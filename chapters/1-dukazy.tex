@@ -1,0 +1,79 @@
+\mathquote{Only prove something that already seems to be obvious.}{Grant Sanderson}
+
+
+V této kapitole se seznámíme s některými základními pojmy a pravidly, které nám pomohou v matematickém uvažování. Základními bloky jsou pojem výrok a práce s nimi. Po zavedení těchto pojmů se seznámíme s důkazy, díky kterým můžeme ověřit správnost tvrzení.
+
+\section{Výroková logika}
+
+Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zmíníme něco o predikátové logice. Výroková logika je základním nástrojem matematiky, který nám umožňuje formulovat veškeré matematické tvrzení.
+
+\begin{tcolorbox}
+  Výrok je tvrzení u kterého lze rozhodnout, zda je pravdivé nebo nepravdivé. Výroky budeme značit písmeny $p, q, r, \ldots$.
+\end{tcolorbox}
+\begin{example}
+  Uvedeme si zde několik příkladů výroků:
+  \begin{itemize}
+    \item $p$: Venku prší.
+    \item $q$: $2 + 2 = 69$.
+    \item $r$: Praha je hlavní město České republiky.
+    \item $s$: $4$ je prvočíslo.
+    \item $t$: $x^2 + 1 = 0$ má reálná řešení.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  Koukněte se na příklad~\ref{ex:1.1.1} a rozhodněte, zda jsou jednotlivé výroky pravdivé nebo nepravdivé.
+\end{problem}
+
+\begin{solution}
+  \begin{itemize}
+    \item $p$: Venku prší. --- Špatně zapsaný výrok. Není určeno, kde se nacházíme.
+    \item $q$: $2 + 2 = 69$. --- Nepravda.
+    \item $r$: Praha je hlavní měs to České republiky. --- Pravda.
+    \item $s$: $4$ je prvočíslo. --- Pravda.
+    \item $t$: $x^2 + 1 = 0$ má reálná řešení. --- Nepravda.
+  \end{itemize}
+\end{solution}
+
+\pagebreak
+\begin{example}
+  Důležité je také uvést si, co výrok není. 
+  \begin{itemize}
+    \item Jak se máš?
+    \item Bum!
+    \item Pozor na psa!
+    \item Černá je nejlepší barva. (Toto je názor, nikoliv výrok. Redakce si avšak myslí, že je to pravda.)
+  \end{itemize}
+\end{example}
+
+Ještě než se vrhneme na logické spojky, představíme si co to znamená negace výroku.
+
+\begin{tcolorbox}
+  \textbf{Negace} výroku $p$ je výrok, který tvrdí opak výroku $p$. Negaci výroku $p$ budeme značit $\neg p$.
+\end{tcolorbox}
+
+\begin{example}
+  Vezměme si výrok $p$: Voda v moři je slaná. Negací tohoto výroku je výrok $\neg p$: Voda v moři není slaná. Upozorňujeme, že opravdu měníme jen slovo `je' na `není'. Nepožíváme například `Voda v moři je sladká'.
+\end{example}
+
+\begin{problem}
+  Opět se vraťte k příkladu~\ref{ex:1.1.1} a určete negace jednotlivých výroků.
+\end{problem}
+
+\begin{solution}
+  \begin{itemize}
+    \item $\neg p$: Venku neprší.
+    \item $\neg q$: $2 + 2 \neq 69$.
+    \item $\neg r$: Praha není hlavní město České republiky.
+    \item $\neg s$: $4$ není prvočíslo.
+    \item $\neg t$: $x^2 + 1 = 0$ nemá reálná řešení.
+  \end{itemize}
+\end{solution}
+
+Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží logické spojky. Je to způsob jakým můžeme spojovat výroky do složitějších celků. Proč? Dozvíte se za chvíli.
+
+\begin{tcolorbox}
+  Rozlišujeme 4 základní logické spojky: \\
+  \textbf{Konjukce} 
+\end{tcolorbox}
+

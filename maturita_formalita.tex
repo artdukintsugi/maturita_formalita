@@ -1,0 +1,104 @@
+\documentclass[a4paper, openany]{book}
+\usepackage[czech]{babel}
+\usepackage{graphicx} 
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath, amssymb}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{pdfpages}
+\usepackage{fancyhdr}
+\usepackage{lipsum}
+\usepackage{titlesec}
+\usepackage[margin=1in]{geometry} % Set margin to 1 inch
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{siunitx}
+\usepackage{datetime}
+\usepackage{indentfirst}
+
+\fancyhf{} 
+\pagestyle{fancy}
+\fancyhead[RE]{\small{\nouppercase{\rightmark}}} 
+\fancyhead[LE]{\thepage} 
+\fancyfoot[RE]{$\mathfrak{yony}$}
+\fancyfoot[LE]{\texttt{\today, \currenttime}}
+
+\fancyhead[RO]{\thepage} 
+\fancyhead[LO]{\small{\nouppercase{\leftmark}}} 
+\fancyfoot[RO]{\texttt{\today, \currenttime}}
+\fancyfoot[LO]{$\mathfrak{yony}$}
+
+% Define a command for typical math quotes
+\newcommand{\mathquote}[2]{%
+    \begin{flushright}
+    \begin{minipage}[t]{0.5\textwidth} % Adjust the width as needed
+    \textit{#1}
+
+    \raggedleft#2
+    \end{minipage}
+    \end{flushright}%
+    \vspace{0.3cm}%
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=magenta, % Change this color to your desired one
+    filecolor=magenta,      
+    urlcolor=magenta,
+}
+
+% Define a command for examples, theorems, etc.
+\newcounter{counter}[section]
+\renewcommand{\thecounter}{\thesection.\arabic{counter}}
+
+\newenvironment{example}[1][]{\refstepcounter{counter}\par\medskip
+  \noindent \textbf{Příklad~\thecounter#1} \rmfamily\label{ex:\thecounter}}{\medskip}
+
+\newenvironment{problem}[1][]{\refstepcounter{counter}\par\medskip
+  \noindent \textbf{Cvičení~\thecounter#1} \rmfamily\label{pr:\thecounter}}{\medskip}
+
+\newenvironment{help}[1][]{
+  \noindent \textbf{Nápověda~\thecounter#1} \rmfamily}{\medskip}
+
+\newenvironment{solution}[1][]{
+  \noindent \textbf{Řešení~\thecounter#1} \rmfamily}{\medskip}
+
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  
+  % Thesis title
+  \textbf{\Huge Maturita Formalita}\\[0.5cm]
+  
+  % Subtitle (if any)
+  \textbf{\Large aneb Jak zvládnout matematiku na jedničku?}\\[1.5cm]
+  
+  % Date
+  \textbf{\Large \today}
+
+  \vfill
+  Stížnosti a návrhy na vylepšení můžete zasílat na můj email: \\[0.5cm]
+  \textbf{\href{mailto: jonas.vybiral.jv@gmail.com}{jonas.vybiral.jv@gmail.com}}.
+\end{titlepage}
+
+\thispagestyle{empty}
+
+\tableofcontents
+
+\chapter*{Úvod}
+\mathquote{Sine mathematica vita nulla est (Bez matematiky život nestojí za nic).}{autor neznámý}
+\addcontentsline{toc}{chapter}{Úvod}
+\input{chapters/0-uvod.tex}
+
+\chapter{Matematické věty a jejich důkazy}
+\input{chapters/1-dukazy.tex}
+
+
+\end{document}
