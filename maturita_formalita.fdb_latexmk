@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1717326472 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1717326473 0
-  "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" 1717323357 2706 1e220db64fbe1259d38a41b893c74d25 ""
+["pdflatex"] 1717328862 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1717328864 0
+  "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" 1717327644 2707 de20e6ce5b81776db69185702742d4c1 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -200,11 +200,11 @@
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1697436527 7883456 5d50d8ad48162c5021a184188465e5eb ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "chapters/0-uvod.tex" 1717325725 1919 9c15f0ea18ea564e52c00dc4d2a90fb9 ""
-  "chapters/1-dukazy.tex" 1717326472 3219 1748f3822615a37acda5e4320e47b1b7 ""
-  "maturita_formalita.aux" 1717326473 1538 b4b917a267e5678bf60fb7915e145b61 "pdflatex"
-  "maturita_formalita.out" 1717326473 429 f7d67e45df068708de3895267e89cdb3 "pdflatex"
-  "maturita_formalita.tex" 1717323357 2706 1e220db64fbe1259d38a41b893c74d25 ""
-  "maturita_formalita.toc" 1717326473 243 849558c935634d1338d835578435772c "pdflatex"
+  "chapters/1-dukazy.tex" 1717328862 6349 df36c3538c87d6107ad16facf3b1eaaa ""
+  "maturita_formalita.aux" 1717328863 1941 500e5a475e6f12d4ed1e654d6f839163 "pdflatex"
+  "maturita_formalita.out" 1717328863 854 7fa3795fbfc3400f5c5a3c43e2395200 "pdflatex"
+  "maturita_formalita.tex" 1717327644 2707 de20e6ce5b81776db69185702742d4c1 ""
+  "maturita_formalita.toc" 1717328863 428 edacfb6e1f489e5219ad61f87853dd59 "pdflatex"
   (generated)
   "maturita_formalita.aux"
   "maturita_formalita.log"

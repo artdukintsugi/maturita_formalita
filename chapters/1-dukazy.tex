@@ -1,3 +1,5 @@
+%chktex-file 44
+
 \mathquote{Only prove something that already seems to be obvious.}{Grant Sanderson}
 
 
@@ -8,7 +10,7 @@ V této kapitole se seznámíme s některými základními pojmy a pravidly, kte
 Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zmíníme něco o predikátové logice. Výroková logika je základním nástrojem matematiky, který nám umožňuje formulovat veškeré matematické tvrzení.
 
 \begin{tcolorbox}
-  Výrok je tvrzení u kterého lze rozhodnout, zda je pravdivé nebo nepravdivé. Výroky budeme značit písmeny $p, q, r, \ldots$.
+  Výrok je tvrzení u kterého lze rozhodnout, zda je pravdivé nebo nepravdivé. Výroky budeme značit písmeny $p, q, r, \ldots$. Pravdivost výroku budeme značit $1$ a nepravdivost $0$. Těmto číslům se říká pravdivostní hodnoty.
 \end{tcolorbox}
 \begin{example}
   Uvedeme si zde několik příkladů výroků:
@@ -28,10 +30,10 @@ Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zm
 \begin{solution}
   \begin{itemize}
     \item $p$: Venku prší. --- Špatně zapsaný výrok. Není určeno, kde se nacházíme.
-    \item $q$: $2 + 2 = 69$. --- Nepravda.
-    \item $r$: Praha je hlavní měs to České republiky. --- Pravda.
-    \item $s$: $4$ je prvočíslo. --- Pravda.
-    \item $t$: $x^2 + 1 = 0$ má reálná řešení. --- Nepravda.
+    \item $q$: $2 + 2 = 69$. --- Nepravda. 0.
+    \item $r$: Praha je hlavní měs to České republiky. --- Pravda. 1.
+    \item $s$: $4$ je prvočíslo. --- Pravda. 1.
+    \item $t$: $x^2 + 1 = 0$ má reálná řešení. --- Nepravda. 0.
   \end{itemize}
 \end{solution}
 
@@ -49,7 +51,7 @@ Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zm
 Ještě než se vrhneme na logické spojky, představíme si co to znamená negace výroku.
 
 \begin{tcolorbox}
-  \textbf{Negace} výroku $p$ je výrok, který tvrdí opak výroku $p$. Negaci výroku $p$ budeme značit $\neg p$.
+  \textbf{Negace} nebo-li NOT výroku $p$ je výrok, který tvrdí opak výroku $p$. Negaci výroku $p$ budeme značit $\neg p$.
 \end{tcolorbox}
 
 \begin{example}
@@ -73,7 +75,60 @@ Ještě než se vrhneme na logické spojky, představíme si co to znamená nega
 Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží logické spojky. Je to způsob jakým můžeme spojovat výroky do složitějších celků. Proč? Dozvíte se za chvíli.
 
 \begin{tcolorbox}
-  Rozlišujeme 4 základní logické spojky: \\
-  \textbf{Konjukce} 
+  Rozlišujeme 4 základní logické spojky:
+
+  \textbf{Konjukce ($\land$):} Konjukce nebo-li AND výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou pravdivé oba výroky $p$ a $q$. 
+
+  \textbf{Disjunkce ($\lor$):} Disjunkce nebo-li OR výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když je pravdivý alespoň jeden z výroků $p$ a $q$.
+
+  \textbf{Implikace ($\Rightarrow$):} Implikace nebo-li IF-THEN výroků $p$ a $q$ je výrok, který je nepravdivý právě tehdy, když je pravdivý výrok $p$ a nepravdivý výrok $q$. V tomto případě lze nad tím přemýšlet jako nad slibem. Když mi někdo něco slíbí, tak to musí splnit, ale pokud to neslíbí, tak je jedno co udělá.
+
+  \textbf{Ekvivalence ($\Leftrightarrow$):} Ekvivalence nebo-li IF-AND-ONLY-IF výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou oba výroky $p$ a $q$ pravdivé nebo oba nepravdivé.
+
+  \vspace{0.2cm}
+
+  Pro větší přehlednost si můžete vytvořit tabulku pravdivostních hodnot pro jednotlivé logické spojky.
+
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      $p$ & $q$ & $p \land q$ & $p \lor q$ & $p \Rightarrow q$ & $p \Leftrightarrow q$ \\
+      \hline
+      0 & 0 & 0 & 0 & 1 & 1 \\
+      0 & 1 & 0 & 1 & 1 & 0 \\
+      1 & 0 & 0 & 1 & 0 & 0 \\
+      1 & 1 & 1 & 1 & 1 & 1 \\
+      \hline
+    \end{tabular}
+  \end{center}
 \end{tcolorbox}
+
+\pagebreak
+
+\begin{example}
+  Uveďme si několik příkladů na logické spojky:
+  \begin{itemize}
+    \item Konjukce: $p \land q$: Venku prší a je teplo.
+    \item Disjunkce: $p \lor q$: Venku prší nebo je teplo.
+    \item Implikace: $p \Rightarrow q$: Když prší, tak je mokro.
+    \item Ekvivalence: $p \Leftrightarrow q$: Venku prší právě tehdy, když je mokro.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  Vraťte se k příkladu~\ref{ex:1.1.1} a zkuste si spojit výroky pomocí logických spojek.
+\end{problem}
+
+\section{Odbočka --- Predikátová logika}
+Predikátová logika staví na výrokové logice a rozšiřuje ji o kvantifikátory. Ty nám umožňují mluvit o všech prvcích nějaké množiny. Základními kvantifikátory jsou:
+\begin{itemize}
+  \item Univerzální kvantifikátor $\forall$: Výrok $\forall x \in M: P(x)$ znamená, že výrok $P(x)$ platí pro všechny prvky množiny $M$.
+  \item Existenciální kvantifikátor $\exists$: Výrok $\exists x \in M: P(x)$ znamená, že existuje prvek množiny $M$, pro který platí výrok $P(x)$.
+\end{itemize}
+
+Toto se nám bude hodit při důkazech, kde budeme chtít mluvit o všech prvcích nějaké množiny (co je množina se také dozvíte). Negace a spojování kvantifikátorů také funguje, ale je to lehce složitější.
+
+\section{Odbočka --- Přirozená dedukce}
+Jeden z formálních dokazovacích systémů je přirozená dedukce. Tento systém je založen na pravidlech, které nám umožňují odvodit nové výroky z již známých. Většina pravidel je intuitivních a vychází z toho, jak my lidé přirozeně uvažujeme.
+
 
