@@ -85,7 +85,7 @@ Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží log
 
   \textbf{Disjunkce ($\lor$):} Disjunkce nebo-li OR výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když je pravdivý alespoň jeden z výroků $p$ a $q$.
 
-  \textbf{Implikace ($\Rightarrow$):} Implikace nebo-li IF-THEN výroků $p$ a $q$ je výrok, který je nepravdivý právě tehdy, když je pravdivý výrok $p$ a nepravdivý výrok $q$. V tomto případě lze nad tím přemýšlet jako nad slibem. Když mi někdo něco slíbí, tak to musí splnit, ale pokud to neslíbí, tak je jedno co udělá.
+  \textbf{Implikace ($\Rightarrow$):} Implikace nebo-li IF-THEN výroků $p$ a $q$ je výrok, který je nepravdivý právě tehdy, když je $p$ výrok pravdivý a výrok $q$ nepravdivý. V tomto případě lze nad tím přemýšlet jako nad slibem. Když mi někdo něco slíbí, tak to musí splnit, ale pokud to neslíbí, tak je jedno co udělá.
 
   \textbf{Ekvivalence ($\Leftrightarrow$):} Ekvivalence nebo-li IF-AND-ONLY-IF výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou oba výroky $p$ a $q$ pravdivé nebo oba nepravdivé.
 
@@ -208,6 +208,39 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
 \end{center}
 
 \begin{example}
+  Podívejme si nyní na důležitý příklad $p\Rightarrow q \dashv\vdash \neg p\lor q$. 
+  \begin{proofbox}
+    1. $p \Rightarrow q$ (předpoklad) \\
+    2. $p \lor \neg p$ (tertium non datur) 
+    \begin{proofbox}
+      3. $p$ (pomocný předpoklad) \\
+      4. $q$ (modus ponens z 1 a 3) \\
+      5. $\neg p \lor q$ (zavedení disjunkce z 4)
+    \end{proofbox}
+    \begin{proofbox}
+      6. $\neg p$ (pomocný předpoklad) \\
+      7. $\neg p \lor q$ (zavedení disjunkce z 6)
+    \end{proofbox}
+    8. $\neg p \lor q$ (elimiace disjunkce z 2, 3--5 a 6--7)
+  \end{proofbox}
+  \begin{proofbox}
+    1. $\neg p \lor q$ (předpoklad) 
+    \begin{proofbox}
+      2. $p$ (pomocný předpoklad) \\
+      3. $q$ (eliminace disjunkce z 1 a 2) 
+    \end{proofbox}
+    4. $p \Rightarrow q$ (zavedení implikace z 2 a 3)
+  \end{proofbox}
+  Využili jsme zde pravidla \textit{tertium non datur} nebo-li pravidlo vyloučeného třetího. To říká, že v našem logickém systému platí, že platí buď $p$ nebo $\neg p$.
+\end{example}
+
+Pro zajímavost existují další bežné logické spojky, které se dají odvodit z těchto základních. Máme zde například XOR (exclusive OR) $\oplus$, který říká, že platí buď $p$ nebo $q$, ale ne oba zároveň. Dalšími jsou NAND $\mid$ a NOR $\downarrow$, které jsou negacemi AND a OR.\@ 
+
+\begin{problem}
+  Napište si, jak by vypadali výše zmíněné spojky pomocí základních spojek.
+\end{problem}
+
+\begin{example}
   Pojďme si nyní odpočinout od úplně formálních příkladů a podívat na trochu méně formální příklad. Mějme následující tvrzení:
   \begin{itemize}
     \item Na výlet pojede Petr nebo Quido.
@@ -261,6 +294,10 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
     6. $p \Rightarrow r$ (zavedení implikace z 3--5)
   \end{proofbox}
 \end{solution}
+
+\begin{definitionbox}
+  Abyste opravdu věřili, že tato metoda je lepší než pravdivostní tabulky, tak se pojďme u příkladu~\ref{ex:1.3.5} zamyslet nad velikostí tabulky. Vzhledem k tomu, že máme 5 proměnných, tak abychom dosáhli všech možných kombinací, musí mít tabulka $2^5 = 32$ řádků! Představte si, že je všechny musíte vyplňovat a pak z toho něco vyčíst. 
+\end{definitionbox}
 
 Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky negací složených výroků.
 
@@ -333,9 +370,10 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
 
 \end{example}
 
-Mohli bychom pokračovat dál, ale máme tu ještě spoustu dalších zajímavých věcí, které chceme probrat. Pokud vás toto téma zaujalo, tak si doporučuji přečíst si knihu 
-\bookcitation{Jiří Velebil}{\href{https://math.fel.cvut.cz/en/people/velebil/files/y01mlo/logika.pdf}{Velmi jemný úvod do matematické logiky}}{Praha 2007}.
-
+Mohli bychom pokračovat dál, ale máme tu ještě spoustu dalších zajímavých věcí, které chceme probrat. Pokud vás téma logiky zaujalo, tak si doporučuji přečíst si knihu 
+\bookcitation{Jiří Velebil}{\href{https://math.fel.cvut.cz/en/people/velebil/files/y01mlo/logika.pdf}{Velmi jemný úvod do matematické logiky}}{Praha 2007}
+Chcete-li jít více do hloubky a dozvědět se i více to těch prapodivných boxech, které jsme používali, tak si přečtěte knihu
+\bookcitation{M. Demlová a B. Pondělíček}{Matematická logika}{skriptum FEL ČVUT, Praha, 1997}
 \section{Důkazy}
 Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali daleko. V této kapitole si ukážeme několik základních typů důkazů, které se v matematice používají. V úvodní kapitole byl zmíněn systém definice-věta-důkaz. Než tedy přejdeme k důkazům, tak si ještě jednou připomeneme co tento systém znamená.
 
@@ -362,7 +400,7 @@ Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali da
     kde $k + l \in \mathbb{Z}$. Tedy $a + b$ je sudé číslo.
   \end{proof}
   
-  Důkaz není úplně korektní, ale za předpokladu, že víme, co znamená, že číslo je sudé, tak bychom mohli tento důkaz přijmout.
+  Důkaz není úplně korektní, ale za předpokladu, že víme, co znamená, že číslo je sudé\footnote{Správná definice je ovšem, že číslo je sudé, pokud lze napsat jako 2k, kde $k\in\mathbb{Z}$. U lichých je to 2k + 1, kde $k\in\mathbb{Z}$}, tak bychom mohli tento důkaz přijmout.
 \end{example}
 
 \begin{problem}
@@ -379,3 +417,17 @@ Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali da
     kde $k + l + 1 \in \mathbb{Z}$. Tedy $a + b$ je sudé číslo.
   \end{proof}
 \end{solution}
+
+\begin{definitionbox}
+  Pojďme si nyní ukázat několik základních typů důkazů, které se v matematice používají. Mějme předpoklad $p$ a závěr $q$.
+
+  \textbf{Důkaz přímý}: Důkaz, kde se jde \textit{přímo} z předpokladu k závěru. V jazyku logických spojek to znamená, že se použije implikace $p \Rightarrow q$. Tento typ důkazu jsme si ukázali v příkladu~\ref{ex:1.4.1}.
+
+  \textbf{Důkaz nepřímý}: Důkaz, kde se používá takzvaná obměněná implikace. V jazyku logických spojek to znamená, že se použije implikace $\neg q \Rightarrow \neg p$. To jsme si odvodili v příkladu~\ref{ex:1.3.2}.
+
+  \textbf{Důkaz sporem}: Důkaz, kde se zneguje výraz $p \Rightarrow q$ a dokáže se, že z toho vyplývá nějaký spor. Zde můžeme použít příklad~\ref{ex:1.3.3} ve kterém jsme si dokázali, že $p\Rightarrow q \vdash \neg p \lor q$. Pokud tento výrok znegujeme za pomoci De Morganových zákonů, tak dostaneme $p \land \neg q$. Toto je nyní náš předpoklad, ze kterého se snažíme vyvodit spor. 
+
+  \vspace{0.1cm}
+
+  Poslední typ zde úplně nezapadá, takže si ho uvedeme za chvíli samostatně.
+\end{definitionbox}
