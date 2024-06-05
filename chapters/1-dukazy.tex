@@ -9,9 +9,9 @@ V této kapitole se seznámíme s některými základními pojmy a pravidly, kte
 
 Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zmíníme něco o predikátové logice. Výroková logika je základním nástrojem matematiky, který nám umožňuje formulovat veškeré matematické tvrzení.
 
-\begin{tcolorbox}
+\begin{definitionbox}
   Výrok je tvrzení u kterého lze rozhodnout, zda je pravdivé nebo nepravdivé. Výroky budeme značit písmeny $p, q, r, \ldots$. Pravdivost výroku budeme značit $1$ a nepravdivost $0$. Těmto číslům se říká pravdivostní hodnoty.
-\end{tcolorbox}
+\end{definitionbox}
 \begin{example}
   Uvedeme si zde několik příkladů výroků:
   \begin{itemize}
@@ -32,7 +32,7 @@ Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zm
     \item $p$: Venku prší. --- Špatně zapsaný výrok. Není určeno, kde se nacházíme.
     \item $q$: $2 + 2 = 69$. --- Nepravda. 0.
     \item $r$: Praha je hlavní měs to České republiky. --- Pravda. 1.
-    \item $s$: $4$ je prvočíslo. --- Pravda. 1.
+    \item $s$: $4$ je prvočíslo. --- Nepravda. 0.
     \item $t$: $x^2 + 1 = 0$ má reálná řešení. --- Nepravda. 0.
   \end{itemize}
 \end{solution}
@@ -44,19 +44,23 @@ Zde se budeme pouze věnovat základní výrokové logice a na konci si lehce zm
     \item Jak se máš?
     \item Bum!
     \item Pozor na psa!
-    \item Černá je nejlepší barva. (Toto je názor, nikoliv výrok. Redakce si avšak myslí, že je to pravda.)
+    \item Černá je nejlepší barva. (Toto je názor, nikoliv výrok. Redakce si však myslí, že to je pravda.)
   \end{itemize}
 \end{example}
 
 Ještě než se vrhneme na logické spojky, představíme si co to znamená negace výroku.
 
-\begin{tcolorbox}
+\begin{definitionbox}
   \textbf{Negace} nebo-li NOT výroku $p$ je výrok, který tvrdí opak výroku $p$. Negaci výroku $p$ budeme značit $\neg p$.
-\end{tcolorbox}
+\end{definitionbox}
 
 \begin{example}
-  Vezměme si výrok $p$: Voda v moři je slaná. Negací tohoto výroku je výrok $\neg p$: Voda v moři není slaná. Upozorňujeme, že opravdu měníme jen slovo `je' na `není'. Nepožíváme například `Voda v moři je sladká'.
+  Vezměme si výrok $p$: Voda v moři je slaná. Negací tohoto výroku je výrok $\neg p$: Voda v moři není slaná. 
 \end{example}
+
+\begin{definitionbox}
+  Upozorňujeme, že v příkladu~\ref{ex:1.1.4} opravdu měníme jen slovo `je' na `není'. Nepoužíváme například `Voda v moři je sladká'. Důvodem pro to je, že ne všechno je dichotomie pravda/nepravda. Některé výroky mohou být pravdivé, nepravdivé nebo něco mezi tím. Vezměme například výrok \textit{Kámen je zelený}. Negace je \textit{Kámen není zelený}. Ale nevíme, zda je kámen modrý, červený nebo třeba duhový.
+\end{definitionbox}
 
 \begin{problem}
   Opět se vraťte k příkladu~\ref{ex:1.1.1} a určete negace jednotlivých výroků.
@@ -74,7 +78,7 @@ Ještě než se vrhneme na logické spojky, představíme si co to znamená nega
 
 Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží logické spojky. Je to způsob jakým můžeme spojovat výroky do složitějších celků. Proč? Dozvíte se za chvíli.
 
-\begin{tcolorbox}
+\begin{definitionbox}
   Rozlišujeme 4 základní logické spojky:
 
   \textbf{Konjukce ($\land$):} Konjukce nebo-li AND výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou pravdivé oba výroky $p$ a $q$. 
@@ -101,7 +105,7 @@ Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží log
       \hline
     \end{tabular}
   \end{center}
-\end{tcolorbox}
+\end{definitionbox}
 
 \pagebreak
 
@@ -120,7 +124,7 @@ Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží log
 \end{problem}
 
 \section{Odbočka --- Predikátová logika}
-Predikátová logika staví na výrokové logice a rozšiřuje ji o kvantifikátory. Ty nám umožňují mluvit o všech prvcích nějaké množiny. Základními kvantifikátory jsou:
+Predikátová logika staví na výrokové logice a rozšiřuje ji o kvantifikátory. Pracuje se zde také s množinami výroků. Ty nám umožňují mluvit o všech prvcích nějaké množiny. Základními kvantifikátory jsou:
 \begin{itemize}
   \item Univerzální kvantifikátor $\forall$: Výrok $\forall x \in M: P(x)$ znamená, že výrok $P(x)$ platí pro všechny prvky množiny $M$.
   \item Existenciální kvantifikátor $\exists$: Výrok $\exists x \in M: P(x)$ znamená, že existuje prvek množiny $M$, pro který platí výrok $P(x)$.
@@ -128,7 +132,250 @@ Predikátová logika staví na výrokové logice a rozšiřuje ji o kvantifikát
 
 Toto se nám bude hodit při důkazech, kde budeme chtít mluvit o všech prvcích nějaké množiny (co je množina se také dozvíte). Negace a spojování kvantifikátorů také funguje, ale je to lehce složitější.
 
+\begin{example}
+  V predikátové logice se pracuje v takzvaném univerzu. To si vždy zvolíme. Může to být například množina všech reálných čísel, množina všech lidí, množina všech zvířat, atd. Většinou se značí písmenem $U$. Ukažme si nyní dva příklady. Pokud si za naše univerzum zvolíme množinu všech reálných čísel, můžeme napsat:
+  \begin{itemize}
+    \item $\forall x \in \mathbb{R}: x^2 \geq 0$. Tento výrok je pravdivý, protože druhá mocnina reálného čísla je vždy nezáporná.
+    \item $\exists x \in \mathbb{R}: x^2 = -1$. Tento výrok je nepravdivý, protože druhá mocnina reálného čísla je vždy nezáporná.  
+  \end{itemize}
+  Nyní zvolme univerzum všech lidí. Zvolme si takzvané predikáty $M(x)$ a $G(x)$, které budou respektive znamenat, že $x$ zvládnul maturitu a $x$ je génius. Nyní můžeme napsat:
+  \begin{itemize}
+    \item $\forall x \in \text{Lidé}: M(x) \Rightarrow G(x)$. Tento výrok říká, že každý, kdo zvládl maturitu, je génius. O pravdivosti se zde raději nebudeme bavit.
+    \item $\exists x \in \text{Lidé}: M(x) \land G(x)$. Tento výrok říká, že existuje někdo, kdo zvládl maturitu a je génius.
+  \end{itemize}
+
+  Všimněte si, že v prvním příkladě jsme mluvili o všech reálných číslech a v druhém o všech lidech. To je důležité, protože výrok může být pravdivý v jednom univerzu a nepravdivý v jiném.
+
+  \begin{definitionbox}
+    Nyní si ukážeme, jak se neguje kvantifikátor. Negace univerzálního kvantifikátoru je existenciální kvantifikátor a naopak.
+  \begin{equation}
+    \begin{aligned}
+      \neg (\forall x \in M: P(x)) \Leftrightarrow \exists x \in M: \neg P(x) \\
+      \neg (\exists x \in M: P(x)) \Leftrightarrow \forall x \in M: \neg P(x)  
+    \end{aligned}
+  \end{equation}
+  Je to celkem intuitivní. Pokud něco platí pro všechny, stačí nám najít jedno, kde to neplatí. Pokud neexistuje ani jedno, kde to platí, tak to neplatí pro všechny.
+  \end{definitionbox}
+\end{example}
+
 \section{Odbočka --- Přirozená dedukce}
-Jeden z formálních dokazovacích systémů je přirozená dedukce. Tento systém je založen na pravidlech, které nám umožňují odvodit nové výroky z již známých. Většina pravidel je intuitivních a vychází z toho, jak my lidé přirozeně uvažujeme.
+Jeden z formálních dokazovacích systémů je přirozená dedukce. Tento systém je založen na pravidlech, které nám umožňují odvodit nové výroky z již známých.\footnote{Přirozený důsledek lze zavést i pro predikátovou logika, ale to je nad rámec tohoto textu.} Většina pravidel je intuitivních a vychází z toho, jak my lidé přirozeně uvažujeme. Tato sekce je uvedena opět jako odbočka, ale doporučuji si ji projít abyste v dalších kapitolách chápali jak se dělají důkazy.
 
+Je zde pár pravidel, ale ty si uvádět nebudeme. Koukneme se na příklady a vysvětlíme si to u nich.
 
+\begin{definitionbox}
+  Většinou našim cílem bude odvodit nějaký výrok $q$ z předpokladů $p_1, p_2, \ldots, p_n$. To značíme jako $p_1, p_2, \ldots, p_n \vdash q$.  Předpoklad je výrok, který považujeme za pravdivý. Nutno ještě zmínit co znamená pomocný předpoklad. Pro větší přehlednost si kreslíme box kolem našeho `světa' ve kterém se pohybujeme. Pokud si vytvoříme nový box, tak to znamená, že v něm a jen v něm platí ty předpoklady, které jsme si tam napsali. Pokud z něj odejdeme, tak už ty předpoklady neplatí. Může se to zdát zbytečné, ale většinou nám to pomůže důkaz dokončit viz příklad~\ref{ex:1.3.2}.
+\end{definitionbox}
+
+\begin{example}
+  Ukažme si nyní, jak bychom mohli dokázat, že $p \land q \vdash q \land p$. Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpokladem $p \land q$ a budeme chtít dokázat $q \land p$. 
+  \begin{proofbox}
+    1. $p \land q$ (předpoklad) \\
+    2. $p$ (eliminace konjukce z 1) \\
+    3. $q$ (eliminace konjukce z 1) \\
+    4. $q \land p$ (zavedení konjukce z 3 a 2)
+  \end{proofbox}
+  Tímto jsme dokázali, že $p \land q \vdash q \land p$. Zde jsme použili pravidla eliminace konjukce a zavedení konjukce. Tyto pravidla vychází z toho, že pokud víme, že platí $p \land q$, tak víme, že platí $p$ a $q$ samostatně a naopak. U ostatních pravidel to tak jednoduché nebude.
+\end{example}
+
+Provedeme si nyní nějakou přípravu, která bude působit zbytečně, ale v dalších kapitolách se nám to bude hodit.
+\begin{example}
+  Ukažme si, jak bychom mohli dokázat, že $p \Rightarrow q \vdash \neg q \Rightarrow \neg p$. Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpokladem $p \Rightarrow q$ a budeme chtít dokázat $\neg q \Rightarrow \neg p$. 
+  \begin{proofbox}
+    1. $p \Rightarrow q$ (předpoklad) 
+    \begin{proofbox}
+      2. $\neg q$ (pomocný předpoklad) \\
+      3. $\neg p$ (modus tollens z 1 a 2)
+    \end{proofbox}
+    4. $\neg q \Rightarrow \neg p$ (zavedení implikace z 2 a 3)
+  \end{proofbox}
+  Tímto jsme dokázali, že $p \Rightarrow q \vdash \neg q \Rightarrow \neg p$. Zde jsme použili pravidlo modus tollens. To říká, že pokud víme, že platí $p \Rightarrow q$ a $\neg q$, tak můžeme odvodit $\neg p$. To vychází přímo z definice implikace. Pokud někdo něco nesplnil, ale slib `vyšel' pozitivně, tak to znamená, že to ani neslíbíl. Zde je krásně vidět, jak nám pomocný předpoklad pomohl. Protože jsme viděli, že když budeme předpokládat $\neg q$, tak můžeme odvodit $\neg p$ a z toho jsme zavedli chtěnou implikaci.
+\end{example}
+
+Pozorného čtenáře jistě napadlo, že místo tohoto postupu si můžeme napsat pravdivostní tabulku a zjistit, že tvrzení platí. To bychom se připravili o všechnu zábavu a pro složitější trvrzení by tabulka rostla exponenciálně.
+Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.2}
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $p$ & $q$ & $p \Rightarrow q$ & $\neg q$ & $\neg p$ & $\neg q \Rightarrow \neg p$ \\
+    \hline
+    0 & 0 & 1 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 0 & 1 & 1 \\
+    1 & 0 & 0 & 1 & 0 & 0 \\
+    1 & 1 & 1 & 0 & 0 & 1 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{example}
+  Pojďme si nyní odpočinout od úplně formálních příkladů a podívat na trochu méně formální příklad. Mějme následující tvrzení:
+  \begin{itemize}
+    \item Na výlet pojede Petr nebo Quido.
+    \item Jestliže pojede Quido, pojede Simona a nepojede Renata.
+    \item Jestliže pojede Tomáš, pojede i Renata.
+    \item Jestliže pojede Simona, pojede Tomáš.
+  \end{itemize}
+  Chceme zjistit, zda je pravda trvzení `Petr pojede na výlet'.\footnote{Toto lze také převést na problém sématického důsledku a řešit resoluční metodou. Tímto spojením se zabýva věta o úplnosti, která je též nad rámec této středoškolské knihy.} Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpoklady, které máme a budeme chtít dokázat, že Petr pojede na výlet. Pojmenujeme si výroky $p$: Petr pojede na výlet, $q$: Quido pojede na výlet, $s$: Simona pojede na výlet, $t$: Tomáš pojede na výlet, $r$: Renata pojede na výlet.
+
+  \begin{proofbox}
+    1. $p \lor q$ (předpoklad) \\
+    2. $q \Rightarrow (s \land \neg r)$ (předpoklad) \\
+    3. $t \Rightarrow r$ (předpoklad) \\
+    4. $s \Rightarrow t$ (předpoklad) 
+  \begin{proofbox}
+    5. $\neg p$ (pomocný předpoklad) \\
+    6. $q$ (eliminace disjunkce z 1) \\
+    7. $s \land \neg r$ (modus ponens z 2 a 6) \\
+    8. $s$ (eliminace konjukce z 7) \\
+    9. $t$ (modus ponens z 4 a 8) \\
+    10. $r$ (modus ponens z 3 a 9) \\
+    11. $\neg r$ (elimace konjunkce z 7) \\
+    12. $\perp$ (eliminace negace z 10 a 11)
+  \end{proofbox}
+    13. $\lnot\lnot p$ (reductio ad absurdum z 5--12) \\
+    17. $p$ (eliminace dvojí negace z 13)
+  \end{proofbox}
+  Tímto jsme dokázali, že Petr pojede na výlet. Zde jsme použili pravidla eliminace disjunkce, modus ponens a reductio ad absurdum. Pojďme si spolu pravidla vysvětlit. 
+  \begin{itemize}
+    \item Eliminace disjunkce: Pokud víme, že platí $p \lor q$ a víme, že jedno z nich neplatí, tak můžeme odvodit to druhé. 
+    \item Modus ponens: Pokud víme, že platí $p \Rightarrow q$ a $p$, tak můžeme odvodit $q$. Někdo mi něco slíbil a já vím, že slib byl úspešný, takže to i splnil.
+    \item Reductio ad absurdum: Pokud předpokládáme něco a dokážeme, že z toho vyplývá spor, tak můžeme odvodit, že to, že platí negace našeho předpokladu.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  Ať si taky něco procvičíte, zkuste si dokázat, že $p \Rightarrow q, q \Rightarrow r \vdash p \Rightarrow r$.\footnote{Pokud se vám to povede, tak gratuluji. Nejsou zde vypsaná pravidla, takže se ani nepředpokládá, že byste to měli zvládnout.}
+\end{problem}
+
+% \pagebreak
+
+\begin{solution}
+  \begin{proofbox}
+    1. $p \Rightarrow q$ (předpoklad) \\
+    2. $q \Rightarrow r$ (předpoklad) 
+  \begin{proofbox}
+    3. $p$ (pomocný předpoklad) \\
+    4. $q$ (modus ponens z 1 a 3) \\
+    5. $r$ (modus ponens z 3 a 4)
+  \end{proofbox}
+    6. $p \Rightarrow r$ (zavedení implikace z 3--5)
+  \end{proofbox}
+\end{solution}
+
+Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky negací složených výroků.
+
+\begin{example} \textbf{(De Morganovy zákony)}
+  De Morganovy zákony jsou zákony, které nám říkají, jak se neguje konjukce a disjunkce. Jsou to následující vzorečky:
+  \begin{equation}
+    \begin{aligned}
+      \neg (p \land q) &\dashv\vdash \neg p \lor \neg q \\
+      \neg (p \lor q) &\dashv\vdash \neg p \land \neg q
+    \end{aligned}
+  \end{equation}
+
+  Tyto zákony se dají dokázat pomocí pravdivostní tabulky, ale my si je zde formálně dokážeme. Dají se zobecnit metematickou indukcí (už se brzy dozvíte co to je) na libovolný počet výroků následujícím způsobem:
+  \begin{equation}
+    \begin{aligned}
+      \neg \left(\bigwedge_{i=1}^{n} p_i\right) &\dashv\vdash \bigvee_{i=1}^{n} \neg p_i \\
+      \neg \left(\bigvee_{i=1}^{n} p_i\right) &\dashv\vdash \bigwedge_{i=1}^{n} \neg p_i.
+    \end{aligned}
+  \end{equation}
+
+  Uvedeme zde důkaz prvního De Morganova zákona. Zbytek necháme jako cvičení pro čtenáře.
+
+  \begin{proofbox}
+    % $\neg (p \land q) \vdash \neg p \lor \neg q$ 
+    % \vspace{0.4cm}
+
+    1. $\neg (p \land q)$ (předpoklad)
+    \begin{proofbox}
+      2. $\neg(\neg p \lor \neg q)$ (pomocný předpoklad)
+      \begin{proofbox}
+        3. $\neg p$ (pomocný předpoklad) \\
+        4. $\neg p \lor \neg q$ (zavedení disjunkce z 3) \\
+        5. $\perp$ (eliminace negace z 4 a 2)
+      \end{proofbox}
+      6. $p$ (reductio ad absurdum z 3--5) 
+      \begin{proofbox}
+        7. $\neg q$ (pomocný předpoklad) \\
+        8. $\neg p \lor \neg q$ (zavedení disjunkce z 7) \\
+        9. $\perp$ (eliminace negace z 8 a 2)
+      \end{proofbox}
+      10. $q$ (reductio ad absurdum z 7--9) \\
+      11. $p \land q$ (zavedení konjukce z 6 a 10) \\
+      12. $\perp$ (eliminace negace z 11 a 1)
+    \end{proofbox}
+    13. $\neg\neg(\neg p \lor \neg q)$ (reductio ad absurdum z 1--12) \\
+    14. $\neg p \lor \neg q$ (eliminace dvojí negace z 13)
+  \end{proofbox}
+
+  \begin{proofbox}
+    % $\neg p \lor \neg q \vdash \neg (p \land q)$ 
+    % \vspace{0.4cm}
+
+    1. $\neg p \lor \neg q$ (předpoklad)
+    \begin{proofbox}
+      2. $p \land q$ (pomocný předpoklad)
+      3. $p$ (eliminace konjukce z 2) \\
+      4. $q$ (eliminace konjukce z 2)
+      \begin{proofbox}
+        5. $\neg p$ (pomocný předpoklad) \\
+        6. $\perp$ (eliminace negace z 3 a 5)
+      \end{proofbox}
+      \begin{proofbox}
+        7. $\neg q$ (pomocný předpoklad) \\
+        8. $\perp$ (eliminace negace z 4 a 7)
+      \end{proofbox}
+      9. $\perp$ (eliminace konjukce z 6 a 8)
+    \end{proofbox}
+    10. $\neg(p \land q)$ (reductio ad absurdum z 2--9)
+  \end{proofbox}
+
+\end{example}
+
+Mohli bychom pokračovat dál, ale máme tu ještě spoustu dalších zajímavých věcí, které chceme probrat. Pokud vás toto téma zaujalo, tak si doporučuji přečíst si knihu 
+\bookcitation{Jiří Velebil}{\href{https://math.fel.cvut.cz/en/people/velebil/files/y01mlo/logika.pdf}{Velmi jemný úvod do matematické logiky}}{Praha 2007}.
+
+\section{Důkazy}
+Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali daleko. V této kapitole si ukážeme několik základních typů důkazů, které se v matematice používají. V úvodní kapitole byl zmíněn systém definice-věta-důkaz. Než tedy přejdeme k důkazům, tak si ještě jednou připomeneme co tento systém znamená.
+
+\begin{definitionbox}
+  \textbf{Definice} je vymezení pojmu, ze kterým hodláme pracovat. Definice obsahuje název a charakteristické vlastnosti daného pojmu.
+
+  \textbf{Věta} je výrok, který je pravdivý a musí být dokázán. Většinou rozvíjíme nějaký pojem, který jsme si definovali.
+
+  \textbf{Důkaz} je postup, který nám ukazuje, proč je věta pravdivá. Důkaz se skládá z předpokladů a závěru. Předpoklady jsou věty, které už máme dokázané a závěr je věta, kterou chceme dokázat.
+\end{definitionbox}
+
+\begin{example}
+  Vyzkoušejme si zde jak by vypadal jednoduchý důkaz. V matematické literatuře by to vypadalo následovně:
+
+  \vspace{0.3cm}
+
+  \noindent\textbf{Věta 1.2.3\footnote{Nenechte se zmást značením. Je zde uvedeno jako příklad, nezapadá však do našeho číslování.} (O součtu dvou sudých čísel)}: Součet dvou sudých čísel je sudé číslo.
+
+  \begin{proof}
+    Nechť $a$ a $b$ jsou sudá čísla. Pak existují taková čísla $k, l \in \mathbb{Z}$, že $a = 2k$ a $b = 2l$. Potom
+    \begin{equation}
+      a + b = 2k + 2l = 2(k + l),
+    \end{equation}
+    kde $k + l \in \mathbb{Z}$. Tedy $a + b$ je sudé číslo.
+  \end{proof}
+  
+  Důkaz není úplně korektní, ale za předpokladu, že víme, co znamená, že číslo je sudé, tak bychom mohli tento důkaz přijmout.
+\end{example}
+
+\begin{problem}
+  Zkuste si nyní dokázat, že součet dvou lichých čísel je sudé číslo.
+\end{problem}
+
+\begin{solution}
+
+  \begin{proof}
+    Nechť $a$ a $b$ jsou lichá čísla. Pak existují taková čísla $k, l \in \mathbb{Z}$, že $a = 2k + 1$ a $b = 2l + 1$. Potom
+    \begin{equation}
+      a + b = 2k + 1 + 2l + 1 = 2(k + l + 1),
+    \end{equation}
+    kde $k + l + 1 \in \mathbb{Z}$. Tedy $a + b$ je sudé číslo.
+  \end{proof}
+\end{solution}

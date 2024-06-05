@@ -19,17 +19,18 @@
 \usepackage{siunitx}
 \usepackage{datetime}
 \usepackage{indentfirst}
+\usepackage{amsthm}
 
 
 \fancyhf{} 
 \pagestyle{fancy}
-\fancyhead[RE]{\small{\nouppercase{\rightmark}}} 
+\fancyhead[RE]{\small{\nouppercase{\leftmark}}} 
 \fancyhead[LE]{\thepage} 
 \fancyfoot[RE]{$\mathfrak{yony}$}
 \fancyfoot[LE]{\texttt{\today, \currenttime}}
 
 \fancyhead[RO]{\thepage} 
-\fancyhead[LO]{\small{\nouppercase{\leftmark}}} 
+\fancyhead[LO]{\small{\nouppercase{\rightmark}}} 
 \fancyfoot[RO]{\texttt{\today, \currenttime}}
 \fancyfoot[LO]{$\mathfrak{yony}$}
 
@@ -43,6 +44,12 @@
     \end{minipage}
     \end{flushright}%
     \vspace{0.3cm}%
+}
+
+\newcommand{\bookcitation}[3]{
+  \begin{tcolorbox}[colback=white!95!black, boxrule=0pt]
+      #1, \textit{#2}, #3
+  \end{tcolorbox}
 }
 
 \hypersetup{
@@ -62,11 +69,23 @@
 \newenvironment{problem}[1][]{\refstepcounter{counter}\par\medskip
   \noindent \textbf{Cvičení~\thecounter#1} \rmfamily\label{pr:\thecounter}}{\medskip}
 
-\newenvironment{help}[1][]{
+\newenvironment{hint}[1][]{
   \noindent \textbf{Nápověda~\thecounter#1} \rmfamily}{\medskip}
 
 \newenvironment{solution}[1][]{
   \noindent \textbf{Řešení~\thecounter#1} \rmfamily}{\medskip}
+
+\newenvironment{proofbox}[1][]{
+  \begin{tcolorbox}[colback=white, sharp corners]}{\end{tcolorbox}}
+
+\newenvironment{definitionbox}[1][]{
+  \begin{tcolorbox}[colback=pink, boxrule=0pt]}{\end{tcolorbox}}
+
+\renewenvironment{proof}[1][]{
+  \noindent \textsc{Důkaz.} #1 \rmfamily}{\hfill$\blacksquare$\medskip}
+
+
+
 
 
 \begin{document}
@@ -98,8 +117,8 @@
 \addcontentsline{toc}{chapter}{Úvod}
 \input{chapters/0-uvod.tex}
 
-\chapter{Matematické věty a jejich důkazy}
-\input{chapters/1-dukazy.tex}
 
+\chapter{Matematická logika a důkazy}
+\input{chapters/1-dukazy.tex}
 
 \end{document}
