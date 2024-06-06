@@ -81,11 +81,11 @@ Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží log
 \begin{definitionbox}
   Rozlišujeme 4 základní logické spojky:
 
-  \textbf{Konjukce ($\land$):} Konjukce nebo-li AND výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou pravdivé oba výroky $p$ a $q$. 
+  \textbf{Konjunkce ($\land$):} Konjunkce nebo-li AND výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou pravdivé oba výroky $p$ a $q$. 
 
   \textbf{Disjunkce ($\lor$):} Disjunkce nebo-li OR výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když je pravdivý alespoň jeden z výroků $p$ a $q$.
 
-  \textbf{Implikace ($\Rightarrow$):} Implikace nebo-li IF-THEN výroků $p$ a $q$ je výrok, který je nepravdivý právě tehdy, když je $p$ výrok pravdivý a výrok $q$ nepravdivý. V tomto případě lze nad tím přemýšlet jako nad slibem. Když mi někdo něco slíbí, tak to musí splnit, ale pokud to neslíbí, tak je jedno co udělá.
+  \textbf{Implikace ($\Rightarrow$):} Implikace nebo-li IF-THEN výroků $p$ a $q$ je výrok, který je nepravdivý právě tehdy, když je výrok $p$ pravdivý a $q$ nepravdivý. V tomto případě lze nad tím přemýšlet jako nad slibem. Když mi někdo něco slíbí, tak to musí splnit, ale pokud to neslíbí, tak je jedno co udělá.
 
   \textbf{Ekvivalence ($\Leftrightarrow$):} Ekvivalence nebo-li IF-AND-ONLY-IF výroků $p$ a $q$ je výrok, který je pravdivý právě tehdy, když jsou oba výroky $p$ a $q$ pravdivé nebo oba nepravdivé.
 
@@ -112,7 +112,7 @@ Výroky samotné jsou sice fajn ale co s nimi dělat? K tomu nám poslouží log
 \begin{example}
   Uveďme si několik příkladů na logické spojky:
   \begin{itemize}
-    \item Konjukce: $p \land q$: Venku prší a je teplo.
+    \item Konjunkce: $p \land q$: Venku prší a je teplo.
     \item Disjunkce: $p \lor q$: Venku prší nebo je teplo.
     \item Implikace: $p \Rightarrow q$: Když prší, tak je mokro.
     \item Ekvivalence: $p \Leftrightarrow q$: Venku prší právě tehdy, když je mokro.
@@ -171,11 +171,11 @@ Je zde pár pravidel, ale ty si uvádět nebudeme. Koukneme se na příklady a v
   Ukažme si nyní, jak bychom mohli dokázat, že $p \land q \vdash q \land p$. Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpokladem $p \land q$ a budeme chtít dokázat $q \land p$. 
   \begin{proofbox}
     1. $p \land q$ (předpoklad) \\
-    2. $p$ (eliminace konjukce z 1) \\
-    3. $q$ (eliminace konjukce z 1) \\
-    4. $q \land p$ (zavedení konjukce z 3 a 2)
+    2. $p$ (eliminace konjunkce z 1) \\
+    3. $q$ (eliminace konjunkce z 1) \\
+    4. $q \land p$ (zavedení konjunkce z 3 a 2)
   \end{proofbox}
-  Tímto jsme dokázali, že $p \land q \vdash q \land p$. Zde jsme použili pravidla eliminace konjukce a zavedení konjukce. Tyto pravidla vychází z toho, že pokud víme, že platí $p \land q$, tak víme, že platí $p$ a $q$ samostatně a naopak. U ostatních pravidel to tak jednoduché nebude.
+  Tímto jsme dokázali, že $p \land q \vdash q \land p$. Zde jsme použili pravidla eliminace konjunkce a zavedení konjunkce. Tyto pravidla vychází z toho, že pokud víme, že platí $p \land q$, tak víme, že platí $p$ a $q$ samostatně a naopak. U ostatních pravidel to tak jednoduché nebude.
 \end{example}
 
 Provedeme si nyní nějakou přípravu, která bude působit zbytečně, ale v dalších kapitolách se nám to bude hodit.
@@ -259,7 +259,7 @@ Pro zajímavost existují další bežné logické spojky, které se dají odvod
     5. $\neg p$ (pomocný předpoklad) \\
     6. $q$ (eliminace disjunkce z 1) \\
     7. $s \land \neg r$ (modus ponens z 2 a 6) \\
-    8. $s$ (eliminace konjukce z 7) \\
+    8. $s$ (eliminace konjunkce z 7) \\
     9. $t$ (modus ponens z 4 a 8) \\
     10. $r$ (modus ponens z 3 a 9) \\
     11. $\neg r$ (elimace konjunkce z 7) \\
@@ -302,7 +302,7 @@ Pro zajímavost existují další bežné logické spojky, které se dají odvod
 Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky negací složených výroků.
 
 \begin{example} \textbf{(De Morganovy zákony)}
-  De Morganovy zákony jsou zákony, které nám říkají, jak se neguje konjukce a disjunkce. Jsou to následující vzorečky:
+  De Morganovy zákony jsou zákony, které nám říkají, jak se neguje konjunkce a disjunkce. Jsou to následující vzorečky:
   \begin{equation}
     \begin{aligned}
       \neg (p \land q) &\dashv\vdash \neg p \lor \neg q \\
@@ -339,7 +339,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
         9. $\perp$ (eliminace negace z 8 a 2)
       \end{proofbox}
       10. $q$ (reductio ad absurdum z 7--9) \\
-      11. $p \land q$ (zavedení konjukce z 6 a 10) \\
+      11. $p \land q$ (zavedení konjunkce z 6 a 10) \\
       12. $\perp$ (eliminace negace z 11 a 1)
     \end{proofbox}
     13. $\neg\neg(\neg p \lor \neg q)$ (reductio ad absurdum z 1--12) \\
@@ -353,8 +353,8 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
     1. $\neg p \lor \neg q$ (předpoklad)
     \begin{proofbox}
       2. $p \land q$ (pomocný předpoklad)
-      3. $p$ (eliminace konjukce z 2) \\
-      4. $q$ (eliminace konjukce z 2)
+      3. $p$ (eliminace konjunkce z 2) \\
+      4. $q$ (eliminace konjunkce z 2)
       \begin{proofbox}
         5. $\neg p$ (pomocný předpoklad) \\
         6. $\perp$ (eliminace negace z 3 a 5)
@@ -363,7 +363,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
         7. $\neg q$ (pomocný předpoklad) \\
         8. $\perp$ (eliminace negace z 4 a 7)
       \end{proofbox}
-      9. $\perp$ (eliminace konjukce z 6 a 8)
+      9. $\perp$ (eliminace konjunkce z 6 a 8)
     \end{proofbox}
     10. $\neg(p \land q)$ (reductio ad absurdum z 2--9)
   \end{proofbox}

@@ -1218,11 +1218,11 @@ INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm1
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 OUTPUT maturita_formalita.toc
+INPUT ./chapters/uvod.tex
+INPUT chapters/uvod.tex
+INPUT ./chapters/uvod.tex
+INPUT chapters/uvod.tex
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT ./chapters/uvod.tex
-INPUT chapters/uvod.tex
-INPUT ./chapters/uvod.tex
-INPUT chapters/uvod.tex
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT ./chapters/dukazy.tex
