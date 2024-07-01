@@ -431,3 +431,59 @@ Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali da
 
   Poslední typ zde úplně nezapadá, takže si ho uvedeme za chvíli samostatně.
 \end{definitionbox}
+
+\begin{example}
+  Ukažme si nyní příklad přímého důkazu. Mějme následující větu: \textit{Pokud je číslo $n$ sudé, tak je i $n^2$ sudé.}. Zde opět využijeme naší definice sudých čísel z předchozích příkladů. Máme tedy číslo $n$, které je sudé. To znamená, že lze napsat jako $2k$, kde $k\in\mathbb{Z}$. Nyní si spočítáme $n^2$: 
+  \begin{equation}
+    n^2 = (2k)^2 = 4k^2 = 2(2k^2).
+  \end{equation}
+  S trochou důvtipu lze vidět, že $2k^2 \in \mathbb{Z}$.\footnote{Zde bychom potřebovali něco o teorii celých čísel. Nám postačí, když tomu budete věřit.} To znamená, že se nám podařilo $n^2$ napsat jako $2l$, kde $l\in\mathbb{Z}$. Tedy $n^2$ je sudé číslo.
+\end{example}
+\begin{problem}
+  Zkuste si nyní dokázat, že pokud je číslo $n$ liché, tak je i $n^2$ liché. Postupujte podobně jako v předchozím příkladu.
+\end{problem}
+
+\begin{example} 
+  Představte si, že máte dokázat větu: \textit{Pokud je číslo $n^2$ sudé, tak je i $n$ sudé.} Zde zkusíme použít důkaz sporem. Provedeme obměněnou implikaci a dostanem výrok $\neg p \Rightarrow \neg q$. Tedy pokud je $n$ liché, tak je i $n^2$ liché. Toto jste již udělali ve cvičení~\ref{pr:1.4.4}.
+\end{example}
+
+\begin{example}
+  Přejděme na důkaz sporem. Oblíbeným příkladem je důkaz iracionality čísla $\sqrt{2}$. Chceme ukázat, že $\sqrt{2}\in\mathbb{Q}$. Provedením negace dostaneme tedy předpoklad, že $\sqrt{2}$ je racionální číslo. To znamená, že existují čísla $p$ a $q$ taková, že $\sqrt{2} = \frac{p}{q}$.\footnote{Definice racionálních čísel.} Dále si můžeme předpokládat, že $p$ a $q$ jsou nesoudělná čísla. To znamená, že nemají žádný společný dělitel. Nyní si můžeme napsat:
+  \begin{equation}
+    \sqrt{2} = \frac{p}{q} \Rightarrow 2 = \frac{p^2}{q^2} \Rightarrow 2q^2 = p^2.
+  \end{equation}
+  To znamená, že $p^2$ je sudé číslo. Z předchozích příkladů víme, že to znamená, že $p$ je sudé číslo. To znamená, že existuje číslo $k$ takové, že $p = 2k$. Dosadíme zpět do našeho vztahu:
+  \begin{equation}
+    2q^2 = (2k)^2 \Rightarrow 2q^2 = 4k^2 \Rightarrow q^2 = 2k^2.
+  \end{equation}
+  To znamená, že $q^2$ je sudé číslo. Z předchozích příkladů víme, že to znamená, že $q$ je sudé číslo. To je ale spor s naším předpokladem, že $p$ a $q$ nemají žádný společný dělitel. Tedy jsme dokázali, že $\sqrt{2}$ je iracionální číslo.
+\end{example}
+\begin{definitionbox}
+  K důkazům se určitě ještě vrátíme v dalších kapitolách u konkrétních vět, které stojí za dokázání. Teď si uvedeme ještě jeden běžný typ důkazu, který se v matematice používá.
+
+  \vspace{0.2cm}
+
+  \textbf{Důkaz matematickou indukcí}: Důkaz, který se používá pro dokazování vět, které platí pro všechna přirozená čísla. Důkaz se skládá ze tří kroků:
+  \begin{itemize}
+    \item \textbf{Základní krok}: Dokážeme, že věta platí pro první přirozené číslo.
+    \item \textbf{Indukční krok}: Předpokládáme, že věta platí pro nějaké přirozené číslo $n$. Tomuto se říká indukční předpoklad.
+    \item \textbf{Závěr}: Využitím indukčního předpokladu dokážeme, že věta platí i pro $n+1$ čísel.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Ukažme si nyní důkaz matematickou indukcí na příkladu. Mějme následující větu: \textit{Pro každé přirozené číslo $n$ platí, že $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.}\footnote{Zkuste první se zamyslet, proč byt to mohlo platit. Legenda praví, že toto tvrzení objevil slavný matematik Gauss, když byl ještě dítě.}  
+
+  \begin{proof}
+
+    \textbf{Základní krok}: Pro $n = 1$ platí, že $1 = \frac{1(1+1)}{2} = 1$. Tedy věta platí pro $n = 1$.
+
+    \textbf{Indukční krok}: Předpokládejme, že věta platí pro nějaké přirozené číslo $n$. To znamená, že platí rovnost $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.
+
+    \textbf{Závěr}: Nyní se pokusíme dokázat, že věta platí i pro $n+1$. Tedy
+    \begin{equation}
+      1 + 2 + \cdots + n + (n+1) = \frac{n(n+1)}{2} + (n+1) = \frac{n(n+1) + 2(n+1)}{2} = \frac{(n+1)(n+2)}{2}.
+    \end{equation}
+    Tímto jsme dokázali, že věta platí i pro $n+1$. Tedy věta platí pro všechna přirozená čísla.
+  \end{proof}
+\end{example}
