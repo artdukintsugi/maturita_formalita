@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1720024713 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1720024715 0
+["pdflatex"] 1720024821 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1720024823 0
   "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" 1720004902 3820 6c6d1613e85faa79319a710cfc11d519 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -229,13 +229,13 @@
   "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1697436588 4623355 b8cad38412faebe1ce5b780a45db67bd ""
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1697436527 7883456 5d50d8ad48162c5021a184188465e5eb ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
-  "chapters/dukazy.tex" 1720004426 28747 db00a571a26e0f085ea959a34a321c31 ""
+  "chapters/dukazy.tex" 1720024820 28747 47af32b4e4159bb5d625a8a2c068e190 ""
   "chapters/mnoziny.tex" 1720005245 105 cb71fc605a4e2d2d96f1d77beef6c9e6 ""
   "chapters/uvod.tex" 1720024713 2030 bbeda52105afadd907670db013387ba2 ""
-  "maturita_formalita.aux" 1720024715 3323 58fae210ccff4ecb1c23c39202b93b10 "pdflatex"
-  "maturita_formalita.out" 1720024715 1086 7b31f81a6ce510f80bdaef597b454787 "pdflatex"
+  "maturita_formalita.aux" 1720024823 3323 58fae210ccff4ecb1c23c39202b93b10 "pdflatex"
+  "maturita_formalita.out" 1720024823 1086 7b31f81a6ce510f80bdaef597b454787 "pdflatex"
   "maturita_formalita.tex" 1720004902 3820 6c6d1613e85faa79319a710cfc11d519 ""
-  "maturita_formalita.toc" 1720024715 573 31416e3b16feac547ad38f88fc855939 "pdflatex"
+  "maturita_formalita.toc" 1720024823 573 31416e3b16feac547ad38f88fc855939 "pdflatex"
   (generated)
   "maturita_formalita.aux"
   "maturita_formalita.log"
