@@ -1,1 +1,31 @@
 \mathquote{From the paradise that Cantor created for us no-one shall be able to expel us.}{David Hilbert}
+
+\section{Axiomatická teorie množin}
+Než se pustíme do pro nás více relevatních témat, pojďme se seznámit s rigorózní teorií množin na které je postavena celá matematika. Tato teorie byla vytvořena Georgem Cantorem na konci 19. století a je základem pro všechny matematické koncepty, které se týkají množin. Tato teorie je ale velice složitá a zmiňuji ji zde jen proto, abychom měli představu o tom, jak by mohla matematika vypadat, kdybychom se snažili být formální.
+
+Hlavní roli v této teorii hrají axiomy, což jsou základní pravidla, která musíme přijmout jako pravdivá, abychom mohli dále pracovat. Než se pustíme na samotné axiomy, vysvětleme si rychle následující znaky, které nám usnadní zápis. Množiny značíme velkými písmeny, například $X$, $Y$, $Z$, atd. Prvky množin značíme malými písmeny, například $x$, $y$, $z$, atd. Pokud prvek $x$ patří do množiny $X$, značíme to $x\in X$ a pokud nepatří, tak $x\notin X$. Systém množin je vlastně také množina, která obsahuje množiny a značíme ji $\mathcal{X}$, $\mathcal{Y}$, $\mathcal{Z}$, atd. Projděme si nyní axiomy množinové teorie a pak si ukážeme základní příklady a vysvetlení těchto axiomů. 
+
+\begin{definitionbox}
+  \textbf{Axiomy množinové teorie}
+  \begin{enumerate}
+    \item \textbf{Axiom of extension}: Dvě množiny jsou rovny právě tehdy, když obsahují stejné prvky.
+    \item \textbf{Axiom of the empty set}: Existuje množina, která neobsahuje žádné prvky. Tato množina se nazývá prázdná množina a značí se $\emptyset$.
+    \item \textbf{Axiom schema of separation}: Pro každou množinu $x$ a každou vlastnost $P$ existuje množina, která obsahuje všechny prvky množiny $x$ splňující vlastnost $P$.
+    \item \textbf{Axiom of pairing}: Pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. Tato množina se nazývá kartézský součin množin $X$ a $Y$ a značí se $X \times Y$.
+    \item \textbf{Axiom of union}: Pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Tato množina se nazývá sjednocení množin v systému $\mathcal{S}$ a značí se $\bigcup \mathcal{S}$. Pokud bychom chtěli sjednotit pouze množiny $X$ a $Y$, značili bychom to $X\cup Y$.
+    \item \textbf{Axiom of power set}: Pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Tento systém se nazývá potenční množina množiny $X$ a značí se $\mathcal{P}(X)$. 
+    \item \textbf{Axiom of infinity}: Existuje systém množin $\mathcal{S}$ takový, že $\emptyset\in\mathcal{S}$ a pro každou množinu $x\in\mathcal{S}$ platí $x\cup\{x\}\in\mathcal{S}$. 
+    \item \textbf{Axiom of choice}: Pro každý systém neprázdných množin $\mathcal{S}$ existuje funkce $f$, která každé množině $X\in\mathcal{S}$ přiřazuje prvek $f(X)$, který je prvkem množiny $X$.
+    \item \textbf{Axiom schema of replacement}: Pro každou množinu $X$ a každou funkci $f$ existuje množina, která obsahuje všechny prvky $f(x)$ pro každý prvek $x\in X$.
+  \end{enumerate}
+  V poslední řadě chci dodat, že na přesných axiomech množinové teorie se zdroje moc neshodují a můžete najít různé formulace. Nám výše uvedené axiomy postačí pro naše účely. Pojďme si nyní podrobněji vysvětlit jednotlivé axiomy a ukázat si nějaké příklady.
+\end{definitionbox}
+
+\subsection{Axiom of extension}
+K tomuto axiomu moc slov nepotřebujeme. Vezměme například tři množiny definované následovně\footnote{Všimněte si, že množiny zde zapisujeme pomocí závorek a prvky množiny oddělujeme čárkami.}:
+\begin{align*}
+  X &= \{1, 2, 3\},\\
+  Y &= \{1, 2, 3\},\\
+  Z &= \{1, 2, 3, 4\}.
+\end{align*}
+Množiny $X$ a $Y$ jsou rovny, protože obsahují stejné prvky, zatímco množina $Z$ je odlišná, protože obsahuje navíc prvek $4$.

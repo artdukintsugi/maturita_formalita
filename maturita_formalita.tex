@@ -4,6 +4,7 @@
 \usepackage{tikz}
 \usetikzlibrary{decorations.pathmorphing}
 \usepackage{xcolor}
+\usepackage{halloweenmath}
 \usepackage{amsmath, amssymb}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
@@ -25,17 +26,32 @@
 \tcbuselibrary{skins, breakable, theorems}
 
 
+
 \fancyhf{} 
 \pagestyle{fancy}
 \fancyhead[RE]{\small{\nouppercase{\leftmark}}} 
-\fancyhead[LE]{\thepage} 
+\fancyhead[LE]{$\mathrightbat$\thepage$\mathleftbat$} 
 \fancyfoot[RE]{$\mathfrak{yony}$}
 \fancyfoot[LE]{\texttt{\today, \currenttime}}
 
-\fancyhead[RO]{\thepage} 
+\fancyhead[RO]{$\mathrightbat$\thepage$\mathleftbat$} 
 \fancyhead[LO]{\small{\nouppercase{\rightmark}}} 
 \fancyfoot[RO]{\texttt{\today, \currenttime}}
 \fancyfoot[LO]{$\mathfrak{yony}$}
+
+\fancypagestyle{plain}{% % <-- this is new
+  \fancyhf{} 
+  
+  \fancyfoot[RE]{$\mathfrak{yony}$}
+  \fancyfoot[LE]{\texttt{\today, \currenttime}}
+
+  \fancyfoot[C]{$\mathrightbat$\thepage$\mathleftbat$}
+
+  \fancyfoot[RO]{\texttt{\today, \currenttime}}
+  \fancyfoot[LO]{$\mathfrak{yony}$}
+  % \fancyfoot[]{\thepage} % same placement as with page style "fancy"
+  \renewcommand{\headrulewidth}{0pt}}
+
 
 % Define a command for typical math quotes
 \newcommand{\mathquote}[2]{%
@@ -92,7 +108,10 @@
       sharp corners,
       boxrule=0.5mm,
       frame style={ultra thick, double distance=1pt, decorate, decoration={random steps, segment length=3mm, amplitude=0.5mm}},
-      drop fuzzy shadow
+      drop fuzzy shadow,
+      overlay={
+        \node[anchor=north east, font=\small] at (frame.north east) {$\mathleftbat$};
+      }
     ]
   }{
     \end{tcolorbox}

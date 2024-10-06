@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.16)  3 JUL 2024 18:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.16)  1 OCT 2024 21:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -261,7 +261,9 @@ File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgfdecorationsegmentlength=\dimen256
 )
 \tikz@lib@dec@box=\box62
-) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex)) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex)) (/usr/local/texlive/2023/texmf-dist/tex/latex/halloweenmath/halloweenmath.sty
+Package: halloweenmath 2019/11/01 v0.11 (development)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
 \@mathmargin=\skip50
 
@@ -325,6 +327,27 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \mathdisplay@stack=\toks33
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/pict2e/pict2e.sty
+Package: pict2e 2020/09/30 v0.4b Improved picture commands (HjG,RN,JT)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/pict2e/pict2e.cfg
+File: pict2e.cfg 2016/02/05 v0.1u pict2e configuration for teTeX/TeXLive
+)
+Package pict2e Info: Driver file: pdftex.def on input line 112.
+Package pict2e Info: Driver file for pict2e: p2e-pdftex.def on input line 114.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/pict2e/p2e-pdftex.def
+File: p2e-pdftex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
+)
+\pIIe@GRAPH=\toks34
+\@arclen=\dimen266
+\@arcrad=\dimen267
+\pIIe@tempdima=\dimen268
+\pIIe@tempdimb=\dimen269
+\pIIe@tempdimc=\dimen270
+\pIIe@tempdimd=\dimen271
+\pIIe@tempdime=\dimen272
+\pIIe@tempdimf=\dimen273
+)
+\@HwM@arrowfill@skip=\skip53
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
@@ -371,7 +394,7 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count297
 )
-\@linkdim=\dimen266
+\@linkdim=\dimen274
 \Hy@linkcounter=\count298
 \Hy@pagecounter=\count299
  (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/pd1enc.def
@@ -402,15 +425,15 @@ Package hyperref Info: Bookmarks ON on input line 4425.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4763.
-\XeTeXLinkMargin=\dimen267
+\XeTeXLinkMargin=\dimen275
  (/usr/local/texlive/2023/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (/usr/local/texlive/2023/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count302
-\Field@Width=\dimen268
-\Fld@charsize=\dimen269
+\Field@Width=\dimen276
+\Fld@charsize=\dimen277
 Package hyperref Info: Hyper figures OFF on input line 6042.
 Package hyperref Info: Link nesting OFF on input line 6047.
 Package hyperref Info: Hyper index ON on input line 6050.
@@ -442,12 +465,12 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip53
+\Hy@SectionHShift=\skip54
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
-\labelindent=\skip54
-\enit@outerparindent=\dimen270
-\enit@toks=\toks34
+\labelindent=\skip55
+\enit@outerparindent=\dimen278
+\enit@toks=\toks35
 \enit@inbox=\box65
 \enit@count@id=\count308
 \enitdp@description=\count309
@@ -459,44 +482,44 @@ Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count310
 \calc@Bcount=\count311
-\calc@Adimen=\dimen271
-\calc@Bdimen=\dimen272
-\calc@Askip=\skip55
-\calc@Bskip=\skip56
+\calc@Adimen=\dimen279
+\calc@Bdimen=\dimen280
+\calc@Askip=\skip56
+\calc@Bskip=\skip57
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count312
-\calc@Cskip=\skip57
+\calc@Cskip=\skip58
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
-\ESO@tempdima=\dimen273
-\ESO@tempdimb=\dimen274
+\ESO@tempdima=\dimen281
+\ESO@tempdimb=\dimen282
 )
-\AM@pagewidth=\dimen275
-\AM@pageheight=\dimen276
-\AM@fboxrule=\dimen277
+\AM@pagewidth=\dimen283
+\AM@pageheight=\dimen284
+\AM@fboxrule=\dimen285
  (/usr/local/texlive/2023/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2022/12/19 v0.5x Pdfpages driver for pdfTeX (AM)
 )
 \pdfpages@includegraphics@status=\count313
 \AM@pagebox=\box66
-\AM@global@opts=\toks35
+\AM@global@opts=\toks36
 \AM@pagecnt=\count314
-\AM@toc@title=\toks36
-\AM@lof@heading=\toks37
+\AM@toc@title=\toks37
+\AM@lof@heading=\toks38
 \c@AM@survey=\count315
 \AM@templatesizebox=\box67
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
-\f@nch@headwidth=\skip58
-\f@nch@O@elh=\skip59
-\f@nch@O@erh=\skip60
-\f@nch@O@olh=\skip61
-\f@nch@O@orh=\skip62
-\f@nch@O@elf=\skip63
-\f@nch@O@erf=\skip64
-\f@nch@O@olf=\skip65
-\f@nch@O@orf=\skip66
+\f@nch@headwidth=\skip59
+\f@nch@O@elh=\skip60
+\f@nch@O@erh=\skip61
+\f@nch@O@olh=\skip62
+\f@nch@O@orh=\skip63
+\f@nch@O@elf=\skip64
+\f@nch@O@erf=\skip65
+\f@nch@O@olf=\skip66
+\f@nch@O@orf=\skip67
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/lipsum/lipsum.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2023-02-22 L3 programming layer (loader) 
  (/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -513,14 +536,14 @@ Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
  (/usr/local/texlive/2023/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex)) (/usr/local/texlive/2023/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \ttl@box=\box69
-\beforetitleunit=\skip67
-\aftertitleunit=\skip68
-\ttl@plus=\dimen278
-\ttl@minus=\dimen279
-\ttl@toksa=\toks38
-\titlewidth=\dimen280
-\titlewidthlast=\dimen281
-\titlewidthfirst=\dimen282
+\beforetitleunit=\skip68
+\aftertitleunit=\skip69
+\ttl@plus=\dimen286
+\ttl@minus=\dimen287
+\ttl@toksa=\toks39
+\titlewidth=\dimen288
+\titlewidthlast=\dimen289
+\titlewidthfirst=\dimen290
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
  (/usr/local/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
@@ -529,21 +552,21 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@cnth=\count320
 \Gm@cntv=\count321
 \c@Gm@tempcnt=\count322
-\Gm@bindingoffset=\dimen283
-\Gm@wd@mp=\dimen284
-\Gm@odd@mp=\dimen285
-\Gm@even@mp=\dimen286
-\Gm@layoutwidth=\dimen287
-\Gm@layoutheight=\dimen288
-\Gm@layouthoffset=\dimen289
-\Gm@layoutvoffset=\dimen290
-\Gm@dimlist=\toks39
+\Gm@bindingoffset=\dimen291
+\Gm@wd@mp=\dimen292
+\Gm@odd@mp=\dimen293
+\Gm@even@mp=\dimen294
+\Gm@layoutwidth=\dimen295
+\Gm@layoutheight=\dimen296
+\Gm@layouthoffset=\dimen297
+\Gm@layoutvoffset=\dimen298
+\Gm@dimlist=\toks40
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count323
-\float@exts=\toks40
+\float@exts=\toks41
 \float@box=\box70
-\@float@everytoks=\toks41
+\@float@everytoks=\toks42
 \@floatcapt=\box71
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2023/02/19 v1.6 Sub-captions (AR)
@@ -551,14 +574,14 @@ Package: subcaption 2023/02/19 v1.6 Sub-captions (AR)
 Package: caption 2023/03/12 v3.6j Customizing captions (AR)
  (/usr/local/texlive/2023/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2023/03/12 v2.4 caption3 kernel (AR)
-\caption@tempdima=\dimen291
-\captionmargin=\dimen292
-\caption@leftmargin=\dimen293
-\caption@rightmargin=\dimen294
-\caption@width=\dimen295
-\caption@indent=\dimen296
-\caption@parindent=\dimen297
-\caption@hangindent=\dimen298
+\caption@tempdima=\dimen299
+\captionmargin=\dimen300
+\caption@leftmargin=\dimen301
+\caption@rightmargin=\dimen302
+\caption@width=\dimen303
+\caption@indent=\dimen304
+\caption@parindent=\dimen305
+\caption@hangindent=\dimen306
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count324
@@ -571,11 +594,11 @@ Package caption Info: New subtype `subfigure' on input line 239.
 Package caption Info: New subtype `subtable' on input line 239.
 \c@subtable=\count327
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen299
-\WF@size=\dimen300
+\wrapoverhang=\dimen307
+\WF@size=\dimen308
 \c@WF@wrappedlines=\count328
 \WF@box=\box72
-\WF@everypar=\toks42
+\WF@everypar=\toks43
 Package: wrapfig 2003/01/31  v 3.6
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2022/12/04 v6.7b set line spacing
@@ -583,8 +606,8 @@ Package: setspace 2022/12/04 v6.7b set line spacing
 Package: tcolorbox 2023/02/12 version 6.0.1 text color boxes
  (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2022-07-02 v1.5u LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks43
-\verbatim@line=\toks44
+\every@verbatim=\toks44
+\verbatim@line=\toks45
 \verbatim@in@stream=\read4
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/environ/environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
@@ -607,7 +630,7 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \tcb@temp=\box80
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2023-03-04 v3.2.2 A comprehensive (SI) units package
-\l__siunitx_angle_tmp_dim=\dimen301
+\l__siunitx_angle_tmp_dim=\dimen309
 \l__siunitx_angle_marker_box=\box81
 \l__siunitx_angle_unit_box=\box82
 \l__siunitx_compound_count_int=\count333
@@ -624,26 +647,26 @@ Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages 
 \l__siunitx_number_group_size_int=\count341
 \l__siunitx_number_group_minimum_int=\count342
 \l__siunitx_table_tmp_box=\box83
-\l__siunitx_table_tmp_dim=\dimen302
-\l__siunitx_table_column_width_dim=\dimen303
+\l__siunitx_table_tmp_dim=\dimen310
+\l__siunitx_table_column_width_dim=\dimen311
 \l__siunitx_table_integer_box=\box84
 \l__siunitx_table_decimal_box=\box85
 \l__siunitx_table_uncert_box=\box86
 \l__siunitx_table_before_box=\box87
 \l__siunitx_table_after_box=\box88
-\l__siunitx_table_before_dim=\dimen304
-\l__siunitx_table_carry_dim=\dimen305
+\l__siunitx_table_before_dim=\dimen312
+\l__siunitx_table_carry_dim=\dimen313
 \l__siunitx_unit_tmp_int=\count343
 \l__siunitx_unit_position_int=\count344
 \l__siunitx_unit_total_int=\count345
  (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/array.sty
 Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen306
+\col@sep=\dimen314
 \ar@mcellbox=\box89
-\extrarowheight=\dimen307
-\NC@list=\toks45
-\extratabsurround=\skip69
-\backup@length=\skip70
+\extrarowheight=\dimen315
+\NC@list=\toks46
+\extratabsurround=\skip70
+\backup@length=\skip71
 \ar@cellbox=\box90
 )) (/usr/local/texlive/2023/texmf-dist/tex/latex/datetime/datetime.sty
 Package: datetime 2015/03/20 v2.60 Date Time Package
@@ -652,8 +675,8 @@ Package: fmtcount 2020/01/30 v3.07
  (/usr/local/texlive/2023/texmf-dist/tex/latex/xkeyval/xkeyval.sty
 Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
  (/usr/local/texlive/2023/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/local/texlive/2023/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks46
-\XKV@tempa@toks=\toks47
+\XKV@toks=\toks47
+\XKV@tempa@toks=\toks48
 )
 \XKV@depth=\count346
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
@@ -696,21 +719,21 @@ LaTeX Info: Redefining \today on input line 736.
 File: dt-czech.def 2013/09/10
 LaTeX Info: Redefining \dateczech on input line 86.
 )
-\dt@a=\toks48
-\dt@b=\toks49
+\dt@a=\toks49
+\dt@b=\toks50
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/indentfirst.sty
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks50
-\thm@bodyfont=\toks51
-\thm@headfont=\toks52
-\thm@notefont=\toks53
-\thm@headpunct=\toks54
-\thm@preskip=\skip71
-\thm@postskip=\skip72
-\thm@headsep=\skip73
-\dth@everypar=\toks55
+\thm@style=\toks51
+\thm@bodyfont=\toks52
+\thm@headfont=\toks53
+\thm@notefont=\toks54
+\thm@headpunct=\toks55
+\thm@preskip=\skip72
+\thm@postskip=\skip73
+\thm@headsep=\skip74
+\dth@everypar=\toks56
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
 Library (tcolorbox): 'tcbskins.code.tex' version '6.0.1'
 (/usr/local/texlive/2023/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
@@ -734,49 +757,49 @@ Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
 Library (tcolorbox): 'tcbtheorems.code.tex' version '6.0.1'
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 61.
+Package hyperref Info: Option `colorlinks' set `true' on input line 77.
 \c@counter=\count372
  (./maturita_formalita.aux)
 \openout1 = `maturita_formalita.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
  (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count373
-\scratchdimen=\dimen308
+\scratchdimen=\dimen316
 \scratchbox=\box95
 \nofMPsegments=\count374
 \nofMParguments=\count375
-\everyMPshowfont=\toks56
+\everyMPshowfont=\toks57
 \MPscratchCnt=\count376
-\MPscratchDim=\dimen309
+\MPscratchDim=\dimen317
 \MPnumerator=\count377
 \makeMPintoPDFobject=\count378
-\everyMPtoPDFconversion=\toks57
+\everyMPtoPDFconversion=\toks58
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 113.
+Package hyperref Info: Link coloring ON on input line 132.
  (./maturita_formalita.out) (./maturita_formalita.out)
 \@outlinefile=\write4
 \openout4 = `maturita_formalita.out'.
@@ -827,7 +850,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package translations Info: no dictionary file `translations-basic-dictionary-czech.trsl' found. on input line 113.
+Package translations Info: no dictionary file `translations-basic-dictionary-czech.trsl' found. on input line 132.
 [1
 
 
@@ -843,7 +866,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write5
 \openout5 = `maturita_formalita.toc'.
 
- [2
+LaTeX Font Info:    Trying to load font information for U+euf on input line 156.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/ueuf.fd
+File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
+) [2
 
 ] (./chapters/uvod.tex) [3
 
@@ -851,29 +877,28 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 Kapitola 1.
 (./chapters/dukazy.tex [4
 
-{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 111.
- (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/ueuf.fd
-File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [5] [6] [7]
+{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [5] [6] [7]
 Underfull \vbox (badness 2486) has occurred while \output is active []
 
  [8] [9] [10] [11]) [12]
 Kapitola 2.
-(./chapters/mnoziny.tex) [13
+(./chapters/mnoziny.tex [13
 
-] (./maturita_formalita.aux)
+]) [14] (./maturita_formalita.aux)
 Package rerunfilecheck Info: File `maturita_formalita.out' has not changed.
-(rerunfilecheck)             Checksum: 7B31F81A6CE510F80BDAEF597B454787;1086.
+(rerunfilecheck)             Checksum: 4E2DD4E1B2978CB9F2126BEF2ACF5DBD;1434.
  ) 
 Here is how much of TeX's memory you used:
- 34196 strings out of 476025
- 712496 string characters out of 5790016
- 1891388 words of memory out of 5000000
- 54036 multiletter control sequences out of 15000+600000
- 521840 words of font info for 69 fonts, out of 8000000 for 9000
+ 34660 strings out of 476025
+ 720882 string characters out of 5790016
+ 1892388 words of memory out of 5000000
+ 54471 multiletter control sequences out of 15000+600000
+ 523927 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,13n,89p,1085b,1504s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,17n,89p,1085b,1504s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist, replaced by a fixed one
+
 
 pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exist, replaced by a fixed one
 
@@ -899,10 +924,10 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist,
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
 
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on maturita_formalita.pdf (13 pages, 288775 bytes).
+Output written on maturita_formalita.pdf (14 pages, 317201 bytes).
 PDF statistics:
- 283 PDF objects out of 1000 (max. 8388607)
- 225 compressed objects within 3 object streams
- 63 named destinations out of 1000 (max. 500000)
- 69 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 311 PDF objects out of 1000 (max. 8388607)
+ 252 compressed objects within 3 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
