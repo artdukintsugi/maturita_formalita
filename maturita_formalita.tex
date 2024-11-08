@@ -92,7 +92,7 @@
 \newenvironment{solution}[1][]{
   \noindent \textbf{Řešení~\thecounter#1} \rmfamily}{\medskip}
 
-\newenvironment{note}[1][]{
+\newenvironment{note}[1][]{\refstepcounter{counter}\par\medskip
   \noindent \textbf{Poznámka~\thecounter#1} \rmfamily}{\medskip}
 
 \newenvironment{proofbox}[1][]{

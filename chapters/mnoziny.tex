@@ -1,6 +1,6 @@
 \mathquote{From the paradise that Cantor created for us no-one shall be able to expel us.}{David Hilbert}
 
-\section{Axiomatická teorie množin}
+\section{Odbočka --- Axiomatická teorie množin}
 Než se pustíme do pro nás více relevatních témat, pojďme se seznámit s rigorózní teorií množin na které je postavena celá matematika. Tato teorie byla vytvořena Georgem Cantorem na konci 19. století a je základem pro všechny matematické koncepty, které se týkají množin. Tato teorie je ale velice složitá a zmiňuji ji zde jen proto, abychom měli představu o tom, jak by mohla matematika vypadat, kdybychom se snažili být formální.
 
 Hlavní roli v této teorii hrají axiomy, což jsou základní pravidla, která musíme přijmout jako pravdivá, abychom mohli dále pracovat. Než se pustíme na samotné axiomy, vysvětleme si rychle následující znaky, které nám usnadní zápis. Množiny značíme velkými písmeny, například $X$, $Y$, $Z$, atd. Prvky množin značíme malými písmeny, například $x$, $y$, $z$, atd. Pokud prvek $x$ patří do množiny $X$, značíme to $x\in X$ a pokud nepatří, tak $x\notin X$. Systém množin je vlastně také množina, která obsahuje množiny a značíme ji $\mathcal{X}$, $\mathcal{Y}$, $\mathcal{Z}$, atd. Projděme si nyní axiomy množinové teorie a pak si ukážeme základní příklady a vysvetlení těchto axiomů. 
@@ -11,7 +11,7 @@ Hlavní roli v této teorii hrají axiomy, což jsou základní pravidla, která
     \item \textbf{Axiom of extension}: Dvě množiny jsou rovny právě tehdy, když obsahují stejné prvky.
     \item \textbf{Axiom of the empty set}: Existuje množina, která neobsahuje žádné prvky. Tato množina se nazývá prázdná množina a značí se $\emptyset$.
     \item \textbf{Axiom schema of separation}: Pro každou množinu $x$ a každou vlastnost $P$ existuje množina, která obsahuje všechny prvky množiny $x$ splňující vlastnost $P$.
-    \item \textbf{Axiom of pairing}: Pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. Tato množina se nazývá kartézský součin množin $X$ a $Y$ a značí se $X \times Y$.
+    \item \textbf{Axiom of pairing}: Pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. 
     \item \textbf{Axiom of union}: Pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Tato množina se nazývá sjednocení množin v systému $\mathcal{S}$ a značí se $\bigcup \mathcal{S}$. Pokud bychom chtěli sjednotit pouze množiny $X$ a $Y$, značili bychom to $X\cup Y$.
     \item \textbf{Axiom of power set}: Pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Tento systém se nazývá potenční množina množiny $X$ a značí se $\mathcal{P}(X)$. 
     \item \textbf{Axiom of infinity}: Existuje systém množin $\mathcal{S}$ takový, že $\emptyset\in\mathcal{S}$ a pro každou množinu $x\in\mathcal{S}$ platí $x\cup\{x\}\in\mathcal{S}$. 
@@ -29,3 +29,142 @@ K tomuto axiomu moc slov nepotřebujeme. Vezměme například tři množiny defi
   Z &= \{1, 2, 3, 4\}.
 \end{align*}
 Množiny $X$ a $Y$ jsou rovny, protože obsahují stejné prvky, zatímco množina $Z$ je odlišná, protože obsahuje navíc prvek $4$.
+\subsection{Axiom of the empty set}
+I tento axiom je poměrně jednoduchý. Prázdná množina je množina, která neobsahuje žádné prvky. Můžeme ji zapsat následovně: $\emptyset = \{\}$.
+\subsection{Axiom schema of separation}
+Tento axiom nám říká, že pro každou množinu $x$ a každou vlastnost $P$ existuje množina, která obsahuje všechny prvky množiny $x$ splňující vlastnost $P$. Například, pokud máme množinu $X = \{1, 2, 3, 4, 5\}$ a vlastnost $P$, že prvek $x$ je sudý, můžeme vytvořit množinu $Y = \{2, 4\}$.
+\subsection{Axiom of pairing}
+Tento axiom nám říká, že pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{3, 4\}$, můžeme vytvořit množinu $Z = \{\{1, 2\}, \{3, 4\}\}$. Tento axiom využijeme při důležité definici kartézského součinu množin.
+\subsection{Axiom of union}
+Tento axiom nám říká, že pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{2, 3\}$, můžeme vytvořit množinu $Z = X\cup Y \{1, 2, 3\}$.
+\subsection{Axiom of power set}
+Tento axiom nám říká, že pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Například, pokud máme množinu $X = \{1, 2\}$, můžeme vytvořit množinu $\mathcal{P}(X) = \{\emptyset, \{1\}, \{2\}, \{1, 2\}\}$. Této množině se říká potenční množina množiny $X$.
+\subsection{Axiom of infinity}
+Tento axiom nám říká, že existuje systém množin $\mathcal{S}$ takový, že $\emptyset\in\mathcal{S}$ a pro každou množinu $x\in\mathcal{S}$ platí $x\cup\{x\}\in\mathcal{S}$. Tento axiom nám zaručuje existenci nekonečných množin. Pomocí tohoto axiomu můžeme definovat například množinu přirozených čísel $\mathbb{N}$ a to následovně:
+\begin{align*}
+  0 &= \emptyset,\\
+  1 &= \{0\} = \{\emptyset\},\\
+  2 &= \{0, 1\} = \{\emptyset, \{\emptyset\}\},\\
+  3 &= \{0, 1, 2\} = \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\},\\
+  &\vdots
+\end{align*}
+\subsection{Axiom of choice}
+Tento axiom je nejkontroverznější z celé množinové teorie, protože pokud ho pokud ho nepřijmeme, spousta zajímavých matematických konceptů se nám zhroutí. Například bez tohoto axiomu nefungují limity, protože potřebujeme vybrat prvek z nekonečné množiny posloupností a tento axiom nám zaručuje, že tam nějaký takový prvek je. K tomuto axiomu se ještě vrátíme, až se budeme zabývat konkrétními matematickými koncepty. Znamým paradoxem spojeným s tímto axiomem je Banach-Tarski paradox, který říká, že můžeme rozložit kouli na konečně mnoho koulí, které mají stejný objem jako původní koule. 
+\subsection{Axiom schema of replacement}
+Tento axiom nám říká, že pro každou množinu $X$ a každou funkci $f$ existuje množina, která obsahuje všechny prvky $f(x)$ pro každý prvek $x\in X$. Například, pokud máme množinu $X = \{1, 2, 3\}$ a funkci $f(x) = x^2$\footnote{Zde předpokládáme, že víte, co dělá základní operace na druhou.}, můžeme vytvořit množinu $Y = \{1, 4, 9\}$.
+
+\section{Množiny}
+Nebudeme se zde zabývat, co přímo množina je, protože bychom se pohybovali na hranici mezi matematikou a filozofií. Množinou tedy rozumíme určitou kolekci prvků, které mohou být cokoliv. Pokud jste nečetli předchozí odbočku, zopakujme si nyní základní definice a pojmy spojené s množinami.
+\begin{definitionbox}
+  \textbf{Značení}: Množiny značíme velkými písmeny, například $X$, $Y$, $Z$. Prvky množin značíme malými písmeny, například $x$, $y$, $z$.\\
+  \textbf{Prvek množiny}: Prvek $x$ je prvkem množiny $X$, pokud $x\in X$. Opak platí, pokud $x\notin X$.\\
+  \textbf{Prázdná množina}: Množina, která neobsahuje žádné prvky. Značíme ji $\emptyset$. \\
+  \textbf{Podmnožina}: Množina $Y$ je podmnožinou množiny $X$, pokud každý prvek množiny $Y$ je také prvkem množiny $X$. Značíme to $Y\subseteq X$. \\
+  \textbf{Rovnost množin}: Množiny $X$ a $Y$ jsou rovny, pokud obsahují stejné prvky. Značíme to $X = Y$. \\
+  \textbf{Sjednocení množin}: Sjednocení množin $X$ a $Y$ je množina, která obsahuje všechny prvky množin $X$ a $Y$. Značíme to $X\cup Y$. \\
+  \textbf{Průnik množin}: Průnik množin $X$ a $Y$ je množina, která obsahuje pouze ty prvky, které jsou zároveň v množinách $X$ a $Y$. Značíme to $X\cap Y$. \\
+  \textbf{Rozdíl množin}: Rozdíl množin $X$ a $Y$ je množina, která obsahuje pouze ty prvky, které jsou v množině $X$ a nejsou v množině $Y$. Značíme to $X\setminus Y$. \\
+  \textbf{Potenční množina}: Potenční množina množiny $X$ je množina všech podmnožin množiny $X$. Značíme to $\mathcal{P}(X)$. \\
+\end{definitionbox}
+
+% TODO obrazky?!
+
+\begin{example}
+  Mějme množiny $X = \{1, 2, 3\}$ a $Y = \{2, 3, 4\}$. Potom platí:
+  \begin{align*}
+    X\cup Y &= \{1, 2, 3, 4\},\\
+    X\cap Y &= \{2, 3\},\\
+    X\setminus Y &= \{1\},\\
+    Y\setminus X &= \{4\}. \\
+    \mathcal{P}(X) &= \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1, 3\}, \{2, 3\}, \{1, 2, 3\}\}.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Mějme množiny $X = \{1, 2, 3, 4\}$ a $Y = \{3, 4, 5\}$. Zjistěte $X\cup Y$, $X\cap Y$, $X\setminus Y$, $Y\setminus X$ a $\mathcal{P}(Y)$.
+\end{problem}
+
+\begin{solution}
+  Máme:
+  \begin{align*}
+    X\cup Y &= \{1, 2, 3, 4, 5\},\\
+    X\cap Y &= \{3, 4\},\\
+    X\setminus Y &= \{1, 2\},\\
+    Y\setminus X &= \{5\},\\
+    \mathcal{P}(Y) &= \{\emptyset, \{3\}, \{4\}, \{5\}, \{3, 4\}, \{3, 5\}, \{4, 5\}, \{3, 4, 5\}\}.
+  \end{align*}
+\end{solution}
+
+% TODO jeste sem pls zajeb nejake priklady setu
+
+\section{Relace}
+Když už nyní víme, co jsou množiny, je na čase se zabývat vztahy mezi nimi. Takovým vztahům se říká relace a jsou základem pro všechny další matematické koncepty. Relace můžeme chápat jako způsob, jakým jsou prvky množin propojeny. Nejprve si zopakujme základní definice a pojmy spojené s relacemi. Než si řekneme, co je to relace, musíme nejdříve definovat kartézský součin množin.
+
+\begin{definitionbox}
+  \textbf{Kartézský součin množin}: Kartézský součin množin $X$ a $Y$ je množina všech uspořádaných dvojic $(x, y)$, kde $x\in X$ a $y\in Y$. Značíme to $X\times Y$. 
+\end{definitionbox}
+
+\begin{example}
+  Mějme množiny $X = \{1, 2\}$ a $Y = \{3, 4\}$. Potom platí:
+  \begin{align*}
+    X\times Y &= \{(1, 3), (1, 4), (2, 3), (2, 4)\}.
+  \end{align*}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Relace}: Relace $\mathcal R$ mezi množinami $X$ a $Y$ je podmnožina kartézského součinu $X\times Y$. Pokud máme relaci $\mathcal R$ mezi množinami $X$ a $Y$, značíme to $\mathcal R\subseteq X\times Y$. Prvek $(x, y)\in R$ značíme $x\mathcal Ry$ a říkáme, že prvek $x$ je v relaci $R$ s prvkem $y$. Je to ve zkratce jakási omezující vlastnost na kartézský součin množin. 
+\end{definitionbox}
+
+\begin{example}
+  Mějme množiny $X = \{1, 2\}$ a $Y = \{3, 4\}$ a relaci $\mathcal R = \{(1, 3), (2, 4)\}$. Potom platí:
+  \begin{align*}
+    1\mathcal R3,\\
+    2\mathcal R4.
+  \end{align*}
+V tomto případě máme relaci zadanou explicitně a slouží jen na ukázání poněkud zvláštního zápisu\footnote{Tento zápis, jak brzy uvidíte, moc používat nebudeme.}.
+\end{example}
+
+\begin{example}
+  Nyní si pojďme ukázat příklad, kde je relace zadaná jako nějaká vlastnost, kterou prvky množin splňují. Mějme množiny $X = \{1, 2, 3\}$ a $Y = \{3, 4, 5\}$ a relaci $\mathcal R = \{(x, y)\in X\times Y\ |\ x < y\}$. Což v překladu znamená, že prvek $x$ je v relaci s prvkem $y$, pokud $x$ je menší než $y$. Potom platí:
+  \begin{align*}
+    1\mathcal R3,\\
+    1\mathcal R4,\\
+    1\mathcal R5,\\
+    2\mathcal R3,\\
+    2\mathcal R4,\\
+    2\mathcal R5.
+  \end{align*}
+
+\end{example}
+
+\begin{problem}
+  Mějme množiny $X = \{1, 2, 3\}$ a $Y = \{3, 4, 5\}$ a relaci $\mathcal R = \{(x, y)\in X\times Y\ |\ x + y = 5\}$. Zjistěte, které dvojice prvků množin $X$ a $Y$ splňují vlastnost $x + y = 5$.
+\end{problem}
+
+\begin{solution}
+  Máme:
+  \begin{align*}
+    1\mathcal R4,\\
+    2\mathcal R3.
+  \end{align*}
+\end{solution}
+
+\begin{note}
+  Jak již bylo zmíněno v definice kartézského součinu, prvek $(x, y)$ je uspořádaná dvojice, což znamená, že pořadí prvků má význam. To znamená, že ve většině případů $(x, y)\neq(y, x)$. 
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti relací}. \\
+    Nechť $\mathcal R$ je relace na množině $X$. Potom můžeme definovat následující vlastnosti relací: \\
+
+    \textbf{Reflexivita}: Relace $\mathcal R$ je reflexivní, pokud pro každý prvek $x\in X$ platí $x\mathcal Rx$. \\
+    \textbf{Symetrie}: Relace $\mathcal R$ je symetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$, tak $y\mathcal Rx$. \\
+    \textbf{Antisymetrie}: Relace $\mathcal R$ je antisymetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rx$, tak $x = y$. \\
+    \textbf{Tranzitivita}: Relace $\mathcal R$ je tranzitivní, pokud pro každý prvek $x, y, z\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rz$, tak $x\mathcal Rz$. \\ 
+
+  Pokud je relace reflexivní, symetrická a tranzitivní, říkáme, že je relace ekvivalence.
+\end{definitionbox}
+
+Vlastnosti relací se nejlépe ukazující na číselných množinách a proto si nejprve pojďme říct něco o nich.
+
+\section{Čísla}

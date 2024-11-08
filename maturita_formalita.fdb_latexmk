@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1727809877 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1727809879 0
-  "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" 1727808905 4413 d492ed368e32735ba4e4743875b10cb3 ""
+["pdflatex"] 1731079059 "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" "maturita_formalita.pdf" "maturita_formalita" 1731079062 0
+  "/Users/yonysek/Documents/dofe_math/maturita_formalita.tex" 1731078084 4449 f2708aea563db48a92657fe6352ba185 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -237,12 +237,12 @@
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1697436527 7883456 5d50d8ad48162c5021a184188465e5eb ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "chapters/dukazy.tex" 1727808614 28746 62e3c79b6bcc9c08d442e5fe5312e7d5 ""
-  "chapters/mnoziny.tex" 1727809877 4092 1529a65e8ac11020791192717718a1ad ""
+  "chapters/mnoziny.tex" 1731079059 13685 5d5cb6b055f727997def0a9bcc89fcf5 ""
   "chapters/uvod.tex" 1720024713 2030 bbeda52105afadd907670db013387ba2 ""
-  "maturita_formalita.aux" 1727809879 3582 f9ec060e5848446ceae5d805f95fa58b "pdflatex"
-  "maturita_formalita.out" 1727809879 1434 4e2dd4e1b2978cb9f2126bef2acf5dbd "pdflatex"
-  "maturita_formalita.tex" 1727808905 4413 d492ed368e32735ba4e4743875b10cb3 ""
-  "maturita_formalita.toc" 1727809879 750 2bcf22e011ca0e457ba49d42bc4f718f "pdflatex"
+  "maturita_formalita.aux" 1731079062 5325 ead343fbef3970cecc04c6edbef2c52d "pdflatex"
+  "maturita_formalita.out" 1731079062 3094 aa7394d9b1d5bb4186565e8162f8a9a8 "pdflatex"
+  "maturita_formalita.tex" 1731078084 4449 f2708aea563db48a92657fe6352ba185 ""
+  "maturita_formalita.toc" 1731079062 1690 22a009dfad991c39d786873da341667b "pdflatex"
   (generated)
   "maturita_formalita.aux"
   "maturita_formalita.log"
