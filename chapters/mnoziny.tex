@@ -39,7 +39,7 @@ Tento axiom nám říká, že pro každé dvě množiny $X$ a $Y$ existuje množ
 Tento axiom nám říká, že pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{2, 3\}$, můžeme vytvořit množinu $Z = X\cup Y \{1, 2, 3\}$.
 \subsection{Axiom of power set}
 Tento axiom nám říká, že pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Například, pokud máme množinu $X = \{1, 2\}$, můžeme vytvořit množinu $\mathcal{P}(X) = \{\emptyset, \{1\}, \{2\}, \{1, 2\}\}$. Této množině se říká potenční množina množiny $X$.
-\subsection{Axiom of infinity}
+\subsection{Axiom of infinity} \label{axiom_of_infinity}
 Tento axiom nám říká, že existuje systém množin $\mathcal{S}$ takový, že $\emptyset\in\mathcal{S}$ a pro každou množinu $x\in\mathcal{S}$ platí $x\cup\{x\}\in\mathcal{S}$. Tento axiom nám zaručuje existenci nekonečných množin. Pomocí tohoto axiomu můžeme definovat například množinu přirozených čísel $\mathbb{N}$ a to následovně:
 \begin{align*}
   0 &= \emptyset,\\
@@ -98,7 +98,7 @@ Nebudeme se zde zabývat, co přímo množina je, protože bychom se pohybovali 
 % TODO jeste sem pls zajeb nejake priklady setu
 
 \section{Relace}
-Když už nyní víme, co jsou množiny, je na čase se zabývat vztahy mezi nimi. Takovým vztahům se říká relace a jsou základem pro všechny další matematické koncepty. Relace můžeme chápat jako způsob, jakým jsou prvky množin propojeny. Nejprve si zopakujme základní definice a pojmy spojené s relacemi. Než si řekneme, co je to relace, musíme nejdříve definovat kartézský součin množin.
+Když už nyní víme, co jsou množiny, je na čase se zabývat vztahy mezi nimi. Takovým vztahům se říká relace a jsou základem pro spoustu dalších matematických koncept. Relace můžeme chápat jako způsob, jakým jsou prvky množin propojeny. Nejprve si zopakujme základní definice a pojmy spojené s relacemi. Než si řekneme, co je to relace, musíme nejdříve definovat kartézský součin množin.
 
 \begin{definitionbox}
   \textbf{Kartézský součin množin}: Kartézský součin množin $X$ a $Y$ je množina všech uspořádaných dvojic $(x, y)$, kde $x\in X$ a $y\in Y$. Značíme to $X\times Y$. 
@@ -155,16 +155,56 @@ V tomto případě máme relaci zadanou explicitně a slouží jen na ukázání
 
 \begin{definitionbox}
   \textbf{Vlastnosti relací}. \\
-    Nechť $\mathcal R$ je relace na množině $X$. Potom můžeme definovat následující vlastnosti relací: \\
+    Nechť $\mathcal R$ je relace na množině $X$. Potom můžeme definovat následující vlastnosti relací: \vspace{5mm}
 
-    \textbf{Reflexivita}: Relace $\mathcal R$ je reflexivní, pokud pro každý prvek $x\in X$ platí $x\mathcal Rx$. \\
-    \textbf{Symetrie}: Relace $\mathcal R$ je symetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$, tak $y\mathcal Rx$. \\
-    \textbf{Antisymetrie}: Relace $\mathcal R$ je antisymetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rx$, tak $x = y$. \\
-    \textbf{Tranzitivita}: Relace $\mathcal R$ je tranzitivní, pokud pro každý prvek $x, y, z\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rz$, tak $x\mathcal Rz$. \\ 
+    \textbf{Reflexivita}: Relace $\mathcal R$ je reflexivní, pokud pro každý prvek $x\in X$ platí $x\mathcal Rx$.\ \vspace{1mm}
 
-  Pokud je relace reflexivní, symetrická a tranzitivní, říkáme, že je relace ekvivalence.
+    \textbf{Symetrie}: Relace $\mathcal R$ je symetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$, tak $y\mathcal Rx$.\ \vspace{1mm}
+
+    \textbf{Antisymetrie}: Relace $\mathcal R$ je antisymetrická, pokud pro každý prvek $x, y\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rx$, tak $x = y$.\ \vspace{1mm}
+
+    \textbf{Tranzitivita}: Relace $\mathcal R$ je tranzitivní, pokud pro každý prvek $x, y, z\in X$ platí, že pokud $x\mathcal Ry$ a $y\mathcal Rz$, tak $x\mathcal Rz$.\ \vspace{1mm}
+
+  Pokud je relace reflexivní, symetrická a tranzitivní, říkáme, že je \textbf{relace ekvivalence}.
 \end{definitionbox}
 
 Vlastnosti relací se nejlépe ukazující na číselných množinách a proto si nejprve pojďme říct něco o nich.
 
 \section{Čísla}
+O číslech jste pravděpodobně již slyšeli, ale stejně je nutné si představit základní číselné množiny, se kterými budeme pracovat. 
+
+\subsection{Přirozená čísla}
+Přirozená čísla, jak jejich název napovídá, jsou čísla, která se nejčastěji vyskutují v našem životě. Je to také první množina, která se považovala za číselnou množinu po překvapivě dlouhou dobu.\footnote{Nula byla často rozporuplná a někteří matematikové ji neuznávali jako číslo a jejich argument byl, že není potřeba číslo, které značí nic.} 
+\begin{definitionbox}
+  \textbf{Přirozená čísla} jsou množina čísel, která začínají od jedničky a pokračují dál. Značíme je $\mathbb{N} = \{1, 2, 3, \ldots\}$. Pokud si vzpomínáte na odbočku o axiomech, tak konkrétně v~\ref{axiom_of_infinity} jsme si ukázali, jak můžeme přirozená čísla definovat pomocí množinové teorie.
+
+  V případě, že chceme zahrnout nulu, mluvíme o \textbf{přirozených číslech včetně nuly} a značíme je $\mathbb{N}_0 = \{0, 1, 2, 3, \ldots\}$.
+\end{definitionbox}
+
+\begin{note}
+  Sice jsme se o operacích na přirozených číslech ještě nezmínili, ale věřím, že většina z vás ví, co znamená sčítání, odčítání, násobení a dělení. Proto je nutné si uvědomit, že přirozená čísla jsou uzavřená na sčítání a násobení, ale ne na odčítání a dělení. To znamená, že pokud sečteme nebo vynásobíme dvě přirozená čísla, výsledek bude také přirozené číslo, ale pokud je odečteme nebo vydělíme, výsledek nemusí být přirozené číslo ($3-5 = -2 \not\in\mathbb{N}$ nebo $3/2 = 1.5 \not\in\mathbb{N}$).
+\end{note}
+
+\subsection{Celá čísla}
+\begin{definitionbox}
+  \textbf{Celá čísla} jsou množina čísel, která zahrnují přirozená čísla, ale také záporná čísla a nulu. Značíme je $\mathbb{Z} = \{\ldots, -3, -2, -1, 0, 1, 2, 3, \ldots\}$.
+\end{definitionbox}
+
+\begin{note}
+  Celá čísla jsou stejně jako přirozená čísla uzavřená na sčítání a násobení a navíc na odčítání. Na dělení si budeme ještě chvíli muset počkat.
+\end{note}
+
+\begin{note}
+  Další důležitá vlastnost spojena s uzavřeností na sčítání a odčítání je, že každé celé číslo má svůj opačný prvek. To znamená, že pro každé celé číslo $x$ existuje celé číslo $-x$ takové, že $x + (-x) = 0$. K tomuto faktu se ještě vrátíme, až si představíme další (a hezčí\footnote{Toto není matematický výraz, ale brzy uvidíme, co je tím myšleno.}) číselné množiny.
+\end{note}
+
+\subsection{Racionální čísla}
+\begin{definitionbox}
+  \textbf{Racionální čísla} jsou množina čísel, která zahrnují celá čísla, ale také zlomky. Značíme je $\mathbb{Q} = \left\{\frac{a}{b}\ |\ a, b\in\mathbb{Z}, b\neq 0\right\}$.\ \vspace{2mm}
+
+  Tato definice je trochu složitější, ale znamená to, že racionální čísla jsou všechna čísla, která můžeme zapsat jako zlomek, kde čitatel i jmenovatel jsou celá čísla a jmenovatel není nula. 
+\end{definitionbox}
+
+\begin{note}
+  Racionální čísla jsou uzavřená na sčítání, odčítání, násobení a dělení, pokud dělitel není nula. To znamená, že pokud sečteme, odečteme, vynásobíme nebo vydělíme dvě racionální čísla, výsledek bude také racionální číslo. Tento fakt je důležitý, protože nám říká, že racionální čísla tvoří těleso\footnote{Těleso je matematický pojem, který znamená, že množina je uzavřená na sčítání, odčítání, násobení a dělení.}.
+\end{note}
