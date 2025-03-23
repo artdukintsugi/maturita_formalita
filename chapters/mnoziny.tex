@@ -170,6 +170,33 @@ V tomto případě máme relaci zadanou explicitně a slouží jen na ukázání
 
 Vlastnosti relací se nejlépe ukazující na číselných množinách a proto si nejprve pojďme říct něco o nich.
 
+\section{Odbočka --- Tělesa}
+Těleso je ve zkratce množina prvků, který splňuje  `hezké' vlastnosti. Jdou mezi sebou `hezky' sčítat a násobit. Pojďme si nyní zadefinovat co přesně těleso je.
+
+\begin{definitionbox}
+  \textbf{Těleso} je zadáno množinou $\mathbb{F}$ a obsahuje dvě funkce, které jdou abstraktně zadefinovat, ale pro nás bude stačit, že to je sčítaní a násobení. Těleso musí splňovat následující axiomy:
+
+  \begin{enumerate}
+    \item Axiomy pro sčítání skalárů (Skaláry jsou prvky tělesa. Například v případě $\mathbb{R}$ jsou skaláry reálná čísla. To že jsou reálná čísla těleso si řekneme později.):
+    \begin{enumerate}
+      \item Existence nulového prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $0\in\mathbb{F}$ takový, že $x + 0 = x$. Tento prvek se nazývá nulový prvek.
+      \item Komutativita sčítání: Pro každé dva prvky $x, y\in\mathbb{F}$ platí, že $x + y = y + x$.
+      \item Asociativita sčítání: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $(x + y) + z = x + (y + z)$.
+      \item Existence opačného prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $-x\in\mathbb{F}$ takový, že $x + (-x) = 0$.
+    \end{enumerate}
+    \item Axiomy pro násobení skalárů:
+    \begin{enumerate}
+      \item Existence jednotkového prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $1\in\mathbb{F}$ takový, že $x\cdot 1 = x$. Tento prvek se nazývá jednotkový prvek.
+      \item Komutativita násobení: Pro každé dva prvky $x, y\in\mathbb{F}$ platí, že $x\cdot y = y\cdot x$.
+      \item Asociativita násobení: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $(x\cdot y)\cdot z = x\cdot (y\cdot z)$.
+    \end{enumerate}
+    \item Distributivní zákon: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $x\cdot (y + z) = x\cdot y + x\cdot z$.
+    \item Test invertibility: Pro každý nenulový prvek $x\in\mathbb{F}$ existuje prvek $x^{-1}\in\mathbb{F}$ takový, že $x\cdot x^{-1} = 1$. Tento prvek se nazývá inverzní prvek.
+  \end{enumerate}
+  
+
+\end{definitionbox}
+
 \section{Čísla}
 O číslech jste pravděpodobně již slyšeli, ale stejně je nutné si představit základní číselné množiny, se kterými budeme pracovat. 
 
@@ -181,22 +208,38 @@ Přirozená čísla, jak jejich název napovídá, jsou čísla, která se nejč
   V případě, že chceme zahrnout nulu, mluvíme o \textbf{přirozených číslech včetně nuly} a značíme je $\mathbb{N}_0 = \{0, 1, 2, 3, \ldots\}$.
 \end{definitionbox}
 
-\begin{note}
-  Sice jsme se o operacích na přirozených číslech ještě nezmínili, ale věřím, že většina z vás ví, co znamená sčítání, odčítání, násobení a dělení. Proto je nutné si uvědomit, že přirozená čísla jsou uzavřená na sčítání a násobení, ale ne na odčítání a dělení. To znamená, že pokud sečteme nebo vynásobíme dvě přirozená čísla, výsledek bude také přirozené číslo, ale pokud je odečteme nebo vydělíme, výsledek nemusí být přirozené číslo ($3-5 = -2 \not\in\mathbb{N}$ nebo $3/2 = 1.5 \not\in\mathbb{N}$).
-\end{note}
+\begin{problem}
+  Jsou přirozená čísla těleso?
+\end{problem}
+
+\begin{hint}
+  Zkuste si projít axiomy tělesa a zjistit, zda přirozená čísla splňují všechny axiomy.
+\end{hint}
+
+\begin{solution}
+  Nejsou.
+
+  \begin{proof}
+    Přirozená čísla nesplňují axiomy tělesa, protože například neexistuje inverzní prvek pro sčítání. Pokud vezmeme libovolné přirozené číslo $n$, tak jeho inverzní prvek by měl být $-n$, ale toto číslo není přirozené.
+  \end{proof}
+\end{solution}
 
 \subsection{Celá čísla}
 \begin{definitionbox}
   \textbf{Celá čísla} jsou množina čísel, která zahrnují přirozená čísla, ale také záporná čísla a nulu. Značíme je $\mathbb{Z} = \{\ldots, -3, -2, -1, 0, 1, 2, 3, \ldots\}$.
 \end{definitionbox}
 
-\begin{note}
-  Celá čísla jsou stejně jako přirozená čísla uzavřená na sčítání a násobení a navíc na odčítání. Na dělení si budeme ještě chvíli muset počkat.
-\end{note}
+\begin{problem}
+  Jsou přirozená čísla těleso?
+\end{problem}
 
-\begin{note}
-  Další důležitá vlastnost spojena s uzavřeností na sčítání a odčítání je, že každé celé číslo má svůj opačný prvek. To znamená, že pro každé celé číslo $x$ existuje celé číslo $-x$ takové, že $x + (-x) = 0$. K tomuto faktu se ještě vrátíme, až si představíme další (a hezčí\footnote{Toto není matematický výraz, ale brzy uvidíme, co je tím myšleno.}) číselné množiny.
-\end{note}
+\begin{solution}
+  Nejsou.
+
+  \begin{proof}
+    Celá čísla nesplňují axiomy tělesa, protože například neexistuje inverzní prvek pro násobení. Pokud vezmeme libovolné celé číslo $n$, tak jeho inverzní prvek by měl být $\frac{1}{n}$, ale toto číslo není celé.
+  \end{proof}
+\end{solution}
 
 \subsection{Racionální čísla}
 \begin{definitionbox}
@@ -205,6 +248,58 @@ Přirozená čísla, jak jejich název napovídá, jsou čísla, která se nejč
   Tato definice je trochu složitější, ale znamená to, že racionální čísla jsou všechna čísla, která můžeme zapsat jako zlomek, kde čitatel i jmenovatel jsou celá čísla a jmenovatel není nula. 
 \end{definitionbox}
 
+\begin{problem}
+  Jsou racionální čísla těleso?
+\end{problem}
+
+\begin{solution}
+  Ano.
+
+  \begin{proof}
+    Racionální čísla splňují axiomy tělesa, protože jsou uzavřená na sčítání, násobení, existuje nulový prvek, existuje opačný prvek, existuje jednotkový prvek, jsou komutativní a asociativní. Pokud tomu nevěříte, zkuste si projít axiomy tělesa a zjistit, zdali racionální čísla splňují všechny axiomy.
+  \end{proof}
+\end{solution}
+
+\subsection{Reálná čísla}
+\begin{definitionbox}
+  \textbf{Reálná čísla} jsou množina čísel, která zahrnují racionální čísla, ale také iracionální čísla. Značíme je $\mathbb{R}$. Přesnou definici zde nebudeme uvádět, protože je složitější.
+\end{definitionbox}
+
+Proč ale existují reálná čísla? Proč nestačí racionální čísla? Odpověď je jednoduchá, ale zároveň složitá. Ukažme si příklad, který nám ukáže číslo, které není racionální.
+
+\begin{example}
+  Mějme číslo čtverec o stranách délky $1$. Jaká je délka úhlopříčky čtverce? Pokud si vzpomenete na Pythagorovu větu\footnote{K této větě se ještě dostaneme, takže pokud nevíte o co jde, tak stačí, když mi budete věřit.}, tak délka úhlopříčky je $\sqrt{1^2 + 1^2} = \sqrt{2}$. Nyní si pojďme ukázat, že číslo $\sqrt{2}$ není racionální.
+
+  \begin{proof}
+    Sporem. Předpokládejme, že číslo $\sqrt{2}$ je racionální. To znamená, že existují nesoudělná\footnote{Nemají žádného společného dělitele.} celá čísla $a$ a $b$ taková, že $\sqrt{2} = \frac{a}{b}$. Potom můžeme napsat:
+    \begin{align*}
+      \sqrt{2} &= \frac{a}{b},\\
+      2 &= \frac{a^2}{b^2},\\
+      2b^2 &= a^2.
+    \end{align*}
+    To znamená, že $a^2$ je sudé číslo, což znamená, že $a$ je také sudé číslo. Toto tvrzení víme z příkladu \ref{ex:1.4.5}. Takže existuje celé číslo $c$ takové, že $a = 2c$. Dosadíme zpět do rovnice:
+    \begin{align*}
+      2b^2 &= {(2c)}^2,\\ 
+      2b^2 &= 4c^2,\\
+      b^2 &= 2c^2.
+    \end{align*}
+    To znamená, že $b^2$ je sudé číslo, což znamená, že $b$ je také sudé číslo. To ale znamená, že čísla $a$ a $b$ mají společného dělitele a došli jsme ke sporu. Tedy jsme dokázali, že číslo $\sqrt{2}$ není racionální.
+  \end{proof}
+\end{example}
+
+Když tedy $\sqrt{2}$ není racionální číslo, co tedy je? Těmto číslům se říká iracionální čísla a je to podmnožina čísel reálných. Velice známým iracionálním číslem je $\pi$ nebo $e$.
+
+\begin{problem}
+  Ukažte, že realná čísla jsou těleso.
+\end{problem}
+
 \begin{note}
-  Racionální čísla jsou uzavřená na sčítání, odčítání, násobení a dělení, pokud dělitel není nula. To znamená, že pokud sečteme, odečteme, vynásobíme nebo vydělíme dvě racionální čísla, výsledek bude také racionální číslo. Tento fakt je důležitý, protože nám říká, že racionální čísla tvoří těleso\footnote{Těleso je matematický pojem, který znamená, že množina je uzavřená na sčítání, odčítání, násobení a dělení.}.
+  Reálná čísla jsou takzvaně nespočetná množina. To zjednodušeně znamená, že jich je více než přirozených čísel. Těch je ale také nekonečně mnoho. Ve zkratce, počet prvků množiny reálných čísel je větší nekonečno než počet prvků množiny přirozených čísel. Více se tím zde zabývat nebudeme.
 \end{note}
+
+\subsection{Komplexní čísla}
+\begin{definitionbox}
+  \textbf{Komplexní čísla} jsou množina čísel, která zahrnují reálná čísla, ale také imaginární čísla. Značíme je $\mathbb{C} = \{a + bi\ |\ a, b\in\mathbb{R}\}$, kde $i$ je imaginární jednotka, která splňuje $i^2 = -1$.
+\end{definitionbox}
+
+Proč potřebujeme další číselnou množinu? Odpověď je jednoduchá, ale zároveň složitá. Komplexní čísla nám umožňují řešit rovnice, které nemají řešení v reálných číslech. Například rovnice $x^2 + 1 = 0$ nemá řešení v reálných číslech, protože $\sqrt{-1}$ není definované, ale má řešení v komplexních číslech.
