@@ -1,0 +1,275 @@
+\label{kap:integraly}
+\mathquote{Give me a place to stand, and I shall move the earth.}{Archimédés}
+
+Integrál je opak derivace, a zároveň je to obsah plochy pod grafem. To, že tyto dvě věci, které spolu na první pohled vůbec nesouvisí, jsou ve skutečnosti totéž, je obsahem \textbf{základní věty integrálního počtu} a je to jeden z nejkrásnějších objevů v dějinách matematiky. Díky integrálům spočítáme obsahy, objemy, dráhy, práci a pravděpodobnosti. Tahle kapitola je posledním dílkem skládačky. Konečně dokážeme vzorce pro objem koule a kužele, které jsme v kapitole~\ref{kap:stereometrie} museli jen přijmout.
+
+\section{Primitivní funkce a neurčitý integrál}
+
+\begin{definitionbox}
+  Funkce $F$ je \textbf{primitivní funkcí} k funkci $f$ na intervalu $I$, pokud pro všechna $x\in I$ platí
+  \begin{equation*}
+    F'(x) = f(x).
+  \end{equation*}
+  Pokud je $F$ primitivní funkce k $f$, je primitivní funkcí i $F + C$ pro každou konstantu $C$, protože derivace konstanty je nula. A jiné primitivní funkce (na intervalu) neexistují. Množinu všech primitivních funkcí nazýváme \textbf{neurčitý integrál} a značíme
+  \begin{equation*}
+    \int f(x)\,\mathrm{d}x = F(x) + C.
+  \end{equation*}
+  Funkci $f$ nazýváme \textbf{integrand}, $C$ \textbf{integrační konstanta}.
+\end{definitionbox}
+
+Integrování je tedy derivování pozpátku: hledáme funkci, jejíž derivace je to, co máme. Každý integrál si můžeme snadno ověřit tím, že výsledek zderivujeme. A pozor na konstantu $C$! Zapomenout ji je u ústní maturity spolehlivý způsob, jak zkoušejícího přimět ke smutnému výrazu.
+
+\begin{definitionbox}
+  \textbf{Základní integrály} (dostaneme je obrácením tabulky derivací z kapitoly~\ref{kap:derivace}):
+  \begin{center}
+    \renewcommand{\arraystretch}{1.8}
+    \begin{tabular}{|c|c||c|c|}
+      \hline
+      $f(x)$ & $\int f(x)\,\mathrm{d}x$ & $f(x)$ & $\int f(x)\,\mathrm{d}x$ \\
+      \hline
+      $x^n\ (n\neq -1)$ & $\dfrac{x^{n+1}}{n + 1} + C$ & $\sin x$ & $-\cos x + C$ \\
+      $\dfrac{1}{x}$ & $\ln|x| + C$ & $\cos x$ & $\sin x + C$ \\
+      $e^x$ & $e^x + C$ & $\dfrac{1}{\cos^2 x}$ & $\tg x + C$ \\
+      $a^x$ & $\dfrac{a^x}{\ln a} + C$ & $\dfrac{1}{\sin^2 x}$ & $-\cotg x + C$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \textbf{Linearita}:
+  \begin{equation*}
+    \int\left(af(x) + bg(x)\right)\mathrm{d}x = a\int f(x)\,\mathrm{d}x + b\int g(x)\,\mathrm{d}x.
+  \end{equation*}
+\end{definitionbox}
+
+Proč $\ln|x|$ a ne $\ln x$? Funkce $\frac{1}{x}$ je definovaná i pro záporná $x$, ale $\ln x$ ne. Pro $x < 0$ je ${(\ln(-x))}' = \frac{1}{-x}\cdot(-1) = \frac{1}{x}$, takže absolutní hodnota pokryje oba případy.
+
+\begin{example}
+  \begin{align*}
+    \int(3x^2 + 2x - 1)\,\mathrm{d}x &= x^3 + x^2 - x + C,\\
+    \int\left(\sqrt{x} + \frac{1}{x^2}\right)\mathrm{d}x &= \int\left(x^{\frac{1}{2}} + x^{-2}\right)\mathrm{d}x = \frac{2}{3}x^{\frac{3}{2}} - \frac{1}{x} + C,\\
+    \int(2\cos x - 3e^x)\,\mathrm{d}x &= 2\sin x - 3e^x + C.
+  \end{align*}
+  Kontrola derivací: ${\left(\frac{2}{3}x^{\frac{3}{2}} - \frac{1}{x}\right)}' = x^{\frac{1}{2}} + \frac{1}{x^2}$.
+\end{example}
+
+\begin{note}
+  Integrovat je mnohem těžší než derivovat. Derivovat se dá podle pravidel skoro cokoli. Integrál ale nemá pravidlo pro součin ani pro složenou funkci a mnoho funkcí, které vypadají nevinně, nemá primitivní funkci vyjádřitelnou elementárními funkcemi. Například $\int e^{-x^2}\,\mathrm{d}x$, integrál klíčový pro statistiku, se elementárně spočítat nedá. To se dokonce dá dokázat. Derivování je řemeslo, integrování umění.
+\end{note}
+
+\subsection{Substituce a integrace per partes}
+
+\begin{definitionbox}
+  \textbf{Substituční metoda} (obrácené pravidlo pro derivaci složené funkce):
+  \begin{equation*}
+    \int f(g(x))\cdot g'(x)\,\mathrm{d}x = \int f(t)\,\mathrm{d}t,\qquad\text{kde } t = g(x),\ \mathrm{d}t = g'(x)\,\mathrm{d}x.
+  \end{equation*}
+
+  \textbf{Integrace per partes} (obrácené pravidlo pro derivaci součinu):
+  \begin{equation*}
+    \int u(x)v'(x)\,\mathrm{d}x = u(x)v(x) - \int u'(x)v(x)\,\mathrm{d}x.
+  \end{equation*}
+\end{definitionbox}
+
+Per partes plyne ze vzorce $(uv)' = u'v + uv'$. Zintegrováním obou stran dostaneme $uv = \int u'v + \int uv'$ a stačí jeden integrál převést na druhou stranu. Metoda se vyplatí, pokud je $\int u'v$ jednodušší než původní integrál. Typicky za $u$ volíme mnohočlen (derivováním se zjednoduší) nebo logaritmus (jeho derivace je hezčí než on sám).
+
+\begin{example}[ (substituce)]
+  \begin{align*}
+    \int 2x\cos(x^2)\,\mathrm{d}x &= \left|\begin{array}{c} t = x^2\\ \mathrm{d}t = 2x\,\mathrm{d}x \end{array}\right| = \int\cos t\,\mathrm{d}t = \sin t + C = \sin(x^2) + C,\\
+    \int xe^{x^2}\,\mathrm{d}x &= \left|\begin{array}{c} t = x^2\\ \mathrm{d}t = 2x\,\mathrm{d}x \end{array}\right| = \frac{1}{2}\int e^t\,\mathrm{d}t = \frac{1}{2}e^{x^2} + C,\\
+    \int\tg x\,\mathrm{d}x = \int\frac{\sin x}{\cos x}\,\mathrm{d}x &= \left|\begin{array}{c} t = \cos x\\ \mathrm{d}t = -\sin x\,\mathrm{d}x \end{array}\right| = -\int\frac{\mathrm{d}t}{t} = -\ln|\cos x| + C.
+  \end{align*}
+\end{example}
+
+\begin{example}[ (per partes)]
+  \begin{align*}
+    \int xe^x\,\mathrm{d}x &= \left|\begin{array}{cc} u = x & v' = e^x\\ u' = 1 & v = e^x \end{array}\right| = xe^x - \int e^x\,\mathrm{d}x = xe^x - e^x + C,\\
+    \int\ln x\,\mathrm{d}x &= \left|\begin{array}{cc} u = \ln x & v' = 1\\ u' = \frac{1}{x} & v = x \end{array}\right| = x\ln x - \int 1\,\mathrm{d}x = x\ln x - x + C,\\
+    \int x\sin x\,\mathrm{d}x &= \left|\begin{array}{cc} u = x & v' = \sin x\\ u' = 1 & v = -\cos x \end{array}\right| = -x\cos x + \int\cos x\,\mathrm{d}x = -x\cos x + \sin x + C.
+  \end{align*}
+  U $\ln x$ je trik v tom, že integrand chápeme jako $\ln x\cdot 1$. Matematici jsou někdy líní až vynalézaví.
+\end{example}
+
+\begin{problem}
+  Vypočítejte:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\int(4x^3 - 6x + 5)\,\mathrm{d}x$,
+    \item $\int\frac{x^2 + 1}{x}\,\mathrm{d}x$,
+    \item $\int{(2x + 1)}^{5}\,\mathrm{d}x$,
+    \item $\int\sin x\cos x\,\mathrm{d}x$,
+    \item $\int x^2\ln x\,\mathrm{d}x$,
+    \item $\int\frac{2x}{x^2 + 1}\,\mathrm{d}x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^4 - 3x^2 + 5x + C$.
+    \item $\int\left(x + \frac{1}{x}\right)\mathrm{d}x = \frac{x^2}{2} + \ln|x| + C$.
+    \item $t = 2x + 1$, $\mathrm{d}t = 2\,\mathrm{d}x$: $\frac{1}{2}\cdot\frac{t^6}{6} = \frac{{(2x + 1)}^6}{12} + C$.
+    \item $t = \sin x$: $\frac{\sin^2 x}{2} + C$. (Jiná cesta přes $\sin x\cos x = \frac{1}{2}\sin 2x$ dá $-\frac{\cos 2x}{4} + C$. Oba výsledky jsou správně, liší se jen o konstantu. Ověřte si to.)
+    \item $u = \ln x$, $v' = x^2$: $\frac{x^3}{3}\ln x - \int\frac{x^3}{3}\cdot\frac{1}{x}\,\mathrm{d}x = \frac{x^3}{3}\ln x - \frac{x^3}{9} + C$.
+    \item $t = x^2 + 1$: $\ln(x^2 + 1) + C$. Obecně $\int\frac{f'(x)}{f(x)}\,\mathrm{d}x = \ln|f(x)| + C$.
+  \end{enumerate}
+\end{solution}
+
+\section{Určitý integrál}
+
+Jak spočítat obsah plochy pod grafem funkce $f$ mezi $a$ a $b$? Rozdělíme interval $[a, b]$ na $n$ malých kousků, nad každým postavíme obdélník s výškou rovnou hodnotě funkce a obsahy obdélníků sečteme. Čím jemnější dělení, tím přesnější odhad. V limitě dostaneme přesný obsah.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \draw[->] (-0.2,0) -- (2.3,0) node[right] {\small $x$};
+    \draw[->] (0,-0.2) -- (0,2.2) node[above] {\small $y$};
+    \foreach \i in {0,...,7} {
+      \pgfmathsetmacro{\x}{0.25*\i}
+      \pgfmathsetmacro{\h}{0.5*(\x+0.25)*(\x+0.25)}
+      \fill[colorofwisdom!25] (\x,0) rectangle ({\x+0.25},\h);
+      \draw[colorofwisdom!70] (\x,0) rectangle ({\x+0.25},\h);
+    }
+    \draw[thick, colorofwisdom, domain=0:2.05, samples=60] plot (\x, {0.5*\x*\x});
+    \node[below] at (0,0) {\small $a$};
+    \node[below] at (2,0) {\small $b$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Určitý (Riemannův) integrál} funkce $f$ na intervalu $[a, b]$ je limita součtů obsahů obdélníků
+  \begin{equation*}
+    \int_a^b f(x)\,\mathrm{d}x = \lim_{n\to\infty}\sum_{i=1}^{n}f(x_i)\cdot\Delta x,
+  \end{equation*}
+  kde $\Delta x = \frac{b - a}{n}$ je šířka obdélníků a $x_i$ jsou body v jednotlivých dílcích. Pro spojitou funkci tato limita vždy existuje. Pro nezápornou funkci je to \textbf{obsah plochy} pod grafem. Části pod osou $x$ se počítají záporně.
+
+  \vspace{0.2cm}
+
+  \textbf{Newtonova--Leibnizova věta} (základní věta integrálního počtu): Pokud je $f$ spojitá na $[a, b]$ a $F$ je k ní primitivní funkce, pak
+  \begin{equation*}
+    \int_a^b f(x)\,\mathrm{d}x = F(b) - F(a) = {\big[F(x)\big]}_a^b.
+  \end{equation*}
+\end{definitionbox}
+
+Znak $\int$ je mimochodem protažené písmeno S, jako \textit{summa}. Zavedl ho Leibniz a připomíná, že integrál je součet nekonečně mnoha nekonečně tenkých obdélníků o šířce $\mathrm{d}x$.
+
+Proč platí Newtonova--Leibnizova věta? Označme $S(x)$ obsah plochy pod grafem od $a$ do $x$. Když $x$ zvětšíme o malé $h$, přibude proužek o šířce $h$ a výšce přibližně $f(x)$, tedy $S(x + h) - S(x)\approx f(x)\cdot h$. Po vydělení $h$ a limitě dostaneme $S'(x) = f(x)$. Funkce `obsah plochy' je tedy primitivní funkcí k $f$! A protože $S(a) = 0$, je $S(b) = F(b) - F(a)$ pro libovolnou primitivní funkci $F$ (konstanta se odečte). Celá věta je tedy důsledkem toho, že rychlost, jakou roste plocha, je rovna výšce grafu.
+
+\begin{example}
+  \begin{itemize}
+    \item $\int_0^1 x^2\,\mathrm{d}x = {\left[\frac{x^3}{3}\right]}_0^1 = \frac{1}{3}$. Obsah pod parabolou od $0$ do $1$ je přesně třetina jednotkového čtverce. Archimédés tento výsledek (v trochu jiné podobě) odvodil už ve 3. století před naším letopočtem, devatenáct století před Newtonem a Leibnizem, takzvanou metodou vyčerpávání.
+    \item $\int_0^{\pi}\sin x\,\mathrm{d}x = {\big[-\cos x\big]}_0^{\pi} = 1 - (-1) = 2$. Obsah pod jedním `obloukem' sinusoidy je přesně $2$.
+    \item $\int_1^e\frac{1}{x}\,\mathrm{d}x = {\big[\ln x\big]}_1^e = 1 - 0 = 1$. Tohle je mimochodem jedna z možných definic čísla $e$: je to číslo, pro které má plocha pod hyperbolou $\frac{1}{x}$ od $1$ do $e$ obsah $1$.
+  \end{itemize}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti určitého integrálu}:
+  \begin{align*}
+    \int_a^b(f + g)\,\mathrm{d}x &= \int_a^b f\,\mathrm{d}x + \int_a^b g\,\mathrm{d}x, & \int_a^b c\cdot f\,\mathrm{d}x &= c\int_a^b f\,\mathrm{d}x,\\
+    \int_a^b f\,\mathrm{d}x &= \int_a^c f\,\mathrm{d}x + \int_c^b f\,\mathrm{d}x, & \int_a^b f\,\mathrm{d}x &= -\int_b^a f\,\mathrm{d}x.
+  \end{align*}
+\end{definitionbox}
+
+\section{Užití určitého integrálu}
+
+\subsection{Obsah rovinného útvaru}
+
+\begin{definitionbox}
+  Obsah plochy mezi grafy funkcí $f$ a $g$, kde $f(x)\geq g(x)$ na $[a, b]$, je
+  \begin{equation*}
+    S = \int_a^b\left(f(x) - g(x)\right)\mathrm{d}x.
+  \end{equation*}
+  Pokud funkce na části intervalu klesne pod osu $x$, musíme interval rozdělit a části pod osou vzít v absolutní hodnotě.
+\end{definitionbox}
+
+\begin{example}
+  Obsah plochy mezi přímkou $y = x$ a parabolou $y = x^2$. Průsečíky: $x = x^2$, tedy $x\in\{0, 1\}$. Na $[0, 1]$ je $x\geq x^2$, a tedy
+  \begin{equation*}
+    S = \int_0^1(x - x^2)\,\mathrm{d}x = {\left[\frac{x^2}{2} - \frac{x^3}{3}\right]}_0^1 = \frac{1}{2} - \frac{1}{3} = \frac{1}{6}.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}[scale=2.5]
+      \draw[->] (-0.1,0) -- (1.3,0) node[right] {\small $x$};
+      \draw[->] (0,-0.1) -- (0,1.3) node[above] {\small $y$};
+      \fill[colorofwisdom!30, domain=0:1, samples=40] plot (\x, {\x}) -- plot[domain=1:0] (\x, {\x*\x}) -- cycle;
+      \draw[thick, domain=-0.05:1.2] plot (\x, \x) node[right] {\small $y = x$};
+      \draw[thick, colorofwisdom, domain=-0.05:1.1, samples=40] plot (\x, {\x*\x}) node[right] {\small $y = x^2$};
+      \node[below] at (1,0) {\small $1$};
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{example}
+  Pozor na části pod osou. $\int_0^{2\pi}\sin x\,\mathrm{d}x = 0$, protože kladná a záporná část se vyruší. Obsah plochy mezi sinusoidou a osou $x$ na $[0, 2\pi]$ je ale $2 + 2 = 4$.
+\end{example}
+
+\subsection{Objem rotačního tělesa}
+
+\begin{definitionbox}
+  Objem tělesa, které vznikne rotací plochy pod grafem $f$ (na $[a, b]$) kolem osy $x$, je
+  \begin{equation*}
+    V = \pi\int_a^b f^2(x)\,\mathrm{d}x.
+  \end{equation*}
+\end{definitionbox}
+
+Vzorec plyne ze stejné myšlenky jako určitý integrál: těleso rozřežeme na tenké kotoučky. Kotouček v bodě $x$ je válec s poloměrem $f(x)$ a výškou $\mathrm{d}x$, a má tedy objem $\pi f^2(x)\,\mathrm{d}x$. Sečtením dostaneme integrál. Je to vlastně Cavalieriho princip z kapitoly~\ref{kap:stereometrie} dovedený do konce.
+
+\begin{example}\label{ex:objem-koule}
+  Konečně dokážeme vzorce z kapitoly o stereometrii.
+
+  \textbf{Koule}: vznikne rotací půlkružnice $f(x) = \sqrt{r^2 - x^2}$ na $[-r, r]$:
+  \begin{equation*}
+    V = \pi\int_{-r}^{r}(r^2 - x^2)\,\mathrm{d}x = \pi{\left[r^2x - \frac{x^3}{3}\right]}_{-r}^{r} = \pi\left(2r^3 - \frac{2r^3}{3}\right) = \frac{4}{3}\pi r^3.
+  \end{equation*}
+
+  \textbf{Kužel}: vznikne rotací úsečky $f(x) = \frac{r}{v}x$ na $[0, v]$:
+  \begin{equation*}
+    V = \pi\int_0^v\frac{r^2}{v^2}x^2\,\mathrm{d}x = \pi\frac{r^2}{v^2}\cdot\frac{v^3}{3} = \frac{1}{3}\pi r^2v.
+  \end{equation*}
+  Odtud pochází ta záhadná třetina. Je to $\int x^2 = \frac{x^3}{3}$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Vypočítejte $\int_1^2(3x^2 - 2x)\,\mathrm{d}x$ a $\int_0^{\frac{\pi}{2}}\cos x\,\mathrm{d}x$.
+    \item Určete obsah plochy ohraničené parabolou $y = 4 - x^2$ a osou $x$.
+    \item Určete obsah plochy mezi grafy $y = x^2$ a $y = 2x + 3$.
+    \item Určete objem tělesa, které vznikne rotací plochy pod grafem $y = \sqrt{x}$ na $[0, 4]$ kolem osy $x$.
+    \item Auto zrychluje a jeho rychlost v čase $t$ je $v(t) = 3t\ \si{m/s}$. Jakou dráhu ujede za prvních $10$ sekund?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item ${\big[x^3 - x^2\big]}_1^2 = (8 - 4) - (1 - 1) = 4$. ${\big[\sin x\big]}_0^{\frac{\pi}{2}} = 1$.
+    \item Průsečíky s osou $\pm 2$. $S = \int_{-2}^{2}(4 - x^2)\,\mathrm{d}x = {\left[4x - \frac{x^3}{3}\right]}_{-2}^{2} = 2\left(8 - \frac{8}{3}\right) = \frac{32}{3}$.
+    \item Průsečíky: $x^2 = 2x + 3$, $x\in\{-1, 3\}$. Na $[-1, 3]$ je přímka nad parabolou: $S = \int_{-1}^{3}(2x + 3 - x^2)\,\mathrm{d}x = {\left[x^2 + 3x - \frac{x^3}{3}\right]}_{-1}^{3} = 9 - \left(-\frac{5}{3}\right) = \frac{32}{3}$.
+    \item $V = \pi\int_0^4 x\,\mathrm{d}x = \pi\cdot 8 = 8\pi$. Těleso je rotační paraboloid, tvarem podobný satelitní anténě z kapitoly~\ref{kap:kuzelosecky}.
+    \item Dráha je integrál rychlosti: $s = \int_0^{10}3t\,\mathrm{d}t = {\left[\frac{3t^2}{2}\right]}_0^{10} = 150\ \si{m}$. Derivace dráhy je rychlost, integrál rychlosti je dráha. Kruh se uzavírá.
+  \end{enumerate}
+\end{solution}
+
+\begin{note}
+  Integrovat se dá i přes nekonečný interval. Takovému integrálu se říká \textbf{nevlastní}. Například $\int_1^{\infty}\frac{1}{x^2}\,\mathrm{d}x = \lim_{b\to\infty}{\left[-\frac{1}{x}\right]}_1^b = 1$. Nekonečně dlouhá plocha má konečný obsah! Ještě podivnější je \textbf{Gabrielův roh}, který vznikne rotací grafu $\frac{1}{x}$ na $[1, \infty)$. Jeho objem je $\pi\int_1^{\infty}\frac{1}{x^2}\,\mathrm{d}x = \pi$, ale jeho povrch je nekonečný. Do rohu se tedy vejde konečně mnoho barvy, ale nikdy nenatřete jeho vnitřní stěnu. Objevil ho v roce 1643 Evangelista Torricelli a pojmenován je po archandělu Gabrielovi, který podle tradice zatroubí na roh v den posledního soudu.
+\end{note}
+
+\section{Odbočka --- Spálené papíry}
+
+Bernhard Riemann, po kterém je pojmenovaný určitý integrál, byl plachý a nemocný muž z chudé rodiny luteránského pastora. Původně měl studovat teologii, ale matematika ho nepustila. Za svůj krátký život publikoval jen hrstku prací, ale skoro každá z nich změnila matematiku. Jeho geometrie zakřivených prostorů se o šedesát let později stala jazykem Einsteinovy obecné teorie relativity, o které jsme mluvili u pátého postulátu v kapitole~\ref{kap:planimetrie}.
+
+V roce 1859 publikoval jediný článek o prvočíslech, osm stran dlouhý. Na jeho konci mimochodem zmínil domněnku o tom, kde leží nulové body jedné komplexní funkce, a poznamenal, že ji zatím nedokázal, ale pro jeho účely ji nepotřebuje. \textbf{Riemannova hypotéza} je dnes považována za nejdůležitější nevyřešený problém matematiky. Clayův matematický institut za její důkaz v roce 2000 vypsal odměnu jeden milion dolarů. Dosud nikdo nepřišel na to, jak ji dokázat.
+
+Riemann onemocněl tuberkulózou a odjel se léčit do Itálie, kde v roce 1866 ve věku 39 let zemřel. Po jeho smrti začala jeho hospodyně uklízet pracovnu a velkou část jeho poznámek spálila, dřív než ji kolegové stačili zastavit. Nikdo neví, co v těch papírech bylo. Možná nic. A možná tam byl ten důkaz.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je primitivní funkce a neurčitý integrál? Proč se přidává konstanta $C$?
+    \item Uveďte základní integrály. Proč je $\int\frac{1}{x}\,\mathrm{d}x = \ln|x| + C$?
+    \item Popište substituční metodu a integraci per partes. Z jakých pravidel pro derivace vycházejí?
+    \item Co je určitý integrál? Jak souvisí s obsahem plochy?
+    \item Vyslovte Newtonovu--Leibnizovu větu a vysvětlete, proč platí.
+    \item Jak spočítáte obsah plochy mezi dvěma grafy? Na co si dát pozor, když je funkce záporná?
+    \item Jak spočítáte objem rotačního tělesa? Odvoďte vzorec pro objem koule a kužele.
+    \item Uveďte příklady využití integrálů ve fyzice.
+  \end{enumerate}
+\end{problem}
