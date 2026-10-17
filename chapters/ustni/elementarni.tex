@@ -1,0 +1,321 @@
+\label{kap:elementarni}
+\mathquote{Philosophy is written in this grand book, the universe\ldots\ It is written in the language of mathematics.}{Galileo Galilei}
+
+V minulé kapitole jsme si řekli, jak o funkcích mluvit. Teď se podíváme na konkrétní funkce, se kterými se budete potkávat neustále: lineární, kvadratické, lineární lomené a mocninné. Ke každé z nich budete u ústní maturity potřebovat umět nakreslit graf a popsat vlastnosti z předchozí kapitoly. Dobrá zpráva je, že když pochopíte, \textit{proč} graf vypadá tak, jak vypadá, nemusíte si skoro nic pamatovat.
+
+\section{Lineární funkce}
+
+\begin{definitionbox}
+  \textbf{Lineární funkce} je funkce $f: \mathbb{R}\to\mathbb{R}$ daná předpisem
+  \begin{equation*}
+    f(x) = ax + b,\qquad a, b\in\mathbb{R}.
+  \end{equation*}
+  Grafem lineární funkce je \textbf{přímka}. Pro $a = 0$ dostáváme \textbf{konstantní funkci} $f(x) = b$, jejímž grafem je vodorovná přímka. Pro $b = 0$ dostáváme \textbf{přímou úměrnost} $f(x) = ax$, jejíž graf prochází počátkem.
+
+  \vspace{0.2cm}
+
+  \textbf{Vlastnosti}:
+  \begin{itemize}
+    \item Koeficient $a$ se nazývá \textbf{směrnice}. Udává, o kolik se změní $y$, když se $x$ zvětší o $1$. Pokud přímka svírá s kladnou poloosou $x$ úhel $\alpha$, je $a = \tg\alpha$.
+    \item Koeficient $b$ je $y$-ová souřadnice průsečíku s osou $y$, tedy $f(0) = b$.
+    \item Pro $a > 0$ je funkce \textbf{rostoucí}, pro $a < 0$ \textbf{klesající}, pro $a = 0$ konstantní.
+    \item Pro $a\neq 0$ je $H(f) = \mathbb{R}$, funkce je prostá a inverzní funkce je opět lineární.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{proof}[(monotonie)]
+  Nechť $x_1 < x_2$. Pak $f(x_2) - f(x_1) = ax_2 + b - ax_1 - b = a(x_2 - x_1)$. Protože $x_2 - x_1 > 0$, má rozdíl stejné znaménko jako $a$. Pro $a > 0$ je tedy $f(x_1) < f(x_2)$ a funkce roste, pro $a < 0$ klesá.
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-2.5,0) -- (4,0) node[right] {\small $x$};
+    \draw[->] (0,-2) -- (0,4) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-1.5:2.4] plot (\x, {1.2*\x + 1}) node[right] {\small $a > 0$};
+    \draw[thick, domain=-2:3.5] plot (\x, {-0.6*\x + 2}) node[right] {\small $a < 0$};
+    \draw[thick, gray, domain=-2.3:3.8] plot (\x, {-1.3}) node[right] {\small $a = 0$};
+    \draw[dashed] (1,2.2) -- (2,2.2) node[midway, below] {\tiny $1$} -- (2,3.4) node[midway, right] {\tiny $a$};
+    \filldraw[colorofwisdom] (0,1) circle (2pt) node[left] {\small $b$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Najděme lineární funkci, jejíž graf prochází body $A = (1, 3)$ a $B = (3, 7)$. Směrnice je podíl změny $y$ a změny $x$:
+  \begin{equation*}
+    a = \frac{7 - 3}{3 - 1} = 2.
+  \end{equation*}
+  Z $f(1) = 3$ dostaneme $2 + b = 3$, tedy $b = 1$ a $f(x) = 2x + 1$. Jinak řečeno, řešíme soustavu dvou lineárních rovnic $a + b = 3$, $3a + b = 7$ z kapitoly~\ref{kap:rovnice}.
+\end{example}
+
+\begin{note}
+  Grafy dvou lineárních funkcí jsou rovnoběžné, právě když mají stejnou směrnici. Kolmé jsou (pro nenulové směrnice), právě když $a_1\cdot a_2 = -1$. To dokážeme v kapitole o analytické geometrii.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete průsečíky grafu $f(x) = -\frac{1}{2}x + 3$ s osami a rozhodněte, zda je $f$ rostoucí.
+    \item Najděte lineární funkci, jejíž graf prochází bodem $(2, -1)$ a je rovnoběžný s grafem $y = 3x$.
+    \item Jaký úhel svírá graf funkce $y = x$ s osou $x$? A graf $y = \sqrt{3}x$?
+    \item Taxi účtuje nástupní sazbu $60$ Kč a $28$ Kč za kilometr. Vyjádřete cenu jako funkci ujetých kilometrů. Kolik kilometrů ujedete za $480$ Kč?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item S osou $y$ v $(0, 3)$, s osou $x$: $-\frac{1}{2}x + 3 = 0$, tedy $(6, 0)$. Směrnice je záporná, funkce je klesající.
+    \item $a = 3$, $-1 = 6 + b$, $b = -7$. Tedy $y = 3x - 7$.
+    \item $\tg\alpha = 1$, $\alpha = 45^\circ$. $\tg\alpha = \sqrt{3}$, $\alpha = 60^\circ$.
+    \item $c(k) = 28k + 60$. Z $28k + 60 = 480$ plyne $k = 15$ kilometrů.
+  \end{enumerate}
+\end{solution}
+
+\section{Kvadratická funkce}
+
+\begin{definitionbox}
+  \textbf{Kvadratická funkce} je funkce $f: \mathbb{R}\to\mathbb{R}$ daná předpisem
+  \begin{equation*}
+    f(x) = ax^2 + bx + c,\qquad a, b, c\in\mathbb{R},\ a\neq 0.
+  \end{equation*}
+  Grafem kvadratické funkce je \textbf{parabola}. Doplněním na čtverec (kapitola~\ref{kap:kvadraticke}) ji převedeme na \textbf{vrcholový tvar}
+  \begin{equation*}
+    f(x) = a{(x - m)}^2 + n,\qquad\text{kde } m = -\frac{b}{2a},\ n = f(m) = c - \frac{b^2}{4a}.
+  \end{equation*}
+  Bod $V = [m, n]$ je \textbf{vrchol} paraboly a přímka $x = m$ je její \textbf{osa souměrnosti}.
+
+  \vspace{0.2cm}
+
+  \textbf{Vlastnosti} (pro $a > 0$; pro $a < 0$ se vše obrátí):
+  \begin{itemize}
+    \item parabola je otevřená \textbf{nahoru},
+    \item funkce je klesající na $(-\infty, m]$ a rostoucí na $[m, \infty)$,
+    \item v bodě $m$ má \textbf{minimum} $n$, maximum nemá,
+    \item $H(f) = [n, \infty)$, funkce je zdola omezená a shora neomezená,
+    \item průsečík s osou $y$ je $[0, c]$, průsečíky s osou $x$ jsou kořeny rovnice $ax^2 + bx + c = 0$.
+  \end{itemize}
+\end{definitionbox}
+
+Proč tomu tak je? Ve vrcholovém tvaru je výraz ${(x - m)}^2$ vždy nezáporný a nulový jen pro $x = m$. Pro $a > 0$ je tedy $f(x) = a{(x - m)}^2 + n\geq n$ a rovnost nastane jen ve vrcholu. Zbytek je transformace grafu z kapitoly~\ref{kap:funkce}: parabolu $y = x^2$ roztáhneme $a$-krát, posuneme o $m$ doprava a o $n$ nahoru.
+
+\begin{example}
+  Vyšetřeme funkci $f(x) = x^2 - 4x + 3$. Doplníme na čtverec:
+  \begin{equation*}
+    f(x) = (x^2 - 4x + 4) - 1 = {(x - 2)}^2 - 1.
+  \end{equation*}
+  Vrchol je $V = [2, -1]$, $a = 1 > 0$, parabola je otevřená nahoru. Průsečík s osou $y$: $[0, 3]$. Průsečíky s osou $x$: $x^2 - 4x + 3 = (x - 1)(x - 3) = 0$, tedy $[1, 0]$ a $[3, 0]$. Funkce je klesající na $(-\infty, 2]$, rostoucí na $[2, \infty)$, $H(f) = [-1, \infty)$, minimum $-1$ v bodě $2$.
+
+  Druhá funkce $g(x) = -2x^2 + 4x + 6 = -2(x^2 - 2x) + 6 = -2{(x - 1)}^2 + 8$ má vrchol $[1, 8]$, je otevřená dolů, má maximum $8$ a $H(g) = (-\infty, 8]$. Kořeny jsou $-1$ a $3$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.55]
+      \draw[->] (-2.5,0) -- (5,0) node[right] {\small $x$};
+      \draw[->] (0,-2) -- (0,9) node[above] {\small $y$};
+      \foreach \x in {-1,1,2,3,4} \draw (\x,0.1) -- (\x,-0.1) node[below] {\tiny $\x$};
+      \foreach \y in {2,4,6,8} \draw (0.1,\y) -- (-0.1,\y) node[left] {\tiny $\y$};
+      \draw[thick, colorofwisdom, domain=-0.6:4.6, samples=60] plot (\x, {(\x-2)*(\x-2)-1}) node[right] {\small $f$};
+      \draw[thick, domain=-1.3:3.3, samples=60] plot (\x, {-2*(\x-1)*(\x-1)+8}) node[right] {\small $g$};
+      \draw[dashed, colorofwisdom] (2,-1) -- (2,6.5);
+      \draw[dashed] (1,8) -- (1,-1.5);
+      \filldraw[colorofwisdom] (2,-1) circle (3pt);
+      \filldraw (1,8) circle (3pt);
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{note}
+  Vrchol je přesně uprostřed mezi kořeny (pokud existují). To plyne ze souměrnosti paraboly a z Vietových vzorců: $\frac{x_1 + x_2}{2} = -\frac{b}{2a} = m$. Pokud tedy znáte kořeny, vrchol najdete zpaměti.
+\end{note}
+
+\subsection{Úlohy na extrém}
+
+Protože kvadratická funkce má vždy jeden extrém ve vrcholu, umíme řešit jednoduché optimalizační úlohy, aniž bychom potřebovali derivace.
+
+\begin{example}
+  Ze $20$ metrů pletiva chceme oplotit obdélníkový záhon co největšího obsahu. Jaké má mít rozměry?
+
+  Označme jednu stranu $x$. Pak druhá strana je $10 - x$ a obsah je
+  \begin{equation*}
+    S(x) = x(10 - x) = -x^2 + 10x = -{(x - 5)}^2 + 25.
+  \end{equation*}
+  Parabola je otevřená dolů a má maximum $25$ v bodě $x = 5$. Nejlepší je tedy čtverec $5\times 5$ metrů. Mezi všemi obdélníky se stejným obvodem má největší obsah čtverec. Tahle odpověď se objevuje v matematice pořád dokola, jen v různých převlecích.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Vyšetřete funkci $f(x) = 2x^2 + 8x + 5$ (vrchol, monotonie, obor hodnot, průsečíky s osami).
+    \item Určete kvadratickou funkci, jejíž graf má vrchol $[1, -4]$ a prochází bodem $[3, 4]$.
+    \item Součet dvou čísel je $14$. Pro jaká čísla je jejich součin největší?
+    \item Kámen vyhozený svisle vzhůru je v čase $t$ ve výšce $h(t) = 20t - 5t^2$ metrů. Kdy dosáhne nejvyššího bodu a jak vysoko to je?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $f(x) = 2(x^2 + 4x) + 5 = 2{(x + 2)}^2 - 3$. Vrchol $[-2, -3]$, klesající na $(-\infty, -2]$, rostoucí na $[-2, \infty)$, $H = [-3, \infty)$. Osa $y$: $[0, 5]$. Osa $x$: $2x^2 + 8x + 5 = 0$, $x = \frac{-8\pm\sqrt{24}}{4} = -2\pm\frac{\sqrt{6}}{2}$.
+    \item $f(x) = a{(x - 1)}^2 - 4$, z $f(3) = 4$ plyne $4a - 4 = 4$, $a = 2$. Tedy $f(x) = 2{(x - 1)}^2 - 4 = 2x^2 - 4x - 2$.
+    \item $x(14 - x) = -{(x - 7)}^2 + 49$, maximum pro $x = 7$, čísla jsou $7$ a $7$.
+    \item $h(t) = -5(t^2 - 4t) = -5{(t - 2)}^2 + 20$. Nejvýš je v čase $t = 2\ \si{s}$ ve výšce $20\ \si{m}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Nepřímá úměrnost a lineární lomená funkce}
+
+\begin{definitionbox}
+  \textbf{Nepřímá úměrnost} je funkce $f(x) = \frac{k}{x}$, kde $k\neq 0$. Grafem je \textbf{rovnoosá hyperbola} se \textbf{asymptotami} $x = 0$ a $y = 0$.
+  \begin{itemize}
+    \item $D(f) = \mathbb{R}\setminus\{0\}$, $H(f) = \mathbb{R}\setminus\{0\}$,
+    \item funkce je lichá a prostá,
+    \item pro $k > 0$ je klesající na $(-\infty, 0)$ a na $(0, \infty)$ (graf v 1. a 3. kvadrantu), pro $k < 0$ je rostoucí na každém z těchto intervalů (graf ve 2. a 4. kvadrantu),
+    \item není omezená a nemá extrémy.
+  \end{itemize}
+
+  \textbf{Lineární lomená funkce} je funkce
+  \begin{equation*}
+    f(x) = \frac{ax + b}{cx + d},\qquad c\neq 0,\ ad - bc\neq 0.
+  \end{equation*}
+  Úpravou ji vždy převedeme na tvar
+  \begin{equation*}
+    f(x) = \frac{k}{x - m} + n,
+  \end{equation*}
+  ze kterého je vidět, že jde o hyperbolu $y = \frac{k}{x}$ posunutou o $m$ doprava a o $n$ nahoru. Asymptoty jsou $x = m$ a $y = n$, $D(f) = \mathbb{R}\setminus\{m\}$ a $H(f) = \mathbb{R}\setminus\{n\}$.
+\end{definitionbox}
+
+Podmínky v definici mají svůj smysl. Pro $c = 0$ by šlo o lineární funkci. Pro $ad - bc = 0$ (ano, to je determinant z kapitoly~\ref{kap:rovnice}) by se čitatel a jmenovatel daly zkrátit a dostali bychom konstantní funkci s jedním vyňatým bodem.
+
+\begin{example}
+  Upravme $f(x) = \frac{2x + 1}{x - 1}$. Trik: v čitateli `vyrobíme' jmenovatel.
+  \begin{equation*}
+    \frac{2x + 1}{x - 1} = \frac{2(x - 1) + 3}{x - 1} = 2 + \frac{3}{x - 1}.
+  \end{equation*}
+  Jde tedy o hyperbolu $y = \frac{3}{x}$ posunutou o $1$ doprava a o $2$ nahoru. Asymptoty $x = 1$, $y = 2$, $D(f) = \mathbb{R}\setminus\{1\}$, $H(f) = \mathbb{R}\setminus\{2\}$. Protože $k = 3 > 0$, je funkce klesající na $(-\infty, 1)$ i na $(1, \infty)$. Průsečíky: s osou $y$ v $[0, -1]$, s osou $x$ v $\left[-\frac{1}{2}, 0\right]$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->] (-4.5,0) -- (6,0) node[right] {\small $x$};
+      \draw[->] (0,-4) -- (0,7) node[above] {\small $y$};
+      \draw[dashed, gray] (1,-4) -- (1,7) node[above right] {\small $x = 1$};
+      \draw[dashed, gray] (-4.5,2) -- (6,2) node[right] {\small $y = 2$};
+      \draw[thick, colorofwisdom, domain=-4.5:0.4, samples=60] plot (\x, {2 + 3/(\x - 1)});
+      \draw[thick, colorofwisdom, domain=1.6:6, samples=60] plot (\x, {2 + 3/(\x - 1)});
+      \filldraw (0,-1) circle (2.5pt);
+      \filldraw (-0.5,0) circle (2.5pt);
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{problem}
+  Upravte na tvar $\frac{k}{x - m} + n$, určete asymptoty, definiční obor, obor hodnot a monotonii:
+  \begin{enumerate}[label=(\alph*)]
+    \item $f(x) = \dfrac{x + 3}{x + 1}$,
+    \item $g(x) = \dfrac{3x - 1}{x - 2}$,
+    \item $h(x) = \dfrac{-2x + 5}{x - 2}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{(x + 1) + 2}{x + 1} = 1 + \frac{2}{x + 1}$. Asymptoty $x = -1$, $y = 1$. $D = \mathbb{R}\setminus\{-1\}$, $H = \mathbb{R}\setminus\{1\}$. Klesající na $(-\infty, -1)$ a na $(-1, \infty)$.
+    \item $\frac{3(x - 2) + 5}{x - 2} = 3 + \frac{5}{x - 2}$. Asymptoty $x = 2$, $y = 3$. Klesající na obou intervalech.
+    \item $\frac{-2(x - 2) + 1}{x - 2} = -2 + \frac{1}{x - 2}$. Asymptoty $x = 2$, $y = -2$. Klesající na $(-\infty, 2)$ a na $(2, \infty)$.
+  \end{enumerate}
+\end{solution}
+
+\begin{example}
+  Nepřímá úměrnost je všude kolem nás. Pokud jedeme $120\ \si{km}$, je doba jízdy $t = \frac{120}{v}$. Dvakrát rychleji znamená dvakrát kratší dobu. Pokud si $n$ lidí dělí pizzu, dostane každý $\frac{1}{n}$ pizzy. Graf ukazuje, že pro velká $n$ se kousek blíží nule, ale nikdy jí nedosáhne. Což z vlastní zkušenosti z oslav nemusí být pravda.
+\end{example}
+
+\section{Mocninné funkce}
+
+\begin{definitionbox}
+  \textbf{Mocninná funkce} je funkce $f(x) = x^r$, kde $r\in\mathbb{R}$ je konstanta. U maturity nás zajímají hlavně tyto případy:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|l|l|l|l|}
+      \hline
+      Exponent & Příklad & $D(f)$ & Vlastnosti \\
+      \hline
+      $n\in\mathbb{N}$ sudé & $x^2, x^4$ & $\mathbb{R}$ & sudá, $H = [0, \infty)$, klesající na $(-\infty, 0]$, rostoucí na $[0, \infty)$ \\
+      $n\in\mathbb{N}$ liché & $x, x^3$ & $\mathbb{R}$ & lichá, $H = \mathbb{R}$, rostoucí, prostá \\
+      $-n$, $n$ sudé & $x^{-2}$ & $\mathbb{R}\setminus\{0\}$ & sudá, $H = (0, \infty)$, rostoucí na $(-\infty, 0)$, klesající na $(0, \infty)$ \\
+      $-n$, $n$ liché & $x^{-1}$ & $\mathbb{R}\setminus\{0\}$ & lichá, $H = \mathbb{R}\setminus\{0\}$, klesající na $(-\infty, 0)$ i na $(0, \infty)$ \\
+      $\frac{1}{n}$ & $\sqrt{x}, \sqrt[3]{x}$ & $[0, \infty)$ & rostoucí, $H = [0, \infty)$, inverzní k $x^n$ na $[0, \infty)$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \begin{scope}
+      \draw[->] (-2.2,0) -- (2.4,0) node[right] {\small $x$};
+      \draw[->] (0,-2.2) -- (0,2.6) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-1.5:1.5, samples=60] plot (\x, {\x*\x}) node[above] {\small $x^2$};
+      \draw[thick, domain=-1.25:1.25, samples=60] plot (\x, {\x*\x*\x*\x}) node[right] {\small $x^4$};
+      \draw[thick, dashed, domain=-1.3:1.3, samples=60] plot (\x, {\x*\x*\x}) node[right] {\small $x^3$};
+      \filldraw (1,1) circle (1.5pt) (-1,1) circle (1.5pt) (-1,-1) circle (1.5pt);
+      \node at (0,-2.7) {\small kladné celé exponenty};
+    \end{scope}
+    \begin{scope}[xshift=6.5cm]
+      \draw[->] (-2.2,0) -- (2.4,0) node[right] {\small $x$};
+      \draw[->] (0,-2.2) -- (0,2.6) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=0.42:2.2, samples=60] plot (\x, {1/\x}) node[above] {\small $x^{-1}$};
+      \draw[thick, colorofwisdom, domain=-2.2:-0.42, samples=60] plot (\x, {1/\x});
+      \draw[thick, domain=0.65:2.2, samples=60] plot (\x, {1/(\x*\x)}) node[right] {\small $x^{-2}$};
+      \draw[thick, domain=-2.2:-0.65, samples=60] plot (\x, {1/(\x*\x)});
+      \node at (0,-2.7) {\small záporné exponenty};
+    \end{scope}
+    \begin{scope}[xshift=12cm]
+      \draw[->] (-0.5,0) -- (3.2,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,2.6) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=0:3, samples=80] plot (\x, {sqrt(\x)}) node[above] {\small $\sqrt{x}$};
+      \draw[thick, domain=0:3, samples=80] plot (\x, {\x^(1/3)}) node[below right] {\small $\sqrt[3]{x}$};
+      \filldraw (1,1) circle (1.5pt);
+      \node at (1.4,-1.2) {\small odmocniny};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Všimněte si, že všechny grafy procházejí bodem $[1, 1]$, protože $1^r = 1$ pro každé $r$. Pro $x\in(0, 1)$ je $x^4 < x^2 < x$, ale pro $x > 1$ naopak $x^4 > x^2 > x$. Vyšší mocnina je u nuly `plošší' a dál od nuly `strmější'. Totéž platí obráceně pro odmocniny.
+
+\begin{note}
+  Proč je $x^{-2}$ rostoucí na $(-\infty, 0)$? Pro $x_1 < x_2 < 0$ je $x_1^2 > x_2^2$ (čím dál od nuly, tím větší druhá mocnina) a převrácené hodnoty se otočí, tedy $\frac{1}{x_1^2} < \frac{1}{x_2^2}$. Na grafu: když jdeme zleva k nule, hodnoty rostou do nekonečna.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Seřaďte podle velikosti čísla $0{,}5^2$, $0{,}5^3$, $0{,}5^{\frac{1}{2}}$, $0{,}5^{-1}$.
+    \item Nakreslete graf funkce $f(x) = {(x + 1)}^3 - 2$ a určete její obor hodnot a průsečík s osou $y$.
+    \item Pro která $x$ platí $x^3 > x$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $0{,}5^3 = 0{,}125 < 0{,}5^2 = 0{,}25 < 0{,}5^{\frac{1}{2}}\approx 0{,}707 < 0{,}5^{-1} = 2$. Pro základ menší než $1$ s rostoucím exponentem hodnota klesá.
+    \item Posun grafu $y = x^3$ o $1$ doleva a o $2$ dolů. $H = \mathbb{R}$, průsečík s osou $y$: $f(0) = 1 - 2 = -1$.
+    \item $x^3 - x = x(x - 1)(x + 1) > 0$. Metodou nulových bodů $K = (-1, 0)\cup(1, \infty)$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Hořící zrcadla}
+
+Proč se parabola jmenuje parabola? Název pochází od řeckého matematika Apollónia z Pergy, který zkoumal křivky vzniklé řezem kužele rovinou. Parabola (z řeckého \textit{parabolé}, `přiložení vedle') vznikne, když je řez rovnoběžný s povrchovou přímkou kužele. Víc o tom v kapitole o kuželosečkách.
+
+Parabola má jednu výjimečnou vlastnost. Všechny paprsky, které na ni dopadají rovnoběžně s osou, se po odrazu setkají v jednom bodě, v takzvaném \textbf{ohnisku}. Proto mají satelitní antény, reflektory aut i solární vařiče parabolický tvar. Funguje to i obráceně: zdroj světla v ohnisku vyšle rovnoběžný svazek paprsků.
+
+Podle legendy toho využil Archimédés při obraně Syrakus proti Římanům v roce 212 př.~n.~l. Prý nechal vojáky postavit obrovská zrcadla, kterými soustředil sluneční paprsky na římské lodě a zapálil je. Jestli se to opravdu stalo, je sporné. V roce 2005 to zkusili studenti z MIT s dřevěnou lodí a 127 zrcadly a loď sice začala hořet, ale trvalo to dlouho a muselo být ideální počasí.\footnote{Pořad Bořiči mýtů (Mythbusters) to zkusil několikrát a mýtus prohlásil za vyvrácený. Takže záleží, komu věříte.}
+
+Syrakusy nakonec stejně padly. Podle Plútarcha byl Archimédés v té době zabraný do geometrického problému a kreslil obrazce do písku. Když k němu přišel římský voják, Archimédés ho prý okřikl `Neruš mé kruhy!' a voják ho na místě zabil. Římský velitel Marcellus, který chtěl Archiméda zajmout živého, byl prý jeho smrtí rozezlen. Archimédés si přál, aby mu na hrob vytesali kouli vepsanou do válce, protože objev vztahu mezi jejich objemy považoval za svůj největší úspěch. O 137 let později našel Cicero zarostlý a zapomenutý hrob právě podle tohoto obrazce. Ten vztah si ukážeme v kapitole o stereometrii.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je lineární funkce? Jaký význam mají koeficienty $a$ a $b$? Dokažte, kdy je lineární funkce rostoucí.
+    \item Jak najdete lineární funkci, jejíž graf prochází dvěma danými body?
+    \item Co je kvadratická funkce? Jak najdete vrchol paraboly? Popište vlastnosti kvadratické funkce v závislosti na znaménku $a$.
+    \item Jak souvisí graf kvadratické funkce s řešením kvadratické rovnice a nerovnice?
+    \item Co je nepřímá úměrnost a lineární lomená funkce? Jak najdete asymptoty?
+    \item Proč v definici lineární lomené funkce požadujeme $ad - bc\neq 0$?
+    \item Popište vlastnosti mocninných funkcí s kladným celým, záporným celým a racionálním exponentem. Nakreslete grafy.
+    \item Uveďte příklady využití lineárních, kvadratických a lomených funkcí v praxi.
+  \end{enumerate}
+\end{problem}

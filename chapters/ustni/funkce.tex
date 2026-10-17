@@ -1,0 +1,414 @@
+\label{kap:funkce}
+\mathquote{In mathematics you don't understand things. You just get used to them.}{John von Neumann}
+
+Funkce jsou pravděpodobně nejdůležitějším pojmem celé matematiky. Popisují, jak jedna veličina závisí na jiné: dráha na čase, cena na množství, teplota na nadmořské výšce. V této kapitole si funkce pořádně zadefinujeme (pomocí relací z kapitoly 2, takže se nám konečně vyplatí, že jsme je zaváděli), popíšeme jejich vlastnosti a naučíme se s nimi pracovat. Konkrétní funkce (lineární, kvadratické, exponenciální, goniometrické, \ldots) přijdou v dalších kapitolách. Tahle kapitola je o tom, jak o funkcích mluvit.
+
+\section{Pojem funkce}
+
+Intuitivně je funkce předpis, který každému číslu $x$ přiřadí nějaké číslo $y$. Můžeme si ji představit jako automat: dáte do něj $x$ a vypadne jedno $y$. Důležité je slovo \textit{jedno}. Pokud by z automatu pro stejné $x$ jednou vypadlo jedno a podruhé jiné číslo, nebyl by to automat, ale loterie.
+
+\begin{definitionbox}
+  \textbf{Funkce} $f$ z množiny $A$ do množiny $B$ je relace $f\subseteq A\times B$ taková, že ke každému $x\in A$ existuje \textbf{právě jedno} $y\in B$ s vlastností $(x, y)\in f$. Toto $y$ značíme $f(x)$ a nazýváme ho \textbf{funkční hodnota} v bodě $x$. Píšeme
+  \begin{equation*}
+    f: A\to B,\qquad x\mapsto f(x),
+  \end{equation*}
+  nebo zkráceně $y = f(x)$. Proměnnou $x$ nazýváme \textbf{nezávisle proměnná} (argument), proměnnou $y$ \textbf{závisle proměnná}.
+
+  \vspace{0.2cm}
+
+  \textbf{Definiční obor} $D(f)$ je množina všech $x$, pro která je funkce definovaná. \textbf{Obor hodnot} $H(f)$ je množina všech hodnot, kterých funkce nabývá:
+  \begin{equation*}
+    H(f) = \{f(x)\ |\ x\in D(f)\}.
+  \end{equation*}
+  \textbf{Graf funkce} je množina bodů $\{(x, f(x))\ |\ x\in D(f)\}$ v rovině. Z definice je graf funkce vlastně funkce sama.
+\end{definitionbox}
+
+V tomto textu budeme pracovat s \textbf{reálnými funkcemi reálné proměnné}, tedy $A, B\subseteq\mathbb{R}$. Pokud je funkce zadaná jen předpisem (například $f(x) = \sqrt{x - 1}$) a definiční obor není výslovně uveden, rozumíme jím největší množinu, pro kterou má předpis smysl. Určujeme ho stejně jako definiční obor výrazu v kapitole~\ref{kap:vyrazy}.
+
+\begin{example}
+  Několik funkcí a ne-funkcí:
+  \begin{itemize}
+    \item $f(x) = x^2$ je funkce, $D(f) = \mathbb{R}$, $H(f) = [0, \infty)$. Různým $x$ může příslušet stejné $y$ (například $f(2) = f(-2) = 4$), to definice dovoluje.
+    \item $g(x) = \frac{1}{x - 2}$ je funkce s $D(g) = \mathbb{R}\setminus\{2\}$ a $H(g) = \mathbb{R}\setminus\{0\}$.
+    \item Relace $\{(x, y)\in\mathbb{R}^2\ |\ x^2 + y^2 = 1\}$ (kružnice) \textbf{není} funkce, protože například k $x = 0$ patří dvě hodnoty $y = 1$ i $y = -1$.
+    \item Relace $\{(1, 2), (2, 3), (3, 2)\}$ je funkce s $D = \{1, 2, 3\}$ a $H = \{2, 3\}$. Funkce nemusí mít předpis, stačí tabulka.
+  \end{itemize}
+\end{example}
+
+\begin{note}
+  Jak poznat z obrázku, zda je křivka grafem funkce? \textbf{Test svislou přímkou}: každá svislá přímka smí křivku protnout nejvýše jednou. Pokud ji někde protne dvakrát, máme pro jedno $x$ dvě hodnoty $y$. Kružnice testem neprojde.
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Způsoby zadání funkce}:
+  \begin{itemize}
+    \item \textbf{předpisem} (rovnicí), například $f(x) = 3x^2 - 1$,
+    \item \textbf{tabulkou} (u funkcí s konečným definičním oborem nebo u naměřených dat),
+    \item \textbf{grafem},
+    \item \textbf{slovně}, například `každému přirozenému číslu přiřadíme jeho nejmenšího prvočíselného dělitele'.
+  \end{itemize}
+  Funkce může být zadána i \textbf{po částech}, tedy různými předpisy na různých intervalech. Takovou funkcí je například absolutní hodnota z kapitoly~\ref{kap:absolutni}.
+\end{definitionbox}
+
+\begin{problem}
+  Určete definiční obor:
+  \begin{enumerate}[label=(\alph*)]
+    \item $f(x) = \dfrac{x + 1}{x^2 - 5x + 6}$,
+    \item $g(x) = \sqrt{4 - x^2}$,
+    \item $h(x) = \dfrac{\sqrt{x + 3}}{|x| - 1}$,
+    \item $k(x) = \sqrt{\dfrac{x - 1}{x + 2}}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^2 - 5x + 6 = (x - 2)(x - 3)\neq 0$, tedy $D(f) = \mathbb{R}\setminus\{2, 3\}$.
+    \item $4 - x^2\geq 0$, tedy $D(g) = [-2, 2]$.
+    \item $x\geq -3$ a $|x|\neq 1$, tedy $D(h) = [-3, -1)\cup(-1, 1)\cup(1, \infty)$.
+    \item $\frac{x - 1}{x + 2}\geq 0$, podle příkladu v kapitole~\ref{kap:rovnice} je $D(k) = (-\infty, -2)\cup[1, \infty)$.
+  \end{enumerate}
+\end{solution}
+
+\section{Vlastnosti funkcí}
+
+\subsection{Monotonie}
+
+\begin{definitionbox}
+  Nechť $M\subseteq D(f)$. Funkce $f$ je na množině $M$
+  \begin{itemize}
+    \item \textbf{rostoucí}, pokud pro všechna $x_1, x_2\in M$ platí $x_1 < x_2\Rightarrow f(x_1) < f(x_2)$,
+    \item \textbf{klesající}, pokud pro všechna $x_1, x_2\in M$ platí $x_1 < x_2\Rightarrow f(x_1) > f(x_2)$,
+    \item \textbf{neklesající}, pokud pro všechna $x_1, x_2\in M$ platí $x_1 < x_2\Rightarrow f(x_1)\leq f(x_2)$,
+    \item \textbf{nerostoucí}, pokud pro všechna $x_1, x_2\in M$ platí $x_1 < x_2\Rightarrow f(x_1)\geq f(x_2)$.
+  \end{itemize}
+  Funkce, které mají některou z těchto vlastností, nazýváme \textbf{monotónní}, rostoucí a klesající funkce \textbf{ryze monotónní}. Pokud množinu $M$ neuvedeme, myslíme celý definiční obor.
+\end{definitionbox}
+
+Slovy: funkce je rostoucí, když s rostoucím $x$ roste i $y$. Graf rostoucí funkce `jde do kopce', když ho čteme zleva doprava. V definici si všimněte kvantifikátoru `pro všechna'. Nestačí ověřit pár bodů, musí to platit pro každou dvojici.
+
+\begin{example}
+  Dokažme, že $f(x) = 2x + 1$ je rostoucí na $\mathbb{R}$. Nechť $x_1 < x_2$. Pak $2x_1 < 2x_2$ (násobíme kladným číslem) a $2x_1 + 1 < 2x_2 + 1$, tedy $f(x_1) < f(x_2)$.
+
+  Dokažme, že $g(x) = \frac{1}{x}$ je klesající na $(0, \infty)$. Nechť $0 < x_1 < x_2$. Pak
+  \begin{equation*}
+    g(x_1) - g(x_2) = \frac{1}{x_1} - \frac{1}{x_2} = \frac{x_2 - x_1}{x_1x_2} > 0,
+  \end{equation*}
+  protože čitatel i jmenovatel jsou kladné. Tedy $g(x_1) > g(x_2)$. Úplně stejně se ukáže, že $g$ je klesající i na $(-\infty, 0)$.
+\end{example}
+
+\begin{note}\label{note:1x}
+  Pozor, funkce $\frac{1}{x}$ \textbf{není} klesající na celém svém definičním oboru $\mathbb{R}\setminus\{0\}$! Stačí vzít $x_1 = -1 < 1 = x_2$, a $g(-1) = -1 < 1 = g(1)$. Je klesající na každém z intervalů $(-\infty, 0)$ a $(0, \infty)$ zvlášť, ale ne na jejich sjednocení. Tohle je oblíbená chyták otázka u ústní maturity. Správná odpověď je `klesající na $(-\infty, 0)$ a na $(0, \infty)$', nikdy `klesající na $\mathbb{R}\setminus\{0\}$'.
+\end{note}
+
+\subsection{Prostá funkce}
+
+\begin{definitionbox}
+  Funkce $f$ je \textbf{prostá}, pokud pro všechna $x_1, x_2\in D(f)$ platí
+  \begin{equation*}
+    x_1\neq x_2\quad\Rightarrow\quad f(x_1)\neq f(x_2).
+  \end{equation*}
+  Ekvivalentně (obměnou implikace z kapitoly 1): $f(x_1) = f(x_2)\Rightarrow x_1 = x_2$.
+\end{definitionbox}
+
+Prostá funkce nikdy nepřiřadí stejnou hodnotu dvěma různým číslům. Graficky: každá \textbf{vodorovná} přímka protne graf nejvýše jednou. Funkce $x^2$ prostá není ($f(-2) = f(2)$), funkce $x^3$ ano.
+
+\begin{definitionbox}
+  \textbf{Věta}: Každá ryze monotónní funkce je prostá.
+\end{definitionbox}
+
+\begin{proof}
+  Nechť $f$ je rostoucí a $x_1\neq x_2$. Bez újmy na obecnosti\footnote{Tato fráze se v matematice používá, když by druhý případ vypadal úplně stejně, jen s prohozenými písmeny. Je to způsob, jak elegantně říct `ten druhý případ se mi nechce psát'.} $x_1 < x_2$. Pak $f(x_1) < f(x_2)$, a tedy $f(x_1)\neq f(x_2)$. Pro klesající funkci stejně.
+\end{proof}
+
+Obrácená implikace neplatí! Funkce $\frac{1}{x}$ je prostá (zkuste si to dokázat), ale podle poznámky~\ref{note:1x} na svém definičním oboru monotónní není.
+
+\subsection{Sudost a lichost}
+
+\begin{definitionbox}
+  Funkce $f$ je
+  \begin{itemize}
+    \item \textbf{sudá}, pokud pro každé $x\in D(f)$ je $-x\in D(f)$ a $f(-x) = f(x)$,
+    \item \textbf{lichá}, pokud pro každé $x\in D(f)$ je $-x\in D(f)$ a $f(-x) = -f(x)$.
+  \end{itemize}
+  Graf sudé funkce je \textbf{souměrný podle osy $y$}, graf liché funkce je \textbf{souměrný podle počátku}.
+\end{definitionbox}
+
+Názvy pochází z mocnin: $x^2, x^4, x^6, \ldots$ jsou sudé funkce a $x, x^3, x^5, \ldots$ liché. Nenechte se ale zmást. Většina funkcí není ani sudá, ani lichá. Funkce není jako číslo, které musí být jedno nebo druhé.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \begin{scope}
+      \draw[->] (-2.6,0) -- (2.8,0) node[right] {\small $x$};
+      \draw[->] (0,-0.6) -- (0,3.4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-1.8:1.8, samples=60] plot (\x, {\x*\x});
+      \draw[dashed] (-1.5,0) -- (-1.5,2.25) -- (1.5,2.25) -- (1.5,0);
+      \node[below] at (-1.5,0) {\small $-x$};
+      \node[below] at (1.5,0) {\small $x$};
+      \node at (0,-1.3) {\small sudá: $f(x) = x^2$};
+    \end{scope}
+    \begin{scope}[xshift=8cm, yshift=1.4cm]
+      \draw[->] (-2.6,0) -- (2.8,0) node[right] {\small $x$};
+      \draw[->] (0,-2) -- (0,2) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-1.55:1.55, samples=60] plot (\x, {0.5*\x*\x*\x});
+      \draw[dashed] (-1.4,0) -- (-1.4,-1.372) (1.4,0) -- (1.4,1.372);
+      \draw[dashed, gray] (-1.4,-1.372) -- (1.4,1.372);
+      \node[above] at (-1.4,0) {\small $-x$};
+      \node[below] at (1.4,0) {\small $x$};
+      \node at (0,-2.7) {\small lichá: $f(x) = \frac{1}{2}x^3$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Rozhodněme o sudosti a lichosti:
+  \begin{itemize}
+    \item $f(x) = x^4 - x^2$: $f(-x) = {(-x)}^4 - {(-x)}^2 = x^4 - x^2 = f(x)$. Sudá.
+    \item $g(x) = x^3 + x$: $g(-x) = -x^3 - x = -g(x)$. Lichá.
+    \item $h(x) = x^2 + x$: $h(1) = 2$, $h(-1) = 0$. Protože $h(-1)\neq h(1)$ a $h(-1)\neq -h(1)$, není ani sudá, ani lichá. Pro vyvrácení stačí jeden protipříklad.
+    \item $k(x) = \sqrt{x}$: $D(k) = [0, \infty)$ není souměrný podle nuly ($1\in D$, ale $-1\notin D$). Není ani sudá, ani lichá a nemusíme nic počítat.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Rozhodněte o sudosti a lichosti funkcí $\frac{x}{x^2 + 1}$, $|x| + 1$, $\frac{1}{x - 1}$.
+    \item Existuje funkce, která je zároveň sudá i lichá?
+    \item Dokažte, že součin dvou lichých funkcí je sudá funkce.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item První je lichá, druhá sudá. Třetí má definiční obor $\mathbb{R}\setminus\{1\}$, který není souměrný, takže není ani sudá, ani lichá.
+    \item Ano, $f(x) = 0$. Z $f(-x) = f(x)$ a $f(-x) = -f(x)$ plyne $f(x) = -f(x)$, tedy $f(x) = 0$. Je to tedy jediná taková funkce (na daném souměrném definičním oboru).
+    \item Nechť $f, g$ jsou liché a $h = f\cdot g$. Pak $h(-x) = f(-x)g(-x) = (-f(x))(-g(x)) = f(x)g(x) = h(x)$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Omezenost a extrémy}
+
+\begin{definitionbox}
+  Funkce $f$ je na množině $M\subseteq D(f)$
+  \begin{itemize}
+    \item \textbf{shora omezená}, pokud existuje $h\in\mathbb{R}$ takové, že $f(x)\leq h$ pro všechna $x\in M$,
+    \item \textbf{zdola omezená}, pokud existuje $d\in\mathbb{R}$ takové, že $f(x)\geq d$ pro všechna $x\in M$,
+    \item \textbf{omezená}, pokud je omezená shora i zdola.
+  \end{itemize}
+  Funkce $f$ má v bodě $a\in M$ \textbf{maximum} na $M$, pokud $f(x)\leq f(a)$ pro všechna $x\in M$, a \textbf{minimum}, pokud $f(x)\geq f(a)$ pro všechna $x\in M$. Maximum a minimum společně nazýváme \textbf{extrémy}.
+\end{definitionbox}
+
+\begin{example}
+  Funkce $f(x) = x^2$ je zdola omezená (například číslem $0$), shora omezená není. Má minimum v bodě $0$, maximum nemá.
+
+  Funkce $g(x) = \frac{1}{x}$ na intervalu $(0, \infty)$ je zdola omezená číslem $0$, ale minimum nemá! Hodnoty se k nule libovolně blíží, ale nikdy jí nedosáhnou. Omezenost tedy neznamená, že existuje extrém. V analýze se pro `nejlepší' dolní mez zavádí pojem infimum, ale to už je nad rámec maturity.
+
+  Funkce $\sin x$ je omezená ($-1\leq\sin x\leq 1$) a maxima nabývá v nekonečně mnoha bodech.
+\end{example}
+
+\subsection{Periodičnost}
+
+\begin{definitionbox}
+  Funkce $f$ je \textbf{periodická} s periodou $p > 0$, pokud pro každé $x\in D(f)$ je i $x\pm p\in D(f)$ a
+  \begin{equation*}
+    f(x + p) = f(x).
+  \end{equation*}
+  Nejmenší takové $p$ (pokud existuje) nazýváme \textbf{základní perioda}.
+\end{definitionbox}
+
+Typickými periodickými funkcemi jsou goniometrické funkce, kterým patří kapitola~\ref{kap:goniometrie}. Funkce $\sin x$ má základní periodu $2\pi$. Pokud je $p$ perioda, je periodou i $2p$, $3p$ a tak dál, proto mluvíme o základní periodě. Zajímavost: konstantní funkce je periodická s libovolnou periodou, a proto základní periodu nemá.
+
+\section{Operace s funkcemi}
+
+\subsection{Skládání funkcí}
+
+\begin{definitionbox}
+  \textbf{Složená funkce} $g\circ f$ (čteme `$g$ po $f$') je funkce
+  \begin{equation*}
+    (g\circ f)(x) = g(f(x)).
+  \end{equation*}
+  Nejdřív se tedy použije $f$ (\textbf{vnitřní funkce}) a na výsledek $g$ (\textbf{vnější funkce}). Definiční obor tvoří ta $x\in D(f)$, pro která je $f(x)\in D(g)$.
+\end{definitionbox}
+
+\begin{example}
+  Nechť $f(x) = x + 1$ a $g(x) = x^2$. Pak
+  \begin{equation*}
+    (g\circ f)(x) = g(x + 1) = {(x + 1)}^2,\qquad (f\circ g)(x) = f(x^2) = x^2 + 1.
+  \end{equation*}
+  Tedy $g\circ f\neq f\circ g$. Skládání funkcí \textbf{není komutativní}, stejně jako násobení matic.\footnote{To není náhoda. Matice jsou ve skutečnosti zápisem určitého druhu funkcí (lineárních zobrazení) a násobení matic odpovídá jejich skládání. To je důvod, proč je násobení matic definované tak divně.} Obléct si ponožky a pak boty dá jiný výsledek než obráceně.
+\end{example}
+
+\begin{example}
+  Nechť $f(x) = \sqrt{x}$ a $g(x) = x - 4$. Pak $(f\circ g)(x) = \sqrt{x - 4}$ s definičním oborem $[4, \infty)$, zatímco $(g\circ f)(x) = \sqrt{x} - 4$ s definičním oborem $[0, \infty)$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Pro $f(x) = 2x - 1$ a $g(x) = \frac{1}{x}$ určete $f\circ g$, $g\circ f$ a $f\circ f$ včetně definičních oborů.
+    \item Funkci $h(x) = \sqrt{x^2 + 1}$ zapište jako složení dvou jednodušších funkcí.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $(f\circ g)(x) = \frac{2}{x} - 1$, $D = \mathbb{R}\setminus\{0\}$. $(g\circ f)(x) = \frac{1}{2x - 1}$, $D = \mathbb{R}\setminus\left\{\frac{1}{2}\right\}$. $(f\circ f)(x) = 2(2x - 1) - 1 = 4x - 3$, $D = \mathbb{R}$.
+    \item $h = g\circ f$, kde $f(x) = x^2 + 1$ a $g(x) = \sqrt{x}$. Tento rozklad budeme potřebovat u derivací.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Inverzní funkce}
+
+Funkce přiřazuje číslu $x$ číslo $y$. Můžeme jít obráceně a z $y$ zjistit, z jakého $x$ vzniklo? To jde jen tehdy, když každé $y$ vzniklo z jediného $x$, tedy když je funkce prostá.
+
+\begin{definitionbox}
+  Nechť $f$ je \textbf{prostá} funkce. \textbf{Inverzní funkce} $f^{-1}$ je funkce, která každému $y\in H(f)$ přiřadí to (jediné) $x\in D(f)$, pro které $f(x) = y$. Platí:
+  \begin{itemize}
+    \item $D(f^{-1}) = H(f)$ a $H(f^{-1}) = D(f)$,
+    \item $f^{-1}(f(x)) = x$ pro všechna $x\in D(f)$ a $f(f^{-1}(y)) = y$ pro všechna $y\in H(f)$,
+    \item graf $f^{-1}$ je souměrný s grafem $f$ podle přímky $y = x$.
+  \end{itemize}
+
+  \textbf{Postup hledání}: V rovnici $y = f(x)$ vyjádříme $x$ pomocí $y$ a pak písmena $x$ a $y$ prohodíme (protože nezávislou proměnnou obvykle značíme $x$).
+\end{definitionbox}
+
+\begin{note}
+  Značení $f^{-1}$ je bohužel matoucí. Neznamená $\frac{1}{f}$! Například pro $f(x) = 2x$ je $f^{-1}(x) = \frac{x}{2}$, ale $\frac{1}{f(x)} = \frac{1}{2x}$. Exponent $-1$ zde znamená `inverze vzhledem ke skládání', podobně jako $A^{-1}$ u matic znamenalo inverzi vzhledem k násobení matic.
+\end{note}
+
+\begin{example}
+  Najděme inverzní funkci k $f(x) = 2x - 3$. Funkce je rostoucí, tedy prostá. Z $y = 2x - 3$ vyjádříme $x = \frac{y + 3}{2}$ a prohodíme písmena: $f^{-1}(x) = \frac{x + 3}{2}$. Ověření: $f^{-1}(f(x)) = \frac{2x - 3 + 3}{2} = x$.
+\end{example}
+
+\begin{example}
+  Funkce $f(x) = x^2$ na $\mathbb{R}$ prostá není, takže inverzní funkci nemá. Pokud ale definiční obor omezíme na $[0, \infty)$, prostá je a inverzní funkce je $f^{-1}(x) = \sqrt{x}$. Přesně takhle je ostatně definována odmocnina v kapitole~\ref{kap:vyrazy}: je to inverze k mocnině na nezáporných číslech.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.85]
+      \draw[->] (-0.5,0) -- (3.6,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,3.6) node[above] {\small $y$};
+      \draw[dashed, gray] (-0.3,-0.3) -- (3.4,3.4) node[above right] {\small $y = x$};
+      \draw[thick, colorofwisdom, domain=0:1.85, samples=60] plot (\x, {\x*\x}) node[above] {\small $y = x^2$};
+      \draw[thick, domain=0:3.4, samples=80] plot (\x, {sqrt(\x)}) node[right] {\small $y = \sqrt{x}$};
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{problem}
+  Najděte inverzní funkci a určete její definiční obor:
+  \begin{enumerate}[label=(\alph*)]
+    \item $f(x) = 5 - 3x$,
+    \item $g(x) = \dfrac{2x + 1}{x - 3}$,
+    \item $h(x) = x^2 + 1$ pro $x\leq 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x = \frac{5 - y}{3}$, tedy $f^{-1}(x) = \frac{5 - x}{3}$, $D = \mathbb{R}$.
+    \item $y(x - 3) = 2x + 1$, tedy $x(y - 2) = 3y + 1$ a $x = \frac{3y + 1}{y - 2}$. $g^{-1}(x) = \frac{3x + 1}{x - 2}$, $D(g^{-1}) = H(g) = \mathbb{R}\setminus\{2\}$.
+    \item $x^2 = y - 1$ a protože $x\leq 0$, je $x = -\sqrt{y - 1}$. $h^{-1}(x) = -\sqrt{x - 1}$, $D(h^{-1}) = H(h) = [1, \infty)$. Pozor na znaménko: kdybychom napsali $+\sqrt{\ }$, dostali bychom inverzi k jiné větvi paraboly.
+  \end{enumerate}
+\end{solution}
+
+\section{Transformace grafů}
+
+Pokud známe graf funkce $f$, můžeme z něj snadno nakreslit grafy mnoha příbuzných funkcí. To je jedna z nejužitečnějších dovedností pro celou analýzu, protože místo bodování (počítání hodnot v mnoha bodech) stačí znát pár základních grafů a vědět, jak se posouvají.
+
+\begin{definitionbox}
+  \textbf{Transformace grafu} funkce $y = f(x)$ (pro $c > 0$, $a > 0$):
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|l|l|}
+      \hline
+      Nová funkce & Co se stane s grafem \\
+      \hline
+      $y = f(x) + c$ & posun o $c$ \textbf{nahoru} \\
+      $y = f(x) - c$ & posun o $c$ \textbf{dolů} \\
+      $y = f(x - c)$ & posun o $c$ \textbf{doprava} \\
+      $y = f(x + c)$ & posun o $c$ \textbf{doleva} \\
+      $y = -f(x)$ & překlopení podle osy $x$ \\
+      $y = f(-x)$ & překlopení podle osy $y$ \\
+      $y = a\cdot f(x)$ & $a$-násobné roztažení ve směru osy $y$ (pro $a < 1$ stlačení) \\
+      $y = f(a\cdot x)$ & $a$-násobné stlačení ve směru osy $x$ (pro $a < 1$ roztažení) \\
+      $y = |f(x)|$ & části grafu pod osou $x$ se překlopí nahoru \\
+      $y = f(|x|)$ & pravá část grafu se zrcadlí doleva (levá se zahodí) \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{definitionbox}
+
+Zdaleka nejčastější chyba je u vodorovných posunů. $f(x - 2)$ posouvá graf \textbf{doprava}, ne doleva. Proč? Funkce $g(x) = f(x - 2)$ nabývá v bodě $x = 2$ hodnoty $f(0)$. Co dřív bylo v nule, je teď ve dvojce. Graf se tedy posunul doprava. Vodorovné transformace prostě dělají `opak toho, co vidíte', a je lepší to pochopit než to biflovat.
+
+\begin{example}
+  Nakresleme graf $y = {(x - 2)}^2 - 1$. Vyjdeme z paraboly $y = x^2$, posuneme ji o $2$ doprava a o $1$ dolů. Vrchol se tak přesune z $(0, 0)$ do $(2, -1)$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.75]
+      \draw[->] (-2.5,0) -- (4.8,0) node[right] {\small $x$};
+      \draw[->] (0,-1.6) -- (0,4.4) node[above] {\small $y$};
+      \foreach \x in {-2,-1,1,2,3,4} \draw (\x,0.08) -- (\x,-0.08) node[below] {\tiny $\x$};
+      \draw[thick, gray, dashed, domain=-2:2, samples=60] plot (\x, {\x*\x}) node[left] {\small $y = x^2$};
+      \draw[thick, colorofwisdom, domain=-0.2:4.2, samples=60] plot (\x, {(\x-2)*(\x-2)-1}) node[right] {\small $y = (x - 2)^2 - 1$};
+      \filldraw[colorofwisdom] (2,-1) circle (2pt);
+      \draw[->, gray] (0.2,0.1) -- (1.8,-0.85);
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{example}
+  Graf $y = |x^2 - 4|$ dostaneme z paraboly $y = x^2 - 4$ tak, že část mezi $-2$ a $2$, která je pod osou $x$, překlopíme nahoru. Graf $y = {|x|}^2 - 4$ je naopak stejný jako $y = x^2 - 4$, protože parabola je sudá a pravá strana je zrcadlem levé už teď.
+\end{example}
+
+\begin{problem}
+  Popište, jak vzniknou z grafu $y = f(x)$ grafy:
+  \begin{enumerate}[label=(\alph*)]
+    \item $y = f(x + 3) - 2$,
+    \item $y = -f(x) + 1$,
+    \item $y = 2f(x - 1)$,
+    \item $y = |f(x)| - 1$.
+  \end{enumerate}
+  Výsledky si nakreslete pro $f(x) = x^2$ a $f(x) = \frac{1}{x}$.
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Posun o $3$ doleva a o $2$ dolů.
+    \item Překlopení podle osy $x$ a pak posun o $1$ nahoru. Na pořadí záleží! Kdybychom nejdřív posunuli a pak překlopili, dostali bychom $-(f(x) + 1) = -f(x) - 1$.
+    \item Posun o $1$ doprava a dvojnásobné roztažení ve směru osy $y$.
+    \item Části pod osou $x$ se překlopí nahoru a pak se celý graf posune o $1$ dolů.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Monstra}
+
+Když se v 19. století matematici začali vážně zabývat tím, co je funkce, zjistili, že definice `ke každému $x$ právě jedno $y$' dovoluje věci, které nikdo nečekal.
+
+Peter Gustav Lejeune Dirichlet přišel s funkcí
+\begin{equation*}
+  D(x) = \begin{cases}
+    1 & \text{pro } x\in\mathbb{Q},\\
+    0 & \text{pro } x\notin\mathbb{Q}.
+  \end{cases}
+\end{equation*}
+Je to naprosto legitimní funkce, splňuje definici. Jenže se nedá nakreslit. Racionální i iracionální čísla jsou na reálné ose `všude' (mezi každými dvěma čísly leží racionální i iracionální číslo), takže graf by vypadal jako dvě husté vodorovné čáry v $y = 0$ a $y = 1$, ze kterých ale ve skutečnosti chybí nekonečně mnoho bodů. Tato funkce není spojitá v žádném bodě.
+
+Karl Weierstrass pak v roce 1872 sestrojil funkci, která je spojitá všude (její graf se dá nakreslit jedním tahem), ale nemá tečnu v žádném bodě. Graf je tak `zubatý', že zuby má v každém sebemenším kousku. Matematici té doby byli zděšení. Henri Poincaré, autor citátu na začátku kapitoly~\ref{kap:kvadraticke}, takové funkce nazval \textbf{monstry}. Charles Hermite napsal kolegovi:
+\begin{center}
+  \textit{`S hrůzou a odporem se odvracím od této politováníhodné rány spojitých funkcí, které nemají derivaci.'}
+\end{center}
+Dnes víme, že monstra nejsou výjimka, ale pravidlo. V jistém přesném smyslu je `skoro každá' spojitá funkce taková jako ta Weierstrassova. Hezké hladké funkce, se kterými pracujeme ve škole, jsou ve skutečnosti ty vzácné. A mimochodem, podobně zubaté křivky dnes používáme k popisu pobřeží, horských hřebenů nebo cen akcií. Monstra se ukázala být docela užitečná.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je funkce? Jak souvisí s relacemi? Co je definiční obor, obor hodnot a graf?
+    \item Jak lze funkci zadat? Jak poznáte z obrázku, zda jde o graf funkce?
+    \item Definujte rostoucí, klesající, nerostoucí a neklesající funkci. Dokažte, že $\frac{1}{x}$ je klesající na $(0, \infty)$. Proč není klesající na $\mathbb{R}\setminus\{0\}$?
+    \item Co je prostá funkce? Jaký je vztah mezi prostou a ryze monotónní funkcí?
+    \item Co je sudá a lichá funkce? Jak to poznáte z grafu?
+    \item Co je omezená funkce? Co je maximum a minimum? Může být funkce omezená a nemít extrém?
+    \item Co je periodická funkce?
+    \item Co je složená funkce? Je skládání funkcí komutativní?
+    \item Kdy existuje inverzní funkce? Jak ji najdeme a jak vypadá její graf?
+    \item Jak se změní graf funkce, když k ní přičteme konstantu, když ji posuneme v argumentu, když ji vynásobíme $-1$ a když na ni použijeme absolutní hodnotu?
+  \end{enumerate}
+\end{problem}
