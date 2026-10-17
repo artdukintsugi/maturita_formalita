@@ -1,0 +1,217 @@
+\label{kap:pravdepodobnost}
+\mathquote{Probability theory is nothing but common sense reduced to calculation.}{Pierre-Simon Laplace}
+
+Laplace tvrdí, že pravděpodobnost je jen zdravý rozum převedený na počty. Dobrá zpráva je, že má pravdu. Špatná zpráva je, že lidský zdravý rozum je v pravděpodobnosti překvapivě špatný. V této kapitole si ukážeme, jak pravděpodobnost počítat, a narazíme na několik příkladů, ve kterých intuice selhává tak spolehlivě, že kvůli nim vznikaly hádky mezi profesory matematiky.
+
+\section{Náhodný pokus a jevy}
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Náhodný pokus} je děj, jehož výsledek není předem jednoznačně určen (hod kostkou, losování, měření).
+    \item \textbf{Prostor výsledků} $\Omega$ je množina všech možných výsledků pokusu.
+    \item \textbf{Jev} $A$ je libovolná podmnožina $\Omega$. Jev \textbf{nastal}, pokud výsledek pokusu patří do $A$.
+    \item \textbf{Jistý jev} je $\Omega$, \textbf{nemožný jev} je $\emptyset$.
+  \end{itemize}
+
+  \textbf{Operace s jevy} jsou množinové operace z kapitoly 2:
+  \begin{itemize}
+    \item $A\cup B$: nastal $A$ \textbf{nebo} $B$ (sjednocení),
+    \item $A\cap B$: nastal $A$ \textbf{a} $B$ (průnik),
+    \item $A' = \Omega\setminus A$: \textbf{nenastal} $A$ (opačný jev),
+    \item $A$ a $B$ jsou \textbf{neslučitelné}, pokud $A\cap B = \emptyset$ (nemohou nastat současně).
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Hod kostkou: $\Omega = \{1, 2, 3, 4, 5, 6\}$. Jev `padne sudé číslo' je $A = \{2, 4, 6\}$, jev `padne víc než $4$' je $B = \{5, 6\}$. Pak $A\cup B = \{2, 4, 5, 6\}$, $A\cap B = \{6\}$ a $A' = \{1, 3, 5\}$.
+\end{example}
+
+\section{Klasická pravděpodobnost}
+
+\begin{definitionbox}
+  \textbf{Klasická definice pravděpodobnosti}: Pokud má pokus konečně mnoho výsledků a všechny jsou \textbf{stejně pravděpodobné}, je pravděpodobnost jevu $A$
+  \begin{equation*}
+    P(A) = \frac{|A|}{|\Omega|} = \frac{\text{počet příznivých výsledků}}{\text{počet všech výsledků}}.
+  \end{equation*}
+
+  \textbf{Vlastnosti}:
+  \begin{enumerate}
+    \item $0\leq P(A)\leq 1$, $P(\emptyset) = 0$, $P(\Omega) = 1$,
+    \item $P(A') = 1 - P(A)$,
+    \item $P(A\cup B) = P(A) + P(B) - P(A\cap B)$, speciálně pro neslučitelné jevy $P(A\cup B) = P(A) + P(B)$.
+  \end{enumerate}
+\end{definitionbox}
+
+Vlastnost 3 je stejný princip jako u počítání prvků sjednocení: když sečteme $|A|$ a $|B|$, prvky průniku započítáme dvakrát, a jednou je proto musíme odečíst. Vlastnost 2 je nejužitečnější trik celé pravděpodobnosti. Kdykoli úloha obsahuje slovo `alespoň', zkuste nejdřív spočítat opačný jev.
+
+Podmínka stejně pravděpodobných výsledků je důležitá. Výroky jako `buď vyhraju v loterii, nebo ne, takže je to padesát na padesát' selhávají přesně na ní.
+
+\begin{example}
+  \begin{itemize}
+    \item Hodíme dvěma kostkami. Výsledků je $6\cdot 6 = 36$ (uspořádané dvojice). Součet $7$ padne v $6$ případech ($1 + 6, 2 + 5, \ldots, 6 + 1$), tedy $P = \frac{6}{36} = \frac{1}{6}$. Součet $2$ jen v jednom případě, $P = \frac{1}{36}$. Proto má v deskové hře Osadníci z Katanu políčko se sedmičkou zvláštní pravidla.
+    \item Z balíčku $52$ karet vytáhneme jednu. $P(\text{eso}) = \frac{4}{52} = \frac{1}{13}$. $P(\text{eso nebo srdce}) = \frac{4}{52} + \frac{13}{52} - \frac{1}{52} = \frac{16}{52} = \frac{4}{13}$, protože srdcové eso jsme započítali dvakrát.
+    \item Pravděpodobnost výhry v prvním pořadí Sportky je $\frac{1}{\binom{49}{6}} = \frac{1}{13\,983\,816}$.
+  \end{itemize}
+\end{example}
+
+\begin{example}
+  Jaká je pravděpodobnost, že při čtyřech hodech kostkou padne alespoň jedna šestka? Opačný jev je `nepadne žádná šestka' s pravděpodobností ${\left(\frac{5}{6}\right)}^4$. Tedy
+  \begin{equation*}
+    P = 1 - {\left(\frac{5}{6}\right)}^4 = 1 - \frac{625}{1296}\approx 0{,}518.
+  \end{equation*}
+  Sázet na alespoň jednu šestku ve čtyřech hodech se tedy vyplatí. To je přesně sázka, kterou ve Francii v 17. století s oblibou nabízel hazardní hráč Chevalier de Méré a vydělával na ní. Viz odbočka.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Hodíme třemi mincemi. Jaká je pravděpodobnost, že padnou alespoň dva líce?
+    \item Z osudí s $5$ bílými a $3$ černými koulemi vytáhneme najednou dvě. Jaká je pravděpodobnost, že budou obě bílé? A že bude každá jiné barvy?
+    \item Jaká je pravděpodobnost, že ve Sportce uhodnete právě $3$ čísla?
+    \item Číslo z množiny $\{1, 2, \ldots, 100\}$ vybereme náhodně. Jaká je pravděpodobnost, že je dělitelné dvěma nebo třemi?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $|\Omega| = 8$, příznivé: LLR, LRL, RLL, LLL, tedy $\frac{4}{8} = \frac{1}{2}$.
+    \item $\frac{\binom{5}{2}}{\binom{8}{2}} = \frac{10}{28} = \frac{5}{14}$. Každá jiné barvy: $\frac{5\cdot 3}{28} = \frac{15}{28}$.
+    \item Tři ze šesti tažených a tři ze $43$ netažených: $\frac{\binom{6}{3}\binom{43}{3}}{\binom{49}{6}} = \frac{20\cdot 12341}{13983816}\approx 0{,}0177$, tedy asi $1{,}8\,\%$.
+    \item Dělitelných dvěma je $50$, třemi $33$, šesti $16$. $P = \frac{50 + 33 - 16}{100} = \frac{67}{100}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Podmíněná pravděpodobnost a nezávislost}
+
+\begin{definitionbox}
+  \textbf{Podmíněná pravděpodobnost} jevu $A$ za podmínky, že nastal jev $B$ (s $P(B) > 0$), je
+  \begin{equation*}
+    P(A\,|\,B) = \frac{P(A\cap B)}{P(B)}.
+  \end{equation*}
+  Jevy $A$ a $B$ jsou \textbf{nezávislé}, pokud
+  \begin{equation*}
+    P(A\cap B) = P(A)\cdot P(B),
+  \end{equation*}
+  tedy pokud $P(A\,|\,B) = P(A)$: to, že nastal $B$, nijak nemění šanci na $A$.
+\end{definitionbox}
+
+Podmíněná pravděpodobnost znamená, že jsme dostali nějakou informaci a tím se zmenšil prostor výsledků. Už nepočítáme ze všech možností, jen z těch, ve kterých nastal $B$.
+
+\begin{example}
+  Hodíme kostkou a víme, že padlo sudé číslo. Jaká je pravděpodobnost, že padla šestka? $P(6\,|\,\text{sudé}) = \frac{\frac{1}{6}}{\frac{1}{2}} = \frac{1}{3}$. Jasné: ze tří sudých čísel je jedno šestka.
+\end{example}
+
+\begin{example}
+  Rodina má dvě děti a víme, že alespoň jedno je kluk. Jaká je pravděpodobnost, že jsou to dva kluci? Intuice říká $\frac{1}{2}$, ale prostor je $\{KK, KD, DK, DD\}$ a informace vyřadí jen $DD$. Ze tří zbylých stejně pravděpodobných možností je příznivá jedna: $P = \frac{1}{3}$. Pokud bychom ale věděli, že \textit{starší} dítě je kluk, bylo by to $\frac{1}{2}$. Na tom, jak přesně informaci dostaneme, záleží.
+\end{example}
+
+\begin{note}
+  Pozor na \textbf{gamblerův omyl}. Pokud na ruletě padla pětkrát po sobě červená, šance na černou v dalším kole není větší. Jednotlivá kola rulety jsou nezávislá a ruleta si nepamatuje, co padlo. V roce 1913 v kasinu v Monte Carlu padla černá šestadvacetkrát po sobě a hráči během té série prosázeli miliony franků, protože byli přesvědčení, že červená `už musí přijít'.
+\end{note}
+
+\subsection{Bayesova věta}
+
+\begin{definitionbox}
+  \textbf{Věta o úplné pravděpodobnosti}: Pokud jevy $B$ a $B'$ rozdělí prostor na dvě části, platí
+  \begin{equation*}
+    P(A) = P(A\,|\,B)P(B) + P(A\,|\,B')P(B').
+  \end{equation*}
+  \textbf{Bayesova věta}:
+  \begin{equation*}
+    P(B\,|\,A) = \frac{P(A\,|\,B)\cdot P(B)}{P(A)}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Nemoc má $1\,\%$ populace. Test ji odhalí u nemocného s pravděpodobností $99\,\%$, ale u zdravého člověka vyjde falešně pozitivní v $5\,\%$ případů. Váš test vyšel pozitivní. Jaká je pravděpodobnost, že jste nemocní?
+
+  Označme $N$ = nemocný, $+$ = pozitivní test. $P(+) = 0{,}99\cdot 0{,}01 + 0{,}05\cdot 0{,}99 = 0{,}0099 + 0{,}0495 = 0{,}0594$. Podle Bayese
+  \begin{equation*}
+    P(N\,|\,+) = \frac{0{,}99\cdot 0{,}01}{0{,}0594} = \frac{0{,}0099}{0{,}0594} = \frac{1}{6}\approx 16{,}7\,\%.
+  \end{equation*}
+  Ne $99\,\%$, ale jen asi $17\,\%$! Zdravých lidí je tolik, že i malé procento falešných poplachů jich vyprodukuje víc než skutečně nemocných. Studie ukázaly, že velká část lékařů na takovou otázku odpoví špatně. Proto se pozitivní výsledky screeningových testů vždy ověřují dalším testem.
+\end{example}
+
+\begin{example}[ (Monty Hall)]
+  V televizní soutěži jsou tři dveře. Za jedněmi je auto, za ostatními kozy. Vyberete si dveře, třeba číslo $1$. Moderátor, který ví, kde je auto, otevře jiné dveře, třeba číslo $3$, za kterými je koza. Pak se vás zeptá, jestli chcete změnit volbu na dveře číslo $2$. Vyplatí se to?
+
+  Ano! Pokud volbu změníte, vyhrajete s pravděpodobností $\frac{2}{3}$. Vaše původní volba měla šanci $\frac{1}{3}$ a moderátor na tom nic nezměnil, protože koza za nějakými dalšími dveřmi je vždycky. Zbylé $\frac{2}{3}$ se ale `soustředily' na jediné zbývající dveře. Nevěříte? Představte si stejnou hru se sto dveřmi, ze kterých moderátor otevře $98$ s kozou. Nechali byste si svou původní volbu?
+
+  Když tuto úlohu v roce 1990 v časopise vyřešila Marilyn vos Savant, dostala přes deset tisíc dopisů, z toho asi tisíc od lidí s doktorátem, že se mýlí. Přesvědčit se prý nenechal ani slavný matematik Paul Erdős, dokud neviděl počítačovou simulaci.
+\end{example}
+
+\section{Opakované pokusy}
+
+\begin{definitionbox}
+  \textbf{Bernoulliho schéma}: Pokus, ve kterém nastane `úspěch' s pravděpodobností $p$, opakujeme $n$-krát nezávisle. Pravděpodobnost, že úspěch nastane \textbf{právě $k$-krát}, je
+  \begin{equation*}
+    P_n(k) = \binom{n}{k}p^k{(1 - p)}^{n - k}.
+  \end{equation*}
+\end{definitionbox}
+
+Odkud vzorec? Konkrétní pořadí s $k$ úspěchy a $n - k$ neúspěchy má pravděpodobnost $p^k{(1 - p)}^{n-k}$ (z nezávislosti). A takových pořadí je tolik, kolika způsoby lze vybrat $k$ pozic pro úspěchy z $n$, tedy $\binom{n}{k}$.
+
+\begin{example}
+  Test má $10$ otázek, každá má $4$ možnosti. Student nic neumí a tipuje. Jaká je pravděpodobnost, že odpoví správně na právě $5$ otázek?
+  \begin{equation*}
+    P_{10}(5) = \binom{10}{5}{\left(\frac{1}{4}\right)}^5{\left(\frac{3}{4}\right)}^5 = 252\cdot\frac{243}{1048576}\approx 0{,}058.
+  \end{equation*}
+  Alespoň jednu správnou odpověď má s pravděpodobností $1 - {\left(\frac{3}{4}\right)}^{10}\approx 0{,}944$. Aspoň něco.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Geometrická pravděpodobnost}: Pokud vybíráme náhodně bod z oblasti $\Omega$ (úsečky, obrazce, tělesa) a každé místo je `stejně pravděpodobné', je pravděpodobnost, že bod padne do části $A$,
+  \begin{equation*}
+    P(A) = \frac{\text{míra } A}{\text{míra } \Omega},
+  \end{equation*}
+  kde mírou je délka, obsah nebo objem.
+\end{definitionbox}
+
+\begin{example}
+  Do čtverce o straně $2$ náhodně hodíme šipku. Jaká je pravděpodobnost, že padne do vepsaného kruhu? $P = \frac{\pi\cdot 1^2}{4} = \frac{\pi}{4}\approx 0{,}785$. Takto se dá $\pi$ dokonce \textit{změřit}: hodíme velké množství náhodných bodů a spočítáme, kolik jich padlo do kruhu. Této metodě se říká \textbf{Monte Carlo} a dnes se používá ve fyzice, ve financích i při vývoji her.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Kolik lidí musí být v místnosti, aby pravděpodobnost, že dva z nich mají narozeniny ve stejný den, byla větší než $\frac{1}{2}$? Odhadněte nejdřív bez počítání.
+    \item Střelec zasáhne terč s pravděpodobností $0{,}8$. Jaká je pravděpodobnost, že z $5$ výstřelů zasáhne alespoň čtyřikrát?
+    \item Dva kamarádi se domluví, že se sejdou mezi 18:00 a 19:00. Každý přijde v náhodnou chvíli a čeká $15$ minut. Jaká je pravděpodobnost, že se potkají?
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (a) spočítejte pravděpodobnost opačného jevu: všichni mají narozeniny v různé dny. U (c) si nakreslete čtverec $60\times 60$, kde osa $x$ je příchod prvního a osa $y$ druhého.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Pro $n$ lidí je pravděpodobnost různých narozenin $\frac{365\cdot 364\cdots(365 - n + 1)}{365^n}$. Pro $n = 23$ vyjde asi $0{,}493$, takže pravděpodobnost shody je asi $0{,}507$. Stačí $23$ lidí! Většina lidí tipuje kolem $180$. Tomu se říká \textbf{narozeninový paradox}. Ve třídě o $30$ žácích je pravděpodobnost shody už asi $70\,\%$.
+    \item $P_5(4) + P_5(5) = 5\cdot 0{,}8^4\cdot 0{,}2 + 0{,}8^5 = 0{,}4096 + 0{,}32768\approx 0{,}737$.
+    \item Potkají se, pokud $|x - y|\leq 15$. Mimo tento pás leží dva trojúhelníky s odvěsnami $45$, dohromady s obsahem $45^2 = 2025$. $P = 1 - \frac{2025}{3600} = \frac{1575}{3600} = \frac{7}{16}\approx 0{,}44$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Hráč a noc ohně}
+
+Moderní teorie pravděpodobnosti začala hazardem. Chevalier de Méré, francouzský šlechtic a vášnivý hráč, roky vydělával na sázce, že ve čtyřech hodech kostkou padne alespoň jedna šestka (jak jsme spočítali, pravděpodobnost je asi $0{,}518$). Když ho to přestalo bavit, vymyslel si `vylepšenou' verzi: ve $24$ hodech dvěma kostkami padne alespoň jednou dvojitá šestka. Jeho úvaha: dvojitá šestka je šestkrát méně pravděpodobná, a proto potřebuji šestkrát víc hodů. Jenže začal prohrávat. Skutečná pravděpodobnost je $1 - {\left(\frac{35}{36}\right)}^{24}\approx 0{,}491$, tedy těsně pod polovinou.
+
+Zmatený de Méré se v roce 1654 obrátil na Blaise Pascala. Pascal si o problému začal dopisovat s Pierrem de Fermatem a v jejich korespondenci se zrodila teorie pravděpodobnosti. Řešili mimo jiné, jak spravedlivě rozdělit sázku, když se hra musí přerušit před koncem.
+
+Ve stejném roce, v noci 23. listopadu 1654, prožil Pascal svou mystickou zkušenost, o které jsme mluvili v kapitole~\ref{kap:vyrazy}. Trvala zhruba od půl jedenácté do půl jedné v noci a Pascal ji popsal na kousek pergamenu, který začíná slovem \textit{OHEŇ}. Ten pergamen si pak nechal zašít do podšívky kabátu a nosil ho u sebe každý den až do smrti. Celých osm let o něm nikdo nevěděl. Našel ho až sluha, který po Pascalově smrti procházel jeho oblečení. Pascal se po té noci matematice skoro přestal věnovat. Tak se stalo, že jeden z otců teorie pravděpodobnosti opustil hazard i vědu ve stejném roce, ve kterém je spojil.
+
+Pascal ale ještě stihl jeden pravděpodobnostní argument, tentokrát o Bohu, takzvanou \textbf{Pascalovu sázku}. Pokud Bůh existuje a věříte v něj, získáte nekonečnou odměnu. Pokud neexistuje, ztratíte jen málo. Očekávaná hodnota víry je tedy nekonečná, takže se vyplatí věřit. Filozofové se o tento argument přou dodnes.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je náhodný pokus, prostor výsledků a jev? Jak souvisí operace s jevy s množinovými operacemi?
+    \item Definujte klasickou pravděpodobnost. Za jakých předpokladů ji lze použít?
+    \item Jaké vlastnosti má pravděpodobnost? Proč se u úloh se slovem `alespoň' vyplatí počítat opačný jev?
+    \item Co je podmíněná pravděpodobnost? Kdy jsou jevy nezávislé?
+    \item Vysvětlete Bayesovu větu na příkladu lékařského testu.
+    \item Co je Bernoulliho schéma? Odvoďte vzorec pro pravděpodobnost $k$ úspěchů v $n$ pokusech.
+    \item Co je geometrická pravděpodobnost?
+    \item Vysvětlete narozeninový paradox a úlohu Montyho Halla.
+  \end{enumerate}
+\end{problem}

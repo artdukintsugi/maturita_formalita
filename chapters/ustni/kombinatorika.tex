@@ -1,0 +1,236 @@
+\label{kap:kombinatorika}
+\mathquote{Counting is the religion of this generation. It is its hope and its salvation.}{Gertrude Stein}
+
+Kombinatorika je umění počítat, aniž bychom počítali. Kolik je možných PINů? Kolika způsoby se může seřadit třída na fotku? Kolik je tiketů ve Sportce? Vypisovat všechny možnosti by trvalo věčnost, takže potřebujeme chytřejší metodu. Kombinatorika je také základem celé pravděpodobnosti, které se věnuje další kapitola. Bez počítání možností totiž nelze spočítat ani šance.
+
+\section{Základní pravidla}
+
+\begin{definitionbox}
+  \textbf{Pravidlo součtu}: Pokud lze jednu věc vybrat $m$ způsoby a jinou (disjunktní, tedy se s ní nepřekrývající) $n$ způsoby, lze vybrat jednu z nich $m + n$ způsoby. Pro množiny: $|A\cup B| = |A| + |B|$, pokud $A\cap B = \emptyset$.
+
+  \vspace{0.2cm}
+
+  \textbf{Pravidlo součinu}: Pokud se výběr skládá ze dvou kroků, kde první krok lze provést $m$ způsoby a druhý (pro každou volbu prvního) $n$ způsoby, lze celý výběr provést $m\cdot n$ způsoby. Pro množiny: $|A\times B| = |A|\cdot|B|$.
+\end{definitionbox}
+
+Pravidlo součinu je jen počítání prvků kartézského součinu z kapitoly 2. Pokud máte $3$ trička a $4$ kalhoty, máte $3\cdot 4 = 12$ outfitů, protože outfit je uspořádaná dvojice (tričko, kalhoty).
+
+\begin{example}
+  \begin{itemize}
+    \item Čtyřmístných PINů (číslice $0$--$9$) je $10\cdot 10\cdot 10\cdot 10 = 10^4 = 10\,000$.
+    \item Čtyřmístných čísel (první číslice nesmí být nula) je $9\cdot 10^3 = 9\,000$.
+    \item Čtyřmístných čísel s různými číslicemi je $9\cdot 9\cdot 8\cdot 7 = 4\,536$. Na prvním místě $9$ možností (ne nula), na druhém zase $9$ (už i nula, ale ne ta první číslice), pak $8$ a $7$.
+  \end{itemize}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Faktoriál} přirozeného čísla $n$ je
+  \begin{equation*}
+    n! = n\cdot(n - 1)\cdot\ \cdots\ \cdot 2\cdot 1,\qquad 0! = 1.
+  \end{equation*}
+  Rekurentně: $0! = 1$ a $(n + 1)! = (n + 1)\cdot n!$.
+\end{definitionbox}
+
+Proč $0! = 1$? Ze stejného důvodu jako $a^0 = 1$ v kapitole~\ref{kap:vyrazy}: chceme, aby rekurentní vztah fungoval i pro $n = 0$, tedy $1! = 1\cdot 0!$. Navíc $n!$ bude počet způsobů, jak seřadit $n$ věcí, a nic se dá seřadit právě jedním způsobem. Faktoriály rostou neuvěřitelně rychle: $10! = 3\,628\,800$ a $52!$ (počet způsobů, jak zamíchat balíček karet) má $68$ cifer. Pokaždé, když pořádně zamícháte karty, s téměř jistotou vytvoříte pořadí, které v dějinách vesmíru ještě nikdy neexistovalo.
+
+\section{Výběry bez opakování}
+
+\begin{definitionbox}
+  Mějme $n$ různých prvků a vybíráme z nich $k$ (každý nejvýš jednou).
+
+  \vspace{0.2cm}
+
+  \textbf{Variace} $k$-té třídy z $n$ prvků: uspořádané $k$-tice (\textbf{na pořadí záleží}). Jejich počet je
+  \begin{equation*}
+    V(k, n) = n\cdot(n - 1)\cdot\ \cdots\ \cdot(n - k + 1) = \frac{n!}{(n - k)!}.
+  \end{equation*}
+
+  \textbf{Permutace} z $n$ prvků: variace $n$-té třídy, tedy seřazení všech prvků. Jejich počet je
+  \begin{equation*}
+    P(n) = n!.
+  \end{equation*}
+
+  \textbf{Kombinace} $k$-té třídy z $n$ prvků: $k$-prvkové podmnožiny (\textbf{na pořadí nezáleží}). Jejich počet je
+  \begin{equation*}
+    C(k, n) = \binom{n}{k} = \frac{n!}{k!\,(n - k)!}.
+  \end{equation*}
+  Číslo $\binom{n}{k}$ čteme `$n$ nad $k$' a nazýváme \textbf{kombinační číslo}.
+\end{definitionbox}
+
+Vzorec pro variace plyne z pravidla součinu: na první místo vybíráme z $n$ prvků, na druhé z $n - 1$ zbylých a tak dál. Kombinace pak dostaneme z variací tak, že nebudeme rozlišovat pořadí. Každou $k$-prvkovou podmnožinu lze seřadit $k!$ způsoby, takže ve variacích je započítaná $k!$-krát:
+\begin{equation*}
+  C(k, n) = \frac{V(k, n)}{k!} = \frac{n!}{k!(n - k)!}.
+\end{equation*}
+
+\begin{definitionbox}
+  \textbf{Jak poznat, co použít?} Položte si dvě otázky:
+  \begin{enumerate}
+    \item \textbf{Záleží na pořadí?} Pokud ano (stupně vítězů, hesla, pořadí ve frontě), jde o variace nebo permutace. Pokud ne (výběr týmu, karty v ruce, čísla ve Sportce), jde o kombinace.
+    \item \textbf{Mohou se prvky opakovat?} Pokud ano, jde o výběry s opakováním (viz dále).
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  \begin{itemize}
+    \item Pět lidí se může postavit do řady $5! = 120$ způsoby.
+    \item Na stupních vítězů z $10$ běžců (zlato, stříbro, bronz) může stát $V(3, 10) = 10\cdot 9\cdot 8 = 720$ různých trojic.
+    \item Tříčlenný výbor z $10$ lidí (bez funkcí) lze vybrat $\binom{10}{3} = \frac{720}{6} = 120$ způsoby. Je to $3! = 6$-krát méně než stupně vítězů, protože tady nerozlišujeme, kdo je `první'.
+    \item Ve Sportce se vybírá $6$ čísel ze $49$. Různých tiketů je $\binom{49}{6} = 13\,983\,816$. Pokud si vsadíte jeden tiket týdně, vyhrajete první cenu v průměru jednou za zhruba $270\,000$ let.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Kolika způsoby lze rozesadit $8$ hostů kolem kulatého stolu, pokud nás zajímá jen to, kdo sedí vedle koho (otočení stolu nic nemění)?
+    \item Kolik je podání rukou, pokud si na večírku s $10$ lidmi podá ruku každý s každým?
+    \item Kolik úhlopříček má konvexní $n$-úhelník? Odvoďte to kombinatoricky.
+    \item Z $6$ mužů a $4$ žen máme vybrat tříčlennou komisi, ve které je alespoň jedna žena. Kolika způsoby to jde?
+    \item Kolik je pěticiferných čísel s různými číslicemi, která jsou dělitelná pěti?
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (d) je jednodušší spočítat doplněk: všechny komise minus komise bez žen.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{8!}{8} = 7! = 5\,040$. Každé rozesazení jsme započítali osmkrát (pro každé otočení).
+    \item $\binom{10}{2} = 45$.
+    \item Dvojic vrcholů je $\binom{n}{2}$, z toho $n$ jsou strany. Úhlopříček je $\binom{n}{2} - n = \frac{n(n - 1)}{2} - n = \frac{n(n - 3)}{2}$. Stejný výsledek jako v kapitole~\ref{kap:planimetrie}.
+    \item $\binom{10}{3} - \binom{6}{3} = 120 - 20 = 100$.
+    \item Končí nulou: $9\cdot 8\cdot 7\cdot 6 = 3\,024$. Končí pětkou: na prvním místě nesmí být nula ani pětka, tedy $8\cdot 8\cdot 7\cdot 6 = 2\,688$. Celkem $5\,712$.
+  \end{enumerate}
+\end{solution}
+
+\section{Výběry s opakováním}
+
+\begin{definitionbox}
+  \textbf{Variace s opakováním} $k$-té třídy z $n$ prvků (uspořádané $k$-tice, prvky se mohou opakovat):
+  \begin{equation*}
+    V'(k, n) = n^k.
+  \end{equation*}
+
+  \textbf{Permutace s opakováním}: seřazení $n$ prvků, mezi kterými je $n_1$ stejných prvků prvního druhu, $n_2$ druhého, \ldots, $n_r$ druhu $r$ ($n_1 + \cdots + n_r = n$):
+  \begin{equation*}
+    P'(n_1, \ldots, n_r) = \frac{n!}{n_1!\,n_2!\cdots n_r!}.
+  \end{equation*}
+
+  \textbf{Kombinace s opakováním} $k$-té třídy z $n$ druhů (neuspořádané výběry, prvky se mohou opakovat):
+  \begin{equation*}
+    C'(k, n) = \binom{n + k - 1}{k}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  \begin{itemize}
+    \item PIN je variace s opakováním čtvrté třídy z $10$ číslic: $10^4$.
+    \item Slovo MATEMATIKA má $10$ písmen: M dvakrát, A třikrát, T dvakrát a E, I, K po jednom. Různých přesmyček je
+    \begin{equation*}
+      \frac{10!}{2!\,3!\,2!} = \frac{3\,628\,800}{24} = 151\,200.
+    \end{equation*}
+    Kdybychom všechna písmena rozlišovali, bylo by jich $10!$. Prohozením obou M, tří A mezi sebou nebo obou T ale dostaneme stejné slovo, a proto dělíme.
+    \item Ve zmrzlinárně mají $5$ druhů zmrzliny a chceme kornout se třemi kopečky (na pořadí kopečků nezáleží, druhy se mohou opakovat). Možností je $\binom{5 + 3 - 1}{3} = \binom{7}{3} = 35$.
+  \end{itemize}
+\end{example}
+
+Odkud se bere vzorec pro kombinace s opakováním? Výběr $k$ kopečků z $n$ druhů zakódujeme jako řadu $k$ hvězdiček a $n - 1$ přepážek. Hvězdičky před první přepážkou jsou kopečky prvního druhu, mezi první a druhou kopečky druhého a tak dál. Například pro $3$ kopečky z $5$ druhů znamená $\star\star\,|\,|\,\star\,|\,|$ dva kopečky prvního druhu a jeden třetího. Každý výběr odpovídá právě jedné takové řadě a řad je tolik, kolika způsoby lze mezi $n + k - 1$ místy vybrat $k$ míst pro hvězdičky. Tomuto triku se v angličtině říká \textit{stars and bars}.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Kolik je SPZ ve tvaru `číslice, písmeno, číslice, číslice, číslice, číslice, číslice', pokud máme $26$ písmen?
+    \item Kolik různých slov (i nesmyslných) lze sestavit přeskládáním písmen slova BANANA?
+    \item Kolika způsoby lze rozdělit $10$ stejných bonbonů mezi $4$ děti?
+    \item Kolik je cest z levého dolního do pravého horního rohu mřížky $5\times 3$, pokud smíme chodit jen doprava a nahoru?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $10\cdot 26\cdot 10^5 = 26\,000\,000$.
+    \item $\frac{6!}{1!\,3!\,2!} = 60$.
+    \item $\binom{4 + 10 - 1}{10} = \binom{13}{10} = \binom{13}{3} = 286$.
+    \item Každá cesta je posloupnost $5$ kroků doprava a $3$ nahoru. Je to permutace s opakováním: $\frac{8!}{5!\,3!} = \binom{8}{3} = 56$.
+  \end{enumerate}
+\end{solution}
+
+\section{Kombinační čísla a binomická věta}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti kombinačních čísel}:
+  \begin{enumerate}
+    \item $\binom{n}{0} = \binom{n}{n} = 1$, $\binom{n}{1} = n$,
+    \item $\binom{n}{k} = \binom{n}{n - k}$ \quad(souměrnost),
+    \item $\binom{n}{k} + \binom{n}{k + 1} = \binom{n + 1}{k + 1}$ \quad(Pascalův vztah),
+    \item $\binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^n$.
+  \end{enumerate}
+
+  \textbf{Binomická věta}: Pro všechna $a, b\in\mathbb{R}$ a $n\in\mathbb{N}$ platí
+  \begin{equation*}
+    {(a + b)}^n = \sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k = \binom{n}{0}a^n + \binom{n}{1}a^{n-1}b + \cdots + \binom{n}{n}b^n.
+  \end{equation*}
+\end{definitionbox}
+
+Všechny vlastnosti se dají dokázat počítáním se vzorcem, ale mnohem hezčí jsou \textbf{kombinatorické důkazy}, kde stejnou věc spočítáme dvěma způsoby.
+
+\begin{proof}[(vlastností 2--4 a binomické věty)]
+  \textbf{Souměrnost}: Vybrat $k$ prvků, které \textit{vezmeme}, je totéž jako vybrat $n - k$ prvků, které \textit{nevezmeme}.
+
+  \textbf{Pascalův vztah}: Kolika způsoby lze vybrat $k + 1$ prvků z $n + 1$? Označme jeden prvek jako `speciální'. Buď ho vybereme, a pak zbylých $k$ vybíráme z $n$ ostatních ($\binom{n}{k}$ způsobů), nebo ho nevybereme a všech $k + 1$ vybíráme z $n$ ostatních ($\binom{n}{k + 1}$ způsobů). Sečtením dostaneme $\binom{n + 1}{k + 1}$.
+
+  \textbf{Součet řádku}: Levá strana počítá všechny podmnožiny $n$-prvkové množiny podle počtu prvků. Pravá strana počítá totéž jinak: u každého prvku se rozhodneme, zda ho vezmeme, nebo ne, což dává $2^n$ možností. Je to počet prvků potenční množiny z kapitoly 2.
+
+  \textbf{Binomická věta}: Roznásobíme ${(a + b)}^n = (a + b)(a + b)\cdots(a + b)$. Z každé závorky vybereme buď $a$, nebo $b$. Člen $a^{n-k}b^k$ dostaneme, kdykoli vybereme $b$ z právě $k$ závorek. Těch závorek lze vybrat $\binom{n}{k}$ způsoby, a proto je to koeficient u $a^{n-k}b^k$.
+\end{proof}
+
+Pascalův vztah je přesně pravidlo, podle kterého se staví Pascalův trojúhelník z kapitoly~\ref{kap:vyrazy}: každé číslo je součtem dvou čísel nad ním. Čísla v $n$-tém řádku jsou $\binom{n}{0}, \binom{n}{1}, \ldots, \binom{n}{n}$. Tam jsme slíbili důkaz binomické věty a teď jsme ho dodali.
+
+\begin{example}
+  \begin{itemize}
+    \item ${(x + 2)}^4 = x^4 + 4x^3\cdot 2 + 6x^2\cdot 4 + 4x\cdot 8 + 16 = x^4 + 8x^3 + 24x^2 + 32x + 16$.
+    \item Koeficient u $x^3$ v ${(2x - 1)}^5$: člen je $\binom{5}{2}{(2x)}^3{(-1)}^2 = 10\cdot 8x^3 = 80x^3$.
+    \item $1{,}01^{10} = {(1 + 0{,}01)}^{10}\approx 1 + 10\cdot 0{,}01 + 45\cdot 0{,}0001 = 1{,}1045$. Další členy jsou zanedbatelné (přesně $1{,}10462\ldots$). Takhle se počítalo před kalkulačkami.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Vyřešte v $\mathbb{N}$: $\binom{n}{2} = 28$ a $\frac{(n + 1)!}{(n - 1)!} = 30$.
+    \item Zjednodušte $\binom{n}{2} + \binom{n}{3}$.
+    \item Určete člen, který neobsahuje $x$, v rozvoji ${\left(x + \frac{1}{x}\right)}^6$.
+    \item Kolik podmnožin má množina $\{1, 2, \ldots, 10\}$? Kolik z nich má sudý počet prvků?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{n(n - 1)}{2} = 28$, $n^2 - n - 56 = 0$, $n = 8$ (záporný kořen zahodíme). Dále $(n + 1)n = 30$, $n = 5$.
+    \item Podle Pascalova vztahu $\binom{n + 1}{3}$.
+    \item Obecný člen je $\binom{6}{k}x^{6-k}x^{-k} = \binom{6}{k}x^{6 - 2k}$. Bez $x$ pro $k = 3$: $\binom{6}{3} = 20$.
+    \item $2^{10} = 1024$. Polovina z nich, tedy $512$, má sudý počet prvků. Z binomické věty pro $a = 1$, $b = -1$ totiž $0 = {(1 - 1)}^{10} = \binom{10}{0} - \binom{10}{1} + \binom{10}{2} - \cdots$, takže součet `sudých' kombinačních čísel je roven součtu `lichých'.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Josephův problém}
+
+Roku 67 našeho letopočtu obléhali Římané galilejské město Jotapata. Když město padlo, ukryl se židovský velitel Josephus se čtyřiceti svými muži v jeskyni. Muži se odmítli vzdát a rozhodli se raději zemřít. Podle Josephova vlastního vyprávění se domluvili, že se postaví do kruhu a budou se navzájem zabíjet podle losu, aby nikdo nemusel spáchat sebevraždu, kterou jejich víra zakazovala. Josephus a jeden další muž zůstali poslední, a místo aby splnili dohodu, vzdali se Římanům. Josephus pak přežil válku, stal se římským občanem a sepsal dějiny židovské války, ze kterých celý příběh známe.
+
+Pozdější verze legendy (od matematiků, ne od historiků) z toho udělaly hádanku: $41$ lidí stojí v kruhu a počítá se dokola. Každý třetí je vyřazen, dokud nezůstane jediný. Na které místo se musí postavit Josephus, aby přežil? Odpověď je: na $31.$ místo, a jeho přítel na $16.$ místo, aby byli poslední dva.
+
+Obecně, pokud vyřazujeme každého druhého z $n$ lidí, dá se poloha přeživšího spočítat přesně. Napíšeme $n = 2^m + l$, kde $2^m$ je největší mocnina dvojky nepřevyšující $n$ a $0\leq l < 2^m$. Přeživší stojí na místě $2l + 1$. Pro $41 = 32 + 9$ je to místo $19$. Zkuste si to ověřit na malém příkladu, například pro $n = 5$ (přežije třetí) nebo $n = 8$ (přežije první). Úloha se dnes používá jako klasické cvičení v programování, kde se jí říká \textit{Josephus problem}. Je to asi jediná programovací úloha, jejímž historickým základem je hromadná sebevražda v jeskyni.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Vysvětlete pravidlo součtu a součinu. Jak souvisí s množinami?
+    \item Co je faktoriál? Proč je $0! = 1$?
+    \item Co jsou variace, permutace a kombinace bez opakování? Odvoďte vzorce pro jejich počet.
+    \item Jak poznáte, který typ výběru v úloze použít?
+    \item Co jsou variace, permutace a kombinace s opakováním? Vysvětlete vzorec pro permutace s opakováním.
+    \item Jaké vlastnosti mají kombinační čísla? Dokažte Pascalův vztah.
+    \item Vyslovte a dokažte binomickou větu. Jak souvisí s Pascalovým trojúhelníkem?
+    \item Kolik podmnožin má $n$-prvková množina a proč?
+  \end{enumerate}
+\end{problem}
