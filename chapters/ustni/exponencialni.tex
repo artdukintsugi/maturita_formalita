@@ -1,0 +1,369 @@
+\label{kap:exponencialni}
+\mathquote{[Logarithms,] by shortening the labours, doubled the life of the astronomer.}{Pierre-Simon Laplace}
+
+Představte si, že vám někdo nabídne dvě možnosti. Buď dostanete milion korun hned, nebo dostanete dnes jednu korunu, zítra dvě, pozítří čtyři a každý další den dvojnásobek předchozího, a to po dobu jednoho měsíce. Většina lidí sáhne po milionu. Třicátý den by ale druhá možnost vyplatila $2^{29}$, tedy přes půl miliardy korun, a celkem dohromady přes miliardu. Lidský mozek je prostě na exponenciální růst krátký. V této kapitole se podíváme na funkce, které takový růst popisují, a na logaritmy, které jsou jejich opakem.
+
+\section{Exponenciální funkce}
+
+V kapitole~\ref{kap:vyrazy} jsme si postupně zadefinovali mocniny s přirozeným, celým, racionálním a nakonec i iracionálním exponentem. Pro kladný základ $a$ tedy má výraz $a^x$ smysl pro každé reálné $x$. Mocninná funkce měla proměnnou v základu a pevný exponent. Teď to otočíme.
+
+\begin{definitionbox}
+  \textbf{Exponenciální funkce} o základu $a$ je funkce
+  \begin{equation*}
+    f(x) = a^x,\qquad a > 0,\ a\neq 1.
+  \end{equation*}
+
+  \textbf{Vlastnosti}:
+  \begin{itemize}
+    \item $D(f) = \mathbb{R}$, $H(f) = (0, \infty)$,
+    \item pro $a > 1$ je \textbf{rostoucí}, pro $0 < a < 1$ \textbf{klesající},
+    \item je prostá, zdola omezená (nulou), shora neomezená, nemá extrémy,
+    \item graf prochází bodem $[0, 1]$, protože $a^0 = 1$, a bodem $[1, a]$,
+    \item osa $x$ (přímka $y = 0$) je \textbf{asymptota} grafu.
+  \end{itemize}
+\end{definitionbox}
+
+Proč podmínky na základ? Pro $a = 1$ bychom dostali konstantní funkci $1^x = 1$, což je nuda. Pro $a\leq 0$ by výraz $a^x$ nebyl definovaný pro mnoho $x$ (zkuste ${(-2)}^{\frac{1}{2}}$), jak jsme viděli v kapitole~\ref{kap:vyrazy}.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-3.5,0) -- (3.5,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,5) node[above] {\small $y$};
+    \foreach \x in {-3,-2,-1,1,2,3} \draw (\x,0.08) -- (\x,-0.08) node[below] {\tiny $\x$};
+    \foreach \y in {1,2,3,4} \draw (0.08,\y) -- (-0.08,\y) node[left] {\tiny $\y$};
+    \draw[thick, colorofwisdom, domain=-3.4:2.2, samples=60] plot (\x, {pow(2,\x)}) node[right] {\small $y = 2^x$};
+    \draw[thick, domain=-2.2:3.4, samples=60] plot (\x, {pow(0.5,\x)});
+    \node at (-2.6,4.6) {\small $y = \left(\frac{1}{2}\right)^x$};
+    \filldraw (0,1) circle (2pt);
+  \end{tikzpicture}
+\end{center}
+
+Grafy $2^x$ a ${\left(\frac{1}{2}\right)}^x$ jsou souměrné podle osy $y$, protože ${\left(\frac{1}{2}\right)}^x = 2^{-x}$. To je transformace $f(-x)$ z kapitoly~\ref{kap:funkce}.
+
+\begin{proof}[(monotonie pro $a > 1$)]
+  Nechť $x_1 < x_2$. Pak $a^{x_2} = a^{x_1}\cdot a^{x_2 - x_1}$. Protože $x_2 - x_1 > 0$ a $a > 1$, je $a^{x_2 - x_1} > 1$.\footnote{Pro přirozený exponent je to jasné (součin čísel větších než $1$), pro racionální plyne z vlastností odmocnin a pro iracionální z aproximace. Detaily vynecháme.} Vynásobením kladného čísla $a^{x_1}$ číslem větším než $1$ dostaneme větší číslo, a tedy $a^{x_1} < a^{x_2}$.
+\end{proof}
+
+\subsection{Eulerovo číslo}
+
+Mezi všemi možnými základy je jeden výjimečný. Představte si banku, která vám nabídne úrok $100\,\%$ ročně. Vložíte $1$ korunu a za rok máte $2$. Co když vám ale úrok připíše po půl roce (každé pololetí $50\,\%$)? Pak máte za rok ${(1 + \frac{1}{2})}^2 = 2{,}25$ korun. Při čtvrtletním připisování ${(1 + \frac{1}{4})}^4\approx 2{,}44$ korun. A co když se úrok připisuje každou vteřinu?
+\begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $n$ & $1$ & $2$ & $4$ & $12$ & $365$ & $1\,000\,000$ \\
+    \hline
+    ${\left(1 + \frac{1}{n}\right)}^n$ & $2$ & $2{,}25$ & $2{,}441$ & $2{,}613$ & $2{,}7146$ & $2{,}71828$ \\
+    \hline
+  \end{tabular}
+\end{center}
+Hodnoty rostou, ale ne nade všechny meze. Blíží se k číslu
+\begin{equation*}
+  e = 2{,}718\,281\,828\,459\ldots,
+\end{equation*}
+kterému se říká \textbf{Eulerovo číslo}. Je iracionální (a dokonce transcendentní) a je to jedno z nejdůležitějších čísel matematiky, hned vedle $0$, $1$, $\pi$ a $i$. Exponenciální funkce $e^x$ se často nazývá prostě `exponenciála' a v kapitole o derivacích uvidíme, proč je tak výjimečná: je to jediná funkce (až na násobek), která je sama sobě derivací. Přesně řečeno je $e$ limitou posloupnosti ${\left(1 + \frac{1}{n}\right)}^n$, ale limity přijdou až později.
+
+\section{Logaritmus}
+
+Rovnici $2^x = 8$ vyřeší každý zpaměti: $x = 3$. Ale co rovnice $2^x = 5$? Řešení existuje (exponenciální funkce je prostá a nabývá všech kladných hodnot), ale nedá se vyjádřit pomocí operací, které zatím známe. Potřebujeme nový symbol.
+
+\begin{definitionbox}
+  \textbf{Logaritmus} čísla $x$ o základu $a$ (kde $a > 0$, $a\neq 1$ a $x > 0$) je číslo $y$, pro které platí $a^y = x$. Značíme ho $\log_a x$:
+  \begin{equation*}
+    \log_a x = y\quad\Leftrightarrow\quad a^y = x.
+  \end{equation*}
+  Slovy: logaritmus odpovídá na otázku `na kolikátou musím umocnit $a$, abych dostal $x$?'
+
+  \vspace{0.2cm}
+
+  \textbf{Speciální značení}:
+  \begin{itemize}
+    \item \textbf{dekadický logaritmus} (základ $10$): $\log x = \log_{10} x$,
+    \item \textbf{přirozený logaritmus} (základ $e$): $\ln x = \log_e x$.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Spočítejme podle definice:
+  \begin{align*}
+    \log_2 8 &= 3, &&\text{protože } 2^3 = 8,\\
+    \log_3\tfrac{1}{9} &= -2, &&\text{protože } 3^{-2} = \tfrac{1}{9},\\
+    \log_5\sqrt{5} &= \tfrac{1}{2}, &&\text{protože } 5^{\frac{1}{2}} = \sqrt{5},\\
+    \log 0{,}001 &= -3, &&\text{protože } 10^{-3} = 0{,}001,\\
+    \log_{\frac{1}{2}} 8 &= -3, &&\text{protože } {\left(\tfrac{1}{2}\right)}^{-3} = 8,\\
+    \log_a 1 &= 0, &&\text{protože } a^0 = 1,\\
+    \log_a a &= 1, &&\text{protože } a^1 = a.
+  \end{align*}
+  Logaritmus záporného čísla ani nuly neexistuje (v reálných číslech), protože $a^y$ je vždy kladné.
+\end{example}
+
+\begin{problem}
+  Spočítejte: $\log_2 32$, $\log_4 2$, $\log_9 27$, $\log_{\frac{1}{3}} 81$, $\ln e^5$, $\log_7 1$, $\log 1000$, $\log_2\frac{\sqrt{2}}{4}$.
+\end{problem}
+
+\begin{solution}
+  $5$, $\frac{1}{2}$, $\frac{3}{2}$ (protože $9^{\frac{3}{2}} = 27$), $-4$, $5$, $0$, $3$ a $\log_2 2^{\frac{1}{2} - 2} = -\frac{3}{2}$.
+\end{solution}
+
+\subsection{Logaritmická funkce}
+
+\begin{definitionbox}
+  \textbf{Logaritmická funkce} o základu $a$ ($a > 0$, $a\neq 1$) je funkce $f(x) = \log_a x$. Je to \textbf{inverzní funkce} k exponenciální funkci $a^x$. Proto:
+  \begin{itemize}
+    \item $D(f) = (0, \infty)$, $H(f) = \mathbb{R}$ (prohodily se oproti exponenciální funkci),
+    \item pro $a > 1$ je rostoucí, pro $0 < a < 1$ klesající,
+    \item je prostá, neomezená, nemá extrémy,
+    \item graf prochází bodem $[1, 0]$ a bodem $[a, 1]$,
+    \item osa $y$ je asymptota grafu,
+    \item graf je souměrný s grafem $a^x$ podle přímky $y = x$.
+  \end{itemize}
+  Pro všechna přípustná $x$ platí
+  \begin{equation*}
+    a^{\log_a x} = x\qquad\text{a}\qquad\log_a a^x = x.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-3,0) -- (5,0) node[right] {\small $x$};
+    \draw[->] (0,-3) -- (0,5) node[above] {\small $y$};
+    \foreach \x in {-2,-1,1,2,3,4} \draw (\x,0.08) -- (\x,-0.08) node[below] {\tiny $\x$};
+    \draw[dashed, gray] (-2.8,-2.8) -- (4.6,4.6) node[above right] {\small $y = x$};
+    \draw[thick, gray, domain=-2.9:2.25, samples=60] plot (\x, {pow(2,\x)}) node[above] {\small $y = 2^x$};
+    \draw[thick, colorofwisdom, domain=0.13:4.8, samples=80] plot (\x, {ln(\x)/ln(2)}) node[right] {\small $y = \log_2 x$};
+    \filldraw (1,0) circle (2pt) (0,1) circle (2pt);
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Pravidla pro počítání s logaritmy}
+
+\begin{definitionbox}
+  Pro $a, b > 0$, $a, b\neq 1$, $x, y > 0$ a $r\in\mathbb{R}$ platí:
+  \begin{enumerate}
+    \item $\log_a(x\cdot y) = \log_a x + \log_a y$,
+    \item $\log_a\dfrac{x}{y} = \log_a x - \log_a y$,
+    \item $\log_a x^r = r\cdot\log_a x$,
+    \item $\log_a x = \dfrac{\log_b x}{\log_b a}$ \quad(\textbf{převod základu}).
+  \end{enumerate}
+\end{definitionbox}
+
+Logaritmus tedy převádí násobení na sčítání a mocnění na násobení. To je přesně důvod, proč byly logaritmy po staletí tak cenné: sčítat se dá mnohem snáz než násobit.
+
+\begin{proof}
+  Všechna pravidla jsou jen přepisem pravidel pro mocniny. Označme $u = \log_a x$ a $v = \log_a y$, tedy $a^u = x$ a $a^v = y$.
+  \begin{enumerate}
+    \item $xy = a^u\cdot a^v = a^{u + v}$, a tedy podle definice $\log_a(xy) = u + v$.
+    \item $\frac{x}{y} = \frac{a^u}{a^v} = a^{u - v}$, tedy $\log_a\frac{x}{y} = u - v$.
+    \item $x^r = {(a^u)}^r = a^{ru}$, tedy $\log_a x^r = ru$.
+    \item Zlogaritmujeme rovnost $x = a^u$ o základu $b$ a použijeme pravidlo 3: $\log_b x = \log_b a^u = u\cdot\log_b a$. Protože $a\neq 1$, je $\log_b a\neq 0$ a můžeme dělit.
+  \end{enumerate}
+\end{proof}
+
+\begin{note}
+  Pro součet žádné pravidlo neexistuje! $\log(x + y)\neq\log x + \log y$. Tohle je stejná chyba jako ${(a + b)}^2 = a^2 + b^2$, jen v jiném převleku. Pravidlo 1 platí pro logaritmus součinu, ne součtu.
+\end{note}
+
+\begin{example}
+  Upravme:
+  \begin{align*}
+    \log 2 + \log 50 &= \log 100 = 2,\\
+    \log_3 54 - \log_3 2 &= \log_3 27 = 3,\\
+    2\log_5 10 - \log_5 4 &= \log_5 100 - \log_5 4 = \log_5 25 = 2,\\
+    \log_2 3\cdot\log_3 8 &= \log_2 3\cdot\frac{\log_2 8}{\log_2 3} = \log_2 8 = 3.
+  \end{align*}
+\end{example}
+
+\begin{note}
+  Pravidlo pro převod základu je důvod, proč na kalkulačce stačí tlačítka $\log$ a $\ln$. Například $\log_2 5 = \frac{\log 5}{\log 2}\approx\frac{0{,}699}{0{,}301}\approx 2{,}32$.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Spočítejte $\log_6 4 + \log_6 9$, $\log_2 40 - \log_2 5$, $\frac{1}{2}\log_3 81$, $5^{\log_5 7}$, $10^{2\log 3}$.
+    \item Vyjádřete pomocí $\log x$, $\log y$ a $\log z$: $\log\dfrac{x^3\sqrt{y}}{z^2}$.
+    \item Zapište jako jeden logaritmus: $2\ln a + \ln b - 3\ln c$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\log_6 36 = 2$, $\log_2 8 = 3$, $\frac{1}{2}\cdot 4 = 2$, $7$, $10^{\log 9} = 9$.
+    \item $3\log x + \frac{1}{2}\log y - 2\log z$.
+    \item $\ln\dfrac{a^2b}{c^3}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Exponenciální rovnice}
+
+\begin{definitionbox}
+  \textbf{Exponenciální rovnice} je rovnice, ve které se neznámá vyskytuje v exponentu. Základní metody:
+  \begin{enumerate}
+    \item \textbf{Převod na stejný základ}: Protože je exponenciální funkce prostá, platí
+    \begin{equation*}
+      a^{f(x)} = a^{g(x)}\quad\Leftrightarrow\quad f(x) = g(x).
+    \end{equation*}
+    \item \textbf{Vytýkání}: Pokud se v rovnici vyskytuje $a^{x + c}$ pro různá $c$, vytkneme $a^x$.
+    \item \textbf{Substituce}: Pokud se v rovnici vyskytuje $a^x$ a $a^{2x} = {(a^x)}^2$, zavedeme $t = a^x$. Pozor, $t > 0$!
+    \item \textbf{Logaritmování}: Pokud nelze převést na stejný základ, obě strany zlogaritmujeme.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme:
+  \begin{enumerate}[label=(\alph*)]
+    \item $2^{x + 1} = 32$. Tedy $2^{x + 1} = 2^5$, $x + 1 = 5$ a $x = 4$.
+    \item $9^x = 27$. Převedeme na základ $3$: $3^{2x} = 3^3$, tedy $x = \frac{3}{2}$.
+    \item $5^{x^2 - 3x} = \frac{1}{25}$. Tedy $5^{x^2 - 3x} = 5^{-2}$, $x^2 - 3x + 2 = 0$, $x\in\{1, 2\}$.
+    \item $2^x + 2^{x + 2} = 40$. Vytkneme $2^x$: $2^x(1 + 4) = 40$, tedy $2^x = 8$ a $x = 3$.
+    \item $4^x - 3\cdot 2^x - 4 = 0$. Substituce $t = 2^x > 0$: $t^2 - 3t - 4 = 0$, tedy $t = 4$ nebo $t = -1$. Záporné $t$ zahodíme, protože $2^x$ je vždy kladné. Z $2^x = 4$ plyne $x = 2$.
+    \item $3^x = 7$. Zlogaritmujeme: $x\log 3 = \log 7$, tedy $x = \frac{\log 7}{\log 3} = \log_3 7\approx 1{,}77$.
+  \end{enumerate}
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item ${\left(\frac{1}{2}\right)}^{x} = 16$,
+    \item $3^{2x - 1} = \sqrt{3}$,
+    \item $9^x - 4\cdot 3^x + 3 = 0$,
+    \item $5^{x + 1} - 5^{x - 1} = 120$,
+    \item $2^{x} = 3^{x - 1}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $2^{-x} = 2^4$, $x = -4$.
+    \item $2x - 1 = \frac{1}{2}$, $x = \frac{3}{4}$.
+    \item $t = 3^x$: $t^2 - 4t + 3 = 0$, $t\in\{1, 3\}$, tedy $x\in\{0, 1\}$.
+    \item $5^{x - 1}(25 - 1) = 120$, $5^{x - 1} = 5$, $x = 2$.
+    \item Zlogaritmujeme: $x\log 2 = (x - 1)\log 3$, tedy $x(\log 3 - \log 2) = \log 3$ a $x = \frac{\log 3}{\log 3 - \log 2} = \frac{\log 3}{\log 1{,}5}\approx 2{,}71$.
+  \end{enumerate}
+\end{solution}
+
+\section{Logaritmické rovnice}
+
+\begin{definitionbox}
+  \textbf{Logaritmická rovnice} je rovnice, ve které se neznámá vyskytuje v argumentu logaritmu (případně v základu). Postup:
+  \begin{enumerate}
+    \item Určíme \textbf{podmínky}: argumenty logaritmů musí být kladné (a základy kladné a různé od $1$).
+    \item Pomocí pravidel převedeme rovnici na tvar $\log_a f(x) = \log_a g(x)$, případně $\log_a f(x) = c$.
+    \item Využijeme prostoty: $\log_a f(x) = \log_a g(x)\Leftrightarrow f(x) = g(x)$, případně z definice $\log_a f(x) = c\Leftrightarrow f(x) = a^c$.
+    \item Ověříme podmínky (nebo provedeme zkoušku).
+  \end{enumerate}
+\end{definitionbox}
+
+Pozor: úprava $\log_a f(x) + \log_a g(x) = \log_a(f(x)g(x))$ \textbf{rozšiřuje definiční obor}. Výraz vlevo vyžaduje $f(x) > 0$ \textbf{a} $g(x) > 0$, výraz vpravo jen $f(x)g(x) > 0$, což je splněno i když jsou obě záporné. Proto je nutné kontrolovat podmínky původní rovnice.
+
+\begin{example}
+  Vyřešme $\log_2 x + \log_2(x - 2) = 3$. Podmínky: $x > 0$ a $x > 2$, tedy $x > 2$.
+  \begin{equation*}
+    \log_2\left(x(x - 2)\right) = 3\quad\Leftrightarrow\quad x(x - 2) = 2^3\quad\Leftrightarrow\quad x^2 - 2x - 8 = 0\quad\Leftrightarrow\quad x\in\{4, -2\}.
+  \end{equation*}
+  Podmínku splňuje jen $x = 4$. $K = \{4\}$. Číslo $-2$ je falešný kořen, který vznikl přesně tím rozšířením definičního oboru: $(-2)\cdot(-4) = 8 > 0$, ale $\log_2(-2)$ neexistuje.
+\end{example}
+
+\begin{example}
+  Vyřešme $\log^2 x - 3\log x + 2 = 0$ (kde $\log^2 x$ znamená ${(\log x)}^2$). Podmínka $x > 0$. Substituce $t = \log x$: $t^2 - 3t + 2 = 0$, tedy $t\in\{1, 2\}$ a $x\in\{10, 100\}$.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\log_3(2x - 1) = 2$,
+    \item $\log(x + 1) - \log(x - 1) = \log 2$,
+    \item $\log_3(x^2 - 8) = 0$,
+    \item $\ln x = 2\ln 3 - \ln 2$,
+    \item $\log_2^2 x - \log_2 x^3 + 2 = 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x > \frac{1}{2}$, $2x - 1 = 9$, $x = 5$.
+    \item $x > 1$, $\log\frac{x + 1}{x - 1} = \log 2$, tedy $x + 1 = 2x - 2$ a $x = 3$.
+    \item $x^2 > 8$, $x^2 - 8 = 3^0 = 1$, $x = \pm 3$. Obě splňují podmínku, $K = \{-3, 3\}$.
+    \item $\ln x = \ln\frac{9}{2}$, $x = \frac{9}{2}$.
+    \item $\log_2^2 x - 3\log_2 x + 2 = 0$, $t = \log_2 x\in\{1, 2\}$, $x\in\{2, 4\}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Exponenciální a logaritmické nerovnice}
+
+Pro nerovnice je klíčová monotonie. Rostoucí funkce zachovává nerovnost, klesající ji otáčí.
+
+\begin{definitionbox}
+  Pro $a > 1$:
+  \begin{equation*}
+    a^{f(x)} < a^{g(x)}\Leftrightarrow f(x) < g(x),\qquad \log_a f(x) < \log_a g(x)\Leftrightarrow 0 < f(x) < g(x).
+  \end{equation*}
+  Pro $0 < a < 1$ se znak nerovnosti \textbf{otočí}:
+  \begin{equation*}
+    a^{f(x)} < a^{g(x)}\Leftrightarrow f(x) > g(x),\qquad \log_a f(x) < \log_a g(x)\Leftrightarrow f(x) > g(x) > 0.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  \begin{enumerate}[label=(\alph*)]
+    \item $3^{x - 1} < 9$. Základ $3 > 1$: $x - 1 < 2$, tedy $K = (-\infty, 3)$.
+    \item ${\left(\frac{1}{2}\right)}^x\geq 4$. Základ menší než $1$, znak se otočí: ${\left(\frac{1}{2}\right)}^x\geq{\left(\frac{1}{2}\right)}^{-2}\Leftrightarrow x\leq -2$. $K = (-\infty, -2]$.
+    \item $\log_2(x + 3) < 2$. Podmínka $x > -3$. $x + 3 < 4$, tedy $x < 1$. $K = (-3, 1)$.
+    \item $\log_{\frac{1}{3}}(x - 1)\geq -2$. Podmínka $x > 1$. Základ menší než $1$: $x - 1\leq{\left(\frac{1}{3}\right)}^{-2} = 9$, tedy $x\leq 10$. $K = (1, 10]$.
+  \end{enumerate}
+\end{example}
+
+\section{Využití v praxi}
+
+Exponenciální funkce popisují všechno, co roste nebo klesá úměrně tomu, kolik toho právě je. Logaritmy se pak používají všude, kde potřebujeme měřit veličiny, které se pohybují v obrovském rozsahu.
+
+\begin{example}[ (rozpad)]
+  Uhlík $^{14}$C má poločas rozpadu přibližně $5\,730$ let. To znamená, že za $5\,730$ let se rozpadne polovina atomů. Množství po čase $t$ je
+  \begin{equation*}
+    N(t) = N_0\cdot{\left(\frac{1}{2}\right)}^{\frac{t}{5730}}.
+  \end{equation*}
+  Archeologové najdou kost, ve které zbyla $\frac{1}{8}$ původního množství uhlíku $^{14}$C. Jak je stará? ${\left(\frac{1}{2}\right)}^{\frac{t}{5730}} = \frac{1}{8} = {\left(\frac{1}{2}\right)}^3$, tedy $t = 3\cdot 5730 = 17\,190$ let.
+\end{example}
+
+\begin{example}[ (růst)]
+  Bakterie se dělí každých $20$ minut. Kolikrát se jejich počet zvětší za $2$ hodiny? Za $2$ hodiny proběhne $6$ dělení, takže počet se zvětší $2^6 = 64$krát. Za den by to bylo $2^{72}\approx 4{,}7\cdot 10^{21}$krát. Naštěstí jim dřív dojde jídlo.
+\end{example}
+
+\begin{note}
+  Logaritmické stupnice jsou kolem nás:
+  \begin{itemize}
+    \item \textbf{pH}: $\mathrm{pH} = -\log[\mathrm{H}^+]$. Roztok s pH $3$ je desetkrát kyselejší než roztok s pH $4$.
+    \item \textbf{Decibely}: zvýšení hlasitosti o $10\ \si{dB}$ znamená desetkrát větší intenzitu zvuku. Koncert ($110\ \si{dB}$) je tedy stomilionkrát intenzivnější než šeptání ($30\ \si{dB}$).
+    \item \textbf{Richterova stupnice}: zemětřesení o síle $7$ uvolní zhruba $32$krát víc energie než zemětřesení o síle $6$.
+  \end{itemize}
+\end{note}
+
+\begin{problem}
+  Kolik let musí ležet $10\,000$ Kč v bance s úrokem $5\,\%$ ročně (úrok se připisuje jednou ročně a nechává se v bance), aby se částka zdvojnásobila?
+\end{problem}
+
+\begin{solution}
+  $10000\cdot 1{,}05^n = 20000$, tedy $1{,}05^n = 2$ a $n = \frac{\log 2}{\log 1{,}05}\approx 14{,}2$. Částka se zdvojnásobí během 15. roku. Podrobně se úročením zabývá kapitola o finanční matematice.
+\end{solution}
+
+\section{Odbočka --- Muž s černým kohoutem}
+
+Logaritmy vymyslel skotský šlechtic John Napier a v roce 1614 je zveřejnil v knize s krásným názvem \textit{Mirifici Logarithmorum Canonis Descriptio}, tedy `Popis podivuhodného pravidla logaritmů'. Napier strávil přes dvacet let ručním počítáním tabulek. Astronomové je okamžitě začali používat, protože násobení dlouhých čísel se změnilo na sčítání a vyhledání v tabulce. Johannes Kepler díky nim dokončil výpočty drah planet. Odtud pochází i citát na začátku kapitoly. Pak přišla logaritmická pravítka, na kterých počítali inženýři až do 70. let 20. století. Na nich se mimo jiné počítaly i výpočty pro let na Měsíc.
+
+Napier ale nebyl jen matematik. Mezi sousedy měl pověst čaroděje. Chodil prý v dlouhém černém plášti, mumlal si pro sebe a všude s sebou nosil černého kohouta, o kterém se říkalo, že je to jeho démonický pomocník. Nejznámější historka vypráví, jak Napier zjistil, kdo z jeho služebnictva krade. Zavřel kohouta do temné místnosti a oznámil, že kohout pozná zloděje. Každý sluha měl jít dovnitř a pohladit ho. Když se zloděj dotkne kohouta, ten zakokrhá. Kohout nezakokrhal ani jednou. Napier ale předtím kohouta natřel sazemi a pak si prohlédl ruce služebnictva. Jeden z nich měl ruce čisté, protože se kohouta bál dotknout.\footnote{Je to spíš legenda než doložený fakt, ale je to tak dobrá ukázka logického uvažování, že ji vyprávíme rádi. Napier mimochodem napsal i rozsáhlý výklad Apokalypsy, ve kterém spočítal, že konec světa nastane mezi lety 1688 a 1700. Tady se trochu přepočítal.}
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je exponenciální funkce? Proč požadujeme $a > 0$ a $a\neq 1$? Popište její vlastnosti pro $a > 1$ a pro $0 < a < 1$.
+    \item Co je Eulerovo číslo a jak ho můžeme získat?
+    \item Jak je definován logaritmus? Proč neexistuje logaritmus záporného čísla?
+    \item Jaký je vztah mezi exponenciální a logaritmickou funkcí? Jak to vypadá na grafu?
+    \item Vyslovte a dokažte pravidla pro počítání s logaritmy, včetně převodu základu.
+    \item Jaké znáte metody řešení exponenciálních rovnic?
+    \item Jak se řeší logaritmické rovnice? Proč je nutné kontrolovat podmínky?
+    \item Jak se řeší exponenciální a logaritmické nerovnice? Kdy se otáčí znak nerovnosti?
+    \item Uveďte příklady využití exponenciálních funkcí a logaritmů v praxi.
+  \end{enumerate}
+\end{problem}
