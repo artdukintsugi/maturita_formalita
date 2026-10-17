@@ -1,0 +1,254 @@
+\label{kap:financni}
+\mathquote{Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it.}{připisováno Albertu Einsteinovi (nejspíš neprávem)}
+
+Finanční matematika je ta část matematiky, která vás bude v životě pronásledovat nejdéle. Spořicí účty, hypotéky, splátky telefonu, kreditní karty, inflace. Banky a obchodníci s tím počítají každý den a spoléhají na to, že vy ne. Matematicky v této kapitole nic nového nebude: všechno jsou to procenta, geometrické posloupnosti z kapitoly~\ref{kap:posloupnosti} a exponenciála z kapitoly~\ref{kap:exponencialni}. Nové bude jen to, že tentokrát jde o vaše peníze.
+
+\section{Procenta}
+
+\begin{definitionbox}
+  \textbf{Procento} je setina celku: $1\,\% = \frac{1}{100} = 0{,}01$. \textbf{Promile} je tisícina: $1\,\permil = 0{,}001$.
+
+  \vspace{0.2cm}
+
+  \begin{itemize}
+    \item $p\,\%$ ze základu $z$ je \textbf{procentová část} $c = \frac{p}{100}\cdot z$,
+    \item zvětšení o $p\,\%$ znamená vynásobení číslem $1 + \frac{p}{100}$, zmenšení o $p\,\%$ vynásobení číslem $1 - \frac{p}{100}$,
+    \item \textbf{procentní bod} je rozdíl dvou procentních údajů. Pokud úroková sazba vzroste ze $2\,\%$ na $3\,\%$, vzrostla o $1$ procentní bod, ale o $50\,\%$.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Bunda stála $2\,000$ Kč. Obchod ji zdražil o $20\,\%$ a pak ji ve výprodeji zlevnil o $20\,\%$. Kolik stojí teď?
+  \begin{equation*}
+    2000\cdot 1{,}2\cdot 0{,}8 = 2000\cdot 0{,}96 = 1920\ \text{Kč}.
+  \end{equation*}
+  Bunda je o $4\,\%$ levnější než na začátku, ne stejně drahá. Zlevnění se počítá z vyšší ceny, takže ubere víc, než předtím přidalo zdražení. Obchody to vědí. Zákazníci většinou ne.
+\end{example}
+
+\begin{example}
+  Po zdražení o $25\,\%$ stojí lístek do kina $250$ Kč. Kolik stál předtím? Ne $250\cdot 0{,}75 = 187{,}5$ Kč, ale $\frac{250}{1{,}25} = 200$ Kč. Abyste zrušili zdražení o $25\,\%$, musíte zlevnit o $20\,\%$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Cena akcie vzrostla o $10\,\%$, pak klesla o $10\,\%$, pak vzrostla o $10\,\%$. Jaká je celková změna?
+    \item Kolika procenty je $45$ z $180$? A kolik je $180$ procent z $45$?
+    \item Volební strana měla $8\,\%$ a teď má $10\,\%$. O kolik procentních bodů a o kolik procent si polepšila?
+    \item O kolik procent se zvětší obsah čtverce, když jeho stranu zvětšíme o $10\,\%$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $1{,}1\cdot 0{,}9\cdot 1{,}1 = 1{,}089$, tedy vzrostla o $8{,}9\,\%$.
+    \item $\frac{45}{180} = 0{,}25 = 25\,\%$. $1{,}8\cdot 45 = 81$.
+    \item O $2$ procentní body, což je $\frac{2}{8} = 25\,\%$.
+    \item $1{,}1^2 = 1{,}21$, tedy o $21\,\%$.
+  \end{enumerate}
+\end{solution}
+
+\section{Úročení}
+
+\begin{definitionbox}
+  Pojmy:
+  \begin{itemize}
+    \item \textbf{jistina} $K_0$: počáteční vklad (nebo dluh),
+    \item \textbf{úroková sazba} $i$: kolik procent z jistiny se připíše za jedno úrokovací období (obvykle rok, zkratka p.\,a., \textit{per annum}). Ve vzorcích ji píšeme jako desetinné číslo, tedy $3\,\% = 0{,}03$,
+    \item \textbf{úrok}: částka, kterou za půjčení peněz dostaneme (nebo zaplatíme).
+  \end{itemize}
+
+  \textbf{Jednoduché úročení}: úrok se počítá stále jen z původní jistiny. Po $n$ obdobích
+  \begin{equation*}
+    K_n = K_0(1 + n\cdot i).
+  \end{equation*}
+
+  \textbf{Složené úročení}: úrok se připíše k jistině a v dalším období se úročí i on. Po $n$ obdobích
+  \begin{equation*}
+    K_n = K_0{(1 + i)}^n.
+  \end{equation*}
+\end{definitionbox}
+
+Jednoduché úročení je aritmetická posloupnost (každý rok přibude stejná částka), složené úročení je geometrická posloupnost s kvocientem $1 + i$ (každý rok se částka vynásobí stejným číslem). Na krátkou dobu je rozdíl malý, na dlouhou obrovský, protože geometrická posloupnost roste exponenciálně.
+
+\begin{example}
+  Vložíme $10\,000$ Kč na $4$ roky s úrokem $3\,\%$ ročně.
+  \begin{itemize}
+    \item Jednoduché úročení: $10000(1 + 4\cdot 0{,}03) = 11\,200$ Kč.
+    \item Složené úročení: $10000\cdot 1{,}03^4\approx 11\,255{,}09$ Kč.
+  \end{itemize}
+  Za čtyři roky je rozdíl jen $55$ Kč. Za čtyřicet let by to bylo $22\,000$ Kč proti $32\,620$ Kč.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Daň z úroků}: V České republice se z úroků na běžných účtech odvádí \textbf{srážková daň} $15\,\%$. Ze sazby $i$ nám tedy reálně zbude $0{,}85\cdot i$ a
+  \begin{equation*}
+    K_n = K_0{(1 + 0{,}85\cdot i)}^n.
+  \end{equation*}
+
+  \textbf{Častější připisování úroků}: Pokud je roční (nominální) sazba $i$ a úroky se připisují $m$-krát ročně, připíše se pokaždé $\frac{i}{m}$ a za $n$ let
+  \begin{equation*}
+    K_n = K_0{\left(1 + \frac{i}{m}\right)}^{mn}.
+  \end{equation*}
+  Skutečný roční výnos (\textbf{efektivní sazba}) je pak ${\left(1 + \frac{i}{m}\right)}^m - 1$, což je víc než $i$.
+\end{definitionbox}
+
+\begin{example}
+  Při sazbě $3\,\%$ a dani $15\,\%$ máme z $10\,000$ Kč za $4$ roky $10000\cdot 1{,}0255^4\approx 11\,059{,}68$ Kč.
+
+  Při nominální sazbě $6\,\%$ s měsíčním připisováním je efektivní sazba ${(1 + 0{,}005)}^{12} - 1\approx 6{,}17\,\%$. Pokud bychom úroky připisovali nekonečně často (spojité úročení), dostali bychom ${\left(1 + \frac{i}{m}\right)}^m\to e^i$ a efektivní sazbu $e^{0{,}06} - 1\approx 6{,}18\,\%$. Tady se Eulerovo číslo z kapitoly~\ref{kap:exponencialni} objevuje přesně v tom kontextu, ve kterém ho objevil Jacob Bernoulli.
+\end{example}
+
+\begin{note}
+  \textbf{Pravidlo 72}: Doba (v letech), za kterou se vklad při složeném úročení zdvojnásobí, je přibližně $\frac{72}{p}$, kde $p$ je sazba v procentech. Při $7\,\%$ je to asi $10$ let (přesně $\frac{\ln 2}{\ln 1{,}07}\approx 10{,}24$). Platí to proto, že $\ln 2\approx 0{,}693$ a pro malá $i$ je $\ln(1 + i)\approx i$. Číslo $72$ se používá místo $69$ proto, že se lépe dělí (dvěma, třemi, čtyřmi, šesti, osmi, devíti a dvanácti).
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Inflace} je růst cenové hladiny. Pokud je úroková sazba $i$ a inflace $\pi$, je \textbf{reálný výnos}
+  \begin{equation*}
+    r = \frac{1 + i}{1 + \pi} - 1\approx i - \pi.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Banka nabízí $4\,\%$, inflace je $6\,\%$. Reálný výnos je $\frac{1{,}04}{1{,}06} - 1\approx -1{,}89\,\%$. Peníze na účtu se sice množí, ale koupíte si za ně každý rok méně. A to jsme ještě nezapočítali daň.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Jakou roční sazbu potřebujeme, aby se vklad za $10$ let zdvojnásobil?
+    \item Auto za $500\,000$ Kč ztrácí každý rok $15\,\%$ své hodnoty. Kolik bude stát za $4$ roky?
+    \item Kolik musíme dnes vložit při sazbě $5\,\%$ (bez daně), abychom za $18$ let měli $100\,000$ Kč?
+    \item Babička vám v den vašeho narození uložila $10\,000$ Kč na $4\,\%$ ročně (bez daně). Kolik budete mít k maturitě (v $19$ letech)?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item ${(1 + i)}^{10} = 2$, $i = \sqrt[10]{2} - 1\approx 7{,}18\,\%$.
+    \item $500000\cdot 0{,}85^4\approx 261\,003$ Kč. Auto ztratí skoro polovinu hodnoty.
+    \item $K_0 = \frac{100000}{1{,}05^{18}}\approx 41\,552$ Kč. Tomuto se říká \textbf{současná hodnota} budoucí částky.
+    \item $10000\cdot 1{,}04^{19}\approx 21\,068$ Kč. Za tu dobu se vklad zhruba zdvojnásobí, přesně podle pravidla 72 ($\frac{72}{4} = 18$).
+  \end{enumerate}
+\end{solution}
+
+\section{Spoření}
+
+Při pravidelném spoření vkládáme každé období stejnou částku $a$. Každý vklad se pak úročí jinou dobu: ten první nejdéle, ten poslední nejkratší dobu nebo vůbec. Výsledná částka je součet geometrické posloupnosti.
+
+\begin{definitionbox}
+  \textbf{Pravidelné spoření}: Pokud na konci každého z $n$ období vložíme částku $a$ a sazba za období je $i$, máme na konci
+  \begin{equation*}
+    S_n = a\cdot\frac{{(1 + i)}^n - 1}{i}.
+  \end{equation*}
+  Pokud vkládáme na \textbf{začátku} každého období, každý vklad se úročí o jedno období déle a
+  \begin{equation*}
+    S_n = a{(1 + i)}\cdot\frac{{(1 + i)}^n - 1}{i}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Při vkladech na konci období se poslední vklad neúročí vůbec, předposlední jedno období a první $n - 1$ období. Celkem
+  \begin{equation*}
+    S_n = a + a(1 + i) + a{(1 + i)}^2 + \cdots + a{(1 + i)}^{n-1}.
+  \end{equation*}
+  To je součet $n$ členů geometrické posloupnosti s prvním členem $a$ a kvocientem $q = 1 + i$. Podle kapitoly~\ref{kap:posloupnosti}
+  \begin{equation*}
+    S_n = a\cdot\frac{{(1 + i)}^n - 1}{(1 + i) - 1} = a\cdot\frac{{(1 + i)}^n - 1}{i}.
+  \end{equation*}
+\end{proof}
+
+\begin{example}
+  Každý měsíc na konci měsíce vložíme $1\,000$ Kč na účet s roční sazbou $3\,\%$ (měsíčně tedy $0{,}25\,\%$, daň zanedbáme). Kolik budeme mít za dva roky?
+  \begin{equation*}
+    S_{24} = 1000\cdot\frac{1{,}0025^{24} - 1}{0{,}0025}\approx 24\,703\ \text{Kč}.
+  \end{equation*}
+  Vložili jsme $24\,000$ Kč, úroky dělají $703$ Kč. Na krátkou dobu se spoření moc nevyplatí. Na čtyřicet let by to ale bylo přes $925\,000$ Kč z vložených $480\,000$ Kč.
+\end{example}
+
+\section{Úvěry}
+
+Úvěr je spoření obráceně. Banka nám půjčí částku $U$ a my ji splácíme pravidelnými splátkami. Každá splátka se skládá z \textbf{úroku} (z dosud nesplaceného dluhu) a \textbf{úmoru} (části, která skutečně snižuje dluh).
+
+\begin{definitionbox}
+  \textbf{Anuitní splácení}: Úvěr $U$ splácíme $n$ stejnými splátkami $a$ na konci každého období při sazbě $i$ za období. Pak
+  \begin{equation*}
+    a = U\cdot\frac{i{(1 + i)}^n}{{(1 + i)}^n - 1}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Dluh po jednom období je $U(1 + i) - a$, po dvou $\left(U(1 + i) - a\right)(1 + i) - a = U{(1 + i)}^2 - a(1 + i) - a$, a tak dál. Po $n$ obdobích má být dluh nulový:
+  \begin{equation*}
+    U{(1 + i)}^n - a\left({(1 + i)}^{n-1} + \cdots + (1 + i) + 1\right) = 0.
+  \end{equation*}
+  Závorka je stejná geometrická řada jako u spoření, tedy $\frac{{(1 + i)}^n - 1}{i}$. Odtud
+  \begin{equation*}
+    U{(1 + i)}^n = a\cdot\frac{{(1 + i)}^n - 1}{i}\quad\Leftrightarrow\quad a = U\cdot\frac{i{(1 + i)}^n}{{(1 + i)}^n - 1}.
+  \end{equation*}
+  Rovnice má mimochodem pěknou interpretaci: to, na kolik by narostl dluh, kdybychom nesplácali (vlevo), se musí rovnat tomu, na kolik by narostly splátky, kdybychom je místo toho spořili (vpravo).
+\end{proof}
+
+\begin{example}
+  Půjčíme si $200\,000$ Kč na $5$ let s úrokem $6\,\%$ ročně a splácíme jednou ročně. Roční splátka je
+  \begin{equation*}
+    a = 200000\cdot\frac{0{,}06\cdot 1{,}06^5}{1{,}06^5 - 1}\approx 47\,479{,}28\ \text{Kč}.
+  \end{equation*}
+  Celkem zaplatíme $5a\approx 237\,396$ Kč, z toho úroky jsou asi $37\,396$ Kč. Začátek \textbf{splátkového kalendáře}:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|r|r|r|r|}
+      \hline
+      rok & dluh na začátku & úrok ($6\,\%$) & úmor & dluh na konci \\
+      \hline
+      $1$ & $200\,000{,}00$ & $12\,000{,}00$ & $35\,479{,}28$ & $164\,520{,}72$ \\
+      $2$ & $164\,520{,}72$ & $9\,871{,}24$ & $37\,608{,}04$ & $126\,912{,}68$ \\
+      \vdots & \vdots & \vdots & \vdots & \vdots \\
+      \hline
+    \end{tabular}
+  \end{center}
+  Na začátku tvoří velkou část splátky úrok, ke konci skoro jen úmor. U třicetileté hypotéky to znamená, že prvních deset let splácíte hlavně bance, ne dluh.
+\end{example}
+
+\begin{note}
+  Při porovnávání úvěrů se nedívejte jen na úrokovou sazbu, ale na \textbf{RPSN} (roční procentní sazba nákladů). Ta zahrnuje i poplatky za vedení úvěru, pojištění a další náklady. Půjčka `bez úroku' může mít RPSN klidně desítky procent. Nebankovní půjčky v minulosti nabízely RPSN v řádu stovek i tisíců procent, než zákon o spotřebitelském úvěru v roce 2016 výrazně zpřísnil pravidla pro jejich poskytovatele.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Telefon za $24\,000$ Kč koupíme na $12$ měsíčních splátek s měsíčním úrokem $1\,\%$. Jaká je splátka a kolik celkem přeplatíme?
+    \item Kolik musíme spořit na konci každého roku při $4\,\%$, abychom za $10$ let měli $500\,000$ Kč?
+    \item Úvěr $1\,000\,000$ Kč na $20$ let při $5\,\%$ ročně. Jaká je roční splátka a kolik zaplatíme celkem?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $a = 24000\cdot\frac{0{,}01\cdot 1{,}01^{12}}{1{,}01^{12} - 1}\approx 2\,132{,}37$ Kč. Celkem $25\,588$ Kč, přeplatíme asi $1\,588$ Kč.
+    \item $a = 500000\cdot\frac{0{,}04}{1{,}04^{10} - 1}\approx 41\,645$ Kč ročně.
+    \item $a = 10^6\cdot\frac{0{,}05\cdot 1{,}05^{20}}{1{,}05^{20} - 1}\approx 80\,243$ Kč ročně, celkem asi $1\,604\,852$ Kč. Na úrocích zaplatíme přes $600\,000$ Kč.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Lichváři v sedmém kruhu}
+
+Půjčovat peníze na úrok bylo po většinu evropských dějin hříchem. Už První nikajský koncil v roce 325 zakázal brát úroky duchovním a Třetí lateránský koncil v roce 1179 rozhodl, že lichváři budou exkomunikováni a nesmí být pohřbeni v posvěcené půdě. Za \textit{lichvu} se přitom považoval jakýkoli úrok, ne jen přemrštěný.
+
+Dante Alighieri ve své \textit{Božské komedii} umístil lichváře do sedmého kruhu pekla, mezi ty, kdo se provinili násilím proti Bohu a přírodě. Sedí tam na rozžhaveném písku pod deštěm ohně a každý má na krku měšec se znakem svého rodu, na který neustále zírá. Dante je tam řadí vedle rouhačů a sodomitů. Podle středověké logiky totiž lichvář nechává peníze `rodit' další peníze, což je proti přirozenosti, protože peníze jsou neplodné.
+
+Shakespearův \textit{Kupec benátský} pak vytvořil postavu Shylocka, lichváře, který si jako zástavu za půjčku vymíní libru masa z dlužníkova těla. Dnešní banky naštěstí berou jen nemovitosti. Ale principiálně se toho zas tolik nezměnilo: kdo neumí počítat složené úročení, ten platí. Možná proto je ten citát na začátku kapitoly tak oblíbený, i když ho Einstein nejspíš nikdy neřekl.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je procento a procentní bod? Proč zdražení o $20\,\%$ a následné zlevnění o $20\,\%$ nevrátí původní cenu?
+    \item Jaký je rozdíl mezi jednoduchým a složeným úročením? Jak souvisí s aritmetickou a geometrickou posloupností?
+    \item Jak se do výpočtu promítne daň z úroků a častější připisování úroků? Co je efektivní sazba?
+    \item Co je inflace a reálný výnos?
+    \item Odvoďte vzorec pro pravidelné spoření.
+    \item Co je anuitní splácení? Odvoďte vzorec pro výši splátky.
+    \item Z čeho se skládá splátka úvěru a jak se poměr mezi úrokem a úmorem v čase mění?
+    \item Co je RPSN a proč je důležitější než samotná úroková sazba?
+  \end{enumerate}
+\end{problem}
