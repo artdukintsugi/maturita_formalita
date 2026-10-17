@@ -1,0 +1,387 @@
+\label{kap:vice-promennych}
+\mathquote{Příroda se směje obtížím integrace.}{Pierre-Simon Laplace}
+\tikzset{pohled3d/.style={x={(-0.55cm,-0.45cm)}, y={(1cm,0cm)}, z={(0cm,1cm)}}}
+
+Všechny funkce, které jsme dosud derivovali a integrovali, měly jednu proměnnou. Svět ale tak jednoduchý není. Teplota v místnosti závisí na třech souřadnicích a na čase. Cena bytu na rozloze, patře, poloze a stáří. Chyba neuronové sítě na milionech parametrů. V této kapitole přeneseme derivace a integrály do více rozměrů. Uvidíme, že většina myšlenek zůstane stejná, jen místo křivek budeme mít plochy, místo tečen tečné roviny a místo `sklonu' vektor, kterému se říká gradient.
+
+\section{Funkce dvou proměnných jako krajina}
+
+\begin{definitionbox}
+  \textbf{Funkce dvou proměnných} $f\colon D\to\mathbb{R}$, $D\subseteq\mathbb{R}^2$, přiřazuje každému bodu $[x, y]$ číslo $f(x, y)$. Jejím \textbf{grafem} je plocha $z = f(x, y)$ v prostoru. \textbf{Vrstevnice} na úrovni $c$ je množina bodů roviny, kde $f(x, y) = c$.
+\end{definitionbox}
+
+Nejlepší představa: $f(x, y)$ je nadmořská výška krajiny v bodě se zeměpisnými souřadnicemi $[x, y]$. Graf je samotná krajina, vrstevnice jsou čáry, které znáte z turistických map. Kde jsou vrstevnice hustě u sebe, je svah prudký.
+
+\begin{center}
+  \begin{tikzpicture}[pohled3d, scale=1.25]
+    \draw[->] (0,0,0) -- (2.4,0,0) node[below left] {\small $x$};
+    \draw[->] (0,0,0) -- (0,2.4,0) node[right] {\small $y$};
+    \foreach \r in {0.7,1.0,1.4} {
+      \draw[colorofwisdom!60, dashed] plot[variable=\t, domain=0:360, samples=60] ({\r*cos(\t)}, {\r*sin(\t)}, 0);
+      \draw[gray!60, dotted] ({\r},0,0) -- ({\r},0,{\r*\r/2});
+    }
+    \foreach \a in {0,30,...,330} {
+      \draw[gray!70] plot[variable=\r, domain=0:1.5, samples=15] ({\r*cos(\a)}, {\r*sin(\a)}, {\r*\r/2});
+    }
+    \foreach \r in {0.7,1.0,1.4} {
+      \draw[thick, colorofwisdom] plot[variable=\t, domain=0:360, samples=60] ({\r*cos(\t)}, {\r*sin(\t)}, {\r*\r/2});
+    }
+    \draw[thick] plot[variable=\t, domain=0:360, samples=60] ({1.5*cos(\t)}, {1.5*sin(\t)}, 1.125);
+    \draw[->] (0,0,0) -- (0,0,1.9) node[above] {\small $z$};
+    \node[font=\small] at (0,2.6,1.3) {$z = \frac{x^2 + y^2}{2}$};
+    \node[font=\scriptsize, colorofwisdom] at (0,2.3,-0.3) {vrstevnice};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[scale=1.15]
+    \draw[->] (-1.8,0) -- (1.9,0) node[right] {\small $x$};
+    \draw[->] (0,-1.8) -- (0,1.9) node[above] {\small $y$};
+    \foreach \r/\c in {0.7/0{,}25, 1.0/0{,}5, 1.4/1} {
+      \draw[thick, colorofwisdom] (0,0) circle (\r);
+      \node[font=\scriptsize, fill=white, inner sep=1pt] at ({\r*cos(45)},{\r*sin(45)}) {$\c$};
+    }
+    \node[font=\scriptsize, align=center] at (0,-2.3) {mapa: vrstevnice $x^2 + y^2 = 2c$};
+  \end{tikzpicture}
+\end{center}
+
+Vlevo je graf funkce $f(x, y) = \frac{x^2 + y^2}{2}$, tedy `miska', vpravo její mapa. Vrstevnice jsou kružnice. Čím výš, tím jsou si blíž, protože miska je dál od středu strmější.
+
+\begin{center}
+  \begin{tikzpicture}[pohled3d, scale=1.3]
+    \foreach \c in {-1,-0.5,...,1} {
+      \draw[gray!80] plot[variable=\t, domain=-1:1, samples=20] ({\c}, {\t}, {0.8*(\c*\c-\t*\t)});
+      \draw[colorofwisdom!80] plot[variable=\t, domain=-1:1, samples=20] ({\t}, {\c}, {0.8*(\t*\t-\c*\c)});
+    }
+    \fill (0,0,0) circle (1.5pt);
+    \node[font=\small] at (0,1.9,0.9) {$z = x^2 - y^2$};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[scale=1]
+    \clip (-1.7,-1.7) rectangle (1.7,1.7);
+    \foreach \c in {0.3,0.8,1.5} {
+      \draw[thick, colorofwisdom, domain=-1.3:1.3, samples=40] plot ({sqrt(\c)*cosh(\x)}, {sqrt(\c)*sinh(\x)});
+      \draw[thick, colorofwisdom, domain=-1.3:1.3, samples=40] plot ({-sqrt(\c)*cosh(\x)}, {sqrt(\c)*sinh(\x)});
+      \draw[thick, gray, domain=-1.3:1.3, samples=40] plot ({sqrt(\c)*sinh(\x)}, {sqrt(\c)*cosh(\x)});
+      \draw[thick, gray, domain=-1.3:1.3, samples=40] plot ({sqrt(\c)*sinh(\x)}, {-sqrt(\c)*cosh(\x)});
+    }
+    \draw[dashed] (-1.7,-1.7) -- (1.7,1.7) (-1.7,1.7) -- (1.7,-1.7);
+    \draw[->] (-1.7,0) -- (1.7,0);
+    \draw[->] (0,-1.7) -- (0,1.7);
+  \end{tikzpicture}
+\end{center}
+
+Funkce $f(x, y) = x^2 - y^2$ je \textbf{sedlo}, tvar, který znáte z koňského sedla nebo z chipsů Pringles. Ve směru osy $x$ jde nahoru, ve směru osy $y$ dolů. Její vrstevnice jsou hyperboly z kapitoly~\ref{kap:kuzelosecky}: barevné jsou kladné úrovně (`kopce' vlevo a vpravo), šedé záporné (`údolí' nahoře a dole). Bod $[0, 0]$ není ani vrchol, ani dno, a přesto je v něm krajina `vodorovná'.
+
+\section{Parciální derivace}
+
+Jak změřit sklon krajiny? Záleží na tom, kterým směrem jdeme. Nejjednodušší je jít rovnoběžně s osami.
+
+\begin{definitionbox}
+  \textbf{Parciální derivace} funkce $f(x, y)$ podle $x$ v bodě $[a, b]$ je
+  \begin{equation*}
+    \frac{\partial f}{\partial x}(a, b) = \lim_{h\to 0}\frac{f(a + h, b) - f(a, b)}{h}.
+  \end{equation*}
+  Počítá se jako obyčejná derivace podle $x$, přičemž $y$ považujeme za konstantu. Podobně $\frac{\partial f}{\partial y}$. Značí se také $f_x$, $f_y$.
+\end{definitionbox}
+
+Geometricky: krajinu `rozřízneme' svislou rovinou. Pro $f_x$ rovinou $y = b$, pro $f_y$ rovinou $x = a$ (na obrázku). Řez je obyčejná křivka a parciální derivace je sklon její tečny. Jako byste šli přesně na východ (nebo na sever) a měřili, jak strmě stoupáte.
+
+\begin{center}
+  \begin{tikzpicture}[pohled3d, scale=1.5]
+    \foreach \a in {0,30,...,330} {
+      \draw[gray!50] plot[variable=\r, domain=0:1.5, samples=15] ({\r*cos(\a)}, {\r*sin(\a)}, {\r*\r/2});
+    }
+    \draw[gray!60] plot[variable=\t, domain=0:360, samples=60] ({1.5*cos(\t)}, {1.5*sin(\t)}, 1.125);
+    \fill[colorofwisdom!12, opacity=0.7] (0.6,-1.7,0) -- (0.6,1.7,0) -- (0.6,1.7,1.6) -- (0.6,-1.7,1.6) -- cycle;
+    \draw[colorofwisdom!50] (0.6,-1.7,0) -- (0.6,1.7,0) -- (0.6,1.7,1.6) -- (0.6,-1.7,1.6) -- cycle;
+    \draw[very thick, colorofwisdom] plot[variable=\t, domain=-1.38:1.38, samples=40] (0.6, {\t}, {(\t*\t+0.36)/2});
+    \draw[thick] (0.6,0.1,-0.06) -- (0.6,1.5,1.06);
+    \fill (0.6,0.8,0.5) circle (1.3pt);
+    \node[font=\scriptsize, anchor=south] at (0.6,-1.2,1.6) {řez $x = a$};
+    \node[font=\scriptsize, anchor=west] at (0.6,1.55,1.06) {tečna se sklonem $f_y(a, b)$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Pro $f(x, y) = x^2y + \sin(xy)$:
+  \begin{equation*}
+    \frac{\partial f}{\partial x} = 2xy + y\cos(xy),\qquad\frac{\partial f}{\partial y} = x^2 + x\cos(xy).
+  \end{equation*}
+  Derivujeme-li podle $x$, je $y$ jen číslo, třeba $5$. Pak $x^2\cdot 5$ má derivaci $10x$, tedy $2xy$, a $\sin(5x)$ má derivaci $5\cos(5x)$, tedy $y\cos(xy)$.
+\end{example}
+
+Derivovat můžeme i podruhé: $f_{xx}$, $f_{yy}$ a smíšené $f_{xy}$, $f_{yx}$. Pro rozumné funkce na pořadí nezáleží, $f_{xy} = f_{yx}$ (\textbf{Schwarzova věta}). V našem příkladu $f_{xy} = 2x + \cos(xy) - xy\sin(xy) = f_{yx}$. Zkontrolujte si to.
+
+\section{Gradient: kudy nahoru}
+
+\begin{definitionbox}
+  \textbf{Gradient} funkce $f$ v bodě $[a, b]$ je vektor parciálních derivací
+  \begin{equation*}
+    \nabla f(a, b) = \big(f_x(a, b),\ f_y(a, b)\big).
+  \end{equation*}
+  \textbf{Směrová derivace} ve směru jednotkového vektoru $\vec{u}$ je
+  \begin{equation*}
+    D_{\vec{u}}f = \lim_{h\to 0}\frac{f([a, b] + h\vec{u}) - f(a, b)}{h} = \nabla f\cdot\vec{u}.
+  \end{equation*}
+\end{definitionbox}
+
+Druhá rovnost (pro hladké funkce) říká, že sklon v libovolném směru dostaneme ze dvou čísel $f_x$ a $f_y$. Krok $h\vec{u} = (hu_1, hu_2)$ se skládá z kroku $hu_1$ na východ a $hu_2$ na sever. Výška se při něm změní přibližně o $f_x\cdot hu_1 + f_y\cdot hu_2 = h(\nabla f\cdot\vec{u})$.
+
+Ze skalárního součinu plynou dvě klíčové vlastnosti:
+\begin{itemize}
+  \item $D_{\vec{u}}f = |\nabla f|\cos\theta$, kde $\theta$ je úhel mezi $\vec{u}$ a gradientem. Největší je pro $\theta = 0$. \textbf{Gradient ukazuje směr nejprudšího stoupání} a jeho délka je velikost toho stoupání. Opačný směr, $-\nabla f$, je nejprudší klesání. Kam by stekla voda.
+  \item Podél vrstevnice se výška nemění, takže směrová derivace podél ní je nulová: $\nabla f\cdot\vec{t} = 0$. \textbf{Gradient je kolmý na vrstevnice.}
+\end{itemize}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.3]
+    \foreach \c in {0.5,1.5,3} {
+      \draw[thick, colorofwisdom!70] plot[variable=\t, domain=0:360, samples=80] ({sqrt(\c)*cos(\t)}, {sqrt(\c/2)*sin(\t)});
+    }
+    \foreach \c in {0.5,1.5} {
+      \foreach \t in {20,70,110,160,200,250,290,340} {
+        \pgfmathsetmacro{\px}{sqrt(\c)*cos(\t)}
+        \pgfmathsetmacro{\py}{sqrt(\c/2)*sin(\t)}
+        \draw[->, thick] (\px,\py) -- ({\px+0.18*2*\px},{\py+0.18*4*\py});
+      }
+    }
+    \draw[->, gray] (-2.2,0) -- (2.3,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-1.5) -- (0,1.6) node[above] {\small $y$};
+    \node[font=\scriptsize, align=center] at (0,-1.95) {vrstevnice $x^2 + 2y^2 = c$ a gradienty $\nabla f = (2x, 4y)$};
+  \end{tikzpicture}
+\end{center}
+
+Šipky gradientu míří kolmo ven z vrstevnic, tedy do kopce. Všimněte si, že nemíří do středu: v protáhlém údolí nevede nejprudší směr přímo ke dnu. Tohle je mimochodem základ \textbf{gradientního sestupu}, algoritmu, kterým se učí neuronové sítě. Chybu sítě si představíme jako krajinu v mnoha rozměrech a opakovaně uděláme malý krok ve směru $-\nabla f$. Krok po kroku sejdeme do údolí.
+
+\section{Tečná rovina a lineární přiblížení}
+
+Tečna ke křivce je přímka, která se ke křivce v jednom bodě nejvíc `přimkne'. U plochy hraje stejnou roli \textbf{tečná rovina}. Když se díváte na krajinu z dostatečné blízkosti, vypadá rovinná. Proto lidé dlouho věřili, že Země je placatá.
+
+\begin{definitionbox}
+  \textbf{Tečná rovina} ke grafu $z = f(x, y)$ v bodě $[a, b, f(a, b)]$:
+  \begin{equation*}
+    z = f(a, b) + f_x(a, b)(x - a) + f_y(a, b)(y - b).
+  \end{equation*}
+  Pro body blízko $[a, b]$ tedy platí \textbf{lineární přiblížení} (totální diferenciál)
+  \begin{equation*}
+    \Delta f\approx f_x\,\Delta x + f_y\,\Delta y.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Válec má poloměr $r = 5$ cm a výšku $v = 10$ cm, oboje změřené s chybou nejvýš $0{,}1$ cm. Jak velká může být chyba objemu $V = \pi r^2v$? Platí $V_r = 2\pi rv = 100\pi$ a $V_v = \pi r^2 = 25\pi$, takže
+  \begin{equation*}
+    |\Delta V|\lessapprox 100\pi\cdot 0{,}1 + 25\pi\cdot 0{,}1 = 12{,}5\pi\approx 39\ \text{cm}^3,
+  \end{equation*}
+  což je asi $5\,\%$ objemu $250\pi\approx 785$ cm$^3$. Chyba v poloměru je čtyřikrát nebezpečnější než chyba ve výšce, protože poloměr je ve vzorci na druhou. Takhle fyzici počítají chyby měření.
+\end{example}
+
+\section{Extrémy}
+
+Kde má krajina vrchol nebo dno, je tečná rovina vodorovná, tedy obě parciální derivace jsou nulové. Bodům s $\nabla f = \vec{o}$ říkáme \textbf{stacionární}. Jenže vodorovná je i rovina v sedle. Jak je rozlišit?
+
+V jedné proměnné rozhodovala druhá derivace, tedy jestli je graf vypouklý nahoru nebo dolů. Ve dvou proměnných máme tři druhé derivace $f_{xx}$, $f_{xy}$, $f_{yy}$ a krajina může být v různých směrech zakřivená různě. Kolem stacionárního bodu se funkce chová jako kvadratický výraz
+\begin{equation*}
+  f(a + h, b + k)\approx f(a, b) + \frac{1}{2}\left(f_{xx}h^2 + 2f_{xy}hk + f_{yy}k^2\right),
+\end{equation*}
+tedy jako miska, obrácená miska, nebo sedlo. Který z těch tvarů to je, rozhoduje znaménko jistého determinantu.
+
+\begin{definitionbox}
+  Nechť $\nabla f(a, b) = \vec{o}$ a označme $D = f_{xx}f_{yy} - f_{xy}^2$ (vše v bodě $[a, b]$).
+  \begin{itemize}
+    \item $D > 0$ a $f_{xx} > 0$: \textbf{lokální minimum} (miska),
+    \item $D > 0$ a $f_{xx} < 0$: \textbf{lokální maximum} (obrácená miska),
+    \item $D < 0$: \textbf{sedlový bod},
+    \item $D = 0$: test nerozhodne.
+  \end{itemize}
+\end{definitionbox}
+
+Číslo $D$ je determinant symetrické matice $\begin{pmatrix} f_{xx} & f_{xy}\\ f_{xy} & f_{yy}\end{pmatrix}$, které se říká \textbf{Hessova matice}. Podle spektrální věty z kapitoly~\ref{kap:linearni-algebra} má dvě reálná vlastní čísla, která udávají zakřivení ve dvou kolmých `hlavních' směrech, a determinant je jejich součin. Kladný součin znamená stejná znaménka (obě nahoru nebo obě dolů), záporný různá znaménka, tedy sedlo.
+
+\begin{example}
+  Najděme extrémy funkce $f(x, y) = x^3 - 3x + y^2$. Stacionární body: $f_x = 3x^2 - 3 = 0$ a $f_y = 2y = 0$, tedy $[1, 0]$ a $[-1, 0]$. Druhé derivace: $f_{xx} = 6x$, $f_{yy} = 2$, $f_{xy} = 0$.
+  \begin{itemize}
+    \item V $[1, 0]$: $D = 6\cdot 2 = 12 > 0$, $f_{xx} = 6 > 0$, lokální minimum $f(1, 0) = -2$.
+    \item V $[-1, 0]$: $D = -12 < 0$, sedlo.
+  \end{itemize}
+  Globální minimum funkce nemá, protože pro $x\to-\infty$ jde $x^3$ do $-\infty$.
+\end{example}
+
+\subsection{Vázané extrémy a Lagrangeovy multiplikátory}
+
+Často hledáme extrém jen na nějaké křivce: maximum zisku při daném rozpočtu, nejkratší cestu po povrchu Země. Úloha zní: najdi extrém $f(x, y)$ za podmínky $g(x, y) = 0$.
+
+Představte si, že jdete po turistické stezce (to je podmínka $g = 0$) a hledáte na ní nejvyšší místo. Dokud stezka vrstevnice protíná, můžete ještě vystoupat výš. V nejvyšším bodě se stezka vrstevnice jen \textit{dotkne}. Tam je stezka rovnoběžná s vrstevnicí, a tedy jsou rovnoběžné i jejich normály, gradienty $\nabla f$ a $\nabla g$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \foreach \c in {-1,-0.5,0,0.5,1,1.4142,2} {
+      \draw[colorofwisdom!60] ({\c/2-1.1},{\c/2+1.1}) -- ({\c/2+1.1},{\c/2-1.1});
+    }
+    \node[font=\scriptsize, colorofwisdom] at (1.85,0.05) {$x + y = c$};
+    \draw[very thick] (0,0) circle (1);
+    \node[font=\scriptsize] at (-0.95,-0.95) {$x^2 + y^2 = 1$};
+    \fill (0.7071,0.7071) circle (1.3pt);
+    \draw[->, thick, colorofwisdom] (0.7071,0.7071) -- (1.1071,1.1071) node[above right, font=\scriptsize] {$\nabla f\parallel\nabla g$};
+    \draw[->, gray] (-1.5,0) -- (1.6,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-1.5) -- (0,1.6) node[above] {\small $y$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Metoda Lagrangeových multiplikátorů}: V bodě vázaného extrému funkce $f$ za podmínky $g = 0$ (kde $\nabla g\neq\vec{o}$) existuje číslo $\lambda$ takové, že
+  \begin{equation*}
+    \nabla f = \lambda\nabla g,\qquad g = 0.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Maximum $f(x, y) = x + y$ na kružnici $x^2 + y^2 = 1$ (obrázek nahoře). Podmínka $(1, 1) = \lambda(2x, 2y)$ dává $x = y = \frac{1}{2\lambda}$, dosazením do kružnice $x = y = \pm\frac{\sqrt{2}}{2}$. Maximum je $\sqrt{2}$ v bodě $\left[\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right]$, minimum $-\sqrt{2}$ v bodě opačném. Na obrázku je vidět, že přímka $x + y = \sqrt{2}$ se kružnice právě dotýká.
+\end{example}
+
+\section{Dvojný integrál}
+
+Integrál funkce jedné proměnné byl plocha pod grafem. Integrál funkce dvou proměnných přes oblast $M$ v rovině je \textbf{objem pod grafem}. Definice je stejná: rozdělíme $M$ na malé obdélníčky o obsahu $\Delta S$, nad každým postavíme hranol s výškou $f$ a objemy sečteme. V limitě dostaneme $\iint_M f(x, y)\,\mathrm{d}S$.
+
+Jak se takový integrál počítá? Úplně stejně, jako se krájí chleba.
+
+\begin{definitionbox}
+  \textbf{Fubiniho věta}: Pro spojitou funkci na obdélníku $[a, b]\times[c, d]$ je
+  \begin{equation*}
+    \iint_{[a,b]\times[c,d]}f(x, y)\,\mathrm{d}S = \int_a^b\left(\int_c^d f(x, y)\,\mathrm{d}y\right)\mathrm{d}x = \int_c^d\left(\int_a^b f(x, y)\,\mathrm{d}x\right)\mathrm{d}y.
+  \end{equation*}
+\end{definitionbox}
+
+Vnitřní integrál $\int_c^d f(x, y)\,\mathrm{d}y$ je obsah jednoho `krajíce', řezu tělesa rovinou s pevným $x$. Vnější integrál krajíce sečte. Je jedno, jestli krájíme podél nebo napříč, chleba má pořád stejný objem. Je to tatáž myšlenka jako Cavalieriho princip ze stereometrie.
+
+\begin{center}
+  \begin{tikzpicture}[pohled3d, scale=1.4]
+    \draw[->] (0,0,0) -- (2.6,0,0) node[below left] {\small $x$};
+    \draw[->] (0,0,0) -- (0,2.8,0) node[right] {\small $y$};
+    \draw[->] (0,0,0) -- (0,0,2.9) node[above] {\small $z$};
+    \draw[gray] (2,0,0) -- (2,2,0) -- (0,2,0);
+    \foreach \x in {0,0.5,1,1.5,2} {
+      \draw[gray!70] plot[variable=\t, domain=0:2, samples=10] ({\x}, {\t}, {0.6+0.5*\x*\t});
+    }
+    \foreach \y in {0,0.5,1,1.5,2} {
+      \draw[gray!70] plot[variable=\t, domain=0:2, samples=10] ({\t}, {\y}, {0.6+0.5*\t*\y});
+    }
+    \fill[colorofwisdom!45, opacity=0.85] (1.2,0,0) -- (1.2,2,0) -- plot[variable=\t, domain=2:0, samples=10] (1.2, {\t}, {0.6+0.6*\t}) -- cycle;
+    \draw[colorofwisdom, thick] (1.2,0,0) -- (1.2,2,0) -- (1.2,2,1.8) -- (1.2,0,0.6) -- cycle;
+    \foreach \p in {(2,0,0),(2,2,0),(0,2,0)} \draw[gray, dotted] \p -- ++(0,0,0.6);
+    \node[font=\scriptsize, anchor=west] at (1.2,2.1,1.7) {krajíc $\int f(x_0, y)\,\mathrm{d}y$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  $\displaystyle\iint_{[0,1]\times[0,2]}xy\,\mathrm{d}S = \int_0^1\left(\int_0^2 xy\,\mathrm{d}y\right)\mathrm{d}x = \int_0^1 x\left[\frac{y^2}{2}\right]_0^2\mathrm{d}x = \int_0^1 2x\,\mathrm{d}x = 1$.
+\end{example}
+
+\subsection{Polární souřadnice}
+
+Pro kruhové oblasti se hodí popisovat body vzdáleností $r$ od počátku a úhlem $\varphi$: $x = r\cos\varphi$, $y = r\sin\varphi$. Kousek oblasti mezi $r$ a $r + \mathrm{d}r$ a mezi $\varphi$ a $\varphi + \mathrm{d}\varphi$ je skoro obdélník se stranami $\mathrm{d}r$ a $r\,\mathrm{d}\varphi$ (délka oblouku je poloměr krát úhel). Jeho obsah je tedy
+\begin{equation*}
+  \mathrm{d}S = r\,\mathrm{d}r\,\mathrm{d}\varphi.
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \draw[->, gray] (-0.2,0) -- (2.6,0);
+    \draw[->, gray] (0,-0.2) -- (0,2.3);
+    \foreach \r in {0.5,1,1.5,2} \draw[gray!50] (\r,0) arc (0:90:\r);
+    \foreach \a in {15,30,...,75} \draw[gray!50] (0,0) -- (\a:2.1);
+    \fill[colorofwisdom!45] (30:1.5) arc (30:45:1.5) -- (45:2) arc (45:30:2) -- cycle;
+    \draw[thick, colorofwisdom] (30:1.5) arc (30:45:1.5) -- (45:2) arc (45:30:2) -- cycle;
+    \draw[decorate, decoration={brace, amplitude=3pt}] (30:1.5) -- (30:2) node[midway, below right, font=\scriptsize] {$\mathrm{d}r$};
+    \node[font=\scriptsize] at (37.5:2.35) {$r\,\mathrm{d}\varphi$};
+    \draw (0.5,0) arc (0:30:0.5);
+    \node[font=\scriptsize] at (15:0.7) {$\varphi$};
+  \end{tikzpicture}
+\end{center}
+
+Ten faktor $r$ je důležitý: dílky dál od středu jsou větší. Vyplatí se to hned v jednom z nejkrásnějších výpočtů celé analýzy.
+
+\section{Odbočka --- Gaussův integrál}
+
+Funkce $\mathrm{e}^{-x^2}$ je základem normálního rozdělení z kapitoly~\ref{kap:pravdepodobnost}. Její primitivní funkci nelze zapsat pomocí elementárních funkcí (zmínili jsme to u základní věty integrálního počtu). Přesto spočítáme
+\begin{equation*}
+  I = \int_{-\infty}^{\infty}\mathrm{e}^{-x^2}\,\mathrm{d}x.
+\end{equation*}
+Trik je neuvěřitelně drzý: místo $I$ spočítáme $I^2$ a podíváme se na něj jako na dvojný integrál přes celou rovinu.
+\begin{equation*}
+  I^2 = \int_{-\infty}^{\infty}\mathrm{e}^{-x^2}\,\mathrm{d}x\cdot\int_{-\infty}^{\infty}\mathrm{e}^{-y^2}\,\mathrm{d}y = \iint_{\mathbb{R}^2}\mathrm{e}^{-(x^2 + y^2)}\,\mathrm{d}S.
+\end{equation*}
+Funkce $\mathrm{e}^{-(x^2 + y^2)}$ je `zvon', který závisí jen na vzdálenosti $r$ od počátku, protože $x^2 + y^2 = r^2$. V polárních souřadnicích:
+\begin{equation*}
+  I^2 = \int_0^{2\pi}\int_0^{\infty}\mathrm{e}^{-r^2}\,r\,\mathrm{d}r\,\mathrm{d}\varphi = 2\pi\left[-\frac{1}{2}\mathrm{e}^{-r^2}\right]_0^{\infty} = 2\pi\cdot\frac{1}{2} = \pi.
+\end{equation*}
+Faktor $r$ z polárních souřadnic je přesně ta derivace vnitřní funkce, kterou potřebujeme k substituci. Bez něj by to nešlo. Tedy
+\begin{equation*}
+  \int_{-\infty}^{\infty}\mathrm{e}^{-x^2}\,\mathrm{d}x = \sqrt{\pi}.
+\end{equation*}
+Integrál, který v jedné dimenzi spočítat nejde, se ve dvou dimenzích spočítá na tři řádky. Proto má hustota normálního rozdělení ve jmenovateli $\sqrt{2\pi}$. A proto je $\Gamma\!\left(\frac{1}{2}\right) = \sqrt{\pi}$, jak jsme viděli v odbočce o faktoriálu v kapitole~\ref{kap:kombinatorika}.
+
+\section{Vektorová pole}
+
+Na závěr ještě jeden pojem, bez kterého se fyzika neobejde. \textbf{Vektorové pole} přiřazuje každému bodu roviny (nebo prostoru) vektor. Rychlost proudící vody, síla větru na meteorologické mapě, gravitační nebo elektrické pole. Gradient funkce je vektorové pole, ale ne každé pole je gradient.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \foreach \x in {-2,-1,...,2} \foreach \y in {-2,-1,...,2} {
+      \draw[->, colorofwisdom, thick] (\x,\y) -- ({\x+0.18*\x},{\y+0.18*\y});
+    }
+    \node[font=\small] at (0,-2.8) {$\vec{F} = (x, y)$: zdroj};
+    \begin{scope}[xshift=6cm]
+      \foreach \x in {-2,-1,...,2} \foreach \y in {-2,-1,...,2} {
+        \draw[->, colorofwisdom, thick] (\x,\y) -- ({\x-0.18*\y},{\y+0.18*\x});
+      }
+      \node[font=\small] at (0,-2.8) {$\vec{F} = (-y, x)$: vír};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Pole vlevo `vyvěrá' z počátku jako voda z pramene. Jeho \textbf{divergence} $\frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} = 2$ je kladná: v každém bodě voda přibývá. Pole vpravo se točí. Jeho divergence je nulová, ale jeho \textbf{rotace} $\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} = 2$ ne. Kdybyste do něj položili malé mlýnské kolečko, roztočilo by se. Pole vpravo není gradientem žádné funkce. Kdyby bylo, šli bychom po kružnici pořád `do kopce' a vrátili se do výchozího bodu výš, než jsme začali, což je nesmysl. Divergence a rotace jsou jazyk, kterým jsou napsány Maxwellovy rovnice elektromagnetismu.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Spočítejte parciální derivace funkce $f(x, y) = \mathrm{e}^{xy}\ln y$.
+    \item Ve kterém směru roste funkce $f(x, y) = x^2y$ v bodě $[1, 2]$ nejrychleji a jak rychle?
+    \item Najděte a klasifikujte stacionární body funkce $f(x, y) = x^2 + xy + y^2 - 3x$.
+    \item Pomocí Lagrangeových multiplikátorů najděte obdélník s obvodem $20$ a s největším obsahem.
+    \item Spočítejte objem pod grafem $z = x + y$ nad čtvercem $[0, 1]\times[0, 1]$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $f_x = y\,\mathrm{e}^{xy}\ln y$, $f_y = x\,\mathrm{e}^{xy}\ln y + \frac{\mathrm{e}^{xy}}{y}$.
+    \item $\nabla f = (2xy, x^2) = (4, 1)$. Nejrychleji ve směru $(4, 1)$, rychlostí $|\nabla f| = \sqrt{17}$.
+    \item $f_x = 2x + y - 3 = 0$, $f_y = x + 2y = 0$, tedy $[2, -1]$. $D = 2\cdot 2 - 1 = 3 > 0$, $f_{xx} = 2 > 0$, minimum $f(2, -1) = -3$.
+    \item Maximalizujeme $xy$ za podmínky $2x + 2y = 20$. $(y, x) = \lambda(2, 2)$ dává $x = y = 5$. Čtverec s obsahem $25$.
+    \item $\int_0^1\int_0^1(x + y)\,\mathrm{d}y\,\mathrm{d}x = \int_0^1\left(x + \frac{1}{2}\right)\mathrm{d}x = 1$.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Hlava, která se znovu nenarodí}
+
+Joseph-Louis Lagrange se narodil v roce 1736 v Turíně jako Giuseppe Lodovico Lagrangia. V devatenácti letech poslal Eulerovi dopis s novou metodou, ze které vznikl variační počet, a Euler, tehdy nejslavnější matematik světa, se podle legendy se zveřejněním vlastní práce na stejné téma zdržel, aby mladík dostal zásluhy. Později Lagrange nahradil Eulera v Berlíně a v roce 1787 přesídlil do Paříže. Dva roky před revolucí.
+
+Za jakobínského teroru byl přijat dekret o vypovězení cizinců. Lagrange, rodilý Ital, byl z něj výslovně vyjmut, a místo do vyhnanství šel pracovat do komise, která připravovala metrickou soustavu. Jeho přítel, chemik Antoine Lavoisier, takové štěstí neměl. Lavoisier byl kromě chemie i výběrčím daní, a v roce 1794 ho za to revoluční tribunál poslal pod gilotinu. Lagrange druhý den řekl: `Stačil jim okamžik, aby tu hlavu sťali, a sto let možná nestačí, aby se zrodila jiná, jako byla ona.'
+
+Lagrange revoluci přežil, Napoleon z něj udělal hraběte a senátora a zemřel v roce 1813 v Paříži. Na vzniku metru a kilogramu, které dnes používá skoro celý svět, má tak nemalý podíl.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak si představit funkci dvou proměnných? Co jsou vrstevnice?
+    \item Co je parciální derivace a jak ji vidíme na grafu?
+    \item Co je gradient? Proč ukazuje směr nejprudšího stoupání a proč je kolmý na vrstevnice?
+    \item Co je tečná rovina a k čemu se hodí lineární přiblížení?
+    \item Jak se hledají a klasifikují lokální extrémy? Co je sedlový bod?
+    \item Vysvětlete geometricky metodu Lagrangeových multiplikátorů.
+    \item Co říká Fubiniho věta? Proč je v polárních souřadnicích $\mathrm{d}S = r\,\mathrm{d}r\,\mathrm{d}\varphi$?
+    \item Spočítejte Gaussův integrál.
+    \item Co je vektorové pole, divergence a rotace?
+  \end{enumerate}
+\end{problem}

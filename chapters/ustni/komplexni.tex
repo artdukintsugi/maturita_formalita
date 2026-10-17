@@ -52,6 +52,30 @@ Dělení je přesně stejný trik jako usměrňování zlomků v kapitole~\ref{k
     i^1 = i,\quad i^2 = -1,\quad i^3 = -i,\quad i^4 = 1,\quad i^5 = i,\ \ldots
   \end{equation*}
   Stačí tedy vydělit exponent čtyřmi a podívat se na zbytek. Například $i^{2026} = i^{4\cdot 506 + 2} = i^2 = -1$.
+  Proč zrovna perioda $4$? Za chvíli v Gaussově rovině uvidíme, že násobení číslem $i$ znamená otočení o $90^\circ$. Každá další mocnina je tedy o čtvrt otáčky dál a po čtyřech čtvrtotáčkách jsme zpátky. Vpravo je totéž otáčení použité na číslo $z = 2 + i$: čísla $z, iz, i^2z, i^3z$ tvoří čtverec.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.95]
+      \begin{scope}
+        \draw[->] (-1.7,0) -- (1.8,0) node[right] {\tiny Re};
+        \draw[->] (0,-1.6) -- (0,1.7) node[above] {\tiny Im};
+        \draw[dashed, gray] (0,0) circle (1.2);
+        \foreach \a/\l/\p in {0/{$i^0 = 1$}/above left, 90/{$i$}/below right, 180/{$i^2 = -1$}/below right, 270/{$i^3 = -i$}/above left} {
+          \filldraw[colorofwisdom] (\a:1.2) circle (2pt) node[\p, font=\scriptsize] {\l};
+        }
+        \foreach \a in {0,90,180,270} \draw[->, colorofwisdom, thick] (\a+12:1.45) arc (\a+12:\a+78:1.45);
+        \node[font=\scriptsize, colorofwisdom] at (45:1.8) {$\cdot i$};
+      \end{scope}
+      \begin{scope}[xshift=5.5cm, scale=0.6]
+        \draw[->] (-2.8,0) -- (2.9,0) node[right] {\tiny Re};
+        \draw[->] (0,-2.7) -- (0,2.8) node[above] {\tiny Im};
+        \draw[gray, dashed] (2,1) -- (-1,2) -- (-2,-1) -- (1,-2) -- cycle;
+        \foreach \x/\y/\l/\p in {2/1/{$z = 2 + i$}/right, -1/2/{$iz = -1 + 2i$}/above left, -2/-1/{$i^2z$}/left, 1/-2/{$i^3z$}/below right} {
+          \draw[colorofwisdom] (0,0) -- (\x,\y);
+          \filldraw[colorofwisdom] (\x,\y) circle (3pt) node[\p, font=\scriptsize] {\l};
+        }
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
 \end{note}
 
 \begin{note}
@@ -117,6 +141,34 @@ Komplexní číslo $a + bi$ je určeno dvojicí reálných čísel $(a, b)$. Mů
   \end{tikzpicture}
 \end{center}
 
+Komplexní číslo si tedy můžeme představit dvojím způsobem: jako \textbf{bod} $[a, b]$, nebo jako \textbf{šipku} (vektor) z počátku do tohoto bodu. Sčítání je pak skládání šipek, přesně jako u sil ve fyzice. Šipku $z_2$ přiložíme na konec šipky $z_1$, a kde skončíme, tam je $z_1 + z_2$. Obě šipky a jejich součet tvoří rovnoběžník. Na obrázku jsou čísla z příkladu výše, $z_1 = 2 + 3i$ a $z_2 = 1 - i$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.8,0) -- (4.3,0) node[right] {\small Re};
+    \draw[->] (0,-1.6) -- (0,3.7) node[above] {\small Im};
+    \foreach \x in {1,2,3} \draw (\x,0.06) -- (\x,-0.06);
+    \foreach \y in {-1,1,2,3} \draw (0.06,\y) -- (-0.06,\y);
+    \fill[colorofwisdom!8] (0,0) -- (2,3) -- (3,2) -- (1,-1) -- cycle;
+    \draw[->, thick, colorofwisdom] (0,0) -- (2,3) node[above left, font=\small] {$z_1 = 2 + 3i$};
+    \draw[->, thick] (0,0) -- (1,-1) node[below right, font=\small] {$z_2 = 1 - i$};
+    \draw[->, dashed] (2,3) -- (3,2);
+    \draw[->, dashed, colorofwisdom] (1,-1) -- (3,2);
+    \draw[->, very thick, colorofwisdom!60!black] (0,0) -- (3,2) node[right, font=\small] {$z_1 + z_2 = 3 + 2i$};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-0.8,0) -- (4.3,0) node[right] {\small Re};
+    \draw[->] (0,-1.6) -- (0,3.7) node[above] {\small Im};
+    \draw[->, thick, colorofwisdom] (0,0) -- (2,3) node[above left, font=\small] {$z_1$};
+    \draw[->, thick] (0,0) -- (1,-1) node[below right, font=\small] {$z_2$};
+    \draw[very thick, colorofwisdom!60!black] (1,-1) -- (2,3) node[midway, right, font=\small] {$|z_1 - z_2| = \sqrt{17}$};
+    \draw[dashed, gray] (0,0) circle (1.414);
+    \node[gray, font=\scriptsize] at (-0.3,-1.65) {$|z| = \sqrt{2}$};
+  \end{tikzpicture}
+\end{center}
+Vpravo je vzdálenost dvou čísel: $z_1 - z_2 = 1 + 4i$, a tedy $|z_1 - z_2| = \sqrt{1 + 16} = \sqrt{17}$. Šedá kružnice je množina všech čísel se stejnou absolutní hodnotou jako $z_2$, tedy $\{z : |z| = \sqrt{2}\}$. Rovnice $|z - z_0| = r$ obecně popisuje kružnici se středem $z_0$ a poloměrem $r$.
+
 \section{Goniometrický tvar}
 
 \begin{definitionbox}
@@ -148,6 +200,29 @@ Komplexní číslo $a + bi$ je určeno dvojicí reálných čísel $(a, b)$. Mů
 
 Tohle je ten nejdůležitější poznatek celé kapitoly. Násobení komplexním číslem s absolutní hodnotou $1$ je \textbf{otočení} roviny. Násobení číslem $i$ (které má $|i| = 1$ a $\arg i = \frac{\pi}{2}$) otočí každý bod o $90^\circ$ proti směru hodinových ručiček. Dvojí otočení o $90^\circ$ je otočení o $180^\circ$, tedy násobení $-1$. A to je geometrický důvod, proč $i^2 = -1$! Nic mystického, jen dvě otočení za sebou.
 
+\begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \draw[->] (-1.4,0) -- (2.6,0) node[right] {\small Re};
+    \draw[->] (0,-0.3) -- (0,3.1) node[above] {\small Im};
+    \coordinate (Z1) at (1,1);
+    \coordinate (Z2) at (1,1.732);
+    \coordinate (P) at (-0.732,2.732);
+    \draw[->, thick, gray] (0,0) -- (Z1) node[right, font=\small, black] {$z_1 = 1 + i$};
+    \draw[->, thick, black] (0,0) -- (Z2) node[right, font=\small] {$z_2 = 1 + \sqrt{3}\,i$};
+    \draw[->, very thick, colorofwisdom] (0,0) -- (P) node[above left, font=\small] {$z_1z_2$};
+    \draw[gray] (0.55,0) arc (0:45:0.55);
+    \node[font=\scriptsize, gray] at (22:0.75) {$45^\circ$};
+    \draw (60:0.95) arc (60:105:0.95);
+    \node[font=\scriptsize] at (83:1.15) {$45^\circ$};
+    \draw (1.25,0) arc (0:60:1.25);
+    \node[font=\scriptsize] at (30:1.48) {$60^\circ$};
+    \draw[->, colorofwisdom] (1.8,0) arc (0:105:1.8);
+    \node[font=\scriptsize, colorofwisdom] at (12:2.1) {$105^\circ$};
+    \node[anchor=west, align=left, font=\small] at (3,1.6) {$|z_1| = \sqrt{2}$, $\arg z_1 = 45^\circ$\\$|z_2| = 2$, $\arg z_2 = 60^\circ$\\[2pt]$|z_1z_2| = 2\sqrt{2}$, $\arg z_1z_2 = 105^\circ$\\[2pt]$z_1z_2 = (1 - \sqrt{3}) + (1 + \sqrt{3})i$};
+  \end{tikzpicture}
+\end{center}
+Na obrázku násobíme $z_2 = 1 + \sqrt{3}\,i$ číslem $z_1 = 1 + i$. Šipka $z_2$ se otočí o $\arg z_1 = 45^\circ$ a natáhne se $|z_1| = \sqrt{2}$-krát. Zkuste si ověřit roznásobením, že $(1 + i)(1 + \sqrt{3}\,i)$ vyjde opravdu tak, jak je napsáno vpravo. Násobení komplexních čísel je tedy vždy kombinace dvou jednoduchých pohybů: \textbf{otočení a natažení}.
+
 \begin{example}
   Převeďme do goniometrického tvaru:
   \begin{itemize}
@@ -173,6 +248,20 @@ Tohle je ten nejdůležitější poznatek celé kapitoly. Násobení komplexním
   \end{equation*}
   Pro záporná $n$ to plyne z pravidla pro dělení.
 \end{proof}
+
+Moivreova věta říká graficky, že mocniny $z, z^2, z^3, \ldots$ leží na \textbf{spirále}. Každé další vynásobení číslem $z$ otočí o stejný úhel $\varphi$ a natáhne $|z|$-krát. Pro $|z| > 1$ se spirála rozvíjí ven, pro $|z| < 1$ se stáčí do počátku a pro $|z| = 1$ body obíhají po jednotkové kružnici. Na obrázku jsou mocniny čísla $1 + i$, každá otočená o $45^\circ$ a $\sqrt{2}$-krát delší než předchozí.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-5,0) -- (2.6,0) node[right] {\small Re};
+    \draw[->] (0,-4.6) -- (0,2.9) node[above] {\small Im};
+    \draw[thick, colorofwisdom!50, domain=0:225, samples=80] plot ({pow(2,\x/90)*cos(\x)}, {pow(2,\x/90)*sin(\x)});
+    \foreach \x/\y/\l/\p in {1/0/{$z^0 = 1$}/below right, 1/1/{$z = 1 + i$}/right, 0/2/{$z^2 = 2i$}/above right, -2/2/{$z^3 = -2 + 2i$}/above left, -4/0/{$z^4 = -4$}/above left, -4/-4/{$z^5 = -4 - 4i$}/below right} {
+      \draw[gray] (0,0) -- (\x,\y);
+      \filldraw[colorofwisdom] (\x,\y) circle (3.5pt) node[\p, font=\scriptsize] {\l};
+    }
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   \begin{itemize}
@@ -212,6 +301,28 @@ Tohle je ten nejdůležitější poznatek celé kapitoly. Násobení komplexním
 
 \begin{example}
   Rovnice $x^2 + 2x + 5 = 0$ z kapitoly~\ref{kap:kvadraticke}: $D = -16$, $\sqrt{-D} = 4$, tedy $x_{1,2} = \frac{-2\pm 4i}{2} = -1\pm 2i$. Kontrola Vietem: součet $-2$, součin ${(-1)}^2 + 2^2 = 5$. Sedí.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \begin{scope}
+        \draw[->] (-3.4,0) -- (1.6,0) node[right] {\small $x$};
+        \draw[->] (0,-0.4) -- (0,6) node[above] {\small $y$};
+        \draw[thick, colorofwisdom, domain=-3.2:1.2, samples=60] plot (\x, {(\x*\x + 2*\x + 5)/1.6});
+        \filldraw (-1,2.5) circle (2pt) node[below, font=\scriptsize] {$[-1, 4]$};
+        \node[font=\small] at (-1,-1) {$y = x^2 + 2x + 5$};
+      \end{scope}
+      \begin{scope}[xshift=6.5cm, yshift=2.6cm]
+        \draw[->] (-2.4,0) -- (1.6,0) node[right] {\small Re};
+        \draw[->] (0,-2.6) -- (0,2.7) node[above] {\small Im};
+        \draw[dashed, gray] (-1,2) -- (-1,-2);
+        \filldraw[colorofwisdom] (-1,2) circle (2.5pt) node[left, font=\scriptsize] {$-1 + 2i$};
+        \filldraw[colorofwisdom] (-1,-2) circle (2.5pt) node[left, font=\scriptsize] {$-1 - 2i$};
+        \draw (-1,0.06) -- (-1,-0.06) node[below right, font=\scriptsize] {$-1$};
+        \node[font=\small] at (-0.4,-3.6) {kořeny v Gaussově rovině};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Parabola osu $x$ neprotíná, takže reálné kořeny nejsou. Komplexní kořeny leží symetricky podle reálné osy (jsou komplexně sdružené) a jejich reálná část $-1$ je přesně $x$-ová souřadnice vrcholu paraboly. To platí obecně: $-\frac{b}{2a}$ je střed mezi kořeny, ať jsou reálné, nebo komplexní.
 \end{example}
 
 \begin{definitionbox}

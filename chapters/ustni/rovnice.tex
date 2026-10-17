@@ -39,6 +39,72 @@ Poslední věta je důležitá. Pokud uhodnete, že $x = 3$ je řešením $2x + 
 
 Pokud se na to podíváme optikou první kapitoly, ekvivalentní úprava znamená, že mezi původní a novou rovnicí platí ekvivalence $\Leftrightarrow$. Důsledková úprava zaručuje jen implikaci $\Rightarrow$. Proto ty názvy.
 
+Ekvivalentní úpravy si můžeme představit na rovnoramenných vahách. Rovnice je váha v rovnováze: na levé misce leží $L(x)$, na pravé $P(x)$. Neznámá $x$ je krabička, o které nevíme, kolik váží. Rovnováha se nepokazí, pokud s \textit{oběma} miskami uděláme totéž: přidáme nebo odebereme stejné závaží, nebo obsah obou misek zdvojnásobíme či rozpůlíme. Vyřešit rovnici pak znamená upravovat obě misky tak dlouho, až na jedné zůstane jediná krabička:
+\begin{center}
+  \begin{tikzpicture}[scale=0.72]
+\draw[thick] (-0.60,0) -- (0.60,0);
+\fill[black!60] (-0.35,0) -- (0.35,0) -- (0.00,0.35) -- cycle;
+\draw[thick] (0.00,0) -- (0.00,1.8);
+\draw[very thick] (-1.50,1.8) -- (1.50,1.8);
+\fill (0.00,1.8) circle (2.5pt);
+\draw (-1.50,1.8) -- (-2.15,0.6) (-1.50,1.8) -- (-0.85,0.6);
+\draw[very thick] (-2.20,0.6) -- (-0.80,0.6);
+\draw (1.50,1.8) -- (0.85,0.6) (1.50,1.8) -- (2.15,0.6);
+\draw[very thick] (0.80,0.6) -- (2.20,0.6);
+\filldraw[fill=colorofwisdom!30, draw=black] (-2.12,0.6) rectangle (-1.70,1.02);
+\node[font=\scriptsize] at (-1.91,0.81) {$x$};
+\filldraw[fill=colorofwisdom!30, draw=black] (-1.64,0.6) rectangle (-1.22,1.02);
+\node[font=\scriptsize] at (-1.43,0.81) {$x$};
+\filldraw[fill=black!35, draw=black] (-1.02,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.02,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.34,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.66,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.98,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.18,1.01) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.50,1.01) circle (0.13);
+\filldraw[fill=black!35, draw=black] (1.82,1.01) circle (0.13);
+\node[font=\small] at (0.00,-0.45) {$2x + 1 = 7$};
+\draw[thick] (5.20,0) -- (6.40,0);
+\fill[black!60] (5.45,0) -- (6.15,0) -- (5.80,0.35) -- cycle;
+\draw[thick] (5.80,0) -- (5.80,1.8);
+\draw[very thick] (4.30,1.8) -- (7.30,1.8);
+\fill (5.80,1.8) circle (2.5pt);
+\draw (4.30,1.8) -- (3.65,0.6) (4.30,1.8) -- (4.95,0.6);
+\draw[very thick] (3.60,0.6) -- (5.00,0.6);
+\draw (7.30,1.8) -- (6.65,0.6) (7.30,1.8) -- (7.95,0.6);
+\draw[very thick] (6.60,0.6) -- (8.00,0.6);
+\filldraw[fill=colorofwisdom!30, draw=black] (3.85,0.6) rectangle (4.27,1.02);
+\node[font=\scriptsize] at (4.06,0.81) {$x$};
+\filldraw[fill=colorofwisdom!30, draw=black] (4.33,0.6) rectangle (4.75,1.02);
+\node[font=\scriptsize] at (4.54,0.81) {$x$};
+\filldraw[fill=black!35, draw=black] (6.82,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (7.14,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (7.46,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (7.78,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (7.14,1.01) circle (0.13);
+\filldraw[fill=black!35, draw=black] (7.46,1.01) circle (0.13);
+\node[font=\small] at (5.80,-0.45) {$2x = 6$};
+\draw[thick] (11.00,0) -- (12.20,0);
+\fill[black!60] (11.25,0) -- (11.95,0) -- (11.60,0.35) -- cycle;
+\draw[thick] (11.60,0) -- (11.60,1.8);
+\draw[very thick] (10.10,1.8) -- (13.10,1.8);
+\fill (11.60,1.8) circle (2.5pt);
+\draw (10.10,1.8) -- (9.45,0.6) (10.10,1.8) -- (10.75,0.6);
+\draw[very thick] (9.40,0.6) -- (10.80,0.6);
+\draw (13.10,1.8) -- (12.45,0.6) (13.10,1.8) -- (13.75,0.6);
+\draw[very thick] (12.40,0.6) -- (13.80,0.6);
+\filldraw[fill=colorofwisdom!30, draw=black] (9.89,0.6) rectangle (10.31,1.02);
+\node[font=\scriptsize] at (10.10,0.81) {$x$};
+\filldraw[fill=black!35, draw=black] (12.78,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (13.10,0.74) circle (0.13);
+\filldraw[fill=black!35, draw=black] (13.42,0.74) circle (0.13);
+\node[font=\small] at (11.60,-0.45) {$x = 3$};
+\draw[->, thick, colorofwisdom] (2.4,1.1) -- (3.4,1.1) node[midway, above, font=\small] {$-1$};
+\draw[->, thick, colorofwisdom] (8.2,1.1) -- (9.2,1.1) node[midway, above, font=\small] {$:2$};
+  \end{tikzpicture}
+\end{center}
+Je také vidět, proč nesmíme násobit nulou. Kdybychom z obou misek všechno vyhodili, váha by zůstala v rovnováze, ale o krabičce bychom se nedozvěděli vůbec nic.
+
 \begin{example}
   Proč je násobení nulou zakázané? Vezměme rovnici $x = 2$, která má jediné řešení. Pokud obě strany vynásobíme nulou, dostaneme $0 = 0$, což platí pro všechna $x$. Najednou máme nekonečně mnoho `řešení'. Násobení nulou je prostě matematický ekvivalent odpovědi `idk'. Technicky to není lež, ale nikam vás to neposune.
 
@@ -80,6 +146,32 @@ Lineární rovnici umíme vyřešit úplně obecně. To je vzácná věc, takže
   \end{enumerate}
 \end{proof}
 
+Větu si můžeme představit i graficky. Body $(x, ax + b)$ leží v rovině na přímce $y = ax + b$ (podrobně v kapitole o funkcích). Řešit rovnici $ax + b = 0$ znamená hledat, kde tato přímka protíná osu $x$. Šikmá přímka ($a\neq 0$) ji protne právě jednou, vodorovná přímka nad nebo pod osou ($a = 0$, $b\neq 0$) nikdy a přímka, která s osou splývá ($a = b = 0$), všude:
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \begin{scope}
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-1.6) -- (0,2.6) node[above] {\small $y$};
+      \draw[thick, colorofwisdom] (-0.3,-1.44) -- (3.8,1.84);
+      \filldraw (1.5,0) circle (2.5pt) node[above left] {\small $-\frac{b}{a}$};
+      \node at (1.75,-2.3) {\small $a\neq 0$: jedno řešení};
+    \end{scope}
+    \begin{scope}[xshift=6cm]
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-1.6) -- (0,2.6) node[above] {\small $y$};
+      \draw[thick, colorofwisdom] (-0.3,1.4) -- (3.8,1.4) node[above left] {\small $y = b$};
+      \node at (1.75,-2.3) {\small $a = 0$, $b\neq 0$: žádné};
+    \end{scope}
+    \begin{scope}[xshift=12cm]
+      \draw[line width=3pt, colorofwisdom!40] (-0.5,0) -- (3.8,0);
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-1.6) -- (0,2.6) node[above] {\small $y$};
+      \node[colorofwisdom] at (2,0.5) {\small $y = 0$};
+      \node at (1.75,-2.3) {\small $a = b = 0$: všechna $x$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Vyřešme rovnici $3(x - 2) - 2(x + 1) = 4 - x$.
   \begin{align*}
@@ -89,6 +181,22 @@ Lineární rovnici umíme vyřešit úplně obecně. To je vzácná věc, takže
     x &= 6.
   \end{align*}
   Zkouška: $L(6) = 3\cdot 4 - 2\cdot 7 = -2$, $P(6) = 4 - 6 = -2$. Tedy $L(6) = P(6)$ a $K = \{6\}$.
+
+  Na rovnici se dá dívat i jako na hledání průsečíku dvou grafů. Levá strana je po úpravě $y = x - 8$, pravá $y = 4 - x$. Obě přímky se potkají právě v jednom bodě a jeho $x$-ová souřadnice je řešení:
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.7, yscale=0.32]
+      \draw[->] (-0.5,0) -- (9,0) node[right] {\small $x$};
+      \draw[->] (0,-8.8) -- (0,5.5) node[above] {\small $y$};
+      \foreach \x in {2,4,6,8} \draw (\x,0.25) -- (\x,-0.25);
+      \foreach \y in {-8,-4,4} \draw (0.1,\y) -- (-0.1,\y) node[left] {\scriptsize $\y$};
+      \node[above, font=\scriptsize] at (2,0.2) {$2$};
+      \node[above, font=\scriptsize] at (4,0.2) {$4$};
+      \draw[thick, colorofwisdom] (0,-8) -- (8.8,0.8) node[right] {\small $y = L(x)$};
+      \draw[thick] (0,4) -- (8.8,-4.8) node[below] {\small $y = P(x)$};
+      \draw[dashed] (6,-2) -- (6,0) node[above, font=\small] {$6$};
+      \filldraw (6,-2) circle (2.5pt);
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \begin{example}
@@ -326,6 +434,25 @@ S nerovnicemi pracujeme téměř stejně jako s rovnicemi. Je zde ale jeden zás
 
 Proč se znak otočí? Intuitivně: $2 < 3$, ale $-2 > -3$, protože na záporné straně osy je `větší' číslo blíže nule. Záporná čísla jsou prostě dramatická a všechno obrátí naruby. Dokažme si to.
 
+Na číselné ose je to krásně vidět. Násobení číslem $-1$ je \textit{zrcadlení} podle nuly. Co bylo vpravo, je po zrcadlení vlevo, a tedy i pořadí bodů se obrátí:
+\begin{center}
+  \begin{tikzpicture}
+    \draw[->, thick] (-4.5,0) -- (4.5,0) node[right] {$x$};
+    \foreach \x in {-4,...,4} \draw (\x,0.1) -- (\x,-0.1) node[below] {\small $\x$};
+    \filldraw[colorofwisdom] (2,0) circle (3pt);
+    \filldraw[colorofwisdom] (3,0) circle (3pt);
+    \filldraw (-2,0) circle (3pt);
+    \filldraw (-3,0) circle (3pt);
+    \draw[->, colorofwisdom, thick] (2,0.2) to[bend right=50] (-2,0.2);
+    \draw[->, colorofwisdom, thick] (3,0.2) to[bend right=50] (-3,0.2);
+    \draw[dashed, gray] (0,-0.6) -- (0,2.2);
+    \node[colorofwisdom, font=\small] at (2.5,-0.9) {$2 < 3$};
+    \node[font=\small] at (-2.5,-0.9) {$-2 > -3$};
+    \node[font=\small, colorofwisdom] at (0,2.5) {$\cdot(-1)$};
+  \end{tikzpicture}
+\end{center}
+Násobení kladným číslem naopak osu jen natáhne nebo smrští, ale nepřevrátí, a proto pořadí zachová.
+
 \begin{proof}
   Nechť $a < b$ a $c < 0$. Chceme ukázat, že $ac > bc$. Z $a < b$ plyne, že $b - a > 0$. Z $c < 0$ plyne, že $-c > 0$. Součin dvou kladných čísel je kladný, tedy
   \begin{equation*}
@@ -378,6 +505,32 @@ Pokud má neznámá splňovat několik nerovnic zároveň, mluvíme o soustavě 
   \end{equation*}
 \end{example}
 
+Průnik si nejlépe představíme tak, že obě množiny řešení nakreslíme nad sebe a díváme se, kde se `překrývají':
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \foreach \y in {0,-1,-2.2} {
+      \draw[->] (-4.5,\y) -- (5,\y);
+      \foreach \x in {-4,...,4} \draw (\x,\y+0.08) -- (\x,\y-0.08);
+    }
+    \foreach \x in {-4,...,4} \node[below, font=\scriptsize] at (\x,-2.3) {$\x$};
+    % K1
+    \draw[line width=3pt, black!45] (-2,0) -- (4.8,0);
+    \filldraw[fill=white, draw=black!60, thick] (-2,0) circle (3pt);
+    \node[left] at (-4.6,0) {$K_1$};
+    % K2
+    \draw[line width=3pt, black!45] (-4.4,-1) -- (3,-1);
+    \filldraw[black!60] (3,-1) circle (3pt);
+    \node[left] at (-4.6,-1) {$K_2$};
+    % K
+    \draw[line width=3pt, colorofwisdom] (-2,-2.2) -- (3,-2.2);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (-2,-2.2) circle (3pt);
+    \filldraw[colorofwisdom] (3,-2.2) circle (3pt);
+    \node[left] at (-4.6,-2.2) {$K_1\cap K_2$};
+    \draw[dashed, gray] (-2,0.3) -- (-2,-2.2);
+    \draw[dashed, gray] (3,0.3) -- (3,-2.2);
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Zápis $-1 < 2x + 3\leq 7$ je zkrácený zápis soustavy dvou nerovnic $-1 < 2x + 3$ a $2x + 3\leq 7$. Takovou `dvojitou' nerovnici můžeme upravovat najednou, pokud provádíme stejnou úpravu se všemi třemi částmi:
   \begin{equation*}
@@ -424,6 +577,24 @@ Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vyn�
   \begin{equation*}
     K = (-\infty, -2)\cup[1, \infty).
   \end{equation*}
+
+  Tabulku znamének si můžeme představit jako `hada', který se vine kolem číselné osy. Nad osou je tam, kde je výraz kladný, pod osou tam, kde je záporný. V každém nulovém bodě, kde mění znaménko některý činitel, přeleze na druhou stranu:
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[->, thick] (-4.5,0) -- (4,0) node[right] {$x$};
+      \draw[thick, colorofwisdom, smooth] plot coordinates {(-4.3,0.55) (-3.2,0.45) (-2,0) (-0.5,-0.55) (1,0) (2.3,0.5) (3.7,0.6)};
+      \node[colorofwisdom] at (-3.3,0.85) {$+$};
+      \node[colorofwisdom] at (-0.5,-0.9) {$-$};
+      \node[colorofwisdom] at (2.6,0.85) {$+$};
+      \draw[line width=3pt, black!35] (-4.4,-0.02) -- (-2,-0.02);
+      \draw[line width=3pt, black!35] (1,-0.02) -- (3.9,-0.02);
+      \filldraw[fill=white, draw=black, thick] (-2,0) circle (3pt);
+      \filldraw (1,0) circle (3pt);
+      \node[below] at (-2,-0.15) {$-2$};
+      \node[below] at (1,-0.15) {$1$};
+    \end{tikzpicture}
+  \end{center}
+  Šedě je vyznačena množina řešení. Pozor, pokud by se některý činitel opakoval v sudé mocnině (například ${(x - 1)}^2$), had by se v jeho nulovém bodě osy jen dotkl a zůstal na stejné straně.
 \end{example}
 
 \begin{note}
@@ -505,6 +676,20 @@ Všimněte si, že řešení je uspořádaná dvojice, tedy prvek kartézského 
   \textbf{Sčítací metoda}: Sečteme obě rovnice: $2x = 14$, tedy $x = 7$. Odečteme je: $2y = 6$, tedy $y = 3$.
 
   Obě metody dají samozřejmě stejný výsledek, $K = \{(7, 3)\}$. Zkouška: $7 + 3 = 10$ a $7 - 3 = 4$.
+
+  A ještě grafická metoda: první rovnici můžeme přepsat jako $y = 10 - x$, druhou jako $y = x - 4$. Řešení soustavy je bod, který leží na obou přímkách zároveň:
+  \begin{center}
+    \begin{tikzpicture}[scale=0.38]
+      \draw[->] (-0.8,0) -- (11.5,0) node[right] {\small $x$};
+      \draw[->] (0,-4.8) -- (0,11) node[above] {\small $y$};
+      \foreach \x in {2,4,...,10} \draw (\x,0.2) -- (\x,-0.2) node[below] {\scriptsize $\x$};
+      \foreach \y in {-4,-2,2,4,6,8,10} \draw (0.2,\y) -- (-0.2,\y) node[left] {\scriptsize $\y$};
+      \draw[thick, colorofwisdom] (-0.5,10.5) -- (11,-1) node[below, font=\small] {$x + y = 10$};
+      \draw[thick] (-0.5,-4.5) -- (11,7) node[right, font=\small] {$x - y = 4$};
+      \draw[dashed, gray] (7,0) -- (7,3) -- (0,3);
+      \filldraw (7,3) circle (2.5pt) node[right=4pt, font=\small] {$(7, 3)$};
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \begin{example}
@@ -533,7 +718,7 @@ Každá rovnice $ax + by = c$ (kde $a, b$ nejsou obě nulová) popisuje v rovin�
       \draw[->] (0,-0.5) -- (0,4) node[above] {\small $y$};
       \draw[thick, colorofwisdom] (-0.3,3.8) -- (3.8,-0.3);
       \draw[thick] (-0.3,0.3) -- (3.5,2.2);
-      \filldraw (2.33,1.47) circle (2.5pt);
+      \filldraw (2.03,1.47) circle (2.5pt);
       \node[below] at (1.75,-0.6) {\small jedno řešení};
     \end{scope}
     % rovnobezne
@@ -713,6 +898,31 @@ Proč tyto úpravy nemění množinu řešení? Protože každou z nich umíme \
   \textbf{Gaussova eliminační metoda} spočívá v tom, že rozšířenou matici převedeme řádkovými úpravami do odstupňovaného tvaru a pak neznámé dopočítáme odspodu.
 \end{definitionbox}
 
+Název `schodovitý' je doslovný. Pod pivoty si můžeme nakreslit schodiště, pod kterým jsou samé nuly. Každý schod je široký aspoň jeden sloupec, ale může být i širší:
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \foreach \r/\row in {0/{p,*,*,*,*}, 1/{0,p,*,*,*}, 2/{0,0,0,p,*}, 3/{0,0,0,0,0}} {
+      \foreach \e [count=\c from 0] in \row {
+        \if\e p
+          \filldraw[fill=colorofwisdom!35, draw=none] (\c+0.1,-\r-0.1) rectangle (\c+0.9,-\r-0.9);
+          \node at (\c+0.5,-\r-0.5) {$\blacksquare$};
+        \else\if\e 0
+          \node[gray] at (\c+0.5,-\r-0.5) {$0$};
+        \else
+          \node at (\c+0.5,-\r-0.5) {$*$};
+        \fi\fi
+      }
+    }
+    \draw[very thick, colorofwisdom] (0,-1) -- (1,-1) -- (1,-2) -- (3,-2) -- (3,-3) -- (5,-3);
+    \draw[thick] (0.2,0) -- (0,0) -- (0,-4) -- (0.2,-4);
+    \draw[thick] (4.8,0) -- (5,0) -- (5,-4) -- (4.8,-4);
+    \node[right, font=\small] at (5.6,-0.5) {$\blacksquare$ \dots\ pivot (nenulový)};
+    \node[right, font=\small] at (5.6,-1.5) {$*$ \dots\ cokoli};
+    \node[right, font=\small] at (5.6,-2.5) {\textcolor{gray}{$0$} \dots\ nuly pod schody};
+  \end{tikzpicture}
+\end{center}
+Eliminace tedy postupuje zleva doprava: v prvním sloupci si vybereme pivot a pomocí jeho řádku `vynulujeme' všechno pod ním. Pak se přesuneme o řádek níž a o sloupec dál a opakujeme. Každý krok přidá jeden schod.
+
 \begin{example}\label{ex:gauss-matice}
   Vyřešme maticově soustavu, kterou jsme už jednou vyřešili v předchozí sekci:
   \begin{align*}
@@ -875,6 +1085,39 @@ Matice nejsou jen úsporný zápis soustav. Dá se s nimi počítat skoro jako s
   \end{itemize}
 \end{definitionbox}
 
+Při násobení si pomůže, když si matice rozložíme do tvaru písmene L. Matici $B$ napíšeme nahoru, matici $A$ doleva a výsledek $AB$ vznikne v rohu mezi nimi. Každý prvek výsledku leží přesně na křižovatce `svého' řádku matice $A$ a `svého' sloupce matice $B$:
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    % A
+    \fill[colorofwisdom!25] (0,0.7) rectangle (2.4,1.4);
+    \draw (0.8,0) -- (0.8,1.4) (1.6,0) -- (1.6,1.4) (0,0.7) -- (2.4,0.7);
+    \draw[thick] (0,0) rectangle (2.4,1.4);
+    \node at (0.4,1.05) {\small $a_{11}$};
+    \node at (1.2,1.05) {\small $a_{12}$};
+    \node at (2.0,1.05) {\small $a_{13}$};
+    \node[left] at (-0.1,0.7) {$A$};
+    % B
+    \fill[colorofwisdom!25] (3.8,2.0) rectangle (4.6,4.1);
+    \draw (3.8,2.0) -- (3.8,4.1) (3.0,2.7) -- (4.6,2.7) (3.0,3.4) -- (4.6,3.4);
+    \draw[thick] (3.0,2.0) rectangle (4.6,4.1);
+    \node at (4.2,3.75) {\small $b_{12}$};
+    \node at (4.2,3.05) {\small $b_{22}$};
+    \node at (4.2,2.35) {\small $b_{32}$};
+    \node[above] at (3.8,4.1) {$B$};
+    % AB
+    \fill[colorofwisdom!55] (3.8,0.7) rectangle (4.6,1.4);
+    \draw (3.8,0) -- (3.8,1.4) (3.0,0.7) -- (4.6,0.7);
+    \draw[thick] (3.0,0) rectangle (4.6,1.4);
+    \node at (4.2,1.05) {\small $c_{12}$};
+    \node[right] at (4.7,0.7) {$AB$};
+    % vodici cary
+    \draw[->, dashed, colorofwisdom, thick] (2.5,1.05) -- (3.7,1.05);
+    \draw[->, dashed, colorofwisdom, thick] (4.2,1.9) -- (4.2,1.5);
+    \node[right, font=\small] at (6.0,1.05) {$c_{12} = a_{11}b_{12} + a_{12}b_{22} + a_{13}b_{32}$};
+  \end{tikzpicture}
+\end{center}
+Z obrázku je také vidět, proč musí sedět rozměry. Řádek matice $A$ a sloupec matice $B$ musí být stejně dlouhé, jinak by nebylo co s čím násobit.
+
 \begin{example}
   Mějme
   \begin{equation*}
@@ -964,6 +1207,30 @@ Ve všech třech výrazech se opakuje stejný vzor: `křížem' vynásobíme a o
 \end{definitionbox}
 
 Pro $n = 2$ je výše uvedené odvození zároveň důkazem Cramerova pravidla. Podmínka $D\neq 0$ geometricky znamená, že přímky nejsou rovnoběžné.\footnote{Determinant má i krásný geometrický význam: $|D|$ je obsah rovnoběžníku, který vytvoří vektory $(a_1, a_2)$ a $(b_1, b_2)$. Pokud je nulový, vektory leží na jedné přímce a rovnoběžník se `splácne'. Více se dozvíte v kapitole o vektorech.}
+
+Geometrický význam z poznámky pod čarou si můžeme rovnou nakreslit. Sloupce matice $\begin{pmatrix} 3 & 1\\ 1 & 2 \end{pmatrix}$ chápeme jako šipky $(3, 1)$ a $(1, 2)$. Rovnoběžník, který napnou, má obsah $3\cdot 2 - 1\cdot 1 = 5$. Pokud ale šipky míří stejným směrem, například $(2, 1)$ a $(4, 2)$, rovnoběžník se splácne do úsečky a determinant $2\cdot 2 - 4\cdot 1$ je nulový:
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \begin{scope}
+      \draw[->, gray] (-0.3,0) -- (4.6,0);
+      \draw[->, gray] (0,-0.3) -- (0,3.4);
+      \filldraw[fill=colorofwisdom!20, draw=none] (0,0) -- (3,1) -- (4,3) -- (1,2) -- cycle;
+      \draw[dashed] (3,1) -- (4,3) -- (1,2);
+      \draw[->, very thick, colorofwisdom] (0,0) -- (3,1) node[below right, font=\small] {$(3, 1)$};
+      \draw[->, very thick] (0,0) -- (1,2) node[above left, font=\small] {$(1, 2)$};
+      \node at (2,1.5) {$5$};
+      \node[font=\small] at (2,-0.8) {$D = 5$};
+    \end{scope}
+    \begin{scope}[xshift=7cm]
+      \draw[->, gray] (-0.3,0) -- (4.6,0);
+      \draw[->, gray] (0,-0.3) -- (0,3.4);
+      \draw[->, line width=3pt, black!40] (0,0) -- (4,2) node[above, font=\small, black] {$(4, 2)$};
+      \draw[->, very thick, colorofwisdom] (0,0) -- (2,1) node[above left, font=\small] {$(2, 1)$};
+      \node[font=\small] at (2,-0.8) {$D = 0$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Nulový determinant tedy znamená, že sloupce matice `ukazují stejným směrem' a nesou vlastně jen jednu informaci místo dvou. Proto soustava nemá jednoznačné řešení.
 
 \begin{example}
   Vyřešme pomocí Cramerova pravidla soustavu
@@ -1110,6 +1377,20 @@ Slovní úlohy jsou místo, kde se matematika potkává se skutečným světem. 
   \end{equation*}
   Zkouška: osobní auto ujede za $2$ hodiny $180\ \si{km}$, nákladní za $3$ hodiny také $180\ \si{km}$. Odpověď: Osobní auto dohoní nákladní v $11{:}00$, $180\ \si{km}$ od Prahy. Za předpokladu, že na D1 nebyla kolona. Což byla.
 \end{example}
+
+Pohybové úlohy se skvěle kreslí do grafu, kde je na vodorovné ose čas a na svislé ujetá dráha. Každé auto je pak přímka, a čím je auto rychlejší, tím je přímka strmější. Místo, kde se přímky protnou, je okamžik setkání:
+\begin{center}
+  \begin{tikzpicture}[xscale=1.5, yscale=0.95]
+    \draw[->] (0,0) -- (4.5,0) node[right] {\small čas};
+    \draw[->] (0,0) -- (0,4.9) node[above] {\small dráha (km)};
+    \foreach \t/\h in {0/8,1/9,2/10,3/11,4/12} \draw (\t,0.08) -- (\t,-0.08) node[below] {\scriptsize $\h{:}00$};
+    \foreach \s/\k in {1/60,2/120,3/180,4/240} \draw (0.05,\s) -- (-0.05,\s) node[left] {\scriptsize $\k$};
+    \draw[thick] (0,0) -- (4.2,4.2) node[right, font=\small] {nákladní ($60\ \si{km/h}$)};
+    \draw[thick, colorofwisdom] (1,0) -- (4,4.5) node[above, font=\small] {osobní ($90\ \si{km/h}$)};
+    \draw[dashed, gray] (3,0) -- (3,3) -- (0,3);
+    \filldraw (3,3) circle (2.5pt);
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}[ (společná práce)]
   Jeden bazén napustí první čerpadlo za $6$ hodin a druhé za $3$ hodiny. Za jak dlouho ho napustí obě čerpadla dohromady?

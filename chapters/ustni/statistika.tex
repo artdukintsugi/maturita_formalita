@@ -72,6 +72,36 @@ Pravděpodobnost se ptá: když víme, jak funguje náhoda, co uvidíme? Statist
 
 \begin{note}
   Grafy jsou nejsnadnější způsob, jak se statistikou lhát, aniž byste řekli jedinou nepravdu. Oblíbené triky: osa $y$, která nezačíná nulou (malý rozdíl pak vypadá obrovsky), trojrozměrné koláčové grafy (přední výseče vypadají větší) a vybírání časového úseku tak, aby trend vypadal, jak se nám hodí. Když vidíte graf ve zprávách, nejdřív se podívejte na osy.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \begin{scope}
+        \draw[->] (0,0) -- (3.4,0);
+        \draw[->] (0,0) -- (0,3.4);
+        \foreach \y/\l in {1/20, 2/40} \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\l\,\%$};
+        \filldraw[fill=gray!40, draw=black] (0.5,0) rectangle (1.4,2.5);
+        \filldraw[fill=colorofwisdom!70, draw=black] (2,0) rectangle (2.9,2.6);
+        \node[below, font=\scriptsize] at (0.95,0) {strana A};
+        \node[below, font=\scriptsize] at (2.45,0) {strana B};
+        \node[above, font=\scriptsize] at (0.95,2.5) {$50\,\%$};
+        \node[above, font=\scriptsize] at (2.45,2.6) {$52\,\%$};
+        \node[font=\small] at (1.7,-1) {osa od nuly};
+      \end{scope}
+      \begin{scope}[xshift=6cm]
+        \draw[->] (0,0) -- (3.4,0);
+        \draw[->] (0,0) -- (0,3.4);
+        \draw (-0.12,0.15) -- (0.12,0.25);
+        \draw (-0.12,0.25) -- (0.12,0.35);
+        \foreach \y/\l in {0.9/50, 2.6/52} \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\l\,\%$};
+        \filldraw[fill=gray!40, draw=black] (0.5,0) rectangle (1.4,0.9);
+        \filldraw[fill=colorofwisdom!70, draw=black] (2,0) rectangle (2.9,2.6);
+        \node[below, font=\scriptsize] at (0.95,0) {strana A};
+        \node[below, font=\scriptsize] at (2.45,0) {strana B};
+        \node[font=\small] at (1.7,-1) {osa od $49{,}5\,\%$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Oba grafy ukazují stejná data. V levém je vidět, že strany jsou skoro vyrovnané. V pravém to vypadá, že strana B vede trojnásobně, protože osa začíná těsně pod $50\,\%$.
 \end{note}
 
 \section{Charakteristiky polohy}
@@ -95,6 +125,23 @@ Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
 
 \begin{example}
   V datech z příkladu~\ref{ex:znamky} je průměr $\bar{x} = \frac{1\cdot 2 + 2\cdot 4 + 3\cdot 2 + 4 + 5}{10} = \frac{25}{10} = 2{,}5$. Seřazená data: $1, 1, 2, 2, 2, 2, 3, 3, 4, 5$. Medián je průměr pátého a šestého prvku, tedy $\tilde{x} = 2$. Modus je $\hat{x} = 2$.
+
+  Průměr má krásný fyzikální význam: je to \textbf{těžiště}. Představte si číselnou osu jako lehké prkno a na každou hodnotu položte jednu stejně těžkou kuličku. Prkno bude v rovnováze, právě když ho podepřete v průměru. Odchylky nalevo ($-1{,}5$ dvakrát a $-0{,}5$ čtyřikrát, celkem $-5$) se přesně vyváží s odchylkami napravo ($0{,}5$ dvakrát, $1{,}5$ a $2{,}5$, celkem $+5$).
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \draw[thick] (0.3,0) -- (8.7,0);
+      \foreach \x in {1,...,5} \draw (1.6*\x,0.08) -- (1.6*\x,-0.08) node[below=1pt] {\small $\x$};
+      \foreach \x/\n in {1/2, 2/4, 3/2, 4/1, 5/1} {
+        \foreach \k in {1,...,\n} {
+          \filldraw[fill=colorofwisdom!60, draw=black] (1.6*\x,{0.28*\k-0.1}) circle (0.12);
+        }
+      }
+      \fill[colorofwisdom] (4,-0.42) -- (3.8,-0.8) -- (4.2,-0.8) -- cycle;
+      \node[right, font=\small, colorofwisdom] at (4.25,-0.65) {$\bar{x} = 2{,}5$};
+      \draw[dashed, gray] (3.2,-0.3) -- (3.2,1.4) node[above, black, font=\small] {$\tilde{x} = 2$};
+    \end{tikzpicture}
+  \end{center}
+  Medián naopak dělí kuličky na dvě stejně \textit{početné} poloviny, ať jsou krajní kuličky jakkoli daleko.
 \end{example}
 
 \begin{example}
@@ -103,6 +150,20 @@ Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
     \bar{x} = \frac{9\cdot 30000 + 300000}{10} = 57\,000\ \text{Kč}.
   \end{equation*}
   Ale nikdo kromě ředitele tolik nebere! Medián je $30\,000$ Kč a mnohem lépe popisuje `typického' zaměstnance. Průměr je citlivý na extrémní hodnoty, medián ne. Proto se ve zprávách o mzdách vždy vyplatí zjistit, zda jde o průměr, nebo o medián. Medián mezd v Česku bývá zhruba o šestinu nižší než průměr.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \draw[->] (0,0) -- (11,0) node[right] {\small tis. Kč};
+      \foreach \x in {0,50,...,300} \draw ({0.035*\x},0.08) -- ({0.035*\x},-0.08) node[below] {\scriptsize $\x$};
+      \foreach \k in {1,...,9} \filldraw[fill=gray!50, draw=black] (1.05,{0.24*\k-0.08}) circle (0.1);
+      \filldraw[fill=colorofwisdom!70, draw=black] (10.5,0.16) circle (0.1);
+      \node[above, font=\scriptsize] at (10.5,0.3) {ředitel};
+      \draw[dashed, gray] (1.05,-0.5) -- (1.05,2.5) node[above, black, font=\small] {medián $30$};
+      \fill[colorofwisdom] (1.995,-0.45) -- (1.82,-0.8) -- (2.17,-0.8) -- cycle;
+      \node[right, font=\small, colorofwisdom] at (2.2,-0.65) {průměr $57$};
+    \end{tikzpicture}
+  \end{center}
+  V řeči těžiště: jedna kulička daleko vpravo má dlouhé `rameno páky', takže přetáhne podpěru (průměr) doprava, přestože nalevo je kuliček devět. Medián se o vzdálenost nestará, jen o počet.
 \end{example}
 
 \begin{example}
@@ -121,6 +182,27 @@ Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
 
 Dva soubory mohou mít stejný průměr a přitom vypadat úplně jinak. Data $\{4, 5, 6\}$ a $\{0, 5, 10\}$ mají oba průměr $5$, ale ty druhé jsou mnohem víc `rozházené'. Charakteristiky variability měří, jak moc se data od průměru odchylují.
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \foreach \row/\vals/\s/\lab in {0/{4,5,6}/0.816/{$\{4, 5, 6\}$: $s\approx 0{,}82$}, -1.6/{0,5,10}/4.082/{$\{0, 5, 10\}$: $s\approx 4{,}08$}} {
+      \fill[colorofwisdom!12] ({5-\s},\row-0.35) rectangle ({5+\s},\row+0.35);
+      \draw (-0.3,\row) -- (10.3,\row);
+      \foreach \x in {0,...,10} \draw (\x,\row+0.06) -- (\x,\row-0.06);
+      \foreach \v in \vals {
+        \ifnum\v=5\relax\else
+          \draw[->, colorofwisdom, thick] (5,\row+0.2) -- (\v,\row+0.2);
+        \fi
+        \filldraw[fill=colorofwisdom!60, draw=black] (\v,\row) circle (0.12);
+      }
+      \node[anchor=west, font=\small] at (10.6,\row) {\lab};
+    }
+    \foreach \x in {0,5,10} \node[below, font=\scriptsize] at (\x,-1.7) {$\x$};
+    \fill[colorofwisdom] (5,-2.15) -- (4.85,-2.45) -- (5.15,-2.45) -- cycle;
+    \node[right, font=\scriptsize] at (5.15,-2.3) {$\bar{x} = 5$};
+  \end{tikzpicture}
+\end{center}
+Šipky jsou odchylky od průměru, světlý pruh sahá od $\bar{x} - s$ do $\bar{x} + s$. Směrodatnou odchylku si můžete představit jako `typickou vzdálenost' hodnoty od průměru. U horních dat je to necelá jednička, u dolních přes čtyři.
+
 \begin{definitionbox}
   \begin{itemize}
     \item \textbf{Variační rozpětí}: $R = x_{\max} - x_{\min}$.
@@ -134,6 +216,7 @@ Dva soubory mohou mít stejný průměr a přitom vypadat úplně jinak. Data $\
 \end{definitionbox}
 
 Proč druhé mocniny? Kdybychom průměrovali přímo odchylky $x_i - \bar{x}$, vyšla by vždy nula, protože kladné a záporné odchylky se přesně vyruší (zkuste si to dokázat). Druhá mocnina udělá ze všech odchylek kladná čísla. Směrodatná odchylka pak vrací výsledek do původních jednotek. Vzorec $s^2 = \overline{x^2} - \bar{x}^2$ (průměr druhých mocnin minus druhá mocnina průměru) se počítá rychleji a odvodí se roznásobením.
+ Druhá mocnina má i geometrický smysl: nad každou odchylkou si nakreslete čtverec. Rozptyl je \textbf{průměrný obsah těchto čtverců} a směrodatná odchylka je strana čtverce s tímto průměrným obsahem. Vzdálené hodnoty mají obrovské čtverce, takže rozptyl na ně reaguje mnohem citlivěji než na hodnoty blízko průměru.
 
 \begin{example}
   Pro známky z příkladu~\ref{ex:znamky} s průměrem $2{,}5$:
@@ -205,6 +288,28 @@ Pro naše známky je dolní polovina $1, 1, 2, 2, 2$ s mediánem $Q_1 = 2$ a hor
     \item $r$ blízko $0$: žádná lineární závislost (ale může existovat jiná, třeba kvadratická).
   \end{itemize}
 \end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \foreach \sx/\pts/\lab in {
+      0/{0.2/0.28, 0.44/0.68, 0.67/0.74, 0.91/1.1, 1.15/1.31, 1.38/1.1, 1.62/1.26, 1.85/2.02, 2.09/1.8, 2.33/1.98, 2.56/2.69, 2.8/2.52}/{$r\approx 0{,}96$},
+      3.7/{0.2/2.62, 0.44/2.26, 0.67/2.17, 0.91/1.74, 1.15/1.8, 1.38/1.75, 1.62/1.4, 1.85/1.33, 2.09/1.12, 2.33/0.63, 2.56/0.81, 2.8/0.55}/{$r\approx -0{,}98$},
+      7.4/{0.2/2.05, 0.44/2.11, 0.67/1.37, 0.91/0.88, 1.15/0.3, 1.38/1.76, 1.62/1.33, 1.85/1.97, 2.09/1.12, 2.33/1.99, 2.56/0.9, 2.8/2.06}/{$r\approx 0$},
+      11.1/{0.2/0.73, 0.44/1.17, 0.67/1.65, 0.91/2.05, 1.15/2.48, 1.38/2.47, 1.62/2.51, 1.85/2.32, 2.09/2.12, 2.33/1.71, 2.56/1.23, 2.8/0.66}/{$r\approx 0$}} {
+      \begin{scope}[xshift=\sx cm]
+        \draw[->] (0,0) -- (3.1,0) node[right] {\scriptsize $x$};
+        \draw[->] (0,0) -- (0,3) node[above] {\scriptsize $y$};
+        \foreach \x/\y in \pts \filldraw[colorofwisdom] (\x,\y) circle (2.2pt);
+        \node[font=\small] at (1.5,-0.45) {\lab};
+      \end{scope}
+    }
+    \node[font=\scriptsize] at (1.5,-0.95) {přímá závislost};
+    \node[font=\scriptsize] at (5.2,-0.95) {nepřímá závislost};
+    \node[font=\scriptsize] at (8.9,-0.95) {žádná závislost};
+    \node[font=\scriptsize, align=center] at (12.6,-1.1) {silná, ale ne lineární!};
+  \end{tikzpicture}
+\end{center}
+Korelační koeficient si můžete představit takhle. Bodovým grafem proložíme svislou a vodorovnou přímku průměry $\bar{x}$ a $\bar{y}$, čímž ho rozdělíme na čtyři kvadranty. Body vpravo nahoře a vlevo dole přispívají do čitatele kladně (obě odchylky mají stejné znaménko), body v ostatních dvou kvadrantech záporně. Pokud body tvoří stoupající pruh, převažují kladné příspěvky a $r > 0$. Na posledním obrázku se příspěvky z levé a pravé poloviny paraboly přesně vyruší, takže $r\approx 0$, přestože $y$ je na $x$ silně závislé. Proto je dobré se vždy nejdřív podívat na graf.
 
 Pozorný čtenář si všimne, že vzorec je přesně kosinus úhlu mezi vektory odchylek $(x_1 - \bar{x}, \ldots, x_n - \bar{x})$ a $(y_1 - \bar{y}, \ldots, y_n - \bar{y})$ podle kapitoly~\ref{kap:analyticka}, jen v $n$-rozměrném prostoru. Proto je vždy mezi $-1$ a $1$.
 

@@ -41,6 +41,25 @@ Okamžitou rychlost (tu, kterou ukazuje tachometr) dostaneme, když necháme $h$
   \textbf{Fyzikální význam}: derivace je okamžitá rychlost změny.
 \end{definitionbox}
 
+Představte si, že druhý bod sečny klouže po grafu směrem k prvnímu bodu. Sečna se přitom otáčí kolem pevného bodu $[x_0, f(x_0)]$ a její směrnice se ustaluje na nějaké hodnotě. Přímka, ke které se sečny `přimknou', je tečna, a její směrnice je derivace. Na obrázku je $f(x) = \frac{1}{4}x^2 + \frac{1}{2}$, $x_0 = 1$ a sečny pro $h = 2{,}5$, $h = 1{,}5$ a $h = 0{,}7$ mají směrnice $1{,}125$, $0{,}875$ a $0{,}675$. Blíží se ke směrnici tečny $f'(1) = 0{,}5$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \draw[->] (-0.3,0) -- (4.6,0) node[right] {\small $x$};
+    \draw[->] (0,-0.3) -- (0,4.4) node[above] {\small $y$};
+    \foreach \h/\c in {2.5/25, 1.5/45, 0.7/70} {
+      \pgfmathsetmacro{\k}{0.5+0.25*\h}
+      \draw[black!\c] (0.1,{0.75-0.9*\k}) -- (4.3,{0.75+3.3*\k});
+      \filldraw[black!\c] ({1+\h},{0.25*(1+\h)*(1+\h)+0.5}) circle (1.6pt);
+    }
+    \draw[thick, colorofwisdom, domain=0:4.1, samples=60] plot (\x, {0.25*\x*\x + 0.5});
+    \draw[very thick] (-0.2,0.15) -- (4.3,2.4) node[right, font=\small] {tečna};
+    \filldraw (1,0.75) circle (2pt);
+    \draw[dashed] (1,0.75) -- (1,0) node[below, font=\small] {$x_0$};
+    \node[font=\scriptsize, black!45] at (3.2,4.2) {sečny};
+  \end{tikzpicture}
+\end{center}
+
 Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně malá změna $y$ ku nekonečně malé změně $x$'. Newton psal tečku nad písmeno, $\dot{s}$. Značení $f'$ zavedl až Lagrange. Fyzici dodnes používají všechna tři, podle nálady.
 
 \begin{example}
@@ -52,7 +71,20 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
 \end{example}
 
 \begin{note}
-  Každá diferencovatelná funkce je spojitá. Obráceně to neplatí: funkce $|x|$ je v nule spojitá, ale derivaci tam nemá. Zprava je sklon $1$, zleva $-1$ a graf má `zlom'. Weierstrassova funkce z odbočky v kapitole~\ref{kap:funkce} je spojitá, ale nemá derivaci v žádném bodě. Je to funkce, která se skládá jen ze zlomů.
+  Každá diferencovatelná funkce je spojitá. Obráceně to neplatí: funkce $|x|$ je v nule spojitá, ale derivaci tam nemá. Zprava je sklon $1$, zleva $-1$ a graf má `zlom'. Sečny zprava se přimknou k přímce $y = x$, sečny zleva k přímce $y = -x$, a jedna společná tečna tedy neexistuje.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.7]
+      \draw[->] (-2.4,0) -- (2.6,0) node[right] {\small $x$};
+      \draw[->] (0,-0.3) -- (0,2.4) node[above] {\small $y$};
+      \draw[dashed, gray] (-1,-1) -- (2.3,2.3);
+      \draw[dashed, gray] (1,-1) -- (-2.3,2.3);
+      \draw[very thick, colorofwisdom] (-2,2) -- (0,0) -- (2,2);
+      \filldraw (0,0) circle (2pt);
+      \node[font=\scriptsize] at (2.6,1.6) {sklon $1$};
+      \node[font=\scriptsize] at (-2.7,1.6) {sklon $-1$};
+    \end{tikzpicture}
+  \end{center}
+  Weierstrassova funkce z odbočky v kapitole~\ref{kap:funkce} je spojitá, ale nemá derivaci v žádném bodě. Je to funkce, která se skládá jen ze zlomů.
 \end{note}
 
 \section{Pravidla pro derivování}
@@ -97,6 +129,25 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
   \textbf{Součin}: $f(x + h)g(x + h) - f(x)g(x) = \left(f(x + h) - f(x)\right)g(x + h) + f(x)\left(g(x + h) - g(x)\right)$. Po vydělení $h$ a limitě dostaneme $f'g + fg'$. (Použili jsme, že $g$ je spojitá, takže $g(x + h)\to g(x)$.)
 \end{proof}
 
+
+Pravidlo pro součin má hezký obrázek. Představte si obdélník se stranami $f(x)$ a $g(x)$, jehož obsah je součin $f(x)g(x)$. Když se $x$ trochu zvětší, strany narostou o $\Delta f$ a $\Delta g$ a obdélník přibere tři kousky: proužek $f\cdot\Delta g$ nahoře, proužek $g\cdot\Delta f$ vpravo a malý čtvereček $\Delta f\cdot\Delta g$ v rohu. Po vydělení $h$ dají proužky $fg' + f'g$, zatímco roh je `malý krát malý', a v limitě proto zmizí.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \filldraw[fill=gray!25, draw=black] (0,0) rectangle (4,2.5);
+    \filldraw[fill=colorofwisdom!45, draw=black] (0,2.5) rectangle (4,3.1);
+    \filldraw[fill=colorofwisdom!45, draw=black] (4,0) rectangle (4.7,2.5);
+    \filldraw[fill=colorofwisdom!80, draw=black] (4,2.5) rectangle (4.7,3.1);
+    \node at (2,1.25) {$f\cdot g$};
+    \node[font=\small] at (2,2.8) {$f\cdot\Delta g$};
+    \node[font=\small, rotate=90] at (4.35,1.25) {$g\cdot\Delta f$};
+    \draw[decorate, decoration={brace, mirror, amplitude=4pt}] (0,-0.1) -- (4,-0.1) node[midway, below=4pt, font=\small] {$f$};
+    \draw[decorate, decoration={brace, mirror, amplitude=3pt}] (4,-0.1) -- (4.7,-0.1) node[midway, below=4pt, font=\small] {$\Delta f$};
+    \draw[decorate, decoration={brace, amplitude=4pt}] (-0.1,0) -- (-0.1,2.5) node[midway, left=4pt, font=\small] {$g$};
+    \draw[decorate, decoration={brace, amplitude=3pt}] (-0.1,2.5) -- (-0.1,3.1) node[midway, left=4pt, font=\small] {$\Delta g$};
+    \draw[<-] (4.75,3.05) -- (5.6,3.5) node[right, font=\small] {$\Delta f\cdot\Delta g$ (zanedbatelné)};
+  \end{tikzpicture}
+\end{center}
 Teď dokážeme všechno ostatní z tabulky. Nejdřív zbylá pravidla, protože z nich pak vzorce pro jednotlivé funkce vyjdou skoro samy.
 
 \begin{proof}[(zbylých pravidel)]
@@ -156,6 +207,8 @@ Celou tabulku tedy stačí odvodit z definice derivace, ze dvou limit ($\frac{\s
   U složených funkcí derivujeme `zvenku dovnitř': nejdřív vnější funkci (vnitřek necháme, jak je) a pak vynásobíme derivací vnitřku. Rozklad na vnější a vnitřní funkci jsme si procvičili v kapitole~\ref{kap:funkce}.
 \end{example}
 
+Proč se u složené funkce derivace \textit{násobí}? Představte si soukolí. Když se kolečko $g$ točí třikrát rychleji než kolečko $x$ a kolečko $f$ dvakrát rychleji než kolečko $g$, pak se $f$ točí $2\cdot 3 = 6$krát rychleji než $x$. Derivace je `převodový poměr' a převody za sebou se násobí. V Leibnizově značení to vypadá skoro jako krácení zlomků: $\frac{\mathrm{d}f}{\mathrm{d}x} = \frac{\mathrm{d}f}{\mathrm{d}g}\cdot\frac{\mathrm{d}g}{\mathrm{d}x}$.
+
 \begin{problem}
   Zderivujte:
   \begin{enumerate}[label=(\alph*)]
@@ -190,6 +243,36 @@ Celou tabulku tedy stačí odvodit z definice derivace, ze dvou limit ($\frac{\s
 \end{definitionbox}
 
 Pozor: $f'(x_0) = 0$ je jen \textit{nutná} podmínka, ne postačující. Funkce $x^3$ má $f'(0) = 0$, ale v nule extrém nemá, je všude rostoucí. Tečna je tam vodorovná, ale graf jde dál nahoru. Proto je třeba ověřit změnu znaménka derivace nebo druhou derivaci.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \begin{scope}
+      \draw[thick, colorofwisdom, domain=-1.5:1.5, samples=40] plot (\x, {0.6*\x*\x});
+      \foreach \t in {-1.1,0,1.1} {
+        \draw[gray] ({\t-0.6},{0.6*\t*\t-0.72*\t}) -- ({\t+0.6},{0.6*\t*\t+0.72*\t});
+        \filldraw (\t,{0.6*\t*\t}) circle (1.5pt);
+      }
+      \node[font=\small, align=center] at (0,-0.9) {konvexní: $f'' > 0$\\sklon tečen roste};
+    \end{scope}
+    \begin{scope}[xshift=4.6cm]
+      \draw[thick, colorofwisdom, domain=-1.5:1.5, samples=40] plot (\x, {1.35-0.6*\x*\x});
+      \foreach \t in {-1.1,0,1.1} {
+        \draw[gray] ({\t-0.6},{1.35-0.6*\t*\t+0.72*\t}) -- ({\t+0.6},{1.35-0.6*\t*\t-0.72*\t});
+        \filldraw (\t,{1.35-0.6*\t*\t}) circle (1.5pt);
+      }
+      \node[font=\small, align=center] at (0,-0.9) {konkávní: $f'' < 0$\\sklon tečen klesá};
+    \end{scope}
+    \begin{scope}[xshift=9.2cm, yshift=0.6cm]
+      \draw[->] (-1.6,0) -- (1.7,0);
+      \draw[->] (0,-1.2) -- (0,1.3);
+      \draw[thick, colorofwisdom, domain=-1.1:1.1, samples=40] plot (\x, {0.9*\x*\x*\x});
+      \draw[gray] (-0.9,0) -- (0.9,0);
+      \filldraw (0,0) circle (1.5pt);
+      \node[font=\small, align=center] at (0,-2.1) {$x^3$: vodorovná tečna,\\ale žádný extrém};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Konvexní graf leží \textit{nad} svými tečnami, konkávní \textit{pod} nimi. V inflexním bodě tečna graf protíná: graf přechází z jedné strany tečny na druhou. Tak je to i u $x^3$ v nule.
 
 \begin{definitionbox}
   \textbf{Postup vyšetření průběhu funkce}:
@@ -228,6 +311,38 @@ Pozor: $f'(x_0) = 0$ je jen \textit{nutná} podmínka, ne postačující. Funkce
       \draw[dashed, gray] (0.2,-2) -- (1.8,-2);
     \end{tikzpicture}
   \end{center}
+
+  Ještě názornější je nakreslit graf funkce a graf její derivace pod sebe. Kde je $f'$ nad osou, $f$ roste. Kde je $f'$ pod osou, $f$ klesá. A kde $f'$ protíná osu, má $f$ vodorovnou tečnu a extrém. Graf $f'$ je vlastně záznam sklonu grafu $f$.
+  \begin{center}
+    \begin{tikzpicture}[xscale=1.1, yscale=0.6]
+      \begin{scope}
+        \draw[->] (-2.4,0) -- (2.6,0) node[right] {\small $x$};
+        \draw[->] (0,-2.8) -- (0,3) node[above] {\small $f$};
+        \draw[thick, colorofwisdom, domain=-2.1:2.1, samples=80] plot (\x, {\x*\x*\x - 3*\x});
+        \node[font=\scriptsize] at (-1.75,2.4) {roste};
+        \node[font=\scriptsize] at (0.6,1.3) {klesá};
+        \node[font=\scriptsize] at (1.75,-2.4) {roste};
+        \draw[thick] (-1.4,2) -- (-0.6,2);
+        \draw[thick] (0.6,-2) -- (1.4,-2);
+      \end{scope}
+      \begin{scope}[yshift=-8cm]
+        \draw[->] (-2.4,0) -- (2.6,0) node[right] {\small $x$};
+        \draw[->] (0,-1.9) -- (0,3.9) node[above] {\small $f'$};
+        \fill[colorofwisdom!15, domain=-1.85:-1, samples=30] (-1.85,0) -- plot (\x, {(3*\x*\x - 3)/2}) -- (-1,0) -- cycle;
+        \fill[colorofwisdom!15, domain=1:1.85, samples=30] (1,0) -- plot (\x, {(3*\x*\x - 3)/2}) -- (1.85,0) -- cycle;
+        \fill[gray!25, domain=-1:1, samples=30] (-1,0) -- plot (\x, {(3*\x*\x - 3)/2}) -- (1,0) -- cycle;
+        \draw[thick, colorofwisdom, domain=-1.85:1.85, samples=60] plot (\x, {(3*\x*\x - 3)/2});
+        \node[font=\scriptsize] at (-1.6,-0.6) {$+$};
+        \node[font=\scriptsize] at (0.35,-0.6) {$-$};
+        \node[font=\scriptsize] at (1.6,-0.6) {$+$};
+        \node[right, font=\scriptsize] at (1.9,3) {$f'(x) = 3x^2 - 3$};
+      \end{scope}
+      \draw[dashed, gray] (-1,2) -- (-1,-8);
+      \draw[dashed, gray] (1,-2) -- (1,-8);
+      \node[below left, font=\scriptsize] at (-1,-8) {$-1$};
+      \node[below right, font=\scriptsize] at (1,-8) {$1$};
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \section{Užití derivací}
@@ -244,6 +359,25 @@ V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkc�
     S(r) = 2\pi r^2 + 2\pi rv = 2\pi r^2 + \frac{2000}{r}.
   \end{equation*}
   Derivace $S'(r) = 4\pi r - \frac{2000}{r^2} = 0$, tedy $r^3 = \frac{500}{\pi}$ a $r\approx 5{,}42\ \si{cm}$. Výška vychází $v = \frac{1000}{\pi r^2}\approx 10{,}84\ \si{cm}$, tedy přesně $v = 2r$. Druhá derivace $S''(r) = 4\pi + \frac{4000}{r^3} > 0$, takže jde opravdu o minimum.
+
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.75, yscale=0.45]
+      \draw[->] (0,0) -- (13,0) node[right] {\small $r$ [cm]};
+      \draw[->] (0,0) -- (0,11.5) node[above] {\small $S$ [cm$^2$]};
+      \foreach \y in {2,4,...,10} \draw (0.1,\y) -- (-0.1,\y) node[left] {\tiny $\y00$};
+      \foreach \x in {2,4,...,12} \draw (\x,0.12) -- (\x,-0.12) node[below] {\tiny $\x$};
+      \draw[dashed, gray, domain=0.5:4.2, samples=40] plot (\x, {0.02*pi*\x*\x});
+      \draw[dashed, gray, domain=1.75:12.5, samples=60] plot (\x, {20/\x});
+      \draw[very thick, colorofwisdom, domain=1.95:12.5, samples=80] plot (\x, {0.02*pi*\x*\x + 20/\x});
+      \filldraw[colorofwisdom] (5.42,5.536) circle (2.5pt);
+      \draw[dashed] (5.42,5.536) -- (5.42,0);
+      \node[below, font=\scriptsize] at (5.42,-0.6) {$5{,}42$};
+      \node[below right, font=\scriptsize] at (5.5,5.4) {minimum $\approx 554\ \text{cm}^2$};
+      \node[font=\scriptsize, gray, align=center] at (3.6,1.3) {podstavy\\$2\pi r^2$};
+      \node[font=\scriptsize, gray, align=center] at (11.3,2.4) {plášť $\frac{2000}{r}$};
+    \end{tikzpicture}
+  \end{center}
+  Graf ukazuje, o čem úloha je: jde o \textbf{kompromis}. Úzká vysoká plechovka má malé podstavy, ale obrovský plášť. Široká nízká plechovka má malý plášť, ale obrovské podstavy. Součet je nejmenší někde mezi, a právě tam má graf vodorovnou tečnu.
 
   Optimální plechovka má výšku rovnou průměru. Až půjdete příště do obchodu, všimněte si, že většina plechovek je vyšší. Na vině je prý marketing, pohodlný úchop a to, že víčka bývají z pevnějšího, a tedy dražšího plechu než plášť.
 \end{example}
@@ -279,6 +413,27 @@ V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkc�
   \end{equation*}
   Druhá limita říká, že logaritmus roste pomaleji než jakákoli přímka. Pravidlo pochází od markýze de l'Hospital, který ho v roce 1696 publikoval v první učebnici diferenciálního počtu vůbec. Ve skutečnosti ho ale objevil jeho učitel Johann Bernoulli, kterému markýz platil za to, že mu bude posílat své objevy a nechá ho je vydávat pod svým jménem. Pravidlo tedy dodnes nese jméno člověka, který si ho koupil.
 \end{example}
+
+Proč pravidlo funguje? Zblízka vypadá každá diferencovatelná funkce jako svoje tečna. Pokud $f(a) = g(a) = 0$, pak poblíž $a$ je $f(x)\approx f'(a)(x - a)$ a $g(x)\approx g'(a)(x - a)$, a tedy
+\begin{equation*}
+  \frac{f(x)}{g(x)}\approx\frac{f'(a)(x - a)}{g'(a)(x - a)} = \frac{f'(a)}{g'(a)}.
+\end{equation*}
+Podíl dvou funkcí, které obě míří do nuly, je zblízka jen podíl sklonů jejich tečen. Například pro $\lim_{x\to 0}\frac{e^x - 1}{\sin 2x}$ se čitatel u nuly chová jako přímka $y = x$ a jmenovatel jako přímka $y = 2x$, takže limita je $\frac{1}{2}$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \draw[->] (-1.1,0) -- (1.2,0) node[right] {\small $x$};
+    \draw[->] (0,-1.3) -- (0,1.5) node[above] {\small $y$};
+    \draw[dashed, gray] (-1,-1) -- (1.1,1.1);
+    \draw[dashed, gray] (-0.65,-1.3) -- (0.72,1.44);
+    \draw[thick, colorofwisdom, domain=-1:0.9, samples=50] plot (\x, {exp(\x) - 1});
+    \draw[thick, black, domain=-0.65:0.72, samples=50] plot (\x, {sin(deg(2*\x))});
+    \node[right, font=\scriptsize, colorofwisdom] at (0.9,1.46) {$e^x - 1$};
+    \node[font=\scriptsize] at (0.95,0.75) {$\sin 2x$};
+    \node[font=\scriptsize, gray] at (-0.95,-0.7) {$y = x$};
+    \node[font=\scriptsize, gray] at (-0.25,-1.3) {$y = 2x$};
+  \end{tikzpicture}
+\end{center}
 
 Na závěr malý výhled. Derivace odpovídá na otázku `znám funkci, jak rychle se mění?'. Často ale potřebujeme opak: `znám rychlost, kde jsem?' Na tuto obrácenou otázku odpovídá integrál. Že jde opravdu o obrácení derivace, a že tatáž operace zároveň počítá plochy pod grafem, říká \textbf{základní věta integrálního počtu} v sekci~\ref{sec:zvip} na straně~\pageref{sec:zvip}. Právě tato věta je to, co Newton a Leibniz objevili. Derivace samotné znali v nějaké podobě už Fermat a další.
 

@@ -43,6 +43,23 @@ Než se pustíme do obecného vzorce, podívejme se na dva speciální případy
   \end{align*}
 \end{example}
 
+Proč má ryze kvadratická rovnice dvě, jedno, nebo žádné řešení, je vidět z obrázku. Rovnice $x^2 = k$ se ptá, ve kterých bodech má parabola $y = x^2$ výšku $k$. Vodorovná přímka $y = k$ nad vrcholem protne parabolu dvakrát, a to souměrně ($\pm\sqrt{k}$), přímka $y = 0$ se jí dotkne ve vrcholu a přímka pod vrcholem ji mine:
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-2.6,0) -- (2.8,0) node[right] {\small $x$};
+    \draw[->] (0,-1.5) -- (0,4.4) node[above] {\small $y$};
+    \draw[thick, domain=-2.05:2.05, samples=60] plot (\x, {\x*\x}) node[right] {\small $y = x^2$};
+    \draw[colorofwisdom, thick] (-2.4,2) -- (2.4,2) node[right] {\small $k = 2$: dvě řešení};
+    \filldraw[colorofwisdom] (-1.414,2) circle (2pt);
+    \filldraw[colorofwisdom] (1.414,2) circle (2pt);
+    \draw[dashed, colorofwisdom] (-1.414,2) -- (-1.414,0) node[below, font=\scriptsize] {$-\sqrt{2}$};
+    \draw[dashed, colorofwisdom] (1.414,2) -- (1.414,0) node[below, font=\scriptsize] {$\sqrt{2}$};
+    \filldraw (0,0) circle (2pt);
+    \node[left, font=\small] at (-0.2,-0.45) {$k = 0$: jedno řešení};
+    \draw[gray, thick] (-2.4,-1) -- (2.4,-1) node[right, black] {\small $k = -1$: žádné řešení};
+  \end{tikzpicture}
+\end{center}
+
 \begin{note}
   U rovnice $3x^2 = 12x$ by vás mohlo napadnout vydělit obě strany číslem $3x$. Nedělejte to! Výraz $3x$ může být nulový a dělením byste přišli o řešení $x = 0$. Tohle je jedna z nejčastějších chyb vůbec. Vytýkejte, nedělte.
 \end{note}
@@ -54,6 +71,44 @@ Jak vyřešit rovnici $x^2 + 6x + 5 = 0$? Trik je přepsat levou stranu tak, aby
   x^2 + 6x + 5 = (x^2 + 6x + 9) - 4 = {(x + 3)}^2 - 4.
 \end{equation*}
 Rovnice tedy zní ${(x + 3)}^2 = 4$, a to už je v podstatě ryze kvadratická rovnice: $x + 3 = \pm 2$, tedy $x = -1$ nebo $x = -5$. Tomuto postupu se říká \textbf{doplnění na čtverec} a je to jedna z nejužitečnějších technik celé středoškolské matematiky. Uvidíme ji znovu u paraboly, u kružnice i u integrálů.
+
+Název `doplnění na čtverec' je míněn úplně doslova. Takhle o kvadratických rovnicích přemýšlel perský matematik al-Chwárizmí kolem roku 820, od jehož jména pochází slovo \textit{algoritmus}.\footnote{A z názvu jeho knihy \textit{al-Kitáb al-muchtasar fí hisáb al-džabr wa'l-muqábala} pochází slovo \textit{algebra}.} Písmena a záporná čísla ještě neznal, a tak si výraz $x^2 + 6x$ představil jako čtverec o straně $x$ a obdélník $6\times x$. Obdélník rozpůlil na dva proužky $3\times x$ a přiložil je ke dvěma stranám čtverce. Vznikl skoro čtverec o straně $x + 3$, chybí mu jen roh $3\times 3$:
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \fill[colorofwisdom!30] (0,0) rectangle (3,3);
+    \fill[black!12] (3,0) rectangle (4.5,3);
+    \fill[black!12] (0,3) rectangle (3,4.5);
+    \draw[thick] (0,0) -- (4.5,0) -- (4.5,3) -- (3,3) -- (3,4.5) -- (0,4.5) -- cycle;
+    \draw[thick] (3,0) -- (3,3) -- (0,3);
+    \draw[dashed, colorofwisdom, thick] (3,3) rectangle (4.5,4.5);
+    \node at (1.5,1.5) {$x^2$};
+    \node at (3.75,1.5) {$3x$};
+    \node at (1.5,3.75) {$3x$};
+    \node[colorofwisdom, font=\small] at (3.75,3.75) {$9$?};
+    \node[below] at (1.5,0) {$x$};
+    \node[below] at (3.75,0) {$3$};
+    \node[left] at (0,1.5) {$x$};
+    \node[left] at (0,3.75) {$3$};
+    \node[right, font=\small, text width=5.2cm] at (5.2,2.25) {$x^2 + 6x$ je čtverec o straně $x + 3$ bez rohu. Doplníme-li roh ($+9$), dostaneme celý čtverec ${(x + 3)}^2$. Proto $x^2 + 6x = {(x + 3)}^2 - 9$.};
+  \end{tikzpicture}
+\end{center}
+Pro naši rovnici $x^2 + 6x + 5 = 0$ tedy ${(x + 3)}^2 - 9 + 5 = 0$, což je přesně ${(x + 3)}^2 = 4$ jako výše. Al-Chwárizmího vlastní příklad byl mimochodem $x^2 + 10x = 39$. Zkuste si ho stejným obrázkem vyřešit.
+
+Doplnění na čtverec nám navíc prozradí, jak vypadá graf. Výraz ${(x + 3)}^2 - 4$ je obyčejná parabola $y = x^2$, kterou jsme posunuli o $3$ doleva (tam, kde je závorka nulová, tedy v $x = -3$, je teď vrchol) a o $4$ dolů. Kořeny jsou body, ve kterých posunutá parabola protne osu $x$:
+\begin{center}
+  \begin{tikzpicture}[scale=0.5]
+    \draw[->] (-6.8,0) -- (3,0) node[right] {\small $x$};
+    \draw[->] (0,-4.8) -- (0,5.6) node[above] {\small $y$};
+    \foreach \x in {-6,-5,...,2} \draw (\x,0.12) -- (\x,-0.12);
+    \draw[dashed, gray, thick, domain=-2.2:2.2, samples=50] plot (\x, {\x*\x}) node[right, font=\small] {$y = x^2$};
+    \draw[thick, colorofwisdom, domain=-6:0, samples=60] plot (\x, {(\x+3)*(\x+3) - 4});
+    \node[colorofwisdom, font=\small, left] at (-6,5) {$y = {(x + 3)}^2 - 4$};
+    \draw[->, thick, gray] (-0.2,-0.2) -- (-2.8,-3.8);
+    \filldraw[colorofwisdom] (-3,-4) circle (3pt) node[below left, font=\small] {$(-3, -4)$};
+    \filldraw (-5,0) circle (3pt) node[below left, font=\small] {$-5$};
+    \filldraw (-1,0) circle (3pt) node[below right, font=\small] {$-1$};
+  \end{tikzpicture}
+\end{center}
 
 Pokud stejný postup provedeme s obecnou rovnicí, dostaneme slavný vzorec.
 
@@ -92,6 +147,27 @@ Pokud stejný postup provedeme s obecnou rovnicí, dostaneme slavný vzorec.
 \end{proof}
 
 Všimněte si, že vzorec platí i pro $D = 0$, jen obě řešení splynou. Proto se mluví o dvojnásobném kořeni.
+
+Vzorec se dá číst i obrazově. Zapišme ho jako
+\begin{equation*}
+  x_{1,2} = -\frac{b}{2a}\pm\frac{\sqrt{D}}{2a}.
+\end{equation*}
+První zlomek nezávisí na znaménku $\pm$. Je to osa souměrnosti paraboly $y = ax^2 + bx + c$, tedy $x$-ová souřadnice jejího vrcholu. Kořeny pak leží \textbf{souměrně} kolem této osy, každý ve vzdálenosti $\frac{\sqrt{D}}{2|a|}$. Diskriminant tedy říká, jak daleko od osy kořeny jsou. Čím je menší, tím blíž jsou kořeny u sebe, pro $D = 0$ splynou ve vrcholu a pro $D < 0$ parabola osu $x$ vůbec nedosáhne (všechny tři případy jsou nakreslené v sekci o kvadratických nerovnicích). Pro rovnici $2x^2 - 3x - 2 = 0$ z následujícího příkladu:
+\begin{center}
+  \begin{tikzpicture}[xscale=1.6, yscale=0.6]
+    \draw[->] (-1.3,0) -- (2.9,0) node[right] {\small $x$};
+    \draw[->] (0,-3.8) -- (0,3.4) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-1:2.5, samples=60] plot (\x, {2*\x*\x - 3*\x - 2});
+    \draw[dashed, gray] (0.75,-3.6) -- (0.75,3.2);
+    \filldraw (-0.5,0) circle (2pt) node[below left, font=\small] {$-\frac{1}{2}$};
+    \filldraw (2,0) circle (2pt) node[below right, font=\small] {$2$};
+    \filldraw[colorofwisdom] (0.75,-3.125) circle (2pt);
+    \node[right, font=\small] at (0.8,-3.3) {osa $x = -\frac{b}{2a} = \frac{3}{4}$};
+    \draw[decorate, decoration={brace, amplitude=4pt}] (-0.5,0.15) -- (0.75,0.15) node[midway, above=4pt, font=\small] {$\frac{5}{4}$};
+    \draw[decorate, decoration={brace, amplitude=4pt}] (0.75,0.15) -- (2,0.15) node[midway, above=4pt, font=\small] {$\frac{5}{4}$};
+    \node[right, font=\small] at (2.6,0.8) {$\frac{\sqrt{D}}{2a} = \frac{\sqrt{25}}{4} = \frac{5}{4}$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}\label{ex:kvadr-vzorec}
   Vyřešme rovnici $2x^2 - 3x - 2 = 0$. Máme $a = 2$, $b = -3$, $c = -2$, takže
@@ -173,6 +249,20 @@ Podívejme se, co se stane, když kořeny kvadratické rovnice sečteme a vynás
   \end{equation*}
 \end{proof}
 
+Vietovy vzorce mají i hezký obrázkový význam. Vezměme normovanou rovnici $x^2 + px + q = 0$. Kořeny leží na ose $x$ souměrně kolem osy paraboly $x = -\frac{p}{2}$, jejich průměr je tedy $-\frac{p}{2}$ a součet $-p$. A součin? Dosadíme-li do rozkladu $x^2 + px + q = (x - x_1)(x - x_2)$ nulu, dostaneme $q = (-x_1)(-x_2) = x_1x_2$. Absolutní člen je výška, ve které parabola protíná osu $y$, a ta se rovná součinu kořenů. Například pro $x^2 - 2x - 3 = (x + 1)(x - 3)$:
+\begin{center}
+  \begin{tikzpicture}[xscale=0.9, yscale=0.45]
+    \draw[->] (-2.2,0) -- (4.4,0) node[right] {\small $x$};
+    \draw[->] (0,-4.8) -- (0,4.4) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-1.8:3.8, samples=60] plot (\x, {\x*\x - 2*\x - 3});
+    \draw[dashed, gray] (1,-4.6) -- (1,4.2) node[above, font=\scriptsize, black] {osa $x = 1$};
+    \filldraw (-1,0) circle (2.5pt) node[below left, font=\small] {$x_1 = -1$};
+    \filldraw (3,0) circle (2.5pt) node[below right, font=\small] {$x_2 = 3$};
+    \filldraw[colorofwisdom] (0,-3) circle (2.5pt) node[below left, font=\small] {$q = -3$};
+    \node[right, font=\small, align=left] at (4.2,-2.5) {$x_1 + x_2 = 2 = 2\cdot 1 = -p$\\ $x_1\cdot x_2 = -3 = q$};
+  \end{tikzpicture}
+\end{center}
+
 François Viète byl francouzský právník, který matematiku dělal ve volném čase. Mimo jiné prý během války rozluštil šifrovanou korespondenci španělského krále tak spolehlivě, že si Španělé stěžovali u papeže, že Francouzi používají černou magii.\footnote{Papež stížnost neřešil. Jeho vlastní luštitelé tu šifru totiž prý také dávno prolomili.}
 
 Vietovy vzorce mají spoustu využití:
@@ -237,6 +327,23 @@ U lineárních rovnic s parametrem jsme rozhodovali podle toho, zda je koeficien
   \end{itemize}
 \end{example}
 
+Diskuzi si můžeme i nakreslit. Rovnici přepíšeme na $x^2 + 2x = -m$. Levá strana je pevná parabola s vrcholem v bodě $(-1, -1)$, pravá strana je vodorovná přímka ve výšce $-m$. Měnit parametr znamená posouvat přímku nahoru a dolů a počítat průsečíky:
+\begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-4,0) -- (2.2,0) node[right] {\small $x$};
+    \draw[->] (0,-2.8) -- (0,5.2) node[above] {\small $y$};
+    \draw[thick, domain=-3.4:1.4, samples=60] plot (\x, {\x*\x + 2*\x});
+    \node[font=\small] at (-3.1,5.0) {$y = x^2 + 2x$};
+    \draw[colorofwisdom, thick] (-3.8,2) -- (1.9,2) node[right, font=\small] {$m < 1$: dvě řešení};
+    \filldraw[colorofwisdom] (-2.732,2) circle (2.5pt);
+    \filldraw[colorofwisdom] (0.732,2) circle (2.5pt);
+    \draw[colorofwisdom, thick] (-3.8,-1) -- (1.9,-1) node[right, font=\small] {$m = 1$: jedno řešení};
+    \filldraw[colorofwisdom] (-1,-1) circle (2.5pt);
+    \draw[gray, thick] (-3.8,-2.2) -- (1.9,-2.2) node[right, font=\small, black] {$m > 1$: žádné};
+  \end{tikzpicture}
+\end{center}
+Tento trik, kdy parametr `oddělíme' na jednu stranu a díváme se na průsečíky s vodorovnou přímkou, funguje u spousty rovnic s parametrem.
+
 \begin{example}
   Vyřešme rovnici $mx^2 - 2x + 1 = 0$ s parametrem $m\in\mathbb{R}$.
 
@@ -293,6 +400,20 @@ Pro rovnice třetího a čtvrtého stupně existují obecné vzorce, ale jsou ta
 
   Rovnice $x^4 + 3x^2 - 4 = 0$ dává $t^2 + 3t - 4 = 0$, tedy $t_1 = 1$, $t_2 = -4$. Rovnice $x^2 = -4$ nemá řešení, takže $K = \{-1, 1\}$.
 \end{example}
+
+Proč kořeny bikvadratické rovnice přicházejí v párech $\pm$? Výraz $x^4 - 5x^2 + 4$ obsahuje jen sudé mocniny, takže pro $x$ a $-x$ vychází stejně. Jeho graf je proto souměrný podle osy $y$ a každý kořen napravo má svůj zrcadlový obraz nalevo:
+\begin{center}
+  \begin{tikzpicture}[xscale=1.1, yscale=0.42]
+    \draw[->] (-2.8,0) -- (2.9,0) node[right] {\small $x$};
+    \draw[->] (0,-3) -- (0,6.4) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-2.3:2.3, samples=100] plot (\x, {(\x)^4 - 5*(\x)^2 + 4});
+    \foreach \r in {-2,-1,1,2} \filldraw (\r,0) circle (2pt);
+    \foreach \r/\p in {-2/below left, -1/below right, 1/below left, 2/below right} \node[\p, font=\small] at (\r,0) {$\r$};
+    \draw[<->, gray] (-1.5,4.5) -- (1.5,4.5);
+    \node[gray, font=\scriptsize, above] at (0.75,4.5) {zrcadlo};
+    \node[colorofwisdom, right, font=\small] at (2.3,5.5) {$y = x^4 - 5x^2 + 4$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   Substituce funguje i pro složitější výrazy. Vyřešme ${(x^2 - 2x)}^2 - 2(x^2 - 2x) - 3 = 0$. Substituce $t = x^2 - 2x$ dává $t^2 - 2t - 3 = 0$, tedy $t = 3$ nebo $t = -1$.
@@ -498,6 +619,25 @@ Nejrychlejší je ale představit si graf. Funkce $y = ax^2 + bx + c$ má jako g
   \end{enumerate}
 \end{example}
 
+První z nerovnic si nakresleme. Parabola $y = x^2 - x - 6$ je otevřená nahoru a protíná osu $x$ v bodech $-2$ a $3$. Pod osou (tedy tam, kde je výraz záporný) je právě mezi kořeny. Řešení nerovnice je `stín', který tato část paraboly vrhá na osu $x$:
+\begin{center}
+  \begin{tikzpicture}[xscale=0.8, yscale=0.4]
+    \draw[->] (-3.4,0) -- (4.4,0) node[right] {\small $x$};
+    \draw[->] (0,-7) -- (0,5.4) node[above] {\small $y$};
+    \fill[colorofwisdom!15, domain=-2:3, samples=60] plot (\x, {\x*\x - \x - 6}) -- cycle;
+    \draw[thick, domain=-2.8:3.8, samples=60] plot (\x, {\x*\x - \x - 6});
+    \draw[thick, colorofwisdom, domain=-2:3, samples=60] plot (\x, {\x*\x - \x - 6});
+    \draw[line width=3pt, colorofwisdom] (-2,0) -- (3,0);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (-2,0) circle (3pt);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (3,0) circle (3pt);
+    \node[above left, font=\small] at (-2,0) {$-2$};
+    \node[above right, font=\small] at (3,0) {$3$};
+    \node[font=\small] at (0.5,-3.5) {$y < 0$};
+    \node[right, font=\small] at (3.8,4.6) {$y = x^2 - x - 6$};
+  \end{tikzpicture}
+\end{center}
+Kdyby se nerovnice ptala na $> 0$, hledali bychom naopak části paraboly \textit{nad} osou, tedy $(-\infty, -2)\cup(3, \infty)$.
+
 \begin{note}
   Proč je $x^2 + x + 1$ vždy kladné? Doplněním na čtverec: $x^2 + x + 1 = {\left(x + \frac{1}{2}\right)}^2 + \frac{3}{4}$. Druhá mocnina je nezáporná a přičteme k ní kladné číslo. To je důkaz celého bodu 4 v postupu výše, jen pro konkrétní čísla.
 \end{note}
@@ -547,6 +687,22 @@ Pokud je v soustavě alespoň jedna rovnice kvadratická, metody z předchozí k
   Z druhé rovnice $x = y + 1$, dosazením ${(y + 1)}^2 + y^2 = 25$, tedy $2y^2 + 2y - 24 = 0$, neboli $y^2 + y - 12 = 0$, a tedy $y = 3$ nebo $y = -4$. Odpovídající $x$ jsou $4$ a $-3$. $K = \{(4, 3), (-3, -4)\}$.
 
   Geometricky: první rovnice je kružnice se středem v počátku a poloměrem $5$, druhá je přímka. Přímka protíná kružnici ve dvou bodech. Kdyby ji jen tečně škrtla, měli bychom jedno řešení, a kdyby ji minula, žádné. Více v kapitole o kuželosečkách.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.42]
+      \draw[->] (-6.5,0) -- (7.5,0) node[right] {\small $x$};
+      \draw[->] (0,-7.5) -- (0,6.5) node[above] {\small $y$};
+      \draw[thick] (0,0) circle (5);
+      \draw[thick, colorofwisdom] (-5.5,-6.5) -- (6.5,5.5) node[above right, font=\small] {$x - y = 1$};
+      \draw[dashed, gray] (0.07,-7) -- (7,-0.07);
+      \draw[dotted, gray, thick] (2.5,-6.5) -- (7.4,-1.6);
+      \filldraw (4,3) circle (5pt) node[above left, font=\small] {$(4, 3)$};
+      \filldraw (-3,-4) circle (5pt) node[left=2pt, font=\small] {$(-3, -4)$};
+      \node[font=\small] at (-4.2,4.6) {$x^2 + y^2 = 25$};
+      \node[gray, font=\scriptsize, right] at (7,-0.8) {tečna};
+      \node[gray, font=\scriptsize, right] at (7.4,-2.2) {mine};
+    \end{tikzpicture}
+  \end{center}
+  Čárkovaně je nakreslena rovnoběžná přímka, která kružnici jen tečně škrtne (jedno řešení), a tečkovaně přímka, která ji mine (žádné řešení).
 \end{example}
 
 \begin{problem}
@@ -563,6 +719,17 @@ Pokud je v soustavě alespoň jedna rovnice kvadratická, metody z předchozí k
     \item $x = y + 2$, $(y + 2)y = 15$, $y^2 + 2y - 15 = 0$, $y\in\{3, -5\}$. $K = \{(5, 3), (-3, -5)\}$.
     \item $x^2 - y^2 = (x - y)(x + y) = 8(x - y) = 16$, tedy $x - y = 2$. Spolu s $x + y = 8$: $K = \{(5, 3)\}$. Zde stačilo všimnout si vzorce.
     \item $x^2 - 3 = 2x$, $x^2 - 2x - 3 = 0$, $x\in\{-1, 3\}$. $K = \{(-1, -2), (3, 6)\}$. Geometricky průsečíky paraboly a přímky.
+
+    \begin{center}
+      \begin{tikzpicture}[xscale=0.6, yscale=0.32]
+        \draw[->] (-3,0) -- (4.4,0) node[right] {\small $x$};
+        \draw[->] (0,-4.6) -- (0,9) node[above] {\small $y$};
+        \draw[thick, domain=-2.4:3.4, samples=60] plot (\x, {\x*\x - 3}) node[left, font=\small] {$y = x^2 - 3$};
+        \draw[thick, colorofwisdom] (-2.2,-4.4) -- (3.9,7.8) node[right, font=\small] {$y = 2x$};
+        \filldraw (-1,-2) circle (2.5pt) node[left=3pt, font=\small] {$(-1, -2)$};
+        \filldraw (3,6) circle (2.5pt) node[left=3pt, font=\small] {$(3, 6)$};
+      \end{tikzpicture}
+    \end{center}
   \end{enumerate}
 \end{solution}
 

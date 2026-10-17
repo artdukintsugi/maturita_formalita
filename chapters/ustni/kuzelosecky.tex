@@ -17,6 +17,74 @@ Pokud dvojitý kužel (dva kužele spojené vrcholy) protneme rovinou, dostaneme
   \end{tabular}
 \end{center}
 
+Představte si přesýpací hodiny ze dvou kornoutů slepených špičkami a k tomu plochý nůž. Řízneme-li vodorovně, dostaneme kružnici. Když nůž trochu nakloníme, kružnice se protáhne v elipsu. Nakloníme-li ho přesně tak, aby byl rovnoběžný se stěnou kornoutu, elipsa se `roztrhne' a nikdy se neuzavře: to je parabola. A když je nůž ještě strmější, prořízne oba kornouty a dostaneme dvě větve hyperboly.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \begin{scope}[xshift=0.0cm]
+      \draw[thick] (0.848,1.315) -- (0.913,1.372) -- (0.951,1.433) -- (0.959,1.496) -- (0.939,1.558) -- (0.890,1.618) -- (0.814,1.674) -- (0.713,1.724) -- (0.591,1.767) -- (0.451,1.801) -- (0.297,1.826) -- (0.134,1.840) -- (-0.034,1.843) -- (-0.200,1.835) -- (-0.360,1.817) -- (-0.509,1.788) -- (-0.642,1.751) -- (-0.756,1.705) -- (-0.848,1.652) -- (-0.913,1.595) -- (-0.951,1.534) -- (-0.959,1.471) -- (-0.939,1.409) -- (-0.890,1.349) -- (-0.814,1.293) -- (-0.713,1.243) -- (-0.591,1.200) -- (-0.451,1.166) -- (-0.297,1.141) -- (-0.134,1.127) -- (0.034,1.124) -- (0.200,1.132) -- (0.360,1.150) -- (0.509,1.179) -- (0.642,1.216) -- (0.756,1.262) -- (0.848,1.315);
+      \draw[thick] (-0.931,-1.396) -- (-0.950,-1.432) -- (-0.959,-1.468) -- (-0.958,-1.504) -- (-0.948,-1.540) -- (-0.928,-1.576) -- (-0.898,-1.610) -- (-0.860,-1.644) -- (-0.812,-1.675) -- (-0.757,-1.705) -- (-0.693,-1.732) -- (-0.623,-1.757) -- (-0.546,-1.779) -- (-0.464,-1.798) -- (-0.377,-1.814) -- (-0.286,-1.827) -- (-0.192,-1.836) -- (-0.097,-1.841) -- (0.000,-1.843) -- (0.097,-1.841) -- (0.192,-1.836) -- (0.286,-1.827) -- (0.377,-1.814) -- (0.464,-1.798) -- (0.546,-1.779) -- (0.623,-1.757) -- (0.693,-1.732) -- (0.757,-1.705) -- (0.812,-1.675) -- (0.860,-1.644) -- (0.898,-1.610) -- (0.928,-1.576) -- (0.948,-1.540) -- (0.958,-1.504) -- (0.959,-1.468) -- (0.950,-1.432) -- (0.931,-1.396);
+      \draw[dashed, gray] (0.931,-1.396) -- (0.900,-1.358) -- (0.858,-1.322) -- (0.805,-1.288) -- (0.742,-1.255) -- (0.671,-1.226) -- (0.591,-1.200) -- (0.504,-1.177) -- (0.411,-1.158) -- (0.312,-1.143) -- (0.210,-1.133) -- (0.106,-1.126) -- (-0.000,-1.124) -- (-0.106,-1.126) -- (-0.210,-1.133) -- (-0.312,-1.143) -- (-0.411,-1.158) -- (-0.504,-1.177) -- (-0.591,-1.200) -- (-0.671,-1.226) -- (-0.742,-1.255) -- (-0.805,-1.288) -- (-0.858,-1.322) -- (-0.900,-1.358) -- (-0.931,-1.396);
+      \draw[thick] (0,0) -- (0.931,1.396);
+      \draw[thick] (0,0) -- (-0.931,1.396);
+      \draw[thick] (0,0) -- (0.931,-1.396);
+      \draw[thick] (0,0) -- (-0.931,-1.396);
+      \fill[gray, opacity=0.18] (-1.623,0.649) -- (0.496,0.227) -- (1.623,1.020) -- (-0.496,1.442) -- cycle;
+      \draw[gray] (-1.623,0.649) -- (0.496,0.227) -- (1.623,1.020) -- (-0.496,1.442) -- cycle;
+      \draw[very thick, colorofwisdom] (0.477,0.739) -- (0.497,0.755) -- (0.514,0.772) -- (0.526,0.789);
+      \draw[thick, colorofwisdom, dashed] (0.526,0.789) -- (0.535,0.806) -- (0.539,0.824) -- (0.540,0.842) -- (0.536,0.859) -- (0.528,0.877) -- (0.516,0.894) -- (0.501,0.910) -- (0.481,0.926) -- (0.458,0.942) -- (0.431,0.956) -- (0.401,0.970) -- (0.368,0.982) -- (0.332,0.994) -- (0.294,1.004) -- (0.254,1.013) -- (0.211,1.021) -- (0.167,1.027) -- (0.121,1.032) -- (0.075,1.035) -- (0.028,1.036) -- (-0.019,1.037) -- (-0.066,1.035) -- (-0.112,1.032) -- (-0.158,1.028) -- (-0.202,1.022) -- (-0.245,1.015) -- (-0.286,1.006) -- (-0.325,0.996) -- (-0.361,0.985) -- (-0.395,0.972) -- (-0.426,0.959) -- (-0.453,0.945) -- (-0.477,0.929) -- (-0.497,0.914) -- (-0.514,0.897) -- (-0.526,0.880) -- (-0.535,0.863) -- (-0.539,0.845) -- (-0.540,0.827) -- (-0.536,0.810) -- (-0.528,0.792) -- (-0.516,0.775);
+      \draw[very thick, colorofwisdom] (-0.516,0.775) -- (-0.501,0.759) -- (-0.481,0.743) -- (-0.458,0.727) -- (-0.431,0.713) -- (-0.401,0.699) -- (-0.368,0.687) -- (-0.332,0.675) -- (-0.294,0.665) -- (-0.254,0.656) -- (-0.211,0.648) -- (-0.167,0.642) -- (-0.121,0.637) -- (-0.075,0.634) -- (-0.028,0.632) -- (0.019,0.632) -- (0.066,0.634) -- (0.112,0.637) -- (0.158,0.641) -- (0.202,0.647) -- (0.245,0.654) -- (0.286,0.663) -- (0.325,0.673) -- (0.361,0.684) -- (0.395,0.697) -- (0.426,0.710) -- (0.453,0.724) -- (0.477,0.739);
+      \node at (0,-2.3) {\small kružnice};
+    \end{scope}
+    \begin{scope}[xshift=3.1cm]
+      \draw[thick] (0.848,1.315) -- (0.913,1.372) -- (0.951,1.433) -- (0.959,1.496) -- (0.939,1.558) -- (0.890,1.618) -- (0.814,1.674) -- (0.713,1.724) -- (0.591,1.767) -- (0.451,1.801) -- (0.297,1.826) -- (0.134,1.840) -- (-0.034,1.843) -- (-0.200,1.835) -- (-0.360,1.817) -- (-0.509,1.788) -- (-0.642,1.751) -- (-0.756,1.705) -- (-0.848,1.652) -- (-0.913,1.595) -- (-0.951,1.534) -- (-0.959,1.471) -- (-0.939,1.409) -- (-0.890,1.349) -- (-0.814,1.293) -- (-0.713,1.243) -- (-0.591,1.200) -- (-0.451,1.166) -- (-0.297,1.141) -- (-0.134,1.127) -- (0.034,1.124) -- (0.200,1.132) -- (0.360,1.150) -- (0.509,1.179) -- (0.642,1.216) -- (0.756,1.262) -- (0.848,1.315);
+      \draw[thick] (-0.931,-1.396) -- (-0.950,-1.432) -- (-0.959,-1.468) -- (-0.958,-1.504) -- (-0.948,-1.540) -- (-0.928,-1.576) -- (-0.898,-1.610) -- (-0.860,-1.644) -- (-0.812,-1.675) -- (-0.757,-1.705) -- (-0.693,-1.732) -- (-0.623,-1.757) -- (-0.546,-1.779) -- (-0.464,-1.798) -- (-0.377,-1.814) -- (-0.286,-1.827) -- (-0.192,-1.836) -- (-0.097,-1.841) -- (0.000,-1.843) -- (0.097,-1.841) -- (0.192,-1.836) -- (0.286,-1.827) -- (0.377,-1.814) -- (0.464,-1.798) -- (0.546,-1.779) -- (0.623,-1.757) -- (0.693,-1.732) -- (0.757,-1.705) -- (0.812,-1.675) -- (0.860,-1.644) -- (0.898,-1.610) -- (0.928,-1.576) -- (0.948,-1.540) -- (0.958,-1.504) -- (0.959,-1.468) -- (0.950,-1.432) -- (0.931,-1.396);
+      \draw[dashed, gray] (0.931,-1.396) -- (0.900,-1.358) -- (0.858,-1.322) -- (0.805,-1.288) -- (0.742,-1.255) -- (0.671,-1.226) -- (0.591,-1.200) -- (0.504,-1.177) -- (0.411,-1.158) -- (0.312,-1.143) -- (0.210,-1.133) -- (0.106,-1.126) -- (-0.000,-1.124) -- (-0.106,-1.126) -- (-0.210,-1.133) -- (-0.312,-1.143) -- (-0.411,-1.158) -- (-0.504,-1.177) -- (-0.591,-1.200) -- (-0.671,-1.226) -- (-0.742,-1.255) -- (-0.805,-1.288) -- (-0.858,-1.322) -- (-0.900,-1.358) -- (-0.931,-1.396);
+      \draw[thick] (0,0) -- (0.931,1.396);
+      \draw[thick] (0,0) -- (-0.931,1.396);
+      \draw[thick] (0,0) -- (0.931,-1.396);
+      \draw[thick] (0,0) -- (-0.931,-1.396);
+      \fill[gray, opacity=0.18] (-1.620,0.076) -- (0.587,0.680) -- (1.620,1.407) -- (-0.587,0.804) -- cycle;
+      \draw[gray] (-1.620,0.076) -- (0.587,0.680) -- (1.620,1.407) -- (-0.587,0.804) -- cycle;
+      \draw[very thick, colorofwisdom] (0.581,0.900) -- (0.604,0.919) -- (0.622,0.935) -- (0.633,0.949);
+      \draw[thick, colorofwisdom, dashed] (0.633,0.949) -- (0.637,0.960) -- (0.635,0.970) -- (0.626,0.976) -- (0.612,0.981) -- (0.592,0.982) -- (0.567,0.982) -- (0.539,0.979) -- (0.506,0.974) -- (0.471,0.968) -- (0.433,0.959) -- (0.393,0.950) -- (0.352,0.939) -- (0.310,0.927) -- (0.268,0.914) -- (0.225,0.901) -- (0.183,0.886) -- (0.142,0.872) -- (0.101,0.857) -- (0.061,0.842) -- (0.023,0.827) -- (-0.015,0.812) -- (-0.051,0.797) -- (-0.085,0.782) -- (-0.118,0.767) -- (-0.149,0.753) -- (-0.178,0.739) -- (-0.206,0.725) -- (-0.232,0.711) -- (-0.256,0.698) -- (-0.278,0.686) -- (-0.299,0.673) -- (-0.317,0.662) -- (-0.334,0.651) -- (-0.348,0.640) -- (-0.361,0.630) -- (-0.371,0.620) -- (-0.379,0.612) -- (-0.385,0.603) -- (-0.389,0.596) -- (-0.390,0.589) -- (-0.389,0.584) -- (-0.385,0.579);
+      \draw[very thick, colorofwisdom] (-0.385,0.579) -- (-0.379,0.575) -- (-0.370,0.572) -- (-0.359,0.570) -- (-0.344,0.569) -- (-0.327,0.569) -- (-0.306,0.570) -- (-0.282,0.573) -- (-0.255,0.577) -- (-0.225,0.583) -- (-0.192,0.590) -- (-0.156,0.599) -- (-0.116,0.609) -- (-0.074,0.621) -- (-0.028,0.635) -- (0.019,0.650) -- (0.069,0.666) -- (0.121,0.685) -- (0.173,0.704) -- (0.227,0.725) -- (0.280,0.747) -- (0.332,0.769) -- (0.382,0.792) -- (0.430,0.815) -- (0.475,0.838) -- (0.515,0.860) -- (0.551,0.881) -- (0.581,0.900);
+      \node at (0,-2.3) {\small elipsa};
+    \end{scope}
+    \begin{scope}[xshift=6.2cm]
+      \draw[thick] (0.848,1.315) -- (0.913,1.372) -- (0.951,1.433) -- (0.959,1.496) -- (0.939,1.558) -- (0.890,1.618) -- (0.814,1.674) -- (0.713,1.724) -- (0.591,1.767) -- (0.451,1.801) -- (0.297,1.826) -- (0.134,1.840) -- (-0.034,1.843) -- (-0.200,1.835) -- (-0.360,1.817) -- (-0.509,1.788) -- (-0.642,1.751) -- (-0.756,1.705) -- (-0.848,1.652) -- (-0.913,1.595) -- (-0.951,1.534) -- (-0.959,1.471) -- (-0.939,1.409) -- (-0.890,1.349) -- (-0.814,1.293) -- (-0.713,1.243) -- (-0.591,1.200) -- (-0.451,1.166) -- (-0.297,1.141) -- (-0.134,1.127) -- (0.034,1.124) -- (0.200,1.132) -- (0.360,1.150) -- (0.509,1.179) -- (0.642,1.216) -- (0.756,1.262) -- (0.848,1.315);
+      \draw[thick] (-0.931,-1.396) -- (-0.950,-1.432) -- (-0.959,-1.468) -- (-0.958,-1.504) -- (-0.948,-1.540) -- (-0.928,-1.576) -- (-0.898,-1.610) -- (-0.860,-1.644) -- (-0.812,-1.675) -- (-0.757,-1.705) -- (-0.693,-1.732) -- (-0.623,-1.757) -- (-0.546,-1.779) -- (-0.464,-1.798) -- (-0.377,-1.814) -- (-0.286,-1.827) -- (-0.192,-1.836) -- (-0.097,-1.841) -- (0.000,-1.843) -- (0.097,-1.841) -- (0.192,-1.836) -- (0.286,-1.827) -- (0.377,-1.814) -- (0.464,-1.798) -- (0.546,-1.779) -- (0.623,-1.757) -- (0.693,-1.732) -- (0.757,-1.705) -- (0.812,-1.675) -- (0.860,-1.644) -- (0.898,-1.610) -- (0.928,-1.576) -- (0.948,-1.540) -- (0.958,-1.504) -- (0.959,-1.468) -- (0.950,-1.432) -- (0.931,-1.396);
+      \draw[dashed, gray] (0.931,-1.396) -- (0.900,-1.358) -- (0.858,-1.322) -- (0.805,-1.288) -- (0.742,-1.255) -- (0.671,-1.226) -- (0.591,-1.200) -- (0.504,-1.177) -- (0.411,-1.158) -- (0.312,-1.143) -- (0.210,-1.133) -- (0.106,-1.126) -- (-0.000,-1.124) -- (-0.106,-1.126) -- (-0.210,-1.133) -- (-0.312,-1.143) -- (-0.411,-1.158) -- (-0.504,-1.177) -- (-0.591,-1.200) -- (-0.671,-1.226) -- (-0.742,-1.255) -- (-0.805,-1.288) -- (-0.858,-1.322) -- (-0.900,-1.358) -- (-0.931,-1.396);
+      \draw[thick] (0,0) -- (0.931,1.396);
+      \draw[thick] (0,0) -- (-0.931,1.396);
+      \draw[thick] (0,0) -- (0.931,-1.396);
+      \draw[thick] (0,0) -- (-0.931,-1.396);
+      \fill[gray, opacity=0.18] (1.147,-2.125) -- (1.074,1.907) -- (-1.124,1.878) -- (-1.051,-2.154) -- cycle;
+      \draw[gray] (1.147,-2.125) -- (1.074,1.907) -- (-1.124,1.878) -- (-1.051,-2.154) -- cycle;
+      \draw[thick, colorofwisdom, dashed] (-0.746,1.710) -- (-0.685,1.480) -- (-0.631,1.293) -- (-0.584,1.140) -- (-0.542,1.012) -- (-0.504,0.905) -- (-0.470,0.814) -- (-0.438,0.736) -- (-0.410,0.669) -- (-0.383,0.611) -- (-0.359,0.561) -- (-0.336,0.517) -- (-0.314,0.478) -- (-0.294,0.443) -- (-0.275,0.413) -- (-0.257,0.386);
+      \draw[very thick, colorofwisdom] (-0.257,0.386) -- (-0.240,0.362) -- (-0.224,0.341) -- (-0.209,0.322) -- (-0.194,0.304) -- (-0.180,0.289) -- (-0.166,0.275) -- (-0.153,0.263) -- (-0.140,0.252) -- (-0.127,0.242) -- (-0.115,0.234) -- (-0.103,0.226) -- (-0.092,0.219) -- (-0.080,0.213) -- (-0.069,0.208) -- (-0.058,0.204) -- (-0.047,0.201) -- (-0.036,0.198) -- (-0.026,0.196) -- (-0.015,0.194) -- (-0.005,0.193) -- (0.006,0.193) -- (0.016,0.194) -- (0.027,0.195) -- (0.037,0.197) -- (0.048,0.199) -- (0.058,0.202) -- (0.069,0.206) -- (0.080,0.210) -- (0.091,0.216) -- (0.102,0.222) -- (0.114,0.229) -- (0.125,0.237) -- (0.137,0.246) -- (0.149,0.256) -- (0.162,0.267) -- (0.174,0.280) -- (0.188,0.294) -- (0.201,0.310) -- (0.216,0.327) -- (0.230,0.347) -- (0.246,0.368) -- (0.262,0.393);
+      \draw[thick, colorofwisdom, dashed] (0.262,0.393) -- (0.279,0.420) -- (0.297,0.451) -- (0.315,0.486) -- (0.335,0.525) -- (0.357,0.570) -- (0.379,0.621) -- (0.404,0.680) -- (0.430,0.747) -- (0.458,0.826) -- (0.489,0.918) -- (0.523,1.026) -- (0.561,1.155) -- (0.602,1.309) -- (0.649,1.497) -- (0.702,1.729);
+      \node at (0,-2.3) {\small parabola};
+    \end{scope}
+    \begin{scope}[xshift=9.3cm]
+      \draw[thick] (0.848,1.315) -- (0.913,1.372) -- (0.951,1.433) -- (0.959,1.496) -- (0.939,1.558) -- (0.890,1.618) -- (0.814,1.674) -- (0.713,1.724) -- (0.591,1.767) -- (0.451,1.801) -- (0.297,1.826) -- (0.134,1.840) -- (-0.034,1.843) -- (-0.200,1.835) -- (-0.360,1.817) -- (-0.509,1.788) -- (-0.642,1.751) -- (-0.756,1.705) -- (-0.848,1.652) -- (-0.913,1.595) -- (-0.951,1.534) -- (-0.959,1.471) -- (-0.939,1.409) -- (-0.890,1.349) -- (-0.814,1.293) -- (-0.713,1.243) -- (-0.591,1.200) -- (-0.451,1.166) -- (-0.297,1.141) -- (-0.134,1.127) -- (0.034,1.124) -- (0.200,1.132) -- (0.360,1.150) -- (0.509,1.179) -- (0.642,1.216) -- (0.756,1.262) -- (0.848,1.315);
+      \draw[thick] (-0.931,-1.396) -- (-0.950,-1.432) -- (-0.959,-1.468) -- (-0.958,-1.504) -- (-0.948,-1.540) -- (-0.928,-1.576) -- (-0.898,-1.610) -- (-0.860,-1.644) -- (-0.812,-1.675) -- (-0.757,-1.705) -- (-0.693,-1.732) -- (-0.623,-1.757) -- (-0.546,-1.779) -- (-0.464,-1.798) -- (-0.377,-1.814) -- (-0.286,-1.827) -- (-0.192,-1.836) -- (-0.097,-1.841) -- (0.000,-1.843) -- (0.097,-1.841) -- (0.192,-1.836) -- (0.286,-1.827) -- (0.377,-1.814) -- (0.464,-1.798) -- (0.546,-1.779) -- (0.623,-1.757) -- (0.693,-1.732) -- (0.757,-1.705) -- (0.812,-1.675) -- (0.860,-1.644) -- (0.898,-1.610) -- (0.928,-1.576) -- (0.948,-1.540) -- (0.958,-1.504) -- (0.959,-1.468) -- (0.950,-1.432) -- (0.931,-1.396);
+      \draw[dashed, gray] (0.931,-1.396) -- (0.900,-1.358) -- (0.858,-1.322) -- (0.805,-1.288) -- (0.742,-1.255) -- (0.671,-1.226) -- (0.591,-1.200) -- (0.504,-1.177) -- (0.411,-1.158) -- (0.312,-1.143) -- (0.210,-1.133) -- (0.106,-1.126) -- (-0.000,-1.124) -- (-0.106,-1.126) -- (-0.210,-1.133) -- (-0.312,-1.143) -- (-0.411,-1.158) -- (-0.504,-1.177) -- (-0.591,-1.200) -- (-0.671,-1.226) -- (-0.742,-1.255) -- (-0.805,-1.288) -- (-0.858,-1.322) -- (-0.900,-1.358) -- (-0.931,-1.396);
+      \draw[thick] (0,0) -- (0.931,1.396);
+      \draw[thick] (0,0) -- (-0.931,1.396);
+      \draw[thick] (0,0) -- (0.931,-1.396);
+      \draw[thick] (0,0) -- (-0.931,-1.396);
+      \fill[gray, opacity=0.18] (-1.245,-1.502) -- (0.963,-1.942) -- (0.963,1.304) -- (-1.245,1.743) -- cycle;
+      \draw[gray] (-1.245,-1.502) -- (0.963,-1.942) -- (0.963,1.304) -- (-1.245,1.743) -- cycle;
+      \draw[thick, colorofwisdom, dashed] (-0.935,1.525) -- (-0.906,1.470) -- (-0.877,1.416) -- (-0.847,1.362) -- (-0.818,1.308) -- (-0.788,1.254) -- (-0.759,1.201) -- (-0.729,1.148) -- (-0.700,1.095) -- (-0.671,1.043) -- (-0.641,0.991) -- (-0.612,0.940) -- (-0.582,0.890) -- (-0.553,0.840) -- (-0.523,0.791) -- (-0.494,0.744) -- (-0.465,0.697) -- (-0.435,0.652) -- (-0.406,0.609);
+      \draw[very thick, colorofwisdom] (-0.406,0.609) -- (-0.376,0.568) -- (-0.347,0.529) -- (-0.317,0.493) -- (-0.288,0.460) -- (-0.259,0.432) -- (-0.229,0.407) -- (-0.200,0.387) -- (-0.170,0.373) -- (-0.141,0.364) -- (-0.111,0.361) -- (-0.082,0.364) -- (-0.053,0.372) -- (-0.023,0.385) -- (0.006,0.402) -- (0.036,0.423) -- (0.065,0.447) -- (0.095,0.474) -- (0.124,0.504) -- (0.153,0.535) -- (0.183,0.568) -- (0.212,0.603) -- (0.242,0.639) -- (0.271,0.676) -- (0.301,0.714) -- (0.330,0.753) -- (0.359,0.792) -- (0.389,0.832) -- (0.418,0.872) -- (0.448,0.913) -- (0.477,0.955) -- (0.507,0.996) -- (0.536,1.038) -- (0.566,1.080) -- (0.595,1.123) -- (0.624,1.166) -- (0.654,1.208);
+      \draw[very thick, colorofwisdom] (-0.935,-1.407) -- (-0.906,-1.364) -- (-0.877,-1.321) -- (-0.847,-1.279) -- (-0.818,-1.237) -- (-0.788,-1.195) -- (-0.759,-1.153) -- (-0.729,-1.112) -- (-0.700,-1.071) -- (-0.671,-1.030) -- (-0.641,-0.990) -- (-0.612,-0.951) -- (-0.582,-0.912) -- (-0.553,-0.874) -- (-0.523,-0.837) -- (-0.494,-0.802) -- (-0.465,-0.767) -- (-0.435,-0.734) -- (-0.406,-0.702) -- (-0.376,-0.673) -- (-0.347,-0.645) -- (-0.317,-0.621) -- (-0.288,-0.600) -- (-0.259,-0.583) -- (-0.229,-0.570) -- (-0.200,-0.562) -- (-0.170,-0.560) -- (-0.141,-0.563) -- (-0.111,-0.572) -- (-0.082,-0.586) -- (-0.053,-0.605) -- (-0.023,-0.630) -- (0.006,-0.659) -- (0.036,-0.692) -- (0.065,-0.728) -- (0.095,-0.766) -- (0.124,-0.808) -- (0.153,-0.851) -- (0.183,-0.896) -- (0.212,-0.942) -- (0.242,-0.990) -- (0.271,-1.039) -- (0.301,-1.088) -- (0.330,-1.139) -- (0.359,-1.190) -- (0.389,-1.241) -- (0.418,-1.294) -- (0.448,-1.346) -- (0.477,-1.399) -- (0.507,-1.453) -- (0.536,-1.506) -- (0.566,-1.560) -- (0.595,-1.614) -- (0.624,-1.669) -- (0.654,-1.724);
+      \node at (0,-2.3) {\small hyperbola};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+
 V analytické geometrii je ale budeme definovat jako množiny bodů s určitou vlastností vzdálenosti. A jejich rovnice budou rovnice druhého stupně v $x$ a $y$.
 
 \section{Kružnice}
@@ -53,6 +121,22 @@ Rovnice tečny plyne z toho, že tečna je kolmá na poloměr $ST$. Vektor $\ove
   Tečna ke kružnici $x^2 + y^2 = 25$ v bodě $[3, 4]$ je $3x + 4y = 25$.
 \end{example}
 
+Že je tečna kolmá na poloměr, si představte na kole jízdního kola. Silnice se kola dotýká v jediném bodě a drát (paprsek) vedoucí ze středu do tohoto bodu stojí na silnici kolmo. Kdyby nebyl kolmý, silnice by kolo na jedné straně `prořízla'.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.45, >=stealth]
+    \draw[->] (-6,0) -- (7,0) node[right] {\small $x$};
+    \draw[->] (0,-6) -- (0,7) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (0,0) circle (5);
+    \draw[thick] (0.6,5.8) -- (6.6,1.3) node[right] {\small $3x + 4y = 25$};
+    \draw[->, very thick] (0,0) -- (3,4) node[pos=0.45, right=2pt] {\small $\overrightarrow{ST} = (3, 4)$};
+    \draw (3,4) ++(-0.48,-0.64) -- ++(0.64,-0.48) -- ++(0.48,0.64);
+    \filldraw (0,0) circle (3pt) node[below left] {\small $S$};
+    \filldraw (3,4) circle (3pt) node[above right] {\small $T$};
+  \end{tikzpicture}
+\end{center}
+Vektor $\overrightarrow{ST}$ je normálovým vektorem tečny, odtud koeficienty $3$ a $4$ v její rovnici.
+
 \subsection{Vzájemná poloha přímky a kružnice}
 
 Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdálenost středu od přímky s poloměrem (jako v kapitole~\ref{kap:planimetrie}), nebo vyřešíme soustavu rovnic. Dosazením přímky do rovnice kružnice dostaneme kvadratickou rovnici a o počtu průsečíků rozhodne diskriminant.
@@ -66,6 +150,25 @@ Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdáleno
   \end{itemize}
 \end{definitionbox}
 
+U kružnice je to vidět i bez počítání. Stačí porovnat vzdálenost $d$ středu od přímky s poloměrem $r$. Představte si, že přímku k~míči pomalu přibližujete: nejdřív ho mine, pak se ho právě dotkne a nakonec ho protne.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.95]
+    \foreach \d/\sx/\lab/\nm in {0.5/0/{$d < r$}/{sečna}, 1/3.6/{$d = r$}/{tečna}, 1.4/7.2/{$d > r$}/{vnější přímka}} {
+      \begin{scope}[xshift=\sx cm]
+        \draw[thick, colorofwisdom] (0,0) circle (1);
+        \draw[thick] ($(110:\d)+(20:-1.7)$) -- ($(110:\d)+(20:1.7)$);
+        \draw[very thick, gray] (0,0) -- (110:\d) node[pos=0.5, right] {\scriptsize $d$};
+        \filldraw (0,0) circle (1.3pt);
+        \node at (0,-1.45) {\scriptsize \nm, \lab};
+      \end{scope}
+    }
+    \filldraw[colorofwisdom] ($(110:0.5)+(20:0.866)$) circle (1.8pt) ($(110:0.5)+(20:-0.866)$) circle (1.8pt);
+    \filldraw[colorofwisdom] ($(3.6,0)+(110:1)$) circle (1.8pt);
+    \draw ($(3.6,0)+(110:1)+(20:0.15)$) -- ++(290:0.15) -- ++(200:0.15);
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Přímka $y = x + 1$ a kružnice $x^2 + y^2 = 25$: $x^2 + {(x + 1)}^2 = 25$, tedy $2x^2 + 2x - 24 = 0$, neboli $x^2 + x - 12 = 0$, a tedy $x\in\{3, -4\}$. Průsečíky jsou $[3, 4]$ a $[-4, -3]$, přímka je sečna.
 \end{example}
@@ -75,6 +178,32 @@ Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdáleno
 
   Kontrola vzdáleností: vzdálenost středu $[0, 0]$ od přímky $x - y + k = 0$ je $\frac{|k|}{\sqrt{2}}$ a má být rovna $r = 2\sqrt{2}$, tedy $|k| = 4$.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.38]
+    \draw[->] (-6.5,0) -- (6.5,0) node[right] {\small $x$};
+    \draw[->] (0,-6.5) -- (0,6.5) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (0,0) circle (5);
+    \draw[thick] (-6,-5) -- (5,6) node[right] {\small $y = x + 1$};
+    \filldraw (3,4) circle (4pt) node[right=2pt] {\small $[3, 4]$};
+    \filldraw (-4,-3) circle (4pt) node[left] {\small $[-4, -3]$};
+    \node at (0,-7.5) {\scriptsize sečna kružnice $x^2 + y^2 = 25$};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-4.2,0) -- (4.2,0) node[right] {\small $x$};
+    \draw[->] (0,-4.2) -- (0,4.2) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (0,0) circle ({2*sqrt(2)});
+    \draw[thick] (0.2,4.2) -- (-4.2,-0.2) node[left] {\scriptsize $y = x + 4$};
+    \draw[thick] (4.2,0.2) -- (-0.2,-4.2) node[left] {\scriptsize $y = x - 4$};
+    \draw[very thick, gray] (0,0) -- (-2,2) node[midway, below left] {\scriptsize $2\sqrt{2}$};
+    \draw (-2,2) ++(0.25,-0.25) -- ++(0.25,0.25) -- ++(-0.25,0.25);
+    \filldraw (-2,2) circle (2.5pt) node[above left] {\scriptsize $[-2, 2]$};
+    \filldraw (2,-2) circle (2.5pt) node[below right] {\scriptsize $[2, -2]$};
+    \node at (0,-4.8) {\scriptsize tečny kružnice $x^2 + y^2 = 8$};
+  \end{tikzpicture}
+\end{center}
+Všechny přímky $y = x + k$ jsou navzájem rovnoběžné. Měníme-li $k$, přímka se posouvá a kružnice se dotkne právě ve dvou krajních polohách $k = \pm 4$.
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
@@ -92,6 +221,17 @@ Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdáleno
     \item $r = 5$, ${(x - 1)}^2 + {(y - 2)}^2 = 25$.
     \item Střed je střed $AB$, tedy $[1, 5]$, $r = \frac{|AB|}{2} = \frac{10}{2} = 5$: ${(x - 1)}^2 + {(y - 5)}^2 = 25$.
     \item Vzdálenost středů je $5 = 3 + 2$, kružnice mají \textbf{vnější dotyk} v bodě $[3, 0]$.
+    \begin{center}
+      \begin{tikzpicture}[scale=0.4]
+        \draw[->] (-3.8,0) -- (8,0) node[right] {\small $x$};
+        \draw[thick, colorofwisdom] (0,0) circle (3);
+        \draw[thick] (5,0) circle (2);
+        \filldraw (0,0) circle (3pt) (5,0) circle (3pt);
+        \filldraw[colorofwisdom] (3,0) circle (4pt) node[above right] {\scriptsize $[3, 0]$};
+        \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (0,-0.3) -- (3,-0.3) node[midway, below=3pt] {\scriptsize $3$};
+        \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (3,-0.3) -- (5,-0.3) node[midway, below=3pt] {\scriptsize $2$};
+      \end{tikzpicture}
+    \end{center}
     \item $x = 0$: $1 + y^2 = 5$, $y = \pm 2$. Průsečíky $[0, 2]$ a $[0, -2]$.
   \end{enumerate}
 \end{solution}
@@ -136,6 +276,34 @@ Proč $a^2 = b^2 + e^2$? Vrchol $C$ na vedlejší ose má od obou ohnisek stejno
 
 Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zapíchněte připínáčky, uvažte mezi ně volný provázek a tužkou ho napínejte. Tužka opíše elipsu. Tak se to mimochodem dělá i při zakládání eliptických záhonů. Pokud dáte oba připínáčky do jednoho bodu, dostanete kružnici. Kružnice je tedy elipsa s $e = 0$.
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[thick, colorofwisdom!40] (0,0) ellipse (2.5 and 1.5);
+    \coordinate (F1) at (-2,0); \coordinate (F2) at (2,0);
+    \coordinate (X) at ({2.5*cos(110)},{1.5*sin(110)});
+    \draw[very thick, colorofwisdom] (F1) -- (X) -- (F2);
+    \foreach \f in {F1, F2} {\draw[thick] (\f) -- ++(0,0.35); \filldraw[gray] ($(\f)+(0,0.35)$) circle (2.5pt);}
+    \draw[fill=gray!40, rotate around={-20:(X)}] ($(X)+(-0.06,0)$) rectangle ++(0.12,0.7);
+    \filldraw (X) circle (1.5pt);
+    \node[below] at (F1) {\small $F_1$}; \node[below] at (F2) {\small $F_2$};
+    \node[above left] at (X) {\small $X$};
+    \node at (0,-1.9) {\scriptsize provázek délky $2a$: $|XF_1| + |XF_2| = 2a$};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[thick, colorofwisdom] (0,0) ellipse (2.5 and 2);
+    \draw[gray] (-2.8,0) -- (2.8,0);
+    \filldraw (-1.5,0) circle (1.5pt) node[above] {\small $F_1$};
+    \filldraw (1.5,0) circle (1.5pt) node[above left] {\small $F_2$};
+    \filldraw (0,0) circle (1.2pt) node[above] {\small $S$};
+    \filldraw (2.5,0) circle (1.5pt) node[right] {\small $B$};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (-1.5,-0.15) -- (2.5,-0.15) node[midway, below=4pt] {\scriptsize $a + e$};
+    \draw[decorate, decoration={brace, amplitude=3pt}] (1.5,0.15) -- (2.5,0.15) node[midway, above=3pt] {\scriptsize $a - e$};
+    \node at (0,-2.4) {\scriptsize $|BF_1| + |BF_2| = (a + e) + (a - e) = 2a$};
+  \end{tikzpicture}
+\end{center}
+Vpravo je vidět, proč je konstanta v definici právě $2a$, tedy délka hlavní osy. Pro hlavní vrchol $B$ je součet vzdáleností $(a + e) + (a - e) = 2a$, a protože je součet pro všechny body elipsy stejný, platí to všude.
+
 \begin{example}
   Elipsa $\frac{x^2}{25} + \frac{y^2}{9} = 1$ má $a = 5$, $b = 3$, $e = \sqrt{25 - 9} = 4$. Ohniska jsou $[\pm 4, 0]$, hlavní vrcholy $[\pm 5, 0]$ a vedlejší vrcholy $[0, \pm 3]$. (To je přesně elipsa na obrázku.)
 
@@ -149,6 +317,19 @@ Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zap�
 \begin{note}
   Poměr $\varepsilon = \frac{e}{a}\in[0, 1)$ se nazývá \textbf{číselná výstřednost} a říká, jak moc je elipsa `zploštělá'. Oběžná dráha Země kolem Slunce má $\varepsilon\approx 0{,}017$, je tedy skoro kruhová. Halleyova kometa má $\varepsilon\approx 0{,}967$, její dráha je velice protáhlá. Slunce leží v jednom ohnisku dráhy, druhé ohnisko je prázdné. To je první Keplerův zákon.
 \end{note}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.55]
+    \foreach \eps/\b/\sx in {0/2/0, 0.5/1.732/4.8, 0.8/1.2/9.6, 0.95/0.6245/14.4} {
+      \begin{scope}[xshift=\sx cm]
+        \draw[thick, colorofwisdom] (0,0) ellipse (2 and \b);
+        \filldraw ({-2*\eps},0) circle (2.5pt) ({2*\eps},0) circle (2.5pt);
+        \node at (0,-2.6) {\small $\varepsilon = \eps$};
+      \end{scope}
+    }
+  \end{tikzpicture}
+\end{center}
+Všechny čtyři elipsy mají stejnou hlavní poloosu $a$. Čím dál jsou ohniska od sebe, tím je elipsa plošší.
 
 \section{Hyperbola}
 
@@ -186,6 +367,27 @@ Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zap�
 \begin{example}
   Hyperbola $\frac{x^2}{16} - \frac{y^2}{9} = 1$ má $a = 4$, $b = 3$, $e = \sqrt{16 + 9} = 5$. Ohniska $[\pm 5, 0]$, vrcholy $[\pm 4, 0]$, asymptoty $y = \pm\frac{3}{4}x$. Asymptoty jsou úhlopříčky obdélníku o stranách $2a$ a $2b$ se středem ve středu hyperboly (šedý obdélník na obrázku). To je nejrychlejší způsob, jak hyperbolu nakreslit.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.5]
+    \draw[->] (-8,0) -- (8.2,0) node[right] {\small $x$};
+    \draw[->] (0,-5.4) -- (0,5.6) node[above] {\small $y$};
+    \draw[dashed, gray] (-7.2,-5.4) -- (7.2,5.4) (-7.2,5.4) -- (7.2,-5.4);
+    \draw[gray] (-4,-3) rectangle (4,3);
+    \draw[dotted, thick] (0,0) circle (5);
+    \draw[gray] (0,0) -- (4,3) node[midway, above left] {\scriptsize $e$};
+    \draw[thick, colorofwisdom, domain=-1.15:1.15, samples=50, variable=\t] plot ({4*cosh(\t)}, {3*sinh(\t)});
+    \draw[thick, colorofwisdom, domain=-1.15:1.15, samples=50, variable=\t] plot ({-4*cosh(\t)}, {3*sinh(\t)});
+    \coordinate (X) at (5.3497,2.6643);
+    \draw[thick] (-5,0) -- (X) node[pos=0.3, below=1pt] {\scriptsize $|XF_1|$};
+    \draw[thick] (5,0) -- (X) node[pos=0.5, right] {\scriptsize $|XF_2|$};
+    \filldraw (X) circle (4pt) node[above right] {\small $X$};
+    \filldraw (5,0) circle (4pt) node[below right] {\small $F_2$};
+    \filldraw (-5,0) circle (4pt) node[below left] {\small $F_1$};
+    \filldraw (4,0) circle (3pt); \filldraw (-4,0) circle (3pt);
+  \end{tikzpicture}
+\end{center}
+Tečkovaná kružnice se středem $S$ prochází rohy šedého obdélníku i oběma ohnisky. Úhlopříčka obdélníku má totiž podle Pythagorovy věty délku $\sqrt{a^2 + b^2} = e$. Pro bod $X$ na obrázku (zhruba $[5{,}35;\ 2{,}66]$) je $|XF_1|\approx 10{,}69$ a $|XF_2|\approx 2{,}69$, rozdíl je $8 = 2a$. Hyperbolu si můžete představit jako místa, kam zvuk ze dvou současně vystřelivších děl $F_1$ a $F_2$ dorazí se stále stejným zpožděním. Přesně na tom principu fungoval LORAN zmíněný níže.
 
 \begin{note}
   Graf nepřímé úměrnosti $y = \frac{k}{x}$ z kapitoly~\ref{kap:elementarni} je také hyperbola, jen otočená o $45^\circ$. Asymptotami jsou osy souřadnic a $a = b$, proto se jí říká \textbf{rovnoosá}. Hyperboly se ve skutečném světě objevují méně často než elipsy, ale potkáte je: po hyperbole letí kometa, která má dost energie, aby ze Sluneční soustavy unikla, a na hyperbolách stál starší navigační systém LORAN, který určoval polohu lodí z rozdílu časů, za které dorazily signály ze dvou vysílačů.
@@ -231,10 +433,30 @@ Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zap�
 \end{center}
 
 Šedé paprsky na obrázku ukazují vlastnost, kterou jsme zmínili u Archimédových zrcadel v kapitole~\ref{kap:elementarni}: paprsky rovnoběžné s osou se po odrazu od paraboly setkají v ohnisku.
+Na tom stojí satelitní talíř: signál z velmi vzdálené družice přichází v rovnoběžných paprscích a talíř tvaru rotačního paraboloidu ho soustředí do přijímače umístěného v ohnisku. Reflektor auta funguje obráceně: žárovka sedí v ohnisku a světlo odchází rovnoběžným svazkem.
 
 \begin{example}
   Rovnice $x^2 - 4x - 8y + 12 = 0$ po doplnění na čtverec dává ${(x - 2)}^2 - 4 - 8y + 12 = 0$, tedy ${(x - 2)}^2 = 8(y - 1)$. Vrchol $V = [2, 1]$, $2p = 8$, tedy $p = 4$. Parabola je otevřená nahoru, ohnisko je o $\frac{p}{2} = 2$ nad vrcholem, $F = [2, 3]$, a řídicí přímka $y = -1$.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!30] (-3.5,-1.5) grid (7.5,5.5);
+    \draw[->] (-3.5,0) -- (7.8,0) node[right] {\small $x$};
+    \draw[->] (0,-1.5) -- (0,5.8) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-3.2:7.2, samples=60] plot (\x, {1 + (\x-2)*(\x-2)/8});
+    \draw[very thick] (-3.5,-1) -- (7.5,-1) node[right] {\small $d: y = -1$};
+    \draw[thick] (6,3) -- (2,3) node[midway, above] {\scriptsize $4$};
+    \draw[thick] (6,3) -- (6,-1) node[midway, right] {\scriptsize $4$};
+    \draw[thick, dashed] (-1,2.125) -- (2,3);
+    \draw[thick, dashed] (-1,2.125) -- (-1,-1);
+    \filldraw[colorofwisdom] (2,3) circle (3.5pt) node[above] {\small $F$};
+    \filldraw (2,1) circle (3pt) node[below right] {\small $V$};
+    \filldraw (6,3) circle (3pt) node[right=4pt] {\small $X = [6, 3]$};
+    \filldraw (-1,2.125) circle (3pt) node[above left] {\small $Y$};
+  \end{tikzpicture}
+\end{center}
+Bod $X = [6, 3]$ paraboly má od ohniska i od řídicí přímky vzdálenost $4$. Bod $Y = \left[-1, \frac{17}{8}\right]$ má obě vzdálenosti rovny $\frac{25}{8}$ (čárkovaně). Vrchol $V$ leží přesně v půli mezi $F$ a $d$.
 
 \section{Rozpoznání kuželosečky a vzájemné polohy}
 
@@ -252,6 +474,29 @@ Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zap�
 \begin{note}
   U paraboly a hyperboly může mít přímka s kuželosečkou jediný společný bod, a přesto nebýt tečnou. U paraboly je to přímka rovnoběžná s osou, u hyperboly přímka rovnoběžná s asymptotou. Po dosazení v tom případě nedostaneme kvadratickou, ale lineární rovnici, takže diskriminant nemá smysl.
 \end{note}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-1,0) -- (3,0) node[right] {\small $x$};
+    \draw[->] (0,-2.2) -- (0,2.4) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-2:2, samples=40, variable=\y] plot ({\y*\y/2}, \y);
+    \draw[thick] (-1,1) -- (3,1);
+    \filldraw (0.5,1) circle (2pt);
+    \node at (1,-2.7) {\scriptsize $y^2 = 2x$ a přímka $y = 1$};
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (-2.6,0) -- (2.8,0) node[right] {\small $x$};
+    \draw[->] (0,-2.2) -- (0,2.4) node[above] {\small $y$};
+    \draw[dashed, gray] (-2.2,-2.2) -- (2.2,2.2) (-2.2,2.2) -- (2.2,-2.2);
+    \draw[thick, colorofwisdom, domain=-1.45:1.45, samples=40, variable=\t] plot ({cosh(\t)}, {sinh(\t)});
+    \draw[thick, colorofwisdom, domain=-1.45:1.45, samples=40, variable=\t] plot ({-cosh(\t)}, {sinh(\t)});
+    \draw[thick] (-1.6,-2.1) -- (2.6,2.1);
+    \filldraw (1.25,0.75) circle (2pt);
+    \node at (0,-2.7) {\scriptsize $x^2 - y^2 = 1$ a přímka $y = x - \frac{1}{2}$};
+  \end{tikzpicture}
+\end{center}
+Obě přímky mají s křivkou jediný společný bod, ale křivku protínají, nedotýkají se jí. Vlevo přímka vstoupí `do paraboly' a už nikdy nevyjde ven. Vpravo přímka běží rovnoběžně s asymptotou, takže se k jedné části větve donekonečna přibližuje a nikdy ji podruhé neprotne.
 
 \begin{problem}
   Rozhodněte, o jakou kuželosečku jde, a určete její základní parametry:
@@ -286,6 +531,27 @@ Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zap�
     \item $x = 2y - 2$, dosazením ${(2y - 2)}^2 + 4y^2 = 20$, $8y^2 - 8y - 16 = 0$, $y^2 - y - 2 = 0$, $y\in\{2, -1\}$. Průsečíky $[2, 2]$ a $[-4, -1]$.
     \item ${(2x + q)}^2 = 8x$, tedy $4x^2 + (4q - 8)x + q^2 = 0$. $D = {(4q - 8)}^2 - 16q^2 = -64q + 64 = 0$, tedy $q = 1$.
   \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.42]
+      \draw[->] (-5.5,0) -- (5.8,0) node[right] {\small $x$};
+      \draw[->] (0,-3) -- (0,3.8) node[above] {\small $y$};
+      \draw[thick, colorofwisdom] (0,0) ellipse ({sqrt(20)} and {sqrt(5)});
+      \draw[thick] (-5.5,-1.75) -- (5,3.5);
+      \filldraw (2,2) circle (4pt) node[above left] {\scriptsize $[2, 2]$};
+      \filldraw (-4,-1) circle (4pt) node[below left] {\scriptsize $[-4, -1]$};
+      \node at (0,-3.8) {\scriptsize (a)};
+    \end{tikzpicture}
+    \hspace{1.2cm}
+    \begin{tikzpicture}[scale=0.42]
+      \draw[->] (-2.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-4.8) -- (0,5.5) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-4.5:4.5, samples=40, variable=\y] plot ({\y*\y/8}, \y);
+      \draw[thick] (-2.25,-3.5) -- (2.25,5.5) node[right] {\scriptsize $y = 2x + 1$};
+      \filldraw (0.5,2) circle (4pt) node[right=2pt] {\scriptsize $\left[\frac{1}{2}, 2\right]$};
+      \node at (0.5,-5.6) {\scriptsize (b)};
+    \end{tikzpicture}
+  \end{center}
+  V části (b) je bod dotyku $\left[\frac{1}{2}, 2\right]$: pro $q = 1$ má rovnice $4x^2 - 4x + 1 = 0$ dvojnásobný kořen $x = \frac{1}{2}$.
 \end{solution}
 
 \section{Příběh --- Hypatia}

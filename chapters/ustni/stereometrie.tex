@@ -56,6 +56,30 @@ V dalších příkladech budeme pracovat s krychlí $ABCDEFGH$, kde $ABCD$ je do
   \end{itemize}
 \end{example}
 
+Tři situace z příkladu jsou nakreslené vedle sebe. Dobrý test mimoběžnosti: zkuste si představit list papíru, na kterém by ležely obě přímky. U rovnoběžek i různoběžek takový list existuje (u $AB$ a $HG$ je to úhlopříčný řez $ABGH$), u mimoběžek ne, papír by se musel zkroutit. Nejkratší spojnice mimoběžek $AB$ a $CG$ je hrana $BC$, která je kolmá na obě.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6, krychle]
+    \krychle
+    \draw[very thick, colorofwisdom] (-0.25,0,0) -- (1.25,0,0) (-0.25,1,1) -- (1.25,1,1);
+    \node at (0.72,0,-0.45) {\scriptsize rovnoběžné $AB$, $HG$};
+  \end{tikzpicture}
+  \hspace{0.5cm}
+  \begin{tikzpicture}[scale=1.6, krychle]
+    \krychle
+    \draw[very thick, colorofwisdom] (-0.25,0,0) -- (1.25,0,0) (1,0,-0.25) -- (1,0,1.25);
+    \filldraw[colorofwisdom] (B) circle (1.2pt);
+    \node at (0.72,0,-0.45) {\scriptsize různoběžné $AB$, $BF$};
+  \end{tikzpicture}
+  \hspace{0.5cm}
+  \begin{tikzpicture}[scale=1.6, krychle]
+    \krychle
+    \draw[very thick, colorofwisdom] (-0.25,0,0) -- (1.25,0,0) (1,1,-0.25) -- (1,1,1.25);
+    \draw[thick, gray, dotted] (B) -- (C);
+    \node at (0.72,0,-0.45) {\scriptsize mimoběžné $AB$, $CG$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{problem}
   Určete vzájemnou polohu v krychli $ABCDEFGH$:
   \begin{enumerate}[label=(\alph*)]
@@ -77,6 +101,25 @@ V dalších příkladech budeme pracovat s krychlí $ABCDEFGH$, kde $ABCD$ je do
     \item Rovnoběžné, $AC\parallel EG$.
     \item Různoběžné, jejich průsečnicí je svislá přímka procházející středy podstav.
   \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.8, krychle]
+      \krychle
+      \draw[thick, dashed] (B) -- (D);
+      \draw[very thick, colorofwisdom] (A) -- (C);
+      \draw[very thick, colorofwisdom] (F) -- (H);
+      \node at (0.72,0,-0.42) {\scriptsize (b) $FH\parallel BD$, ale $FH\nparallel AC$};
+    \end{tikzpicture}
+    \hspace{1cm}
+    \begin{tikzpicture}[scale=1.8, krychle]
+      \krychle
+      \fill[colorofwisdom, opacity=0.18] (A) -- (C) -- (G) -- (E) -- cycle;
+      \fill[gray, opacity=0.25] (B) -- (D) -- (H) -- (F) -- cycle;
+      \draw[colorofwisdom] (A) -- (C) (E) -- (G);
+      \draw[gray] (B) -- (D) (F) -- (H);
+      \draw[very thick, colorofwisdom] (0.5,0.5,0) -- (0.5,0.5,1);
+      \node at (0.72,0,-0.42) {\scriptsize (f) průsečnice rovin $ACG$ a $BDH$};
+    \end{tikzpicture}
+  \end{center}
 \end{solution}
 
 \subsection{Řezy těles}
@@ -278,6 +321,53 @@ Na závěr dvě zajímavosti.
   Odchylky jsou vždy z intervalu $[0^\circ, 90^\circ]$.
 \end{definitionbox}
 
+Všechny tři situace z definice si můžeme představit v pokoji. Vzdálenost bodu od roviny je délka olovnice spuštěné ze stropu na podlahu: měříme vždy \textit{kolmo}, nikdy šikmo. Odchylka přímky od roviny je úhel, který svírá žebřík opřený o zeď s podlahou. Měříme ho mezi žebříkem a jeho `stínem' na podlaze při slunci přímo nad hlavou, tedy kolmým průmětem. A odchylka dvou rovin je úhel, o který otevřete knihu. Měříme ho kolmo ke hřbetu, ne šikmo přes roh.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \fill[gray!15] (0,0) -- (3,0) -- (3.8,1.2) -- (0.8,1.2) -- cycle;
+    \draw[gray] (0,0) -- (3,0) -- (3.8,1.2) -- (0.8,1.2) -- cycle;
+    \node[gray] at (0.55,0.25) {\scriptsize $\rho$};
+    \coordinate (M) at (1.9,2.5); \coordinate (P) at (1.9,0.6);
+    \draw[very thick, colorofwisdom] (M) -- (P) node[midway, right] {\small $d$};
+    \draw (1.9,0.8) -- (2.1,0.8) -- (2.1,0.6);
+    \filldraw (M) circle (1.3pt) node[above] {\small $M$};
+    \filldraw (P) circle (1.3pt) node[below left] {\small $P$};
+    \node at (1.9,-0.5) {\scriptsize vzdálenost bodu od roviny};
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=0.85]
+    \fill[gray!15] (0,0) -- (3,0) -- (3.8,1.2) -- (0.8,1.2) -- cycle;
+    \draw[gray] (0,0) -- (3,0) -- (3.8,1.2) -- (0.8,1.2) -- cycle;
+    \coordinate (X) at (1.2,0.6); \coordinate (Q) at (2.7,2.2); \coordinate (Qp) at (2.7,0.6);
+    \fill[colorofwisdom!20] (X) -- (Q) -- (Qp) -- cycle;
+    \draw[thick, colorofwisdom, dashed] (X) -- ($(X)!-0.25!(Q)$);
+    \draw[thick, colorofwisdom] (X) -- ($(X)!1.25!(Q)$) node[right] {\small $p$};
+    \draw[thick] (X) -- (3.4,0.6) node[right] {\small $p'$};
+    \draw[dashed] (Q) -- (Qp);
+    \draw (2.5,0.6) -- (2.5,0.8) -- (2.7,0.8);
+    \draw (X) ++(0:0.55) arc[start angle=0, end angle=46.8, radius=0.55];
+    \node at ($(X)+(23:0.8)$) {\small $\varphi$};
+    \filldraw (Q) circle (1.3pt);
+    \node at (1.9,-0.5) {\scriptsize odchylka přímky a roviny};
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=0.85]
+    \fill[gray!15] (0,0) -- (2.6,0) -- (3.6,1.5) -- (1,1.5) -- cycle;
+    \draw[gray] (0,0) -- (2.6,0) -- (3.6,1.5) -- (1,1.5) -- cycle;
+    \fill[colorofwisdom!15, opacity=0.8] (0,0) -- ({2.2*cos(40)},{2.2*sin(40)}) -- ({1+2.2*cos(40)},{1.5+2.2*sin(40)}) -- (1,1.5) -- cycle;
+    \draw[colorofwisdom!60] (0,0) -- ({2.2*cos(40)},{2.2*sin(40)}) -- ({1+2.2*cos(40)},{1.5+2.2*sin(40)}) -- (1,1.5);
+    \draw[very thick] (-0.3,-0.45) node[left] {\scriptsize průsečnice} -- (1.3,1.95);
+    \coordinate (O) at (0.5,0.75);
+    \draw[thick] (O) -- ++(0:1.8);
+    \draw[thick, colorofwisdom] (O) -- ++(40:1.8);
+    \draw (O) ++(0:0.6) arc[start angle=0, end angle=40, radius=0.6];
+    \node at ($(O)+(20:0.85)$) {\small $\varphi$};
+    \filldraw (O) circle (1.2pt);
+    \node at (1.8,-0.5) {\scriptsize odchylka dvou rovin};
+  \end{tikzpicture}
+\end{center}
+
 Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný pravoúhlý trojúhelník, který leží v nějaké rovině, a použijeme Pythagorovu větu nebo goniometrické funkce z kapitoly~\ref{kap:goniometrie}. Celý trik je v tom, ten trojúhelník najít.
 
 \begin{example}
@@ -290,6 +380,32 @@ Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný prav
     \item \textbf{vzdálenost mimoběžek $AB$ a $CG$}: úsečka $BC$ je kolmá na obě, takže vzdálenost je $a$.
   \end{itemize}
 \end{example}
+
+Hledané trojúhelníky jsou na obrázcích vybarvené. Vlevo je pravoúhlý trojúhelník $ACG$: jeho odvěsnou je stěnová úhlopříčka $AC$ ležící v podstavě, druhou odvěsnou svislá hrana $CG$ a přeponou tělesová úhlopříčka $AG$. Představte si, že krychlí je krabice od bot a vy do ní šikmo zasunete co nejdelší tužku. Ta vede z rohu $A$ do protějšího rohu $G$ a úhel $\varphi$ je přesně to, o kolik tužku zvednete nad dno. Vpravo je rovnostranný trojúhelník $AFH$ ze tří stěnových úhlopříček. Čárkovaně je vyznačena jeho výška, která se bude hodit v úloze níže.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.6, krychle]
+    \krychle
+    \fill[colorofwisdom, opacity=0.2] (A) -- (C) -- (G) -- cycle;
+    \draw[very thick, colorofwisdom] (A) -- (C) -- (G) -- cycle;
+    \draw ({1-0.085},{1-0.085},0) -- ({1-0.085},{1-0.085},0.12) -- (1,1,0.12);
+    \draw plot[domain=0:35.26, samples=20, variable=\t] ({0.3*cos(\t)/sqrt(2)}, {0.3*cos(\t)/sqrt(2)}, {0.3*sin(\t)});
+    \node at (0.42,0.42,0.12) {\scriptsize $\varphi$};
+    \node[below=1pt, colorofwisdom] at (0.55,0.55,0) {\scriptsize $a\sqrt{2}$};
+    \node[above left, colorofwisdom] at (0.5,0.5,0.5) {\scriptsize $a\sqrt{3}$};
+    \node[right, colorofwisdom] at (1,1,0.55) {\scriptsize $a$};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[scale=2.6, krychle]
+    \krychle
+    \fill[colorofwisdom, opacity=0.2] (A) -- (F) -- (H) -- cycle;
+    \draw[very thick, colorofwisdom] (A) -- (F) -- (H) -- cycle;
+    \draw[thick, colorofwisdom, dashed] (A) -- (0.5,0.5,1);
+    \draw plot[domain=0:60, samples=20, variable=\t] ({0.25*(cos(\t)/sqrt(2) - 0.5*sin(\t)/1.2247)}, {0.25*sin(\t)/1.2247}, {0.25*(cos(\t)/sqrt(2) + 0.5*sin(\t)/1.2247)});
+    \node[inner sep=0pt, pin={[pin distance=0.45cm, pin edge={gray}]left:{\scriptsize $60^\circ$}}] at (0.0634,0.1732,0.2366) {};
+    \node[right=1pt, colorofwisdom] at (0.55,0,0.55) {\scriptsize $a\sqrt{2}$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
@@ -307,6 +423,36 @@ Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný prav
     \item Průsečnice je $AB$. V rovině $ABC$ je na ni kolmá $BC$, v rovině $ABG$ je na ni kolmá $BG$. Odchylka je úhel $CBG = 45^\circ$.
     \item Pata výšky je ve středu podstavy, jehož vzdálenost od vrcholu podstavy je $3\sqrt{2}$. Boční hrana je $\sqrt{16 + 18} = \sqrt{34}$. Pro odchylku boční stěny vezmeme trojúhelník z výšky jehlanu, spojnice středu podstavy se středem hrany podstavy (délka $3$) a stěnové výšky: $\tg\varphi = \frac{4}{3}$, $\varphi\approx 53{,}1^\circ$.
   \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=2, krychle]
+      \krychle
+      \fill[gray, opacity=0.15] (A) -- (B) -- (C) -- (D) -- cycle;
+      \fill[colorofwisdom, opacity=0.15] (A) -- (B) -- (G) -- (H) -- cycle;
+      \draw[colorofwisdom] (A) -- (H) (B) -- (G);
+      \draw[very thick] (B) -- (C);
+      \draw[very thick, colorofwisdom] (B) -- (G);
+      \draw plot[domain=0:45, samples=15, variable=\t] (1, {0.45*cos(\t)}, {0.45*sin(\t)});
+      \node at (1,0.69,0.287) {\scriptsize $45^\circ$};
+      \node at (0.72,0,-0.42) {\scriptsize (c) roviny $ABC$ a $ABG$};
+    \end{tikzpicture}
+    \hspace{1cm}
+    \begin{tikzpicture}[scale=0.45, krychle]
+      \coordinate (A) at (0,0,0); \coordinate (B) at (6,0,0); \coordinate (C) at (6,6,0); \coordinate (D) at (0,6,0);
+      \coordinate (V) at (3,3,4); \coordinate (S) at (3,3,0); \coordinate (M) at (3,0,0);
+      \fill[colorofwisdom, opacity=0.2] (S) -- (M) -- (V) -- cycle;
+      \draw[thick] (A) -- (B) -- (C) -- (V) -- cycle (B) -- (V);
+      \draw[dashed, gray] (A) -- (D) -- (C) (D) -- (V);
+      \draw[thick, colorofwisdom] (S) -- (M) -- (V) -- cycle;
+      \draw plot[domain=0:53.13, samples=15, variable=\t] (3, {1.1*cos(\t)}, {1.1*sin(\t)});
+      \node at (3.5,1.9,0.55) {\scriptsize $\varphi$};
+      \node[right, colorofwisdom] at (3,3,2) {\scriptsize $4$};
+      \node[below right, colorofwisdom] at (3,1.4,0) {\scriptsize $3$};
+      \node[left, colorofwisdom] at (3,1.5,2.1) {\scriptsize $5$};
+      \node[right] at (4.6,4.5,2) {\scriptsize $\sqrt{34}$};
+      \node[below] at (M) {\scriptsize $6$};
+      \node at (3,0,-1.6) {\scriptsize (d) pravidelný jehlan};
+    \end{tikzpicture}
+  \end{center}
 \end{solution}
 
 \section{Tělesa}
@@ -319,6 +465,70 @@ Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný prav
   \end{itemize}
   \textbf{Rotační tělesa}: \textbf{válec}, \textbf{kužel} a \textbf{koule} vzniknou rotací obdélníku, pravoúhlého trojúhelníku a půlkruhu kolem osy.
 \end{definitionbox}
+
+Pro všechna tělesa používáme stejné značení. Výška $v$ se měří vždy \textbf{kolmo}: u hranolu a válce je to vzdálenost podstav, u jehlanu a kužele vzdálenost vrcholu od roviny podstavy. Strana kužele $s$ je vzdálenost vrcholu od okraje podstavy, tedy přepona pravoúhlého trojúhelníku s odvěsnami $v$ a $r$. Proto vždy $s > v$. Kužel si představte jako kornout zmrzliny, válec jako plechovku a kouli jako míč. Hranol a válec jsou `stejné nahoře i dole', jehlan a kužel se zužují do jednoho bodu.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.3, krychle]
+    \coordinate (P1) at (0,0,0); \coordinate (P2) at (1.4,0,0); \coordinate (P3) at (0.1,1.8,0);
+    \coordinate (Q1) at (0,0,1.6); \coordinate (Q2) at (1.4,0,1.6); \coordinate (Q3) at (0.1,1.8,1.6);
+    \fill[colorofwisdom!15] (Q1) -- (Q2) -- (Q3) -- cycle;
+    \draw[thick] (P1) -- (P2) -- (Q2) -- (Q3) -- (Q1) -- cycle (Q1) -- (Q2);
+    \draw[dashed, gray] (P1) -- (P3) -- (P2) (P3) -- (Q3);
+    \node[below] at (0.7,0,0) {\scriptsize $a$};
+    \node[right] at (1.4,0,0.8) {\scriptsize $v$};
+    \node at (0.7,0,-0.55) {\small hranol};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[scale=1.3, krychle]
+    \coordinate (A) at (0,0,0); \coordinate (B) at (1.4,0,0); \coordinate (C) at (1.4,1.4,0); \coordinate (D) at (0,1.4,0);
+    \coordinate (V) at (0.7,0.7,1.7); \coordinate (S) at (0.7,0.7,0);
+    \draw[thick] (A) -- (B) -- (C) -- (V) -- cycle (B) -- (V);
+    \draw[dashed, gray] (A) -- (D) -- (C) (D) -- (V);
+    \draw[thick, colorofwisdom, dashed] (S) -- (V) node[pos=0.45, left] {\scriptsize $v$};
+    \draw[colorofwisdom] (0.7,0.7,0.15) -- (0.85,0.7,0.15) -- (0.85,0.7,0);
+    \filldraw (S) circle (0.8pt);
+    \node[below] at (0.7,0,0) {\scriptsize $a$};
+    \node at (0.7,0,-0.55) {\small jehlan};
+  \end{tikzpicture}
+
+  \vspace{0.4cm}
+
+  \begin{tikzpicture}[scale=1]
+    \fill[colorofwisdom!8] (-0.9,0) -- (-0.9,2) arc[start angle=180, end angle=360, x radius=0.9, y radius=0.27] -- (0.9,0) arc[start angle=0, end angle=-180, x radius=0.9, y radius=0.27];
+    \draw[thick] (0,2) ellipse (0.9 and 0.27);
+    \draw[thick] (-0.9,0) -- (-0.9,2) (0.9,0) -- (0.9,2);
+    \draw[thick] (-0.9,0) arc[start angle=180, end angle=360, x radius=0.9, y radius=0.27];
+    \draw[dashed, gray] (0.9,0) arc[start angle=0, end angle=180, x radius=0.9, y radius=0.27];
+    \draw[colorofwisdom, thick] (0,0) -- (0.9,0) node[midway, above] {\scriptsize $r$};
+    \draw[colorofwisdom, dashed] (0,0) -- (0,2);
+    \filldraw (0,0) circle (0.8pt) (0,2) circle (0.8pt);
+    \node[right] at (0.9,1) {\scriptsize $v$};
+    \node at (0,-0.7) {\small válec};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[scale=1]
+    \fill[colorofwisdom!8] (0,2.1) -- (-0.8925,0.0347) arc[start angle=172.61, end angle=367.39, x radius=0.9, y radius=0.27] -- cycle;
+    \draw[thick] (0,2.1) -- (-0.8925,0.0347) (0,2.1) -- (0.8925,0.0347);
+    \draw[thick] (-0.8925,0.0347) arc[start angle=172.61, end angle=367.39, x radius=0.9, y radius=0.27];
+    \draw[dashed, gray] (0.8925,0.0347) arc[start angle=7.39, end angle=172.61, x radius=0.9, y radius=0.27];
+    \draw[colorofwisdom, thick] (0,0) -- (0.9,0) node[midway, below] {\scriptsize $r$};
+    \draw[colorofwisdom, dashed] (0,0) -- (0,2.1) node[pos=0.45, left] {\scriptsize $v$};
+    \filldraw (0,0) circle (0.8pt);
+    \node[right] at (0.47,1.1) {\scriptsize $s$};
+    \node at (0,-0.7) {\small kužel};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[scale=1]
+    \fill[colorofwisdom!8] (0,1) circle (1);
+    \draw[thick] (0,1) circle (1);
+    \draw[thick] (-1,1) arc[start angle=180, end angle=360, x radius=1, y radius=0.28];
+    \draw[dashed, gray] (1,1) arc[start angle=0, end angle=180, x radius=1, y radius=0.28];
+    \draw[colorofwisdom, thick] (0,1) -- ++(45:1) node[midway, above left] {\scriptsize $r$};
+    \filldraw (0,1) circle (0.8pt);
+    \node at (0,-0.4) {\small koule};
+  \end{tikzpicture}
+\end{center}
 
 \begin{definitionbox}
   \textbf{Objemy a povrchy} ($S_p$ je obsah podstavy, $S_{pl}$ obsah pláště, $v$ výška, $r$ poloměr, $s$ délka strany kužele):
@@ -341,6 +551,33 @@ Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný prav
   \end{center}
 \end{definitionbox}
 
+Povrch tělesa je obsah jeho \textbf{sítě}, tedy obrazce, který dostaneme, když povrch rozstřiháme a rozložíme do roviny. Představte si plechovku od fazolí. Etiketu rozřízněte svisle podél jedné povrchové přímky a rozviňte ji: vznikne obdélník. Jeho výška je $v$ a šířka je obvod podstavy $2\pi r$, protože etiketa přesně jednou obepnula kruh. Plášť válce má tedy obsah $2\pi r\cdot v$ a k němu přidáme dvě kruhová víčka $\pi r^2$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[thick] (0,1.6) ellipse (0.6 and 0.18);
+    \draw[thick] (-0.6,0) -- (-0.6,1.6) (0.6,0) -- (0.6,1.6);
+    \draw[thick] (-0.6,0) arc[start angle=180, end angle=360, x radius=0.6, y radius=0.18];
+    \draw[dashed, gray] (0.6,0) arc[start angle=0, end angle=180, x radius=0.6, y radius=0.18];
+    \draw[very thick, colorofwisdom, decorate, decoration={zigzag, segment length=1.5mm, amplitude=0.4mm}] (0.25,-0.164) -- (0.25,1.436);
+    \node[colorofwisdom] at (0.25,-0.55) {\scriptsize řez};
+    \draw[->, thick, gray] (1.1,0.8) -- (2,0.8);
+    \begin{scope}[xshift=2.5cm]
+      \fill[colorofwisdom!20] (0,0) rectangle (3.77,1.6);
+      \draw[thick] (0,0) rectangle (3.77,1.6);
+      \draw[thick, fill=gray!15] (1.885,2.2) circle (0.6);
+      \draw[thick, fill=gray!15] (1.885,-0.6) circle (0.6);
+      \draw (1.885,2.2) -- ++(0.6,0) node[midway, above] {\scriptsize $r$};
+      \draw[<->] (0.05,0.3) -- (3.72,0.3);
+      \node[fill=colorofwisdom!20, inner sep=1pt] at (1.885,0.3) {\scriptsize $2\pi r$};
+      \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (3.82,0) -- (3.82,1.6) node[midway, right=3pt] {\scriptsize $v$};
+      \node at (1.885,1.05) {\small plášť $2\pi r\cdot v$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Podobně je síť hranolu tvořena dvěma podstavami a obdélníky boční stěn a síť jehlanu podstavou a trojúhelníky. U koule to nejde: kouli nelze rozložit do roviny bez natahování (proto jsou všechny mapy světa nějak zkreslené). Vzorec $4\pi r^2$ se proto odvozuje jinak, nejčastěji integrálem.
+
 Odkud se vzorce berou? U hranolu je to přirozené: objem je `podstava krát výška', jako když skládáte stejné vrstvy na sebe. U ostatních těles se hodí následující princip.
 
 \begin{definitionbox}
@@ -349,8 +586,48 @@ Odkud se vzorce berou? U hranolu je to přirozené: objem je `podstava krát vý
 
 Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě posunou, tvar se změní, ale objem ne. To je přesně Cavalieriho princip. Odtud například plyne, že šikmý hranol má stejný objem jako kolmý se stejnou podstavou a výškou.
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \foreach \i in {0,...,9} \draw[fill=colorofwisdom!20] (0,{0.2*\i}) rectangle ++(1.8,0.17);
+    \foreach \i in {0,...,9} \draw[fill=colorofwisdom!20] ({3.2+0.13*\i},{0.2*\i}) rectangle ++(1.8,0.17);
+    \foreach \i in {0,...,9} \draw[fill=colorofwisdom!20] ({7+0.45*sin(40*\i)},{0.2*\i}) rectangle ++(1.8,0.17);
+    \draw[dashed, gray] (-0.3,1.285) -- (9.5,1.285);
+    \node[right, gray] at (9.5,1.285) {\scriptsize stejné řezy};
+    \node at (0.9,-0.4) {\scriptsize kolmý hranol};
+    \node at (4.7,-0.4) {\scriptsize šikmý hranol};
+    \node at (7.9,-0.4) {\scriptsize `pokřivený' balíček};
+  \end{tikzpicture}
+\end{center}
+Všechny tři balíčky jsou ze stejných karet, mají tedy stejný objem. Každá vodorovná rovina (čárkovaná) je protne ve stejně velké kartě.
+
 \begin{example}
   Proč má jehlan třetinový objem? Krychli lze rozdělit na tři shodné jehlany se společným vrcholem $G$ a podstavami $ABCD$, $ABFE$ a $ADHE$ (tři stěny, které se nedotýkají vrcholu $G$). Každý z nich má podstavu $a^2$ a výšku $a$, a protože jsou tři a dohromady dávají krychli, je objem každého $\frac{1}{3}a^3 = \frac{1}{3}S_pv$. Pro obecný jehlan pak vzorec plyne z Cavalieriho principu a podobnosti řezů. Kužel je `jehlan s kruhovou podstavou', a proto má stejně třetinu objemu válce.
+  \begin{center}
+    \begin{tikzpicture}[scale=1.7, krychle]
+      \krychle
+      \fill[colorofwisdom, opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;
+      \draw[thick, colorofwisdom] (G) -- (A) (G) -- (B) (G) -- (D);
+      \draw[very thick, colorofwisdom] (G) -- (C);
+      \node at (0.72,0,-0.42) {\scriptsize podstava $ABCD$};
+    \end{tikzpicture}
+    \hspace{0.5cm}
+    \begin{tikzpicture}[scale=1.7, krychle]
+      \krychle
+      \fill[colorofwisdom, opacity=0.25] (A) -- (B) -- (F) -- (E) -- cycle;
+      \draw[thick, colorofwisdom] (G) -- (A) (G) -- (B) (G) -- (E);
+      \draw[very thick, colorofwisdom] (G) -- (F);
+      \node at (0.72,0,-0.42) {\scriptsize podstava $ABFE$};
+    \end{tikzpicture}
+    \hspace{0.5cm}
+    \begin{tikzpicture}[scale=1.7, krychle]
+      \krychle
+      \fill[colorofwisdom, opacity=0.25] (A) -- (D) -- (H) -- (E) -- cycle;
+      \draw[thick, colorofwisdom] (G) -- (A) (G) -- (D) (G) -- (E);
+      \draw[very thick, colorofwisdom] (G) -- (H);
+      \node at (0.72,0,-0.42) {\scriptsize podstava $ADHE$};
+    \end{tikzpicture}
+  \end{center}
+  Všechny tři jehlany mají společnou hranu $AG$ (tělesovou úhlopříčku) a dohromady vyplní celou krychli.
 \end{example}
 
 \begin{example}
@@ -359,6 +636,30 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
 
 \begin{example}
   Kužel má poloměr podstavy $r = 3$ a výšku $v = 4$. Strana je $s = \sqrt{9 + 16} = 5$. Objem $V = \frac{1}{3}\pi\cdot 9\cdot 4 = 12\pi$ a povrch $S = 9\pi + 15\pi = 24\pi$. Plášť kužele se dá rozvinout do roviny jako kruhová výseč s poloměrem $s$, jejíž oblouk má délku $2\pi r$. Proto $S_{pl} = \frac{1}{2}\cdot s\cdot 2\pi r = \pi rs$ podle vzorce pro výseč z kapitoly~\ref{kap:planimetrie}.
+
+  Představte si papírový kornout: když ho rozstřihnete podél strany $s$ a rozložíte, dostanete kruhovou výseč. Její poloměr je strana kužele a délka oblouku je obvod podstavy, který kornout obepínal. Pro náš kužel ($r = 3$, $s = 5$) je středový úhel výseče $\frac{r}{s}\cdot 360^\circ = 216^\circ$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.4]
+      \fill[colorofwisdom!8] (0,4) -- (-2.923,0.2025) arc[start angle=167, end angle=373, x radius=3, y radius=0.9] -- cycle;
+      \draw[thick] (0,4) -- (-2.923,0.2025) (0,4) -- (2.923,0.2025);
+      \draw[thick] (-2.923,0.2025) arc[start angle=167, end angle=373, x radius=3, y radius=0.9];
+      \draw[dashed, gray] (2.923,0.2025) arc[start angle=13, end angle=167, x radius=3, y radius=0.9];
+      \draw[colorofwisdom, thick] (0,0) -- (3,0) node[midway, below] {\scriptsize $3$};
+      \draw[colorofwisdom, dashed] (0,0) -- (0,4) node[midway, left] {\scriptsize $4$};
+      \node[right] at (1.6,2.2) {\scriptsize $s = 5$};
+      \draw[->, thick, gray] (4.2,1.5) -- (6.2,1.5);
+      \begin{scope}[xshift=12.3cm, yshift=3cm]
+        \fill[colorofwisdom!20] (0,0) -- (162:5) arc[start angle=162, end angle=378, radius=5] -- cycle;
+        \draw[thick] (0,0) -- (162:5) arc[start angle=162, end angle=378, radius=5] -- cycle;
+        \draw[thick, fill=gray!15] (0,-8) circle (3);
+        \draw (0,-8) -- (3,-8) node[midway, above] {\scriptsize $r = 3$};
+        \node[above] at (162:2.5) {\scriptsize $s = 5$};
+        \draw (0,0) ++(162:1) arc[start angle=162, end angle=378, radius=1];
+        \node at (270:1.6) {\scriptsize $216^\circ$};
+        \node[right] at (330:5.1) {\scriptsize oblouk $2\pi r$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \begin{example}\label{ex:archimedes}
@@ -367,11 +668,50 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
     \frac{2}{3}.
   \end{equation*}
   To je objev, který Archimédés považoval za svůj největší a který si nechal vytesat na hrob, jak jsme zmínili v kapitole~\ref{kap:elementarni}. Navíc objem kužele se stejnou podstavou a výškou je $\frac{2}{3}\pi r^3$, takže kužel, koule a válec mají objemy v poměru $1:2:3$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \foreach \sx/\lab in {0/{kužel: $\frac{2}{3}\pi r^3$}, 3/{koule: $\frac{4}{3}\pi r^3$}, 6/{válec: $2\pi r^3$}} {
+        \begin{scope}[xshift=\sx cm]
+          \draw[gray] (0,2) ellipse (1 and 0.25);
+          \draw[gray] (-1,0) -- (-1,2) (1,0) -- (1,2);
+          \draw[gray] (-1,0) arc[start angle=180, end angle=360, x radius=1, y radius=0.25];
+          \draw[gray, dashed] (1,0) arc[start angle=0, end angle=180, x radius=1, y radius=0.25];
+          \node at (0,-0.75) {\scriptsize \lab};
+        \end{scope}
+      }
+      \fill[colorofwisdom!30] (0,2) -- (-0.9922,0.0313) arc[start angle=172.82, end angle=367.18, x radius=1, y radius=0.25] -- cycle;
+      \draw[thick, colorofwisdom] (0,2) -- (-0.9922,0.0313) (0,2) -- (0.9922,0.0313);
+      \fill[colorofwisdom!30] (3,1) circle (1);
+      \draw[thick, colorofwisdom] (3,1) circle (1);
+      \draw[colorofwisdom] (2,1) arc[start angle=180, end angle=360, x radius=1, y radius=0.25];
+      \fill[colorofwisdom!30] (5,0) -- (5,2) arc[start angle=180, end angle=360, x radius=1, y radius=0.25] -- (7,0) arc[start angle=0, end angle=-180, x radius=1, y radius=0.25];
+      \draw[thick, colorofwisdom] (6,2) ellipse (1 and 0.25);
+      \draw[thick, colorofwisdom] (5,0) -- (5,2) (7,0) -- (7,2) (5,0) arc[start angle=180, end angle=360, x radius=1, y radius=0.25];
+      \draw[<->] (7.3,0) -- (7.3,2) node[midway, right] {\scriptsize $2r$};
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \begin{note}
   Pokud těleso zvětšíme $k$-krát (podobností), jeho povrch se zvětší $k^2$-krát a objem $k^3$-krát. Proto obři z pohádek nemohou existovat. Kdyby byl člověk desetkrát vyšší, vážil by tisíckrát víc, ale průřez jeho kostí by byl jen stokrát větší. Zlomil by si nohy při prvním kroku. Tento argument použil už Galileo Galilei. A proto mají sloni tak tlusté nohy a mravenci tak tenké.
 \end{note}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9, krychle]
+    \fill[colorofwisdom!20] (0,0,0) -- (1,0,0) -- (1,0,1) -- (0,0,1) -- cycle;
+    \draw[thick] (0,0,0) -- (1,0,0) -- (1,1,0) -- (1,1,1) -- (0,1,1) -- (0,0,1) -- cycle (1,0,0) -- (1,0,1) -- (1,1,1) (1,0,1) -- (0,0,1);
+    \draw[dashed, gray] (0,0,0) -- (0,1,0) -- (1,1,0) (0,1,0) -- (0,1,1);
+    \node at (0.72,0,-0.6) {\scriptsize $k = 1$: $S = 6$, $V = 1$};
+    \begin{scope}[shift={(3,0,0)}]
+      \fill[colorofwisdom!20] (0,0,0) -- (2,0,0) -- (2,0,2) -- (0,0,2) -- cycle;
+      \draw[thick] (0,0,0) -- (2,0,0) -- (2,2,0) -- (2,2,2) -- (0,2,2) -- (0,0,2) -- cycle (2,0,0) -- (2,0,2) -- (2,2,2) (2,0,2) -- (0,0,2);
+      \draw[dashed, gray] (0,0,0) -- (0,2,0) -- (2,2,0) (0,2,0) -- (0,2,2);
+      \draw (1,0,0) -- (1,0,2) -- (1,2,2) (0,0,1) -- (2,0,1) -- (2,2,1) (2,1,0) -- (2,1,2) -- (0,1,2);
+      \node at (1.45,0,-0.6) {\scriptsize $k = 2$: $S = 24$, $V = 8$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Zdvojnásobením hrany vznikne krychle, na jejíž stěnu se vejdou čtyři původní stěny (vybarveno), ale do jejíhož objemu se vejde osm původních krychlí.
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
@@ -421,6 +761,51 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
 \begin{proof}[(že jich je nejvýš pět)]
   V každém vrcholu se stýkají alespoň tři stěny a součet jejich úhlů musí být menší než $360^\circ$ (jinak by se vrchol `rozplácl' do roviny). Pravidelný trojúhelník má úhly $60^\circ$, takže se jich ve vrcholu mohou stýkat $3$, $4$ nebo $5$ ($6\cdot 60^\circ = 360^\circ$ už nejde). Čtverec má úhly $90^\circ$, takže jen $3$. Pětiúhelník má úhly $108^\circ$, tedy jen $3$. Šestiúhelník má $120^\circ$ a $3\cdot 120^\circ = 360^\circ$, takže už nejde ani jeden. Dohromady $3 + 1 + 1 = 5$ možností a každá odpovídá jednomu tělesu v tabulce.
 \end{proof}
+
+Představte si, že mnohostěn ve vrcholu `rozstřihnete' a stěny kolem vrcholu rozložíte do roviny. Mezi nimi zbude mezera a právě ta mezera umožňuje stěny zase ohnout do prostorového rohu. Když mezera zmizí (šest trojúhelníků, tři šestiúhelníky), stěny leží v rovině a žádný roh nevznikne.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \foreach \n/\sx/\lab in {3/0/{čtyřstěn}, 4/3.3/{osmistěn}, 5/6.6/{dvacetistěn}, 6/9.9/{rovina}} {
+      \begin{scope}[xshift=\sx cm]
+        \pgfmathsetmacro{\gap}{360-60*\n}
+        \foreach \i in {1,...,\n} {
+          \pgfmathsetmacro{\st}{90+\gap/2+60*(\i-1)}
+          \draw[fill=colorofwisdom!20] (0,0) -- ++(\st:1.1) -- ++(\st+120:1.1) -- cycle;
+        }
+        \filldraw (0,0) circle (1.5pt);
+        \node[align=center] at (0,-1.6) {\scriptsize $\n\cdot 60^\circ$\\ \scriptsize \lab};
+      \end{scope}
+    }
+  \end{tikzpicture}
+
+  \vspace{0.3cm}
+
+  \begin{tikzpicture}[scale=0.75]
+    \foreach \i in {1,2,3} {
+      \pgfmathsetmacro{\st}{90+45+90*(\i-1)}
+      \draw[fill=colorofwisdom!20] (0,0) -- ++(\st:0.9) -- ++(\st+90:0.9) -- ++(\st+180:0.9) -- cycle;
+    }
+    \filldraw (0,0) circle (1.5pt);
+    \node[align=center] at (0,-1.8) {\scriptsize $3\cdot 90^\circ$\\ \scriptsize krychle};
+    \begin{scope}[xshift=4cm]
+      \foreach \i in {1,2,3} {
+        \pgfmathsetmacro{\st}{90+18+108*(\i-1)}
+        \draw[fill=colorofwisdom!20] (0,0) -- ++(\st:0.7) -- ++(\st+72:0.7) -- ++(\st+144:0.7) -- ++(\st+216:0.7) -- cycle;
+      }
+      \filldraw (0,0) circle (1.5pt);
+      \node[align=center] at (0,-1.8) {\scriptsize $3\cdot 108^\circ$\\ \scriptsize dvanáctistěn};
+    \end{scope}
+    \begin{scope}[xshift=8cm]
+      \foreach \i in {1,2,3} {
+        \pgfmathsetmacro{\st}{90+120*(\i-1)}
+        \draw[fill=colorofwisdom!20] (0,0) -- ++(\st:0.6) -- ++(\st+60:0.6) -- ++(\st+120:0.6) -- ++(\st+180:0.6) -- ++(\st+240:0.6) -- cycle;
+      }
+      \filldraw (0,0) circle (1.5pt);
+      \node[align=center] at (0,-1.8) {\scriptsize $3\cdot 120^\circ$\\ \scriptsize rovina};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
 
 Názvy jako tetraedr nebo ikosaedr pochází z řečtiny (\textit{tetra} = čtyři, \textit{hexa} = šest, \textit{okta} = osm, \textit{dodeka} = dvanáct, \textit{eikosi} = dvacet, \textit{hedra} = stěna) a v odborné literatuře se používají běžněji než české. Hráči deskových her znají všech pět pravidelných mnohostěnů jako kostky k4, k6, k8, k12 a k20. Je to tak proto, že jedině pravidelný mnohostěn dává každé stěně stejnou šanci. Pravděpodobnosti se věnujeme v pozdější kapitole.
 

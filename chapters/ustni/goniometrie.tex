@@ -22,6 +22,34 @@ Goniometrie je část matematiky, která se zabývá úhly a funkcemi, které na
 
 Proč radiány? Stupně jsou úplně libovolné, číslo $360$ si vymysleli Babyloňané, protože se dobře dělí a je blízko počtu dní v roce. Radiány jsou naopak `přirozené'. Vzorce v analýze (třeba pro derivaci sinu) fungují hezky jen v radiánech. Pokud v radiánech uvidíte úhel bez jednotky, je to v pořádku, radián se obvykle nepíše.
 
+Co je tedy jeden radián? Představte si, že poloměr kružnice vezmete jako kus provázku a přiložíte ho na obvod kružnice. Úhel, který takový oblouk vytne, je právě $1$ radián, zhruba $57{,}3^\circ$. Na celý obvod se provázek vejde $2\pi\approx 6{,}28$krát, proto má plný úhel $2\pi$ radiánů.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.4]
+    \begin{scope}
+      \fill[colorofwisdom!15] (0,0) -- (1,0) arc (0:57.2958:1) -- cycle;
+      \draw[thick] (0,0) circle (1);
+      \draw[line width=2.2pt, colorofwisdom] (1,0) arc (0:57.2958:1);
+      \draw[thick] (0,0) -- (1,0) node[midway, below] {\small $r$};
+      \draw[thick] (0,0) -- (57.2958:1) node[midway, above left] {\small $r$};
+      \draw (0.3,0) arc (0:57.2958:0.3);
+      \node at (28.65:0.5) {\scriptsize $1$ rad};
+      \node[colorofwisdom, right] at (28.65:1.05) {\scriptsize oblouk délky $r$};
+      \fill (0,0) circle (1pt);
+    \end{scope}
+    \begin{scope}[shift={(4.9,0)}, scale=1.25]
+      \draw[gray] (-1.12,0) -- (1.12,0);
+      \draw[gray] (0,-1.12) -- (0,1.12);
+      \draw[thick] (0,0) circle (1);
+      \foreach \a/\l in {0/0, 30/\frac{\pi}{6}, 45/\frac{\pi}{4}, 60/\frac{\pi}{3}, 90/\frac{\pi}{2}, 120/\frac{2\pi}{3}, 135/\frac{3\pi}{4}, 150/\frac{5\pi}{6}, 180/\pi, 210/\frac{7\pi}{6}, 225/\frac{5\pi}{4}, 240/\frac{4\pi}{3}, 270/\frac{3\pi}{2}, 300/\frac{5\pi}{3}, 315/\frac{7\pi}{4}, 330/\frac{11\pi}{6}} {
+        \draw[gray!60] (0,0) -- (\a:1);
+        \fill[colorofwisdom] (\a:1) circle (1.1pt);
+        \node at (\a:1.27) {\tiny $\l$};
+      }
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
 \begin{center}
   \renewcommand{\arraystretch}{1.4}
   \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -85,6 +113,33 @@ Proč tato definice dává smysl? Všechny pravoúhlé trojúhelníky se stejný
   \begin{equation*}
     \sin 30^\circ = \frac{1}{2},\quad\cos 30^\circ = \frac{\sqrt{3}}{2},\quad\sin 60^\circ = \frac{\sqrt{3}}{2},\quad\cos 60^\circ = \frac{1}{2}.
   \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.3]
+      \begin{scope}
+        \fill[colorofwisdom!15] (0,0) -- (1.8,0) -- (1.8,1.8) -- cycle;
+        \draw[thick] (0,0) -- (1.8,0) node[midway, below] {\small $1$} -- (1.8,1.8) node[midway, right] {\small $1$} -- cycle;
+        \node[above left] at (0.9,0.9) {\small $\sqrt{2}$};
+        \draw (1.6,0) -- (1.6,0.2) -- (1.8,0.2);
+        \draw (0.5,0) arc (0:45:0.5);
+        \node at (22.5:0.75) {\scriptsize $45^\circ$};
+      \end{scope}
+      \begin{scope}[xshift=3.2cm]
+        \fill[colorofwisdom!15] (0,0) -- (1.5,0) -- (1.5,2.598) -- cycle;
+        \draw[thick] (0,0) -- (3,0) -- (1.5,2.598) -- cycle;
+        \draw[thick, colorofwisdom] (1.5,0) -- (1.5,2.598);
+        \draw (1.3,0) -- (1.3,0.2) -- (1.5,0.2);
+        \node[below] at (0.75,0) {\small $1$};
+        \node[below] at (2.25,0) {\small $1$};
+        \node[above left] at (0.75,1.3) {\small $2$};
+        \node[above right] at (2.25,1.3) {\small $2$};
+        \node[colorofwisdom, right] at (1.5,1.0) {\small $\sqrt{3}$};
+        \draw (0.45,0) arc (0:60:0.45);
+        \node at (30:0.7) {\scriptsize $60^\circ$};
+        \draw ($(1.5,2.598)+(240:0.55)$) arc (240:270:0.55);
+        \node at ($(1.5,2.598)+(255:0.82)$) {\scriptsize $30^\circ$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
 \end{example}
 
 \begin{definitionbox}
@@ -161,6 +216,29 @@ V trojúhelníku má smysl jen úhel mezi $0$ a $\frac{\pi}{2}$. Pro obecný úh
 
 Pro ostré úhly se nová definice shoduje se starou. Bod $M$, jeho průmět na osu $x$ a počátek tvoří pravoúhlý trojúhelník s přeponou $1$, takže $\sin x = \frac{\text{protilehlá}}{1}$.
 
+I tangens má na jednotkové kružnici svůj obrázek. Představte si \textbf{tečnu} ke kružnici v bodě $[1, 0]$, tedy svislou přímku $x = 1$. Prodloužíme rameno úhlu, dokud tečnu neprotne v bodě $T$. Trojúhelník s vrcholy $[0, 0]$, $[1, 0]$ a $T$ je podobný trojúhelníku s vrcholy $[0, 0]$, $[\cos x, 0]$ a $M$, takže výška bodu $T$ je $\frac{\sin x}{\cos x}\cdot 1 = \tg x$. Tangens je tedy \textbf{výška bodu $T$ na tečně}. Teď je také vidět, proč pro $x\to\frac{\pi}{2}$ tangens utíká do nekonečna: rameno je skoro svislé a s tečnou se protne vysoko nahoře, pro $x = \frac{\pi}{2}$ jsou rovnoběžné a tangens neexistuje.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.2]
+    \draw[->] (-1.2,0) -- (1.6,0) node[right] {\small $x$};
+    \draw[->] (0,-1.2) -- (0,1.3) node[above] {\small $y$};
+    \draw[thick] (0,0) circle (1);
+    \draw[dashed, gray] (1,-1.15) -- (1,1.25) node[above] {\small $x = 1$};
+    \draw[thick, colorofwisdom] (0,0) -- (1,0.70021);
+    \draw[dashed] (35:1) -- (0.81915,0);
+    \draw[line width=2pt, colorofwisdom!60] (0,0) -- (0.81915,0);
+    \draw[line width=2pt, black!50] (0.81915,0) -- (35:1);
+    \draw[line width=2pt, colorofwisdom] (1,0) -- (1,0.70021);
+    \fill (35:1) circle (0.8pt) node[above left] {\small $M$};
+    \fill[colorofwisdom] (1,0.70021) circle (0.8pt) node[right] {\small $T = [1, \tg x]$};
+    \node[right, colorofwisdom] at (1,0.33) {\small $\tg x$};
+    \node[below] at (0.41,0) {\scriptsize $\cos x$};
+    \node[left] at (0.81915,0.29) {\scriptsize $\sin x$};
+    \draw[->, colorofwisdom] (0.3,0) arc (0:35:0.3);
+    \node[colorofwisdom] at (17:0.42) {\small $x$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{definitionbox}
   \textbf{Znaménka v kvadrantech}:
   \begin{center}
@@ -185,6 +263,27 @@ Pro ostré úhly se nová definice shoduje se starou. Bod $M$, jeho průmět na 
   Všechny plynou ze souměrnosti jednotkové kružnice.
 \end{definitionbox}
 
+Tyto vzorce není potřeba se učit nazpaměť, stačí si je nakreslit. Úhly $x$, $\pi - x$, $\pi + x$ a $2\pi - x$ leží v rozích obdélníku vepsaného do kružnice. Úhel $\pi - x$ je zrcadlem úhlu $x$ podle osy $y$, takže má stejnou výšku (sinus) a opačnou vodorovnou souřadnici (kosinus). Úhel $\pi + x$ je otočením o půl kruhu, oběma souřadnicím se změní znaménko. Úhel $2\pi - x$, tedy $-x$, je zrcadlem podle osy $x$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \draw[->] (-1.3,0) -- (1.4,0) node[right] {\small $x$};
+    \draw[->] (0,-1.25) -- (0,1.3) node[above] {\small $y$};
+    \draw[thick] (0,0) circle (1);
+    \draw[dashed, colorofwisdom] (30:1) -- (150:1) -- (210:1) -- (330:1) -- cycle;
+    \foreach \a in {30,150,210,330} \draw[gray] (0,0) -- (\a:1);
+    \fill[colorofwisdom] (30:1) circle (1pt) node[above right] {\small $x$};
+    \fill (150:1) circle (1pt) node[above left] {\small $\pi - x$};
+    \fill (210:1) circle (1pt) node[below left] {\small $\pi + x$};
+    \fill (330:1) circle (1pt) node[below right] {\small $2\pi - x$};
+    \node[right] at (0,0.58) {\scriptsize $\sin x$};
+    \node[right] at (0,-0.58) {\scriptsize $-\sin x$};
+    \node[below] at (0.6,0) {\scriptsize $\cos x$};
+    \node[below] at (-0.6,0) {\scriptsize $-\cos x$};
+    \draw[colorofwisdom, ->] (0.25,0) arc (0:30:0.25);
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Spočítejme:
   \begin{align*}
@@ -206,6 +305,35 @@ Pro ostré úhly se nová definice shoduje se starou. Bod $M$, jeho průmět na 
 \section{Grafy a vlastnosti goniometrických funkcí}
 
 Pokud bod $M$ obíhá kolem jednotkové kružnice a my zapisujeme jeho výšku v závislosti na úhlu, dostaneme graf sinu. Vodorovná souřadnice dá graf kosinu.
+
+Představte si, že úhel $x$ (délku oblouku) `odvineme' z kružnice na osu $x$ a do výšky nad ním naneseme výšku bodu $M$. Každý bod sinusoidy je tak jen výškou nějakého bodu kružnice.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.05]
+    \draw[->] (-2.7,0) -- (6.9,0) node[right] {\small $x$};
+    \draw[->] (0,-1.3) -- (0,1.45) node[above] {\small $y$};
+    \draw[thick] (-1.5,0) circle (1);
+    \draw (-1.5,-1.15) -- (-1.5,1.15);
+    \foreach \t/\l in {1.5708/{\frac{\pi}{2}}, 3.1416/{\pi}, 4.7124/{\frac{3\pi}{2}}, 6.2832/{2\pi}} \draw (\t,0.06) -- (\t,-0.06) node[below] {\tiny $\l$};
+    \foreach \a in {0,45,...,315} {
+      \pgfmathsetmacro{\rr}{\a*pi/180}
+      \draw[dotted, gray] ({-1.5 + cos(\a)},{sin(\a)}) -- (\rr,{sin(\a)});
+      \fill[gray] ({-1.5 + cos(\a)},{sin(\a)}) circle (1.2pt);
+      \fill[gray] (\rr,{sin(\a)}) circle (1.2pt);
+    }
+    \draw[thick, colorofwisdom, domain=0:6.2832, samples=120] plot (\x, {sin(\x r)});
+    \draw[thick, colorofwisdom] (-1.5,0) -- (-1,0.866);
+    \draw[->, colorofwisdom] (-1.2,0) arc (0:60:0.3);
+    \node[colorofwisdom] at ($(-1.5,0)+(30:0.45)$) {\scriptsize $x$};
+    \draw[line width=1.8pt, black!50] (-1,0) -- (-1,0.866);
+    \draw[line width=1.8pt, black!50] (1.0472,0) -- (1.0472,0.866);
+    \draw[dashed, colorofwisdom] (-1,0.866) -- (1.0472,0.866);
+    \fill[colorofwisdom] (-1,0.866) circle (1.5pt) node[above] {\scriptsize $M$};
+    \fill[colorofwisdom] (1.0472,0.866) circle (1.5pt);
+    \draw[line width=1.8pt, colorofwisdom!50] (0,0) -- (1.0472,0) node[midway, below] {\tiny $x$};
+    \node[colorofwisdom] at (3.9,1.05) {\small $y = \sin x$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{center}
   \begin{tikzpicture}[xscale=0.85, yscale=1.2]
@@ -258,6 +386,21 @@ Pokud bod $M$ obíhá kolem jednotkové kružnice a my zapisujeme jeho výšku v
   \end{tikzpicture}
 \end{center}
 
+\begin{center}
+  \begin{tikzpicture}[xscale=0.85, yscale=0.6]
+    \draw[->] (-3.6,0) -- (5.2,0) node[right] {\small $x$};
+    \draw[->] (0,-3.4) -- (0,3.6) node[above] {\small $y$};
+    \foreach \t/\l in {-3.1416/{-\pi}, -1.5708/{-\frac{\pi}{2}}, 1.5708/{\frac{\pi}{2}}, 3.1416/{\pi}, 4.7124/{\frac{3\pi}{2}}} \draw (\t,0.1) -- (\t,-0.1) node[below] {\tiny $\l$};
+    \foreach \a in {-3.1416, 3.1416} \draw[dashed, gray] (\a,-3.4) -- (\a,3.4);
+    \draw[thick, domain=0.29:2.85, samples=60] plot (\x, {cos(\x r)/sin(\x r)});
+    \draw[thick, domain=-2.85:-0.29, samples=60] plot (\x, {cos(\x r)/sin(\x r)});
+    \draw[thick, domain=3.43:5.15, samples=50] plot (\x, {cos(\x r)/sin(\x r)});
+    \node at (1.15,2.6) {\small $\cotg x$};
+  \end{tikzpicture}
+\end{center}
+
+Graf kotangentu je `zrcadlový' ke grafu tangentu: má asymptoty v nulových bodech sinu ($x = k\pi$), nulové body v $\frac{\pi}{2} + k\pi$ a na každém intervalu mezi asymptotami klesá. Opakuje se už po $\pi$, ne po $2\pi$, protože bod $M$ a bod k němu souměrný podle počátku (otočený o $\pi$) leží na stejné přímce procházející počátkem, a tedy dávají stejný poměr $\frac{\sin x}{\cos x}$.
+
 \begin{definitionbox}
   \textbf{Vlastnosti funkce tangens}: $D = \mathbb{R}\setminus\left\{\frac{\pi}{2} + k\pi\right\}$, $H = \mathbb{R}$, perioda $\pi$, lichá, rostoucí na každém intervalu $\left(-\frac{\pi}{2} + k\pi, \frac{\pi}{2} + k\pi\right)$, nulové body $k\pi$, asymptoty $x = \frac{\pi}{2} + k\pi$. Kotangens má periodu $\pi$, je lichý a klesající na každém intervalu $(k\pi, \pi + k\pi)$.
 \end{definitionbox}
@@ -265,6 +408,21 @@ Pokud bod $M$ obíhá kolem jednotkové kružnice a my zapisujeme jeho výšku v
 \begin{example}
   Graf funkce $f(x) = 2\sin\left(x - \frac{\pi}{3}\right)$ dostaneme z grafu sinu posunem o $\frac{\pi}{3}$ doprava a roztažením dvakrát ve směru osy $y$ (transformace z kapitoly~\ref{kap:funkce}). Obor hodnot je $[-2, 2]$, perioda zůstává $2\pi$. Funkce $g(x) = \sin 2x$ má naopak periodu $\pi$, protože graf je stlačen dvakrát ve směru osy $x$. Obecně má $\sin(ax)$ periodu $\frac{2\pi}{|a|}$.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[xscale=0.85, yscale=0.7]
+    \draw[->] (-0.4,0) -- (7.2,0) node[right] {\small $x$};
+    \draw[->] (0,-2.4) -- (0,2.6) node[above] {\small $y$};
+    \foreach \t/\l in {1.0472/{\frac{\pi}{3}}, 3.1416/{\pi}, 6.2832/{2\pi}} \draw (\t,0.1) -- (\t,-0.1) node[below] {\tiny $\l$};
+    \foreach \y in {-2,-1,1,2} \draw (0.08,\y) -- (-0.08,\y) node[left] {\tiny $\y$};
+    \draw[thick, dashed, gray, domain=0:6.6, samples=100] plot (\x, {sin(\x r)});
+    \draw[thick, colorofwisdom, domain=0:6.9, samples=100] plot (\x, {2*sin((\x - 1.0472) r)});
+    \draw[thick, domain=0:6.6, samples=150] plot (\x, {sin(2*\x r)});
+    \draw[thick, dashed, gray] (8,1.6) -- (8.6,1.6) node[right, black] {\scriptsize $\sin x$};
+    \draw[thick, colorofwisdom] (8,0.8) -- (8.6,0.8) node[right, black] {\scriptsize $2\sin\left(x - \frac{\pi}{3}\right)$};
+    \draw[thick] (8,0) -- (8.6,0) node[right] {\scriptsize $\sin 2x$};
+  \end{tikzpicture}
+\end{center}
 
 \section{Goniometrické vzorce}
 
@@ -310,6 +468,40 @@ Vzorec $\sin^2 x + \cos^2 x = 1$ je Pythagorova věta na jednotkové kružnici. 
   \end{equation*}
   Porovnáním obou vyjádření dostaneme $\cos(x - y) = \cos x\cos y + \sin x\sin y$.
 \end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \begin{scope}
+      \draw[->, gray] (-1.25,0) -- (1.35,0);
+      \draw[->, gray] (0,-1.15) -- (0,1.3);
+      \draw[thick] (0,0) circle (1);
+      \draw (0,0) -- (110:1) (0,0) -- (40:1);
+      \draw[line width=1.6pt, colorofwisdom] (110:1) -- (40:1);
+      \fill (110:1) circle (1.2pt) node[above left] {\small $A$};
+      \fill (40:1) circle (1.2pt) node[right] {\small $B$};
+      \draw[->] (0.3,0) arc (0:40:0.3);
+      \node at (20:0.45) {\scriptsize $y$};
+      \draw[->] (0.6,0) arc (0:110:0.6);
+      \node at (72:0.75) {\scriptsize $x$};
+      \node at (0,-1.4) {\small původní poloha};
+    \end{scope}
+    \begin{scope}[xshift=3.4cm]
+      \draw[->, gray] (-1.25,0) -- (1.35,0);
+      \draw[->, gray] (0,-1.15) -- (0,1.3);
+      \draw[thick] (0,0) circle (1);
+      \draw (0,0) -- (70:1) (0,0) -- (1,0);
+      \draw[line width=1.6pt, colorofwisdom] (70:1) -- (1,0);
+      \fill (70:1) circle (1.2pt) node[above right] {\small $A'$};
+      \fill (1,0) circle (1.2pt) node[below right] {\small $B' = [1, 0]$};
+      \draw[->] (0.4,0) arc (0:70:0.4);
+      \node at (35:0.58) {\scriptsize $x - y$};
+      \node at (0,-1.4) {\small po otočení o úhel $-y$};
+    \end{scope}
+    \draw[->, thick, gray] (1.45,0.6) to[bend left=20] node[above] {\scriptsize otočení} (2.05,0.6);
+  \end{tikzpicture}
+\end{center}
+
+Délka červené tětivy se otočením nezmění. Na levém obrázku ji ale počítáme z obecných souřadnic $A$ a $B$, na pravém z jednoduchých souřadnic $A'$ a $B'$. Obě čísla musí vyjít stejně, a z toho vypadne vzorec.
 
 Ostatní vzorce z tohoto plynou. Dosazením $-y$ místo $y$ dostaneme $\cos(x + y)$. Ze vztahu $\sin x = \cos\left(\frac{\pi}{2} - x\right)$ dostaneme $\sin(x + y) = \cos\left(\left(\frac{\pi}{2} - x\right) - y\right)$ a po rozepsání vzorec pro sinus. Volbou $y = x$ dostaneme vzorce pro dvojnásobný úhel a z $\cos 2x = 1 - 2\sin^2 x$ po dosazení $\frac{x}{2}$ vzorce pro poloviční úhel. Celá tabulka vzorců tedy stojí na jednom obrázku.
 
@@ -370,6 +562,26 @@ Nejlepší je řešení vždy vidět na jednotkové kružnici. Rovnice $\sin x =
     \filldraw[colorofwisdom] (30:1) circle (1pt) node[above right] {\small $\frac{\pi}{6}$};
     \filldraw[colorofwisdom] (150:1) circle (1pt) node[above left] {\small $\frac{5\pi}{6}$};
     \draw (0,0) -- (30:1) (0,0) -- (150:1);
+  \end{tikzpicture}
+\end{center}
+
+Totéž na grafu: přímka $y = \frac{1}{2}$ protne sinusoidu v každé periodě dvakrát. Všechna řešení dostaneme z těchto dvou posouváním o celé násobky $2\pi$.
+
+\begin{center}
+  \begin{tikzpicture}[xscale=0.75]
+    \draw[->] (-4,0) -- (9.9,0) node[right] {\small $x$};
+    \draw[->] (0,-1.25) -- (0,1.6) node[above] {\small $y$};
+    \foreach \t/\l in {-3.1416/{-\pi}, 3.1416/{\pi}, 6.2832/{2\pi}, 9.4248/{3\pi}} \draw (\t,0.06) -- (\t,-0.06) node[below] {\tiny $\l$};
+    \draw[thick, colorofwisdom, domain=-3.9:9.7, samples=200] plot (\x, {sin(\x r)});
+    \draw[dashed, gray] (-3.9,0.5) -- (9.7,0.5) node[right] {\small $y = \frac{1}{2}$};
+    \foreach \p in {-3.6652, 0.5236, 2.6180, 6.8068, 8.9012} \fill (\p,0.5) circle (1.5pt);
+    \node[above right] at (-3.67,0.5) {\tiny $-\frac{7\pi}{6}$};
+    \node[above left] at (0.52,0.5) {\tiny $\frac{\pi}{6}$};
+    \node[above right] at (2.62,0.5) {\tiny $\frac{5\pi}{6}$};
+    \node[above left] at (6.81,0.5) {\tiny $\frac{13\pi}{6}$};
+    \node[above right] at (8.90,0.5) {\tiny $\frac{17\pi}{6}$};
+    \draw[<->, gray] (0.5236,1.3) -- (6.8068,1.3) node[midway, above] {\scriptsize $+2\pi$};
+    \draw[dotted, gray] (0.5236,0.5) -- (0.5236,1.3) (6.8068,0.5) -- (6.8068,1.3);
   \end{tikzpicture}
 \end{center}
 
@@ -440,6 +652,21 @@ Nejlepší je řešení vždy vidět na jednotkové kružnici. Rovnice $\sin x =
 
 \begin{example}
   Goniometrické nerovnice řešíme nejlépe pomocí jednotkové kružnice nebo grafu. $\sin x > \frac{1}{2}$ platí pro body na kružnici nad přímkou $y = \frac{1}{2}$, tedy na oblouku mezi $\frac{\pi}{6}$ a $\frac{5\pi}{6}$. $K = \bigcup_{k\in\mathbb{Z}}\left(\frac{\pi}{6} + 2k\pi, \frac{5\pi}{6} + 2k\pi\right)$.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+      \fill[colorofwisdom!12] (30:1) arc (30:150:1) -- cycle;
+      \draw[->] (-1.3,0) -- (1.4,0);
+      \draw[->] (0,-1.2) -- (0,1.3);
+      \draw[thick] (0,0) circle (1);
+      \draw[dashed, gray] (-1.25,0.5) -- (1.25,0.5) node[right] {\small $y = \frac{1}{2}$};
+      \draw[line width=2.5pt, colorofwisdom] (30:1) arc (30:150:1);
+      \draw[thick, colorofwisdom, fill=white] (30:1) circle (1.6pt) node[below right] {\small $\frac{\pi}{6}$};
+      \draw[thick, colorofwisdom, fill=white] (150:1) circle (1.6pt) node[below left] {\small $\frac{5\pi}{6}$};
+      \node[colorofwisdom, right] at (0.45,1.15) {\small $\sin x > \frac{1}{2}$};
+    \end{tikzpicture}
+  \end{center}
+  Krajní body do řešení nepatří (prázdná kolečka), protože v nich je $\sin x = \frac{1}{2}$, ne větší.
 \end{example}
 
 \section{Řešení obecného trojúhelníku}
@@ -476,6 +703,44 @@ V obecném (ne nutně pravoúhlém) trojúhelníku značíme strany $a, b, c$ a 
   \end{equation*}
 \end{proof}
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.95]
+    \begin{scope}
+      \fill[colorofwisdom!8] (0,0) -- (5,0) -- (1.8,2.6) -- cycle;
+      \draw[thick] (0,0) -- (5,0) -- (1.8,2.6) -- cycle;
+      \draw[thick, dashed, colorofwisdom] (1.8,2.6) -- (1.8,0);
+      \draw (1.8,0.2) -- (2,0.2) -- (2,0);
+      \node[right, colorofwisdom] at (1.8,1.1) {\small $v_c$};
+      \node[below left] at (0,0) {\small $A$};
+      \node[below right] at (5,0) {\small $B$};
+      \node[above] at (1.8,2.6) {\small $C$};
+      \node[below] at (3.4,0) {\small $c$};
+      \node[above left] at (0.9,1.3) {\small $b$};
+      \node[above right] at (3.4,1.3) {\small $a$};
+      \draw (0.6,0) arc (0:55.3:0.6);
+      \node at (27:0.85) {\scriptsize $\alpha$};
+      \draw ($(5,0)+(140.9:0.6)$) arc (140.9:180:0.6);
+      \node at ($(5,0)+(160:0.85)$) {\scriptsize $\beta$};
+      \node[align=center] at (2.5,-0.95) {\small $v_c = b\sin\alpha = a\sin\beta$};
+    \end{scope}
+    \begin{scope}[xshift=6.6cm]
+      \fill[colorofwisdom!8] (0,0) -- (4.5,0) -- (1.7207,2.4575) -- cycle;
+      \draw[thick] (0,0) -- (4.5,0) -- (1.7207,2.4575) -- cycle;
+      \draw[dashed, gray] (1.7207,2.4575) -- (1.7207,0);
+      \node[below left] at (0,0) {\small $C$};
+      \node[below right] at (4.5,0) {\small $B = [a, 0]$};
+      \node[above] at (1.7207,2.4575) {\small $A = [b\cos\gamma, b\sin\gamma]$};
+      \node[above left] at (0.86,1.23) {\small $b$};
+      \node[above right] at (3.11,1.23) {\small $c$};
+      \node[above] at (3.1,0) {\small $a$};
+      \draw (0.55,0) arc (0:55:0.55);
+      \node at (27:0.8) {\scriptsize $\gamma$};
+      \draw[decorate, decoration={brace, mirror, amplitude=4pt}] (0,-0.1) -- (1.7207,-0.1) node[midway, below=4pt] {\scriptsize $b\cos\gamma$};
+      \node[right, gray] at (1.7207,1.0) {\scriptsize $b\sin\gamma$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
 Kosinová věta je zobecněním Pythagorovy věty. Pro $\gamma = 90^\circ$ je $\cos\gamma = 0$ a dostaneme $c^2 = a^2 + b^2$. Člen $-2ab\cos\gamma$ je `oprava' pro trojúhelníky, které pravoúhlé nejsou.
 
 \begin{example}
@@ -496,6 +761,23 @@ Kosinová věta je zobecněním Pythagorovy věty. Pro $\gamma = 90^\circ$ je $\
 \begin{note}
   Pokud známe dvě strany a úhel \textbf{proti kratší} z nich, sinová věta může dát dvě řešení, protože $\sin\beta = \sin(180^\circ - \beta)$. Trojúhelník pak existuje ve dvou verzích (s ostrým a s tupým úhlem), nebo vůbec. Tomu se říká \textbf{nejednoznačný případ}. Kosinová věta tímto problémem netrpí, protože kosinus na $(0^\circ, 180^\circ)$ je prostý.
 \end{note}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \draw[thick, ->] (0,0) -- (6.2,0);
+    \draw[dashed, gray] ($(3.464,2)+(-145:2.5)$) arc (-145:-35:2.5);
+    \draw[thick] (0,0) -- (3.464,2) node[midway, above left] {\small $b$};
+    \draw[thick, colorofwisdom] (3.464,2) -- (1.964,0) node[midway, left] {\small $a$};
+    \draw[thick] (3.464,2) -- (4.964,0) node[midway, right] {\small $a$};
+    \fill (0,0) circle (1.5pt) node[below left] {\small $A$};
+    \fill (3.464,2) circle (1.5pt) node[above] {\small $C$};
+    \fill[colorofwisdom] (1.964,0) circle (1.5pt) node[below] {\small $B_1$};
+    \fill (4.964,0) circle (1.5pt) node[below] {\small $B_2$};
+    \draw (0.7,0) arc (0:30:0.7);
+    \node at (15:0.95) {\scriptsize $\alpha$};
+  \end{tikzpicture}
+\end{center}
+Na obrázku známe $\alpha$, $b$ a $a < b$. Bod $B$ musí ležet na polopřímce z $A$ a zároveň ve vzdálenosti $a$ od $C$, tedy na kružnici se středem $C$. Ta polopřímku protne dvakrát, a proto vzniknou dva různé trojúhelníky $AB_1C$ (s tupým úhlem u $B_1$) a $AB_2C$. Kdyby byla strana $a$ příliš krátká, kružnice by polopřímku vůbec nezasáhla.
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]

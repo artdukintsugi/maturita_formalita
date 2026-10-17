@@ -23,6 +23,28 @@ Finanční matematika je ta část matematiky, která vás bude v životě pron�
     2000\cdot 1{,}2\cdot 0{,}8 = 2000\cdot 0{,}96 = 1920\ \text{Kč}.
   \end{equation*}
   Bunda je o $4\,\%$ levnější než na začátku, ne stejně drahá. Zlevnění se počítá z vyšší ceny, takže ubere víc, než předtím přidalo zdražení. Obchody to vědí. Zákazníci většinou ne.
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.9, yscale=0.6]
+      \draw[->] (0,0) -- (7.2,0);
+      \draw[->] (0,0) -- (0,5.3) node[above] {\small Kč};
+      \foreach \y/\l in {1/500, 2/1000, 3/1500, 4/2000} \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\l$};
+      \filldraw[fill=gray!35, draw=black] (0.6,0) rectangle (1.8,4);
+      \filldraw[fill=gray!35, draw=black] (2.9,0) rectangle (4.1,4);
+      \filldraw[fill=colorofwisdom!60, draw=black] (2.9,4) rectangle (4.1,4.8);
+      \filldraw[fill=gray!35, draw=black] (5.2,0) rectangle (6.4,3.84);
+      \draw[dashed, colorofwisdom] (5.2,3.84) rectangle (6.4,4.8);
+      \draw[dashed, gray] (0,4) -- (7,4);
+      \node[font=\scriptsize] at (3.5,4.4) {$+400$};
+      \node[font=\scriptsize, colorofwisdom] at (5.8,4.32) {$-480$};
+      \node[below, font=\small] at (1.2,0) {původně};
+      \node[below, font=\small] at (3.5,0) {$+20\,\%$};
+      \node[below, font=\small] at (5.8,0) {$-20\,\%$};
+      \node[above, font=\scriptsize] at (1.2,4) {$2000$};
+      \node[above, font=\scriptsize] at (3.5,4.8) {$2400$};
+      \node[below, font=\scriptsize] at (5.8,3.84) {$1920$};
+    \end{tikzpicture}
+  \end{center}
+  Na obrázku je to vidět: oba kroky jsou `$20\,\%$', ale pokaždé z jiného základu. Zdražení přidá $20\,\%$ ze $2\,000$, tedy $400$ Kč, zlevnění ubere $20\,\%$ ze $2\,400$, tedy $480$ Kč.
 \end{example}
 
 \begin{example}
@@ -70,6 +92,34 @@ Finanční matematika je ta část matematiky, která vás bude v životě pron�
 
 Jednoduché úročení je aritmetická posloupnost (každý rok přibude stejná částka), složené úročení je geometrická posloupnost s kvocientem $1 + i$ (každý rok se částka vynásobí stejným číslem). Na krátkou dobu je rozdíl malý, na dlouhou obrovský, protože geometrická posloupnost roste exponenciálně.
 
+Představte si to takhle. Při jednoduchém úročení dostáváte každý rok stejnou `výplatu' z původní jistiny. Při složeném úročení pracují i úroky z minulých let: úrok z úroku, pak úrok z úroku z úroku a tak dál. Na grafu je vývoj vkladu $10\,000$ Kč při $3\,\%$ ročně z následujícího příkladu, vždy po pěti letech. Šedé sloupce rostou rovnoměrně (přímka), červené stále rychleji (exponenciála).
+
+\begin{center}
+  \begin{tikzpicture}[yscale=1.1, xscale=0.95]
+    \draw[->] (0,0) -- (11.3,0) node[below right] {\small roky};
+    \draw[->] (0,0) -- (0,3.9) node[above] {\small tis. Kč};
+    \foreach \y in {1,2,3} {
+      \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\y0$};
+      \draw[gray!30] (0.07,\y) -- (11,\y);
+    }
+    \foreach \k in {0,...,8} {
+      \pgfmathsetmacro{\n}{5*\k}
+      \pgfmathsetmacro{\s}{1 + 0.03*\n}
+      \pgfmathsetmacro{\c}{pow(1.03,\n)}
+      \filldraw[fill=gray!40, draw=black] ({1.2*\k+0.25},0) rectangle ({1.2*\k+0.6},\s);
+      \filldraw[fill=colorofwisdom!70, draw=black] ({1.2*\k+0.6},0) rectangle ({1.2*\k+0.95},\c);
+      \pgfmathtruncatemacro{\nn}{\n}
+      \node[below, font=\tiny] at ({1.2*\k+0.6},0) {$\nn$};
+    }
+    \node[right, font=\scriptsize] at (10.6,2.2) {$22\,000$};
+    \node[right, font=\scriptsize, colorofwisdom] at (10.6,3.26) {$32\,620$};
+    \filldraw[fill=gray!40, draw=black] (0.5,3.55) rectangle (0.8,3.75);
+    \node[right, font=\scriptsize] at (0.8,3.65) {jednoduché};
+    \filldraw[fill=colorofwisdom!70, draw=black] (3.0,3.55) rectangle (3.3,3.75);
+    \node[right, font=\scriptsize] at (3.3,3.65) {složené};
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Vložíme $10\,000$ Kč na $4$ roky s úrokem $3\,\%$ ročně.
   \begin{itemize}
@@ -108,6 +158,26 @@ Jednoduché úročení je aritmetická posloupnost (každý rok přibude stejná
 
 \begin{note}
   \textbf{Pravidlo 72}: Doba (v letech), za kterou se vklad při složeném úročení zdvojnásobí, je přibližně $\frac{72}{p}$, kde $p$ je sazba v procentech. Při $7\,\%$ je to asi $10$ let (přesně $\frac{\ln 2}{\ln 1{,}07}\approx 10{,}24$). Platí to proto, že $\ln 2\approx 0{,}693$ a pro malá $i$ je $\ln(1 + i)\approx i$. Číslo $72$ se používá místo $69$ proto, že se lépe dělí (dvěma, třemi, čtyřmi, šesti, osmi, devíti a dvanácti).
+
+
+  Pravidlo skrývá ještě jednu pěknou věc: doba zdvojnásobení \textit{nezávisí na tom, kolik zrovna máte}. Z $1$ na $2$ to trvá stejně dlouho jako ze $2$ na $4$ nebo ze $4$ na $8$. Exponenciála je jediná křivka s touto vlastností, a proto se po stejných časových krocích stále zdvojnásobuje:
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.3, yscale=0.42]
+      \draw[->] (0,0) -- (34,0) node[right] {\small roky};
+      \draw[->] (0,0) -- (0,9.4) node[above] {\small $K_n/K_0$};
+      \foreach \y in {1,2,4,8} {
+        \draw[dashed, gray] (0,\y) -- ({ln(\y)/ln(1.07)},\y) -- ({ln(\y)/ln(1.07)},0);
+        \node[left, font=\scriptsize] at (0,\y) {$\y$};
+      }
+      \foreach \t in {10,20,30} \node[below, font=\scriptsize] at (\t,0) {$\t$};
+      \draw[thick, colorofwisdom, domain=0:32.5, samples=60] plot (\x, {pow(1.07,\x)});
+      \foreach \a/\b in {0/10.24, 10.24/20.49, 20.49/30.73} {
+        \draw[<->, colorofwisdom] (\a,-1.6) -- (\b,-1.6);
+        \node[below, font=\tiny] at ({(\a+\b)/2},-1.6) {$\approx 10$ let};
+      }
+      \node[font=\small] at (8,7) {$1{,}07^n$};
+    \end{tikzpicture}
+  \end{center}
 \end{note}
 
 \begin{definitionbox}
@@ -142,6 +212,30 @@ Jednoduché úročení je aritmetická posloupnost (každý rok přibude stejná
 \section{Spoření}
 
 Při pravidelném spoření vkládáme každé období stejnou částku $a$. Každý vklad se pak úročí jinou dobu: ten první nejdéle, ten poslední nejkratší dobu nebo vůbec. Výsledná částka je součet geometrické posloupnosti.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[->] (-0.3,0) -- (10.6,0) node[right] {\small čas};
+    \foreach \k in {0,...,5} {
+      \draw (2*\k,0.1) -- (2*\k,-0.1) node[below] {\scriptsize $\k$};
+    }
+    \foreach \k/\e in {1/4, 2/3, 3/2, 4/1} {
+      \filldraw[colorofwisdom] (2*\k,0) circle (2pt);
+      \node[above, font=\scriptsize] at (2*\k,0.05) {$a$};
+      \draw[->, colorofwisdom!80, looseness=0.9] (2*\k,0.35) to[out=60, in=180] (9.6,{0.35+0.45*\e});
+      \ifnum\e=1
+        \node[right, font=\scriptsize] at (10,{0.35+0.45*\e}) {$a(1 + i)$};
+      \else
+        \node[right, font=\scriptsize] at (10,{0.35+0.45*\e}) {$a{(1 + i)}^{\e}$};
+      \fi
+    }
+    \filldraw[colorofwisdom] (10,0) circle (2pt);
+    \node[right, font=\scriptsize] at (10,0.35) {$a$};
+    \node[font=\scriptsize, align=center] at (0,-0.9) {začátek};
+    \node[font=\scriptsize, align=center] at (10,-0.9) {konec};
+  \end{tikzpicture}
+\end{center}
+Na obrázku je spoření po dobu $n = 5$ období. Každý vklad `jede' do konce jinak dlouho: první vklad se úročí čtyři období, poslední vůbec. Na konci sečteme pět čísel $a, a(1 + i), \ldots, a{(1 + i)}^4$, a to je geometrická posloupnost.
 
 \begin{definitionbox}
   \textbf{Pravidelné spoření}: Pokud na konci každého z $n$ období vložíme částku $a$ a sazba za období je $i$, máme na konci
@@ -215,6 +309,38 @@ Při pravidelném spoření vkládáme každé období stejnou částku $a$. Ka�
     \end{tabular}
   \end{center}
   Na začátku tvoří velkou část splátky úrok, ke konci skoro jen úmor. U třicetileté hypotéky to znamená, že prvních deset let splácíte hlavně bance, ne dluh.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \begin{scope}
+        \draw[->] (0,0) -- (6.3,0) node[right] {\small rok};
+        \draw[->] (0,0) -- (0,5.6) node[above] {\small tis. Kč};
+        \foreach \y in {1,2,3,4} \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\y0$};
+        \foreach \k/\u in {1/1.2, 2/0.987124, 3/0.761476, 4/0.522289, 5/0.268751} {
+          \filldraw[fill=gray!40, draw=black] ({\k-0.35},0) rectangle ({\k+0.35},{4.747928-\u});
+          \filldraw[fill=colorofwisdom!70, draw=black] ({\k-0.35},{4.747928-\u}) rectangle ({\k+0.35},4.747928);
+          \node[below, font=\scriptsize] at (\k,0) {$\k$};
+        }
+        \filldraw[fill=colorofwisdom!70, draw=black] (0.3,5.15) rectangle (0.6,5.35);
+        \node[right, font=\scriptsize] at (0.6,5.25) {úrok};
+        \filldraw[fill=gray!40, draw=black] (2.4,5.15) rectangle (2.7,5.35);
+        \node[right, font=\scriptsize] at (2.7,5.25) {úmor};
+        \node[font=\small] at (3,-1) {složení splátky};
+      \end{scope}
+      \begin{scope}[xshift=8.3cm]
+        \draw[->] (0,0) -- (6.2,0) node[right] {\small rok};
+        \draw[->] (0,0) -- (0,5.6) node[above] {\small zbývající dluh};
+        \foreach \y/\l in {1/25, 2/50, 3/75, 4/100} \draw (0.07,\y) -- (-0.07,\y) node[left] {\tiny $\l\,\%$};
+        \foreach \t in {0,10,20,30} \draw (0.18*\t,0.07) -- (0.18*\t,-0.07) node[below] {\scriptsize $\t$};
+        \draw[dashed, gray] (0,4) -- (5.4,0);
+        \draw[thick, colorofwisdom, domain=0:30, samples=60] plot ({0.18*\x}, {4*(4.321942-pow(1.05,\x))/3.321942});
+        \draw[dashed] (1.8,0) -- (1.8,3.243) -- (0,3.243);
+        \filldraw[colorofwisdom] (1.8,3.243) circle (2pt) node[above right, font=\scriptsize] {po $10$ letech zbývá $81\,\%$};
+        \node[font=\small] at (2.8,-1) {hypotéka na $30$ let při $5\,\%$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Levý graf: všechny splátky jsou stejně vysoké, ale červená část (úrok) se zmenšuje a šedá (úmor) roste. Dluh proto neklesá rovnoměrně, ale zpočátku pomaleji a ke konci rychleji. U pětiletého úvěru je to skoro neznatelné, u dlouhé hypotéky už velmi. Pravý graf ukazuje zbývající dluh u hypotéky na $30$ let při $5\,\%$ ročně: po třetině doby splácení zbývá splatit ještě $81\,\%$ dluhu (dluh po $k$ letech je $U\cdot\frac{1{,}05^{30} - 1{,}05^k}{1{,}05^{30} - 1}$, což plyne ze stejného výpočtu jako v důkazu výše). Šedá přímka ukazuje, jak by dluh klesal, kdyby se splácel rovnoměrně.
 \end{example}
 
 \begin{note}

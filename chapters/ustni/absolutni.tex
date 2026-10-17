@@ -29,6 +29,37 @@ Definice na první pohled děsí tím, že se v ní objevuje $-a$. Absolutní ho
   \end{tikzpicture}
 \end{center}
 
+Jak vypadá graf funkce $y = |x|$? Pro $x\geq 0$ je to přímka $y = x$, pro $x < 0$ přímka $y = -x$. Jinak řečeno: vezmeme přímku $y = x$ a její část pod osou $x$ \textit{překlopíme} nahoru. Vznikne tvar písmene V se špičkou v počátku. Posouvání pak funguje jako u každé jiné funkce. Graf $y = |x - 2|$ má špičku v bodě $2$, tedy tam, kde je výraz uvnitř absolutní hodnoty nulový, a graf $y = |x| - 1$ je celé V posunuté o $1$ dolů:
+\begin{center}
+  \begin{tikzpicture}[scale=0.55]
+    \begin{scope}
+      \draw[->] (-2.8,0) -- (3.3,0) node[right] {\small $x$};
+      \draw[->] (0,-2) -- (0,3.4) node[above] {\small $y$};
+      \draw[dashed, gray, thick] (-1.8,-1.8) -- (0,0);
+      \draw[->, gray] (-1.3,-1.1) to[bend left=40] (-1.3,1.1);
+      \draw[very thick, colorofwisdom] (-2.6,2.6) -- (0,0) -- (2.9,2.9);
+      \node[font=\small] at (0.3,-2.7) {$y = |x|$};
+    \end{scope}
+    \begin{scope}[xshift=7.3cm]
+      \draw[->] (-1.4,0) -- (5,0) node[right] {\small $x$};
+      \draw[->] (0,-2) -- (0,3.4) node[above] {\small $y$};
+      \draw[very thick, colorofwisdom] (-1,3) -- (2,0) -- (4.8,2.8);
+      \filldraw (2,0) circle (3pt) node[below, font=\small] {$2$};
+      \node[font=\small] at (1.8,-2.7) {$y = |x - 2|$};
+    \end{scope}
+    \begin{scope}[xshift=15.5cm]
+      \draw[->] (-2.8,0) -- (3.3,0) node[right] {\small $x$};
+      \draw[->] (0,-2) -- (0,3.4) node[above] {\small $y$};
+      \draw[dashed, gray] (-2.6,2.6) -- (0,0) -- (2.9,2.9);
+      \draw[very thick, colorofwisdom] (-2.6,1.6) -- (0,-1) -- (2.9,1.9);
+      \filldraw (-1,0) circle (3pt) node[below left, font=\small] {$-1$};
+      \filldraw (1,0) circle (3pt) node[below right, font=\small] {$1$};
+      \node[font=\small] at (0.3,-2.7) {$y = |x| - 1$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Ostrá špička je typickým poznávacím znamením absolutní hodnoty. V kapitole o derivacích uvidíme, že právě v ní nemá graf tečnu.
+
 \begin{definitionbox}
   \textbf{Vlastnosti absolutní hodnoty}: Pro všechna $a, b\in\mathbb{R}$ platí
   \begin{enumerate}
@@ -52,6 +83,29 @@ Většina vlastností plyne přímo z definice rozebráním případů $a\geq 0$
 \end{proof}
 
 Proč se jí říká trojúhelníková? Ve vektorech (kapitola o analytické geometrii) bude mít tvar $|\vec{u} + \vec{v}|\leq|\vec{u}| + |\vec{v}|$ a říká, že žádná strana trojúhelníku není delší než součet zbylých dvou. Neboli: přímá cesta je vždy nejkratší. Rovnost nastává, právě když $a$ a $b$ mají stejné znaménko (nebo je jedno z nich nula).
+
+Už na číselné ose je ale vidět, o co jde. Číslo $a + b$ najdeme tak, že z nuly uděláme krok $a$ a pak krok $b$. Celkem jsme ušli $|a| + |b|$. Pokud oba kroky míří stejným směrem, skončíme přesně v této vzdálenosti od nuly. Pokud míří proti sobě, druhý krok část cesty `vrátí' a skončíme blíž:
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \begin{scope}
+      \draw[->] (-1,0) -- (4.5,0);
+      \foreach \x in {0,...,4} \draw (\x,0.08) -- (\x,-0.08) node[below, font=\scriptsize] {$\x$};
+      \draw[->, very thick, colorofwisdom] (0,0.3) -- (2,0.3) node[midway, above, font=\small] {$a = 2$};
+      \draw[->, very thick] (2,0.3) -- (3.5,0.3) node[midway, above, font=\small] {$b = 1{,}5$};
+      \filldraw (3.5,0) circle (2.5pt);
+      \node[font=\small] at (1.75,-1) {$|a + b| = 3{,}5 = |a| + |b|$};
+    \end{scope}
+    \begin{scope}[xshift=7.5cm]
+      \draw[->] (-1,0) -- (4.5,0);
+      \foreach \x in {0,...,4} \draw (\x,0.08) -- (\x,-0.08) node[below, font=\scriptsize] {$\x$};
+      \draw[->, very thick, colorofwisdom] (0,0.3) -- (3,0.3) node[midway, above, font=\small] {$a = 3$};
+      \draw[->, very thick] (3,1.05) -- (1,1.05) node[midway, above, font=\small] {$b = -2$};
+      \draw[dotted] (3,0.3) -- (3,1.05);
+      \filldraw (1,0) circle (2.5pt);
+      \node[font=\small] at (1.75,-1) {$|a + b| = 1 < 5 = |a| + |b|$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
@@ -84,6 +138,28 @@ Pokud je v rovnici jen jedna absolutní hodnota tvaru $|x - a|$, nejrychlejší 
   \end{align*}
   Slovy: hledáme čísla, jejichž vzdálenost od $a$ je rovna, menší nebo větší než $b$. Pro $b < 0$ nemá rovnice $|x - a| = b$ řešení (vzdálenost nemůže být záporná) a pro $b = 0$ má jediné řešení $x = a$.
 \end{definitionbox}
+
+Představte si, že do bodu $a$ zapíchneme kružítko s rozevřením $b$. Body, kam kružítko dosáhne přesně, řeší rovnici. Body uvnitř řeší nerovnici `$<$' a body venku nerovnici `$>$':
+\begin{center}
+  \begin{tikzpicture}
+    \draw[->, thick] (-4.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[line width=3pt, colorofwisdom] (-2.5,0) -- (2.5,0);
+    \draw[line width=3pt, black!25] (-4.3,0) -- (-2.5,0);
+    \draw[line width=3pt, black!25] (2.5,0) -- (4.3,0);
+    \filldraw (0,0) circle (2pt);
+    \filldraw[fill=white, draw=black, thick] (-2.5,0) circle (3pt);
+    \filldraw[fill=white, draw=black, thick] (2.5,0) circle (3pt);
+    \node[below] at (0,-0.15) {$a$};
+    \node[below] at (-2.5,-0.15) {$a - b$};
+    \node[below] at (2.5,-0.15) {$a + b$};
+    \draw[decorate, decoration={brace, amplitude=5pt}] (-2.5,0.2) -- (0,0.2) node[midway, above=4pt, font=\small] {$b$};
+    \draw[decorate, decoration={brace, amplitude=5pt}] (0,0.2) -- (2.5,0.2) node[midway, above=4pt, font=\small] {$b$};
+    \node[colorofwisdom, font=\small] at (0,-0.95) {$|x - a| < b$};
+    \node[gray, font=\small] at (-3.6,-0.95) {$|x - a| > b$};
+    \node[gray, font=\small] at (3.6,-0.95) {$|x - a| > b$};
+    \node[font=\small] at (0,1.25) {krajní body: $|x - a| = b$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   Vyřešme:
@@ -132,6 +208,27 @@ Krok 4 je důležitý a zapomíná se na něj nejčastěji. Na každém interval
   $K = \{-2, 3\}$. Geometricky: hledáme body, jejichž součet vzdáleností od $-1$ a od $2$ je $5$. Body mezi $-1$ a $2$ mají tento součet vždy $3$, takže musíme jít ven. A vyjít musíme o $1$ na každou stranu.
 \end{example}
 
+Celý příklad si můžeme nakreslit. Graf funkce $y = |x + 1| + |x - 2|$ se skládá ze tří úseček, na každém intervalu z tabulky jedné. Nulové body jsou přesně místa, kde se graf `láme'. Uprostřed je graf vodorovný ve výšce $3$, po stranách stoupá. Řešení rovnice jsou $x$-ové souřadnice průsečíků s vodorovnou přímkou $y = 5$:
+\begin{center}
+  \begin{tikzpicture}[xscale=0.85, yscale=0.5]
+    \draw[->] (-3.8,0) -- (4.8,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,7.8) node[above] {\small $y$};
+    \foreach \x in {-3,...,4} \draw (\x,0.12) -- (\x,-0.12) node[below, font=\scriptsize] {$\x$};
+    \draw[dashed, gray] (-1,0) -- (-1,3);
+    \draw[dashed, gray] (2,0) -- (2,3);
+    \draw[very thick, colorofwisdom] (-3,7) -- (-1,3) -- (2,3) -- (4,7);
+    \draw[thick] (-3.6,5) -- (4.6,5) node[right, font=\small] {$y = 5$};
+    \filldraw (-2,5) circle (3pt);
+    \filldraw (3,5) circle (3pt);
+    \draw[dotted, thick] (-2,5) -- (-2,0);
+    \draw[dotted, thick] (3,5) -- (3,0);
+    \node[left, font=\small] at (-3.05,7) {$-2x + 1$};
+    \node[above, font=\small] at (0.5,3) {$3$};
+    \node[right, font=\small] at (4.05,7) {$2x - 1$};
+  \end{tikzpicture}
+\end{center}
+Z obrázku je hned vidět i to, že rovnice $|x + 1| + |x - 2| = c$ nemá pro $c < 3$ žádné řešení.
+
 \begin{example}
   Vyřešme $|x - 1| = 2x + 4$. Nulový bod je $1$.
   \begin{itemize}
@@ -140,6 +237,23 @@ Krok 4 je důležitý a zapomíná se na něj nejčastěji. Na každém interval
   \end{itemize}
   $K = \{-1\}$. Zkouška: $|-2| = 2 = 2\cdot(-1) + 4$. Kdybychom zapomněli na krok 4, tvrdili bychom, že $x = -5$ je řešení, ale $|-6| = 6\neq -6$.
 \end{example}
+
+Odkud se `řešení' $x = -5$ vzalo? Na intervalu $[1, \infty)$ jsme řešili rovnici $x - 1 = 2x + 4$. Tím jsme vlastně hledali průsečík přímky $y = 2x + 4$ s \textit{celou} přímkou $y = x - 1$, a ne jen s její částí napravo od $1$, která tvoří graf absolutní hodnoty. Průsečík vyšel na čárkované části, která do grafu nepatří:
+\begin{center}
+  \begin{tikzpicture}[scale=0.42]
+    \draw[->] (-6.8,0) -- (4.5,0) node[right] {\small $x$};
+    \draw[->] (0,-7.6) -- (0,6) node[above] {\small $y$};
+    \foreach \x in {-6,...,3} \draw (\x,0.15) -- (\x,-0.15);
+    \draw[dashed, gray, thick] (1,0) -- (-5.8,-6.8);
+    \draw[very thick, colorofwisdom] (-4.2,5.2) -- (1,0) -- (4,3) node[right, font=\small] {$y = |x - 1|$};
+    \draw[thick] (-5.6,-7.2) -- (0.6,5.2) node[right, font=\small] {$y = 2x + 4$};
+    \filldraw (-1,2) circle (5pt);
+    \draw[gray] (-1,2) -- (-2.6,1.2) node[left, font=\small, black] {$(-1, 2)$};
+    \filldraw[fill=white, draw=black, thick] (-5,-6) circle (5pt) node[left=3pt, font=\small] {$(-5, -6)$};
+    \node[gray, font=\scriptsize, right] at (-2.6,-3.9) {$y = x - 1$};
+    \node[font=\small, below] at (1,-0.1) {$1$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   Nerovnice se řeší úplně stejně. Vyřešme $|x - 3| - |x| < 1$. Nulové body $0$ a $3$.
@@ -157,6 +271,20 @@ Krok 4 je důležitý a zapomíná se na něj nejčastěji. Na každém interval
     |x - 1| > |x + 3|\quad\Leftrightarrow\quad{(x - 1)}^2 > {(x + 3)}^2\quad\Leftrightarrow\quad -2x + 1 > 6x + 9\quad\Leftrightarrow\quad x < -1.
   \end{equation*}
   Geometricky hledáme body, které jsou dál od $1$ než od $-3$. To jsou všechny body vlevo od středu, tedy od $-1$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \draw[->, thick] (-5.5,0) -- (3.5,0) node[right] {$x$};
+      \foreach \x in {-5,...,3} \draw (\x,0.08) -- (\x,-0.08) node[below, font=\scriptsize] {$\x$};
+      \draw[line width=3pt, colorofwisdom] (-5.3,0) -- (-1,0);
+      \filldraw[fill=white, draw=colorofwisdom, thick] (-1,0) circle (3pt);
+      \filldraw (-3,0) circle (2.5pt);
+      \filldraw (1,0) circle (2.5pt);
+      \draw[dashed, gray] (-1,-0.7) -- (-1,1.3) node[above, font=\scriptsize] {střed};
+      \draw[decorate, decoration={brace, amplitude=4pt}] (-3,0.25) -- (-1,0.25) node[midway, above=3pt, font=\scriptsize] {$2$};
+      \draw[decorate, decoration={brace, amplitude=4pt}] (-1,0.25) -- (1,0.25) node[midway, above=3pt, font=\scriptsize] {$2$};
+      \node[colorofwisdom, font=\small] at (-3.8,-0.9) {blíž k $-3$ než k $1$};
+    \end{tikzpicture}
+  \end{center}
 \end{note}
 
 \begin{problem}
@@ -187,6 +315,22 @@ Krok 4 je důležitý a zapomíná se na něj nejčastěji. Na každém interval
 
   Zajímavější je rovnice $|x - 1| + |x + 1| = a$. Z příkladu~\ref{ex:abs-dve} už tušíme, že součet vzdáleností od $-1$ a $1$ je vždy alespoň $2$ (vzdálenost těch dvou bodů), a to přesně pro body mezi nimi. Tedy pro $a < 2$ žádné řešení, pro $a = 2$ celý interval $[-1, 1]$ a pro $a > 2$ dvě řešení $x = \pm\frac{a}{2}$. Kdo nevěří, ať si to rozepíše metodou nulových bodů.
 \end{example}
+
+Opět pomůže obrázek. Graf levé strany je `vana' s vodorovným dnem ve výšce $2$ a pravá strana je vodorovná přímka ve výšce $a$. Pokud je přímka pod dnem, nic neprotne. Pokud leží přesně na dně, splyne s ním na celém intervalu $[-1, 1]$. A pokud je výš, protne stěny vany ve dvou bodech:
+\begin{center}
+  \begin{tikzpicture}[xscale=0.9, yscale=0.55]
+    \draw[->] (-3.2,0) -- (3.4,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,5.8) node[above] {\small $y$};
+    \foreach \x in {-2,-1,1,2} \draw (\x,0.12) -- (\x,-0.12) node[below, font=\scriptsize] {$\x$};
+    \draw[very thick] (-2.5,5) -- (-1,2) -- (1,2) -- (2.5,5);
+    \draw[thick, colorofwisdom] (-3,3) -- (3,3) node[right, font=\small] {$a = 3$: dvě řešení};
+    \filldraw[colorofwisdom] (-1.5,3) circle (3pt);
+    \filldraw[colorofwisdom] (1.5,3) circle (3pt);
+    \draw[line width=3pt, colorofwisdom!50] (-1,2) -- (1,2);
+    \draw[thick, colorofwisdom] (-3,2) -- (3,2) node[right, font=\small] {$a = 2$: celý interval $[-1, 1]$};
+    \draw[thick, gray] (-3,1) -- (3,1) node[right, font=\small, black] {$a = 1$: žádné řešení};
+  \end{tikzpicture}
+\end{center}
 
 \section{Iracionální rovnice}
 
@@ -220,6 +364,20 @@ Proč je zkouška nutná? V kapitole~\ref{kap:rovnice} jsme si řekli, že umocn
   \end{itemize}
   $K = \{1\}$. Kořen $-2$ je falešný. Přišel z rovnice $\sqrt{x + 3} = -(x + 1)$, kterou jsme umocněním omylem vyřešili také.
 \end{example}
+
+Na obrázku je to krásně vidět. Rovnici $x + 3 = {(x + 1)}^2$, kterou jsme po umocnění řešili, splňují body přímky $y = x + 1$, pro které platí $y^2 = x + 3$. To je ale `ležatá' parabola, která má dvě poloviny: horní $y = \sqrt{x + 3}$ (graf naší levé strany) a dolní $y = -\sqrt{x + 3}$. Umocněním jsme k odmocnině nepozorovaně přibrali i její zrcadlový obraz. Falešný kořen $-2$ je průsečík s touto dolní, čárkovanou polovinou:
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[->] (-3.8,0) -- (3.6,0) node[right] {\small $x$};
+    \draw[->] (0,-2.9) -- (0,3.4) node[above] {\small $y$};
+    \draw[very thick, colorofwisdom, domain=-3:3, samples=120] plot (\x, {sqrt(\x+3)}) node[right, font=\small] {$y = \sqrt{x + 3}$};
+    \draw[dashed, thick, gray, domain=-3:3, samples=120] plot (\x, {-sqrt(\x+3)}) node[right, font=\small] {$y = -\sqrt{x + 3}$};
+    \draw[thick] (-3.6,-2.6) -- (2.3,3.3) node[left, font=\small] {$y = x + 1$};
+    \filldraw (1,2) circle (2.5pt) node[below right, font=\small] {$(1, 2)$};
+    \draw[gray] (-2,-1) -- (-1.2,-2.3) node[below, font=\small, black] {$(-2, -1)$};
+    \filldraw[fill=white, draw=black, thick] (-2,-1) circle (2.5pt);
+  \end{tikzpicture}
+\end{center}
 
 \begin{note}
   Místo zkoušky můžeme na začátku přidat podmínku, že strana, na které není odmocnina, musí být nezáporná (protože odmocnina je nezáporná). V předchozím příkladu $x + 1\geq 0$, tedy $x\geq -1$, a kořen $-2$ by vypadl rovnou. Za těchto podmínek už je umocnění ekvivalentní úprava. U maturity ale doporučujeme dělat zkoušku tak jako tak. Podmínka se snadno pokazí, zkouška ne.
@@ -330,7 +488,19 @@ Představte si ale, že jste v městě s pravoúhlou sítí ulic, jako je Manhat
 \begin{equation*}
   d_{\text{taxi}}(A, B) = |a_1 - b_1| + |a_2 - b_2|.
 \end{equation*}
-Tomu se říká \textbf{taxíková} (také manhattanská) \textbf{vzdálenost}.\footnote{V Praze to nefunguje, protože ulice nejsou pravoúhlé a taxikář vás stejně poveze oklikou.} Splňuje všechny rozumné vlastnosti vzdálenosti, včetně trojúhelníkové nerovnosti (dokažte si to pomocí té naší). Geometrie se ale chová velice zvláštně. Co je třeba `kružnice' se středem v počátku a poloměrem $1$? Je to množina bodů, pro které $|x| + |y| = 1$. Metodou nulových bodů (pro každý kvadrant zvlášť) zjistíte, že to je čtverec postavený na špičku:
+Tomu se říká \textbf{taxíková} (také manhattanská) \textbf{vzdálenost}.\footnote{V Praze to nefunguje, protože ulice nejsou pravoúhlé a taxikář vás stejně poveze oklikou.} Pro body $A = (0, 0)$ a $B = (4, 3)$ je taxíková vzdálenost $4 + 3 = 7$, zatímco vzdušnou čarou je to jen $5$. Zajímavé je, že \textit{každá} cesta po ulicích, která jde jen doprava a nahoru, je stejně dlouhá:
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[gray!50] (-0.3,-0.3) grid (4.3,3.3);
+    \draw[dashed, thick] (0,0) -- (4,3) node[pos=0.45, above left, font=\small] {$5$};
+    \draw[very thick, colorofwisdom] (0,0) -- (4,0) -- (4,3);
+    \draw[very thick, black!70] (0,0) -- (1,0) -- (1,1) -- (2,1) -- (2,2) -- (3,2) -- (3,3) -- (4,3);
+    \filldraw (0,0) circle (2.5pt) node[below left] {$A$};
+    \filldraw (4,3) circle (2.5pt) node[above right] {$B$};
+    \node[right, font=\small, align=left] at (4.8,1.5) {obě plné cesty\\ mají délku $7$};
+  \end{tikzpicture}
+\end{center}
+Taxíková vzdálenost splňuje všechny rozumné vlastnosti vzdálenosti, včetně trojúhelníkové nerovnosti (dokažte si to pomocí té naší). Geometrie se ale chová velice zvláštně. Co je třeba `kružnice' se středem v počátku a poloměrem $1$? Je to množina bodů, pro které $|x| + |y| = 1$. Metodou nulových bodů (pro každý kvadrant zvlášť) zjistíte, že to je čtverec postavený na špičku:
 \begin{center}
   \begin{tikzpicture}[scale=1.3]
     \draw[->] (-1.6,0) -- (1.6,0) node[right] {\small $x$};

@@ -35,6 +35,33 @@ V bodě $x = 2$ není definovaná, protože bychom dělili nulou. Ale co se děj
 
 Slovy: hodnoty $f(x)$ budou libovolně blízko $L$ ($\varepsilon$), pokud budeme $x$ volit dost blízko $a$ ($\delta$). Je to stejná hra jako u posloupností, jen místo `od nějakého $n_0$ dál' říkáme `dost blízko bodu $a$'. Důležité je, že \textbf{hodnota v bodě $a$ samotném vůbec nehraje roli}. Proto je v definici prstencové okolí.
 
+Obrázkově: soupeř si zvolí vodorovný pás kolem $L$ o šířce $\varepsilon$ (nahoru i dolů). My musíme najít svislý pás kolem $a$ o šířce $\delta$ tak, aby graf nad tímto svislým pásem (kromě bodu $a$ samotného) celý ležel uvnitř vodorovného pásu. Graf tedy musí projít `okénkem', ve kterém se pásy kříží. Když soupeř pás zúží, musíme zúžit i ten svůj. Limita existuje, když to dokážeme pro jakkoli úzký vodorovný pás.
+
+\begin{center}
+  \begin{tikzpicture}[xscale=2, yscale=1.6]
+    \fill[colorofwisdom!12] (0,1.2) rectangle (3.4,2.2);
+    \fill[gray!20] (1.65,0) rectangle (2.35,2.9);
+    \fill[colorofwisdom!30] (1.65,1.2) rectangle (2.35,2.2);
+    \draw[->] (-0.1,0) -- (3.5,0) node[right] {\small $x$};
+    \draw[->] (0,-0.1) -- (0,3) node[above] {\small $y$};
+    \draw[dashed, colorofwisdom] (0,1.2) -- (3.4,1.2);
+    \draw[dashed, colorofwisdom] (0,2.2) -- (3.4,2.2);
+    \node[left, font=\scriptsize] at (0,1.2) {$L - \varepsilon$};
+    \node[left, font=\scriptsize] at (0,2.2) {$L + \varepsilon$};
+    \node[left, font=\scriptsize] at (0,1.7) {$L$};
+    \draw[dashed, gray] (0,1.7) -- (2,1.7);
+    \draw[dashed, gray] (1.65,0) -- (1.65,2.9);
+    \draw[dashed, gray] (2.35,0) -- (2.35,2.9);
+    \node[below, font=\scriptsize] at (1.6,0) {$a - \delta$};
+    \node[below, font=\scriptsize] at (2.4,0) {$a + \delta$};
+    \node[below, font=\scriptsize] at (2,0) {$a$};
+    \draw[thick, colorofwisdom, domain=0.3:2.85, samples=60] plot (\x, {0.3*\x*\x + 0.5});
+    \filldraw[fill=white, draw=colorofwisdom, thick] (2,1.7) circle (1.5pt);
+    \filldraw[black] (2,0.7) circle (1.5pt);
+    \node[right, font=\scriptsize] at (2.05,0.7) {$f(a)$ může být kdekoli};
+  \end{tikzpicture}
+\end{center}
+
 \begin{definitionbox}
   \textbf{Jednostranné limity}: Pokud se k $a$ blížíme jen zprava ($x > a$), mluvíme o \textbf{limitě zprava} $\lim_{x\to a^+} f(x)$, pokud jen zleva, o \textbf{limitě zleva} $\lim_{x\to a^-} f(x)$. Limita existuje, právě když existují obě jednostranné limity a jsou si rovny.
 
@@ -51,9 +78,43 @@ Slovy: hodnoty $f(x)$ budou libovolně blízko $L$ ($\varepsilon$), pokud budeme
   Limita v nule neexistuje, protože jednostranné limity jsou různé. Nekonečné limity odpovídají svislým asymptotám grafu, limity v nekonečnu vodorovným. To jsou přesně asymptoty hyperboly z kapitoly~\ref{kap:elementarni}.
 \end{example}
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[->] (-4,0) -- (4.2,0) node[right] {\small $x$};
+    \draw[->] (0,-3.4) -- (0,3.6) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=0.3:4, samples=60] plot (\x, {1/\x});
+    \draw[thick, colorofwisdom, domain=-4:-0.3, samples=60] plot (\x, {1/\x});
+    \draw[->, gray] (0.55,2.4) -- (0.4,3.1);
+    \node[right, font=\scriptsize] at (0.45,3.1) {$x\to 0^+$: $y\to\infty$};
+    \draw[->, gray] (-0.55,-2.4) -- (-0.4,-3.1);
+    \node[left, font=\scriptsize] at (-0.45,-3.1) {$x\to 0^-$: $y\to -\infty$};
+    \node[font=\scriptsize] at (3.1,1.1) {$x\to\infty$: $y\to 0$};
+    \node[font=\scriptsize] at (-3.1,-1.1) {$x\to -\infty$: $y\to 0$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Funkce $\mathrm{sgn}(x)$ (signum: $-1$ pro záporná, $0$ pro nulu, $1$ pro kladná $x$) má v nule limitu zprava $1$ a zleva $-1$. Limita neexistuje, i když jsou obě jednostranné limity konečné.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (-3,0) -- (3.2,0) node[right] {\small $x$};
+    \draw[->] (0,-1.6) -- (0,1.7) node[above] {\small $y$};
+    \draw[very thick, colorofwisdom] (0.05,1) -- (2.9,1);
+    \draw[very thick, colorofwisdom] (-2.9,-1) -- (-0.05,-1);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (0,1) circle (2.2pt);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (0,-1) circle (2.2pt);
+    \filldraw[colorofwisdom] (0,0) circle (2.2pt);
+    \node[left, font=\scriptsize] at (0,1) {$1$};
+    \node[right, font=\scriptsize] at (0,-1) {$-1$};
+    \draw[->, gray] (2,1.35) -- (0.4,1.35);
+    \node[above, font=\scriptsize] at (1.6,1.35) {zprava: $1$};
+    \draw[->, gray] (-2,-1.35) -- (-0.4,-1.35);
+    \node[below, font=\scriptsize] at (-1.6,-1.35) {zleva: $-1$};
+  \end{tikzpicture}
+\end{center}
+Představte si dva poutníky, kteří jdou po grafu k bodu $0$, jeden zprava a druhý zleva. Limita existuje jen tehdy, když oba dojdou do stejné výšky. Tady jeden skončí ve výšce $1$ a druhý ve výšce $-1$.
 
 \section{Počítání limit}
 
@@ -136,6 +197,21 @@ Slovy: hodnoty $f(x)$ budou libovolně blízko $L$ ($\varepsilon$), pokud budeme
 
 Tomuto argumentu se říká \textbf{věta o dvou policajtech} (nebo o sevření): pokud je funkce mezi dvěma funkcemi se stejnou limitou, nezbývá jí nic jiného, než jít s nimi. Jako opilec mezi dvěma policisty, kteří ho vedou na stanici.\footnote{V angličtině se jí říká \textit{squeeze theorem} nebo, v Itálii, \textit{teorema dei carabinieri}. Opilec je mezinárodní.} Limita $\frac{\sin x}{x}$ je důvodem, proč pro malé úhly (v radiánech!) platí $\sin x\approx x$. Pro $x = 0{,}1$ je $\sin x\approx 0{,}0998$. Fyzici toho využívají u kyvadla.
 
+\begin{center}
+  \begin{tikzpicture}[xscale=1, yscale=2.2]
+    \draw[->] (-3.4,0) -- (3.6,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,1.35) node[above] {\small $y$};
+    \draw[thick, gray] (-3.2,1) -- (3.2,1) node[right, font=\scriptsize, black] {$y = 1$};
+    \draw[thick, gray, dashed, domain=-1.95:1.95, samples=60] plot (\x, {cos(deg(\x))});
+    \draw[very thick, colorofwisdom, domain=-3.14:3.14, samples=80] plot (\x, {sin(deg(\x))/\x});
+    \filldraw[fill=white, draw=colorofwisdom, thick] (0,1) circle (1.6pt);
+    \node[font=\scriptsize, colorofwisdom] at (2.15,0.6) {$\frac{\sin x}{x}$};
+    \node[font=\scriptsize, gray] at (2.25,-0.3) {$\cos x$};
+    \foreach \x/\l in {-3.14/-\pi, 3.14/\pi} \draw (\x,0.03) -- (\x,-0.03) node[below, font=\scriptsize] {$\l$};
+  \end{tikzpicture}
+\end{center}
+Na obrázku je vidět, jak to funguje: červená křivka $\frac{\sin x}{x}$ je na $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ sevřená mezi přerušovanou kosinusoidou zdola a přímkou $y = 1$ shora. Oba `policisté' se v bodě $0$ potkají ve výšce $1$, a tak tam musí být i funkce mezi nimi. Funkce samotná v nule definovaná není (prázdné kolečko), ale limitu má.
+
 \begin{example}
   $\lim_{x\to 0}\frac{\sin 3x}{x} = \lim_{x\to 0} 3\cdot\frac{\sin 3x}{3x} = 3\cdot 1 = 3$ (substituce $t = 3x$).
 \end{example}
@@ -182,12 +258,61 @@ Intuitivně: spojitou funkci na intervalu nakreslíte jedním tahem, aniž byste
   \end{itemize}
 \end{definitionbox}
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \begin{scope}
+      \draw[->] (-0.2,0) -- (3.4,0);
+      \draw[->] (0,-0.2) -- (0,3);
+      \draw[thick, colorofwisdom, domain=0.2:3.1] plot (\x, {0.4+0.5*\x});
+      \filldraw[fill=white, draw=colorofwisdom, thick] (1.6,1.2) circle (2.2pt);
+      \filldraw[colorofwisdom] (1.6,2.4) circle (2.2pt);
+      \draw[dashed, gray] (1.6,0) node[below, black, font=\scriptsize] {$a$} -- (1.6,2.3);
+      \node[font=\small] at (1.6,-0.9) {odstranitelná};
+    \end{scope}
+    \begin{scope}[xshift=4.6cm]
+      \draw[->] (-0.2,0) -- (3.4,0);
+      \draw[->] (0,-0.2) -- (0,3);
+      \draw[thick, colorofwisdom, domain=0.2:1.6] plot (\x, {0.5+0.3*\x});
+      \draw[thick, colorofwisdom, domain=1.6:3.1] plot (\x, {1.5+0.3*\x});
+      \filldraw[colorofwisdom] (1.6,0.98) circle (2.2pt);
+      \filldraw[fill=white, draw=colorofwisdom, thick] (1.6,1.98) circle (2.2pt);
+      \draw[dashed, gray] (1.6,0) node[below, black, font=\scriptsize] {$a$} -- (1.6,0.9);
+      \node[font=\small] at (1.6,-0.9) {skok};
+    \end{scope}
+    \begin{scope}[xshift=9.2cm]
+      \draw[->] (-0.2,0) -- (3.4,0);
+      \draw[->] (0,-0.2) -- (0,3);
+      \draw[thick, colorofwisdom, domain=0.1:1.33, samples=40] plot (\x, {0.4/(1.6-\x)});
+      \draw[thick, colorofwisdom, domain=1.87:3.2, samples=40] plot (\x, {0.4/(\x-1.6)});
+      \draw[dashed, gray] (1.6,0) node[below, black, font=\scriptsize] {$a$} -- (1.6,2.9);
+      \node[font=\small] at (1.6,-0.9) {nekonečná};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Tužka v prvním případě musí přeskočit jediný chybějící (nebo `přemístěný') bod. Díru stačí zalepit, tedy předefinovat jedinou funkční hodnotu, a funkce je spojitá, odtud název \textit{odstranitelná}. Ve druhém případě tužka musí poskočit o kus nahoru a žádné předefinování jednoho bodu to nespraví. Ve třetím případě by tužka musela dojet až do nekonečna.
+
 \begin{example}
   Pro jaké $a$ je funkce
   \begin{equation*}
     f(x) = \begin{cases} x^2 & \text{pro } x\leq 1,\\ ax + 2 & \text{pro } x > 1\end{cases}
   \end{equation*}
   spojitá? Obě části jsou spojité, problém může být jen v bodě $1$. Limita zleva je $1$, limita zprava je $a + 2$ a $f(1) = 1$. Spojitost nastane pro $a + 2 = 1$, tedy $a = -1$.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[->] (-1.8,0) -- (3.4,0) node[right] {\small $x$};
+      \draw[->] (0,-0.8) -- (0,3.4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-1.7:1, samples=40] plot (\x, {\x*\x});
+      \draw[thick, colorofwisdom] (1,1) -- (2.6,-0.6);
+      \draw[thick, gray, dashed] (1,2) -- (3.2,2);
+      \filldraw[fill=white, draw=gray, thick] (1,2) circle (2pt);
+      \filldraw[colorofwisdom] (1,1) circle (2pt);
+      \node[font=\scriptsize, colorofwisdom] at (2.2,0.2) {$a = -1$};
+      \node[font=\scriptsize, gray] at (2.6,2.3) {$a = 0$: skok};
+      \draw (1,0.06) -- (1,-0.06) node[below, font=\scriptsize] {$1$};
+    \end{tikzpicture}
+  \end{center}
+  Parametr $a$ je směrnice pravé části grafu. Přímka $y = ax + 2$ prochází pro každé $a$ bodem $[0, 2]$ a my ji natáčíme, dokud se v $x = 1$ nenapojí na parabolu.
 \end{example}
 
 \subsection{Věty o spojitých funkcích}
@@ -198,7 +323,7 @@ Intuitivně: spojitou funkci na intervalu nakreslíte jedním tahem, aniž byste
   \textbf{Bolzanova věta}: Pokud je funkce $f$ spojitá na $[a, b]$ a $f(a)$ a $f(b)$ mají opačná znaménka, existuje $c\in(a, b)$ takové, že $f(c) = 0$.
 \end{definitionbox}
 
-Obě věty zní samozřejmě a obě potřebují předpoklady, které nejsou samozřejmé. Funkce $\frac{1}{x}$ na otevřeném intervalu $(0, 1]$ maximum nemá (Weierstrass potřebuje uzavřený interval). Funkce $\frac{1}{x}$ má v $-1$ a $1$ opačná znaménka, ale nulu nikde nemá (Bolzano potřebuje spojitost na celém intervalu, a nula tam chybí).
+Obě věty zní samozřejmě a obě potřebují předpoklady, které nejsou samozřejmé. Funkce $\frac{1}{x}$ na intervalu $(0, 1]$, který není uzavřený, maximum nemá (Weierstrass potřebuje uzavřený interval). Funkce $\frac{1}{x}$ má v $-1$ a $1$ opačná znaménka, ale nulu nikde nemá (Bolzano potřebuje spojitost na celém intervalu, a nula tam chybí).
 
 Bolzanova věta má velice praktický důsledek: dá se podle ní hledat kořen rovnice, i když ji neumíme vyřešit. Této metodě se říká \textbf{metoda půlení intervalu} (bisekce).
 
@@ -211,10 +336,46 @@ Bolzanova věta má velice praktický důsledek: dá se podle ní hledat kořen 
     \item a tak dál.
   \end{itemize}
   Každým krokem se interval zmenší na polovinu. Po deseti krocích známe kořen na tři desetinná místa: $x\approx 0{,}682$. Takhle (jen chytřeji) počítá kalkulačka i počítač.
+
+  \begin{center}
+    \begin{tikzpicture}[xscale=9, yscale=1.5]
+      \draw[->] (-0.03,0) -- (1.1,0) node[right] {\small $x$};
+      \draw[->] (0,-1.15) -- (0,1.3) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=0:1.04, samples=60] plot (\x, {\x*\x*\x + \x - 1});
+      \filldraw (0,-1) circle (0.25pt) node[left, font=\scriptsize] {$f(0) = -1$};
+      \filldraw (1,1) circle (0.25pt) node[right, font=\scriptsize] {$f(1) = 1$};
+      \filldraw[colorofwisdom] (0.6823,0) circle (0.25pt);
+      \foreach \x in {0.5,0.75,0.625} \draw[dashed, gray] (\x,0) -- (\x,{\x*\x*\x+\x-1});
+      \foreach \k/\l/\r in {1/0/1, 2/0.5/1, 3/0.5/0.75, 4/0.625/0.75} {
+        \draw[|-|, thick, colorofwisdom!80] (\l,{-1.15-0.3*\k}) -- (\r,{-1.15-0.3*\k});
+        \node[left, font=\tiny] at (\l,{-1.15-0.3*\k}) {krok \k};
+      }
+      \foreach \x in {0,0.5,1} \node[below, font=\scriptsize] at (\x,-2.5) {$\x$};
+      \node[below, font=\scriptsize] at (0.75,-2.5) {$0{,}75$};
+      \node[below, font=\scriptsize] at (0.6823,-2.85) {$0{,}682$};
+    \end{tikzpicture}
+  \end{center}
+  Graf funkce musí někde přejít z hodnot pod osou na hodnoty nad osou, a protože je spojitá (nemá skoky), musí cestou osu protnout. Úsečky pod grafem ukazují, jak se interval, ve kterém kořen určitě leží, krok za krokem půlí.
 \end{example}
 
 \begin{note}
   Bolzanova věta má i jeden zábavný důsledek, kterému se říká \textit{věta o mnichovi}. Mnich vyjde v 6:00 ráno z kláštera na vrchol hory a dorazí tam v 18:00. Druhý den ve stejný čas sejde stejnou cestou dolů (jakkoli rychle, klidně se cestou zastaví). Existuje místo, kde byl v obou dnech ve stejnou hodinu? Ano! Představte si oba dny současně jako dva mnichy, jednoho jdoucího nahoru a druhého dolů. Někde se nutně potkají. Formálně: rozdíl jejich výšek je spojitá funkce času, na začátku je záporný a na konci kladný.
+
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.6, yscale=0.9]
+      \draw[->] (0,0) -- (12.6,0) node[right] {\small čas};
+      \draw[->] (0,0) -- (0,3.3) node[above] {\small výška};
+      \node[below, font=\scriptsize] at (0,0) {$6{:}00$};
+      \node[below, font=\scriptsize] at (12,0) {$18{:}00$};
+      \draw[thick, colorofwisdom, domain=0:12, samples=60] plot (\x, {3*pow(\x/12,1.6)});
+      \draw[thick, black, domain=0:12, samples=60] plot (\x, {3*pow(1-\x/12,0.8)});
+      \node[font=\scriptsize, colorofwisdom] at (9.6,2.6) {první den};
+      \node[font=\scriptsize] at (10.6,1.1) {druhý den};
+      \filldraw (7.416,1.39) circle (2.5pt);
+      \draw[dashed, gray] (7.416,1.39) -- (7.416,0);
+    \end{tikzpicture}
+  \end{center}
+  Když oba dny nakreslíme do jednoho grafu, jedna křivka vede zdola nahoru a druhá shora dolů. Spojité křivky se nemohou minout, a jejich průsečík je hledané místo a čas.
 \end{note}
 
 \begin{problem}

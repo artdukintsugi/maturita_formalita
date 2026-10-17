@@ -21,6 +21,27 @@ Analytická geometrie je místo, kde se setkává geometrie s algebrou. Body pop
 \end{definitionbox}
 
 Vzorec pro vzdálenost je jen Pythagorova věta. Úsečka $AB$ je přeponou pravoúhlého trojúhelníku, jehož odvěsny jsou rovnoběžné s osami a mají délky $|b_1 - a_1|$ a $|b_2 - a_2|$.
+Představte si, že jdete po městě s pravoúhlými ulicemi z $A$ do $B$. Po ulicích ujdete $3$ bloky doprava a $4$ nahoru, ale pták letí přímo, po přeponě, a uletí jen $5$. Střed úsečky je zase jen `průměr': jeho souřadnice $x$ leží přesně v půli mezi $a_1$ a $b_1$, souřadnice $y$ v půli mezi $a_2$ a $b_2$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.65, >=stealth]
+    \draw[gray!30] (-0.5,-0.5) grid (5.5,6.5);
+    \draw[->] (-0.5,0) -- (5.8,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,6.8) node[above] {\small $y$};
+    \foreach \x in {1,...,5} \node[below] at (\x,0) {\scriptsize $\x$};
+    \foreach \y in {1,...,6} \node[left] at (0,\y) {\scriptsize $\y$};
+    \fill[colorofwisdom!15] (1,2) -- (4,2) -- (4,6) -- cycle;
+    \draw[thick] (1,2) -- (4,2) node[midway, below] {\scriptsize $|b_1 - a_1| = 3$};
+    \draw[thick] (4,2) -- (4,6) node[midway, right] {\scriptsize $|b_2 - a_2| = 4$};
+    \draw (3.7,2) -- (3.7,2.3) -- (4,2.3);
+    \draw[very thick, colorofwisdom] (1,2) -- (4,6) node[pos=0.8, left] {\small $5$};
+    \draw[dotted, thick] (2.5,4) -- (2.5,0) (2.5,4) -- (0,4);
+    \node[below] at (2.5,-0.3) {\scriptsize $\frac{5}{2}$};
+    \filldraw (1,2) circle (2pt) node[below left] {\small $A$};
+    \filldraw (4,6) circle (2pt) node[above right] {\small $B$};
+    \filldraw[colorofwisdom] (2.5,4) circle (2pt) node[above left=-1pt] {\small $S_{AB}$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   Pro $A = [1, 2]$ a $B = [4, 6]$ je $|AB| = \sqrt{9 + 16} = 5$ a $S_{AB} = \left[\frac{5}{2}, 4\right]$.
@@ -39,6 +60,22 @@ Vzorec pro vzdálenost je jen Pythagorova věta. Úsečka $AB$ je přeponou prav
   \end{equation*}
   \textbf{Velikost vektoru} $\vec{u} = (u_1, u_2)$ je $|\vec{u}| = \sqrt{u_1^2 + u_2^2}$. \textbf{Nulový vektor} $\vec{o} = (0, 0)$ má velikost $0$. \textbf{Jednotkový vektor} má velikost $1$.
 \end{definitionbox}
+
+Vektor si představte jako pokyn na mapě pokladu: `tři kroky na východ a jeden na sever'. Pokyn sám neříká, kde stojíte. Ať vyrazíte odkudkoli, posunete se stejně. Všechny šipky na obrázku jsou proto \textbf{tentýž} vektor $\vec{u} = (3, 1)$, jen nakreslený z různých míst.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.65, >=stealth]
+    \draw[gray!30] (-0.5,-0.5) grid (9.5,4.5);
+    \foreach \a/\b in {1/1, 0/3, 5/2.5, 6/0} \draw[->, very thick, colorofwisdom] (\a,\b) -- ++(3,1);
+    \draw[dashed] (1,1) -- (4,1) node[midway, below] {\scriptsize $3$};
+    \draw[dashed] (4,1) -- (4,2) node[midway, right] {\scriptsize $1$};
+    \filldraw (1,1) circle (2pt) node[below left] {\small $A$};
+    \filldraw (4,2) circle (2pt) node[above] {\small $B$};
+    \node[above, colorofwisdom] at (1.5,3.5) {\small $\vec{u}$};
+    \node[above, colorofwisdom] at (6.5,3) {\small $\vec{u}$};
+    \node[above, colorofwisdom] at (7.5,0.5) {\small $\vec{u}$};
+  \end{tikzpicture}
+\end{center}
 
 Souřadnice bodů píšeme do hranatých závorek, souřadnice vektorů do kulatých. Je to drobnost, ale zkoušející si na ní rádi zakládají, takže si na ni zvykněte.
 
@@ -66,7 +103,39 @@ Souřadnice bodů píšeme do hranatých závorek, souřadnice vektorů do kulat
   \end{tikzpicture}
 \end{center}
 
+Násobek vektoru číslem si představte jako změnu rychlosti při stejném směru: $2\vec{u}$ je dvakrát delší krok, $\frac{1}{2}\vec{u}$ poloviční krok a $-\vec{u}$ krok stejně dlouhý, ale pozpátku.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7, >=stealth]
+    \draw[gray!30] (-0.5,-0.5) grid (11.5,2.5);
+    \draw[->, very thick, colorofwisdom] (0,0) -- (2,1) node[above] {\small $\vec{u}$};
+    \draw[->, very thick] (2.5,0) -- (6.5,2) node[above] {\small $2\vec{u}$};
+    \draw[->, very thick] (7,0) -- (8,0.5) node[above] {\small $\frac{1}{2}\vec{u}$};
+    \draw[->, very thick] (11,1) -- (9,0) node[below] {\small $-\vec{u}$};
+  \end{tikzpicture}
+\end{center}
+
 Ano, ten determinant je ten samý jako v kapitole~\ref{kap:rovnice}. Tam jsme si řekli, že jeho absolutní hodnota je obsah rovnoběžníku, který vektory vytvoří. Kolineární vektory vytvoří `rovnoběžník' s nulovým obsahem, a proto je determinant nulový.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8, >=stealth]
+    \draw[gray!30] (-0.5,-0.5) grid (4.5,3.5);
+    \fill[colorofwisdom!20] (0,0) -- (3,1) -- (4,3) -- (1,2) -- cycle;
+    \draw[dashed] (3,1) -- (4,3) -- (1,2);
+    \draw[->, very thick, colorofwisdom] (0,0) -- (3,1) node[below right] {\small $\vec{u} = (3, 1)$};
+    \draw[->, very thick] (0,0) -- (1,2) node[above left] {\small $\vec{v} = (1, 2)$};
+    \node at (2,1.5) {\small $S = 5$};
+    \node at (2,-1) {\scriptsize $\begin{vmatrix} 3 & 1\\ 1 & 2 \end{vmatrix} = 6 - 1 = 5$};
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=0.8, >=stealth]
+    \draw[gray!30] (-0.5,-0.5) grid (4.5,3.5);
+    \draw[->, very thick] (0,0) -- (4,2) node[above] {\small $\vec{v} = (4, 2)$};
+    \draw[->, very thick, colorofwisdom] (0,0) -- (2,1) node[pos=0.6, below right=2pt] {\small $\vec{u} = (2, 1)$};
+    \node at (2,-1) {\scriptsize $\begin{vmatrix} 2 & 4\\ 1 & 2 \end{vmatrix} = 4 - 4 = 0$};
+  \end{tikzpicture}
+\end{center}
+Vpravo jsou vektory kolineární a rovnoběžník se `splácl' do úsečky.
 
 \subsection{Skalární součin}
 
@@ -82,8 +151,40 @@ Ano, ten determinant je ten samý jako v kapitole~\ref{kap:rovnice}. Tam jsme si
   Speciálně: nenulové vektory jsou \textbf{kolmé}, právě když $\vec{u}\cdot\vec{v} = 0$. Dále $\vec{u}\cdot\vec{u} = |\vec{u}|^2$.
 \end{definitionbox}
 
+Co skalární součin `měří'? Představte si, že vektor $\vec{v}$ je tyč a slunce svítí kolmo na přímku, na které leží $\vec{u}$. Stín tyče na této přímce má délku $|\vec{v}|\cos\varphi$, a skalární součin je tedy $|\vec{u}|$ krát délka stínu. Říká, \textit{jak moc míří $\vec{v}$ stejným směrem jako $\vec{u}$}. Je-li úhel tupý, stín padá dozadu a součin je záporný. Je-li pravý, stín je jen bod a součin je nula. Odtud ta nejdůležitější vlastnost: kolmost poznáme podle nulového skalárního součinu.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.75, >=stealth]
+    \foreach \ang/\sx/\lab in {50/0/{$\vec{u}\cdot\vec{v} > 0$}, 90/5.2/{$\vec{u}\cdot\vec{v} = 0$}, 130/10.4/{$\vec{u}\cdot\vec{v} < 0$}} {
+      \begin{scope}[xshift=\sx cm]
+        \draw[gray] (-1.5,0) -- (3.3,0);
+        \draw[dashed, gray] (\ang:2) -- ({2*cos(\ang)},0);
+        \draw[line width=2.5pt, colorofwisdom!60] (0,0) -- ({2*cos(\ang)},0);
+        \draw[->, very thick, colorofwisdom] (0,0) -- (3,0) node[below] {\small $\vec{u}$};
+        \draw[->, very thick] (0,0) -- (\ang:2) node[above] {\small $\vec{v}$};
+        \draw (0,0) ++(0:0.45) arc[start angle=0, end angle=\ang, radius=0.45];
+        \node at ({\ang/2}:0.75) {\scriptsize $\varphi$};
+        \node at (0.7,-0.9) {\small \lab};
+      \end{scope}
+    }
+  \end{tikzpicture}
+\end{center}
+Tlustý úsek na přímce vektoru $\vec{u}$ je `stín' vektoru $\vec{v}$, tedy jeho kolmý průmět.
+
 \begin{proof}
-  Vektory $\vec{u}$, $\vec{v}$ umístíme do společného počátku. Třetí strana trojúhelníku, který vytvoří, je vektor $\vec{u} - \vec{v}$. Podle kosinové věty z kapitoly~\ref{kap:goniometrie}:
+  Vektory $\vec{u}$, $\vec{v}$ umístíme do společného počátku. Třetí strana trojúhelníku, který vytvoří, je vektor $\vec{u} - \vec{v}$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8, >=stealth]
+      \coordinate (O) at (0,0); \coordinate (U) at (4,0.5); \coordinate (V) at (1,2);
+      \fill[colorofwisdom!10] (O) -- (U) -- (V) -- cycle;
+      \draw[->, very thick, colorofwisdom] (O) -- (U) node[midway, below] {\small $\vec{u}$};
+      \draw[->, very thick] (O) -- (V) node[midway, left] {\small $\vec{v}$};
+      \draw[->, very thick, gray] (V) -- (U) node[midway, above right] {\small $\vec{u} - \vec{v}$};
+      \draw (O) ++(7.1:0.6) arc[start angle=7.1, end angle=63.4, radius=0.6];
+      \node at (35:0.9) {\scriptsize $\varphi$};
+    \end{tikzpicture}
+  \end{center}
+  Šedý vektor $\vec{u} - \vec{v}$ vede z konce $\vec{v}$ do konce $\vec{u}$, protože $\vec{v} + (\vec{u} - \vec{v}) = \vec{u}$. Podle kosinové věty z kapitoly~\ref{kap:goniometrie}:
   \begin{equation*}
     |\vec{u} - \vec{v}|^2 = |\vec{u}|^2 + |\vec{v}|^2 - 2|\vec{u}||\vec{v}|\cos\varphi.
   \end{equation*}
@@ -116,6 +217,17 @@ Ano, ten determinant je ten samý jako v kapitole~\ref{kap:rovnice}. Tam jsme si
     \item U $A$: $\overrightarrow{AB} = (4, 0)$, $\overrightarrow{AC} = (1, 3)$, $\cos\alpha = \frac{4}{4\sqrt{10}} = \frac{1}{\sqrt{10}}$, $\alpha\approx 71{,}6^\circ$. U $B$: $\overrightarrow{BA} = (-4, 0)$, $\overrightarrow{BC} = (-3, 3)$, $\cos\beta = \frac{12}{4\cdot 3\sqrt{2}} = \frac{\sqrt{2}}{2}$, $\beta = 45^\circ$. Pak $\gamma\approx 63{,}4^\circ$.
     \item $D = A + \overrightarrow{BC} = [1, 1] + (1, 3) = [2, 4]$.
   \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.6, >=stealth]
+      \draw[gray!30] (-0.5,-0.5) grid (6.5,5.5);
+      \fill[colorofwisdom!10] (1,1) -- (5,2) -- (6,5) -- (2,4) -- cycle;
+      \draw[thick] (1,1) -- (5,2) (6,5) -- (2,4);
+      \draw[->, very thick, colorofwisdom] (5,2) -- (6,5) node[midway, right] {\scriptsize $\overrightarrow{BC}$};
+      \draw[->, very thick, colorofwisdom] (1,1) -- (2,4) node[midway, left] {\scriptsize $\overrightarrow{BC}$};
+      \foreach \p/\c/\pos in {A/{1,1}/below left, B/{5,2}/below right, C/{6,5}/above right, D/{2,4}/above left} \filldraw (\c) circle (2pt) node[\pos] {\small $\p$};
+    \end{tikzpicture}
+  \end{center}
+  Pozor na pořadí vrcholů: rovnoběžník $ABCD$ se obchází dokola, takže $D$ leží naproti $B$, ne naproti $C$.
 \end{solution}
 
 \section{Přímka v rovině}
@@ -154,6 +266,25 @@ Parametrické vyjádření si můžete představit jako pohyb. V čase $t = 0$ j
   Z parametrického vyjádření dostaneme obecnou rovnici také tak, že z obou rovnic vyloučíme $t$: $t = \frac{x - 1}{3} = \frac{y - 2}{4}$, tedy $4x - 4 = 3y - 6$ a $4x - 3y + 2 = 0$.
 \end{example}
 
+Na obrázku je přímka z příkladu. Body s parametrem $t = 0$ a $t = 1$ jsou $A$ a $B$, polovina parametru dává střed úsečky $AB$ a záporné $t$ leží `za' bodem $A$. Směrový vektor $\vec{u}$ míří podél přímky, normálový vektor $\vec{n}$ je na ni kolmý. Obecná rovnice tedy říká: \textit{bod $X$ leží na přímce, právě když je vektor $\overrightarrow{AX}$ kolmý na $\vec{n}$}, tedy $\vec{n}\cdot(X - A) = 0$. Po roznásobení je to přesně $4x - 3y + 2 = 0$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.55, >=stealth]
+    \draw[gray!30] (-1.5,-1.5) grid (6.5,8.5);
+    \draw[->] (-1.5,0) -- (6.8,0) node[right] {\small $x$};
+    \draw[->] (0,-1.5) -- (0,8.8) node[above] {\small $y$};
+    \draw[thick] (-1.25,-1) -- (6.25,9) node[below right] {\small $p$};
+    \draw[->, very thick, colorofwisdom] (1,2) -- (4,6) node[pos=0.3, right=4pt] {\small $\vec{u} = (3, 4)$};
+    \draw[->, very thick] (1,2) -- (5,-1) node[right] {\small $\vec{n} = (4, -3)$};
+    \draw (1.24,2.32) -- (1.56,2.08) -- (1.32,1.76);
+    \foreach \t/\lab in {-0.5/{-\frac{1}{2}}, 0/0, 0.5/{\frac{1}{2}}, 1/1, 1.5/{\frac{3}{2}}} {
+      \filldraw[colorofwisdom] ({1+3*\t},{2+4*\t}) circle (2.5pt) node[left, xshift=-2pt, fill=white, inner sep=1pt] {\scriptsize $t = \lab$};
+    }
+    \node[above left=-1pt, xshift=-2pt, yshift=5pt] at (1,2) {\small $A$};
+    \node[above left=-1pt, xshift=-2pt, yshift=5pt] at (4,6) {\small $B$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{definitionbox}
   \textbf{Vzájemná poloha dvou přímek}: Pro přímky $p: a_1x + b_1y + c_1 = 0$ a $q: a_2x + b_2y + c_2 = 0$:
   \begin{itemize}
@@ -179,6 +310,61 @@ Parametrické vyjádření si můžete představit jako pohyb. V čase $t = 0$ j
   \end{equation*}
 \end{definitionbox}
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[thick, colorofwisdom] (0,0) -- (3,2);
+    \draw[thick] (0,2) -- (3,0.5);
+    \filldraw (1.875,1.25) circle (2pt);
+    \node at (1.5,-0.5) {\scriptsize různoběžné};
+    \begin{scope}[xshift=4cm]
+      \draw[thick, colorofwisdom] (0,0.3) -- (3,1.8);
+      \draw[thick] (0,1) -- (3,2.5);
+      \node at (1.5,-0.5) {\scriptsize rovnoběžné různé};
+    \end{scope}
+    \begin{scope}[xshift=8cm]
+      \draw[line width=3pt, colorofwisdom!50] (0,0.3) -- (3,1.8);
+      \draw[thick] (0,0.3) -- (3,1.8);
+      \node at (1.5,-0.5) {\scriptsize totožné};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+U odchylky můžeme klidně použít normálové vektory místo směrových. Normálový vektor je směrový vektor otočený o $90^\circ$, a když obě přímky otočíme o stejný pravý úhel, úhel mezi nimi se nezmění. Jediný háček je, že vektory mohou svírat tupý úhel $180^\circ - \varphi$ (stačí jeden z nich otočit opačným směrem). Proto je v čitateli absolutní hodnota.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1, >=stealth]
+    \draw[thick, colorofwisdom] (200:2) -- (20:2.6) node[right] {\small $p_1$};
+    \draw[thick] (255:1.2) -- (75:2.2) node[above] {\small $p_2$};
+    \draw (20:0.6) arc[start angle=20, end angle=75, radius=0.6];
+    \node at (47.5:0.85) {\scriptsize $\varphi$};
+    \draw[->, very thick, colorofwisdom] (0,0) -- (110:1.6) node[above] {\small $\vec{n}_1$};
+    \draw[->, very thick] (0,0) -- (165:1.6) node[left] {\small $\vec{n}_2$};
+    \draw (110:0.9) arc[start angle=110, end angle=165, radius=0.9];
+    \node at (137.5:1.15) {\scriptsize $\varphi$};
+    \draw[gray] (20:0.25) -- ($(20:0.25)+(110:0.25)$) -- (110:0.25);
+  \end{tikzpicture}
+\end{center}
+
+Vzdálenost bodu od přímky je délka \textbf{nejkratší} cesty k ní, a ta vede kolmo, tedy ve směru normálového vektoru. Představte si, že stojíte na louce v bodě $M$ a přímka je řeka. K řece nejrychleji doběhnete kolmo k břehu, do bodu $Q$. Důkaz níže tu kolmou cestu nemusí vůbec hledat. Stačí vzít libovolný bod $P$ na břehu a z vektoru $\overrightarrow{PM}$ si nechat jen tu část, která míří ve směru $\vec{n}$ (jeho `stín' na normále, viz skalární součin). Na obrázku je to situace z příkladu níže: $M = [3, 1]$, přímka $4x - 3y + 2 = 0$ a $P = \left[\frac{5}{2}, 4\right]$. Body $P$, $P'$, $M$, $Q$ tvoří obdélník, takže $|PP'| = |QM| = d$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.2, >=stealth]
+    \draw[gray!30] (0,0.5) grid (5,4.5);
+    \fill[colorofwisdom!12] (2.5,4) -- (4.26,2.68) -- (3,1) -- (1.24,2.32) -- cycle;
+    \draw[thick] (0.25,1) -- (2.875,4.5) node[right] {\small $4x - 3y + 2 = 0$};
+    \draw[->, thick, gray] (2.5,4) -- (3,1) node[pos=0.25, left] {\scriptsize $\overrightarrow{PM}$};
+    \draw[very thick, colorofwisdom] (3,1) -- (1.24,2.32) node[midway, below left] {\small $d$};
+    \draw[->, very thick, colorofwisdom!60] (2.5,4) -- (4.26,2.68) node[midway, above right] {\small $\vec{n}$};
+    \draw[dashed] (4.26,2.68) -- (3,1);
+    \draw ($(1.24,2.32)+(0.15,0.2)$) -- ++(0.2,-0.15) -- ++(-0.15,-0.2);
+    \draw ($(4.26,2.68)+(-0.2,0.15)$) -- ++(-0.15,-0.2) -- ++(0.2,-0.15);
+    \filldraw (3,1) circle (1.6pt) node[below right] {\small $M = [3, 1]$};
+    \filldraw (2.5,4) circle (1.6pt) node[above left] {\small $P$};
+    \filldraw (1.24,2.32) circle (1.6pt) node[left] {\small $Q$};
+    \filldraw (4.26,2.68) circle (1.6pt) node[right] {\small $P'$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{proof}[(vzorce pro vzdálenost)]
   Nechť $P = [p_1, p_2]$ je libovolný bod přímky, tedy $ap_1 + bp_2 = -c$. Vzdálenost bodu $M$ od přímky je délka průmětu vektoru $\overrightarrow{PM}$ do směru kolmého na přímku, tedy do směru normálového vektoru $\vec{n}$. Z definice skalárního součinu je tato délka
   \begin{equation*}
@@ -201,6 +387,22 @@ Parametrické vyjádření si můžete představit jako pohyb. V čase $t = 0$ j
 \begin{definitionbox}
   \textbf{Polorovina}: Přímka $ax + by + c = 0$ rozdělí rovinu na dvě poloroviny. Body, pro které $ax + by + c > 0$, leží v jedné z nich, body s $ax + by + c < 0$ ve druhé. Normálový vektor $\vec{n} = (a, b)$ míří do té, kde je výraz kladný.
 \end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7, >=stealth]
+    \fill[colorofwisdom!12] (-0.5,4.5) -- (4.5,4.5) -- (4.5,-0.5) -- cycle;
+    \draw[gray!30] (-0.5,-0.5) grid (4.5,4.5);
+    \draw[->] (-0.5,0) -- (4.8,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,4.8) node[above] {\small $y$};
+    \draw[thick] (-0.5,4.5) -- (4.5,-0.5) node[right] {\small $x + y - 4 = 0$};
+    \draw[->, very thick, colorofwisdom] (1.5,2.5) -- (2.5,3.5) node[above] {\small $\vec{n} = (1, 1)$};
+    \filldraw (0,0) circle (2pt) node[below left] {\scriptsize $[0, 0]$};
+    \filldraw (3,3) circle (2pt) node[right] {\scriptsize $[3, 3]$};
+    \node[colorofwisdom] at (3.9,1.5) {\scriptsize $> 0$};
+    \node at (0.9,1) {\scriptsize $< 0$};
+  \end{tikzpicture}
+\end{center}
+Polorovinu si představte jako jednu stranu plotu. Dosazením bodu do levé strany rovnice zjistíme, na které straně plotu stojí. Normálový vektor ukazuje `ven' na kladnou stranu.
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
@@ -234,11 +436,55 @@ Parametrické vyjádření si můžete představit jako pohyb. V čase $t = 0$ j
 
 Vzorec pro těžiště plyne z toho, že těžiště dělí těžnici v poměru $2:1$. Vzorec pro obsah z toho, že trojúhelník je polovina rovnoběžníku určeného vektory $\overrightarrow{AB}$ a $\overrightarrow{AC}$.
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.85, >=stealth]
+    \fill[colorofwisdom!10] (0,0) -- (3.5,0.5) -- (4.5,2.5) -- (1,2) -- cycle;
+    \fill[colorofwisdom!30] (0,0) -- (3.5,0.5) -- (1,2) -- cycle;
+    \draw[dashed] (3.5,0.5) -- (4.5,2.5) -- (1,2);
+    \draw[thick] (3.5,0.5) -- (1,2);
+    \draw[->, very thick] (0,0) -- (3.5,0.5) node[below right] {\small $B$};
+    \draw[->, very thick] (0,0) -- (1,2) node[above left] {\small $C$};
+    \node[below left] at (0,0) {\small $A$};
+    \node at (1.5,0.85) {\small $S$};
+    \node at (3,1.65) {\small $S$};
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=0.85]
+    \coordinate (A) at (0,0); \coordinate (B) at (4,0); \coordinate (C) at (1.2,2.7);
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \draw[gray] (A) -- ($(B)!0.5!(C)$) (B) -- ($(A)!0.5!(C)$);
+    \draw[very thick, colorofwisdom] (C) -- ($(C)!0.6667!($(A)!0.5!(B)$)$) node[midway, right] {\scriptsize $2$};
+    \draw[very thick, colorofwisdom!50] ($(C)!0.6667!($(A)!0.5!(B)$)$) -- ($(A)!0.5!(B)$) node[midway, right] {\scriptsize $1$};
+    \filldraw ($(A)!0.5!(B)$) circle (1.5pt);
+    \filldraw[colorofwisdom] (1.7333,0.9) circle (2pt) node[left=2pt] {\small $T$};
+    \node[below left] at (A) {\small $A$}; \node[below right] at (B) {\small $B$}; \node[above] at (C) {\small $C$};
+  \end{tikzpicture}
+\end{center}
+Vlevo: rovnoběžník je rozdělen úhlopříčkou na dva shodné trojúhelníky, takže trojúhelník má polovinu obsahu. Vpravo: těžiště $T$ dělí každou těžnici v poměru $2:1$, tedy leží ve třetině těžnice od strany. Představte si trojúhelník z kartonu: v těžišti ho udržíte na špičce tužky.
+
 \begin{example}
   Trojúhelník $A = [0, 0]$, $B = [4, 0]$, $C = [1, 3]$ má těžiště $T = \left[\frac{5}{3}, 1\right]$ a obsah $S = \frac{1}{2}|4\cdot 3 - 0\cdot 1| = 6$. Kontrola: základna $AB$ má délku $4$ a výška z $C$ je $3$, tedy $S = \frac{4\cdot 3}{2} = 6$.
 
   Rovnice výšky z vrcholu $C$: je kolmá na $AB$, takže její normálový vektor je $\overrightarrow{AB} = (4, 0)$, a rovnice je $4x + c = 0$, po dosazení $C$: $x = 1$. Rovnice výšky z $A$: normálový vektor je $\overrightarrow{BC} = (-3, 3)$, neboli $(1, -1)$, rovnice $x - y = 0$. Průsečík obou výšek je ortocentrum $V = [1, 1]$.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \draw[gray!30] (-0.5,-0.5) grid (4.5,3.5);
+    \draw[->] (-0.5,0) -- (4.8,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,3.8) node[above] {\small $y$};
+    \fill[colorofwisdom!10] (0,0) -- (4,0) -- (1,3) -- cycle;
+    \draw[very thick] (0,0) -- (4,0) -- (1,3) -- cycle;
+    \draw[thick, colorofwisdom, dashed] (1,3) -- (1,0) (0,0) -- (2,2) (4,0) -- (0.4,1.2);
+    \draw[gray] (1,0) -- (1,0.2) -- (1.2,0.2) -- (1.2,0);
+    \draw[gray] (2,2) -- (1.86,1.86) -- (2,1.72) -- (2.14,1.86);
+    \draw[gray, dotted, thick] (1,3) -- (2,0) (0,0) -- (2.5,1.5) (4,0) -- (0.5,1.5);
+    \filldraw[colorofwisdom] (1,1) circle (2pt) node[above left] {\small $V$};
+    \filldraw (1.6667,1) circle (2pt) node[right=2pt] {\small $T$};
+    \node[below left] at (0,0) {\small $A$}; \node[below right] at (4,0) {\small $B$}; \node[above] at (1,3) {\small $C$};
+  \end{tikzpicture}
+\end{center}
+Čárkovaně jsou výšky (všechny tři se protnou v ortocentru $V$, třetí výška z $B$ má rovnici $x + 3y - 4 = 0$ a bodem $V$ opravdu prochází), tečkovaně těžnice protínající se v těžišti $T$.
 
 \begin{problem}
   Je dán trojúhelník $A = [1, 1]$, $B = [7, 3]$, $C = [3, 7]$.
@@ -257,6 +503,23 @@ Vzorec pro těžiště plyne z toho, že těžiště dělí těžnici v poměru 
     \item Osa prochází středem $[4, 2]$ a má normálový vektor $\overrightarrow{AB} = (6, 2)$, tedy $(3, 1)$: $3x + y - 14 = 0$.
     \item $|AB| = |AC| = \sqrt{40}$, je rovnoramenný se základnou $BC$. Skalární součiny: $\overrightarrow{AB}\cdot\overrightarrow{AC} = 24\neq 0$, $\overrightarrow{BA}\cdot\overrightarrow{BC} = (-6)(-4) + (-2)(4) = 16\neq 0$, $\overrightarrow{CA}\cdot\overrightarrow{CB} = (-2)(4) + (-6)(-4) = 16\neq 0$. Pravoúhlý není.
   \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.55]
+      \draw[gray!30] (-0.5,-0.5) grid (8.5,8.5);
+      \draw[->] (-0.5,0) -- (8.8,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,8.8) node[above] {\small $y$};
+      \fill[colorofwisdom!10] (1,1) -- (7,3) -- (3,7) -- cycle;
+      \draw[very thick] (1,1) -- (7,3) -- (3,7) -- cycle;
+      \draw[thick, colorofwisdom] (3,7) -- (4,2) node[pos=0.12, right=2pt] {\scriptsize těžnice};
+      \draw[thick, dashed] (4.6667,0) -- (2,8) node[below left] {\scriptsize osa $AB$};
+      \draw ($(4,2)+(0.2846,0.0949)$) -- ++(-0.0949,0.2846) -- ++(-0.2846,-0.0949);
+      \filldraw (4,2) circle (2pt);
+      \filldraw[colorofwisdom] (3.6667,3.6667) circle (2.5pt) node[right=2pt] {\small $T$};
+      \node[below left] at (1,1) {\small $A$}; \node[right] at (7,3) {\small $B$}; \node[above right] at (3,7) {\small $C$};
+      \draw[thick] (3.163,1.51) -- (3.037,1.89) (1.81,4.063) -- (2.19,3.937);
+    \end{tikzpicture}
+  \end{center}
+  Čárky na stranách $AB$ a $AC$ naznačují, že jsou stejně dlouhé. Osa strany $AB$ prochází jejím středem $[4, 2]$ kolmo, těžnice z $C$ míří do téhož středu.
 \end{solution}
 
 \section{Příběh --- Lebka filozofa}

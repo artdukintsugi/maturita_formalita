@@ -1,0 +1,429 @@
+\label{kap:rady}
+\mathquote{Divergentní řady jsou vynálezem ďábla a je hanba na nich zakládat jakýkoli důkaz.}{Niels Henrik Abel, 1826}
+
+V kapitole~\ref{kap:posloupnosti} jsme sečetli nekonečnou geometrickou řadu a zjistili, že nekonečně mnoho čísel může dát konečný součet. To byl jen začátek. V této kapitole se naučíme rozhodovat, kdy nekonečný součet `funguje' a kdy ne, a pak uvidíme dvě z nejmocnějších myšlenek celé analýzy. \textbf{Taylorův rozvoj}: skoro každou rozumnou funkci lze zapsat jako `nekonečný mnohočlen'. \textbf{Fourierův rozvoj}: skoro každou periodickou funkci lze zapsat jako součet sinusovek. První stojí za tím, jak kalkulačka počítá $\sin x$. Druhý za tím, jak funguje MP3 a JPEG.
+
+\section{Číselné řady}
+
+\begin{definitionbox}
+  \textbf{Řada} $\sum_{n=1}^{\infty}a_n = a_1 + a_2 + a_3 + \cdots$ je dvojice posloupností: členů $a_n$ a \textbf{částečných součtů}
+  \begin{equation*}
+    s_N = a_1 + a_2 + \cdots + a_N.
+  \end{equation*}
+  Řada \textbf{konverguje} a má součet $s$, pokud $\lim_{N\to\infty}s_N = s$ je konečné číslo. Jinak řada \textbf{diverguje}.
+\end{definitionbox}
+
+Nekonečný součet tedy není `součet nekonečně mnoha čísel' (to nikdo neumí). Je to limita konečných součtů. Představte si, že sčítáte člen po členu a zapisujete si mezivýsledky. Pokud se mezivýsledky usadí u jednoho čísla, je to součet řady.
+
+\begin{definitionbox}
+  \textbf{Nutná podmínka konvergence}: Pokud řada $\sum a_n$ konverguje, pak $\lim_{n\to\infty}a_n = 0$.
+\end{definitionbox}
+
+\begin{proof}
+  Platí $a_n = s_n - s_{n-1}$. Pokud $s_n\to s$, pak i $s_{n-1}\to s$, a tedy $a_n\to s - s = 0$.
+\end{proof}
+
+Pozor, podmínka je jen \textit{nutná}. To, že členy jdou k nule, nestačí. Nejslavnější protipříklad je \textbf{harmonická řada}.
+
+\begin{example}
+  Harmonická řada $1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots$ \textbf{diverguje}. Důkaz pochází od Nicola Oresma ze 14. století a je krásně jednoduchý. Seskupíme členy po dvou, čtyřech, osmi, \dots:
+  \begin{equation*}
+    1 + \frac{1}{2} + \underbrace{\left(\frac{1}{3} + \frac{1}{4}\right)}_{>\,\frac{1}{4} + \frac{1}{4} = \frac{1}{2}} + \underbrace{\left(\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}\right)}_{>\,4\cdot\frac{1}{8} = \frac{1}{2}} + \underbrace{\left(\frac{1}{9} + \cdots + \frac{1}{16}\right)}_{>\,8\cdot\frac{1}{16} = \frac{1}{2}} + \cdots
+  \end{equation*}
+  Každá skupina přispěje víc než $\frac{1}{2}$ a skupin je nekonečně mnoho. Součet tedy roste nade všechny meze. Roste ale neuvěřitelně pomalu: prvních milion členů dá dohromady jen asi $14{,}39$ a na součet $100$ byste potřebovali přibližně $10^{43}$ členů.
+\end{example}
+
+Proč harmonická řada diverguje, a třeba řada $\sum\frac{1}{n^2}$ ne? Pomůže obrázek. Člen $\frac{1}{n}$ si nakreslíme jako obdélník o šířce $1$ a výšce $\frac{1}{n}$:
+
+\begin{center}
+  \begin{tikzpicture}[x=1.5cm, y=2.4cm]
+    \foreach \n in {1,...,5} {
+      \fill[colorofwisdom!25] (\n,0) rectangle ({\n+1},{1/\n});
+      \draw[colorofwisdom!70] (\n,0) rectangle ({\n+1},{1/\n});
+      \node[font=\scriptsize] at ({\n+0.5},{1/\n+0.08}) {$\frac{1}{\n}$};
+    }
+    \draw[->] (0,0) -- (6.6,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,1.35) node[above] {\small $y$};
+    \draw[thick, domain=0.8:6.4, samples=60] plot (\x, {1/\x}) node[above] {\small $y = \frac{1}{x}$};
+    \foreach \n in {1,...,6} \node[below, font=\scriptsize] at (\n,0) {$\n$};
+  \end{tikzpicture}
+\end{center}
+
+Obdélníky leží \textit{nad} grafem funkce $\frac{1}{x}$, takže jejich součet je větší než plocha pod grafem:
+\begin{equation*}
+  1 + \frac{1}{2} + \cdots + \frac{1}{N} > \int_1^{N+1}\frac{1}{x}\,\mathrm{d}x = \ln(N + 1)\xrightarrow{N\to\infty}\infty.
+\end{equation*}
+Naopak pro $\frac{1}{n^2}$ posuneme obdélníky o jedna doleva, takže leží \textit{pod} grafem $\frac{1}{x^2}$, a plocha pod tímto grafem od $1$ do nekonečna je konečná: $\int_1^{\infty}\frac{1}{x^2}\,\mathrm{d}x = 1$. Proto $\sum\frac{1}{n^2}\leq 1 + 1 = 2$ a řada konverguje. Tomuto postupu se říká \textbf{integrální kritérium}: řada se chová stejně jako integrál. Obecně $\sum\frac{1}{n^p}$ konverguje, právě když $p > 1$.
+
+Mimochodem, přesný součet $\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$ našel Leonhard Euler v roce 1734. Byl to slavný otevřený problém (tzv. basilejský problém) a výsledek šokoval: co dělá $\pi$, číslo o kružnicích, v součtu převrácených čtverců?
+
+\subsection{Kritéria konvergence}
+
+U většiny řad součet nespočítáme. Často ale stačí vědět, \textit{jestli} konvergují. K tomu slouží kritéria. Všechna stojí na stejném nápadu: porovnat řadu s něčím, co známe.
+
+\begin{definitionbox}
+  Nechť $a_n\geq 0$.
+  \begin{itemize}
+    \item \textbf{Srovnávací kritérium}: Pokud $a_n\leq b_n$ a $\sum b_n$ konverguje, konverguje i $\sum a_n$. Pokud $a_n\geq b_n$ a $\sum b_n$ diverguje, diverguje i $\sum a_n$.
+    \item \textbf{Podílové (d'Alembertovo) kritérium}: Nechť $\lim_{n\to\infty}\frac{a_{n+1}}{a_n} = q$. Pokud $q < 1$, řada konverguje. Pokud $q > 1$, diverguje. Pro $q = 1$ kritérium nerozhodne.
+  \end{itemize}
+\end{definitionbox}
+
+Podílové kritérium je srovnání s geometrickou řadou. Pokud je každý člen zhruba $q$-krát menší než předchozí, chová se řada jako $a + aq + aq^2 + \cdots$, a ta pro $q < 1$ konverguje. Pro harmonickou řadu i pro $\sum\frac{1}{n^2}$ vyjde $q = 1$, takže kritérium mlčí. Obě řady se zmenšují `pomaleji než geometricky' a rozhodnout musí jemnější nástroj, třeba integrál.
+
+\begin{example}
+  Řada $\sum_{n=0}^{\infty}\frac{1}{n!} = 1 + 1 + \frac{1}{2} + \frac{1}{6} + \frac{1}{24} + \cdots$ konverguje, protože
+  \begin{equation*}
+    \frac{a_{n+1}}{a_n} = \frac{n!}{(n + 1)!} = \frac{1}{n + 1}\to 0 < 1.
+  \end{equation*}
+  Její součet je $\mathrm{e}\approx 2{,}718\,28$, jak uvidíme u Taylorova rozvoje. Faktoriál roste tak rychle, že řada konverguje velice rychle: prvních deset členů dá $\mathrm{e}$ na šest desetinných míst.
+\end{example}
+
+\subsection{Střídavé řady a podivné přerovnání}
+
+\begin{definitionbox}
+  \textbf{Leibnizovo kritérium}: Pokud $a_n$ klesá k nule, pak \textbf{střídavá řada} $a_1 - a_2 + a_3 - a_4 + \cdots$ konverguje.
+\end{definitionbox}
+
+Představte si chůzi po přímce: krok dopředu o $a_1$, zpátky o $a_2$, dopředu o $a_3$, \dots Kroky se zkracují, takže kmitáte kolem nějakého bodu se stále menší amplitudou, a nakonec se v něm `zastavíte'.
+
+\begin{center}
+  \begin{tikzpicture}[x=6cm, y=2cm]
+    \draw[->] (-0.05,0) -- (1.1,0);
+    \foreach \x/\l in {0/0, 0.5/\frac{1}{2}, 1/1} \draw (\x,0.08) -- (\x,-0.08) node[below, font=\scriptsize] {$\l$};
+    \draw[thick, colorofwisdom] (0.6931,0.12) -- (0.6931,-0.12) node[below, font=\scriptsize] {$\ln 2$};
+    \draw[->, thick] (0,0.3) -- (1,0.3);
+    \draw[->, thick] (1,0.45) -- (0.5,0.45);
+    \draw[->, thick] (0.5,0.6) -- (0.8333,0.6);
+    \draw[->, thick] (0.8333,0.75) -- (0.5833,0.75);
+    \draw[->, thick] (0.5833,0.9) -- (0.7833,0.9);
+    \draw[->, thick] (0.7833,1.05) -- (0.6167,1.05);
+    \draw[->, thick] (0.6167,1.2) -- (0.7595,1.2);
+    \node[font=\scriptsize, anchor=west] at (1.02,0.3) {$+1$};
+    \node[font=\scriptsize, anchor=west] at (1.02,0.45) {$-\frac{1}{2}$};
+    \node[font=\scriptsize, anchor=west] at (1.02,0.6) {$+\frac{1}{3}$};
+    \node[font=\scriptsize, anchor=west] at (1.02,0.75) {$-\frac{1}{4}$};
+    \node[font=\scriptsize, anchor=west] at (1.02,0.9) {$\cdots$};
+  \end{tikzpicture}
+\end{center}
+
+Například $1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots = \ln 2$. Tahle řada ale skrývá past. Zkusme její členy \textit{přerovnat}: za každý kladný člen dáme dva záporné,
+\begin{equation*}
+  \left(1 - \frac{1}{2}\right) - \frac{1}{4} + \left(\frac{1}{3} - \frac{1}{6}\right) - \frac{1}{8} + \left(\frac{1}{5} - \frac{1}{10}\right) - \frac{1}{12} + \cdots = \frac{1}{2} - \frac{1}{4} + \frac{1}{6} - \frac{1}{8} + \frac{1}{10} - \cdots
+\end{equation*}
+Napravo stojí přesně polovina původní řady. Použili jsme tytéž členy, každý právě jednou, a součet je najednou $\frac{1}{2}\ln 2$. Sčítání nekonečně mnoha čísel tedy \textit{není komutativní}!
+
+\section{Odbočka --- Riemannova věta o přerovnání}
+
+To nebyla náhoda. Řada $1 - \frac{1}{2} + \frac{1}{3} - \cdots$ konverguje jen díky tomu, že se kladné a záporné členy navzájem vyrušují. Kladné členy samy o sobě dávají $1 + \frac{1}{3} + \frac{1}{5} + \cdots = \infty$ a záporné také $-\infty$. Takové řadě se říká \textbf{neabsolutně konvergentní}.
+
+\begin{definitionbox}
+  Řada $\sum a_n$ \textbf{konverguje absolutně}, pokud konverguje $\sum|a_n|$.
+
+  \vspace{0.2cm}
+
+  \textbf{Riemannova věta}: Absolutně konvergentní řadu lze libovolně přerovnat a součet se nezmění. Neabsolutně konvergentní řadu lze přerovnat tak, aby měla \textbf{libovolný předem zvolený součet}, nebo aby divergovala.
+\end{definitionbox}
+
+Důkaz je skoro algoritmus. Chceme součet třeba $10$. Bereme kladné členy, dokud nepřesáhneme $10$ (jde to, kladných je `nekonečně mnoho'). Pak bereme záporné, dokud neklesneme pod $10$. Pak zase kladné, a tak dál. Protože členy jdou k nule, kmitáme kolem desítky stále těsněji. Absolutní konvergence je tedy přesně to, co potřebujeme, aby se s nekonečnými součty dalo zacházet `jako s normálními součty'.
+
+\section{Mocninné řady}
+
+Teď uděláme velký krok: místo čísel budeme sčítat mocniny proměnné $x$.
+
+\begin{definitionbox}
+  \textbf{Mocninná řada} se středem $a$ je řada
+  \begin{equation*}
+    \sum_{n=0}^{\infty}c_n{(x - a)}^n = c_0 + c_1(x - a) + c_2{(x - a)}^2 + \cdots
+  \end{equation*}
+  Ke každé mocninné řadě existuje \textbf{poloměr konvergence} $R\in[0, \infty]$ takový, že řada konverguje (absolutně) pro $|x - a| < R$ a diverguje pro $|x - a| > R$.
+\end{definitionbox}
+
+Mocninná řada je `nekonečný mnohočlen'. Nejjednodušší příklad známe: geometrická řada
+\begin{equation*}
+  1 + x + x^2 + x^3 + \cdots = \frac{1}{1 - x}\qquad\text{pro } |x| < 1.
+\end{equation*}
+Pro $|x|\geq 1$ členy nejdou k nule a řada diverguje, i když funkce $\frac{1}{1 - x}$ existuje třeba v bodě $x = -3$. Poloměr konvergence je $R = 1$: na intervalu $(-1, 1)$ řada funkci `vidí', mimo něj ne. Proč zrovna $1$? Protože v bodě $x = 1$ má funkce svou asymptotu a řada se dál než k nejbližšímu `problému' nedostane.
+
+Zajímavější je řada pro $\frac{1}{1 + x^2} = 1 - x^2 + x^4 - x^6 + \cdots$ (dosadili jsme $-x^2$ do geometrické řady). Funkce $\frac{1}{1 + x^2}$ je na celé reálné ose hezká, hladká, bez asymptot. Přesto řada konverguje jen pro $|x| < 1$:
+
+\begin{center}
+  \begin{tikzpicture}[x=2.2cm, y=2cm]
+    \begin{scope}
+      \clip (-1.75,-0.6) rectangle (1.75,1.5);
+      \fill[colorofwisdom!10] (-1,-0.6) rectangle (1,1.5);
+      \draw[gray, dashed, domain=-1.75:1.75, samples=120] plot (\x, {1-(\x)^2+(\x)^4-(\x)^6+(\x)^8});
+      \draw[colorofwisdom!70, dashed, domain=-1.75:1.75, samples=120] plot (\x, {1-(\x)^2+(\x)^4-(\x)^6+(\x)^8-(\x)^10});
+      \draw[very thick, domain=-1.75:1.75, samples=80] plot (\x, {1/(1+(\x)^2)});
+    \end{scope}
+    \draw[->] (-1.8,0) -- (1.85,0) node[right] {\small $x$};
+    \draw[->] (0,-0.6) -- (0,1.55) node[above] {\small $y$};
+    \node[below, font=\scriptsize] at (-1,0) {$-1$};
+    \node[below, font=\scriptsize] at (1,0) {$1$};
+    \node[font=\scriptsize, align=center] at (0,-0.35) {zde řada konverguje};
+    \node[font=\scriptsize, anchor=west] at (1.25,0.5) {$\frac{1}{1 + x^2}$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je funkce (plně) a dva částečné součty řady (čárkovaně). Uvnitř intervalu $(-1, 1)$ se k funkci přimykají. Venku utečou do nekonečna, a čím víc členů přidáme, tím dřív. Kde je ten skrytý problém ve vzdálenosti $1$ od nuly? V komplexních číslech! Jmenovatel $1 + x^2$ je nulový pro $x = \pm i$ a body $\pm i$ mají od počátku v Gaussově rovině vzdálenost přesně $1$. Mocninná řada konverguje v kruhu, který sahá až k nejbližšímu komplexnímu `problému', a reálná osa je jen řez tímto kruhem. Proto se poloměru konvergence říká \textit{poloměr}. K tomu se vrátíme v kapitole o komplexní analýze.
+
+\section{Taylorův polynom}
+
+Hlavní otázka: jak najít mocninnou řadu k dané funkci, třeba k $\sin x$ nebo $\mathrm{e}^x$? Začneme konečnou verzí. Chceme mnohočlen, který se v okolí bodu $a$ chová co nejvíc jako funkce $f$.
+
+Tečna z kapitoly~\ref{kap:derivace} je nejlepší \textit{lineární} přiblížení: má v bodě $a$ stejnou hodnotu i stejnou derivaci jako $f$. Nejlepší \textit{kvadratické} přiblížení by mělo souhlasit ještě i ve druhé derivaci, tedy ve `křivosti'. A tak dál.
+
+\begin{definitionbox}
+  \textbf{Taylorův polynom} stupně $n$ funkce $f$ v bodě $a$ je
+  \begin{equation*}
+    T_n(x) = f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}{(x - a)}^2 + \cdots + \frac{f^{(n)}(a)}{n!}{(x - a)}^n = \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}{(x - a)}^k.
+  \end{equation*}
+  Je to jediný mnohočlen stupně nejvýše $n$, který má v bodě $a$ stejnou hodnotu a stejné derivace až do řádu $n$ jako $f$. Pro $a = 0$ se mu někdy říká \textbf{Maclaurinův polynom}.
+\end{definitionbox}
+
+Odkud se bere faktoriál? Napišme $p(x) = c_0 + c_1(x - a) + c_2{(x - a)}^2 + \cdots + c_n{(x - a)}^n$ a derivujme. Při každém derivování se mocnina sníží a její exponent přeskočí dopředu jako koeficient. Po $k$ derivacích zbude z členu $c_k{(x - a)}^k$ číslo $k(k - 1)\cdots 1\cdot c_k = k!\,c_k$. Členy s nižší mocninou mezitím zmizely a členy s vyšší mocninou obsahují $(x - a)$, takže v bodě $a$ dají nulu. Proto $p^{(k)}(a) = k!\,c_k$, a chceme-li $p^{(k)}(a) = f^{(k)}(a)$, musí být $c_k = \frac{f^{(k)}(a)}{k!}$.
+
+\begin{example}
+  Funkce $\sin x$ v bodě $0$: derivace se opakují s periodou čtyři, $\sin, \cos, -\sin, -\cos, \sin, \dots$, takže v nule dávají $0, 1, 0, -1, 0, 1, \dots$ Sudé členy vypadnou a
+  \begin{equation*}
+    \sin x\approx x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
+  \end{equation*}
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.85cm, y=1.1cm]
+    \begin{scope}
+      \clip (-6.6,-2.1) rectangle (6.6,2.1);
+      \draw[gray!70, domain=-6.5:6.5, samples=40] plot (\x, {\x});
+      \draw[gray!70, dashed, domain=-6.5:6.5, samples=80] plot (\x, {\x-(\x)^3/6});
+      \draw[colorofwisdom!60, domain=-6.5:6.5, samples=100] plot (\x, {\x*(1-\x*\x/6*(1-\x*\x/20))});
+      \draw[colorofwisdom, dashed, thick, domain=-6.5:6.5, samples=120] plot (\x, {\x*(1-\x*\x/6*(1-\x*\x/20*(1-\x*\x/42*(1-\x*\x/72))))});
+      \draw[very thick, domain=-6.5:6.5, samples=150] plot (\x, {sin(deg(\x))});
+    \end{scope}
+    \draw[->] (-6.7,0) -- (6.8,0) node[right] {\small $x$};
+    \draw[->] (0,-2.1) -- (0,2.2) node[above] {\small $y$};
+    \foreach \x/\l in {-3.1416/-\pi, 3.1416/\pi, 6.2832/2\pi} \draw (\x,0.07) -- (\x,-0.07) node[below, font=\scriptsize] {$\l$};
+    \node[font=\scriptsize, gray] at (2.25,2.0) {$T_1$};
+    \node[font=\scriptsize, gray] at (2.75,-1.85) {$T_3$};
+    \node[font=\scriptsize, colorofwisdom!60] at (4.3,1.9) {$T_5$};
+    \node[font=\scriptsize, colorofwisdom] at (5.85,1.85) {$T_9$};
+    \node[font=\scriptsize] at (-4.7,1.25) {$\sin x$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku vidíte, jak se Taylorovy polynomy stupně $1$, $3$, $5$ a $9$ postupně `přilepují' k sinusoidě. Každý další člen prodlouží úsek, na kterém polynom funkci kopíruje. Polynom $T_9$ už je na intervalu $[-\pi, \pi]$ na obrázku od sinusoidy k nerozeznání. Takhle (s chytrými triky navíc) počítají sinus kalkulačky: sčítají mnohočleny, protože sčítat a násobit umí počítač rychle.
+
+\begin{definitionbox}
+  \textbf{Nejdůležitější Taylorovy řady} (v bodě $0$):
+  \begin{align*}
+    \mathrm{e}^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots = \sum_{n=0}^{\infty}\frac{x^n}{n!}, & &x\in\mathbb{R},\\
+    \sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots = \sum_{n=0}^{\infty}\frac{{(-1)}^nx^{2n+1}}{(2n + 1)!}, & &x\in\mathbb{R},\\
+    \cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots = \sum_{n=0}^{\infty}\frac{{(-1)}^nx^{2n}}{(2n)!}, & &x\in\mathbb{R},\\
+    \ln(1 + x) &= x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots = \sum_{n=1}^{\infty}\frac{{(-1)}^{n+1}x^n}{n}, & &x\in(-1, 1],\\
+    {(1 + x)}^{\alpha} &= 1 + \alpha x + \frac{\alpha(\alpha - 1)}{2!}x^2 + \cdots, & &|x| < 1.
+  \end{align*}
+\end{definitionbox}
+
+U $\mathrm{e}^x$ je odvození nejkrásnější: všechny derivace jsou opět $\mathrm{e}^x$ a v nule mají hodnotu $1$, takže koeficienty jsou prostě $\frac{1}{n!}$. Pro $x = 1$ dostaneme $\mathrm{e} = \sum\frac{1}{n!}$. Poslední řada je zobecnění binomické věty z kapitoly~\ref{kap:kombinatorika} na libovolný exponent. Pro přirozené $\alpha$ se koeficienty od jistého místa vynulují a dostaneme obyčejnou binomickou větu.
+
+\subsection{Jak přesné to je}
+
+\begin{definitionbox}
+  \textbf{Taylorova věta se zbytkem v Lagrangeově tvaru}: Má-li $f$ na intervalu mezi $a$ a $x$ derivace až do řádu $n + 1$, pak existuje číslo $\xi$ mezi $a$ a $x$ takové, že
+  \begin{equation*}
+    f(x) = T_n(x) + \frac{f^{(n+1)}(\xi)}{(n + 1)!}{(x - a)}^{n+1}.
+  \end{equation*}
+\end{definitionbox}
+
+Chyba tedy vypadá jako `další člen řady', jen s derivací spočítanou v neznámém bodě $\xi$. Pro $n = 0$ je to věta o střední hodnotě: $f(x) - f(a) = f'(\xi)(x - a)$.
+
+\begin{example}
+  Kolik je $\sin 0{,}1$? Vezmeme $T_3(0{,}1) = 0{,}1 - \frac{0{,}001}{6} = 0{,}099\,833\,3\ldots$ Chyba je nejvýš $\frac{|\sin^{(5)}\xi|}{5!}\cdot 0{,}1^5\leq\frac{10^{-5}}{120} < 10^{-7}$. Dva členy tedy dají sedm platných desetinných míst. Proto fyzici pro malé úhly klidně píšou $\sin x\approx x$, jak jsme viděli u kyvadla v kapitole~\ref{kap:limity}.
+\end{example}
+
+\begin{example}
+  Taylorův rozvoj umí i fyziku. Podle speciální relativity má těleso o hmotnosti $m$ pohybující se rychlostí $v$ energii
+  \begin{equation*}
+    E = \frac{mc^2}{\sqrt{1 - \frac{v^2}{c^2}}} = mc^2{\left(1 - \frac{v^2}{c^2}\right)}^{-\frac{1}{2}}.
+  \end{equation*}
+  Pro rychlosti mnohem menší než rychlost světla je $u = \frac{v^2}{c^2}$ malé číslo a binomická řada dává ${(1 - u)}^{-\frac{1}{2}}\approx 1 + \frac{u}{2}$. Tedy
+  \begin{equation*}
+    E\approx mc^2 + \frac{1}{2}mv^2.
+  \end{equation*}
+  První člen je Einsteinova klidová energie, druhý stará známá kinetická energie z hodin fyziky. Newtonova mechanika je tedy `Taylorův polynom stupně jedna' Einsteinovy.
+\end{example}
+
+\section{Odbočka --- Eulerův vzorec a iracionalita čísla e}
+
+Dosaďme do řady pro $\mathrm{e}^x$ ryze imaginární číslo $ix$ a použijme $i^2 = -1$, $i^3 = -i$, $i^4 = 1$:
+\begin{equation*}
+  \mathrm{e}^{ix} = 1 + ix - \frac{x^2}{2!} - i\frac{x^3}{3!} + \frac{x^4}{4!} + i\frac{x^5}{5!} - \cdots = \underbrace{\left(1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots\right)}_{\cos x} + i\underbrace{\left(x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots\right)}_{\sin x}.
+\end{equation*}
+Reálné členy se seskupily do řady pro kosinus, imaginární do řady pro sinus. Dostali jsme \textbf{Eulerův vzorec}
+\begin{equation*}
+  \mathrm{e}^{ix} = \cos x + i\sin x,
+\end{equation*}
+který jsme v kapitole~\ref{kap:komplexni} jen ukázali. Pro $x = \pi$ z něj plyne $\mathrm{e}^{i\pi} + 1 = 0$. (Přerovnávat členy jsme směli, protože řada pro $\mathrm{e}^x$ konverguje absolutně. Riemann by jinak protestoval.)
+
+Řada pro $\mathrm{e}$ umožňuje i krátký důkaz, že $\mathrm{e}$ je iracionální.
+
+\begin{proof}
+  Předpokládejme, že $\mathrm{e} = \frac{p}{q}$ pro přirozená $p$, $q$. Vynásobme řadu $\mathrm{e} = \sum_{k=0}^{\infty}\frac{1}{k!}$ číslem $q!$ a rozdělme ji na dvě části:
+  \begin{equation*}
+    \underbrace{q!\,\mathrm{e} - \sum_{k=0}^{q}\frac{q!}{k!}}_{\text{celé číslo}} = \sum_{k=q+1}^{\infty}\frac{q!}{k!} = \frac{1}{q + 1} + \frac{1}{(q + 1)(q + 2)} + \cdots
+  \end{equation*}
+  Vlevo je celé číslo, protože $q!\,\mathrm{e} = (q - 1)!\,p$ a $\frac{q!}{k!}$ je pro $k\leq q$ celé. Vpravo je kladné číslo menší než geometrická řada
+  \begin{equation*}
+    \frac{1}{q + 1} + \frac{1}{{(q + 1)}^2} + \cdots = \frac{1}{q}\leq 1.
+  \end{equation*}
+  Celé číslo ostře mezi $0$ a $1$ neexistuje, což je spor.
+\end{proof}
+
+\section{Když Taylor selže}
+
+Mohlo by se zdát, že Taylorova řada každé hladké funkce konverguje k té funkci. Není to pravda, a protipříklad je pozoruhodný. Funkce
+\begin{equation*}
+  f(x) = \begin{cases}\mathrm{e}^{-1/x^2}, & x\neq 0,\\ 0, & x = 0\end{cases}
+\end{equation*}
+má v nule všechny derivace rovné nule. (Exponenciála $\mathrm{e}^{-1/x^2}$ jde pro $x\to 0$ k nule rychleji než jakákoli mocnina $x$, a to se přenese i na derivace.) Její Taylorova řada v nule je tedy $0 + 0x + 0x^2 + \cdots = 0$, ale funkce nulová není.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.4cm, y=2.2cm]
+    \draw[->] (-3.2,0) -- (3.3,0) node[right] {\small $x$};
+    \draw[->] (0,-0.1) -- (0,1.15) node[above] {\small $y$};
+    \draw[dashed, gray] (-3.2,1) -- (3.2,1) node[right, font=\scriptsize] {$1$};
+    \draw[very thick, colorofwisdom, domain=0.12:3.2, samples=80] plot (\x, {exp(-1/(\x*\x))});
+    \draw[very thick, colorofwisdom, domain=-3.2:-0.12, samples=80] plot (\x, {exp(-1/(\x*\x))});
+    \draw[very thick, colorofwisdom] (-0.12,0) -- (0.12,0);
+    \node[font=\scriptsize, align=center] at (0,0.45) {u nuly je funkce\\`placatější' než\\jakýkoli mnohočlen};
+  \end{tikzpicture}
+\end{center}
+
+Funkce je v okolí nuly tak placatá, že žádná derivace v nule `nevidí', že se kousek vedle něco děje. Funkce, které se svou Taylorovou řadou shodují, se nazývají \textbf{analytické}. Patří mezi ně všechny elementární funkce ze střední školy. V komplexní analýze uvidíme, že v komplexních číslech je každá (komplexně) derivovatelná funkce automaticky analytická. Takové monstrum, jako je $\mathrm{e}^{-1/x^2}$, tam neexistuje. Na imaginární ose totiž $\mathrm{e}^{-1/x^2}$ v okolí nuly exploduje.
+
+\section{Fourierovy řady}
+
+Taylorova řada staví funkci z mocnin $x^n$. Je to výborné pro chování v okolí jednoho bodu, ale špatné pro funkce, které se opakují. Zvuk, světlo, střídavý proud, oběh planet, tlukot srdce. Pro periodické funkce jsou přirozenými stavebními kameny sinusovky.
+
+\begin{definitionbox}
+  \textbf{Fourierova řada} funkce $f$ s periodou $2\pi$ je
+  \begin{equation*}
+    f(x)\sim\frac{a_0}{2} + \sum_{n=1}^{\infty}\big(a_n\cos nx + b_n\sin nx\big),
+  \end{equation*}
+  kde
+  \begin{equation*}
+    a_n = \frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos nx\,\mathrm{d}x,\qquad b_n = \frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin nx\,\mathrm{d}x.
+  \end{equation*}
+\end{definitionbox}
+
+Vzorce pro koeficienty vypadají, jako by spadly z nebe. Ve skutečnosti jsou to přesně vzorce pro souřadnice vektoru v ortogonální bázi z kapitoly~\ref{kap:linearni-algebra}. Funkce si představíme jako vektory se skalárním součinem $\langle f, g\rangle = \int_{-\pi}^{\pi}f(x)g(x)\,\mathrm{d}x$. Pak platí
+\begin{equation*}
+  \int_{-\pi}^{\pi}\sin mx\sin nx\,\mathrm{d}x = \begin{cases}0, & m\neq n,\\ \pi, & m = n,\end{cases}\qquad\int_{-\pi}^{\pi}\sin mx\cos nx\,\mathrm{d}x = 0,
+\end{equation*}
+a podobně pro kosiny. Funkce $1, \cos x, \sin x, \cos 2x, \sin 2x, \dots$ jsou tedy na sebe navzájem \textit{kolmé}, jako osy $x$, $y$, $z$ v prostoru, jen jich je nekonečně mnoho. Souřadnici vektoru v kolmé bázi spočítáme jako průmět, tedy skalární součin s bázovým vektorem děleno druhou mocninou jeho délky. Přesně to dělají vzorce pro $a_n$ a $b_n$.
+
+\begin{example}
+  \textbf{Obdélníková vlna}: $f(x) = 1$ pro $x\in(0, \pi)$, $f(x) = -1$ pro $x\in(-\pi, 0)$, a periodicky dál. Funkce je lichá, takže všechna $a_n = 0$ (součin liché a sudé funkce se přes souměrný interval prointegruje na nulu). Pro $b_n$:
+  \begin{equation*}
+    b_n = \frac{2}{\pi}\int_0^{\pi}\sin nx\,\mathrm{d}x = \frac{2}{\pi}\cdot\frac{1 - \cos n\pi}{n} = \begin{cases}\frac{4}{n\pi}, & n\text{ liché},\\ 0, & n\text{ sudé}.\end{cases}
+  \end{equation*}
+  Tedy
+  \begin{equation*}
+    f(x) = \frac{4}{\pi}\left(\sin x + \frac{\sin 3x}{3} + \frac{\sin 5x}{5} + \frac{\sin 7x}{7} + \cdots\right).
+  \end{equation*}
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.05cm, y=1.4cm]
+    \draw[gray, thick] (-3.1416,-1) -- (0,-1) -- (0,1) -- (3.1416,1) -- (3.1416,-1) -- (5.3,-1);
+    \draw[gray, thick] (-5.3,1) -- (-3.1416,1) -- (-3.1416,-1);
+    \draw[colorofwisdom!45, domain=-5.3:5.3, samples=100] plot (\x, {4/pi*sin(deg(\x))});
+    \draw[colorofwisdom!75, domain=-5.3:5.3, samples=200] plot (\x, {4/pi*(sin(deg(\x))+sin(deg(3*\x))/3+sin(deg(5*\x))/5)});
+    \draw[very thick, colorofwisdom, domain=-5.3:5.3, samples=400] plot (\x, {4/pi*(sin(deg(\x))+sin(deg(3*\x))/3+sin(deg(5*\x))/5+sin(deg(7*\x))/7+sin(deg(9*\x))/9+sin(deg(11*\x))/11+sin(deg(13*\x))/13+sin(deg(15*\x))/15+sin(deg(17*\x))/17+sin(deg(19*\x))/19)});
+    \draw[->] (-5.5,0) -- (5.6,0) node[right] {\small $x$};
+    \draw[->] (0,-1.5) -- (0,1.6);
+    \foreach \x/\l in {-3.1416/-\pi, 3.1416/\pi} \node[below right, font=\scriptsize] at (\x,0) {$\l$};
+    \node[font=\scriptsize] at (0,-1.8) {částečné součty: 1 člen (světle), 3 členy, 10 členů (tmavě); šedě obdélníková vlna};
+  \end{tikzpicture}
+\end{center}
+
+Z hladkých vlnek se skládá funkce se skoky! Jeden člen je jen sinusoida, tři členy už tuší `hranatost' a deset členů je skoro obdélník. Všimněte si ale malých `rohů' u skoků. Částečné součty tam přestřelí zhruba o $9\,\%$ výšky skoku a přidáváním členů se překmit \textit{nezmenšuje}, jen se zužuje. Jmenuje se \textbf{Gibbsův jev} a je vidět i v praxi, například jako `duchové' kolem ostrých hran v silně komprimovaných obrázcích JPEG.
+
+Jako bonus dosadíme $x = \frac{\pi}{2}$. Tam je $f = 1$ a $\sin\frac{n\pi}{2}$ je postupně $1, -1, 1, -1, \dots$ pro liché $n$:
+\begin{equation*}
+  1 = \frac{4}{\pi}\left(1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots\right)\qquad\Longrightarrow\qquad\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots
+\end{equation*}
+To je \textbf{Leibnizova řada} pro $\pi$. Číslo o kružnicích vylezlo z obdélníkové vlny.
+
+\subsection{Spektrum: co slyšíme}
+
+Fourierovy koeficienty říkají, `kolik' které frekvence je ve funkci obsaženo. Posloupnosti $|b_1|, |b_2|, |b_3|, \dots$ se říká \textbf{spektrum}. Tón $a^1$ na klavíru i na houslích má stejnou základní frekvenci $440$ Hz, ale jiné spektrum, tedy jiné zastoupení vyšších harmonických frekvencí $880$, $1320$, \dots Hz. Právě rozdílné spektrum slyšíme jako rozdílnou \textbf{barvu zvuku}.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.75cm, y=1.6cm]
+    \draw[->] (0,0) -- (10.5,0) node[right] {\small $n$};
+    \draw[->] (0,0) -- (0,1.5) node[above] {\small $|b_n|$};
+    \foreach \n in {1,3,5,7,9} {
+      \fill[colorofwisdom!70] ({\n-0.25},0) rectangle ({\n+0.25},{4/(pi*\n)});
+    }
+    \foreach \n in {1,...,10} \node[below, font=\scriptsize] at (\n,0) {$\n$};
+    \node[font=\scriptsize, anchor=west] at (3.5,1.1) {spektrum obdélníkové vlny: jen liché harmonické, $|b_n| = \frac{4}{n\pi}$};
+  \end{tikzpicture}
+\end{center}
+
+Obdélníková vlna obsahuje jen liché harmonické, a proto zní `dutě', jako klarinet nebo zvuky ze starých herních konzolí. Komprese MP3 funguje tak, že zvuk rozloží na frekvence a zahodí ty, které lidské ucho stejně neuslyší. Formát JPEG dělá totéž s obrázky, jen ve dvou rozměrech a s kosiny.
+
+\begin{definitionbox}
+  \textbf{Parsevalova rovnost}: Pro rozumnou funkci $f$ s periodou $2\pi$ platí
+  \begin{equation*}
+    \frac{1}{\pi}\int_{-\pi}^{\pi}f(x)^2\,\mathrm{d}x = \frac{a_0^2}{2} + \sum_{n=1}^{\infty}\left(a_n^2 + b_n^2\right).
+  \end{equation*}
+  Je to Pythagorova věta v nekonečně mnoha rozměrech: druhá mocnina délky vektoru je součet druhých mocnin jeho souřadnic. Fyzikálně: energie signálu je součet energií jeho frekvencí.
+\end{definitionbox}
+
+Pro obdélníkovou vlnu je vlevo $\frac{1}{\pi}\cdot 2\pi = 2$ a vpravo $\frac{16}{\pi^2}\left(1 + \frac{1}{9} + \frac{1}{25} + \cdots\right)$. Tedy $1 + \frac{1}{3^2} + \frac{1}{5^2} + \cdots = \frac{\pi^2}{8}$. Odtud už snadno plyne Eulerův výsledek $\sum\frac{1}{n^2} = \frac{\pi^2}{6}$ (zkuste si to: sudé členy dávají čtvrtinu celkového součtu).
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Rozhodněte o konvergenci řad $\sum\frac{2^n}{n!}$, $\sum\frac{n}{n + 1}$, $\sum\frac{1}{\sqrt{n}}$, $\sum\frac{n^2}{3^n}$.
+    \item Napište Taylorův polynom stupně $3$ funkce $\sqrt{1 + x}$ v bodě $0$ a odhadněte $\sqrt{1{,}1}$.
+    \item Pomocí řady pro $\mathrm{e}^x$ spočítejte $\lim_{x\to 0}\frac{\mathrm{e}^x - 1 - x}{x^2}$.
+    \item Dokažte, že $\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$, pokud víte, že $\sum_{k=0}^{\infty}\frac{1}{{(2k + 1)}^2} = \frac{\pi^2}{8}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{a_{n+1}}{a_n} = \frac{2}{n + 1}\to 0$, konverguje (součet je $\mathrm{e}^2 - 1$). Druhá řada diverguje, protože členy jdou k $1$, ne k nule. Třetí diverguje ($p = \frac{1}{2}\leq 1$). Čtvrtá konverguje, $\frac{a_{n+1}}{a_n} = \frac{{(n + 1)}^2}{3n^2}\to\frac{1}{3}$.
+    \item Binomická řada s $\alpha = \frac{1}{2}$: $T_3 = 1 + \frac{x}{2} - \frac{x^2}{8} + \frac{x^3}{16}$. Pro $x = 0{,}1$: $1 + 0{,}05 - 0{,}00125 + 0{,}0000625 = 1{,}0488125$. Skutečně $\sqrt{1{,}1} = 1{,}048\,808\ldots$
+    \item $\mathrm{e}^x - 1 - x = \frac{x^2}{2} + \frac{x^3}{6} + \cdots$, po vydělení $x^2$ zbude $\frac{1}{2} + \frac{x}{6} + \cdots\to\frac{1}{2}$. Taylorův rozvoj často nahradí L'Hospitalovo pravidlo, a je přehlednější.
+    \item Označme $S = \sum\frac{1}{n^2}$. Sudé členy dávají $\sum\frac{1}{{(2k)}^2} = \frac{1}{4}S$, takže liché dávají $\frac{3}{4}S = \frac{\pi^2}{8}$ a $S = \frac{\pi^2}{6}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Dopis z Madrásu}
+
+V lednu 1913 dostal cambridgeský matematik G.\,H. Hardy dopis od neznámého účetního z indického Madrásu. Dopis měl několik stran a obsahoval desítky vzorců bez jediného důkazu. Některé byly známé, některé špatně, a některé byly tak podivné, že Hardy později napsal, že `musí být pravdivé, protože kdyby nebyly, nikdo by neměl dost fantazie, aby si je vymyslel'. Autor se jmenoval Srinivasa Ramanujan, bylo mu pětadvacet a matematiku se naučil převážně sám ze staré sbírky vzorců.
+
+V jednom z dalších dopisů Ramanujan Hardymu napsal, že podle jeho teorie je $1 + 2 + 3 + 4 + \cdots = -\frac{1}{12}$, a dodal, že ho Hardy teď nejspíš pošle do blázince. Neposlal. Ramanujan samozřejmě věděl, že řada diverguje. Jeho `součet' je hodnota jisté funkce (dnes Riemannovy funkce zeta) v bodě, kde obyčejná řada nedává smysl, a ta hodnota se dnes opravdu používá ve fyzice. Abel by se v hrobě obracel.
+
+Hardy Ramanujana v roce 1914 přivedl do Cambridge. Spolupracovali pět let a jejich výsledky o rozkladech čísel na součty se používají dodnes. Anglické klima, válečný nedostatek jídla a přísné vegetariánství ale Ramanujanovi nesvědčily. Vážně onemocněl, v roce 1919 se vrátil do Indie a o rok později zemřel. Bylo mu dvaatřicet. Po smrti zůstaly jeho sešity se téměř čtyřmi tisíci vzorci a matematici je dokazují dodnes.
+
+Když Hardy Ramanujana navštívil v nemocnici, prohodil prý, že přijel taxíkem s číslem $1729$, které mu přišlo dost nudné. Ramanujan odpověděl, že vůbec není nudné: je to nejmenší číslo, které lze dvěma různými způsoby zapsat jako součet dvou třetích mocnin, $1729 = 1^3 + 12^3 = 9^3 + 10^3$.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co znamená, že řada konverguje? Proč harmonická řada diverguje, i když její členy jdou k nule?
+    \item Jak souvisí řada $\sum\frac{1}{n^p}$ s integrálem? Pro která $p$ konverguje?
+    \item Na jaké myšlence stojí podílové kritérium?
+    \item Co říká Riemannova věta o přerovnání? Proč na absolutní konvergenci záleží?
+    \item Co je poloměr konvergence? Proč má řada pro $\frac{1}{1 + x^2}$ poloměr $1$?
+    \item Jak vzniká Taylorův polynom a odkud se v něm berou faktoriály?
+    \item Odvoďte Eulerův vzorec z Taylorových řad.
+    \item Co je Fourierova řada a proč jsou vzorce pro koeficienty `průměty do kolmé báze'?
+    \item Co je Gibbsův jev a co je spektrum signálu?
+  \end{enumerate}
+\end{problem}

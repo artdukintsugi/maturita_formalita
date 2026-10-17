@@ -20,6 +20,37 @@ Posloupnost je seznam čísel, který (obvykle) nikdy nekončí. Na první pohle
 
 Graf posloupnosti není křivka, ale izolované body $[1, a_1], [2, a_2], [3, a_3], \ldots$, protože definičním oborem jsou jen přirozená čísla.
 
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \begin{scope}
+      \draw[->] (0,0) -- (5.4,0) node[right] {\small $n$};
+      \draw[->] (0,0) -- (0,3.5) node[above] {\small $a_n$};
+      \draw[dashed, gray] (0,3) -- (5.2,3);
+      \node[left] at (0,3) {\small $1$};
+      \foreach \n in {1,...,8} {
+        \draw (0.6*\n,0.07) -- (0.6*\n,-0.07) node[below] {\tiny $\n$};
+        \filldraw[colorofwisdom] (0.6*\n,{3*\n/(\n+1)}) circle (2pt);
+      }
+      \node at (2.7,-0.9) {\small $a_n = \frac{n}{n + 1}$: rostoucí, omezená};
+    \end{scope}
+    \begin{scope}[xshift=7cm, yshift=1.6cm]
+      \draw[->] (0,0) -- (5.4,0) node[right] {\small $n$};
+      \draw[->] (0,-1.6) -- (0,1.9) node[above] {\small $b_n$};
+      \draw[dashed, gray] (0,1.2) -- (5.2,1.2);
+      \draw[dashed, gray] (0,-1.2) -- (5.2,-1.2);
+      \node[left] at (0,1.2) {\small $1$};
+      \node[left] at (0,-1.2) {\small $-1$};
+      \foreach \n in {1,...,8} {
+        \draw (0.6*\n,0.07) -- (0.6*\n,-0.07);
+        \filldraw[colorofwisdom] (0.6*\n,{1.2*ifthenelse(isodd(\n),-1,1)}) circle (2pt);
+      }
+      \node at (2.7,-2.5) {\small $b_n = {(-1)}^n$: omezená, není monotónní};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Body grafu nespojujeme čarou. Mezi $n = 1$ a $n = 2$ posloupnost žádnou hodnotu nemá, protože `první a půltý člen' neexistuje. Na obrázku jsou dvě posloupnosti z příkladu níže. Představte si posloupnost jako sérii snímků: na grafu hned vidíte, jestli body stoupají (rostoucí posloupnost), jestli se vejdou do vodorovného pruhu (omezená posloupnost), nebo jestli skáčou nahoru a dolů.
+
 \begin{example}
   Slavná rekurentně zadaná posloupnost je \textbf{Fibonacciho posloupnost}: $F_1 = F_2 = 1$ a $F_{n+2} = F_{n+1} + F_n$. Prvních pár členů je
   \begin{equation*}
@@ -72,7 +103,49 @@ Graf posloupnosti není křivka, ale izolované body $[1, a_1], [2, a_2], [3, a_
 
 Tohle je přesně ten trik, se kterým podle legendy přišel malý Gauss, když měl ve škole za trest sečíst čísla od $1$ do $100$. Za pár vteřin odevzdal výsledek $5050 = \frac{100\cdot 101}{2}$. Tutéž větu jsme dokázali matematickou indukcí v kapitole 1. Teď máte dva důkazy, takže si můžete vybrat ten, který se vám víc líbí.
 
+Gaussův trik se dá i nakreslit. Součet $1 + 2 + \cdots + n$ si představte jako schodiště ze čtverečků. Vezmeme druhé, stejné schodiště, otočíme ho vzhůru nohama a přiložíme k prvnímu. Obě schodiště dohromady přesně vyplní obdélník $n\times(n + 1)$, takže jedno schodiště má $\frac{n(n + 1)}{2}$ čtverečků. Sčítání `popředu a pozpátku' v důkazu je přesně tohle přiložení.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.5]
+    \foreach \k in {1,...,5} {
+      \foreach \j in {1,...,\k} {
+        \filldraw[fill=colorofwisdom!60, draw=white, thick] (\k-1,\j-1) rectangle (\k,\j);
+      }
+      \foreach \j in {\k,...,5} {
+        \filldraw[fill=gray!30, draw=white, thick] (\k-1,\j) rectangle (\k,\j+1);
+      }
+    }
+    \draw[thick] (0,0) rectangle (5,6);
+    \draw[decorate, decoration={brace, mirror, amplitude=4pt}] (0,-0.2) -- (5,-0.2) node[midway, below=5pt] {\small $n = 5$};
+    \draw[decorate, decoration={brace, amplitude=4pt}] (5.2,6) -- (5.2,0) node[midway, right=5pt] {\small $n + 1 = 6$};
+    \node[anchor=west, align=left, font=\small] at (9.6,3) {červené schodiště: $1 + 2 + 3 + 4 + 5$\\šedé schodiště: totéž pozpátku\\dohromady: $5\cdot 6 = 30$ čtverečků\\jedno schodiště: $\frac{30}{2} = 15$};
+  \end{tikzpicture}
+\end{center}
+
 Název `aritmetická' pochází z toho, že každý člen je \textbf{aritmetickým průměrem} svých sousedů: $a_n = \frac{a_{n-1} + a_{n+1}}{2}$.
+
+Graficky: body aritmetické posloupnosti leží na \textbf{přímce}. Z každého bodu do dalšího uděláme krok o $1$ doprava a o $d$ nahoru (pro $d < 0$ dolů). Aritmetická posloupnost je tedy lineární funkce $y = a_1 + (x - 1)d$ vyhodnocená jen v přirozených číslech a diference $d$ je její směrnice. Odtud je vidět i vlastnost s průměrem: prostřední ze tří bodů na přímce leží přesně v polovině výšky mezi sousedy.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.85]
+    \draw[->] (0,0) -- (7.4,0) node[right] {\small $n$};
+    \draw[->] (0,0) -- (0,4.3) node[above] {\small $a_n$};
+    \draw[dashed, gray, domain=0.3:7] plot (\x, {0.5 + 0.5*\x});
+    \foreach \n in {1,...,6} {
+      \draw (\n,0.07) -- (\n,-0.07) node[below] {\tiny $\n$};
+    }
+    \foreach \n in {1,...,5} {
+      \draw[colorofwisdom!70] (\n,{0.5+0.5*\n}) -- (\n+1,{0.5+0.5*\n}) -- (\n+1,{1+0.5*\n});
+    }
+    \node[right, colorofwisdom] at (6,3.25) {\small $d$};
+    \node[below, colorofwisdom] at (5.5,3) {\tiny $1$};
+    \foreach \n in {1,...,6} {
+      \filldraw[colorofwisdom] (\n,{0.5+0.5*\n}) circle (2.2pt);
+    }
+    \node[left] at (1,1.25) {\small $a_1$};
+    \node[anchor=west, font=\small] at (7.6,2) {$a_1 = 1$, $d = \frac{1}{2}$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   \begin{itemize}
@@ -80,6 +153,28 @@ Název `aritmetická' pochází z toho, že každý člen je \textbf{aritmetick�
     \item Je dáno $a_3 = 7$ a $a_8 = 22$. Pak $a_8 - a_3 = 5d = 15$, tedy $d = 3$ a $a_1 = a_3 - 2d = 1$. Dále $a_{20} = 1 + 19\cdot 3 = 58$ a $s_{20} = \frac{20(1 + 58)}{2} = 590$.
     \item Součet prvních $n$ lichých čísel: $1 + 3 + 5 + \cdots + (2n - 1) = \frac{n(1 + 2n - 1)}{2} = n^2$. To se dá i nakreslit: čtverec $n\times n$ se skládá z `háčků' o $1, 3, 5, \ldots$ čtverečcích.
   \end{itemize}
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.55]
+      \foreach \i in {0,...,4} {
+        \foreach \j in {0,...,4} {
+          \pgfmathtruncatemacro{\m}{max(\i,\j)}
+          \ifodd\m
+            \filldraw[fill=gray!30, draw=white, thick] (\i,\j) rectangle (\i+1,\j+1);
+          \else
+            \filldraw[fill=colorofwisdom!55, draw=white, thick] (\i,\j) rectangle (\i+1,\j+1);
+          \fi
+        }
+      }
+      \foreach \m in {0,...,4} {
+        \pgfmathtruncatemacro{\h}{2*\m+1}
+        \node[font=\small] at (\m+0.5,5.5) {$\h$};
+      }
+      \draw[thick] (0,0) rectangle (5,5);
+      \node[anchor=west, font=\small] at (5.8,2.5) {$1 + 3 + 5 + 7 + 9 = 5^2$};
+    \end{tikzpicture}
+  \end{center}
+  Každý další háček obepne dosavadní čtverec zprava a shora, a tím z něj udělá čtverec o jedna větší. Ze čtverce $k\times k$ na $(k + 1)\times(k + 1)$ přibude právě $2k + 1$ čtverečků, tedy další liché číslo.
 \end{example}
 
 \begin{problem}
@@ -126,6 +221,43 @@ Název `aritmetická' pochází z toho, že každý člen je \textbf{aritmetick�
 
 Název `geometrická' pochází z toho, že (pro kladné členy) je každý člen \textbf{geometrickým průměrem} svých sousedů: $a_n = \sqrt{a_{n-1}a_{n+1}}$. Geometrické posloupnosti jsou diskrétní verzí exponenciálních funkcí z kapitoly~\ref{kap:exponencialni}: $a_n = a_1q^{n-1}$ je exponenciála $q^x$ vyhodnocená jen v celých číslech.
 
+Zatímco body aritmetické posloupnosti leží na přímce, body geometrické posloupnosti leží na \textbf{exponenciále}. Pro $q > 1$ letí stále rychleji nahoru, protože každý krok je o stejný \textit{násobek} větší než ten předchozí. Pro $0 < q < 1$ se plíží k nule, každý krok je kratší. A pro záporné $q$ se znaménko střídá, takže body skáčou z jedné strany osy na druhou.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \begin{scope}
+      \draw[->] (0,0) -- (4.3,0) node[right] {\small $n$};
+      \draw[->] (0,0) -- (0,3.6);
+      \draw[dashed, gray, domain=0.3:3.7, samples=40] plot (\x, {0.1*pow(2,\x/0.6-1)});
+      \foreach \n in {1,...,6} {
+        \draw (0.6*\n,0.07) -- (0.6*\n,-0.07);
+        \filldraw[colorofwisdom] (0.6*\n,{0.1*pow(2,\n-1)}) circle (2pt);
+      }
+      \node at (2,-0.7) {\small $q = 2$};
+    \end{scope}
+    \begin{scope}[xshift=5.5cm]
+      \draw[->] (0,0) -- (4.3,0) node[right] {\small $n$};
+      \draw[->] (0,0) -- (0,3.6);
+      \draw[dashed, gray, domain=0.4:4, samples=40] plot (\x, {3*pow(0.5,\x/0.6-1)});
+      \foreach \n in {1,...,6} {
+        \draw (0.6*\n,0.07) -- (0.6*\n,-0.07);
+        \filldraw[colorofwisdom] (0.6*\n,{3*pow(0.5,\n-1)}) circle (2pt);
+      }
+      \node at (2,-0.7) {\small $q = \frac{1}{2}$};
+    \end{scope}
+    \begin{scope}[xshift=11cm, yshift=1.2cm]
+      \draw[->] (0,0) -- (4.3,0) node[right] {\small $n$};
+      \draw[->] (0,-1.4) -- (0,2.4);
+      \foreach \n in {1,...,6} {
+        \draw (0.6*\n,0.07) -- (0.6*\n,-0.07);
+        \draw[gray] (0.6*\n,0) -- (0.6*\n,{2*ifthenelse(isodd(\n),1,-1)*pow(0.5,\n-1)});
+        \filldraw[colorofwisdom] (0.6*\n,{2*ifthenelse(isodd(\n),1,-1)*pow(0.5,\n-1)}) circle (2pt);
+      }
+      \node at (2,-1.9) {\small $q = -\frac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   \begin{itemize}
     \item Pro $a_1 = 2$, $q = 3$ je $a_6 = 2\cdot 3^5 = 486$ a $s_6 = 2\cdot\frac{3^6 - 1}{3 - 1} = 728$.
@@ -163,6 +295,30 @@ Co se děje s posloupností $a_n = \frac{1}{n}$, když $n$ roste? Členy $1, \fr
 \end{definitionbox}
 
 Definice vypadá děsivě, ale říká jednoduchou věc. Řekněte mi libovolně malou toleranci $\varepsilon$. Já vám řeknu, od kterého členu dál jsou všechny členy od $a$ blíž než $\varepsilon$. Pokud to dokážu pro každou toleranci, je $a$ limita. Je to vlastně hra dvou hráčů s kvantifikátory $\forall\varepsilon\ \exists n_0\ \forall n$ z kapitoly 1.
+
+Nakreslete si kolem přímky $y = a$ vodorovný pás o šířce $\varepsilon$ nahoru i dolů. Posloupnost má limitu $a$, pokud po nějakém čase do pásu \textit{vletí a už z něj nikdy nevyletí}. Na prvních pár členech nezáleží, ty mohou být kdekoli. Když pás zúžíme, bude to jen trvat déle (větší $n_0$), ale nakonec se do něj posloupnost vejde zase.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \fill[colorofwisdom!12] (0,1.3) rectangle (9.2,2.7);
+    \draw[dashed, colorofwisdom] (0,1.3) -- (9.2,1.3) node[right] {\small $a - \varepsilon$};
+    \draw[dashed, colorofwisdom] (0,2.7) -- (9.2,2.7) node[right] {\small $a + \varepsilon$};
+    \draw[colorofwisdom] (0,2) -- (9.2,2) node[right] {\small $a$};
+    \draw[->] (0,-1.3) -- (0,4) node[above] {\small $a_n$};
+    \draw[->] (0,0) -- (9.5,0) node[right] {\small $n$};
+    \draw[dashed, gray] (3,-1.2) -- (3,3.8);
+    \node[below right] at (3,0) {\small $n_0$};
+    \foreach \n in {1,...,14} {
+      \pgfmathsetmacro{\y}{2*(1+1.5*ifthenelse(isodd(\n),-1,1)/\n)}
+      \ifnum\n<5
+        \filldraw[black] (0.6*\n,\y) circle (2pt);
+      \else
+        \filldraw[colorofwisdom] (0.6*\n,\y) circle (2pt);
+      \fi
+    }
+  \end{tikzpicture}
+\end{center}
+Na obrázku je $a_n = 1 + \frac{{(-1)}^n\cdot 1{,}5}{n}$ s limitou $a = 1$ a pás $\varepsilon = 0{,}35$. Čtvrtý člen $1{,}375$ je ještě venku, ale od pátého ($n_0 = 5$) jsou už všechny členy uvnitř.
 
 \begin{example}
   Dokažme, že $\lim\frac{1}{n} = 0$. Nechť je dáno $\varepsilon > 0$. Chceme $\left|\frac{1}{n} - 0\right| = \frac{1}{n} < \varepsilon$, tedy $n > \frac{1}{\varepsilon}$. Zvolíme tedy $n_0$ jako libovolné přirozené číslo větší než $\frac{1}{\varepsilon}$. Pro $\varepsilon = 0{,}001$ například $n_0 = 1001$.
@@ -235,6 +391,25 @@ Definice vypadá děsivě, ale říká jednoduchou věc. Řekněte mi libovolně
 \begin{example}
   \begin{itemize}
     \item $1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots = \frac{1}{1 - \frac{1}{2}} = 2$. Pokud ujdete půl cesty, pak polovinu zbytku, pak polovinu zbytku\ldots, dojdete přesně do cíle.
+
+    \begin{center}
+      \begin{tikzpicture}[scale=0.9]
+        \filldraw[fill=colorofwisdom!70, draw=white, thick] (0,0) rectangle (2,4);
+        \filldraw[fill=colorofwisdom!50, draw=white, thick] (2,2) rectangle (4,4);
+        \filldraw[fill=colorofwisdom!35, draw=white, thick] (2,0) rectangle (3,2);
+        \filldraw[fill=colorofwisdom!22, draw=white, thick] (3,0) rectangle (4,1);
+        \filldraw[fill=colorofwisdom!14, draw=white, thick] (3,1) rectangle (3.5,2);
+        \filldraw[fill=colorofwisdom!8, draw=white, thick] (3.5,1.5) rectangle (4,2);
+        \filldraw[fill=colorofwisdom!4, draw=white, thick] (3.5,1) rectangle (3.75,1.5);
+        \draw[thick] (0,0) rectangle (4,4);
+        \node[white] at (1,2) {$\frac{1}{2}$};
+        \node[white] at (3,3) {$\frac{1}{4}$};
+        \node at (2.5,1) {$\frac{1}{8}$};
+        \node at (3.5,0.5) {\small $\frac{1}{16}$};
+        \node[anchor=west, align=left, font=\small] at (4.6,2) {čtverec o obsahu $1$:\\každý dílek je polovina toho, co zbylo,\\a dílky čtverec postupně celý vyplní:\\$\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots = 1$};
+      \end{tikzpicture}
+    \end{center}
+    Obrázek ukazuje, proč součet bez úvodní jedničky vychází $1$: nevyplněný zbytek čtverce je po každém kroku poloviční, a proto se zmenšuje k nule.
     \item $9 - 3 + 1 - \frac{1}{3} + \cdots = \frac{9}{1 + \frac{1}{3}} = \frac{27}{4}$.
     \item $0{,}\overline{3} = \frac{3}{10} + \frac{3}{100} + \cdots = \frac{\frac{3}{10}}{1 - \frac{1}{10}} = \frac{1}{3}$.
     \item $0{,}\overline{12} = \frac{12}{100} + \frac{12}{10000} + \cdots = \frac{\frac{12}{100}}{1 - \frac{1}{100}} = \frac{12}{99} = \frac{4}{33}$.
@@ -281,6 +456,27 @@ Definice vypadá děsivě, ale říká jednoduchou věc. Řekněte mi libovolně
     1 + \frac{1}{2} + \underbrace{\left(\frac{1}{3} + \frac{1}{4}\right)}_{\geq\frac{1}{4} + \frac{1}{4} = \frac{1}{2}} + \underbrace{\left(\frac{1}{5} + \cdots + \frac{1}{8}\right)}_{\geq 4\cdot\frac{1}{8} = \frac{1}{2}} + \underbrace{\left(\frac{1}{9} + \cdots + \frac{1}{16}\right)}_{\geq\frac{1}{2}} + \cdots
   \end{equation*}
   Každá skupina je alespoň $\frac{1}{2}$ a skupin je nekonečně mnoho. Řada ale roste neuvěřitelně pomalu: abyste se dostali přes $100$, museli byste sečíst asi $10^{43}$ členů.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.85]
+      \draw[->] (0,0) -- (8.6,0) node[right] {\small $n$};
+      \draw[->] (0,0) -- (0,3.4);
+      \foreach \n in {1,...,16} {
+        \filldraw[fill=gray!20, draw=gray] ({0.5*(\n-1)},0) rectangle ({0.5*\n},{3/\n});
+      }
+      \foreach \n/\b in {3/4, 4/4, 5/8, 6/8, 7/8, 8/8, 9/16, 10/16, 11/16, 12/16, 13/16, 14/16, 15/16, 16/16} {
+        \fill[colorofwisdom!55] ({0.5*(\n-1)},0) rectangle ({0.5*\n},{3/\b});
+      }
+      \fill[colorofwisdom!55] (0,0) rectangle (0.5,3);
+      \fill[colorofwisdom!55] (0.5,0) rectangle (1,1.5);
+      \node[font=\scriptsize] at (0.25,3.2) {$1$};
+      \node[font=\scriptsize] at (0.75,1.7) {$\frac{1}{2}$};
+      \draw[decorate, decoration={brace, mirror, amplitude=3pt}] (1,-0.1) -- (2,-0.1) node[midway, below=3pt] {\scriptsize $\geq\frac{1}{2}$};
+      \draw[decorate, decoration={brace, mirror, amplitude=3pt}] (2,-0.1) -- (4,-0.1) node[midway, below=3pt] {\scriptsize $\geq\frac{1}{2}$};
+      \draw[decorate, decoration={brace, mirror, amplitude=3pt}] (4,-0.1) -- (8,-0.1) node[midway, below=3pt] {\scriptsize $\geq\frac{1}{2}$};
+    \end{tikzpicture}
+  \end{center}
+  Sloupek nad číslem $n$ má výšku $\frac{1}{n}$. Tmavé části ukazují Oresmův odhad: v každé skupině zkrátíme všechny sloupky na výšku toho nejnižšího. Tmavá plocha každé skupiny je pak přesně $\frac{1}{2}$, a přitom skupiny jsou stále širší. Sloupky sice jdou k nule, ale ne dost rychle.
 \end{note}
 
 \section{Příběh --- Muž, který spočítal nekonečno}

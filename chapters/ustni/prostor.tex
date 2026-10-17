@@ -14,6 +14,27 @@ V kapitole~\ref{kap:stereometrie} jsme řešili prostorové úlohy tak, že jsme
   I zde platí $\vec{u}\cdot\vec{v} = |\vec{u}||\vec{v}|\cos\varphi$ a vektory jsou kolmé, právě když $\vec{u}\cdot\vec{v} = 0$.
 \end{definitionbox}
 
+Jak si bod v prostoru představit? Z počátku ujdeme $a_1$ ve směru osy $x$, pak $a_2$ ve směru osy $y$ a nakonec vystoupáme o $a_3$ nahoru. Bod je roh `krabice' o rozměrech $a_1\times a_2\times a_3$ a délka vektoru $\overrightarrow{OA}$ je její tělesová úhlopříčka. Proto vzorec pro délku vypadá jako Pythagorova věta použitá dvakrát: nejdřív úhlopříčka podstavy $\sqrt{a_1^2 + a_2^2}$, pak s výškou $a_3$.
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.1]
+    \draw[->] (0,0,0) -- (3.3,0,0) node[right] {\small $x$};
+    \draw[->] (0,0,0) -- (0,4.2,0) node[above right] {\small $y$};
+    \draw[->] (0,0,0) -- (0,0,2.9) node[above] {\small $z$};
+    \coordinate (A) at (2,3,2);
+    \draw[dashed, gray] (2,0,0) -- (2,3,0) -- (0,3,0);
+    \draw[dashed, gray] (2,0,0) -- (2,0,2) (2,3,0) -- (2,3,2) (0,3,0) -- (0,3,2);
+    \draw[dashed, gray] (0,0,2) -- (2,0,2) -- (2,3,2) -- (0,3,2) -- cycle;
+    \draw[dotted, thick] (0,0,0) -- (2,3,0) node[midway, below right, font=\scriptsize] {$\sqrt{a_1^2 + a_2^2}$};
+    \draw[->, thick, colorofwisdom] (0,0,0) -- (A);
+    \fill (A) circle (1.5pt) node[above right] {\small $A = [2, 3, 2]$};
+    \node[below left] at (0,0,0) {\small $O$};
+    \node[below] at (2,0,0) {\scriptsize $a_1 = 2$};
+    \node[right] at (0,3,0) {\scriptsize $a_2 = 3$};
+    \node[left] at (0,0,2) {\scriptsize $a_3 = 2$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{example}
   Pro $A = [1, 2, 3]$ a $B = [3, -1, 9]$ je $\overrightarrow{AB} = (2, -3, 6)$, $|AB| = \sqrt{4 + 9 + 36} = 7$ a $S_{AB} = \left[2, \frac{1}{2}, 6\right]$.
 \end{example}
@@ -35,6 +56,22 @@ V prostoru existuje ještě jeden součin vektorů, který v rovině nemá obdob
     \item $\vec{u}\times\vec{v} = \vec{o}$, právě když jsou $\vec{u}$ a $\vec{v}$ kolineární.
   \end{itemize}
 \end{definitionbox}
+
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.25]
+    \coordinate (O) at (0,0,0); \coordinate (U) at (2.5,0,0); \coordinate (V) at (0.8,1.8,0); \coordinate (UV) at (3.3,1.8,0);
+    \draw[->, thick, gray] (O) -- (0,0,-1.1) node[below, font=\small] {$\vec{v}\times\vec{u}$};
+    \fill[colorofwisdom!20] (O) -- (U) -- (UV) -- (V) -- cycle;
+    \draw[dashed] (U) -- (UV) -- (V);
+    \draw[->, thick] (O) -- (U) node[below right] {\small $\vec{u}$};
+    \draw[->, thick] (O) -- (V) node[left] {\small $\vec{v}$};
+    \node[font=\scriptsize, align=center] at (1.75,0.9,0) {obsah\\$|\vec{u}\times\vec{v}|$};
+    \draw[->, thick, colorofwisdom] (O) -- (0,0,2.1) node[above, font=\small] {$\vec{u}\times\vec{v}$};
+    \draw (0.25,0,0) -- (0.25,0,0.25) -- (0,0,0.25);
+  \end{tikzpicture}
+\end{center}
+Na obrázku vidíte všechny vlastnosti najednou: výsledek trčí kolmo z roviny, ve které leží $\vec{u}$ a $\vec{v}$, jeho délka je obsah vybarveného rovnoběžníku a po prohození pořadí míří opačně (šedá šipka). Když jsou $\vec{u}$ a $\vec{v}$ rovnoběžné, rovnoběžník se `splácne' na úsečku s nulovým obsahem.
 
 Vzorec vypadá hrozivě, ale dá se zapamatovat jako `determinant'. Každá složka je determinant $2\times 2$ z ostatních dvou souřadnic: první složka vznikne zakrytím prvního sloupce, druhá zakrytím druhého (s obráceným znaménkem), třetí zakrytím třetího:
 \begin{equation*}
@@ -72,6 +109,32 @@ Kolmost si ověříte přímo: $\vec{u}\cdot(\vec{u}\times\vec{v}) = u_1(u_2v_3 
   Normálový vektor roviny určené vektory $\vec{u}$, $\vec{v}$ najdeme jako $\vec{n} = \vec{u}\times\vec{v}$.
 \end{definitionbox}
 
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \begin{scope}[krychle]
+      \draw[thick] (-0.94,-0.5,-0.4) -- (2.84,1.6,1.65) node[right] {\small $p$};
+      \draw[->, very thick, colorofwisdom] (0.5,0.3,0.4) -- (1.4,0.8,0.9) node[midway, above left] {\small $\vec{u}$};
+      \foreach \t in {-1,0,1,2} {
+        \fill ({0.5+0.9*\t},{0.3+0.5*\t},{0.4+0.5*\t}) circle (1.5pt) node[below right, font=\scriptsize] {$t = \t$};
+      }
+      \node[above left] at (0.5,0.3,0.4) {\small $A$};
+    \end{scope}
+    \begin{scope}[xshift=5.2cm, krychle]
+      \fill[colorofwisdom!15] (-0.8,-0.8,-0.4) -- (2.4,-0.8,0.24) -- (2.4,2.4,1.2) -- (-0.8,2.4,0.56) -- cycle;
+      \draw[gray] (-0.8,-0.8,-0.4) -- (2.4,-0.8,0.24) -- (2.4,2.4,1.2) -- (-0.8,2.4,0.56) -- cycle;
+      \draw[->, thick] (0,0,0) -- (2,0,0.4) node[below right] {\small $\vec{u}$};
+      \draw[->, thick] (0,0,0) -- (0,2,0.6) node[above left] {\small $\vec{v}$};
+      \draw[dashed] (0,0,0) -- (1.4,0,0.28) -- (1.4,1,0.58);
+      \fill (1.4,1,0.58) circle (1.5pt) node[above right, font=\scriptsize] {$X = A + t\vec{u} + s\vec{v}$};
+      \draw[->, thick, colorofwisdom] (0,0,0) -- (-0.24,-0.36,1.2) node[above] {\small $\vec{n} = \vec{u}\times\vec{v}$};
+      \fill (0,0,0) circle (1.5pt) node[below left] {\small $A$};
+      \node at (2.2,2.2,1.1) [below left] {\small $\rho$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Parametr $t$ funguje jako `čas': v čase $t = 0$ stojíme v bodě $A$ a za každou jednotku času ujdeme vektor $\vec{u}$. Záporné $t$ znamená cestu pozpátku. U roviny máme dva nezávislé `ovladače' $t$ a $s$, a tedy dva rozměry, ve kterých se můžeme pohybovat. Normálový vektor $\vec{n}$ trčí z roviny kolmo jako stožár z podlahy.
+
 Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrightarrow{AX} = 0$ říká, že vektor $\overrightarrow{AX}$ je kolmý na $\vec{n}$. V rovině jsou všechny takové body $X$ na jedné přímce. V prostoru tvoří všechny vektory kolmé na $\vec{n}$ celou rovinu. Jedna podmínka v prostoru `ubere' jen jeden rozměr ze tří.
 
 \begin{example}
@@ -85,6 +148,21 @@ Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrighta
 
   Po vydělení šesti dostaneme hezký tvar $\frac{x}{1} + \frac{y}{2} + \frac{z}{3} = 1$, tzv. \textbf{úsekový tvar}, ze kterého jsou průsečíky s osami vidět okamžitě. A obsah trojúhelníku $ABC$ je polovina obsahu rovnoběžníku: $S = \frac{1}{2}|\vec{n}| = \frac{1}{2}\sqrt{36 + 9 + 4} = \frac{7}{2}$.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.15]
+    \draw[->] (0,0,0) -- (1.8,0,0) node[right] {\small $x$};
+    \draw[->] (0,0,0) -- (0,2.9,0) node[above right] {\small $y$};
+    \draw[->] (0,0,0) -- (0,0,3.6) node[above] {\small $z$};
+    \fill[colorofwisdom!30, opacity=0.8] (1,0,0) -- (0,2,0) -- (0,0,3) -- cycle;
+    \draw[thick, colorofwisdom] (1,0,0) -- (0,2,0) -- (0,0,3) -- cycle;
+    \fill (1,0,0) circle (1.5pt) node[below] {\small $A = [1, 0, 0]$};
+    \fill (0,2,0) circle (1.5pt) node[right] {\small $B = [0, 2, 0]$};
+    \fill (0,0,3) circle (1.5pt) node[left] {\small $C = [0, 0, 3]$};
+    \node[font=\small] at (2.6,0,2.2) {$\dfrac{x}{1} + \dfrac{y}{2} + \dfrac{z}{3} = 1$};
+  \end{tikzpicture}
+\end{center}
+Rovina `odřízne' z prvního oktantu trojúhelníkový kousek. Čísla ve jmenovatelích úsekového tvaru jsou přesně místa, kde rovina protíná osy.
 
 \section{Vzájemné polohy}
 
@@ -103,6 +181,56 @@ Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrighta
 
   \textbf{Dvě roviny}: jsou \textbf{rovnoběžné}, pokud mají kolineární normálové vektory (a totožné, pokud jsou rovnice násobkem jedna druhé). Jinak jsou \textbf{různoběžné} a průsečnici najdeme vyřešením soustavy dvou rovnic se třemi neznámými (jedna neznámá bude parametr).
 \end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \begin{scope}[krychle]
+      \draw[thick] (0,0,0) -- (2,1,1) node[right] {\small $p$};
+      \draw[thick] (2,0,0) -- (0,1,1) node[left] {\small $q$};
+      \fill (1,0.5,0.5) circle (1.6pt);
+      \node[font=\small] at (1,0,-0.6) {různoběžné};
+    \end{scope}
+    \begin{scope}[xshift=4cm, krychle]
+      \draw[thick] (0,0,0) -- (2,0.5,1) node[right] {\small $p$};
+      \draw[thick] (0,1,0.3) -- (2,1.5,1.3) node[right] {\small $q$};
+      \node[font=\small] at (1,0,-0.6) {rovnoběžné};
+    \end{scope}
+    \begin{scope}[xshift=8cm, krychle]
+      \draw[gray!60, dashed] (0,0,0) -- (2,0,0) -- (2,1.5,0) -- (0,1.5,0) -- cycle;
+      \draw[gray!60, dashed] (0,0,1.2) -- (2,0,1.2) -- (2,1.5,1.2) -- (0,1.5,1.2) -- cycle;
+      \draw[gray!60, dashed] (0,0,0) -- (0,0,1.2) (2,0,0) -- (2,0,1.2) (2,1.5,0) -- (2,1.5,1.2) (0,1.5,0) -- (0,1.5,1.2);
+      \draw[thick] (-0.3,0.4,0) -- (2.3,0.4,0) node[right] {\small $p$};
+      \draw[thick] (1,-0.3,1.2) -- (1,1.9,1.2) node[above right] {\small $q$};
+      \node[font=\small] at (1,0,-0.6) {mimoběžné};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Mimoběžky jsou to, co v rovině nemáme: dvě přímky, které se nikdy neprotnou, a přesto nejsou rovnoběžné. Představte si přímku vedenou po podlaze podél jedné stěny a přímku po stropě podél stěny sousední. Krabice na obrázku pomáhá: kdyby tam nebyla, na papíře by se přímky zdánlivě křížily. U obrázků prostoru se proto vždy vyplatí přikreslit nějaký `rám'.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \begin{scope}[krychle]
+      \fill[colorofwisdom!15] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle; \draw[gray] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle;
+      \draw[thick, dashed] (1.1,0.9,-0.8) -- (1.34,0.98,0);
+      \draw[thick] (1.34,0.98,0) -- (1.7,1.1,1.2) node[right] {\small $p$};
+      \fill (1.34,0.98,0) circle (1.6pt);
+      \node[font=\small] at (1.2,0,-1.1) {různoběžné (průsečík)};
+    \end{scope}
+    \begin{scope}[xshift=4.3cm, krychle]
+      \fill[colorofwisdom!15] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle; \draw[gray] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle;
+      \draw[thick] (0.2,0.3,0.8) -- (2.4,1.5,0.8) node[right] {\small $p$};
+      \draw[dashed, gray] (0.2,0.3,0) -- (2.4,1.5,0);
+      \draw[dotted] (0.2,0.3,0) -- (0.2,0.3,0.8) (2.4,1.5,0) -- (2.4,1.5,0.8);
+      \node[font=\small] at (1.2,0,-1.1) {rovnoběžné};
+    \end{scope}
+    \begin{scope}[xshift=8.6cm, krychle]
+      \fill[colorofwisdom!15] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle; \draw[gray] (0,0,0) -- (2.4,0,0) -- (2.4,2,0) -- (0,2,0) -- cycle;
+      \draw[thick] (0.2,0.3,0) -- (2.2,1.7,0) node[above] {\small $p$};
+      \node[font=\small] at (1.2,0,-1.1) {přímka leží v rovině};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Podmínka $\vec{n}\cdot\vec{u} = 0$ znamená, že směr přímky je kolmý na normálu, tedy `vodorovný' vzhledem k rovině. Taková přímka buď letí nad rovinou jako letadlo v konstantní výšce, nebo po ní jede jako auto po silnici.
 
 \begin{example}
   Rozhodněme o poloze přímek $p: X = [1, 0, 0] + t(1, 1, 0)$ a $q: X = [0, 1, 1] + s(1, -1, 0)$. Směrové vektory kolineární nejsou. Soustava:
@@ -141,9 +269,119 @@ Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrighta
   \end{align*}
 \end{definitionbox}
 
-Vzorec pro vzdálenost od roviny se odvodí úplně stejně jako vzdálenost bodu od přímky v rovině (kapitola~\ref{kap:analyticka}): je to délka průmětu vektoru $\overrightarrow{PM}$ do normálového směru. Vzorec pro mimoběžky je stejný nápad. Vektor $\vec{u}\times\vec{v}$ je kolmý na obě přímky, takže je to směr jejich osy, a vzdálenost je délka průmětu $\overrightarrow{AB}$ do tohoto směru.
+Všechny tyto vzorce vypadají jako něco, co je potřeba se naučit nazpaměť. Ve skutečnosti za nimi stojí jediná myšlenka: \textbf{průmět vektoru do vhodného směru}. Pojďme si je projít s obrázky.
 
-U odchylky přímky a roviny je sinus, ne kosinus. Proč? Vzorec s kosinem by nám dal úhel mezi přímkou a \textit{normálou} roviny. Úhel mezi přímkou a rovinou je doplněk do $90^\circ$ a $\cos(90^\circ - \varphi) = \sin\varphi$.
+\subsection*{Vzdálenost bodu od roviny}
+
+Představte si, že $M$ je lampa visící nad podlahou $\rho$. Nejkratší cesta z lampy na podlahu vede svisle dolů, tedy ve směru normály $\vec{n}$. Vezmeme libovolný bod $P$ podlahy. Vektor $\overrightarrow{PM}$ míří šikmo, ale nás zajímá jen jeho `svislá' složka, tedy jeho průmět do směru $\vec{n}$.
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.15]
+    \fill[colorofwisdom!15] (0,0,0) -- (4,0,0) -- (4,3,0) -- (0,3,0) -- cycle;
+    \draw[gray] (0,0,0) -- (4,0,0) -- (4,3,0) -- (0,3,0) -- cycle;
+    \node at (3.7,2.7,0) {\small $\rho$};
+    \coordinate (M) at (2.6,1.6,2); \coordinate (M') at (2.6,1.6,0); \coordinate (P) at (0.8,0.5,0);
+    \draw[dashed] (P) -- (M');
+    \draw[->, thick] (P) -- (M) node[midway, above left] {\small $\overrightarrow{PM}$};
+    \draw[very thick, colorofwisdom] (M) -- (M') node[midway, right] {\small $v$};
+    \draw (2.39,1.47,0) -- (2.39,1.47,0.2) -- (2.6,1.6,0.2);
+    \draw[->, thick, colorofwisdom] (P) -- (0.8,0.5,1.1) node[left] {\small $\vec{n}$};
+    \draw[dotted] (0.8,0.5,1.1) -- (0.8,0.5,2) -- (M);
+    \fill (M) circle (1.6pt) node[above right] {\small $M$};
+    \fill (M') circle (1.6pt) node[below right] {\small $M'$};
+    \fill (P) circle (1.6pt) node[below left] {\small $P$};
+  \end{tikzpicture}
+\end{center}
+
+Délka průmětu je $|\overrightarrow{PM}|\cdot|\cos\alpha|$, kde $\alpha$ je úhel mezi $\overrightarrow{PM}$ a $\vec{n}$. Ze skalárního součinu $\overrightarrow{PM}\cdot\vec{n} = |\overrightarrow{PM}||\vec{n}|\cos\alpha$ dostaneme
+\begin{equation*}
+  v = \frac{|\overrightarrow{PM}\cdot\vec{n}|}{|\vec{n}|}.
+\end{equation*}
+A teď rozepišme čitatel. Pro $P = [p_1, p_2, p_3]$ je
+\begin{equation*}
+  \overrightarrow{PM}\cdot\vec{n} = a(m_1 - p_1) + b(m_2 - p_2) + c(m_3 - p_3) = am_1 + bm_2 + cm_3 - \underbrace{(ap_1 + bp_2 + cp_3)}_{=\,-d} = am_1 + bm_2 + cm_3 + d,
+\end{equation*}
+protože $P$ leží v rovině, a tedy $ap_1 + bp_2 + cp_3 + d = 0$. To je celý vzorec. Všimněte si, že nezáleží na tom, který bod $P$ vybereme. Posouváním $P$ po podlaze se mění jen `vodorovná' část vektoru $\overrightarrow{PM}$, svislá zůstává stejná. Mimochodem, výraz $am_1 + bm_2 + cm_3 + d$ bez absolutní hodnoty má ještě jednu informaci: jeho znaménko říká, na \textit{které straně} roviny bod leží.
+
+\subsection*{Vzdálenost mimoběžek}
+
+Každé dvě mimoběžky leží ve dvou rovnoběžných rovinách, jako přímka na podlaze a přímka na stropě. Jejich vzdálenost je tedy prostě `výška místnosti'. Obě roviny mají stejnou normálu, která musí být kolmá na $\vec{u}$ i na $\vec{v}$. Takový vektor už známe: $\vec{u}\times\vec{v}$. Vzdálenost je tak délka průmětu libovolného vektoru $\overrightarrow{AB}$ (z podlahy na strop) do směru $\vec{u}\times\vec{v}$, přesně jako výše.
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.15]
+    \fill[colorofwisdom!15] (-0.5,-0.3,0) -- (3.5,-0.3,0) -- (3.5,2.5,0) -- (-0.5,2.5,0) -- cycle;
+    \draw[gray] (-0.5,-0.3,0) -- (3.5,-0.3,0) -- (3.5,2.5,0) -- (-0.5,2.5,0) -- cycle;
+    \draw[thick] (-0.5,1,0) -- (3.5,1,0) node[right] {\small $p$ (směr $\vec{u}$)};
+    \draw[very thick, colorofwisdom] (1.5,1,0) -- (1.5,1,1.6) node[midway, right] {\small $v$};
+    \draw[->, thick, colorofwisdom] (0.3,1,0) -- (0.3,1,1) node[left] {\small $\vec{u}\times\vec{v}$};
+    \fill[colorofwisdom!8, opacity=0.7] (-0.5,-0.3,1.6) -- (3.5,-0.3,1.6) -- (3.5,2.5,1.6) -- (-0.5,2.5,1.6) -- cycle;
+    \draw[gray] (-0.5,-0.3,1.6) -- (3.5,-0.3,1.6) -- (3.5,2.5,1.6) -- (-0.5,2.5,1.6) -- cycle;
+    \draw[thick] (1.5,-0.3,1.6) -- (1.5,2.5,1.6) node[above right] {\small $q$ (směr $\vec{v}$)};
+    \draw[->, thick] (0.3,1,0) -- (1.5,2.1,1.6);
+    \node[right] at (1.1,1.65,1.05) {\small $\overrightarrow{AB}$};
+    \fill (0.3,1,0) circle (1.6pt) node[below] {\small $A$};
+    \fill (1.5,2.1,1.6) circle (1.6pt) node[above left] {\small $B$};
+  \end{tikzpicture}
+\end{center}
+
+Vzorec má i krásný geometrický význam. Číslo $\overrightarrow{AB}\cdot(\vec{u}\times\vec{v})$ se jmenuje \textbf{smíšený součin} a jeho absolutní hodnota je \textbf{objem rovnoběžnostěnu} s hranami $\overrightarrow{AB}$, $\vec{u}$, $\vec{v}$. Proč? Objem je podstava krát výška, podstava je rovnoběžník s obsahem $|\vec{u}\times\vec{v}|$ a výška je průmět $\overrightarrow{AB}$ do kolmého směru. Vzorec pro vzdálenost mimoběžek tedy říká
+\begin{equation*}
+  v = \frac{\text{objem}}{\text{obsah podstavy}} = \text{výška}.
+\end{equation*}
+
+\subsection*{Odchylky}
+
+Odchylka dvou rovin se měří jako úhel otevřené knihy: v rovině kolmé na hřbet. Normála každé stránky je od stránky otočená o $90^\circ$, takže když se stránky rozevřou o úhel $\varphi$, normály se rozevřou o stejný úhel. Proto stačí změřit úhel normál. Absolutní hodnota ve vzorci zajistí, že dostaneme úhel mezi $0^\circ$ a $90^\circ$. Normálu totiž můžeme vzít i opačně a odchylka nemá záviset na tom, jak se rozhodneme.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.3]
+    \begin{scope}[krychle]
+      \fill[colorofwisdom!15] (0,0,0) -- (3,0,0) -- (3,2,0) -- (0,2,0) -- cycle;
+      \draw[gray] (0,0,0) -- (3,0,0) -- (3,2,0) -- (0,2,0) -- cycle;
+      \coordinate (P) at (1,1,0);
+      \coordinate (Q) at ({1+1.9*cos(35)},1,{1.9*sin(35)});
+      \coordinate (Q') at ({1+1.9*cos(35)},1,0);
+      \coordinate (N) at (1,1,1.4);
+      \coordinate (R) at ({1-0.8*cos(35)},1,{-0.8*sin(35)});
+    \end{scope}
+    \draw[thick, dashed] (R) -- (P);
+    \draw[thick] (P) -- (Q) node[right] {\small $p$};
+    \draw[dashed] (P) -- (Q');
+    \draw[dotted] (Q) -- (Q');
+    \draw[->, thick, colorofwisdom] (P) -- (N) node[above] {\small $\vec{n}$};
+    \draw ($(P)+(0:0.75)$) arc (0:35:0.75);
+    \node at ($(P)+(17:1)$) {\small $\varphi$};
+    \draw[colorofwisdom] ($(P)+(35:0.45)$) arc (35:90:0.45);
+    \node at ($(P)+(64:0.85)$) {\scriptsize $90^\circ{-}\varphi$};
+    \node[font=\small] at (1.8,-0.6) {přímka a rovina};
+    \begin{scope}[xshift=5.2cm]
+      \begin{scope}[krychle]
+        \fill[colorofwisdom!15] (0,0,0) -- (2,0,0) -- (2,2.2,0) -- (0,2.2,0) -- cycle;
+        \draw[gray] (0,0,0) -- (2,0,0) -- (2,2.2,0) -- (0,2.2,0) -- cycle;
+        \fill[colorofwisdom!30, opacity=0.7] (0,0,0) -- ({2*cos(65)},0,{2*sin(65)}) -- ({2*cos(65)},2.2,{2*sin(65)}) -- (0,2.2,0) -- cycle;
+        \draw[gray] (0,0,0) -- ({2*cos(65)},0,{2*sin(65)}) -- ({2*cos(65)},2.2,{2*sin(65)}) -- (0,2.2,0);
+        \draw[very thick] (0,-0.2,0) -- (0,2.4,0);
+        \coordinate (O) at (0,1.1,0);
+        \coordinate (K1) at (1.7,1.1,0);
+        \coordinate (K2) at ({1.7*cos(65)},1.1,{1.7*sin(65)});
+        \coordinate (N1) at (0,1.1,1.2);
+        \coordinate (N2) at ({-1.2*sin(65)},1.1,{1.2*cos(65)});
+      \end{scope}
+      \draw[thick] (O) -- (K1) (O) -- (K2);
+      \draw ($(O)+(0:0.8)$) arc (0:65:0.8);
+      \node at ($(O)+(32:1.05)$) {\small $\varphi$};
+      \draw[->, thick, colorofwisdom] (O) -- (N1) node[above] {\small $\vec{n}_1$};
+      \draw[->, thick, colorofwisdom] (O) -- (N2) node[above left] {\small $\vec{n}_2$};
+      \draw[colorofwisdom] ($(O)+(90:0.55)$) arc (90:155:0.55);
+      \node[colorofwisdom] at ($(O)+(122:0.8)$) {\small $\varphi$};
+      \node[font=\small] at (1.2,-0.6) {dvě roviny};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Odchylka dvou přímek je jednodušší: je to úhel jejich směrových vektorů (opět s absolutní hodnotou). U mimoběžek si jednu přímku posuneme tak, aby druhou protínala, a měříme úhel tam.
+
+U odchylky přímky a roviny je sinus, ne kosinus. Proč? Podívejte se na levý obrázek. Úhel přímky a roviny měříme mezi přímkou a jejím `stínem' (kolmým průmětem) v rovině. Vzorec s kosinem by nám ale dal úhel mezi přímkou a \textit{normálou} roviny. Úhel mezi přímkou a rovinou je doplněk do $90^\circ$ a $\cos(90^\circ - \varphi) = \sin\varphi$.
 
 \begin{example}
   Vraťme se ke krychli z kapitoly~\ref{kap:stereometrie} a spočítejme všechno znovu, tentokrát bez hledání trojúhelníků. Krychle s hranou $1$ má vrcholy $A = [0, 0, 0]$, $B = [1, 0, 0]$, $C = [1, 1, 0]$, $D = [0, 1, 0]$, $E = [0, 0, 1]$, $F = [1, 0, 1]$, $G = [1, 1, 1]$, $H = [0, 1, 1]$.
@@ -155,6 +393,21 @@ U odchylky přímky a roviny je sinus, ne kosinus. Proč? Vzorec s kosinem by n�
   \end{itemize}
   Všechno sedí s výsledky z kapitoly o stereometrii. Kdo nemá prostorovou představivost, má souřadnice.
 \end{example}
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=2.7]
+    \krychle
+    \fill[colorofwisdom!25, opacity=0.7] (B) -- (D) -- (E) -- cycle;
+    \draw[colorofwisdom] (B) -- (E) -- (D);
+    \draw[colorofwisdom, dashed] (B) -- (D);
+    \coordinate (T) at (1/3,1/3,1/3);
+    \draw[very thick, colorofwisdom] (A) -- (T);
+    \draw[dashed, colorofwisdom] (T) -- (G);
+    \fill (T) circle (0.7pt) node[right, font=\scriptsize] {$T$};
+    \node[font=\scriptsize, align=left, anchor=west] at (1.6,0,0.5) {rovina $BDE$ protíná\\úhlopříčku $AG$ v bodě $T$,\\$|AT| = \frac{1}{3}|AG| = \frac{\sqrt{3}}{3}$};
+  \end{tikzpicture}
+\end{center}
+Na obrázku je vidět i to, proč vzdálenost $A$ od roviny $BDE$ měříme právě po úhlopříčce $AG$: ta má směr $(1, 1, 1)$, což je přesně normálový vektor roviny $x + y + z - 1 = 0$. Úhlopříčka tedy rovinu protíná kolmo.
 
 \begin{problem}
   \begin{enumerate}[label=(\alph*)]
