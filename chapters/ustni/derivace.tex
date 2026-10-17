@@ -1,0 +1,261 @@
+\label{kap:derivace}
+\mathquote{It is unworthy of excellent men to lose hours like slaves in the labour of calculation which could safely be relegated to anyone else if machines were used.}{Gottfried Wilhelm Leibniz}
+
+Derivace měří, jak rychle se něco mění. Rychlost je derivace dráhy podle času, zrychlení je derivace rychlosti. Sklon tečny ke grafu je derivace funkce. A když chceme najít maximum nebo minimum čehokoli, od zisku firmy po tvar plechovky, hledáme místa, kde je derivace nulová. Je to pravděpodobně nejužitečnější nástroj, který středoškolská matematika nabízí. Pokud vám z celé analýzy zůstane jen jedna věc, ať je to tahle.
+
+\section{Pojem derivace}
+
+Představte si auto, které ujede za čas $t$ dráhu $s(t)$. Průměrná rychlost mezi časy $t_0$ a $t_0 + h$ je
+\begin{equation*}
+  \frac{s(t_0 + h) - s(t_0)}{h}.
+\end{equation*}
+Okamžitou rychlost (tu, kterou ukazuje tachometr) dostaneme, když necháme $h$ jít k nule. Geometricky je průměrná rychlost směrnice \textbf{sečny} grafu procházející body $[t_0, s(t_0)]$ a $[t_0 + h, s(t_0 + h)]$. Když se druhý bod blíží k prvnímu, sečna se změní v \textbf{tečnu}.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[->] (-0.3,0) -- (4.6,0) node[right] {\small $x$};
+    \draw[->] (0,-0.3) -- (0,4.3) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=0.2:4.2, samples=60] plot (\x, {0.22*\x*\x + 0.3});
+    \coordinate (A) at (1.5,0.795); \coordinate (B) at (3.5,2.995);
+    \filldraw (A) circle (1.5pt); \filldraw (B) circle (1.5pt);
+    \draw[gray] ($(A)!-0.4!(B)$) -- ($(A)!1.3!(B)$) node[right] {\small sečna};
+    \draw[thick] (0.3,0.003) -- (4,2.445) node[right] {\small tečna};
+    \draw[dashed] (A) -- (1.5,0) node[below] {\small $x_0$};
+    \draw[dashed] (B) -- (3.5,0) node[below] {\small $x_0 + h$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Derivace funkce} $f$ v bodě $x_0$ je limita
+  \begin{equation*}
+    f'(x_0) = \lim_{h\to 0}\frac{f(x_0 + h) - f(x_0)}{h},
+  \end{equation*}
+  pokud existuje a je konečná. Pak říkáme, že $f$ je v bodě $x_0$ \textbf{diferencovatelná}. Funkce, která každému $x$ přiřadí $f'(x)$, je \textbf{derivace} $f'$.
+
+  \vspace{0.2cm}
+
+  \textbf{Geometrický význam}: $f'(x_0)$ je směrnice tečny ke grafu v bodě $[x_0, f(x_0)]$. \textbf{Rovnice tečny}:
+  \begin{equation*}
+    y - f(x_0) = f'(x_0)(x - x_0).
+  \end{equation*}
+  \textbf{Fyzikální význam}: derivace je okamžitá rychlost změny.
+\end{definitionbox}
+
+Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně malá změna $y$ ku nekonečně malé změně $x$'. Newton psal tečku nad písmeno, $\dot{s}$. Značení $f'$ zavedl až Lagrange. Fyzici dodnes používají všechna tři, podle nálady.
+
+\begin{example}
+  Spočítejme derivaci $f(x) = x^2$ podle definice:
+  \begin{equation*}
+    f'(x) = \lim_{h\to 0}\frac{{(x + h)}^2 - x^2}{h} = \lim_{h\to 0}\frac{2xh + h^2}{h} = \lim_{h\to 0}(2x + h) = 2x.
+  \end{equation*}
+  Tečna ke grafu $y = x^2$ v bodě $x_0 = 3$ má směrnici $f'(3) = 6$ a rovnici $y - 9 = 6(x - 3)$, tedy $y = 6x - 9$.
+\end{example}
+
+\begin{note}
+  Každá diferencovatelná funkce je spojitá. Obráceně to neplatí: funkce $|x|$ je v nule spojitá, ale derivaci tam nemá. Zprava je sklon $1$, zleva $-1$ a graf má `zlom'. Weierstrassova funkce z odbočky v kapitole~\ref{kap:funkce} je spojitá, ale nemá derivaci v žádném bodě. Je to funkce, která se skládá jen ze zlomů.
+\end{note}
+
+\section{Pravidla pro derivování}
+
+\begin{definitionbox}
+  \textbf{Derivace elementárních funkcí}:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{|c|c||c|c|}
+      \hline
+      $f(x)$ & $f'(x)$ & $f(x)$ & $f'(x)$ \\
+      \hline
+      $c$ & $0$ & $\sin x$ & $\cos x$ \\
+      $x^n$ & $nx^{n-1}$ & $\cos x$ & $-\sin x$ \\
+      $e^x$ & $e^x$ & $\tg x$ & $\dfrac{1}{\cos^2 x}$ \\
+      $a^x$ & $a^x\ln a$ & $\cotg x$ & $-\dfrac{1}{\sin^2 x}$ \\
+      $\ln x$ & $\dfrac{1}{x}$ & $\log_a x$ & $\dfrac{1}{x\ln a}$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  Vzorec pro $x^n$ platí pro libovolný reálný exponent $n$ (na vhodném definičním oboru), například $(\sqrt{x})' = {\left(x^{\frac{1}{2}}\right)}' = \frac{1}{2}x^{-\frac{1}{2}} = \frac{1}{2\sqrt{x}}$.
+
+  \vspace{0.2cm}
+
+  \textbf{Pravidla}:
+  \begin{align*}
+    (c\cdot f)' &= c\cdot f', & (f\pm g)' &= f'\pm g',\\
+    (f\cdot g)' &= f'g + fg', & \left(\frac{f}{g}\right)' &= \frac{f'g - fg'}{g^2},\\
+    \left(f(g(x))\right)' &= f'(g(x))\cdot g'(x) & &\text{(derivace složené funkce)}.
+  \end{align*}
+\end{definitionbox}
+
+\begin{proof}[(několika vzorců)]
+  \textbf{$(x^n)' = nx^{n-1}$ pro $n\in\mathbb{N}$}: Podle binomické věty z kapitoly~\ref{kap:kombinatorika} je ${(x + h)}^n = x^n + nx^{n-1}h + \binom{n}{2}x^{n-2}h^2 + \cdots$. Po odečtení $x^n$ a vydělení $h$ zbyde $nx^{n-1} + (\text{členy s } h)$, a ty pro $h\to 0$ zmizí.
+
+  \textbf{$(\sin x)' = \cos x$}: Podle součtového vzorce
+  \begin{equation*}
+    \frac{\sin(x + h) - \sin x}{h} = \sin x\cdot\frac{\cos h - 1}{h} + \cos x\cdot\frac{\sin h}{h}.
+  \end{equation*}
+  Podle kapitoly~\ref{kap:limity} je $\lim\frac{\sin h}{h} = 1$. Dále $\frac{\cos h - 1}{h} = \frac{-2\sin^2\frac{h}{2}}{h} = -\sin\frac{h}{2}\cdot\frac{\sin\frac{h}{2}}{\frac{h}{2}}\to 0\cdot 1 = 0$. Celkem tedy $\cos x$. Tady je vidět, proč radiány: limita $\frac{\sin h}{h} = 1$ platí jen v nich. Ve stupních by derivace sinu byla $\frac{\pi}{180}\cos x$, což nechce nikdo.
+
+  \textbf{Součin}: $f(x + h)g(x + h) - f(x)g(x) = \left(f(x + h) - f(x)\right)g(x + h) + f(x)\left(g(x + h) - g(x)\right)$. Po vydělení $h$ a limitě dostaneme $f'g + fg'$. (Použili jsme, že $g$ je spojitá, takže $g(x + h)\to g(x)$.)
+\end{proof}
+
+\begin{example}
+  \begin{align*}
+    (3x^4 - 5x^2 + 7)' &= 12x^3 - 10x,\\
+    (x^2\sin x)' &= 2x\sin x + x^2\cos x,\\
+    {\left(\frac{x + 1}{x - 1}\right)}' &= \frac{1\cdot(x - 1) - (x + 1)\cdot 1}{{(x - 1)}^2} = \frac{-2}{{(x - 1)}^2},\\
+    \left(\sin(x^2)\right)' &= \cos(x^2)\cdot 2x,\\
+    \left(e^{3x}\right)' &= e^{3x}\cdot 3,\\
+    \left(\sqrt{x^2 + 1}\right)' &= \frac{1}{2\sqrt{x^2 + 1}}\cdot 2x = \frac{x}{\sqrt{x^2 + 1}},\\
+    \left(\ln(\cos x)\right)' &= \frac{1}{\cos x}\cdot(-\sin x) = -\tg x.
+  \end{align*}
+  U složených funkcí derivujeme `zvenku dovnitř': nejdřív vnější funkci (vnitřek necháme, jak je) a pak vynásobíme derivací vnitřku. Rozklad na vnější a vnitřní funkci jsme si procvičili v kapitole~\ref{kap:funkce}.
+\end{example}
+
+\begin{problem}
+  Zderivujte:
+  \begin{enumerate}[label=(\alph*)]
+    \item $f(x) = 2x^3 - \frac{1}{x} + \sqrt{x}$,
+    \item $f(x) = xe^x$,
+    \item $f(x) = \dfrac{x^2}{x + 1}$,
+    \item $f(x) = {(2x - 1)}^5$,
+    \item $f(x) = \ln(x^2 + 1)$,
+    \item $f(x) = \sin^2 x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $6x^2 + \frac{1}{x^2} + \frac{1}{2\sqrt{x}}$.
+    \item $e^x + xe^x = (1 + x)e^x$.
+    \item $\frac{2x(x + 1) - x^2}{{(x + 1)}^2} = \frac{x^2 + 2x}{{(x + 1)}^2}$.
+    \item $5{(2x - 1)}^4\cdot 2 = 10{(2x - 1)}^4$. Roznásobovat pátou mocninu by byl hřích.
+    \item $\frac{2x}{x^2 + 1}$.
+    \item $2\sin x\cos x = \sin 2x$.
+  \end{enumerate}
+\end{solution}
+
+\section{Průběh funkce}
+
+\begin{definitionbox}
+  \textbf{Monotonie}: Pokud je na intervalu $f'(x) > 0$, je $f$ na něm \textbf{rostoucí}. Pokud $f'(x) < 0$, je \textbf{klesající}.
+
+  \textbf{Lokální extrémy}: Pokud má diferencovatelná funkce v bodě $x_0$ lokální extrém, je $f'(x_0) = 0$ (takovým bodům se říká \textbf{stacionární}). Pokud $f'$ v $x_0$ mění znaménko z $+$ na $-$, je tam \textbf{lokální maximum}, pokud z $-$ na $+$, \textbf{lokální minimum}. Ekvivalentně: pokud $f'(x_0) = 0$ a $f''(x_0) < 0$, je tam maximum, pokud $f''(x_0) > 0$, minimum.
+
+  \textbf{Konvexnost a konkávnost}: Druhá derivace $f'' = (f')'$ udává, jak se mění sklon. Pokud $f'' > 0$, je funkce \textbf{konvexní} (graf `drží vodu', $\cup$). Pokud $f'' < 0$, je \textbf{konkávní} ($\cap$). Bod, ve kterém se konvexnost mění v konkávnost, je \textbf{inflexní bod}.
+\end{definitionbox}
+
+Pozor: $f'(x_0) = 0$ je jen \textit{nutná} podmínka, ne postačující. Funkce $x^3$ má $f'(0) = 0$, ale v nule extrém nemá, je všude rostoucí. Tečna je tam vodorovná, ale graf jde dál nahoru. Proto je třeba ověřit změnu znaménka derivace nebo druhou derivaci.
+
+\begin{definitionbox}
+  \textbf{Postup vyšetření průběhu funkce}:
+  \begin{enumerate}
+    \item definiční obor, sudost/lichost, periodicita,
+    \item průsečíky s osami,
+    \item limity v krajních bodech definičního oboru a asymptoty,
+    \item první derivace: intervaly monotonie a lokální extrémy,
+    \item druhá derivace: konvexnost, konkávnost a inflexní body,
+    \item obor hodnot a graf.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  Vyšetřeme $f(x) = x^3 - 3x$.
+  \begin{enumerate}
+    \item $D(f) = \mathbb{R}$. Funkce je lichá: $f(-x) = -x^3 + 3x = -f(x)$.
+    \item $f(0) = 0$. Nulové body: $x(x^2 - 3) = 0$, tedy $x\in\{0, \pm\sqrt{3}\}$.
+    \item $\lim_{x\to\infty} f(x) = \infty$, $\lim_{x\to-\infty} f(x) = -\infty$. Asymptoty nemá.
+    \item $f'(x) = 3x^2 - 3 = 3(x - 1)(x + 1)$. Nulové body $\pm 1$. Na $(-\infty, -1)$ je $f' > 0$ (rostoucí), na $(-1, 1)$ je $f' < 0$ (klesající), na $(1, \infty)$ je $f' > 0$ (rostoucí). Lokální maximum $f(-1) = 2$, lokální minimum $f(1) = -2$.
+    \item $f''(x) = 6x$. Konkávní na $(-\infty, 0)$, konvexní na $(0, \infty)$, inflexní bod $[0, 0]$.
+    \item $H(f) = \mathbb{R}$.
+  \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \draw[->] (-3,0) -- (3.2,0) node[right] {\small $x$};
+      \draw[->] (0,-3.2) -- (0,3.4) node[above] {\small $y$};
+      \foreach \x in {-2,-1,1,2} \draw (\x,0.08) -- (\x,-0.08) node[below] {\tiny $\x$};
+      \foreach \y in {-2,2} \draw (0.08,\y) -- (-0.08,\y) node[left] {\tiny $\y$};
+      \draw[thick, colorofwisdom, domain=-2.2:2.2, samples=80] plot (\x, {\x*\x*\x - 3*\x});
+      \filldraw (-1,2) circle (2pt) node[above] {\small max};
+      \filldraw (1,-2) circle (2pt) node[below] {\small min};
+      \filldraw (0,0) circle (2pt);
+      \node[above right] at (0.05,0.05) {\tiny inflexe};
+      \draw[dashed, gray] (-1.8,2) -- (-0.2,2);
+      \draw[dashed, gray] (0.2,-2) -- (1.8,-2);
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\section{Užití derivací}
+
+\subsection{Optimalizační úlohy}
+
+V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkcí, kde stačilo najít vrchol. S derivacemi umíme najít extrém téměř čehokoli.
+
+\begin{example}
+  Plechovka tvaru válce má mít objem $1$ litr ($1000\ \si{cm^3}$). Jaké rozměry má mít, aby se na ni spotřebovalo co nejméně plechu?
+
+  Z objemu $\pi r^2v = 1000$ máme $v = \frac{1000}{\pi r^2}$. Povrch je
+  \begin{equation*}
+    S(r) = 2\pi r^2 + 2\pi rv = 2\pi r^2 + \frac{2000}{r}.
+  \end{equation*}
+  Derivace $S'(r) = 4\pi r - \frac{2000}{r^2} = 0$, tedy $r^3 = \frac{500}{\pi}$ a $r\approx 5{,}42\ \si{cm}$. Výška vychází $v = \frac{1000}{\pi r^2}\approx 10{,}84\ \si{cm}$, tedy přesně $v = 2r$. Druhá derivace $S''(r) = 4\pi + \frac{4000}{r^3} > 0$, takže jde opravdu o minimum.
+
+  Optimální plechovka má výšku rovnou průměru. Až půjdete příště do obchodu, všimněte si, že většina plechovek je vyšší. Na vině je prý marketing, pohodlný úchop a to, že víčka bývají z pevnějšího, a tedy dražšího plechu než plášť.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Z obdélníkového kartonu $30\times 20\ \si{cm}$ vystřihneme v rozích čtverce o straně $x$ a ohneme krabici bez víka. Pro jaké $x$ má největší objem?
+    \item Najděte bod na parabole $y = x^2$, který je nejblíže bodu $[0, 2]$.
+    \item Kámen vyhozený vzhůru je v čase $t$ ve výšce $h(t) = 20t - 5t^2$. Určete jeho rychlost v čase $t = 1$ a kdy dosáhne vrcholu.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $V(x) = x(30 - 2x)(20 - 2x) = 4x^3 - 100x^2 + 600x$ pro $x\in(0, 10)$. $V'(x) = 12x^2 - 200x + 600 = 0$, tedy $3x^2 - 50x + 150 = 0$ a $x = \frac{50\pm\sqrt{2500 - 1800}}{6} = \frac{50\pm\sqrt{700}}{6}$. V intervalu je jen $x\approx 3{,}92\ \si{cm}$.
+    \item Druhá mocnina vzdálenosti je $d^2 = x^2 + {(x^2 - 2)}^2 = x^4 - 3x^2 + 4$. Derivace $4x^3 - 6x = 2x(2x^2 - 3) = 0$. V bodě $0$ je lokální maximum ($d^2 = 4$), pro $x = \pm\sqrt{\frac{3}{2}}$ minimum s $d^2 = \frac{9}{4} - \frac{9}{2} + 4 = \frac{7}{4}$. Nejbližší body jsou $\left[\pm\sqrt{\frac{3}{2}}, \frac{3}{2}\right]$.
+    \item $v(t) = h'(t) = 20 - 10t$, $v(1) = 10\ \si{m/s}$. Vrchol pro $v(t) = 0$, tedy $t = 2\ \si{s}$. Stejně jako v kapitole~\ref{kap:elementarni}, jen bez doplňování na čtverec. Zrychlení $h''(t) = -10\ \si{m/s^2}$ je tíhové zrychlení.
+  \end{enumerate}
+\end{solution}
+
+\subsection{L'Hospitalovo pravidlo}
+
+\begin{definitionbox}
+  \textbf{L'Hospitalovo pravidlo}: Pokud je limita $\lim_{x\to a}\frac{f(x)}{g(x)}$ typu $\frac{0}{0}$ nebo $\frac{\infty}{\infty}$ a existuje $\lim_{x\to a}\frac{f'(x)}{g'(x)}$, pak
+  \begin{equation*}
+    \lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f'(x)}{g'(x)}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  \begin{equation*}
+    \lim_{x\to 0}\frac{e^x - 1}{x} = \lim_{x\to 0}\frac{e^x}{1} = 1,\qquad\lim_{x\to\infty}\frac{\ln x}{x} = \lim_{x\to\infty}\frac{\frac{1}{x}}{1} = 0.
+  \end{equation*}
+  Druhá limita říká, že logaritmus roste pomaleji než jakákoli přímka. Pravidlo pochází od markýze de l'Hospital, který ho v roce 1696 publikoval v první učebnici diferenciálního počtu vůbec. Ve skutečnosti ho ale objevil jeho učitel Johann Bernoulli, kterému markýz platil za to, že mu bude posílat své objevy a nechá ho je vydávat pod svým jménem. Pravidlo tedy dodnes nese jméno člověka, který si ho koupil.
+\end{example}
+
+\section{Odbočka --- Válka o kalkulus}
+
+Newton vymyslel diferenciální počet kolem roku 1666, během moru, kdy byla univerzita v Cambridge zavřená a on se uchýlil na rodinnou farmu. Nic ale nezveřejnil. Leibniz na totéž přišel nezávisle kolem roku 1675 a v roce 1684 to publikoval, s mnohem lepším značením, které používáme dodnes. Pak začala jedna z nejošklivějších hádek v dějinách vědy.
+
+Newtonovi stoupenci obvinili Leibnize, že myšlenku ukradl. Leibniz se v roce 1711 obrátil na Královskou společnost v Londýně, aby spor rozhodla. Společnost jmenovala komisi, která po roce vydala zprávu, že prvenství patří Newtonovi a Leibniz je podezřelý z plagiátorství. Prezidentem Královské společnosti byl v té době Isaac Newton. Zprávu, jak se později ukázalo, napsal z velké části on sám. A pak o ní ještě anonymně napsal pochvalnou recenzi.
+
+Leibniz zemřel v roce 1716 v Hannoveru, zapomenutý a v nemilosti u svého zaměstnavatele, který se mezitím stal anglickým králem Jiřím I. Na jeho pohřbu byl podle očitého svědka jediný člověk, jeho tajemník. Newton se o jeho smrti dozvěděl a prý prohlásil, že `zlomil Leibnizovi srdce'. Spor otrávil vztahy mezi britskými a kontinentálními matematiky na celé století. Britové z vlastenectví trvali na Newtonově nepraktickém značení s tečkami, a britská matematika proto za kontinentem desítky let zaostávala. Dnes víme, že oba přišli na kalkulus nezávisle, a celý svět používá Leibnizovo $\frac{\mathrm{d}y}{\mathrm{d}x}$.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Definujte derivaci funkce v bodě. Jaký má geometrický a fyzikální význam?
+    \item Spočítejte derivaci $x^2$ podle definice. Jak vypadá rovnice tečny?
+    \item Jaký je vztah mezi spojitostí a diferencovatelností? Uveďte příklad spojité funkce bez derivace.
+    \item Uveďte derivace elementárních funkcí. Odvoďte derivaci $x^n$ a $\sin x$.
+    \item Uveďte pravidla pro derivaci součtu, součinu, podílu a složené funkce.
+    \item Jak souvisí znaménko první derivace s monotonií? Jak se hledají lokální extrémy? Je $f'(x_0) = 0$ postačující podmínka?
+    \item Co říká druhá derivace? Co je inflexní bod?
+    \item Popište postup vyšetření průběhu funkce.
+    \item Uveďte příklad optimalizační úlohy a vyřešte ji.
+    \item Co říká l'Hospitalovo pravidlo?
+  \end{enumerate}
+\end{problem}
