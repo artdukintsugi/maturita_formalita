@@ -1,0 +1,226 @@
+\label{kap:limity}
+\mathquote{If I have seen further it is by standing on the shoulders of Giants.}{Isaac Newton}
+
+Tři poslední kapitoly této knihy jsou o \textbf{matematické analýze}, tedy o limitách, derivacích a integrálech. Je to matematika, kterou v 17. století vymysleli Newton a Leibniz, aby mohli popsat pohyb, a která od té doby pohání skoro celou fyziku a techniku. Všechno začíná limitou. Limitu posloupnosti už známe z kapitoly~\ref{kap:posloupnosti}. Teď se podíváme na limitu funkce: co se děje s hodnotami $f(x)$, když se $x$ blíží k nějakému bodu?
+
+\section{Limita funkce}
+
+Podívejme se na funkci
+\begin{equation*}
+  f(x) = \frac{x^2 - 4}{x - 2}.
+\end{equation*}
+V bodě $x = 2$ není definovaná, protože bychom dělili nulou. Ale co se děje \textit{blízko} dvojky? Pro $x\neq 2$ můžeme zkrátit: $f(x) = \frac{(x - 2)(x + 2)}{x - 2} = x + 2$. Když se tedy $x$ blíží ke $2$, hodnoty $f(x)$ se blíží ke $4$. Graf je přímka $y = x + 2$, ze které chybí jeden bod. Říkáme, že limita funkce v bodě $2$ je $4$, přestože funkční hodnota v tom bodě vůbec neexistuje.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[->] (-1,0) -- (4,0) node[right] {\small $x$};
+    \draw[->] (0,-0.5) -- (0,5.5) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (-0.8,1.2) -- (3.4,5.4);
+    \filldraw[fill=white, draw=colorofwisdom, thick] (2,4) circle (2.5pt);
+    \draw[dashed] (2,0) node[below] {\small $2$} -- (2,3.9);
+    \draw[dashed] (0,4) node[left] {\small $4$} -- (1.9,4);
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Okolí bodu} $a$ s poloměrem $\delta > 0$ je interval $(a - \delta, a + \delta)$. \textbf{Prstencové okolí} je totéž bez samotného bodu $a$.
+
+  \vspace{0.2cm}
+
+  Funkce $f$ má v bodě $a$ \textbf{limitu} $L$, pokud ke každému $\varepsilon > 0$ existuje $\delta > 0$ takové, že pro všechna $x$ z prstencového okolí $a$ s poloměrem $\delta$ (kde je $f$ definovaná) platí $|f(x) - L| < \varepsilon$. Píšeme
+  \begin{equation*}
+    \lim_{x\to a} f(x) = L.
+  \end{equation*}
+\end{definitionbox}
+
+Slovy: hodnoty $f(x)$ budou libovolně blízko $L$ ($\varepsilon$), pokud budeme $x$ volit dost blízko $a$ ($\delta$). Je to stejná hra jako u posloupností, jen místo `od nějakého $n_0$ dál' říkáme `dost blízko bodu $a$'. Důležité je, že \textbf{hodnota v bodě $a$ samotném vůbec nehraje roli}. Proto je v definici prstencové okolí.
+
+\begin{definitionbox}
+  \textbf{Jednostranné limity}: Pokud se k $a$ blížíme jen zprava ($x > a$), mluvíme o \textbf{limitě zprava} $\lim_{x\to a^+} f(x)$, pokud jen zleva, o \textbf{limitě zleva} $\lim_{x\to a^-} f(x)$. Limita existuje, právě když existují obě jednostranné limity a jsou si rovny.
+
+  \vspace{0.2cm}
+
+  \textbf{Nevlastní limity a limity v nekonečnu}: $\lim_{x\to a} f(x) = \infty$ znamená, že hodnoty rostou nade všechny meze, když se $x$ blíží k $a$. $\lim_{x\to\infty} f(x) = L$ znamená, že se hodnoty blíží k $L$, když $x$ roste nade všechny meze.
+\end{definitionbox}
+
+\begin{example}
+  Funkce $f(x) = \frac{1}{x}$:
+  \begin{equation*}
+    \lim_{x\to 0^+}\frac{1}{x} = \infty,\qquad\lim_{x\to 0^-}\frac{1}{x} = -\infty,\qquad\lim_{x\to\infty}\frac{1}{x} = \lim_{x\to-\infty}\frac{1}{x} = 0.
+  \end{equation*}
+  Limita v nule neexistuje, protože jednostranné limity jsou různé. Nekonečné limity odpovídají svislým asymptotám grafu, limity v nekonečnu vodorovným. To jsou přesně asymptoty hyperboly z kapitoly~\ref{kap:elementarni}.
+\end{example}
+
+\begin{example}
+  Funkce $\mathrm{sgn}(x)$ (signum: $-1$ pro záporná, $0$ pro nulu, $1$ pro kladná $x$) má v nule limitu zprava $1$ a zleva $-1$. Limita neexistuje, i když jsou obě jednostranné limity konečné.
+\end{example}
+
+\section{Počítání limit}
+
+\begin{definitionbox}
+  \textbf{Pravidla}: Pokud $\lim_{x\to a} f(x) = A$ a $\lim_{x\to a} g(x) = B$ (konečné), pak
+  \begin{equation*}
+    \lim(f\pm g) = A\pm B,\qquad\lim(f\cdot g) = A\cdot B,\qquad\lim\frac{f}{g} = \frac{A}{B}\ (B\neq 0).
+  \end{equation*}
+
+  \textbf{Typické postupy}:
+  \begin{enumerate}
+    \item \textbf{Dosazení}: pro `hezké' funkce (spojité, viz dále) stačí dosadit: $\lim_{x\to a} f(x) = f(a)$.
+    \item \textbf{Výraz typu $\frac{0}{0}$}: rozložíme na součin a zkrátíme, nebo rozšíříme výrazem s odmocninou.
+    \item \textbf{Limita v nekonečnu u podílu mnohočlenů}: vydělíme nejvyšší mocninou jmenovatele (stejně jako u posloupností).
+  \end{enumerate}
+  Výrazy jako $\frac{0}{0}$, $\frac{\infty}{\infty}$, $\infty - \infty$ nebo $0\cdot\infty$ jsou \textbf{neurčité}. Neznamená to, že limita neexistuje, ale že z nich samotných ji nepoznáme a musíme výraz upravit.
+\end{definitionbox}
+
+\begin{example}
+  \begin{align*}
+    \lim_{x\to 3}(x^2 - 2x + 1) &= 9 - 6 + 1 = 4,\\
+    \lim_{x\to 1}\frac{x^3 - 1}{x^2 - 1} &= \lim_{x\to 1}\frac{(x - 1)(x^2 + x + 1)}{(x - 1)(x + 1)} = \lim_{x\to 1}\frac{x^2 + x + 1}{x + 1} = \frac{3}{2},\\
+    \lim_{x\to 0}\frac{\sqrt{x + 4} - 2}{x} &= \lim_{x\to 0}\frac{(x + 4) - 4}{x(\sqrt{x + 4} + 2)} = \lim_{x\to 0}\frac{1}{\sqrt{x + 4} + 2} = \frac{1}{4},\\
+    \lim_{x\to\infty}\frac{3x^2 + 1}{x^2 - x} &= \lim_{x\to\infty}\frac{3 + \frac{1}{x^2}}{1 - \frac{1}{x}} = 3.
+  \end{align*}
+\end{example}
+
+\subsection{Limita $\frac{\sin x}{x}$}
+
+\begin{definitionbox}
+  \textbf{Věta}:
+  \begin{equation*}
+    \lim_{x\to 0}\frac{\sin x}{x} = 1.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Pro $x\in\left(0, \frac{\pi}{2}\right)$ porovnáme tři obsahy na jednotkové kružnici: trojúhelník s vrcholy $O$, $[1, 0]$, $[\cos x, \sin x]$ (obsah $\frac{1}{2}\sin x$), kruhovou výseč s úhlem $x$ (obsah $\frac{1}{2}x$, kapitola~\ref{kap:planimetrie}) a pravoúhlý trojúhelník s odvěsnami $1$ a $\tg x$ (obsah $\frac{1}{2}\tg x$). Každý obrazec obsahuje ten předchozí, a tedy
+  \begin{equation*}
+    \sin x < x < \tg x.
+  \end{equation*}
+  Vydělíme $\sin x > 0$ a vezmeme převrácené hodnoty (které otočí nerovnosti):
+  \begin{equation*}
+    \cos x < \frac{\sin x}{x} < 1.
+  \end{equation*}
+  Pro $x\to 0^+$ jde $\cos x\to 1$, a výraz $\frac{\sin x}{x}$, sevřený mezi dvě funkce s limitou $1$, musí mít limitu $1$ také. Pro záporná $x$ to plyne ze sudosti funkce $\frac{\sin x}{x}$.
+\end{proof}
+
+Tomuto argumentu se říká \textbf{věta o dvou policajtech} (nebo o sevření): pokud je funkce mezi dvěma funkcemi se stejnou limitou, nezbývá jí nic jiného, než jít s nimi. Jako opilec mezi dvěma policisty, kteří ho vedou na stanici.\footnote{V angličtině se jí říká \textit{squeeze theorem} nebo, v Itálii, \textit{teorema dei carabinieri}. Opilec je mezinárodní.} Limita $\frac{\sin x}{x}$ je důvodem, proč pro malé úhly (v radiánech!) platí $\sin x\approx x$. Pro $x = 0{,}1$ je $\sin x\approx 0{,}0998$. Fyzici toho využívají u kyvadla.
+
+\begin{example}
+  $\lim_{x\to 0}\frac{\sin 3x}{x} = \lim_{x\to 0} 3\cdot\frac{\sin 3x}{3x} = 3\cdot 1 = 3$ (substituce $t = 3x$).
+\end{example}
+
+\begin{problem}
+  Vypočítejte:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\lim\limits_{x\to -2}\dfrac{x^2 + 5x + 6}{x + 2}$,
+    \item $\lim\limits_{x\to 9}\dfrac{x - 9}{\sqrt{x} - 3}$,
+    \item $\lim\limits_{x\to\infty}\dfrac{2x^3 - x}{5x^3 + 4}$,
+    \item $\lim\limits_{x\to 0}\dfrac{\sin 5x}{\sin 2x}$,
+    \item $\lim\limits_{x\to 2^+}\dfrac{1}{x - 2}$ a $\lim\limits_{x\to 2^-}\dfrac{1}{x - 2}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{(x + 2)(x + 3)}{x + 2} = x + 3\to 1$.
+    \item $\frac{(\sqrt{x} - 3)(\sqrt{x} + 3)}{\sqrt{x} - 3} = \sqrt{x} + 3\to 6$.
+    \item $\frac{2}{5}$.
+    \item $\frac{5\cdot\frac{\sin 5x}{5x}}{2\cdot\frac{\sin 2x}{2x}}\to\frac{5}{2}$.
+    \item $\infty$ a $-\infty$.
+  \end{enumerate}
+\end{solution}
+
+\section{Spojitost}
+
+\begin{definitionbox}
+  Funkce $f$ je \textbf{spojitá v bodě} $a$, pokud
+  \begin{equation*}
+    \lim_{x\to a} f(x) = f(a).
+  \end{equation*}
+  Musí tedy platit tři věci: $f(a)$ existuje, limita existuje a obě se rovnají. Funkce je \textbf{spojitá na intervalu}, pokud je spojitá v každém jeho bodě (v krajních bodech uzavřeného intervalu jen jednostranně).
+\end{definitionbox}
+
+Intuitivně: spojitou funkci na intervalu nakreslíte jedním tahem, aniž byste zvedli tužku. Všechny elementární funkce z předchozích kapitol (mnohočleny, lomené funkce, odmocniny, exponenciála, logaritmus, goniometrické funkce) jsou spojité ve všech bodech svého definičního oboru. Spojité jsou i jejich součty, součiny, podíly a složení. Proto u nich limitu spočítáme prostým dosazením.
+
+\begin{definitionbox}
+  \textbf{Druhy nespojitosti} v bodě $a$:
+  \begin{itemize}
+    \item \textbf{odstranitelná}: limita existuje, ale $f(a)$ neexistuje nebo je jiná (díra v grafu, jako u $\frac{x^2 - 4}{x - 2}$),
+    \item \textbf{skok}: jednostranné limity existují, ale jsou různé (jako u signa),
+    \item \textbf{nekonečná} (podstatná): alespoň jedna jednostranná limita je nekonečná nebo neexistuje (jako u $\frac{1}{x}$).
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Pro jaké $a$ je funkce
+  \begin{equation*}
+    f(x) = \begin{cases} x^2 & \text{pro } x\leq 1,\\ ax + 2 & \text{pro } x > 1\end{cases}
+  \end{equation*}
+  spojitá? Obě části jsou spojité, problém může být jen v bodě $1$. Limita zleva je $1$, limita zprava je $a + 2$ a $f(1) = 1$. Spojitost nastane pro $a + 2 = 1$, tedy $a = -1$.
+\end{example}
+
+\subsection{Věty o spojitých funkcích}
+
+\begin{definitionbox}
+  \textbf{Weierstrassova věta}: Funkce spojitá na \textbf{uzavřeném} intervalu $[a, b]$ je na něm omezená a nabývá na něm svého maxima i minima.
+
+  \textbf{Bolzanova věta}: Pokud je funkce $f$ spojitá na $[a, b]$ a $f(a)$ a $f(b)$ mají opačná znaménka, existuje $c\in(a, b)$ takové, že $f(c) = 0$.
+\end{definitionbox}
+
+Obě věty zní samozřejmě a obě potřebují předpoklady, které nejsou samozřejmé. Funkce $\frac{1}{x}$ na otevřeném intervalu $(0, 1]$ maximum nemá (Weierstrass potřebuje uzavřený interval). Funkce $\frac{1}{x}$ má v $-1$ a $1$ opačná znaménka, ale nulu nikde nemá (Bolzano potřebuje spojitost na celém intervalu, a nula tam chybí).
+
+Bolzanova věta má velice praktický důsledek: dá se podle ní hledat kořen rovnice, i když ji neumíme vyřešit. Této metodě se říká \textbf{metoda půlení intervalu} (bisekce).
+
+\begin{example}
+  Rovnice $x^3 + x - 1 = 0$ nemá celočíselný kořen a vzorec pro kubickou rovnici nechceme. Ale $f(0) = -1 < 0$ a $f(1) = 1 > 0$, takže podle Bolzanovy věty má kořen v $(0, 1)$. Půlíme:
+  \begin{itemize}
+    \item $f(0{,}5) = -0{,}375 < 0$, kořen je v $(0{,}5; 1)$,
+    \item $f(0{,}75)\approx 0{,}172 > 0$, kořen je v $(0{,}5; 0{,}75)$,
+    \item $f(0{,}625)\approx -0{,}131 < 0$, kořen je v $(0{,}625; 0{,}75)$,
+    \item a tak dál.
+  \end{itemize}
+  Každým krokem se interval zmenší na polovinu. Po deseti krocích známe kořen na tři desetinná místa: $x\approx 0{,}682$. Takhle (jen chytřeji) počítá kalkulačka i počítač.
+\end{example}
+
+\begin{note}
+  Bolzanova věta má i jeden zábavný důsledek, kterému se říká \textit{věta o mnichovi}. Mnich vyjde v 6:00 ráno z kláštera na vrchol hory a dorazí tam v 18:00. Druhý den ve stejný čas sejde stejnou cestou dolů (jakkoli rychle, klidně se cestou zastaví). Existuje místo, kde byl v obou dnech ve stejnou hodinu? Ano! Představte si oba dny současně jako dva mnichy, jednoho jdoucího nahoru a druhého dolů. Někde se nutně potkají. Formálně: rozdíl jejich výšek je spojitá funkce času, na začátku je záporný a na konci kladný.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete body nespojitosti funkce $f(x) = \frac{x^2 - 1}{x^2 - 3x + 2}$ a jejich druh.
+    \item Dokažte, že rovnice $\cos x = x$ má řešení.
+    \item Dokažte, že každý mnohočlen lichého stupně má reálný kořen.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{(x - 1)(x + 1)}{(x - 1)(x - 2)}$. V bodě $1$ je odstranitelná nespojitost (limita je $\frac{2}{-1} = -2$), v bodě $2$ nekonečná nespojitost.
+    \item $g(x) = \cos x - x$ je spojitá, $g(0) = 1 > 0$, $g\left(\frac{\pi}{2}\right) = -\frac{\pi}{2} < 0$. Podle Bolzana má kořen v $\left(0, \frac{\pi}{2}\right)$. (Je přibližně $0{,}739$. Když na kalkulačce v radiánech opakovaně mačkáte tlačítko $\cos$, skončíte přesně u něj.)
+    \item Pro mnohočlen lichého stupně s kladným vedoucím koeficientem je $\lim_{x\to\infty} P(x) = \infty$ a $\lim_{x\to-\infty} P(x) = -\infty$. Existují tedy body, kde je záporný a kde je kladný, a mezi nimi podle Bolzana leží kořen. (Pro záporný vedoucí koeficient obráceně.)
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Strážce mince}
+
+Isaac Newton byl génius, ale ne příjemný člověk. Citát na začátku kapitoly napsal v roce 1675 v dopise Robertu Hookovi, se kterým se celý život nesnášel. Někteří historici ho čtou jako skromnou poklonu předchůdcům, jiní jako skrytou urážku: Hooke byl prý malé postavy a shrbený, takže těžko mohl být `obrem'. Po Hookově smrti zmizel jediný jeho známý portrét. Kdo za to může, se neví.
+
+Newton strávil desítky let alchymií a pokusy o výrobu kamene mudrců a napsal o ní víc než o fyzice. Analýzy jeho vlasů ve 20. století ukázaly vysoký obsah rtuti, což by vysvětlovalo jeho období paranoie a nespavosti kolem roku 1693.
+
+V roce 1696 se stal správcem a později ředitelem Královské mincovny. Většina lidí by tu funkci brala jako čestnou synekuru. Newton ne. Osobně vyšetřoval padělatele mincí, převlečený navštěvoval londýnské hospody, aby sbíral svědectví, a vyslýchal podezřelé. Padělání tehdy bylo velezradou, za kterou se věšelo. Jeho nejslavnějším protivníkem byl William Chaloner, padělatel, který Newtona veřejně obviňoval z neschopnosti. Newton ho s neúprosnou pečlivostí usvědčil a Chaloner byl v roce 1699 oběšen, přestože Newtonovi z vězení psal zoufalé dopisy s prosbou o milost. Newton na ně neodpověděl.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je limita funkce v bodě? Vysvětlete definici. Proč nezáleží na hodnotě funkce v samotném bodě?
+    \item Co jsou jednostranné limity? Kdy limita existuje?
+    \item Co jsou nevlastní limity a limity v nekonečnu? Jak souvisí s asymptotami?
+    \item Jak se počítají limity typu $\frac{0}{0}$? Co jsou neurčité výrazy?
+    \item Dokažte, že $\lim_{x\to 0}\frac{\sin x}{x} = 1$.
+    \item Co je spojitost funkce v bodě a na intervalu? Jaké znáte druhy nespojitosti?
+    \item Vyslovte Weierstrassovu a Bolzanovu větu. Proč jsou důležité jejich předpoklady?
+    \item Jak se dá pomocí Bolzanovy věty přibližně najít kořen rovnice?
+  \end{enumerate}
+\end{problem}
