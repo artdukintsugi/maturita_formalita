@@ -31,11 +31,11 @@
 \fancyhf{} 
 \pagestyle{fancy}
 \fancyhead[RE]{\small{\nouppercase{\leftmark}}} 
-\fancyhead[LE]{$\mathrightbat$\thepage$\mathleftbat$} 
+\fancyhead[LE]{$\mathrightbat$\hspace{0.45em}\thepage\hspace{0.45em}$\mathleftbat$} 
 \fancyfoot[RE]{$\mathfrak{evelyn}$}
 \fancyfoot[LE]{\texttt{\today, \currenttime}}
 
-\fancyhead[RO]{$\mathrightbat$\thepage$\mathleftbat$} 
+\fancyhead[RO]{$\mathrightbat$\hspace{0.45em}\thepage\hspace{0.45em}$\mathleftbat$} 
 \fancyhead[LO]{\small{\nouppercase{\rightmark}}} 
 \fancyfoot[RO]{\texttt{\today, \currenttime}}
 \fancyfoot[LO]{$\mathfrak{evelyn}$}
@@ -46,7 +46,7 @@
   \fancyfoot[RE]{$\mathfrak{evelyn}$}
   \fancyfoot[LE]{\texttt{\today, \currenttime}}
 
-  \fancyfoot[C]{$\mathrightbat$\thepage$\mathleftbat$}
+  \fancyfoot[C]{$\mathrightbat$\hspace{0.45em}\thepage\hspace{0.45em}$\mathleftbat$}
 
   \fancyfoot[RO]{\texttt{\today, \currenttime}}
   \fancyfoot[LO]{$\mathfrak{evelyn}$}
@@ -118,6 +118,53 @@
     \end{tcolorbox}
   }
 
+% Hrbitov chyb: nahrobky typickych maturitnich chyb
+\newenvironment{hrbitov}{
+  \begin{tcolorbox}[enhanced, breakable,
+    colback=black!05!white,
+    colframe=black,
+    title={$\dagger$\ Hřbitov chyb\ $\dagger$},
+    fonttitle=\bfseries,
+    coltitle=white,
+    colbacktitle=black,
+    sharp corners,
+    boxrule=0.5mm,
+    drop fuzzy shadow,
+    overlay={
+      \node[anchor=north east, font=\small, text=white] at (frame.north east) {$\mathghost$};
+    }
+  ]
+}{
+  \end{tcolorbox}
+}
+
+% Jeden hrob: co zemrelo, proc a jak to melo byt spravne
+\newcommand{\hrob}[3]{%
+  \par\noindent\textbf{Zde leží:} #1\\
+  \textbf{Příčina smrti:} #2\\
+  \textbf{Správně:} #3\par\medskip
+}
+
+% Ornament na konec kapitoly
+\newcommand{\koneckapitoly}{%
+  \par\vspace{1.5em}
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[thick, decorate, decoration={random steps, segment length=3mm, amplitude=0.4mm}] (-4,0) -- (-0.7,0);
+      \node[scale=1.8] at (0,0) {$\mathbat$};
+      \draw[thick, decorate, decoration={random steps, segment length=3mm, amplitude=0.4mm}] (0.7,0) -- (4,0);
+    \end{tikzpicture}
+  \end{center}
+}
+
+% Nadpisy kapitol: "Kapitola N" frakturou (Euler Fraktur nema ceske znaky,
+% proto je fraktura jen u cisla kapitoly a nazev zustava v beznem pismu)
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\raggedright}
+  {\huge\usefont{U}{euf}{b}{n}\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge}
+
 \renewenvironment{proof}[1][]{
   \noindent \textsc{Důkaz.} #1 \rmfamily}{\hfill$\blacksquare$\medskip}
 
@@ -163,14 +210,18 @@
 
 \chapter{Matematická logika a důkazy}
 \input{chapters/dukazy.tex}
+\koneckapitoly
 
 \chapter{Množiny, relace a čísla}
 \input{chapters/mnoziny.tex}
+\koneckapitoly
 
 \chapter{Mocniny, odmocniny a algebraické výrazy}
 \input{chapters/ustni/vyrazy.tex}
+\koneckapitoly
 
 \chapter{Lineární rovnice, nerovnice, soustavy a matice}
 \input{chapters/ustni/rovnice.tex}
+\koneckapitoly
 
 \end{document}
