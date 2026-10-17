@@ -1,0 +1,310 @@
+\label{kap:posloupnosti}
+\mathquote{The infinite! No other question has ever moved so profoundly the spirit of man.}{David Hilbert}
+
+Posloupnost je seznam čísel, který (obvykle) nikdy nekončí. Na první pohled nic zajímavého. Jenže právě na posloupnostech se matematici poprvé naučili pořádně zacházet s nekonečnem. Naučíme se tu sčítat nekonečně mnoho čísel a dostat konečný výsledek a ukážeme si, proč $0{,}999\ldots$ je přesně jedna. Všechno, co přijde v kapitolách o limitách, derivacích a integrálech, stojí na tom, co se naučíme tady.
+
+\section{Pojem posloupnosti}
+
+\begin{definitionbox}
+  \textbf{Posloupnost} je funkce, jejímž definičním oborem je množina přirozených čísel $\mathbb{N}$ (nebo její počáteční úsek $\{1, 2, \ldots, k\}$, pak mluvíme o \textbf{konečné} posloupnosti). Hodnotu v čísle $n$ značíme $a_n$ a nazýváme ji \textbf{$n$-tý člen}. Posloupnost zapisujeme ${(a_n)}_{n=1}^{\infty}$ nebo zkráceně $(a_n)$.
+
+  \vspace{0.2cm}
+
+  \textbf{Způsoby zadání}:
+  \begin{itemize}
+    \item \textbf{vzorcem pro $n$-tý člen}, například $a_n = \frac{1}{n}$,
+    \item \textbf{rekurentně}: zadáme první člen (nebo několik prvních) a pravidlo, jak z předchozích členů spočítat další. Například $a_1 = 1$, $a_{n+1} = 2a_n + 1$,
+    \item \textbf{výčtem} prvních členů (jen pokud je zřejmé, jak pokračovat, což u maturity bývá a v životě nebývá).
+  \end{itemize}
+\end{definitionbox}
+
+Graf posloupnosti není křivka, ale izolované body $[1, a_1], [2, a_2], [3, a_3], \ldots$, protože definičním oborem jsou jen přirozená čísla.
+
+\begin{example}
+  Slavná rekurentně zadaná posloupnost je \textbf{Fibonacciho posloupnost}: $F_1 = F_2 = 1$ a $F_{n+2} = F_{n+1} + F_n$. Prvních pár členů je
+  \begin{equation*}
+    1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, \ldots
+  \end{equation*}
+  Leonardo Pisánský, zvaný Fibonacci, ji v roce 1202 popsal jako model rozmnožování králíků. Poměry sousedních členů $\frac{F_{n+1}}{F_n}$ se přitom blíží k číslu $\frac{1 + \sqrt{5}}{2}$, tedy ke zlatému řezu z kapitol~\ref{kap:vyrazy} a~\ref{kap:kvadraticke}. Zkuste si to: $\frac{89}{55}\approx 1{,}618$.
+\end{example}
+
+\begin{definitionbox}
+  Posloupnost $(a_n)$ je
+  \begin{itemize}
+    \item \textbf{rostoucí}, pokud $a_{n+1} > a_n$ pro všechna $n$, \textbf{klesající}, pokud $a_{n+1} < a_n$ (a obdobně neklesající a nerostoucí),
+    \item \textbf{shora omezená}, pokud existuje $h$ s $a_n\leq h$ pro všechna $n$, \textbf{zdola omezená}, pokud existuje $d$ s $a_n\geq d$, a \textbf{omezená}, pokud je obojí.
+  \end{itemize}
+  Je to totéž jako u funkcí v kapitole~\ref{kap:funkce}, jen stačí porovnávat sousední členy.
+\end{definitionbox}
+
+\begin{example}
+  Posloupnost $a_n = \frac{n}{n + 1}$ je rostoucí, protože
+  \begin{equation*}
+    a_{n+1} - a_n = \frac{n + 1}{n + 2} - \frac{n}{n + 1} = \frac{{(n + 1)}^2 - n(n + 2)}{(n + 1)(n + 2)} = \frac{1}{(n + 1)(n + 2)} > 0.
+  \end{equation*}
+  Je omezená: $0 < a_n < 1$. Posloupnost $b_n = {(-1)}^n$ ($-1, 1, -1, 1, \ldots$) je omezená, ale není monotónní.
+\end{example}
+
+\section{Aritmetická posloupnost}
+
+\begin{definitionbox}
+  \textbf{Aritmetická posloupnost} je posloupnost, ve které je rozdíl každých dvou sousedních členů stejný. Tento rozdíl $d$ se nazývá \textbf{diference}:
+  \begin{equation*}
+    a_{n+1} = a_n + d.
+  \end{equation*}
+  Platí:
+  \begin{align*}
+    a_n &= a_1 + (n - 1)d,\\
+    a_r - a_s &= (r - s)d,\\
+    s_n &= a_1 + a_2 + \cdots + a_n = \frac{n(a_1 + a_n)}{2}.
+  \end{align*}
+\end{definitionbox}
+
+\begin{proof}[(vzorce pro součet)]
+  Napíšeme součet dvakrát, jednou popředu a jednou pozpátku, a sečteme:
+  \begin{align*}
+    s_n &= a_1 + a_2 + \cdots + a_{n-1} + a_n,\\
+    s_n &= a_n + a_{n-1} + \cdots + a_2 + a_1,\\
+    2s_n &= (a_1 + a_n) + (a_2 + a_{n-1}) + \cdots + (a_n + a_1).
+  \end{align*}
+  Každá závorka má stejnou hodnotu $a_1 + a_n$, protože když jeden člen o $d$ vzroste, druhý o $d$ klesne. Závorek je $n$, takže $2s_n = n(a_1 + a_n)$.
+\end{proof}
+
+Tohle je přesně ten trik, se kterým podle legendy přišel malý Gauss, když měl ve škole za trest sečíst čísla od $1$ do $100$. Za pár vteřin odevzdal výsledek $5050 = \frac{100\cdot 101}{2}$. Tutéž větu jsme dokázali matematickou indukcí v kapitole 1. Teď máte dva důkazy, takže si můžete vybrat ten, který se vám víc líbí.
+
+Název `aritmetická' pochází z toho, že každý člen je \textbf{aritmetickým průměrem} svých sousedů: $a_n = \frac{a_{n-1} + a_{n+1}}{2}$.
+
+\begin{example}
+  \begin{itemize}
+    \item Pro $a_1 = 3$, $d = 4$ je $a_{10} = 3 + 9\cdot 4 = 39$ a $s_{10} = \frac{10(3 + 39)}{2} = 210$.
+    \item Je dáno $a_3 = 7$ a $a_8 = 22$. Pak $a_8 - a_3 = 5d = 15$, tedy $d = 3$ a $a_1 = a_3 - 2d = 1$. Dále $a_{20} = 1 + 19\cdot 3 = 58$ a $s_{20} = \frac{20(1 + 58)}{2} = 590$.
+    \item Součet prvních $n$ lichých čísel: $1 + 3 + 5 + \cdots + (2n - 1) = \frac{n(1 + 2n - 1)}{2} = n^2$. To se dá i nakreslit: čtverec $n\times n$ se skládá z `háčků' o $1, 3, 5, \ldots$ čtverečcích.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item V aritmetické posloupnosti je $a_5 = 17$ a $a_{12} = 45$. Určete $a_1$, $d$ a $s_{12}$.
+    \item Kolik členů posloupnosti $5, 9, 13, \ldots$ musíme sečíst, abychom dostali $230$?
+    \item Určete součet všech dvojciferných čísel dělitelných třemi.
+    \item V hledišti je $20$ řad, v první řadě je $15$ sedadel a v každé další o $2$ víc. Kolik sedadel má hlediště?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $7d = 28$, $d = 4$, $a_1 = 17 - 16 = 1$, $s_{12} = \frac{12(1 + 45)}{2} = 276$.
+    \item $s_n = \frac{n(10 + 4(n - 1))}{2} = n(2n + 3) = 230$, tedy $2n^2 + 3n - 230 = 0$, $D = 9 + 1840 = 43^2$, $n = \frac{-3 + 43}{4} = 10$.
+    \item $12, 15, \ldots, 99$: $a_1 = 12$, $d = 3$, $99 = 12 + (n - 1)3$, $n = 30$. $s_{30} = \frac{30(12 + 99)}{2} = 1665$.
+    \item $a_{20} = 15 + 38 = 53$, $s_{20} = \frac{20(15 + 53)}{2} = 680$.
+  \end{enumerate}
+\end{solution}
+
+\section{Geometrická posloupnost}
+
+\begin{definitionbox}
+  \textbf{Geometrická posloupnost} je posloupnost, ve které je podíl každých dvou sousedních členů stejný. Tento podíl $q$ se nazývá \textbf{kvocient}:
+  \begin{equation*}
+    a_{n+1} = a_n\cdot q,\qquad a_1\neq 0,\ q\neq 0.
+  \end{equation*}
+  Platí:
+  \begin{align*}
+    a_n &= a_1\cdot q^{n-1},\\
+    a_r &= a_s\cdot q^{r - s},\\
+    s_n &= a_1\cdot\frac{q^n - 1}{q - 1}\quad\text{pro } q\neq 1,\qquad s_n = na_1\quad\text{pro } q = 1.
+  \end{align*}
+\end{definitionbox}
+
+\begin{proof}[(vzorce pro součet)]
+  Napíšeme $s_n$ a $q\cdot s_n$ pod sebe:
+  \begin{align*}
+    s_n &= a_1 + a_1q + a_1q^2 + \cdots + a_1q^{n-1},\\
+    qs_n &= \phantom{a_1 + {}} a_1q + a_1q^2 + \cdots + a_1q^{n-1} + a_1q^n.
+  \end{align*}
+  Odečtením se skoro všechno vyruší: $qs_n - s_n = a_1q^n - a_1$, tedy $s_n(q - 1) = a_1(q^n - 1)$. Pro $q\neq 1$ můžeme dělit.
+\end{proof}
+
+Název `geometrická' pochází z toho, že (pro kladné členy) je každý člen \textbf{geometrickým průměrem} svých sousedů: $a_n = \sqrt{a_{n-1}a_{n+1}}$. Geometrické posloupnosti jsou diskrétní verzí exponenciálních funkcí z kapitoly~\ref{kap:exponencialni}: $a_n = a_1q^{n-1}$ je exponenciála $q^x$ vyhodnocená jen v celých číslech.
+
+\begin{example}
+  \begin{itemize}
+    \item Pro $a_1 = 2$, $q = 3$ je $a_6 = 2\cdot 3^5 = 486$ a $s_6 = 2\cdot\frac{3^6 - 1}{3 - 1} = 728$.
+    \item Je dáno $a_2 = 6$ a $a_5 = 162$. Pak $q^3 = 27$, tedy $q = 3$ a $a_1 = 2$.
+    \item Podle legendy si vynálezce šachu vyžádal od krále odměnu: jedno zrnko rýže na první políčko šachovnice, dvě na druhé, čtyři na třetí a tak dál. Celkem $s_{64} = \frac{2^{64} - 1}{2 - 1} = 2^{64} - 1\approx 1{,}8\cdot 10^{19}$ zrnek. To je přes čtyři sta miliard tun, tedy zhruba tolik rýže, kolik se jí na celém světě vypěstuje za několik set let. Legenda pak má dvě verze konce: v jedné se vynálezce stal královým rádcem, ve druhé mu král za drzost nechal useknout hlavu.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item V geometrické posloupnosti je $a_1 = 3$ a $a_4 = -24$. Určete $q$ a $s_6$.
+    \item Mezi čísla $2$ a $162$ vložte tři čísla tak, aby spolu s nimi tvořila geometrickou posloupnost.
+    \item Město má $50\,000$ obyvatel a počet obyvatel každý rok klesne o $2\,\%$. Kolik obyvatel bude mít za $10$ let?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $q^3 = -8$, $q = -2$. $s_6 = 3\cdot\frac{{(-2)}^6 - 1}{-2 - 1} = 3\cdot\frac{63}{-3} = -63$.
+    \item $162 = 2q^4$, $q^4 = 81$, $q = \pm 3$. Buď $6, 18, 54$, nebo $-6, 18, -54$. Obě řešení jsou správně.
+    \item $50000\cdot 0{,}98^{10}\approx 40\,854$ obyvatel.
+  \end{enumerate}
+\end{solution}
+
+\section{Limita posloupnosti}
+
+Co se děje s posloupností $a_n = \frac{1}{n}$, když $n$ roste? Členy $1, \frac{1}{2}, \frac{1}{3}, \ldots, \frac{1}{1000}, \ldots$ se blíží k nule. Nikdy nule nejsou rovny, ale dostanou se k ní libovolně blízko. Tuhle představu `blížení se' potřebujeme zachytit přesně.
+
+\begin{definitionbox}
+  Posloupnost $(a_n)$ má \textbf{limitu} $a\in\mathbb{R}$, pokud ke každému $\varepsilon > 0$ existuje $n_0\in\mathbb{N}$ takové, že pro všechna $n\geq n_0$ platí $|a_n - a| < \varepsilon$. Píšeme
+  \begin{equation*}
+    \lim_{n\to\infty} a_n = a.
+  \end{equation*}
+  Posloupnost s (konečnou) limitou se nazývá \textbf{konvergentní}, jinak \textbf{divergentní}. Pokud členy rostou nade všechny meze (ke každému $K$ existuje $n_0$ s $a_n > K$ pro $n\geq n_0$), píšeme $\lim a_n = \infty$.
+\end{definitionbox}
+
+Definice vypadá děsivě, ale říká jednoduchou věc. Řekněte mi libovolně malou toleranci $\varepsilon$. Já vám řeknu, od kterého členu dál jsou všechny členy od $a$ blíž než $\varepsilon$. Pokud to dokážu pro každou toleranci, je $a$ limita. Je to vlastně hra dvou hráčů s kvantifikátory $\forall\varepsilon\ \exists n_0\ \forall n$ z kapitoly 1.
+
+\begin{example}
+  Dokažme, že $\lim\frac{1}{n} = 0$. Nechť je dáno $\varepsilon > 0$. Chceme $\left|\frac{1}{n} - 0\right| = \frac{1}{n} < \varepsilon$, tedy $n > \frac{1}{\varepsilon}$. Zvolíme tedy $n_0$ jako libovolné přirozené číslo větší než $\frac{1}{\varepsilon}$. Pro $\varepsilon = 0{,}001$ například $n_0 = 1001$.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Pravidla pro limity}: Pokud $\lim a_n = a$ a $\lim b_n = b$ (konečné), pak
+  \begin{equation*}
+    \lim(a_n\pm b_n) = a\pm b,\qquad\lim(a_n\cdot b_n) = a\cdot b,\qquad\lim\frac{a_n}{b_n} = \frac{a}{b}\quad(b\neq 0).
+  \end{equation*}
+  \textbf{Důležité limity}:
+  \begin{equation*}
+    \lim\frac{1}{n^k} = 0\ (k > 0),\qquad\lim q^n = 0\ (|q| < 1),\qquad\lim\sqrt[n]{a} = 1\ (a > 0),\qquad\lim{\left(1 + \frac{1}{n}\right)}^n = e.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Typická úloha: limita podílu dvou mnohočlenů. Vydělíme čitatele i jmenovatele nejvyšší mocninou $n$ ve jmenovateli:
+  \begin{align*}
+    \lim\frac{2n^2 + 1}{n^2 - 3} &= \lim\frac{2 + \frac{1}{n^2}}{1 - \frac{3}{n^2}} = \frac{2 + 0}{1 - 0} = 2,\\
+    \lim\frac{3n + 1}{n^2 + 1} &= \lim\frac{\frac{3}{n} + \frac{1}{n^2}}{1 + \frac{1}{n^2}} = \frac{0}{1} = 0,\\
+    \lim\frac{n^2}{n + 1} &= \lim\frac{n}{1 + \frac{1}{n}} = \infty.
+  \end{align*}
+  Pravidlo: rozhoduje nejvyšší mocnina. Stejné stupně dají podíl koeficientů, vyšší stupeň ve jmenovateli dá nulu, vyšší stupeň v čitateli dá nekonečno.
+\end{example}
+
+\begin{example}
+  Limita $\lim\left(\sqrt{n + 1} - \sqrt{n}\right)$ je typu `$\infty - \infty$', což nic neříká. Pomůže rozšíření výrazem $\sqrt{n + 1} + \sqrt{n}$ (podobně jako usměrňování v kapitole~\ref{kap:vyrazy}):
+  \begin{equation*}
+    \sqrt{n + 1} - \sqrt{n} = \frac{(n + 1) - n}{\sqrt{n + 1} + \sqrt{n}} = \frac{1}{\sqrt{n + 1} + \sqrt{n}}\to 0.
+  \end{equation*}
+\end{example}
+
+\begin{problem}
+  Spočítejte:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\lim\dfrac{5n^3 - 2n}{1 - 2n^3}$,
+    \item $\lim\dfrac{n + {(-1)}^n}{n}$,
+    \item $\lim\dfrac{2^n + 3^n}{3^n}$,
+    \item $\lim\left(\sqrt{n^2 + n} - n\right)$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $-\frac{5}{2}$.
+    \item $1 + \frac{{(-1)}^n}{n}\to 1$.
+    \item ${\left(\frac{2}{3}\right)}^n + 1\to 1$.
+    \item $\frac{n}{\sqrt{n^2 + n} + n} = \frac{1}{\sqrt{1 + \frac{1}{n}} + 1}\to\frac{1}{2}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Nekonečná geometrická řada}
+
+\begin{definitionbox}
+  \textbf{Nekonečná řada} $\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots$ má \textbf{součet} $s$, pokud posloupnost částečných součtů $s_n = a_1 + \cdots + a_n$ má limitu $s$. Pak řada \textbf{konverguje}, jinak \textbf{diverguje}.
+
+  \vspace{0.2cm}
+
+  \textbf{Věta}: Nekonečná geometrická řada $a_1 + a_1q + a_1q^2 + \cdots$ (s $a_1\neq 0$) konverguje, právě když $|q| < 1$, a její součet je
+  \begin{equation*}
+    s = \frac{a_1}{1 - q}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Pro $q\neq 1$ je $s_n = a_1\frac{q^n - 1}{q - 1} = a_1\frac{1 - q^n}{1 - q}$. Pro $|q| < 1$ je $\lim q^n = 0$, a tedy $\lim s_n = \frac{a_1}{1 - q}$. Pro $|q|\geq 1$ členy řady nejdou k nule (mají stálou nebo rostoucí absolutní hodnotu) a součet nemůže existovat.
+\end{proof}
+
+\begin{example}
+  \begin{itemize}
+    \item $1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots = \frac{1}{1 - \frac{1}{2}} = 2$. Pokud ujdete půl cesty, pak polovinu zbytku, pak polovinu zbytku\ldots, dojdete přesně do cíle.
+    \item $9 - 3 + 1 - \frac{1}{3} + \cdots = \frac{9}{1 + \frac{1}{3}} = \frac{27}{4}$.
+    \item $0{,}\overline{3} = \frac{3}{10} + \frac{3}{100} + \cdots = \frac{\frac{3}{10}}{1 - \frac{1}{10}} = \frac{1}{3}$.
+    \item $0{,}\overline{12} = \frac{12}{100} + \frac{12}{10000} + \cdots = \frac{\frac{12}{100}}{1 - \frac{1}{100}} = \frac{12}{99} = \frac{4}{33}$.
+  \end{itemize}
+\end{example}
+
+\begin{example}\label{ex:0999}
+  Kolik je $0{,}\overline{9} = 0{,}999\ldots$? Podle vzorce
+  \begin{equation*}
+    0{,}\overline{9} = \frac{\frac{9}{10}}{1 - \frac{1}{10}} = 1.
+  \end{equation*}
+  Ano, přesně jedna. Ne `skoro jedna', ne `nekonečně blízko jedné'. Jedna. Číslo $0{,}999\ldots$ je jen jiný zápis čísla $1$, podobně jako $\frac{1}{2}$ a $\frac{2}{4}$ jsou dva zápisy téhož čísla. Pokud tomu nevěříte, zkuste najít číslo, které leží mezi $0{,}999\ldots$ a $1$. Žádné takové není, a dvě různá reálná čísla mají mezi sebou vždy nějaké další (například jejich průměr). Tento příklad mimochodem na internetu spolehlivě rozpoutá hádku v jakékoli diskuzi.
+\end{example}
+
+\begin{note}
+  Řecký filozof Zénón z Eleje tvrdil, že rychlonohý Achilles nikdy nedohoní želvu, která má náskok. Než Achilles doběhne tam, kde byla želva, ona se posune o kousek dál. Než doběhne tam, posune se zase dál. A tak donekonečna. Řekové nevěděli, co s tím, protože nevěděli, jak sečíst nekonečně mnoho čísel. Dnes víme, že časy, které Achilles potřebuje na jednotlivé úseky, tvoří geometrickou řadu s konečným součtem. Achilles želvu dohoní v konečném čase. Jen to bude trvat nekonečně mnoho kroků, ale každý bude kratší.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Převeďte na zlomek $0{,}\overline{27}$ a $1{,}2\overline{3}$.
+    \item Pro která $x$ konverguje řada $1 + (x - 1) + {(x - 1)}^2 + \cdots$? Jaký má součet?
+    \item Míček pustíme z výšky $10\ \si{m}$. Po každém odrazu vyskočí do $\frac{3}{4}$ předchozí výšky. Jakou celkovou dráhu urazí, než se zastaví?
+    \item Vyřešte rovnici $x + x^2 + x^3 + \cdots = 3$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $0{,}\overline{27} = \frac{27}{99} = \frac{3}{11}$. $1{,}2\overline{3} = 1{,}2 + \frac{\frac{3}{100}}{1 - \frac{1}{10}} = \frac{6}{5} + \frac{1}{30} = \frac{37}{30}$.
+    \item $|x - 1| < 1$, tedy $x\in(0, 2)$, součet $\frac{1}{1 - (x - 1)} = \frac{1}{2 - x}$.
+    \item Dolů $10\ \si{m}$, pak nahoru a dolů $7{,}5$, pak $5{,}625$ a tak dál: $10 + 2\cdot\frac{7{,}5}{1 - 0{,}75} = 10 + 60 = 70\ \si{m}$.
+    \item Pro $|x| < 1$ je součet $\frac{x}{1 - x} = 3$, tedy $x = \frac{3}{4}$. To splňuje podmínku $|x| < 1$, takže $K = \left\{\frac{3}{4}\right\}$.
+  \end{enumerate}
+\end{solution}
+
+\begin{note}
+  Pozor, z toho, že členy řady jdou k nule, ještě neplyne, že řada konverguje! Slavný protipříklad je \textbf{harmonická řada}
+  \begin{equation*}
+    1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots = \infty.
+  \end{equation*}
+  Důkaz pochází od středověkého biskupa Mikuláše Oresma ze 14. století. Členy seskupíme:
+  \begin{equation*}
+    1 + \frac{1}{2} + \underbrace{\left(\frac{1}{3} + \frac{1}{4}\right)}_{\geq\frac{1}{4} + \frac{1}{4} = \frac{1}{2}} + \underbrace{\left(\frac{1}{5} + \cdots + \frac{1}{8}\right)}_{\geq 4\cdot\frac{1}{8} = \frac{1}{2}} + \underbrace{\left(\frac{1}{9} + \cdots + \frac{1}{16}\right)}_{\geq\frac{1}{2}} + \cdots
+  \end{equation*}
+  Každá skupina je alespoň $\frac{1}{2}$ a skupin je nekonečně mnoho. Řada ale roste neuvěřitelně pomalu: abyste se dostali přes $100$, museli byste sečíst asi $10^{43}$ členů.
+\end{note}
+
+\section{Odbočka --- Muž, který spočítal nekonečno}
+
+Pojem nekonečna dělal matematikům problémy od Zénóna až do 19. století. Pak přišel Georg Cantor, zakladatel teorie množin z kapitoly 2, a ukázal, že nekonečna jsou různě velká. Přirozených čísel je stejně jako racionálních (dají se seřadit do posloupnosti), ale reálných čísel je víc. Tak moc víc, že se do posloupnosti seřadit nedají. Důkaz, kterému se říká \textit{diagonální metoda}, je dnes jedním z nejslavnějších v celé matematice.
+
+Tehdejší matematici byli pobouření. Leopold Kronecker, Cantorův bývalý učitel a jeden z nejvlivnějších matematiků v Německu, ho veřejně nazýval `šarlatánem' a `kazitelem mládeže' a bránil mu v získání místa na prestižní univerzitě v Berlíně. Cantor celý život učil na malé univerzitě v Halle. Od roku 1884 trpěl záchvaty těžké deprese a opakovaně byl hospitalizován v psychiatrických zařízeních. Ve chvílích, kdy se mu nedařilo v matematice, se pokoušel dokázat, že autorem Shakespearových her byl ve skutečnosti Francis Bacon.
+
+Uznání se nakonec dočkal. David Hilbert, autor citátů na začátku této kapitoly i kapitoly 2, prohlásil, že `z ráje, který pro nás Cantor vytvořil, nás nikdo nevyžene'. Cantor ale zemřel v lednu 1918 v psychiatrické léčebně v Halle, podvyživený, protože během první světové války nebylo dost jídla. Ráj, který vytvořil pro ostatní, si sám užít nemohl.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je posloupnost? Jakými způsoby ji lze zadat? Jak vypadá její graf?
+    \item Kdy je posloupnost monotónní a kdy omezená?
+    \item Definujte aritmetickou posloupnost. Odvoďte vzorce pro $n$-tý člen a součet prvních $n$ členů.
+    \item Definujte geometrickou posloupnost. Odvoďte vzorce pro $n$-tý člen a součet prvních $n$ členů.
+    \item Proč se posloupnostem říká aritmetická a geometrická?
+    \item Co je limita posloupnosti? Vysvětlete definici. Jak se počítají limity podílů mnohočlenů?
+    \item Co je nekonečná řada a její součet? Kdy konverguje geometrická řada a jaký má součet?
+    \item Proč je $0{,}\overline{9} = 1$? Jak převedete periodické číslo na zlomek?
+    \item Uveďte příklad řady, jejíž členy jdou k nule, ale která nekonverguje.
+    \item Uveďte příklady využití posloupností v praxi.
+  \end{enumerate}
+\end{problem}
