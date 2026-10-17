@@ -1,0 +1,235 @@
+\label{kap:statistika}
+\mathquote{There are three kinds of lies: lies, damned lies, and statistics.}{Mark Twain (který to připsal Benjaminu Disraelimu, který to nejspíš nikdy neřekl)}
+
+Pravděpodobnost se ptá: když víme, jak funguje náhoda, co uvidíme? Statistika se ptá obráceně: když něco vidíme, co to říká o světě? V této kapitole se podíváme na \textbf{popisnou statistiku}, tedy na to, jak velké množství dat shrnout několika čísly a grafy. Je to ta část matematiky, kterou nejčastěji uvidíte ve zprávách, a také ta, se kterou se nejčastěji manipuluje.
+
+\section{Základní pojmy}
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Statistický soubor} je množina objektů, které zkoumáme (žáci třídy, obyvatelé města, výrobky z linky).
+    \item \textbf{Statistická jednotka} je jeden prvek souboru. Počet jednotek je \textbf{rozsah souboru} $n$.
+    \item \textbf{Statistický znak} je vlastnost, kterou u jednotek sledujeme. Může být \textbf{kvantitativní} (číselný: výška, známka, plat) nebo \textbf{kvalitativní} (slovní: barva očí, oblíbený předmět).
+    \item \textbf{Absolutní četnost} $n_i$ hodnoty $x_i$ je počet jednotek, které mají tuto hodnotu. \textbf{Relativní četnost} je $\frac{n_i}{n}$ (často v procentech). \textbf{Kumulativní četnost} je součet četností všech hodnot menších nebo rovných $x_i$.
+  \end{itemize}
+\end{definitionbox}
+
+Často nezkoumáme celý soubor (\textbf{základní soubor}, například všechny voliče), ale jen jeho část (\textbf{výběrový soubor}, například tisíc dotázaných v průzkumu). Aby výsledky něco znamenaly, musí být výběr \textbf{reprezentativní}. Slavný případ opaku: v roce 1936 americký časopis \textit{Literary Digest} obeslal přes deset milionů lidí a předpověděl drtivé vítězství republikána Landona nad Rooseveltem. Roosevelt vyhrál ve 46 státech ze 48. Časopis totiž vybíral adresy z telefonních seznamů a seznamů majitelů aut, a ty si uprostřed hospodářské krize mohli dovolit hlavně bohatší voliči. O dva roky později časopis zanikl.
+
+\begin{example}\label{ex:znamky}
+  Známky z písemky v malé skupině $10$ studentů: $1, 2, 2, 3, 1, 4, 2, 3, 5, 2$. Tabulka četností:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|}
+      \hline
+      známka $x_i$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+      \hline
+      absolutní četnost $n_i$ & $2$ & $4$ & $2$ & $1$ & $1$ \\
+      relativní četnost & $20\,\%$ & $40\,\%$ & $20\,\%$ & $10\,\%$ & $10\,\%$ \\
+      kumulativní četnost & $2$ & $6$ & $8$ & $9$ & $10$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{example}
+
+\section{Grafické znázornění}
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Sloupcový diagram} (histogram): výška sloupce odpovídá četnosti. Vhodný pro kvantitativní znaky.
+    \item \textbf{Kruhový (koláčový) diagram}: velikost výseče odpovídá relativní četnosti. Úhel výseče je $\frac{n_i}{n}\cdot 360^\circ$. Vhodný pro podíly celku.
+    \item \textbf{Spojnicový graf}: vhodný pro vývoj v čase.
+    \item \textbf{Krabicový graf} (box plot): zobrazuje minimum, kvartily a maximum, viz dále.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw[->] (0,0) -- (6.2,0) node[right] {\small známka};
+    \draw[->] (0,0) -- (0,4.8) node[above] {\small četnost};
+    \foreach \y in {1,2,3,4} \draw (0.08,\y) -- (-0.08,\y) node[left] {\tiny $\y$};
+    \foreach \x/\h in {1/2, 2/4, 3/2, 4/1, 5/1} {
+      \fill[colorofwisdom!60] (\x-0.35,0) rectangle (\x+0.35,\h);
+      \draw (\x-0.35,0) rectangle (\x+0.35,\h);
+      \node[below] at (\x,0) {\small $\x$};
+    }
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=1.3]
+    \fill[colorofwisdom!80] (0,0) -- (0:1) arc (0:72:1) -- cycle;
+    \fill[colorofwisdom!40] (0,0) -- (72:1) arc (72:216:1) -- cycle;
+    \fill[black!30] (0,0) -- (216:1) arc (216:288:1) -- cycle;
+    \fill[black!60] (0,0) -- (288:1) arc (288:324:1) -- cycle;
+    \fill[black!85] (0,0) -- (324:1) arc (324:360:1) -- cycle;
+    \draw (0,0) circle (1);
+    \node at (36:0.65) {\small $1$};
+    \node at (144:0.65) {\small $2$};
+    \node at (252:0.65) {\small $3$};
+    \node[white] at (306:0.7) {\small $4$};
+    \node[white] at (342:0.7) {\small $5$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{note}
+  Grafy jsou nejsnadnější způsob, jak se statistikou lhát, aniž byste řekli jedinou nepravdu. Oblíbené triky: osa $y$, která nezačíná nulou (malý rozdíl pak vypadá obrovsky), trojrozměrné koláčové grafy (přední výseče vypadají větší) a vybírání časového úseku tak, aby trend vypadal, jak se nám hodí. Když vidíte graf ve zprávách, nejdřív se podívejte na osy.
+\end{note}
+
+\section{Charakteristiky polohy}
+
+Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
+
+\begin{definitionbox}
+  Pro hodnoty $x_1, x_2, \ldots, x_n$:
+  \begin{itemize}
+    \item \textbf{Aritmetický průměr}:
+    \begin{equation*}
+      \bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{1}{n}\sum_{i=1}^{n}x_i.
+    \end{equation*}
+    Pokud se hodnoty $x_i$ opakují s četnostmi $n_i$, je to \textbf{vážený průměr} $\bar{x} = \frac{\sum n_ix_i}{\sum n_i}$.
+    \item \textbf{Medián} $\tilde{x}$: prostřední hodnota po seřazení dat podle velikosti. Pro sudé $n$ je to průměr dvou prostředních hodnot.
+    \item \textbf{Modus} $\hat{x}$: nejčastější hodnota.
+    \item \textbf{Geometrický průměr} (pro kladné hodnoty): $\bar{x}_G = \sqrt[n]{x_1x_2\cdots x_n}$.
+    \item \textbf{Harmonický průměr}: $\bar{x}_H = \dfrac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}$.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  V datech z příkladu~\ref{ex:znamky} je průměr $\bar{x} = \frac{1\cdot 2 + 2\cdot 4 + 3\cdot 2 + 4 + 5}{10} = \frac{25}{10} = 2{,}5$. Seřazená data: $1, 1, 2, 2, 2, 2, 3, 3, 4, 5$. Medián je průměr pátého a šestého prvku, tedy $\tilde{x} = 2$. Modus je $\hat{x} = 2$.
+\end{example}
+
+\begin{example}
+  Proč potřebujeme medián? Firma má $9$ zaměstnanců s platem $30\,000$ Kč a ředitele s platem $300\,000$ Kč. Průměrný plat je
+  \begin{equation*}
+    \bar{x} = \frac{9\cdot 30000 + 300000}{10} = 57\,000\ \text{Kč}.
+  \end{equation*}
+  Ale nikdo kromě ředitele tolik nebere! Medián je $30\,000$ Kč a mnohem lépe popisuje `typického' zaměstnance. Průměr je citlivý na extrémní hodnoty, medián ne. Proto se ve zprávách o mzdách vždy vyplatí zjistit, zda jde o průměr, nebo o medián. Medián mezd v Česku bývá zhruba o šestinu nižší než průměr.
+\end{example}
+
+\begin{example}
+  Kdy použít jiné průměry?
+  \begin{itemize}
+    \item \textbf{Harmonický průměr} pro průměrnou rychlost. Pojedete do Brna rychlostí $60\ \si{km/h}$ a zpátky rychlostí $40\ \si{km/h}$. Průměrná rychlost není $50$, ale $\frac{2}{\frac{1}{60} + \frac{1}{40}} = 48\ \si{km/h}$, protože pomalejší cestou strávíte víc času. Pokud pochybujete, spočítejte to pro konkrétní vzdálenost, třeba $120\ \si{km}$: tam $2$ hodiny, zpátky $3$ hodiny, celkem $240\ \si{km}$ za $5$ hodin.
+    \item \textbf{Geometrický průměr} pro průměrný růst. Akcie vzrostla první rok o $10\,\%$ a druhý o $60\,\%$. Průměrný roční růst není $35\,\%$, ale $\sqrt{1{,}1\cdot 1{,}6} - 1 = \sqrt{1{,}76} - 1\approx 32{,}7\,\%$. Kontrola: $1{,}327^2\approx 1{,}76$.
+  \end{itemize}
+\end{example}
+
+\begin{note}
+  Pro kladná čísla vždy platí $\bar{x}_H\leq\bar{x}_G\leq\bar{x}$, a rovnost nastává jen tehdy, když jsou všechna čísla stejná. Pro dvě čísla $a, b$ se nerovnost $\sqrt{ab}\leq\frac{a + b}{2}$ dokáže jednoduše: je ekvivalentní s $0\leq{(\sqrt{a} - \sqrt{b})}^2$. Geometricky to znamená, že ze všech obdélníků s daným obvodem má největší obsah čtverec, což jsme viděli v kapitole~\ref{kap:elementarni}.
+\end{note}
+
+\section{Charakteristiky variability}
+
+Dva soubory mohou mít stejný průměr a přitom vypadat úplně jinak. Data $\{4, 5, 6\}$ a $\{0, 5, 10\}$ mají oba průměr $5$, ale ty druhé jsou mnohem víc `rozházené'. Charakteristiky variability měří, jak moc se data od průměru odchylují.
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Variační rozpětí}: $R = x_{\max} - x_{\min}$.
+    \item \textbf{Rozptyl} (průměrná druhá mocnina odchylky od průměru):
+    \begin{equation*}
+      s^2 = \frac{1}{n}\sum_{i=1}^{n}{(x_i - \bar{x})}^2 = \overline{x^2} - \bar{x}^2.
+    \end{equation*}
+    \item \textbf{Směrodatná odchylka}: $s = \sqrt{s^2}$. Má stejné jednotky jako data.
+    \item \textbf{Variační koeficient}: $v = \frac{s}{\bar{x}}$ (relativní míra variability, obvykle v procentech).
+  \end{itemize}
+\end{definitionbox}
+
+Proč druhé mocniny? Kdybychom průměrovali přímo odchylky $x_i - \bar{x}$, vyšla by vždy nula, protože kladné a záporné odchylky se přesně vyruší (zkuste si to dokázat). Druhá mocnina udělá ze všech odchylek kladná čísla. Směrodatná odchylka pak vrací výsledek do původních jednotek. Vzorec $s^2 = \overline{x^2} - \bar{x}^2$ (průměr druhých mocnin minus druhá mocnina průměru) se počítá rychleji a odvodí se roznásobením.
+
+\begin{example}
+  Pro známky z příkladu~\ref{ex:znamky} s průměrem $2{,}5$:
+  \begin{align*}
+    s^2 &= \frac{2\cdot{(1 - 2{,}5)}^2 + 4\cdot{(2 - 2{,}5)}^2 + 2\cdot{(3 - 2{,}5)}^2 + {(4 - 2{,}5)}^2 + {(5 - 2{,}5)}^2}{10}\\
+    &= \frac{4{,}5 + 1 + 0{,}5 + 2{,}25 + 6{,}25}{10} = 1{,}45.
+  \end{align*}
+  Směrodatná odchylka $s = \sqrt{1{,}45}\approx 1{,}20$ a variační koeficient $v = \frac{1{,}20}{2{,}5}\approx 48\,\%$. Kontrola druhým vzorcem: $\overline{x^2} = \frac{2 + 16 + 18 + 16 + 25}{10} = 7{,}7$ a $7{,}7 - 6{,}25 = 1{,}45$.
+\end{example}
+
+\begin{note}
+  Ve statistice výběrových souborů se rozptyl často počítá s $n - 1$ místo $n$ ve jmenovateli (tzv. výběrový rozptyl), protože to dává lepší odhad rozptylu celé populace. U maturity se obvykle používá verze s $n$, ale pokud vám kalkulačka nebo tabulkový procesor vyhodí jiné číslo, je to pravděpodobně tohle.
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Kvantily}: \textbf{Dolní kvartil} $Q_1$ je hodnota, pod kterou leží čtvrtina dat (medián dolní poloviny), \textbf{horní kvartil} $Q_3$ hodnota, pod kterou leží tři čtvrtiny dat (medián horní poloviny). Medián je druhý kvartil. \textbf{Mezikvartilové rozpětí} je $Q_3 - Q_1$.
+
+  \textbf{Krabicový graf} znázorňuje minimum, $Q_1$, medián, $Q_3$ a maximum. Krabice obsahuje prostřední polovinu dat.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \draw[->] (0.5,0) -- (5.5,0);
+    \foreach \x in {1,2,3,4,5} \draw (\x,0.06) -- (\x,-0.06) node[below] {\small $\x$};
+    \draw[thick] (1,0.6) -- (2,0.6);
+    \draw[thick] (3,0.6) -- (5,0.6);
+    \draw[thick, fill=colorofwisdom!30] (2,0.35) rectangle (3,0.85);
+    \draw[very thick, colorofwisdom] (2,0.35) -- (2,0.85);
+    \draw[thick] (1,0.45) -- (1,0.75);
+    \draw[thick] (5,0.45) -- (5,0.75);
+    \node[above] at (1,0.8) {\tiny min};
+    \node[above] at (2,0.9) {\tiny $Q_1 = \tilde{x}$};
+    \node[above] at (3,0.9) {\tiny $Q_3$};
+    \node[above] at (5,0.8) {\tiny max};
+  \end{tikzpicture}
+\end{center}
+
+Pro naše známky je dolní polovina $1, 1, 2, 2, 2$ s mediánem $Q_1 = 2$ a horní polovina $2, 3, 3, 4, 5$ s mediánem $Q_3 = 3$. Medián je také $2$, takže splývá s dolním kvartilem. To je u malých souborů s mnoha stejnými hodnotami běžné.
+
+\begin{problem}
+  Výšky (v cm) osmi hráčů basketbalového týmu jsou $185, 192, 178, 201, 188, 195, 183, 190$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete průměr, medián a variační rozpětí.
+    \item Určete směrodatnou odchylku.
+    \item Do týmu přibude hráč s výškou $230$ cm. Jak se změní průměr a medián?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Součet $1512$, průměr $\bar{x} = 189$. Seřazeno: $178, 183, 185, 188, 190, 192, 195, 201$, medián $\frac{188 + 190}{2} = 189$. Rozpětí $201 - 178 = 23$.
+    \item Odchylky: $-11, -6, -4, -1, 1, 3, 6, 12$. Čtverce: $121, 36, 16, 1, 1, 9, 36, 144$, součet $364$. $s^2 = 45{,}5$, $s\approx 6{,}75\ \si{cm}$.
+    \item Průměr $\frac{1742}{9}\approx 193{,}6$, vzroste skoro o pět centimetrů. Medián je teď pátá hodnota, tedy $190$, vzroste jen o centimetr. Opět vidíme, jak je průměr citlivý na extrémní hodnoty.
+  \end{enumerate}
+\end{solution}
+
+\section{Závislost dvou znaků}
+
+Často nás zajímá, jestli spolu dva znaky souvisí. Mají vyšší lidé větší boty? Mají studenti, kteří víc spí, lepší známky? Dvojice hodnot $(x_i, y_i)$ můžeme zakreslit jako body do roviny (\textbf{bodový graf}) a podívat se, zda tvoří nějaký trend.
+
+\begin{definitionbox}
+  \textbf{Korelační koeficient} $r\in[-1, 1]$ měří míru \textbf{lineární} závislosti dvou znaků:
+  \begin{equation*}
+    r = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{\sqrt{\sum{(x_i - \bar{x})}^2}\cdot\sqrt{\sum{(y_i - \bar{y})}^2}}.
+  \end{equation*}
+  \begin{itemize}
+    \item $r$ blízko $1$: silná přímá závislost (s rostoucím $x$ roste $y$),
+    \item $r$ blízko $-1$: silná nepřímá závislost,
+    \item $r$ blízko $0$: žádná lineární závislost (ale může existovat jiná, třeba kvadratická).
+  \end{itemize}
+\end{definitionbox}
+
+Pozorný čtenář si všimne, že vzorec je přesně kosinus úhlu mezi vektory odchylek $(x_1 - \bar{x}, \ldots, x_n - \bar{x})$ a $(y_1 - \bar{y}, \ldots, y_n - \bar{y})$ podle kapitoly~\ref{kap:analyticka}, jen v $n$-rozměrném prostoru. Proto je vždy mezi $-1$ a $1$.
+
+\begin{note}
+  \textbf{Korelace neznamená kauzalitu.} V létě roste prodej zmrzliny i počet utonulých. Zmrzlina ale k utonutí nevede. Obojí způsobuje teplé počasí. Na internetu najdete stránky se sbírkami absurdních korelací. Například počet filmů, ve kterých hrál Nicolas Cage, v letech 1999 až 2009 překvapivě dobře koreloval s počtem lidí, kteří utonuli v bazénu. Pokud někdo tvrdí, že `$A$ způsobuje $B$', protože spolu korelují, vždy se zeptejte, jestli za obojím nestojí nějaké $C$.
+\end{note}
+
+\section{Odbočka --- Účty smrti a růže z Krymu}
+
+Moderní statistika se narodila mezi mrtvými. V Londýně se od 16. století každý týden vydávaly takzvané \textit{Bills of Mortality}, tedy seznamy úmrtí podle farností a příčin. Pomáhaly sledovat, kdy se blíží další vlna moru. Mezi příčinami smrti v nich najdete například `zemřel leknutím', `planetou zasažen' nebo `šílenství'. Obchodník John Graunt je v roce 1662 poprvé systematicky zpracoval. Zjistil, že se rodí trochu víc chlapců než dívek, že úmrtnost dětí je děsivě vysoká a že čísla se dají použít k odhadu počtu obyvatel. Jeho kniha je považována za počátek demografie i statistiky vůbec.
+
+O dvě století později se do Krymské války vydala ošetřovatelka Florence Nightingaleová. Ve vojenských nemocnicích zjistila, že vojáci umírají mnohem častěji na nemoci jako cholera nebo tyfus než na zranění z bitev. Aby o tom přesvědčila politiky, kteří čísla nečetli, vymyslela nový druh grafu, takzvaný \textit{coxcomb} (polární diagram, někdy nazývaný Nightingaleova růže). Každý měsíc tvořil jednu výseč a plocha barevných částí ukazovala, kolik vojáků zemřelo na nemoci, na zranění a z jiných příčin. Graf byl tak výmluvný, že vedl k reformě vojenských nemocnic a hygieny. Florence Nightingaleová se v roce 1858 stala první ženou zvolenou do britské Královské statistické společnosti. Lidé si ji pamatují jako `dámu s lampou'. Měli by si ji pamatovat i jako dámu s grafem.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je statistický soubor, jednotka a znak? Jaké druhy znaků znáte?
+    \item Co je absolutní, relativní a kumulativní četnost?
+    \item Jaké znáte způsoby grafického znázornění dat? Jak lze grafem manipulovat?
+    \item Definujte aritmetický průměr, medián a modus. Kdy je lepší použít medián?
+    \item Kdy se používá geometrický a harmonický průměr? Uveďte příklad.
+    \item Co je rozptyl a směrodatná odchylka? Proč se v rozptylu odchylky umocňují?
+    \item Co jsou kvartily a krabicový graf?
+    \item Co měří korelační koeficient? Proč korelace neznamená kauzalitu?
+  \end{enumerate}
+\end{problem}
