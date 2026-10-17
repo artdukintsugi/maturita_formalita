@@ -1,0 +1,313 @@
+\label{kap:komplexni}
+\mathquote{The shortest path between two truths in the real domain passes through the complex domain.}{Jacques Hadamard}
+
+V kapitole 2 jsme slíbili, že se ke komplexním číslům vrátíme. V kapitole~\ref{kap:kvadraticke} jsme viděli, že rovnice $x^2 + 2x + 5 = 0$ nemá reálné řešení, a v odbočce o Cardanovi, že se odmocninám ze záporných čísel nedalo vyhnout ani při řešení rovnic, které reálné řešení mají. Komplexní čísla dlouho měla pověst něčeho podezřelého. Descartes je pohrdavě nazval \textit{imaginárními}, tedy pomyslnými, a to jméno jim už zůstalo. Dnes bez nich nefunguje elektrotechnika, kvantová fyzika ani zpracování signálů. Jsou totiž jediným rozumným způsobem, jak počítat s otáčením.
+
+\section{Algebraický tvar}
+
+\begin{definitionbox}
+  \textbf{Imaginární jednotka} $i$ je číslo, pro které platí $i^2 = -1$.
+
+  \textbf{Komplexní číslo} je číslo tvaru
+  \begin{equation*}
+    z = a + bi,\qquad a, b\in\mathbb{R}.
+  \end{equation*}
+  Číslo $a = \mathrm{Re}\,z$ je \textbf{reálná část}, $b = \mathrm{Im}\,z$ \textbf{imaginární část}. Množinu všech komplexních čísel značíme $\mathbb{C}$. Pro $b = 0$ dostáváme reálná čísla, takže $\mathbb{R}\subset\mathbb{C}$. Čísla s $a = 0$ se nazývají \textbf{ryze imaginární}.
+
+  Dvě komplexní čísla se rovnají, právě když se rovnají jejich reálné i imaginární části.
+\end{definitionbox}
+
+V kapitole 2 jsme psali $i = \sqrt{-1}$. To je dobrá intuice, ale přesnější je definovat $i$ rovností $i^2 = -1$. Odmocnina ze záporného čísla totiž v $\mathbb{C}$ není jednoznačná (číslo $-i$ splňuje ${(-i)}^2 = -1$ úplně stejně) a pravidla jako $\sqrt{a}\sqrt{b} = \sqrt{ab}$ přestávají platit: $\sqrt{-1}\cdot\sqrt{-1} = i\cdot i = -1$, ale $\sqrt{(-1)(-1)} = \sqrt{1} = 1$.
+
+\begin{definitionbox}
+  \textbf{Operace}: Pro $z_1 = a + bi$ a $z_2 = c + di$:
+  \begin{align*}
+    z_1 + z_2 &= (a + c) + (b + d)i,\\
+    z_1\cdot z_2 &= (ac - bd) + (ad + bc)i.
+  \end{align*}
+  Násobíme tedy jako mnohočleny a pak nahradíme $i^2 = -1$.
+
+  \textbf{Komplexně sdružené číslo} k $z = a + bi$ je $\bar{z} = a - bi$. Platí $z\cdot\bar{z} = a^2 + b^2$ (reálné číslo!).
+
+  \textbf{Dělení}: zlomek rozšíříme číslem komplexně sdruženým se jmenovatelem:
+  \begin{equation*}
+    \frac{z_1}{z_2} = \frac{z_1\cdot\bar{z}_2}{z_2\cdot\bar{z}_2} = \frac{z_1\cdot\bar{z}_2}{c^2 + d^2}.
+  \end{equation*}
+\end{definitionbox}
+
+Dělení je přesně stejný trik jako usměrňování zlomků v kapitole~\ref{kap:vyrazy}. Tam jsme se zbavovali odmocniny ve jmenovateli pomocí $(a + \sqrt{b})(a - \sqrt{b}) = a^2 - b$, tady se zbavujeme $i$ pomocí $(c + di)(c - di) = c^2 + d^2$.
+
+\begin{example}
+  Pro $z_1 = 2 + 3i$ a $z_2 = 1 - i$:
+  \begin{align*}
+    z_1 + z_2 &= 3 + 2i,\\
+    z_1\cdot z_2 &= 2 - 2i + 3i - 3i^2 = 2 + i + 3 = 5 + i,\\
+    \frac{z_1}{z_2} &= \frac{(2 + 3i)(1 + i)}{(1 - i)(1 + i)} = \frac{2 + 2i + 3i + 3i^2}{1 + 1} = \frac{-1 + 5i}{2} = -\frac{1}{2} + \frac{5}{2}i.
+  \end{align*}
+\end{example}
+
+\begin{note}
+  Mocniny $i$ se opakují s periodou $4$:
+  \begin{equation*}
+    i^1 = i,\quad i^2 = -1,\quad i^3 = -i,\quad i^4 = 1,\quad i^5 = i,\ \ldots
+  \end{equation*}
+  Stačí tedy vydělit exponent čtyřmi a podívat se na zbytek. Například $i^{2026} = i^{4\cdot 506 + 2} = i^2 = -1$.
+\end{note}
+
+\begin{note}
+  Komplexní čísla tvoří \textbf{těleso} z kapitoly 2: platí všechny axiomy sčítání a násobení a každé nenulové číslo má inverzi $\frac{1}{z} = \frac{\bar{z}}{|z|^2}$. Na rozdíl od reálných čísel ale \textbf{nejsou uspořádaná}. Nedává smysl říct, že $i > 0$ nebo $i < 0$. Kdyby totiž $i > 0$, pak $i\cdot i > 0$, tedy $-1 > 0$, a kdyby $i < 0$, pak $(-i)(-i) > 0$, tedy zase $-1 > 0$. Nerovnice v komplexních číslech proto řešit nemůžeme.
+\end{note}
+
+\begin{problem}
+  Vypočítejte:
+  \begin{enumerate}[label=(\alph*)]
+    \item $(3 - 2i)(4 + i)$,
+    \item ${(1 + i)}^2$ a ${(1 + i)}^4$,
+    \item $\dfrac{5}{2 - i}$,
+    \item $\dfrac{1 + i}{1 - i}$,
+    \item $i + i^2 + i^3 + \cdots + i^{100}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $12 + 3i - 8i - 2i^2 = 14 - 5i$.
+    \item ${(1 + i)}^2 = 1 + 2i - 1 = 2i$, ${(1 + i)}^4 = {(2i)}^2 = -4$.
+    \item $\frac{5(2 + i)}{4 + 1} = 2 + i$.
+    \item $\frac{{(1 + i)}^2}{2} = \frac{2i}{2} = i$.
+    \item Každá čtveřice $i + (-1) + (-i) + 1 = 0$, a čtveřic je $25$. Součet je $0$.
+  \end{enumerate}
+\end{solution}
+
+\section{Gaussova rovina}
+
+Komplexní číslo $a + bi$ je určeno dvojicí reálných čísel $(a, b)$. Můžeme ho tedy zakreslit jako bod v rovině. Vodorovná osa je \textbf{reálná}, svislá \textbf{imaginární}. Takové rovině se říká \textbf{Gaussova} (nebo komplexní) rovina.
+
+\begin{definitionbox}
+  \textbf{Absolutní hodnota} komplexního čísla $z = a + bi$ je jeho vzdálenost od počátku:
+  \begin{equation*}
+    |z| = \sqrt{a^2 + b^2} = \sqrt{z\bar{z}}.
+  \end{equation*}
+  \textbf{Argument} $\arg z$ je orientovaný úhel, který svírá spojnice počátku s bodem $z$ s kladnou reálnou poloosou.
+
+  \vspace{0.2cm}
+
+  \textbf{Geometrický význam operací}:
+  \begin{itemize}
+    \item sčítání komplexních čísel je sčítání vektorů z kapitoly~\ref{kap:analyticka},
+    \item komplexně sdružené číslo je obraz v osové souměrnosti podle reálné osy,
+    \item $|z_1 - z_2|$ je vzdálenost bodů $z_1$ a $z_2$.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \draw[->] (-1,0) -- (4.2,0) node[right] {\small Re};
+    \draw[->] (0,-2.5) -- (0,3) node[above] {\small Im};
+    \coordinate (Z) at (3,2);
+    \draw[thick, colorofwisdom, ->] (0,0) -- (Z);
+    \filldraw[colorofwisdom] (Z) circle (1.5pt) node[above right] {\small $z = a + bi$};
+    \filldraw (3,-2) circle (1.5pt) node[below right] {\small $\bar{z} = a - bi$};
+    \draw[dashed, gray] (3,-2) -- (Z);
+    \draw[dashed] (Z) -- (3,0) node[below right] {\small $a$};
+    \draw[dashed] (Z) -- (0,2) node[left] {\small $b$};
+    \node[colorofwisdom, above left] at (1.5,1) {\small $|z|$};
+    \draw[->] (0.6,0) arc (0:33.7:0.6);
+    \node at (0.85,0.25) {\small $\varphi$};
+  \end{tikzpicture}
+\end{center}
+
+\section{Goniometrický tvar}
+
+\begin{definitionbox}
+  Každé nenulové komplexní číslo lze zapsat v \textbf{goniometrickém tvaru}
+  \begin{equation*}
+    z = |z|(\cos\varphi + i\sin\varphi),
+  \end{equation*}
+  kde $\varphi = \arg z$. Pro $z = a + bi$ platí
+  \begin{equation*}
+    \cos\varphi = \frac{a}{|z|},\qquad\sin\varphi = \frac{b}{|z|}.
+  \end{equation*}
+
+  \textbf{Násobení a dělení v goniometrickém tvaru}: Pro $z_1 = r_1(\cos\varphi_1 + i\sin\varphi_1)$ a $z_2 = r_2(\cos\varphi_2 + i\sin\varphi_2)$:
+  \begin{align*}
+    z_1\cdot z_2 &= r_1r_2\left(\cos(\varphi_1 + \varphi_2) + i\sin(\varphi_1 + \varphi_2)\right),\\
+    \frac{z_1}{z_2} &= \frac{r_1}{r_2}\left(\cos(\varphi_1 - \varphi_2) + i\sin(\varphi_1 - \varphi_2)\right).
+  \end{align*}
+  Při násobení se tedy \textbf{absolutní hodnoty násobí} a \textbf{argumenty sčítají}.
+\end{definitionbox}
+
+\begin{proof}[(násobení)]
+  Roznásobíme a použijeme součtové vzorce z kapitoly~\ref{kap:goniometrie}:
+  \begin{align*}
+    z_1z_2 &= r_1r_2\left(\cos\varphi_1\cos\varphi_2 + i\cos\varphi_1\sin\varphi_2 + i\sin\varphi_1\cos\varphi_2 + i^2\sin\varphi_1\sin\varphi_2\right)\\
+    &= r_1r_2\left((\cos\varphi_1\cos\varphi_2 - \sin\varphi_1\sin\varphi_2) + i(\sin\varphi_1\cos\varphi_2 + \cos\varphi_1\sin\varphi_2)\right)\\
+    &= r_1r_2\left(\cos(\varphi_1 + \varphi_2) + i\sin(\varphi_1 + \varphi_2)\right).
+  \end{align*}
+\end{proof}
+
+Tohle je ten nejdůležitější poznatek celé kapitoly. Násobení komplexním číslem s absolutní hodnotou $1$ je \textbf{otočení} roviny. Násobení číslem $i$ (které má $|i| = 1$ a $\arg i = \frac{\pi}{2}$) otočí každý bod o $90^\circ$ proti směru hodinových ručiček. Dvojí otočení o $90^\circ$ je otočení o $180^\circ$, tedy násobení $-1$. A to je geometrický důvod, proč $i^2 = -1$! Nic mystického, jen dvě otočení za sebou.
+
+\begin{example}
+  Převeďme do goniometrického tvaru:
+  \begin{itemize}
+    \item $z = 1 + i$: $|z| = \sqrt{2}$, $\cos\varphi = \sin\varphi = \frac{1}{\sqrt{2}}$, tedy $\varphi = \frac{\pi}{4}$ a $z = \sqrt{2}\left(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}\right)$.
+    \item $z = -1 + i\sqrt{3}$: $|z| = 2$, $\cos\varphi = -\frac{1}{2}$, $\sin\varphi = \frac{\sqrt{3}}{2}$, tedy $\varphi = \frac{2\pi}{3}$ (druhý kvadrant!).
+    \item $z = -5$: $|z| = 5$, $\varphi = \pi$, $z = 5(\cos\pi + i\sin\pi)$.
+    \item $z = -3i$: $|z| = 3$, $\varphi = \frac{3\pi}{2}$.
+  \end{itemize}
+  Při určování argumentu se vždy podívejte, ve kterém kvadrantu číslo leží. Samotný tangens nestačí, protože $\tg\varphi = \frac{b}{a}$ je stejný pro $z$ i $-z$.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Moivreova věta}: Pro každé $n\in\mathbb{Z}$ platí
+  \begin{equation*}
+    {\left(r(\cos\varphi + i\sin\varphi)\right)}^n = r^n(\cos n\varphi + i\sin n\varphi).
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Pro přirozená $n$ matematickou indukcí. Pro $n = 1$ je to zřejmé. Pokud tvrzení platí pro $n$, pak podle pravidla o násobení
+  \begin{equation*}
+    z^{n+1} = z^n\cdot z = r^n(\cos n\varphi + i\sin n\varphi)\cdot r(\cos\varphi + i\sin\varphi) = r^{n+1}\left(\cos(n + 1)\varphi + i\sin(n + 1)\varphi\right).
+  \end{equation*}
+  Pro záporná $n$ to plyne z pravidla pro dělení.
+\end{proof}
+
+\begin{example}
+  \begin{itemize}
+    \item ${(1 + i)}^8 = {\left(\sqrt{2}\right)}^8\left(\cos 2\pi + i\sin 2\pi\right) = 16$. Zkuste to roznásobit osmkrát.
+    \item ${(1 + i\sqrt{3})}^6 = 2^6(\cos 2\pi + i\sin 2\pi) = 64$, protože $1 + i\sqrt{3} = 2\left(\cos\frac{\pi}{3} + i\sin\frac{\pi}{3}\right)$.
+    \item Moivreova věta dá zadarmo vzorce pro násobné úhly. Pro $n = 2$ a $r = 1$: ${(\cos\varphi + i\sin\varphi)}^2 = \cos^2\varphi - \sin^2\varphi + 2i\sin\varphi\cos\varphi$, a to se musí rovnat $\cos 2\varphi + i\sin 2\varphi$. Porovnáním reálných a imaginárních částí dostaneme oba vzorce pro dvojnásobný úhel z kapitoly~\ref{kap:goniometrie}.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Převeďte do goniometrického tvaru $\sqrt{3} - i$ a $-2 - 2i$.
+    \item Vypočítejte ${(\sqrt{3} - i)}^{12}$.
+    \item Vypočítejte $\dfrac{{(1 + i)}^{10}}{{(1 - i)}^{8}}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sqrt{3} - i = 2\left(\cos\frac{11\pi}{6} + i\sin\frac{11\pi}{6}\right)$, $-2 - 2i = 2\sqrt{2}\left(\cos\frac{5\pi}{4} + i\sin\frac{5\pi}{4}\right)$.
+    \item $2^{12}\left(\cos 22\pi + i\sin 22\pi\right) = 4096$.
+    \item $1 - i = \sqrt{2}\left(\cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right)\right)$. Podíl: ${\left(\sqrt{2}\right)}^{10 - 8}\left(\cos\left(\frac{10\pi}{4} + \frac{8\pi}{4}\right) + i\sin(\ldots)\right) = 2\left(\cos\frac{9\pi}{2} + i\sin\frac{9\pi}{2}\right) = 2i$.
+  \end{enumerate}
+\end{solution}
+
+\section{Rovnice v komplexních číslech}
+
+\subsection{Kvadratické rovnice}
+
+\begin{definitionbox}
+  Kvadratická rovnice $ax^2 + bx + c = 0$ s reálnými koeficienty a $D < 0$ má v $\mathbb{C}$ dva \textbf{komplexně sdružené} kořeny
+  \begin{equation*}
+    x_{1,2} = \frac{-b\pm i\sqrt{-D}}{2a}.
+  \end{equation*}
+  Vietovy vzorce i rozklad $a(x - x_1)(x - x_2)$ platí dál.
+\end{definitionbox}
+
+\begin{example}
+  Rovnice $x^2 + 2x + 5 = 0$ z kapitoly~\ref{kap:kvadraticke}: $D = -16$, $\sqrt{-D} = 4$, tedy $x_{1,2} = \frac{-2\pm 4i}{2} = -1\pm 2i$. Kontrola Vietem: součet $-2$, součin ${(-1)}^2 + 2^2 = 5$. Sedí.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Základní věta algebry}: Každý mnohočlen stupně $n\geq 1$ s komplexními koeficienty má v $\mathbb{C}$ alespoň jeden kořen. Důsledek: lze ho rozložit na součin $n$ lineárních činitelů, takže má (počítáno s násobností) právě $n$ kořenů.
+\end{definitionbox}
+
+Tuto větu dokázal (ne úplně kompletně) Carl Friedrich Gauss ve své disertaci v roce 1799, když mu bylo dvaadvacet. Je to důvod, proč u komplexních čísel nemusíme vymýšlet žádná další čísla. U reálných jsme museli přidat $i$, aby měla řešení rovnice $x^2 + 1 = 0$. U komplexních čísel už mají řešení všechny polynomiální rovnice. Komplexní čísla jsou v tomto smyslu `hotová'.
+
+\subsection{Binomické rovnice}
+
+\begin{definitionbox}
+  \textbf{Binomická rovnice} $z^n = a$, kde $a = r(\cos\alpha + i\sin\alpha)\neq 0$, má v $\mathbb{C}$ právě $n$ řešení
+  \begin{equation*}
+    z_k = \sqrt[n]{r}\left(\cos\frac{\alpha + 2k\pi}{n} + i\sin\frac{\alpha + 2k\pi}{n}\right),\qquad k = 0, 1, \ldots, n - 1.
+  \end{equation*}
+  V Gaussově rovině tvoří tato řešení vrcholy \textbf{pravidelného $n$-úhelníku} se středem v počátku.
+\end{definitionbox}
+
+Proč $+2k\pi$? Podle Moivreovy věty má $z^n$ argument $n\varphi$. Ten se musí rovnat $\alpha$, ale jen až na násobek $2\pi$, protože úhly lišící se o $2\pi$ jsou stejné. Tedy $n\varphi = \alpha + 2k\pi$. Pro $k = 0, \ldots, n - 1$ dostaneme různé body, pro $k = n$ se vrátíme na začátek.
+
+\begin{example}
+  Rovnice $z^3 = 1$ má řešení $\cos\frac{2k\pi}{3} + i\sin\frac{2k\pi}{3}$ pro $k = 0, 1, 2$:
+  \begin{equation*}
+    z_0 = 1,\qquad z_1 = -\frac{1}{2} + \frac{\sqrt{3}}{2}i,\qquad z_2 = -\frac{1}{2} - \frac{\sqrt{3}}{2}i.
+  \end{equation*}
+  Tvoří rovnostranný trojúhelník vepsaný do jednotkové kružnice. Číslo $1$ má tedy tři třetí odmocniny, jen jedna z nich je reálná.
+
+  Rovnice $z^4 = -16$: $r = 16$, $\alpha = \pi$, tedy $z_k = 2\left(\cos\frac{\pi + 2k\pi}{4} + i\sin\frac{\pi + 2k\pi}{4}\right)$. Úhly $\frac{\pi}{4}, \frac{3\pi}{4}, \frac{5\pi}{4}, \frac{7\pi}{4}$ dávají čtyři vrcholy čtverce $\pm\sqrt{2}\pm\sqrt{2}i$.
+  \begin{center}
+    \begin{tikzpicture}[scale=1.1]
+      \begin{scope}
+        \draw[->] (-1.5,0) -- (1.6,0) node[right] {\tiny Re};
+        \draw[->] (0,-1.4) -- (0,1.5) node[above] {\tiny Im};
+        \draw[dashed, gray] (0,0) circle (1);
+        \draw[thick, colorofwisdom] (0:1) -- (120:1) -- (240:1) -- cycle;
+        \foreach \a in {0,120,240} \filldraw[colorofwisdom] (\a:1) circle (1.5pt);
+        \node at (0,-1.8) {\small $z^3 = 1$};
+      \end{scope}
+      \begin{scope}[xshift=5cm]
+        \draw[->] (-1.8,0) -- (1.9,0) node[right] {\tiny Re};
+        \draw[->] (0,-1.7) -- (0,1.8) node[above] {\tiny Im};
+        \draw[dashed, gray] (0,0) circle (1.3);
+        \draw[thick, colorofwisdom] (45:1.3) -- (135:1.3) -- (225:1.3) -- (315:1.3) -- cycle;
+        \foreach \a in {45,135,225,315} \filldraw[colorofwisdom] (\a:1.3) circle (1.5pt);
+        \node at (0,-1.8) {\small $z^4 = -16$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{C}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^2 - 6x + 13 = 0$,
+    \item $x^2 + 9 = 0$,
+    \item $z^2 = i$,
+    \item $z^6 = 64$,
+    \item $x^3 + 8 = 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $D = 36 - 52 = -16$, $x = 3\pm 2i$.
+    \item $x = \pm 3i$.
+    \item $i = \cos\frac{\pi}{2} + i\sin\frac{\pi}{2}$, řešení $\cos\frac{\pi}{4} + i\sin\frac{\pi}{4} = \frac{\sqrt{2}}{2}(1 + i)$ a $\cos\frac{5\pi}{4} + i\sin\frac{5\pi}{4} = -\frac{\sqrt{2}}{2}(1 + i)$.
+    \item $z_k = 2\left(\cos\frac{k\pi}{3} + i\sin\frac{k\pi}{3}\right)$ pro $k = 0, \ldots, 5$: $\pm 2$, $\pm 1\pm\sqrt{3}i$. Pravidelný šestiúhelník.
+    \item $x^3 + 8 = (x + 2)(x^2 - 2x + 4)$ podle vzorce z kapitoly~\ref{kap:vyrazy}. Kořeny $-2$ a $1\pm\sqrt{3}i$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Muž, který předpověděl svou smrt}
+
+Abraham de Moivre, autor Moivreovy věty, byl francouzský protestant. Když v roce 1685 Ludvík XIV. zrušil edikt nantský, který protestantům zaručoval náboženskou svobodu, byl de Moivre uvězněn a teprve po propuštění mohl uprchnout do Anglie. Tam strávil zbytek života. Navzdory tomu, že se přátelil s Newtonem a Halleym a byl členem Královské společnosti, nikdy nezískal univerzitní místo. Živil se doučováním matematiky, poradenstvím pro hazardní hráče a pojišťovny a tím, že v londýnské kavárně Slaughter's hrál o peníze šachy.
+
+V pozdním věku si prý všiml, že každý den spí o čtvrt hodiny déle než předchozí den. Jako správný matematik z toho sestavil aritmetickou posloupnost z kapitoly~\ref{kap:posloupnosti} a spočítal, kdy dosáhne dvaceti čtyř hodin. Toho dne, 27. listopadu 1754, opravdu zemřel. Lékař jako příčinu smrti uvedl somnolenci, tedy chorobnou spavost. Je to pravděpodobně jediný případ v dějinách, kdy někdo předpověděl datum své smrti pomocí aritmetické posloupnosti a vyšlo mu to. Matematika je někdy až příliš přesná.
+
+A ještě jedna věc, kterou nemůžeme vynechat. Pokud se v goniometrickém tvaru podíváme na $\cos\varphi + i\sin\varphi$, Euler v 18. století ukázal, že se to rovná $e^{i\varphi}$, kde $e$ je Eulerovo číslo z kapitoly~\ref{kap:exponencialni}. Moivreova věta je pak jen pravidlo ${(e^{i\varphi})}^n = e^{in\varphi}$. A pro $\varphi = \pi$ dostaneme
+\begin{equation*}
+  e^{i\pi} + 1 = 0,
+\end{equation*}
+rovnici, která v jednom řádku spojuje pět nejdůležitějších čísel matematiky: $0$, $1$, $\pi$, $e$ a $i$. Mnoho matematiků ji považuje za nejkrásnější rovnici, jaká kdy byla napsána. Fyzik Richard Feynman ji ve svém deníku ve čtrnácti letech nazval `nejpozoruhodnějším vzorcem v matematice'.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Proč potřebujeme komplexní čísla? Jak je definována imaginární jednotka?
+    \item Co je algebraický tvar komplexního čísla? Jak se komplexní čísla sčítají, násobí a dělí?
+    \item Co je komplexně sdružené číslo a absolutní hodnota? Jaký mají geometrický význam?
+    \item Proč komplexní čísla nelze uspořádat?
+    \item Co je Gaussova rovina? Jak v ní vypadá sčítání?
+    \item Co je goniometrický tvar? Jak se v něm násobí a dělí? Dokažte to.
+    \item Vyslovte a dokažte Moivreovu větu.
+    \item Jak se řeší kvadratické rovnice se záporným diskriminantem? Co říká základní věta algebry?
+    \item Jak se řeší binomické rovnice? Proč jejich řešení tvoří pravidelný mnohoúhelník?
+  \end{enumerate}
+\end{problem}
