@@ -1,0 +1,205 @@
+\label{kap:prostor}
+\mathquote{Geometry is knowledge of the eternally existent.}{Platón}
+
+V kapitole~\ref{kap:stereometrie} jsme řešili prostorové úlohy tak, že jsme hledali vhodné pravoúhlé trojúhelníky. To funguje, ale vyžaduje to dobrou prostorovou představivost a trochu štěstí. Analytická geometrie v prostoru nabízí jinou cestu: zavedeme souřadnice a všechno spočítáme. Žádné hledání trojúhelníků, žádné kreslení. Jen vektory a rovnice. Pro ty z nás, kdo si v hlavě neumí otočit ani židli, je to vysvobození.
+
+\section{Souřadnice a vektory v prostoru}
+
+\begin{definitionbox}
+  \textbf{Kartézská soustava souřadnic} v prostoru má tři navzájem kolmé osy $x$, $y$, $z$. Bod je určen trojicí $A = [a_1, a_2, a_3]$, vektor trojicí $\vec{u} = (u_1, u_2, u_3)$. Všechny vzorce z roviny se přenesou přidáním třetí souřadnice:
+  \begin{align*}
+    |AB| &= \sqrt{{(b_1 - a_1)}^2 + {(b_2 - a_2)}^2 + {(b_3 - a_3)}^2}, & S_{AB} &= \left[\tfrac{a_1 + b_1}{2}, \tfrac{a_2 + b_2}{2}, \tfrac{a_3 + b_3}{2}\right],\\
+    |\vec{u}| &= \sqrt{u_1^2 + u_2^2 + u_3^2}, & \vec{u}\cdot\vec{v} &= u_1v_1 + u_2v_2 + u_3v_3.
+  \end{align*}
+  I zde platí $\vec{u}\cdot\vec{v} = |\vec{u}||\vec{v}|\cos\varphi$ a vektory jsou kolmé, právě když $\vec{u}\cdot\vec{v} = 0$.
+\end{definitionbox}
+
+\begin{example}
+  Pro $A = [1, 2, 3]$ a $B = [3, -1, 9]$ je $\overrightarrow{AB} = (2, -3, 6)$, $|AB| = \sqrt{4 + 9 + 36} = 7$ a $S_{AB} = \left[2, \frac{1}{2}, 6\right]$.
+\end{example}
+
+\subsection{Vektorový součin}
+
+V prostoru existuje ještě jeden součin vektorů, který v rovině nemá obdobu. Výsledkem není číslo, ale vektor.
+
+\begin{definitionbox}
+  \textbf{Vektorový součin} vektorů $\vec{u} = (u_1, u_2, u_3)$ a $\vec{v} = (v_1, v_2, v_3)$ je vektor
+  \begin{equation*}
+    \vec{u}\times\vec{v} = (u_2v_3 - u_3v_2,\ u_3v_1 - u_1v_3,\ u_1v_2 - u_2v_1).
+  \end{equation*}
+  \textbf{Vlastnosti}:
+  \begin{itemize}
+    \item $\vec{u}\times\vec{v}$ je \textbf{kolmý} na $\vec{u}$ i na $\vec{v}$,
+    \item $|\vec{u}\times\vec{v}| = |\vec{u}||\vec{v}|\sin\varphi$, což je \textbf{obsah rovnoběžníku} určeného vektory $\vec{u}$, $\vec{v}$,
+    \item $\vec{u}\times\vec{v} = -\vec{v}\times\vec{u}$ (není komutativní!),
+    \item $\vec{u}\times\vec{v} = \vec{o}$, právě když jsou $\vec{u}$ a $\vec{v}$ kolineární.
+  \end{itemize}
+\end{definitionbox}
+
+Vzorec vypadá hrozivě, ale dá se zapamatovat jako `determinant'. Každá složka je determinant $2\times 2$ z ostatních dvou souřadnic: první složka vznikne zakrytím prvního sloupce, druhá zakrytím druhého (s obráceným znaménkem), třetí zakrytím třetího:
+\begin{equation*}
+  \vec{u}\times\vec{v} = \left(\begin{vmatrix} u_2 & u_3\\ v_2 & v_3 \end{vmatrix},\ -\begin{vmatrix} u_1 & u_3\\ v_1 & v_3 \end{vmatrix},\ \begin{vmatrix} u_1 & u_2\\ v_1 & v_2 \end{vmatrix}\right).
+\end{equation*}
+Kolmost si ověříte přímo: $\vec{u}\cdot(\vec{u}\times\vec{v}) = u_1(u_2v_3 - u_3v_2) + u_2(u_3v_1 - u_1v_3) + u_3(u_1v_2 - u_2v_1) = 0$, protože se všechny členy po dvou vyruší. Směr výsledku určuje \textbf{pravidlo pravé ruky}: pokud prsty pravé ruky ukazují od $\vec{u}$ k $\vec{v}$, palec ukazuje směr $\vec{u}\times\vec{v}$. Fyzici tohle pravidlo používají u magnetické síly a točivého momentu tak často, že je u zkoušek z fyziky vidět sál plný studentů, kteří kroutí pravou rukou ve vzduchu.
+
+\begin{example}
+  Pro $\vec{u} = (1, 2, 3)$ a $\vec{v} = (4, 5, 6)$:
+  \begin{equation*}
+    \vec{u}\times\vec{v} = (2\cdot 6 - 3\cdot 5,\ 3\cdot 4 - 1\cdot 6,\ 1\cdot 5 - 2\cdot 4) = (-3, 6, -3).
+  \end{equation*}
+  Kontrola: $(1, 2, 3)\cdot(-3, 6, -3) = -3 + 12 - 9 = 0$ a $(4, 5, 6)\cdot(-3, 6, -3) = -12 + 30 - 18 = 0$.
+\end{example}
+
+\section{Přímka a rovina v prostoru}
+
+\begin{definitionbox}
+  \textbf{Přímka} procházející bodem $A$ se směrovým vektorem $\vec{u}$ má \textbf{parametrické vyjádření}
+  \begin{equation*}
+    X = A + t\vec{u},\quad t\in\mathbb{R},\qquad\text{tedy}\qquad x = a_1 + tu_1,\quad y = a_2 + tu_2,\quad z = a_3 + tu_3.
+  \end{equation*}
+  Přímka v prostoru \textbf{nemá} obecnou rovnici. Jedna lineární rovnice v prostoru totiž popisuje rovinu, ne přímku. Přímku lze popsat nejvýš jako průsečnici dvou rovin.
+
+  \vspace{0.2cm}
+
+  \textbf{Rovina} procházející bodem $A$ a určená dvěma nekolineárními vektory $\vec{u}$, $\vec{v}$ má \textbf{parametrické vyjádření}
+  \begin{equation*}
+    X = A + t\vec{u} + s\vec{v},\quad t, s\in\mathbb{R}.
+  \end{equation*}
+  \textbf{Obecná rovnice roviny} s normálovým vektorem $\vec{n} = (a, b, c)$ je
+  \begin{equation*}
+    ax + by + cz + d = 0.
+  \end{equation*}
+  Normálový vektor roviny určené vektory $\vec{u}$, $\vec{v}$ najdeme jako $\vec{n} = \vec{u}\times\vec{v}$.
+\end{definitionbox}
+
+Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrightarrow{AX} = 0$ říká, že vektor $\overrightarrow{AX}$ je kolmý na $\vec{n}$. V rovině jsou všechny takové body $X$ na jedné přímce. V prostoru tvoří všechny vektory kolmé na $\vec{n}$ celou rovinu. Jedna podmínka v prostoru `ubere' jen jeden rozměr ze tří.
+
+\begin{example}
+  Napišme obecnou rovnici roviny $ABC$, kde $A = [1, 0, 0]$, $B = [0, 2, 0]$ a $C = [0, 0, 3]$.
+
+  Vektory $\vec{u} = \overrightarrow{AB} = (-1, 2, 0)$ a $\vec{v} = \overrightarrow{AC} = (-1, 0, 3)$. Normálový vektor
+  \begin{equation*}
+    \vec{n} = \vec{u}\times\vec{v} = (2\cdot 3 - 0\cdot 0,\ 0\cdot(-1) - (-1)\cdot 3,\ (-1)\cdot 0 - 2\cdot(-1)) = (6, 3, 2).
+  \end{equation*}
+  Rovnice $6x + 3y + 2z + d = 0$, dosazením $A$: $d = -6$. Tedy $6x + 3y + 2z - 6 = 0$. Kontrola s $B$: $6 - 6 = 0$, s $C$: $6 - 6 = 0$.
+
+  Po vydělení šesti dostaneme hezký tvar $\frac{x}{1} + \frac{y}{2} + \frac{z}{3} = 1$, tzv. \textbf{úsekový tvar}, ze kterého jsou průsečíky s osami vidět okamžitě. A obsah trojúhelníku $ABC$ je polovina obsahu rovnoběžníku: $S = \frac{1}{2}|\vec{n}| = \frac{1}{2}\sqrt{36 + 9 + 4} = \frac{7}{2}$.
+\end{example}
+
+\section{Vzájemné polohy}
+
+\begin{definitionbox}
+  \textbf{Dvě přímky} $p: X = A + t\vec{u}$ a $q: X = B + s\vec{v}$:
+  \begin{itemize}
+    \item pokud jsou $\vec{u}$ a $\vec{v}$ kolineární, jsou přímky \textbf{rovnoběžné} (různé, nebo totožné, pokud $B\in p$),
+    \item jinak řešíme soustavu $A + t\vec{u} = B + s\vec{v}$ (tři rovnice pro dvě neznámé). Pokud má řešení, jsou \textbf{různoběžné}, pokud nemá, jsou \textbf{mimoběžné}.
+  \end{itemize}
+
+  \textbf{Přímka} $p: X = A + t\vec{u}$ a \textbf{rovina} $\rho: \vec{n}\cdot X + d = 0$:
+  \begin{itemize}
+    \item pokud $\vec{n}\cdot\vec{u}\neq 0$, jsou \textbf{různoběžné}. Průsečík najdeme dosazením parametrického vyjádření přímky do rovnice roviny,
+    \item pokud $\vec{n}\cdot\vec{u} = 0$, je přímka s rovinou \textbf{rovnoběžná}, nebo v ní \textbf{leží} (pokud $A\in\rho$).
+  \end{itemize}
+
+  \textbf{Dvě roviny}: jsou \textbf{rovnoběžné}, pokud mají kolineární normálové vektory (a totožné, pokud jsou rovnice násobkem jedna druhé). Jinak jsou \textbf{různoběžné} a průsečnici najdeme vyřešením soustavy dvou rovnic se třemi neznámými (jedna neznámá bude parametr).
+\end{definitionbox}
+
+\begin{example}
+  Rozhodněme o poloze přímek $p: X = [1, 0, 0] + t(1, 1, 0)$ a $q: X = [0, 1, 1] + s(1, -1, 0)$. Směrové vektory kolineární nejsou. Soustava:
+  \begin{align*}
+    1 + t &= s,\\
+    t &= 1 - s,\\
+    0 &= 1.
+  \end{align*}
+  Třetí rovnice je spor, takže přímky jsou \textbf{mimoběžné}. Kdyby $q$ procházela bodem $[0, 1, 0]$, třetí rovnice by zněla $0 = 0$ a z prvních dvou bychom dostali $t = 0$, $s = 1$ a průsečík $[1, 0, 0]$.
+\end{example}
+
+\begin{example}
+  Průsečík přímky $X = [1, 1, 1] + t(1, 2, 3)$ s rovinou $x + y + z = 12$: dosadíme $(1 + t) + (1 + 2t) + (1 + 3t) = 12$, tedy $6t = 9$ a $t = \frac{3}{2}$. Průsečík je $\left[\frac{5}{2}, 4, \frac{11}{2}\right]$.
+\end{example}
+
+\begin{example}
+  Průsečnice rovin $x + y + z = 3$ a $x - y = 1$: zvolíme $y = t$, pak $x = 1 + t$ a $z = 3 - x - y = 2 - 2t$. Průsečnice je $X = [1, 0, 2] + t(1, 1, -2)$. Kontrola: směrový vektor $(1, 1, -2)$ je kolmý na oba normálové vektory $(1, 1, 1)$ a $(1, -1, 0)$, a tedy je rovnoběžný s $\vec{n}_1\times\vec{n}_2$.
+\end{example}
+
+\section{Metrické úlohy}
+
+\begin{definitionbox}
+  \textbf{Vzdálenost bodu} $M = [m_1, m_2, m_3]$ od roviny $ax + by + cz + d = 0$:
+  \begin{equation*}
+    v = \frac{|am_1 + bm_2 + cm_3 + d|}{\sqrt{a^2 + b^2 + c^2}}.
+  \end{equation*}
+  \textbf{Vzdálenost mimoběžek} $p: X = A + t\vec{u}$ a $q: X = B + s\vec{v}$:
+  \begin{equation*}
+    v = \frac{|\overrightarrow{AB}\cdot(\vec{u}\times\vec{v})|}{|\vec{u}\times\vec{v}|}.
+  \end{equation*}
+  \textbf{Odchylky}:
+  \begin{align*}
+    \text{dvou přímek:}\quad\cos\varphi &= \frac{|\vec{u}\cdot\vec{v}|}{|\vec{u}||\vec{v}|}, &
+    \text{dvou rovin:}\quad\cos\varphi &= \frac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1||\vec{n}_2|},\\
+    \text{přímky a roviny:}\quad\sin\varphi &= \frac{|\vec{u}\cdot\vec{n}|}{|\vec{u}||\vec{n}|}.
+  \end{align*}
+\end{definitionbox}
+
+Vzorec pro vzdálenost od roviny se odvodí úplně stejně jako vzdálenost bodu od přímky v rovině (kapitola~\ref{kap:analyticka}): je to délka průmětu vektoru $\overrightarrow{PM}$ do normálového směru. Vzorec pro mimoběžky je stejný nápad. Vektor $\vec{u}\times\vec{v}$ je kolmý na obě přímky, takže je to směr jejich osy, a vzdálenost je délka průmětu $\overrightarrow{AB}$ do tohoto směru.
+
+U odchylky přímky a roviny je sinus, ne kosinus. Proč? Vzorec s kosinem by nám dal úhel mezi přímkou a \textit{normálou} roviny. Úhel mezi přímkou a rovinou je doplněk do $90^\circ$ a $\cos(90^\circ - \varphi) = \sin\varphi$.
+
+\begin{example}
+  Vraťme se ke krychli z kapitoly~\ref{kap:stereometrie} a spočítejme všechno znovu, tentokrát bez hledání trojúhelníků. Krychle s hranou $1$ má vrcholy $A = [0, 0, 0]$, $B = [1, 0, 0]$, $C = [1, 1, 0]$, $D = [0, 1, 0]$, $E = [0, 0, 1]$, $F = [1, 0, 1]$, $G = [1, 1, 1]$, $H = [0, 1, 1]$.
+  \begin{itemize}
+    \item \textbf{Odchylka tělesové úhlopříčky od podstavy}: $\vec{u} = \overrightarrow{AG} = (1, 1, 1)$, normála podstavy $\vec{n} = (0, 0, 1)$. $\sin\varphi = \frac{1}{\sqrt{3}}$, $\varphi\approx 35{,}26^\circ$. Stejně jako minule.
+    \item \textbf{Vzdálenost $A$ od roviny $BDE$}: rovina prochází body $[1, 0, 0]$, $[0, 1, 0]$, $[0, 0, 1]$, má tedy rovnici $x + y + z - 1 = 0$. Vzdálenost $\frac{|-1|}{\sqrt{3}} = \frac{\sqrt{3}}{3}$, tedy přesně třetina tělesové úhlopříčky.
+    \item \textbf{Vzdálenost mimoběžek $AB$ a $CG$}: $\vec{u} = (1, 0, 0)$, $\vec{v} = (0, 0, 1)$, $\vec{u}\times\vec{v} = (0, -1, 0)$, $\overrightarrow{AC} = (1, 1, 0)$. Vzdálenost $\frac{|-1|}{1} = 1$.
+    \item \textbf{Odchylka rovin $ABG$ a $ABC$}: rovina $ABG$ obsahuje vektory $(1, 0, 0)$ a $(1, 1, 1)$, normála $(0, -1, 1)$. Rovina $ABC$ má normálu $(0, 0, 1)$. $\cos\varphi = \frac{1}{\sqrt{2}}$, $\varphi = 45^\circ$.
+  \end{itemize}
+  Všechno sedí s výsledky z kapitoly o stereometrii. Kdo nemá prostorovou představivost, má souřadnice.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Napište obecnou rovnici roviny, která prochází bodem $[2, -1, 3]$ a je kolmá na vektor $(1, 4, -2)$.
+    \item Určete vzájemnou polohu přímky $X = [1, 0, 2] + t(2, 1, -1)$ a roviny $x - y + z - 4 = 0$. Pokud jsou rovnoběžné, určete jejich vzdálenost.
+    \item Určete vzdálenost rovnoběžných rovin $2x - y + 2z + 3 = 0$ a $2x - y + 2z - 6 = 0$.
+    \item Určete odchylku rovin $x + y + z = 1$ a $z = 0$.
+    \item Určete obsah trojúhelníku $A = [1, 1, 0]$, $B = [3, 1, 0]$, $C = [1, 4, 4]$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x + 4y - 2z + d = 0$, $2 - 4 - 6 + d = 0$, tedy $x + 4y - 2z + 8 = 0$.
+    \item $\vec{n}\cdot\vec{u} = 2 - 1 - 1 = 0$, takže je přímka s rovinou rovnoběžná nebo v ní leží. Bod $[1, 0, 2]$: $1 - 0 + 2 - 4 = -1\neq 0$, rovnoběžná. Vzdálenost $\frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3}$.
+    \item Bod první roviny, například $[0, 3, 0]$, má od druhé vzdálenost $\frac{|-3 - 6|}{\sqrt{4 + 1 + 4}} = \frac{9}{3} = 3$.
+    \item $\cos\varphi = \frac{1}{\sqrt{3}}$, $\varphi\approx 54{,}7^\circ$.
+    \item $\overrightarrow{AB} = (2, 0, 0)$, $\overrightarrow{AC} = (0, 3, 4)$, $\overrightarrow{AB}\times\overrightarrow{AC} = (0\cdot 4 - 0\cdot 3,\ 0\cdot 0 - 2\cdot 4,\ 2\cdot 3 - 0\cdot 0) = (0, -8, 6)$, $S = \frac{1}{2}\cdot 10 = 5$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Most v Dublinu}
+
+Irský matematik William Rowan Hamilton byl zázračné dítě. Ve třinácti letech prý mluvil třinácti jazyky a ve dvaadvaceti, ještě jako student, byl jmenován královským astronomem Irska. Přes deset let se pak snažil vyřešit problém, který ho pronásledoval: jak `násobit' trojice čísel, tedy body v prostoru, podobně jako komplexní čísla (kapitola~\ref{kap:komplexni}) umožňují násobit body v rovině. Každé ráno se ho prý děti u snídaně ptaly: `Tak co, tati, umíš už násobit trojice?' A on smutně odpovídal, že je umí jen sčítat a odčítat.
+
+Šestnáctého října 1843 šel s manželkou podél kanálu v Dublinu a najednou mu došlo, že trojice nestačí. Potřeboval čtyři čísla. Byl tak nadšený, že nožem vyryl do kamene Broughamova mostu vzorec
+\begin{equation*}
+  i^2 = j^2 = k^2 = ijk = -1,
+\end{equation*}
+který definuje takzvané \textbf{kvaterniony}. Nápis už dávno zvětral, ale na mostě je dnes pamětní deska a matematici se k ní každý rok 16. října vydávají na pochod. Kvaterniony se dnes používají k počítání rotací v počítačových hrách, v robotice i v řízení vesmírných sond. Moderní vektorový součin, který jsme poznali v této kapitole, vznikl vlastně jako zjednodušený kus Hamiltonova násobení kvaternionů.
+
+Hamiltonův osobní život tak šťastný nebyl. Celý život miloval ženu jménem Catherine Disneyová, kterou rodina provdala za jiného. V pozdějších letech propadl alkoholu a stal se samotářem. Když po jeho smrti v roce 1865 procházeli jeho pracovnu, našli prý mezi hromadami rukopisů i talíře se zbytky jídla, které tam ležely měsíce, protože odmítal, aby mu kdokoli sahal na papíry.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak se počítá vzdálenost bodů, velikost vektoru a skalární součin v prostoru?
+    \item Co je vektorový součin? Jaké má vlastnosti a k čemu se používá?
+    \item Jak vypadá parametrické vyjádření přímky a roviny v prostoru? Proč přímka v prostoru nemá obecnou rovnici?
+    \item Jak najdete obecnou rovnici roviny procházející třemi body?
+    \item Jak určíte vzájemnou polohu dvou přímek v prostoru? Jak poznáte mimoběžky?
+    \item Jak určíte vzájemnou polohu přímky a roviny a dvou rovin?
+    \item Jak se počítá vzdálenost bodu od roviny a vzdálenost mimoběžek?
+    \item Jak se počítají odchylky přímek a rovin? Proč je u odchylky přímky a roviny sinus?
+  \end{enumerate}
+\end{problem}
