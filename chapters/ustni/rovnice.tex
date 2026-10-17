@@ -1,10 +1,10 @@
 \mathquote{Do not worry about your difficulties in mathematics. I can assure you mine are still greater.}{Albert Einstein}
 
-Rovnice jsou pravděpodobně to první, co si člověk představí pod slovem `matematika'. Najdi $x$.\footnote{Klasický vtip: student dostane obrázek trojúhelníku se zadáním \textit{Najdi $x$}, zakroužkuje písmeno $x$ a připíše `tady je'. Redakce tento přístup nedoporučuje, i když je technicky vzato nepopiratelný.} V této kapitole si ale ukážeme, že řešení rovnic není jen mechanické přehazování čísel z jedné strany na druhou. Za každým krokem stojí logika z první kapitoly a pokud ji pochopíme, vyhneme se většině chyb. Začneme lineárními rovnicemi, pak se podíváme na nerovnice a nakonec na soustavy rovnic.
+Rovnice jsou pravděpodobně to první, co si člověk představí pod slovem `matematika'. Najdi $x$.\footnote{Klasický vtip: student dostane obrázek trojúhelníku se zadáním \textit{Najdi $x$}, zakroužkuje písmeno $x$ a připíše `tady je'. Tento přístup nedoporučujeme, i když je technicky vzato nepopiratelný.} V této kapitole si ale ukážeme, že řešení rovnic není jen mechanické přehazování čísel z jedné strany na druhou. Za každým krokem stojí logika z první kapitoly a pokud ji pochopíme, vyhneme se většině chyb. Začneme lineárními rovnicemi, pak se podíváme na nerovnice a nakonec na soustavy rovnic.
 
 \section{Co je to rovnice?}
 
-V první kapitole jsme si řekli, že výrok je tvrzení, o kterém lze rozhodnout, zda je pravdivé. Je tedy $2x + 1 = 7$ výrok? Není! Dokud nevíme, co je $x$, nemůžeme o pravdivosti rozhodnout. Pro $x = 3$ je to pravda, pro $x = 0$ nepravda. Pro $x = 69$ je to taky nepravda, ale aspoň vtipná. Takovým tvrzením jsme v odbočce o predikátové logice říkali predikáty.
+V první kapitole jsme si řekli, že výrok je tvrzení, o kterém lze rozhodnout, zda je pravdivé. Je tedy $2x + 1 = 7$ výrok? Není! Dokud nevíme, co je $x$, nemůžeme o pravdivosti rozhodnout. Pro $x = 3$ je to pravda, pro $x = 0$ nepravda. Takovým tvrzením jsme v odbočce o predikátové logice říkali predikáty.
 
 \begin{definitionbox}
   \textbf{Rovnice} s neznámou $x$ je zápis $L(x) = P(x)$, kde $L$ a $P$ jsou výrazy. Výraz $L(x)$ nazýváme \textbf{levá strana} a $P(x)$ \textbf{pravá strana} rovnice.
@@ -57,7 +57,7 @@ Pokud se na to podíváme optikou první kapitoly, ekvivalentní úprava znamen�
   \end{equation*}
 \end{definitionbox}
 
-Lineární rovnici umíme vyřešit úplně obecně. To je vzácná věc, takže si to užijme. U rovnic pátého stupně už to například nejde vůbec, a to dokonce dokazatelně.\footnote{Abelova--Ruffiniho věta. Opravdu hluboké vysvětlení, \textit{proč} to nejde, dal až Évariste Galois, který zemřel ve dvaceti letech v souboji, údajně kvůli ženě. Noc před soubojem prý horečně sepisoval svou matematiku do dopisu příteli. Velice gotické.}
+Lineární rovnici umíme vyřešit úplně obecně. To je vzácná věc, takže si to užijme. Pro rovnice pátého stupně už například žádný obecný vzorec (pomocí odmocnin) neexistuje, a to dokonce dokazatelně.\footnote{Abelova--Ruffiniho věta. Opravdu hluboké vysvětlení, \textit{proč} to nejde, dal až Évariste Galois, který zemřel ve dvaceti letech v souboji, údajně kvůli ženě. Noc před soubojem prý horečně sepisoval svou matematiku do dopisu příteli. Velice gotické.}
 
 \begin{definitionbox}
   \textbf{Věta (o řešení lineární rovnice)}: Pro rovnici $ax + b = 0$ s neznámou $x\in\mathbb{R}$ platí:
@@ -157,7 +157,7 @@ Pokud se neznámá objeví ve jmenovateli, musíme nejdříve určit definiční
 
 \subsection{Rovnice s parametrem}
 
-Občas v rovnici kromě neznámé vystupuje ještě nějaké další písmeno, takzvaný \textbf{parametr}. Parametr je číslo, které neznáme, ale je pevně dané. Něco jako vaše výsledná známka z maturity v den, kdy se učíte. Úkolem je vyřešit rovnici pro \textit{všechny} možné hodnoty parametru. Tomuto rozboru říkáme \textbf{diskuze}. Pro lineární rovnice nám přesně řekne, co dělat, věta o řešení lineární rovnice.
+Občas v rovnici kromě neznámé vystupuje ještě nějaké další písmeno, takzvaný \textbf{parametr}. Parametr je číslo, které neznáme, ale je pevně dané. Úkolem je vyřešit rovnici pro \textit{všechny} možné hodnoty parametru. Tomuto rozboru říkáme \textbf{diskuze}. Pro lineární rovnice nám přesně řekne, co dělat, věta o řešení lineární rovnice.
 
 \begin{example}
   Vyřešme rovnici $a(x - 1) = 2x + 3$ s neznámou $x\in\mathbb{R}$ a parametrem $a\in\mathbb{R}$.
@@ -257,7 +257,7 @@ Než se pustíme do nerovnic, potřebujeme si zavést šikovný způsob zápisu 
       \hline
     \end{tabular}
   \end{center}
-  Hranatá závorka znamená, že krajní bod do intervalu \textbf{patří}, kulatá, že \textbf{nepatří}. U nekonečna je vždy kulatá závorka, protože $\infty$ není reálné číslo, a tedy do intervalu patřit nemůže. Nekonečno je spíš koncept. Podobně jako spánek během maturitního týdne.
+  Hranatá závorka znamená, že krajní bod do intervalu \textbf{patří}, kulatá, že \textbf{nepatří}. U nekonečna je vždy kulatá závorka, protože $\infty$ není reálné číslo, a tedy do intervalu patřit nemůže. Nekonečno je spíš koncept. Podobně jako spánek během svaťáku.
 \end{definitionbox}
 
 \begin{note}
@@ -392,7 +392,7 @@ Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vyn�
 \begin{definitionbox}
   \textbf{Metoda nulových bodů} (také metoda intervalů) pro nerovnice tvaru $\frac{A(x)}{B(x)}\gtrless 0$ nebo $A(x)\cdot B(x)\gtrless 0$:
   \begin{enumerate}
-    \item Převedeme všechno na jednu stranu, aby na druhé byla nula. \textbf{Nikdy nenásobíme jmenovatelem!} Ani když se nikdo nedívá. Netopýři se dívají vždycky.
+    \item Převedeme všechno na jednu stranu, aby na druhé byla nula. \textbf{Nikdy nenásobíme jmenovatelem!} Ani když se nikdo nedívá.
     \item Čitatele i jmenovatele rozložíme na součin lineárních činitelů.
     \item Najdeme \textbf{nulové body}, tedy čísla, ve kterých je některý činitel nulový.
     \item Nulové body rozdělí reálnou osu na intervaly. V každém z nich má každý činitel stálé znaménko. Znaménka zapíšeme do tabulky.
@@ -641,9 +641,9 @@ Se třemi neznámými postupujeme stejně: postupně eliminujeme neznámé, až 
 
 \section{Matice}
 
-Pokud jste si u Gaussovy eliminace říkali, že pořád dokola opisujeme $x$, $y$, $z$ a rovnítka, i když se mění jen čísla, máte naprostou pravdu. Matematici jsou líní\footnote{Redakce to myslí jako kompliment. Lenost je hnací motor matematiky.} a tak vymysleli způsob, jak si opisování ušetřit. Proměnné zahodíme a necháme si jen tabulku čísel. Té se říká matice.
+Pokud jste si u Gaussovy eliminace říkali, že pořád dokola opisujeme $x$, $y$, $z$ a rovnítka, i když se mění jen čísla, máte naprostou pravdu. Matematici jsou líní\footnote{Myšleno jako kompliment. Lenost je hnací motor matematiky.} a tak vymysleli způsob, jak si opisování ušetřit. Proměnné zahodíme a necháme si jen tabulku čísel. Té se říká matice.
 
-Ne, ne ta s Keanu Reevesem.\footnote{I když\ldots\ Neo prý vidí všude jen čísla, takže by Gaussovu eliminaci zvládl levou zadní. Redakce si mimochodem vybrala červenou pilulku, což je důvod, proč jsou v této knize všechny odkazy červené.} A ani ta, kterou našroubujete na šroub, ta patří spíš do dílny. Naše matice je mnohem nudnější, ale zato užitečnější. Matice jsou základem lineární algebry, bez které by nefungovala počítačová grafika, vyhledávače, umělá inteligence ani většina fyziky.
+Ne, ne ta, kterou našroubujete na šroub. Ta patří spíš do dílny. Naše matice je mnohem nudnější, ale zato užitečnější. Matice jsou základem lineární algebry, bez které by nefungovala počítačová grafika, vyhledávače, umělá inteligence ani většina fyziky.
 
 \subsection{Co je matice}
 
@@ -748,7 +748,7 @@ Proč tyto úpravy nemění množinu řešení? Protože každou z nich umíme \
       0 & 0 & -7 & -21
     \end{array}\right).
   \end{equation*}
-  Matice je v odstupňovaném tvaru. Poslední řádek znamená $-7z = -21$, tedy $z = 3$. Prostřední řádek $y - 2z = -4$, tedy $y = 2$. První řádek $x + y + z = 6$, tedy $x = 1$. Výsledek $K = \{(1, 2, 3)\}$ samozřejmě souhlasí. Kdyby nesouhlasil, měli bychom problém, a to dost velký.
+  Matice je v odstupňovaném tvaru. Poslední řádek znamená $-7z = -21$, tedy $z = 3$. Prostřední řádek $y - 2z = -4$, tedy $y = 2$. První řádek $x + y + z = 6$, tedy $x = 1$. Výsledek $K = \{(1, 2, 3)\}$ samozřejmě souhlasí.
 \end{example}
 
 \begin{note}
@@ -798,7 +798,7 @@ Nejzajímavější na Gaussově eliminaci je, že z odstupňovaného tvaru okam�
       0 & 0 & 0 & 3
     \end{array}\right),
   \end{equation*}
-  a poslední řádek by znamenal $0 = 3$. To je spor a soustava by neměla žádné řešení. Pokud vám soustava tvrdí, že $0 = 3$, nehádejte se s ní. Prostě napište $K = \emptyset$ a odejděte.
+  a poslední řádek by znamenal $0 = 3$. To je spor a soustava by neměla žádné řešení.
 \end{example}
 
 \begin{definitionbox}
@@ -951,7 +951,7 @@ Ve všech třech výrazech se opakuje stejný vzor: `křížem' vynásobíme a o
 \end{center}
 
 \begin{note}
-  Sarrusovo pravidlo funguje \textbf{jen} pro matice $3\times 3$. Pro větší matice se determinant počítá jinak (například rozvojem podle řádku nebo Gaussovou eliminací). Kdo zkusí Sarrusovo pravidlo na matici $4\times 4$, toho v noci navštíví netopýr $\mathleftbat$ a vysvětlí mu to osobně.
+  Sarrusovo pravidlo funguje \textbf{jen} pro matice $3\times 3$. Pro větší matice se determinant počítá jinak (například rozvojem podle řádku nebo Gaussovou eliminací).
 \end{note}
 
 \begin{definitionbox}
@@ -975,7 +975,7 @@ Pro $n = 2$ je výše uvedené odvození zároveň důkazem Cramerova pravidla. 
     D_x = \begin{vmatrix} 2 & 4\\ 16 & -6 \end{vmatrix} = -12 - 64 = -76,\quad
     D_y = \begin{vmatrix} 3 & 2\\ 5 & 16 \end{vmatrix} = 48 - 10 = 38.
   \end{equation*}
-  Tedy $x = \frac{-76}{-38} = 2$ a $y = \frac{38}{-38} = -1$. Stejný výsledek jako dříve sčítací metodou. Matematika je naštěstí konzistentní, na rozdíl od rozvrhu hodin.
+  Tedy $x = \frac{-76}{-38} = 2$ a $y = \frac{38}{-38} = -1$. Stejný výsledek jako dříve sčítací metodou.
 \end{example}
 
 \begin{example}
@@ -1019,7 +1019,7 @@ Slíbili jsme, že soustavu $A\mathbf{x} = \mathbf{b}$ vyřešíme podobně jako
   Pokud je $A$ regulární, má soustava $A\mathbf{x} = \mathbf{b}$ právě jedno řešení $\mathbf{x} = A^{-1}\mathbf{b}$.
 \end{definitionbox}
 
-Vzorec pro $2\times 2$ si zapamatujete snadno: prvky na hlavní diagonále prohodíme, prvkům na vedlejší diagonále změníme znaménko a celé to vydělíme determinantem. Odtud je také vidět, proč pro $\det A = 0$ inverze neexistuje. Dělili bychom nulou, a to my nikdy neděláme. Ani když se nikdo nedívá.
+Vzorec pro $2\times 2$ si zapamatujete snadno: prvky na hlavní diagonále prohodíme, prvkům na vedlejší diagonále změníme znaménko a celé to vydělíme determinantem. Odtud je také vidět, proč pro $\det A = 0$ inverze neexistuje. Dělili bychom nulou.
 
 \begin{proof}
   Ověřme, že vzorec funguje. Stačí matice vynásobit:
@@ -1038,7 +1038,7 @@ Vzorec pro $2\times 2$ si zapamatujete snadno: prvky na hlavní diagonále proho
 Pozor, musíme násobit \textbf{zleva} na obou stranách. Násobení matic není komutativní, takže $\mathbf{b}A^{-1}$ by bylo něco úplně jiného (a navíc by to ani nešlo spočítat).
 
 \begin{example}
-  Vyřešme naši oblíbenou soustavu $3x + 4y = 2$, $5x - 6y = 16$ ještě potřetí,\footnote{Ano, redakce je posedlá touto soustavou. Do konce kapitoly se to už nezmění.} tentokrát inverzní maticí:
+  Vyřešme naši oblíbenou soustavu $3x + 4y = 2$, $5x - 6y = 16$ ještě potřetí, tentokrát inverzní maticí:
   \begin{equation*}
     A^{-1} = \frac{1}{-38}\begin{pmatrix} -6 & -4\\ -5 & 3 \end{pmatrix},\qquad
     A^{-1}\mathbf{b} = \frac{1}{-38}\begin{pmatrix} -6\cdot 2 - 4\cdot 16\\ -5\cdot 2 + 3\cdot 16 \end{pmatrix} = \frac{1}{-38}\begin{pmatrix} -76\\ 38 \end{pmatrix} = \begin{pmatrix} 2\\ -1 \end{pmatrix}.
@@ -1135,7 +1135,7 @@ Slovní úlohy jsou místo, kde se matematika potkává se skutečným světem. 
 \end{problem}
 
 \begin{solution}
-  Za $x$ let: $42 + x = 3(12 + x)$, tedy $42 + x = 36 + 3x$ a $x = 3$. Zkouška: za $3$ roky bude otci $45$ a synovi $15$, $45 = 3\cdot 15$. Odpověď: Za $3$ roky. Otec si mezitím uvědomí, že syn bude brzy maturovat, a zestárne o dalších deset.
+  Za $x$ let: $42 + x = 3(12 + x)$, tedy $42 + x = 36 + 3x$ a $x = 3$. Zkouška: za $3$ roky bude otci $45$ a synovi $15$, $45 = 3\cdot 15$. Odpověď: Za $3$ roky.
 \end{solution}
 
 \begin{problem}
@@ -1143,7 +1143,7 @@ Slovní úlohy jsou místo, kde se matematika potkává se skutečným světem. 
 \end{problem}
 
 \begin{solution}
-  Označme $c$ počet chlapců a $d$ počet dívek. Pak $c + d = 35$ a $c + 3 = 2d$. Z první $c = 35 - d$, dosazením $38 - d = 2d$, tedy $d = \frac{38}{3}$. To není celé číslo! Úloha tedy nemá řešení. Co by znamenalo $\frac{38}{3}$ dívky, si redakce raději nepředstavuje, protože by z toho byl spíš horor než matematika. I takový závěr je u slovní úlohy správnou odpovědí. Kdyby přišli $4$ chlapci, dostali bychom $39 = 3d$, tedy $13$ dívek a $22$ chlapců.
+  Označme $c$ počet chlapců a $d$ počet dívek. Pak $c + d = 35$ a $c + 3 = 2d$. Z první $c = 35 - d$, dosazením $38 - d = 2d$, tedy $d = \frac{38}{3}$. To není celé číslo! Úloha tedy nemá řešení. I takový závěr je u slovní úlohy správnou odpovědí. Kdyby přišli $4$ chlapci, dostali bychom $39 = 3d$, tedy $13$ dívek a $22$ chlapců.
 \end{solution}
 
 \begin{problem}

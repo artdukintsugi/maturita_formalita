@@ -1,10 +1,10 @@
 \mathquote{Algebra is generous; she often gives more than is asked of her.}{Jean le Rond d'Alembert}
 
-V předchozí kapitole jsme si postavili číselné množiny. Teď s čísly konečně začneme pořádně počítat. Tato kapitola je takovou `posilovnou'\footnote{Redakce do posilovny nechodí, ale prý se tam pořád dokola opakují stejné pohyby, dokud to nebolí. Takže asi sedí.} celé maturity --- mocniny, odmocniny a úpravy výrazů se objeví úplně všude, od rovnic přes funkce až po derivace. Pokud zde něco nebude sedět, bude to bolet později. Budeme se tedy snažit každé pravidlo nejen uvést, ale i ukázat, \textit{proč} platí. Většina těchto pravidel totiž není nic, co by se muselo biflovat, ale přirozeně vyplývá z definic.
+V předchozí kapitole jsme si postavili číselné množiny. Teď s čísly konečně začneme pořádně počítat. Tato kapitola je takovou `posilovnou'\footnote{Prý se tam pořád dokola opakují stejné pohyby, dokud to nebolí. Sedí to.} celé maturity --- mocniny, odmocniny a úpravy výrazů se objeví úplně všude, od rovnic přes funkce až po derivace. Pokud zde něco nebude sedět, bude to bolet později. Budeme se tedy snažit každé pravidlo nejen uvést, ale i ukázat, \textit{proč} platí. Většina těchto pravidel totiž není nic, co by se muselo biflovat, ale přirozeně vyplývá z definic.
 
 \section{Mocniny s přirozeným exponentem}
 
-Začněme tím nejjednodušším. Pokud chceme číslo vynásobit samo sebou několikrát, bylo by nepraktické to vždy vypisovat. Místo $2\cdot 2\cdot 2\cdot 2\cdot 2$ je mnohem příjemnější napsat $2^5$. A zkuste si vypsat $2^{69}$. Redakce to zkusila a ztratila u toho kus své duše.
+Začněme tím nejjednodušším. Pokud chceme číslo vynásobit samo sebou několikrát, bylo by nepraktické to vždy vypisovat. Místo $2\cdot 2\cdot 2\cdot 2\cdot 2$ je mnohem příjemnější napsat $2^5$.
 
 \begin{definitionbox}
   \textbf{Mocnina s přirozeným exponentem}: Pro každé $a\in\mathbb{R}$ a $n\in\mathbb{N}$ definujeme
@@ -37,7 +37,7 @@ Rekurzivní definice je ve skutečnosti velice podobná matematické indukci z p
 \end{example}
 
 \begin{note}
-  Z příkladu výše je vidět, že záporné číslo umocněné na sudý exponent je kladné a na lichý exponent záporné. Je to proto, že každá dvojice mínusů se `vyruší'. Zkuste si to dokázat matematickou indukcí. Speciálně tedy ${(-1)}^{69} = -1$, protože $69$ je liché. Redakce si toto číslo vybrala čistě z matematických důvodů.
+  Z příkladu výše je vidět, že záporné číslo umocněné na sudý exponent je kladné a na lichý exponent záporné. Je to proto, že každá dvojice mínusů se `vyruší'. Zkuste si to dokázat matematickou indukcí. Speciálně tedy ${(-1)}^{69} = -1$, protože $69$ je liché. Toto číslo bylo vybráno čistě z matematických důvodů.
 \end{note}
 
 Teď přijdou pravidla pro počítání s mocninami. Ta vypadají na první pohled jako něco, co se musí naučit nazpaměť, ale ve skutečnosti jsou to jen důsledky toho, že počítáme, kolik máme kde činitelů.
@@ -126,7 +126,7 @@ Teď přijdou pravidla pro počítání s mocninami. Ta vypadají na první pohl
 
 \section{Mocniny s celým exponentem}
 
-Doposud jsme měli v exponentu jen přirozená čísla. Co by ale mělo znamenat $2^0$ nebo $2^{-3}$? Vynásobit dvojku samu sebou nulakrát nebo dokonce mínus třikrát? To zní jako nesmysl. Nebo jako popis redakčního pondělního rána. Zde přichází na řadu typický matematický přístup: chceme, aby naše pravidla platila i nadále, a podle toho si novou definici \textit{vynutíme}.
+Doposud jsme měli v exponentu jen přirozená čísla. Co by ale mělo znamenat $2^0$ nebo $2^{-3}$? Vynásobit dvojku samu sebou nulakrát nebo dokonce mínus třikrát? To zní jako nesmysl. Zde přichází na řadu typický matematický přístup: chceme, aby naše pravidla platila i nadále, a podle toho si novou definici \textit{vynutíme}.
 
 Podívejme se na pravidlo $\frac{a^m}{a^n} = a^{m-n}$. Pokud bychom chtěli, aby fungovalo i pro $m = n$, musí platit
 \begin{equation*}
@@ -191,7 +191,7 @@ Mocniny s celým exponentem se nám hodí i v praxi, například ve fyzice a che
 \end{definitionbox}
 
 \begin{example}
-  Rychlost světla je přibližně $300\,000\,000\ \si{m/s} = 3\cdot 10^8\ \si{m/s}$. Hmotnost elektronu je přibližně $0{,}000\,000\,000\,000\,000\,000\,000\,000\,000\,911\ \si{kg} = 9{,}11\cdot 10^{-31}\ \si{kg}$. Doufám, že je jasné, proč fyzici dávají přednost druhému zápisu. Počítat ty nuly by bavilo leda hraběte z Ulice Sezamové. Ten je mimochodem upír, takže s ním redakce cítí jistou spřízněnost.
+  Rychlost světla je přibližně $300\,000\,000\ \si{m/s} = 3\cdot 10^8\ \si{m/s}$. Hmotnost elektronu je přibližně $0{,}000\,000\,000\,000\,000\,000\,000\,000\,000\,911\ \si{kg} = 9{,}11\cdot 10^{-31}\ \si{kg}$. Doufám, že je jasné, proč fyzici dávají přednost druhému zápisu. Počítat ty nuly by bavilo leda upíra. Podle starých pověstí totiž upír nedokáže odolat a musí spočítat všechno, co vidí. Proto se prý na hroby sypalo mák nebo rýže, aby měl do rána co dělat.
 \end{example}
 
 \section{Odmocniny}
@@ -352,7 +352,7 @@ Tedy $a^{\frac{1}{n}}$ je číslo, které umocněné na $n$ dá $a$. To už ale 
 \end{definitionbox}
 
 \begin{note}
-  Proč požadujeme $a > 0$? Zkusme definici použít na $a = -8$. Na jednu stranu bychom mohli chtít ${(-8)}^{\frac{1}{3}} = -2$. Na druhou stranu ale $\frac{1}{3} = \frac{2}{6}$, takže by mělo platit ${(-8)}^{\frac{1}{3}} = {(-8)}^{\frac{2}{6}} = \sqrt[6]{{(-8)}^2} = \sqrt[6]{64} = 2$. Dostali jsme dva různé výsledky pro stejné číslo, což je v matematice zhruba stejně vážné, jako když v pondělí ráno nefunguje kávovar. Proto se omezíme na kladné základy.
+  Proč požadujeme $a > 0$? Zkusme definici použít na $a = -8$. Na jednu stranu bychom mohli chtít ${(-8)}^{\frac{1}{3}} = -2$. Na druhou stranu ale $\frac{1}{3} = \frac{2}{6}$, takže by mělo platit ${(-8)}^{\frac{1}{3}} = {(-8)}^{\frac{2}{6}} = \sqrt[6]{{(-8)}^2} = \sqrt[6]{64} = 2$. Dostali jsme dva různé výsledky pro stejné číslo, což je katastrofa. Proto se omezíme na kladné základy.
 \end{note}
 
 \begin{example}
@@ -417,7 +417,7 @@ Na závěr odbočky si ukážeme jeden z nejkrásnějších krátkých důkazů 
   V obou případech jsme taková čísla našli.
 \end{proof}
 
-Na tomto důkazu je zvláštní to, že na jeho konci \textit{nevíme}, která z možností nastala. Víme jen, že jedna z nich určitě funguje. Je to trochu jako když vám někdo řekne, že klíče máte buď v kabelce, nebo v bundě. Má pravdu, ale domů se tím nedostanete. Takovým důkazům se říká \textbf{nekonstruktivní}.\footnote{Pro zvědavé: díky hluboké Gelfondově--Schneiderově větě dnes víme, že $\sqrt{2}^{\sqrt{2}}$ je iracionální, takže nastal druhý případ. Pro důkaz výše to ale vůbec nepotřebujeme.} Někteří matematici (takzvaní intuicionisté) takové důkazy odmítají přijmout, protože odmítají právě princip \textit{tertium non datur}. Redakce je respektuje, ale na večírek by je nezvala. Pořád by se ptali, jestli ten večírek opravdu existuje.
+Na tomto důkazu je zvláštní to, že na jeho konci \textit{nevíme}, která z možností nastala. Víme jen, že jedna z nich určitě funguje. Je to trochu jako když vám někdo řekne, že klíče máte buď v kabelce, nebo v bundě. Má pravdu, ale domů se tím nedostanete. Takovým důkazům se říká \textbf{nekonstruktivní}.\footnote{Pro zvědavé: díky hluboké Gelfondově--Schneiderově větě dnes víme, že $\sqrt{2}^{\sqrt{2}}$ je iracionální, takže nastal druhý případ. Pro důkaz výše to ale vůbec nepotřebujeme.} Někteří matematici (takzvaní intuicionisté) takové důkazy odmítají přijmout, protože odmítají právě princip \textit{tertium non datur}.
 
 \section{Algebraické výrazy}
 
@@ -658,7 +658,7 @@ Lomený výraz je zlomek, v jehož jmenovateli se vyskytuje proměnná. S lomen�
   \begin{enumerate}
     \item Rozložit všechny čitatele a jmenovatele na součin.
     \item Určit podmínky (všechny činitele ve jmenovatelích $\neq 0$, u dělení i čitatel dělitele).
-    \item Upravit a krátit. Krátit můžeme jen \textbf{činitele}, nikdy sčítance!\footnote{Kdo krátí sčítance, toho v noci navštíví netopýr $\mathleftbat$ a vysvětlí mu to osobně. Například $\frac{2 + 3}{2}$ není $3$, ale $\frac{5}{2}$.}
+    \item Upravit a krátit. Krátit můžeme jen \textbf{činitele}, nikdy sčítance!\footnote{Například $\frac{2 + 3}{2}$ není $3$, ale $\frac{5}{2}$.}
   \end{enumerate}
 \end{definitionbox}
 
@@ -782,7 +782,7 @@ U ústní maturity se od vás nečeká jen to, že umíte počítat, ale i to, �
 \end{problem}
 
 \begin{problem}
-  Na závěr jeden těžší příklad pro odvážné (nebo pro ty, kteří nemají v pátek večer nic lepšího na práci, redakce nesoudí). Zjednodušte pro $a > 0$, $a\neq 1$:
+  Na závěr jeden těžší příklad pro odvážné. Zjednodušte pro $a > 0$, $a\neq 1$:
   \begin{equation*}
     \left(\frac{a^{\frac{3}{2}} - 1}{a^{\frac{1}{2}} - 1} - a^{\frac{1}{2}}\right)\cdot\frac{a - 1}{a + 1}.
   \end{equation*}
