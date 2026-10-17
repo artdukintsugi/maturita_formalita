@@ -81,17 +81,170 @@ V dalších příkladech budeme pracovat s krychlí $ABCDEFGH$, kde $ABCD$ je do
 
 \subsection{Řezy těles}
 
-Řez tělesa rovinou je průnik tělesa s rovinou. U krychle je to mnohoúhelník, jehož strany leží ve stěnách krychle. Při konstrukci řezu se používají dvě pravidla:
-\begin{enumerate}
-  \item Dva body roviny řezu, které leží ve stejné stěně, spojíme úsečkou.
-  \item Roviny řezu protínají \textbf{rovnoběžné} stěny v \textbf{rovnoběžných} úsečkách.
-\end{enumerate}
-Pokud to nestačí, prodloužíme úsečku řezu ve stěně až k průsečíku s přímkou hrany a tím získáme další bod roviny řezu v sousední stěně.
+\textbf{Řez tělesa} rovinou je průnik tělesa s touto rovinou. U krychle (a obecně u mnohostěnu) je to mnohoúhelník. Jeho vrcholy leží na hranách tělesa a jeho strany leží ve stěnách. Úloha typicky zní: \textit{sestrojte řez krychle rovinou určenou třemi body $K$, $L$, $M$}. Řezy jsou u maturity oblíbené a zároveň jedno z nejhůř pochopených témat, protože vyžadují kombinaci prostorové představivosti a několika jednoduchých pravidel, která se ale musí používat přesně. Pojďme na to pomalu.
+
+\textbf{Intuice}: Představte si krychli ze sýra a obrovský plochý nůž. Řez rovinou je přesně to, co uvidíte na rozříznuté ploše. Nůž projde krychlí rovně, takže na každé stěně, kterou prořízne, nechá \textit{rovnou} čáru. A protože je nůž plochý, nemůže se nikde ohnout. Tři zadané body určují, kudy nůž vede. Celé umění je jen v tom zjistit, kde nůž vyjde z krychle ven.
+
+\begin{definitionbox}
+  \textbf{Pravidla pro konstrukci řezu}:
+  \begin{enumerate}
+    \item \textbf{Stejná stěna}: Dva body roviny řezu, které leží ve \textbf{stejné stěně}, spojíme úsečkou. Ta je stranou řezu. (Dva body, které ve stejné stěně neleží, \textbf{nikdy} nespojujeme! Jejich spojnice prochází vnitřkem tělesa.)
+    \item \textbf{Rovnoběžné stěny}: Rovina řezu protíná dvě \textbf{rovnoběžné} stěny v \textbf{rovnoběžných} úsečkách (dvě rovnoběžné roviny protnuté třetí rovinou mají rovnoběžné průsečnice). Pokud tedy známe stranu řezu v jedné stěně a jeden bod řezu v protější stěně, vedeme jím rovnoběžku.
+    \item \textbf{Prodloužení}: Pokud nestačí ani pravidlo 2, prodloužíme stranu řezu ležící v nějaké stěně až k průsečíku $X$ s \textbf{přímkou} sousední hrany (průsečík obvykle leží \textit{mimo} krychli). Bod $X$ leží v rovině řezu i v rovině sousední stěny, takže ho můžeme v té stěně použít podle pravidla 1.
+    \item \textbf{Hotovo}: Řez je uzavřený mnohoúhelník. Každá jeho strana leží v jedné stěně a v každé stěně leží nejvýš jedna strana. U krychle má tedy řez $3$ až $6$ stran.
+  \end{enumerate}
+  \textbf{Viditelnost}: Strany řezu ve viditelných stěnách kreslíme plně, ve skrytých stěnách čárkovaně. Na našich obrázcích jsou viditelné stěny $ABFE$ (přední), $BCGF$ (pravá) a $EFGH$ (horní).
+\end{definitionbox}
+
+V řeči sýra a nože: pravidlo 1 říká, že nůž vede po stěně rovně. Pravidlo 2 říká, že nůž projde dvěma protějšími stěnami pod stejným úhlem, takže na nich nechá rovnoběžné čáry (jako když krájíte chleba: horní a spodní kůrka jsou rozříznuté stejným směrem). Pravidlo 3 říká, že čáru na stěně můžeme v duchu prodloužit i mimo krychli, protože rovina nože se tam nikde nezastaví. Krychle je konečná, rovina ne.
+
+\begin{example}[ (stačí pravidla 1 a 2)]
+  Sestrojme řez krychle rovinou $KLG$, kde $K$ je střed hrany $AB$ a $L$ je střed hrany $BC$.
+  \begin{enumerate}
+    \item $K$ i $L$ leží v dolní stěně $ABCD$, spojíme je. (Dolní stěna je skrytá, úsečka $KL$ bude čárkovaná.)
+    \item $L$ i $G$ leží v pravé stěně $BCGF$, spojíme je.
+    \item Horní stěna $EFGH$ je rovnoběžná s dolní. Bodem $G$ tedy vedeme rovnoběžku s $KL$. Protože $KL\parallel AC\parallel EG$ ($KL$ je střední příčka trojúhelníku $ABC$), je to přímka $GE$ a druhý bod řezu na horní stěně je $E$.
+    \item $E$ i $K$ leží v přední stěně $ABFE$, spojíme je.
+  \end{enumerate}
+  Řezem je lichoběžník $KLGE$ (strany $KL$ a $EG$ jsou rovnoběžné a $|KL| = \frac{1}{2}|EG|$).
+  \begin{center}
+    \begin{tikzpicture}[scale=2.2, krychle]
+      \krychle
+      \coordinate (K) at (0.5,0,0); \coordinate (L) at (1,0.5,0);
+      \fill[colorofwisdom, opacity=0.25] (K) -- (L) -- (G) -- (E) -- cycle;
+      \draw[very thick, colorofwisdom, dashed] (K) -- (L);
+      \draw[very thick, colorofwisdom] (L) -- (G) -- (E) -- (K);
+      \filldraw[colorofwisdom] (K) circle (0.7pt) node[below] {\scriptsize $K$};
+      \filldraw[colorofwisdom] (L) circle (0.7pt) node[right] {\scriptsize $L$};
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{example}[ (řetězení pravidla 2)]
+  Sestrojme řez krychle rovinou $PQG$, kde $P$ je střed hrany $AE$ a $Q$ je střed hrany $BC$.
+
+  Tady na první pohled nemá smysl nic spojit kromě $Q$ a $G$. Bod $P$ s žádným z nich nesdílí stěnu. Pravidlo 2 nám ale pomůže hned dvakrát.
+  \begin{enumerate}
+    \item $Q$ a $G$ leží v pravé stěně $BCGF$: spojíme je.
+    \item Levá stěna $ADHE$ je rovnoběžná s pravou. Bodem $P$ vedeme rovnoběžku s $QG$. Ta protne hranu $EH$ v bodě $T$ (ve čtvrtině hrany $EH$ od $E$).
+    \item $T$ a $G$ leží v horní stěně: spojíme je.
+    \item Dolní stěna je rovnoběžná s horní. Bodem $Q$ vedeme rovnoběžku s $TG$. Ta protne hranu $AB$ v bodě $S$ (ve třetině hrany od $A$).
+    \item $S$ a $P$ leží v přední stěně: spojíme je.
+  \end{enumerate}
+  Řezem je pětiúhelník $PSQGT$.
+  \begin{center}
+    \begin{tikzpicture}[scale=2.2, krychle]
+      \krychle
+      \coordinate (P) at (0,0,0.5); \coordinate (Q) at (1,0.5,0); \coordinate (T) at (0,0.25,1); \coordinate (S) at (0.3333,0,0);
+      \fill[colorofwisdom, opacity=0.25] (P) -- (S) -- (Q) -- (G) -- (T) -- cycle;
+      \draw[very thick, colorofwisdom] (P) -- (S);
+      \draw[very thick, colorofwisdom, dashed] (S) -- (Q);
+      \draw[very thick, colorofwisdom] (Q) -- (G) -- (T);
+      \draw[very thick, colorofwisdom, dashed] (T) -- (P);
+      \foreach \p/\pos in {P/left, Q/right, T/above, S/below} \filldraw[colorofwisdom] (\p) circle (0.7pt) node[\pos] {\scriptsize $\p$};
+    \end{tikzpicture}
+  \end{center}
+  Kontrola: strany $QG$ a $PT$ (pravá a levá stěna) jsou rovnoběžné, stejně jako $TG$ a $SQ$ (horní a dolní stěna). Zadní stěnu řez zasáhne jen v jediném bodě $G$, takže v ní žádnou stranu nemá.
+\end{example}
+
+\begin{example}[ (potřebujeme pravidlo 3)]\label{ex:rez-prodlouzeni}
+  Sestrojme řez krychle rovinou $KLM$, kde $K$ je střed hrany $AE$, $L$ leží na hraně $BF$ ve čtvrtině její výšky ($|BL| = \frac{1}{4}|BF|$) a $M$ je střed hrany $CD$.
+  \begin{enumerate}
+    \item $K$ a $L$ leží v přední stěně: spojíme je.
+    \item Bod $M$ leží v dolní a zadní stěně, ale ani v jedné z nich zatím nemáme další bod. Rovnoběžky také nepomohou, protože v protější stěně (zadní, rovnoběžné s přední) máme jen jeden bod. Použijeme pravidlo 3: \textbf{prodloužíme} úsečku $KL$ ležící v přední stěně až k průsečíku s \textbf{přímkou} $AB$. Dostaneme bod $X$, který leží za bodem $B$, mimo krychli (konkrétně $|AX| = 2|AB|$).
+    \item Bod $X$ leží na přímce $AB$, tedy v rovině dolní stěny. A zároveň v rovině řezu (protože leží na přímce $KL$). V rovině dolní stěny tedy máme dva body řezu: $X$ a $M$. Spojnice $XM$ protne hranu $BC$ v bodě $N$. Strana řezu v dolní stěně je $NM$.
+    \item $L$ a $N$ leží v pravé stěně: spojíme je.
+    \item Levá stěna je rovnoběžná s pravou. Bodem $K$ vedeme rovnoběžku s $LN$. Ta protne hranu $DH$ v bodě $O$.
+    \item $O$ a $M$ leží v zadní stěně: spojíme je.
+  \end{enumerate}
+  Řezem je pětiúhelník $KLNMO$.
+  \begin{center}
+    \begin{tikzpicture}[scale=2, krychle]
+      \krychle
+      \coordinate (K) at (0,0,0.5); \coordinate (L) at (1,0,0.25); \coordinate (M) at (0.5,1,0);
+      \coordinate (X) at (2,0,0); \coordinate (N) at (1,0.6667,0);
+      \draw[gray, dotted, thick] (B) -- (X);
+      \draw[colorofwisdom!70, thin] (L) -- (X);
+      \draw[colorofwisdom!70, thin] (X) -- (N);
+      \draw[very thick, colorofwisdom] (K) -- (L);
+      \draw[very thick, colorofwisdom, dashed] (N) -- (M);
+      \filldraw (X) circle (0.7pt) node[below] {\scriptsize $X$};
+      \foreach \p/\pos in {K/left, L/below right, M/below, N/right} \filldraw[colorofwisdom] (\p) circle (0.7pt) node[\pos] {\scriptsize $\p$};
+      \node at (1,-0.45,0) {\small kroky 1--3};
+    \end{tikzpicture}
+    \hspace{1cm}
+    \begin{tikzpicture}[scale=2, krychle]
+      \krychle
+      \coordinate (K) at (0,0,0.5); \coordinate (L) at (1,0,0.25); \coordinate (M) at (0.5,1,0);
+      \coordinate (N) at (1,0.6667,0); \coordinate (O) at (0,1,0.125);
+      \fill[colorofwisdom, opacity=0.25] (K) -- (L) -- (N) -- (M) -- (O) -- cycle;
+      \draw[very thick, colorofwisdom] (K) -- (L) -- (N);
+      \draw[very thick, colorofwisdom, dashed] (N) -- (M) -- (O) -- (K);
+      \foreach \p/\pos in {K/left, L/below right, M/below, N/right, O/left} \filldraw[colorofwisdom] (\p) circle (0.7pt) node[\pos] {\scriptsize $\p$};
+      \node at (0.6,-0.45,0) {\small výsledný řez};
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{note}
+  Proč pravidlo 3 funguje? Přímka $KL$ celá leží v rovině řezu (oba body v ní leží). Přímka $AB$ celá leží v rovině dolní stěny. Obě přímky leží v rovině přední stěny, a protože nejsou rovnoběžné, protínají se v bodě $X$. Ten tedy leží v rovině řezu i v rovině dolní stěny, tedy na jejich průsečnici. A průsečnice roviny řezu s rovinou dolní stěny je přesně přímka, na které leží strana řezu v dolní stěně. Bodu $X$ se někdy říká \textbf{pomocný bod} a přímce $XM$ \textbf{stopa} roviny řezu v rovině podstavy. Pro představu: položte krychli na stůl a rozřízněte ji. Nůž se zařízne i do stolu a stopa je čára, kterou na stole nechá. Bod $X$ je místo, kde čára z přední stěny dopadne na stůl.
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Nejčastější chyby u řezů}:
+  \begin{itemize}
+    \item Spojení dvou bodů, které neleží ve stejné stěně (úsečka by vedla vnitřkem krychle).
+    \item Strana řezu, která končí uprostřed stěny místo na hraně.
+    \item Zapomenutá rovnoběžnost: strany řezu v protějších stěnách na obrázku nejsou rovnoběžné.
+    \item Prodloužení úsečky k \textit{hraně} místo k \textit{přímce} hrany. Pomocný bod skoro vždy leží mimo krychli, a to je v pořádku.
+    \item Dvě strany řezu v jedné stěně.
+    \item Špatná viditelnost (čárkovaně ve skrytých stěnách).
+  \end{itemize}
+\end{definitionbox}
+
+\begin{problem}
+  Sestrojte řez krychle $ABCDEFGH$ rovinou $KLG$, kde $K$ je střed hrany $AB$ a $L$ je střed hrany $AD$.
+\end{problem}
+
+\begin{hint}
+  $K$ a $L$ spojte (dolní stěna). Pak prodlužte přímku $KL$ k průsečíkům s přímkami $BC$ a $CD$.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}
+    \item $K$, $L$ v dolní stěně: úsečka $KL$.
+    \item Přímka $KL$ protne přímku $BC$ v bodě $X$ (za bodem $B$, ve vzdálenosti poloviny hrany od $B$) a přímku $CD$ v bodě $Y$ (za bodem $D$, také polovina hrany).
+    \item $X$ leží v rovině pravé stěny a $G$ také: přímka $XG$ protne hranu $BF$ v bodě $P$ ve třetině její výšky.
+    \item $Y$ leží v rovině zadní stěny a $G$ také: přímka $YG$ protne hranu $DH$ v bodě $R$ ve třetině její výšky.
+    \item Spojíme $K$ s $P$ (přední stěna), $P$ s $G$ (pravá stěna), $G$ s $R$ (zadní stěna) a $R$ s $L$ (levá stěna).
+  \end{enumerate}
+  Řezem je pětiúhelník $KPGRL$, souměrný podle roviny $ACG$.
+  \begin{center}
+    \begin{tikzpicture}[scale=2, krychle]
+      \krychle
+      \coordinate (K) at (0.5,0,0); \coordinate (L) at (0,0.5,0);
+      \coordinate (X) at (1,-0.5,0); \coordinate (Y) at (-0.5,1,0);
+      \coordinate (P) at (1,0,0.3333); \coordinate (R) at (0,1,0.3333);
+      \draw[gray, dotted, thick] (B) -- (X) (D) -- (Y);
+      \draw[colorofwisdom!70, thin] (X) -- (K) (L) -- (Y);
+      \draw[colorofwisdom!70, thin] (X) -- (P) (Y) -- (R);
+      \fill[colorofwisdom, opacity=0.25] (K) -- (P) -- (G) -- (R) -- (L) -- cycle;
+      \draw[very thick, colorofwisdom] (K) -- (P) -- (G);
+      \draw[very thick, colorofwisdom, dashed] (G) -- (R) -- (L) -- (K);
+      \filldraw (X) circle (0.7pt) node[below] {\scriptsize $X$};
+      \filldraw (Y) circle (0.7pt) node[left] {\scriptsize $Y$};
+      \foreach \p/\pos in {K/below, L/left, P/right, R/left} \filldraw[colorofwisdom] (\p) circle (0.7pt) node[\pos] {\scriptsize $\p$};
+    \end{tikzpicture}
+  \end{center}
+  Bez prodloužení se tento řez sestrojit nedá: $G$ neleží v žádné stěně s $K$ ani s $L$ a v horní stěně máme jediný bod.
+\end{solution}
+
+Na závěr dvě zajímavosti.
 
 \begin{example}
   Řez krychle rovinou $BDE$ je rovnostranný trojúhelník $BDE$ se stranou $a\sqrt{2}$, protože všechny jeho strany jsou stěnové úhlopříčky. Řez rovinou procházející středy hran $AB$, $BC$, $CG$, $GH$, $HE$ a $EA$ je dokonce \textbf{pravidelný šestiúhelník}. Tato rovina je kolmá na tělesovou úhlopříčku $DF$ a prochází středem krychle.
   \begin{center}
-    \begin{tikzpicture}[scale=2.1, x={(1cm,0cm)}, y={(0.45cm,0.35cm)}, z={(0cm,1cm)}]
+    \begin{tikzpicture}[scale=2.1, krychle]
       \coordinate (A) at (0,0,0); \coordinate (B) at (1,0,0); \coordinate (C) at (1,1,0); \coordinate (D) at (0,1,0);
       \coordinate (E) at (0,0,1); \coordinate (F) at (1,0,1); \coordinate (G) at (1,1,1); \coordinate (H) at (0,1,1);
       \fill[colorofwisdom!25] (0.5,0,0) -- (1,0.5,0) -- (1,1,0.5) -- (0.5,1,1) -- (0,0.5,1) -- (0,0,0.5) -- cycle;
@@ -251,15 +404,15 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
   \textbf{Pravidelný mnohostěn} (platónské těleso) je konvexní mnohostěn, jehož stěny jsou shodné pravidelné mnohoúhelníky a v každém vrcholu se stýká stejný počet stěn. Existuje jich \textbf{právě pět}:
   \begin{center}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|l|c|c|c|c|}
+    \begin{tabular}{|l|l|c|c|c|c|}
       \hline
-      Těleso & stěny & $V$ & $H$ & $S$ \\
+      Těleso & latinsky & stěny & $V$ & $H$ & $S$ \\
       \hline
-      čtyřstěn & trojúhelníky & $4$ & $6$ & $4$ \\
-      krychle (šestistěn) & čtverce & $8$ & $12$ & $6$ \\
-      osmistěn & trojúhelníky & $6$ & $12$ & $8$ \\
-      dvanáctistěn & pětiúhelníky & $20$ & $30$ & $12$ \\
-      dvacetistěn & trojúhelníky & $12$ & $30$ & $20$ \\
+      čtyřstěn & tetraedr & trojúhelníky & $4$ & $6$ & $4$ \\
+      krychle (šestistěn) & hexaedr & čtverce & $8$ & $12$ & $6$ \\
+      osmistěn & oktaedr & trojúhelníky & $6$ & $12$ & $8$ \\
+      dvanáctistěn & dodekaedr & pětiúhelníky & $20$ & $30$ & $12$ \\
+      dvacetistěn & ikosaedr & trojúhelníky & $12$ & $30$ & $20$ \\
       \hline
     \end{tabular}
   \end{center}
@@ -269,9 +422,9 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
   V každém vrcholu se stýkají alespoň tři stěny a součet jejich úhlů musí být menší než $360^\circ$ (jinak by se vrchol `rozplácl' do roviny). Pravidelný trojúhelník má úhly $60^\circ$, takže se jich ve vrcholu mohou stýkat $3$, $4$ nebo $5$ ($6\cdot 60^\circ = 360^\circ$ už nejde). Čtverec má úhly $90^\circ$, takže jen $3$. Pětiúhelník má úhly $108^\circ$, tedy jen $3$. Šestiúhelník má $120^\circ$ a $3\cdot 120^\circ = 360^\circ$, takže už nejde ani jeden. Dohromady $3 + 1 + 1 = 5$ možností a každá odpovídá jednomu tělesu v tabulce.
 \end{proof}
 
-Hráči deskových her znají všech pět pravidelných mnohostěnů jako kostky k4, k6, k8, k12 a k20. Je to tak proto, že jedině pravidelný mnohostěn dává každé stěně stejnou šanci. Pravděpodobnosti se věnujeme v pozdější kapitole.
+Názvy jako tetraedr nebo ikosaedr pochází z řečtiny (\textit{tetra} = čtyři, \textit{hexa} = šest, \textit{okta} = osm, \textit{dodeka} = dvanáct, \textit{eikosi} = dvacet, \textit{hedra} = stěna) a v odborné literatuře se používají běžněji než české. Hráči deskových her znají všech pět pravidelných mnohostěnů jako kostky k4, k6, k8, k12 a k20. Je to tak proto, že jedině pravidelný mnohostěn dává každé stěně stejnou šanci. Pravděpodobnosti se věnujeme v pozdější kapitole.
 
-\section{Odbočka --- Keplerův vesmír a proces s čarodějnicí}
+\section{Příběh --- Keplerův vesmír a proces s čarodějnicí}
 
 Johannes Kepler věřil, že vesmír je postaven na geometrii. V roce 1596 publikoval model, ve kterém je šest tehdy známých planet uloženo na koulích, mezi které je vloženo právě pět platónských těles. Pět těles, šest koulí, šest planet. Bylo to tak krásné, že to přece musela být pravda. Nebyla. Kepler sám později z přesných pozorování Tychona Braheho (který mimochodem zemřel v Praze a je pohřbený v Týnském chrámu) zjistil, že planety obíhají po elipsách, a svůj vlastní nádherný model opustil. To je na vědě to nejlepší: i to nejkrásnější se zahodí, když to nesouhlasí s pozorováním.
 

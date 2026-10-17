@@ -59,7 +59,7 @@ Podmínka stejně pravděpodobných výsledků je důležitá. Výroky jako `bu�
   \begin{equation*}
     P = 1 - {\left(\frac{5}{6}\right)}^4 = 1 - \frac{625}{1296}\approx 0{,}518.
   \end{equation*}
-  Sázet na alespoň jednu šestku ve čtyřech hodech se tedy vyplatí. To je přesně sázka, kterou ve Francii v 17. století s oblibou nabízel hazardní hráč Chevalier de Méré a vydělával na ní. Viz odbočka.
+  Sázet na alespoň jednu šestku ve čtyřech hodech se tedy vyplatí. To je přesně sázka, kterou ve Francii v 17. století s oblibou nabízel hazardní hráč Chevalier de Méré a vydělával na ní. Viz příběh na konci kapitoly.
 \end{example}
 
 \begin{problem}
@@ -190,7 +190,179 @@ Odkud vzorec? Konkrétní pořadí s $k$ úspěchy a $n - k$ neúspěchy má pra
   \end{enumerate}
 \end{solution}
 
-\section{Odbočka --- Hráč a noc ohně}
+\section{Odbočka --- Náhodná veličina a střední hodnota}
+
+Na vysoké škole se pravděpodobnost nepočítá jen pro jevy, ale pro čísla, která z náhodného pokusu vypadnou. Kolik padne na kostce, kolik zákazníků přijde za hodinu, kolik otázek v testu uhodnete.
+
+\begin{definitionbox}
+  \textbf{Náhodná veličina} $X$ je funkce, která každému výsledku pokusu přiřadí číslo. Pokud nabývá jen hodnot $x_1, x_2, \ldots$ (konečně nebo spočetně mnoha), je \textbf{diskrétní} a popisuje ji \textbf{rozdělení} $p_i = P(X = x_i)$, kde $\sum p_i = 1$.
+
+  \vspace{0.2cm}
+
+  \textbf{Střední hodnota} (očekávaná hodnota) je vážený průměr možných hodnot:
+  \begin{equation*}
+    E(X) = \sum_i x_ip_i.
+  \end{equation*}
+  \textbf{Rozptyl} měří, jak moc se hodnoty rozptylují kolem střední hodnoty:
+  \begin{equation*}
+    D(X) = E\left({(X - E(X))}^2\right) = E(X^2) - {E(X)}^2.
+  \end{equation*}
+\end{definitionbox}
+
+Střední hodnota je to samé co aritmetický průměr z kapitoly~\ref{kap:statistika}, jen místo naměřených četností používáme teoretické pravděpodobnosti. A podle \textbf{zákona velkých čísel} se průměr z mnoha opakování pokusu ke střední hodnotě skutečně blíží. Pokud hodíte kostkou milionkrát, průměr hodů bude velice blízko $E(X) = \frac{1 + 2 + \cdots + 6}{6} = 3{,}5$. Přitom samotná hodnota $3{,}5$ na kostce padnout nemůže. Střední hodnota nemusí být hodnota, kterou kdy uvidíte.
+
+\begin{example}
+  V ruletě je $37$ políček ($0$ až $36$). Vsadíte $100$ Kč na červenou ($18$ políček). Pokud padne červená, dostanete zpátky $200$ Kč, jinak nic. Váš čistý zisk $X$ je $+100$ s pravděpodobností $\frac{18}{37}$ a $-100$ s pravděpodobností $\frac{19}{37}$:
+  \begin{equation*}
+    E(X) = 100\cdot\frac{18}{37} - 100\cdot\frac{19}{37} = -\frac{100}{37}\approx -2{,}70\ \text{Kč}.
+  \end{equation*}
+  Za každou stovku v průměru prohrajete $2{,}70$ Kč. Jednou to nevadí. Ale kasino hraje miliony her, a proto podle zákona velkých čísel kasino nikdy neprohrává. Celý jeho zisk dělá to jedno zelené políčko s nulou.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Binomické rozdělení} $\mathrm{Bi}(n, p)$: počet úspěchů v $n$ nezávislých pokusech s pravděpodobností úspěchu $p$ (Bernoulliho schéma):
+  \begin{equation*}
+    P(X = k) = \binom{n}{k}p^k{(1 - p)}^{n - k},\qquad E(X) = np,\qquad D(X) = np(1 - p).
+  \end{equation*}
+\end{definitionbox}
+
+Vzorec $E(X) = np$ je intuitivní: pokud hodíte mincí stokrát, čekáte padesát líců. Vzorec pro rozptyl říká, že nejvíc nejistoty je pro $p = \frac{1}{2}$ a žádná pro $p = 0$ nebo $p = 1$.
+
+\begin{center}
+  \begin{tikzpicture}[xscale=0.65, yscale=12]
+    \draw[->] (-0.7,0) -- (11,0) node[right] {\small $k$};
+    \draw[->] (-0.5,0) -- (-0.5,0.29) node[above] {\small $P(X = k)$};
+    \foreach \y in {0.1,0.2} \draw (-0.6,\y) -- (-0.4,\y) node[left, xshift=-3pt] {\tiny $\y$};
+    \foreach \k/\p in {0/0.001, 1/0.0098, 2/0.0439, 3/0.1172, 4/0.2051, 5/0.2461, 6/0.2051, 7/0.1172, 8/0.0439, 9/0.0098, 10/0.001} {
+      \fill[colorofwisdom!60] (\k-0.35,0) rectangle (\k+0.35,\p);
+      \draw (\k-0.35,0) rectangle (\k+0.35,\p);
+      \node[below] at (\k,0) {\tiny $\k$};
+    }
+    \node[font=\small] at (8.5,0.24) {$\mathrm{Bi}(10, \frac{1}{2})$};
+  \end{tikzpicture}
+\end{center}
+
+\section{Odbočka --- Poissonovo a normální rozdělení}
+
+\subsection{Poissonovo rozdělení: zákon vzácných jevů}
+
+Co když je pokusů obrovské množství, ale úspěch je velice vzácný? Například v knize je $100\,000$ písmen a každé je s pravděpodobností $0{,}00002$ překlep. Nebo v Praze žije milion lidí a každý z nich má malou šanci, že dnes zavolá na záchranku. Počítat s $\binom{100000}{k}$ je nepraktické. Ukazuje se ale, že v limitě se binomické rozdělení promění v mnohem jednodušší vzorec.
+
+\begin{definitionbox}
+  \textbf{Poissonovo rozdělení} $\mathrm{Po}(\lambda)$ s parametrem $\lambda > 0$ (průměrný počet událostí):
+  \begin{equation*}
+    P(X = k) = \frac{\lambda^k}{k!}e^{-\lambda},\qquad k = 0, 1, 2, \ldots,\qquad E(X) = D(X) = \lambda.
+  \end{equation*}
+  \textbf{Věta (Poissonova aproximace)}: Pokud $n\to\infty$ a $p = \frac{\lambda}{n}$ (tedy střední hodnota $np = \lambda$ je pevná), pak
+  \begin{equation*}
+    \binom{n}{k}p^k{(1 - p)}^{n - k}\ \longrightarrow\ \frac{\lambda^k}{k!}e^{-\lambda}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Dosadíme $p = \frac{\lambda}{n}$ a výraz rozložíme na tři části:
+  \begin{equation*}
+    \binom{n}{k}{\left(\frac{\lambda}{n}\right)}^k{\left(1 - \frac{\lambda}{n}\right)}^{n - k} = \frac{\lambda^k}{k!}\cdot\underbrace{\frac{n(n - 1)\cdots(n - k + 1)}{n^k}}_{\to 1}\cdot\underbrace{{\left(1 - \frac{\lambda}{n}\right)}^n}_{\to e^{-\lambda}}\cdot\underbrace{{\left(1 - \frac{\lambda}{n}\right)}^{-k}}_{\to 1}.
+  \end{equation*}
+  První zlomek má v čitateli i jmenovateli $k$ činitelů, z nichž každý podíl $\frac{n - j}{n}$ jde k $1$. Prostřední člen je přesně limita, kterou známe z definice čísla $e$ (kapitoly~\ref{kap:exponencialni} a~\ref{kap:financni}), jen s $-\lambda$ místo $1$. A poslední člen má pevný exponent $k$ a základ jdoucí k $1$.
+\end{proof}
+
+Tady se Eulerovo číslo objevuje úplně nečekaně: v úloze o počítání vzácných událostí. Poissonovo rozdělení popisuje počet překlepů na stránce, počet radioaktivních rozpadů za sekundu, počet zákazníků za hodinu, počet mutací v DNA i počet meteoritů, které dopadnou na určité území.
+
+\begin{example}
+  Kniha má v průměru $2$ překlepy na kapitolu. Jaká je pravděpodobnost, že kapitola nemá žádný překlep? A že jich má víc než dva?
+  \begin{equation*}
+    P(X = 0) = e^{-2}\approx 0{,}135,\qquad P(X > 2) = 1 - e^{-2}\left(1 + 2 + \frac{2^2}{2}\right) = 1 - 5e^{-2}\approx 0{,}323.
+  \end{equation*}
+  Zhruba každá sedmá kapitola bude bez chyby. Pokud v této knize nějakou najdete, víte, co dělat.
+\end{example}
+
+\begin{example}[ (koně, kteří zabíjeli)]
+  Nejslavnější data v historii Poissonova rozdělení posbíral v roce 1898 statistik Ladislaus Bortkiewicz. Spočítal, kolik vojáků pruské jízdy bylo za rok zabito kopnutím koně. Šlo o $10$ jezdeckých sborů po dobu $20$ let, tedy $200$ `sborů-let'. Průměrně připadlo na jeden sbor a rok $\lambda = 0{,}61$ úmrtí. Porovnání skutečnosti s Poissonovým rozdělením (očekávaný počet je $200\cdot P(X = k)$):
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|}
+      \hline
+      počet úmrtí za rok & $0$ & $1$ & $2$ & $3$ & $4$ \\
+      \hline
+      pozorováno & $109$ & $65$ & $22$ & $3$ & $1$ \\
+      podle $\mathrm{Po}(0{,}61)$ & $108{,}7$ & $66{,}3$ & $20{,}2$ & $4{,}1$ & $0{,}6$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \begin{center}
+    \begin{tikzpicture}[xscale=1.3, yscale=0.028]
+      \draw[->] (-0.5,0) -- (4.8,0) node[right] {\small úmrtí za rok};
+      \draw[->] (-0.5,0) -- (-0.5,125);
+      \foreach \y in {50,100} \draw (-0.55,\y) -- (-0.45,\y) node[left, xshift=-2pt] {\tiny $\y$};
+      \foreach \k/\o/\p in {0/109/108.7, 1/65/66.3, 2/22/20.2, 3/3/4.1, 4/1/0.6} {
+        \fill[black!25] (\k-0.3,0) rectangle (\k,\o);
+        \fill[colorofwisdom!70] (\k,0) rectangle (\k+0.3,\p);
+        \node[below] at (\k,0) {\tiny $\k$};
+      }
+      \fill[black!25] (2.7,110) rectangle (2.9,118); \node[right, font=\tiny] at (2.9,114) {pozorováno};
+      \fill[colorofwisdom!70] (2.7,95) rectangle (2.9,103); \node[right, font=\tiny] at (2.9,99) {Poisson};
+    \end{tikzpicture}
+  \end{center}
+  Shoda je ohromující. Smrt kopnutím koně je náhodná, vzácná a nezávislá událost, přesně taková, jakou Poissonovo rozdělení popisuje. Bortkiewicz knihu nazval \textit{Zákon malých čísel}.
+\end{example}
+
+\subsection{Normální rozdělení a centrální limitní věta}
+
+Zatím jsme měli jen diskrétní veličiny. Výška člověka, chyba měření nebo čas do příjezdu tramvaje ale mohou nabývat jakékoli hodnoty z intervalu. Takové veličiny jsou \textbf{spojité} a místo pravděpodobností jednotlivých hodnot je popisuje \textbf{hustota} $f(x)$: pravděpodobnost, že $X$ padne do intervalu $[a, b]$, je obsah plochy pod grafem hustoty, tedy $\int_a^b f(x)\,\mathrm{d}x$ (kapitola~\ref{kap:integraly}). Celková plocha je $1$.
+
+\begin{definitionbox}
+  \textbf{Normální} (Gaussovo) \textbf{rozdělení} $N(\mu, \sigma^2)$ se střední hodnotou $\mu$ a směrodatnou odchylkou $\sigma$ má hustotu
+  \begin{equation*}
+    f(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\frac{{(x - \mu)}^2}{2\sigma^2}}.
+  \end{equation*}
+  \textbf{Pravidlo 68--95--99,7}: Hodnota padne do intervalu $\mu\pm\sigma$ s pravděpodobností asi $68\,\%$, do $\mu\pm 2\sigma$ asi $95\,\%$ a do $\mu\pm 3\sigma$ asi $99{,}7\,\%$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[xscale=1.3, yscale=7]
+    \fill[colorofwisdom!15, domain=-3:3, samples=60] (-3,0) -- plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)}) -- (3,0) -- cycle;
+    \fill[colorofwisdom!30, domain=-2:2, samples=60] (-2,0) -- plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)}) -- (2,0) -- cycle;
+    \fill[colorofwisdom!55, domain=-1:1, samples=60] (-1,0) -- plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)}) -- (1,0) -- cycle;
+    \draw[thick, colorofwisdom, domain=-3.6:3.6, samples=100] plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)});
+    \draw[->] (-3.8,0) -- (3.9,0) node[right] {\small $x$};
+    \foreach \x/\l in {-3/{\mu - 3\sigma}, -2/{\mu - 2\sigma}, -1/{\mu - \sigma}, 0/{\mu}, 1/{\mu + \sigma}, 2/{\mu + 2\sigma}, 3/{\mu + 3\sigma}} \draw (\x,0.008) -- (\x,-0.008) node[below] {\tiny $\l$};
+    \node[font=\small] at (0,0.17) {$68\,\%$};
+    \node[font=\scriptsize] at (1.5,0.04) {$95\,\%$};
+    \node[font=\scriptsize] at (-1.5,0.04) {$95\,\%$};
+    \node[font=\scriptsize] at (2.55,0.012) {$99{,}7\,\%$};
+  \end{tikzpicture}
+\end{center}
+
+Proč je normální rozdělení všude? Odpověď je jedna z nejkrásnějších vět celé matematiky.
+
+\begin{definitionbox}
+  \textbf{Centrální limitní věta}: Součet (nebo průměr) velkého počtu nezávislých náhodných veličin se stejným rozdělením (s konečným rozptylem) má přibližně normální rozdělení, \textbf{bez ohledu na to, jaké rozdělení měly jednotlivé sčítance}.
+\end{definitionbox}
+
+Výška člověka je součtem vlivu tisíců genů a podmínek prostředí, chyba měření je součtem mnoha drobných rušivých vlivů, počet líců ve sto hodech mincí je součtem sta nul a jedniček. Všechno to dá zvonovitou křivku. Je to vidět i na histogramu binomického rozdělení v předchozí odbočce: už pro $n = 10$ vypadá jako zvon.
+
+Nejhezčí ukázkou je \textbf{Galtonova deska}. Kuličky padají shora přes řady kolíčků a na každém se náhodně odrazí doleva nebo doprava. Kam kulička dopadne, je součet mnoha náhodných `kroků', a dole se proto kuličky naskládají do tvaru Gaussovy křivky.
+\begin{center}
+  \begin{tikzpicture}[scale=0.42]
+    \foreach \r in {0,...,7} \foreach \c in {0,...,\r} \filldraw[black!60] ({\c - \r/2}, {-\r}) circle (0.12);
+    \foreach \x/\h in {-4/0.2, -3/0.6, -2/1.8, -1/3.2, 0/3.9, 1/3.2, 2/1.8, 3/0.6, 4/0.2} {
+      \draw[black!40] (\x-0.5,-9.5) -- (\x-0.5,-8.3);
+      \fill[colorofwisdom!60] (\x-0.4,-9.5) rectangle (\x+0.4,{-9.5+\h*0.9});
+    }
+    \draw[black!40] (4.5,-9.5) -- (4.5,-8.3);
+    \draw[thick] (-5,-9.5) -- (5,-9.5);
+    \draw[thick, colorofwisdom, domain=-4.6:4.6, samples=60] plot (\x, {-9.5 + 3.6*exp(-\x*\x/4.5)});
+    \filldraw[colorofwisdom] (0,1) circle (0.2);
+    \draw[->, colorofwisdom] (0,0.7) -- (0,0.25);
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  IQ testy jsou nastavené tak, aby měly normální rozdělení s $\mu = 100$ a $\sigma = 15$. Podle pravidla 68--95--99,7 má IQ mezi $85$ a $115$ asi $68\,\%$ lidí, mezi $70$ a $130$ asi $95\,\%$, a nad $130$ (tedy nad $\mu + 2\sigma$) jen asi $2{,}5\,\%$ (polovina ze zbylých $5\,\%$).
+\end{example}
+
+\section{Příběh --- Hráč a noc ohně}
 
 Moderní teorie pravděpodobnosti začala hazardem. Chevalier de Méré, francouzský šlechtic a vášnivý hráč, roky vydělával na sázce, že ve čtyřech hodech kostkou padne alespoň jedna šestka (jak jsme spočítali, pravděpodobnost je asi $0{,}518$). Když ho to přestalo bavit, vymyslel si `vylepšenou' verzi: ve $24$ hodech dvěma kostkami padne alespoň jednou dvojitá šestka. Jeho úvaha: dvojitá šestka je šestkrát méně pravděpodobná, a proto potřebuji šestkrát víc hodů. Jenže začal prohrávat. Skutečná pravděpodobnost je $1 - {\left(\frac{35}{36}\right)}^{24}\approx 0{,}491$, tedy těsně pod polovinou.
 

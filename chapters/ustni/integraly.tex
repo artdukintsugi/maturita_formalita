@@ -138,18 +138,98 @@ Jak spočítat obsah plochy pod grafem funkce $f$ mezi $a$ a $b$? Rozdělíme in
     \int_a^b f(x)\,\mathrm{d}x = \lim_{n\to\infty}\sum_{i=1}^{n}f(x_i)\cdot\Delta x,
   \end{equation*}
   kde $\Delta x = \frac{b - a}{n}$ je šířka obdélníků a $x_i$ jsou body v jednotlivých dílcích. Pro spojitou funkci tato limita vždy existuje. Pro nezápornou funkci je to \textbf{obsah plochy} pod grafem. Části pod osou $x$ se počítají záporně.
-
-  \vspace{0.2cm}
-
-  \textbf{Newtonova--Leibnizova věta} (základní věta integrálního počtu): Pokud je $f$ spojitá na $[a, b]$ a $F$ je k ní primitivní funkce, pak
-  \begin{equation*}
-    \int_a^b f(x)\,\mathrm{d}x = F(b) - F(a) = {\big[F(x)\big]}_a^b.
-  \end{equation*}
 \end{definitionbox}
 
 Znak $\int$ je mimochodem protažené písmeno S, jako \textit{summa}. Zavedl ho Leibniz a připomíná, že integrál je součet nekonečně mnoha nekonečně tenkých obdélníků o šířce $\mathrm{d}x$.
 
-Proč platí Newtonova--Leibnizova věta? Označme $S(x)$ obsah plochy pod grafem od $a$ do $x$. Když $x$ zvětšíme o malé $h$, přibude proužek o šířce $h$ a výšce přibližně $f(x)$, tedy $S(x + h) - S(x)\approx f(x)\cdot h$. Po vydělení $h$ a limitě dostaneme $S'(x) = f(x)$. Funkce `obsah plochy' je tedy primitivní funkcí k $f$! A protože $S(a) = 0$, je $S(b) = F(b) - F(a)$ pro libovolnou primitivní funkci $F$ (konstanta se odečte). Celá věta je tedy důsledkem toho, že rychlost, jakou roste plocha, je rovna výšce grafu.
+\begin{definitionbox}
+  \textbf{Vlastnosti určitého integrálu}:
+  \begin{align*}
+    \int_a^b(f + g)\,\mathrm{d}x &= \int_a^b f\,\mathrm{d}x + \int_a^b g\,\mathrm{d}x, & \int_a^b c\cdot f\,\mathrm{d}x &= c\int_a^b f\,\mathrm{d}x,\\
+    \int_a^b f\,\mathrm{d}x &= \int_a^c f\,\mathrm{d}x + \int_c^b f\,\mathrm{d}x, & \int_a^b f\,\mathrm{d}x &= -\int_b^a f\,\mathrm{d}x.
+  \end{align*}
+\end{definitionbox}
+
+\subsection{Základní věta integrálního počtu}\label{sec:zvip}
+
+Zatím máme dvě úplně různé věci. \textbf{Derivace} měří, jak rychle se funkce mění (sklon tečny). \textbf{Určitý integrál} měří plochu pod grafem (limita součtů obdélníků). Na první pohled spolu nemají nic společného: jedno je o sklonu, druhé o ploše. A přesto jsou to dvě strany jedné mince. Tohle tvrzení se jmenuje \textbf{základní věta integrálního počtu} (anglicky \textit{fundamental theorem of calculus}) a je to pravděpodobně nejdůležitější věta celé matematické analýzy. Bez ní bychom každý integrál museli počítat jako limitu součtů, ručně, obdélník po obdélníku.
+
+Klíčová myšlenka: místo pevné horní meze $b$ nechme horní mez \textit{pohyblivou} a sledujme, jak plocha roste.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \fill[colorofwisdom!15, domain=0.5:2.2, samples=40] (0.5,0) -- plot (\x, {1+0.5*sin(deg(1.5*\x))}) -- (2.2,0) -- cycle;
+    \fill[colorofwisdom!50, domain=2.2:2.7, samples=20] (2.2,0) -- plot (\x, {1+0.5*sin(deg(1.5*\x))}) -- (2.7,0) -- cycle;
+    \draw[->] (-0.2,0) -- (4.2,0) node[right] {\small $t$};
+    \draw[->] (0,-0.2) -- (0,1.9) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=0:4, samples=80] plot (\x, {1+0.5*sin(deg(1.5*\x))}) node[right] {\small $f$};
+    \draw (0.5,0) -- (0.5,{1+0.5*sin(deg(0.75))});
+    \draw (2.2,0) -- (2.2,{1+0.5*sin(deg(3.3))});
+    \draw (2.7,0) -- (2.7,{1+0.5*sin(deg(4.05))});
+    \node[below] at (0.5,0) {\small $a$};
+    \node[below] at (2.2,0) {\small $x$};
+    \node[below] at (2.75,0) {\small $x{+}h$};
+    \node at (1.35,0.5) {\small $F(x)$};
+    \draw[decorate, decoration={brace, amplitude=3pt, mirror}] (2.2,-0.4) -- (2.7,-0.4) node[midway, below=3pt] {\small $h$};
+    \draw[<-] (2.45,0.35) -- (3.3,1.75) node[above right] {\small $\approx f(x)\cdot h$};
+  \end{tikzpicture}
+\end{center}
+
+Označme $F(x)$ plochu pod grafem $f$ od $a$ do $x$. Když posuneme $x$ o kousek $h$ doprava, přibude tmavý proužek. Je to skoro obdélník o šířce $h$ a výšce $f(x)$, takže
+\begin{equation*}
+  F(x + h) - F(x)\approx f(x)\cdot h\qquad\Longrightarrow\qquad\frac{F(x + h) - F(x)}{h}\approx f(x).
+\end{equation*}
+Vlevo stojí přesně ten podíl, ze kterého v kapitole~\ref{kap:derivace} vznikla derivace. Čím menší $h$, tím víc se proužek podobá obdélníku. V limitě tedy $F'(x) = f(x)$: \textbf{rychlost, jakou roste plocha, je rovna výšce grafu.} Představte si, že natíráte plot zleva doprava stále stejnou rychlostí štětce. Kde je plot vysoký, přibývá natřené plochy rychle. Kde je nízký, pomalu.
+
+\begin{definitionbox}
+  \textbf{Základní věta integrálního počtu.} Nechť $f$ je spojitá na $[a, b]$.
+  \begin{enumerate}
+    \item Funkce $F(x) = \displaystyle\int_a^x f(t)\,\mathrm{d}t$ (plocha od $a$ do $x$) je na $[a, b]$ diferencovatelná a platí
+    \begin{equation*}
+      F'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\int_a^x f(t)\,\mathrm{d}t = f(x).
+    \end{equation*}
+    Jinými slovy, $F$ je primitivní funkce k $f$. Každá spojitá funkce tedy nějakou primitivní funkci \textit{má}.
+    \item (\textbf{Newtonova--Leibnizova formule}) Je-li $G$ libovolná primitivní funkce k $f$ na $[a, b]$, pak
+    \begin{equation*}
+      \int_a^b f(x)\,\mathrm{d}x = G(b) - G(a) = {\big[G(x)\big]}_a^b.
+    \end{equation*}
+  \end{enumerate}
+  Stručně: \textbf{derivace a integrál jsou navzájem inverzní operace.} Nejdřív integrovat a pak derivovat vrátí původní funkci (část 1). Nejdřív derivovat a pak integrovat vrátí původní funkci až na konstantu, a ta se v rozdílu $G(b) - G(a)$ odečte (část 2).
+\end{definitionbox}
+
+Integrační proměnnou jsme přejmenovali na $t$, protože písmeno $x$ je už obsazené horní mezí. Je to jen jméno: $\int_a^x f(t)\,\mathrm{d}t$ a $\int_a^x f(s)\,\mathrm{d}s$ je totéž číslo.
+
+\begin{proof}
+  \textit{Část 1.} Podle vlastnosti o rozdělení intervalu je
+  \begin{equation*}
+    F(x + h) - F(x) = \int_a^{x+h}f(t)\,\mathrm{d}t - \int_a^x f(t)\,\mathrm{d}t = \int_x^{x+h}f(t)\,\mathrm{d}t,
+  \end{equation*}
+  tedy přesně plocha tmavého proužku. Vezměme $h > 0$ (pro $h < 0$ je postup stejný). Funkce $f$ je spojitá, takže podle Weierstrassovy věty z kapitoly~\ref{kap:limity} nabývá na $[x, x + h]$ svého minima $m_h$ a maxima $M_h$. Proužek tedy leží mezi obdélníkem o výšce $m_h$ a obdélníkem o výšce $M_h$:
+  \begin{equation*}
+    m_h\cdot h\leq\int_x^{x+h}f(t)\,\mathrm{d}t\leq M_h\cdot h\qquad\Longrightarrow\qquad m_h\leq\frac{F(x + h) - F(x)}{h}\leq M_h.
+  \end{equation*}
+  Když $h\to 0$, interval $[x, x + h]$ se smršťuje do bodu $x$. Minimum i maximum se nabývá v bodech tohoto intervalu, a protože je $f$ spojitá, jdou $m_h$ i $M_h$ k $f(x)$. Podle věty o dvou policajtech jde k $f(x)$ i podíl uprostřed, tedy $F'(x) = f(x)$.
+
+  \textit{Část 2.} Funkce $F$ z části 1 i $G$ jsou primitivní k $f$, takže $(G - F)' = f - f = 0$. Funkce s nulovou derivací má všude vodorovnou tečnu, a tak je na intervalu konstantní.\footnote{Pečlivě se to dokazuje pomocí Lagrangeovy věty o střední hodnotě: $G - F$ by jinak někde musela mít nenulový sklon.} Proto $G(x) = F(x) + C$ a
+  \begin{equation*}
+    G(b) - G(a) = \big(F(b) + C\big) - \big(F(a) + C\big) = F(b) - F(a) = \int_a^b f(t)\,\mathrm{d}t - \underbrace{\int_a^a f(t)\,\mathrm{d}t}_{=\,0} = \int_a^b f(t)\,\mathrm{d}t.
+  \end{equation*}
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \fill[colorofwisdom!50, domain=1:1.6, samples=20] (1,0) -- plot (\x, {0.3+0.5*\x}) -- (1.6,0) -- cycle;
+    \draw[->] (0.6,0) -- (2.1,0);
+    \draw[thick, colorofwisdom, domain=0.7:1.9] plot (\x, {0.3+0.5*\x});
+    \draw[dashed] (1,0.8) -- (1.6,0.8) node[right, font=\small] {$m_h$};
+    \draw[dashed] (1,1.1) -- (1.6,1.1) node[right, font=\small] {$M_h$};
+    \draw (1,0) -- (1,0.8);
+    \draw (1.6,0) -- (1.6,1.1);
+    \node[below] at (1,0) {\small $x$};
+    \node[below] at (1.6,0) {\small $x{+}h$};
+    \node[align=left, font=\small, anchor=west] at (2.4,0.6) {proužek je sevřen mezi\\nízkým a vysokým obdélníkem;\\pro $h\to 0$ se oba slijí v $f(x)\cdot h$};
+  \end{tikzpicture}
+\end{center}
 
 \begin{example}
   \begin{itemize}
@@ -159,13 +239,21 @@ Proč platí Newtonova--Leibnizova věta? Označme $S(x)$ obsah plochy pod grafe
   \end{itemize}
 \end{example}
 
+\begin{example}
+  Část 1 věty umí něco, co Newtonova--Leibnizova formule neumí: derivovat integrál, aniž bychom ho spočítali.
+  \begin{itemize}
+    \item $\dfrac{\mathrm{d}}{\mathrm{d}x}\displaystyle\int_0^x\mathrm{e}^{-t^2}\,\mathrm{d}t = \mathrm{e}^{-x^2}$. Přitom k $\mathrm{e}^{-t^2}$ \textit{neexistuje} primitivní funkce zapsatelná pomocí elementárních funkcí (dokázal to Liouville v 19. století). Integrál od $0$ do $x$ tedy nejde `vypočítat vzorečkem', a přesto jeho derivaci známe okamžitě. Tato funkce je mimochodem (až na konstantu) přesně ta, kterou se v pravděpodobnosti počítají plochy pod Gaussovou křivkou.
+    \item $\dfrac{\mathrm{d}}{\mathrm{d}x}\displaystyle\int_0^{x^2}\sin t\,\mathrm{d}t = \sin(x^2)\cdot 2x$. Horní mez je složená funkce, takže podle pravidla o derivaci složené funkce násobíme ještě derivací $x^2$.
+  \end{itemize}
+\end{example}
+
+Ještě jedna poznámka o tom, proč je věta tak silná. Definice určitého integrálu (limita součtů) je \textit{geometrická} a těžko se s ní počítá. Hledání primitivní funkce je \textit{algebraické}: stačí přečíst tabulku derivací pozpátku. Základní věta mezi těmito světy staví most. Geometrický problém (plocha, objem, dráha, práce) převede na algebraickou úlohu najít funkci se zadanou derivací. Celá následující sekce o užití integrálu stojí na tomto mostu.
+
 \begin{definitionbox}
-  \textbf{Vlastnosti určitého integrálu}:
-  \begin{align*}
-    \int_a^b(f + g)\,\mathrm{d}x &= \int_a^b f\,\mathrm{d}x + \int_a^b g\,\mathrm{d}x, & \int_a^b c\cdot f\,\mathrm{d}x &= c\int_a^b f\,\mathrm{d}x,\\
-    \int_a^b f\,\mathrm{d}x &= \int_a^c f\,\mathrm{d}x + \int_c^b f\,\mathrm{d}x, & \int_a^b f\,\mathrm{d}x &= -\int_b^a f\,\mathrm{d}x.
-  \end{align*}
+  \textbf{Fyzikální pohled}: je-li $v(t)$ rychlost auta, pak dráha ujetá od času $0$ do času $T$ je $s(T) = \int_0^T v(t)\,\mathrm{d}t$. Část 1 říká $s'(T) = v(T)$, tedy `derivace dráhy je rychlost', což znáte z fyziky. Tachometr (rychlost) a počítadlo kilometrů (dráha) jsou spojeny přesně základní větou integrálního počtu.
 \end{definitionbox}
+
+Myšlenku, že tečny a plochy spolu souvisí, měl už Newtonův učitel \textbf{Isaac Barrow}, který ji v roce 1670 publikoval v geometrické podobě. Newton a Leibniz (nezávisle na sobě) z ní pak udělali výpočetní nástroj. Pečlivý důkaz pro spojité funkce, takový jako ten náš, podal až Cauchy v roce 1823.
 
 \section{Užití určitého integrálu}
 
@@ -250,7 +338,7 @@ Vzorec plyne ze stejné myšlenky jako určitý integrál: těleso rozřežeme n
   Integrovat se dá i přes nekonečný interval. Takovému integrálu se říká \textbf{nevlastní}. Například $\int_1^{\infty}\frac{1}{x^2}\,\mathrm{d}x = \lim_{b\to\infty}{\left[-\frac{1}{x}\right]}_1^b = 1$. Nekonečně dlouhá plocha má konečný obsah! Ještě podivnější je \textbf{Gabrielův roh}, který vznikne rotací grafu $\frac{1}{x}$ na $[1, \infty)$. Jeho objem je $\pi\int_1^{\infty}\frac{1}{x^2}\,\mathrm{d}x = \pi$, ale jeho povrch je nekonečný. Do rohu se tedy vejde konečně mnoho barvy, ale nikdy nenatřete jeho vnitřní stěnu. Objevil ho v roce 1643 Evangelista Torricelli a pojmenován je po archandělu Gabrielovi, který podle tradice zatroubí na roh v den posledního soudu.
 \end{note}
 
-\section{Odbočka --- Spálené papíry}
+\section{Příběh --- Spálené papíry}
 
 Bernhard Riemann, po kterém je pojmenovaný určitý integrál, byl plachý a nemocný muž z chudé rodiny luteránského pastora. Původně měl studovat teologii, ale matematika ho nepustila. Za svůj krátký život publikoval jen hrstku prací, ale skoro každá z nich změnila matematiku. Jeho geometrie zakřivených prostorů se o šedesát let později stala jazykem Einsteinovy obecné teorie relativity, o které jsme mluvili u pátého postulátu v kapitole~\ref{kap:planimetrie}.
 
@@ -267,7 +355,7 @@ Riemann onemocněl tuberkulózou a odjel se léčit do Itálie, kde v roce 1866 
     \item Uveďte základní integrály. Proč je $\int\frac{1}{x}\,\mathrm{d}x = \ln|x| + C$?
     \item Popište substituční metodu a integraci per partes. Z jakých pravidel pro derivace vycházejí?
     \item Co je určitý integrál? Jak souvisí s obsahem plochy?
-    \item Vyslovte Newtonovu--Leibnizovu větu a vysvětlete, proč platí.
+    \item Vyslovte základní větu integrálního počtu (obě části) a vysvětlete, proč platí. Jak z ní plyne Newtonova--Leibnizova formule?
     \item Jak spočítáte obsah plochy mezi dvěma grafy? Na co si dát pozor, když je funkce záporná?
     \item Jak spočítáte objem rotačního tělesa? Odvoďte vzorec pro objem koule a kužele.
     \item Uveďte příklady využití integrálů ve fyzice.

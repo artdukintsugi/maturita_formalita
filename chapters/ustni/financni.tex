@@ -95,7 +95,15 @@ Jednoduché úročení je aritmetická posloupnost (každý rok přibude stejná
 \begin{example}
   Při sazbě $3\,\%$ a dani $15\,\%$ máme z $10\,000$ Kč za $4$ roky $10000\cdot 1{,}0255^4\approx 11\,059{,}68$ Kč.
 
-  Při nominální sazbě $6\,\%$ s měsíčním připisováním je efektivní sazba ${(1 + 0{,}005)}^{12} - 1\approx 6{,}17\,\%$. Pokud bychom úroky připisovali nekonečně často (spojité úročení), dostali bychom ${\left(1 + \frac{i}{m}\right)}^m\to e^i$ a efektivní sazbu $e^{0{,}06} - 1\approx 6{,}18\,\%$. Tady se Eulerovo číslo z kapitoly~\ref{kap:exponencialni} objevuje přesně v tom kontextu, ve kterém ho objevil Jacob Bernoulli.
+  Při nominální sazbě $6\,\%$ s měsíčním připisováním je efektivní sazba ${(1 + 0{,}005)}^{12} - 1\approx 6{,}17\,\%$. Pokud bychom úroky připisovali nekonečně často (spojité úročení), dostali bychom efektivní sazbu $e^{0{,}06} - 1\approx 6{,}18\,\%$. Proč právě $e$? Připomeňme definici z kapitol~\ref{kap:exponencialni} a~\ref{kap:posloupnosti}:
+  \begin{equation*}
+    e = \lim_{n\to\infty}{\left(1 + \frac{1}{n}\right)}^n.
+  \end{equation*}
+  Pokud v našem výrazu označíme $m = n\cdot i$ (tedy počet připsání za rok je $n$-krát roční sazba), dostaneme
+  \begin{equation*}
+    {\left(1 + \frac{i}{m}\right)}^m = {\left(1 + \frac{1}{n}\right)}^{n\cdot i} = {\left({\left(1 + \frac{1}{n}\right)}^n\right)}^i\ \longrightarrow\ e^i\qquad\text{pro } m\to\infty.
+  \end{equation*}
+  Při spojitém úročení tedy jistina roste přesně jako exponenciála: $K(t) = K_0e^{it}$. Tady se Eulerovo číslo z kapitoly~\ref{kap:exponencialni} objevuje přesně v tom kontextu, ve kterém ho objevil Jacob Bernoulli.
 \end{example}
 
 \begin{note}
@@ -229,7 +237,7 @@ Při pravidelném spoření vkládáme každé období stejnou částku $a$. Ka�
   \end{enumerate}
 \end{solution}
 
-\section{Odbočka --- Lichváři v sedmém kruhu}
+\section{Příběh --- Lichváři v sedmém kruhu}
 
 Půjčovat peníze na úrok bylo po většinu evropských dějin hříchem. Už První nikajský koncil v roce 325 zakázal brát úroky duchovním a Třetí lateránský koncil v roce 1179 rozhodl, že lichváři budou exkomunikováni a nesmí být pohřbeni v posvěcené půdě. Za \textit{lichvu} se přitom považoval jakýkoli úrok, ne jen přemrštěný.
 

@@ -60,7 +60,7 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
 \begin{definitionbox}
   \textbf{Derivace elementárních funkcí}:
   \begin{center}
-    \renewcommand{\arraystretch}{1.6}
+    \renewcommand{\arraystretch}{2.3}
     \begin{tabular}{|c|c||c|c|}
       \hline
       $f(x)$ & $f'(x)$ & $f(x)$ & $f'(x)$ \\
@@ -96,6 +96,52 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
 
   \textbf{Součin}: $f(x + h)g(x + h) - f(x)g(x) = \left(f(x + h) - f(x)\right)g(x + h) + f(x)\left(g(x + h) - g(x)\right)$. Po vydělení $h$ a limitě dostaneme $f'g + fg'$. (Použili jsme, že $g$ je spojitá, takže $g(x + h)\to g(x)$.)
 \end{proof}
+
+Teď dokážeme všechno ostatní z tabulky. Nejdřív zbylá pravidla, protože z nich pak vzorce pro jednotlivé funkce vyjdou skoro samy.
+
+\begin{proof}[(zbylých pravidel)]
+  \textbf{Konstanta, násobek a součet}: Pro $f(x) = c$ je $\frac{c - c}{h} = 0$, takže $c' = 0$. Pro $c\cdot f$ a $f\pm g$ stačí vytknout $c$, respektive rozdělit zlomek na dva, a použít, že limita násobku a součtu je násobek a součet limit (kapitola~\ref{kap:limity}).
+
+  \textbf{Složená funkce}: Označme $k = g(x + h) - g(x)$. Pro $h\to 0$ jde i $k\to 0$, protože $g$ je spojitá. Pokud je $k\neq 0$, můžeme rozšířit:
+  \begin{equation*}
+    \frac{f(g(x + h)) - f(g(x))}{h} = \frac{f(g(x) + k) - f(g(x))}{k}\cdot\frac{g(x + h) - g(x)}{h}\ \longrightarrow\ f'(g(x))\cdot g'(x).
+  \end{equation*}
+  První zlomek je přesně definice derivace $f$ v bodě $g(x)$ (s přírůstkem $k$), druhý je definice $g'(x)$. (Pokud by $k$ bylo nulové pro libovolně malá $h$, musí se důkaz udělat trochu opatrněji, ale výsledek platí také. To si nechte na vysokou školu.)
+
+  \textbf{Podíl}: Nejdřív $\left(\frac{1}{g}\right)'$. Funkce $\frac{1}{u} = u^{-1}$ má derivaci $-\frac{1}{u^2}$ (vzorec pro $x^n$ níže s $n = -1$), takže podle pravidla pro složenou funkci $\left(\frac{1}{g(x)}\right)' = -\frac{g'(x)}{g^2(x)}$. Pak podle pravidla pro součin
+  \begin{equation*}
+    {\left(\frac{f}{g}\right)}' = {\left(f\cdot\frac{1}{g}\right)}' = \frac{f'}{g} - \frac{fg'}{g^2} = \frac{f'g - fg'}{g^2}.
+  \end{equation*}
+\end{proof}
+
+\begin{proof}[(zbylých vzorců z tabulky)]
+  \textbf{$e^x$}: Podle definice
+  \begin{equation*}
+    \frac{e^{x + h} - e^x}{h} = e^x\cdot\frac{e^h - 1}{h},
+  \end{equation*}
+  takže stačí ukázat, že $\lim_{h\to 0}\frac{e^h - 1}{h} = 1$. Označme $t = e^h - 1$, tedy $h = \ln(1 + t)$, a pro $h\to 0$ jde i $t\to 0$. Pak
+  \begin{equation*}
+    \frac{e^h - 1}{h} = \frac{t}{\ln(1 + t)} = \frac{1}{\frac{1}{t}\ln(1 + t)} = \frac{1}{\ln{(1 + t)}^{\frac{1}{t}}}\ \longrightarrow\ \frac{1}{\ln e} = 1,
+  \end{equation*}
+  protože ${(1 + t)}^{\frac{1}{t}}\to e$, což je (pro $t = \frac{1}{n}$) přesně definice Eulerova čísla z kapitoly~\ref{kap:exponencialni}. Geometricky to znamená, že graf $e^x$ má v bodě $[0, 1]$ tečnu se směrnicí přesně $1$. Žádný jiný základ tuto vlastnost nemá, a proto je $e$ tak výjimečné.
+
+  \textbf{$a^x$}: Protože $a = e^{\ln a}$, je $a^x = e^{x\ln a}$. Podle pravidla pro složenou funkci $(a^x)' = e^{x\ln a}\cdot\ln a = a^x\ln a$.
+
+  \textbf{$\ln x$}: Pro $x > 0$ platí $e^{\ln x} = x$. Zderivujeme obě strany (vlevo podle pravidla pro složenou funkci): $e^{\ln x}\cdot(\ln x)' = 1$, tedy $x\cdot(\ln x)' = 1$ a $(\ln x)' = \frac{1}{x}$. Tomuto triku se říká \textbf{derivace inverzní funkce}: graf $\ln x$ je zrcadlový obraz grafu $e^x$ podle přímky $y = x$, takže i sklony tečen se `převrátí'.
+
+  \textbf{$\log_a x$}: Podle převodu základu je $\log_a x = \frac{\ln x}{\ln a}$, a tedy $(\log_a x)' = \frac{1}{x\ln a}$.
+
+  \textbf{$x^n$ pro libovolné reálné $n$} (pro $x > 0$): $x^n = e^{n\ln x}$, takže $(x^n)' = e^{n\ln x}\cdot\frac{n}{x} = x^n\cdot\frac{n}{x} = nx^{n-1}$.
+
+  \textbf{$\cos x$}: Protože $\cos x = \sin\left(\frac{\pi}{2} - x\right)$, je $(\cos x)' = \cos\left(\frac{\pi}{2} - x\right)\cdot(-1) = -\sin x$.
+
+  \textbf{$\tg x$ a $\cotg x$}: Podle pravidla pro podíl a vztahu $\sin^2 x + \cos^2 x = 1$:
+  \begin{equation*}
+    (\tg x)' = {\left(\frac{\sin x}{\cos x}\right)}' = \frac{\cos x\cos x - \sin x(-\sin x)}{\cos^2 x} = \frac{1}{\cos^2 x},\qquad(\cotg x)' = \frac{-\sin^2 x - \cos^2 x}{\sin^2 x} = -\frac{1}{\sin^2 x}.
+  \end{equation*}
+\end{proof}
+
+Celou tabulku tedy stačí odvodit z definice derivace, ze dvou limit ($\frac{\sin h}{h}\to 1$ a definice $e$) a ze tří pravidel (součin, složená funkce a součet). Všechno ostatní je jen šikovné kombinování. Za zapamatování opravdu stojí jen pár řádků.
 
 \begin{example}
   \begin{align*}
@@ -234,7 +280,9 @@ V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkc�
   Druhá limita říká, že logaritmus roste pomaleji než jakákoli přímka. Pravidlo pochází od markýze de l'Hospital, který ho v roce 1696 publikoval v první učebnici diferenciálního počtu vůbec. Ve skutečnosti ho ale objevil jeho učitel Johann Bernoulli, kterému markýz platil za to, že mu bude posílat své objevy a nechá ho je vydávat pod svým jménem. Pravidlo tedy dodnes nese jméno člověka, který si ho koupil.
 \end{example}
 
-\section{Odbočka --- Válka o kalkulus}
+Na závěr malý výhled. Derivace odpovídá na otázku `znám funkci, jak rychle se mění?'. Často ale potřebujeme opak: `znám rychlost, kde jsem?' Na tuto obrácenou otázku odpovídá integrál. Že jde opravdu o obrácení derivace, a že tatáž operace zároveň počítá plochy pod grafem, říká \textbf{základní věta integrálního počtu} v sekci~\ref{sec:zvip} na straně~\pageref{sec:zvip}. Právě tato věta je to, co Newton a Leibniz objevili. Derivace samotné znali v nějaké podobě už Fermat a další.
+
+\section{Příběh --- Válka o kalkulus}
 
 Newton vymyslel diferenciální počet kolem roku 1666, během moru, kdy byla univerzita v Cambridge zavřená a on se uchýlil na rodinnou farmu. Nic ale nezveřejnil. Leibniz na totéž přišel nezávisle kolem roku 1675 a v roce 1684 to publikoval, s mnohem lepším značením, které používáme dodnes. Pak začala jedna z nejošklivějších hádek v dějinách vědy.
 

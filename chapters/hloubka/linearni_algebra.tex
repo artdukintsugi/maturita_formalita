@@ -1,0 +1,285 @@
+\label{kap:linearni-algebra}
+\mathquote{The introduction of numbers as coordinates is an act of violence.}{Hermann Weyl}
+
+Tímto začíná druhá část knihy. Maturitu máte za sebou (nebo před sebou, ale to teď nevadí) a můžeme se podívat, kam matematika vede dál. Začneme lineární algebrou, protože na ní stojí skoro všechno ostatní: diferenciální rovnice, kvantová mechanika, počítačová grafika i umělá inteligence.
+
+V kapitole~\ref{kap:rovnice} jsme poznali matice jako tabulky čísel a v kapitole~\ref{kap:analyticka} vektory jako šipky v rovině. Lineární algebra ukazuje, že to jsou dva pohledy na tutéž věc, a že `vektorem' může být mnohem víc než šipka. Polynom, funkce, signál nebo dokonce kvantový stav. Weyl v citátu výše říká, že souřadnice jsou násilí: vektor existuje i bez nich a souřadnice mu vnutíme až my, když si zvolíme bázi. Na konci kapitoly uvidíme, že správná volba báze dokáže složitý problém proměnit v triviální.
+
+\section{Vektorové prostory}
+
+\begin{definitionbox}
+  \textbf{Vektorový} (lineární) \textbf{prostor} nad tělesem $\mathbb{F}$ (obvykle $\mathbb{R}$ nebo $\mathbb{C}$, viz kapitola 2) je množina $V$ s operacemi sčítání $\vec{u} + \vec{v}$ a násobení skalárem $c\cdot\vec{u}$, pro které platí:
+  \begin{enumerate}
+    \item $(V, +)$ se chová jako sčítání v tělese: je asociativní, komutativní, existuje nulový vektor $\vec{o}$ a ke každému $\vec{u}$ opačný vektor $-\vec{u}$,
+    \item $1\cdot\vec{u} = \vec{u}$ a $(ab)\vec{u} = a(b\vec{u})$,
+    \item $a(\vec{u} + \vec{v}) = a\vec{u} + a\vec{v}$ a $(a + b)\vec{u} = a\vec{u} + b\vec{u}$.
+  \end{enumerate}
+  Prvky $V$ nazýváme \textbf{vektory}, prvky $\mathbb{F}$ \textbf{skaláry}.
+\end{definitionbox}
+
+Definice neříká nic o tom, co vektory \textit{jsou}. Říká jen, co s nimi jde dělat. Cokoli, co se dá sčítat a násobit čísly podle těchto pravidel, je vektor. To je typický krok abstraktní matematiky: místo `co to je' se ptáme `jak se to chová'.
+
+\begin{example}
+  Vektorové prostory (nad $\mathbb{R}$):
+  \begin{itemize}
+    \item $\mathbb{R}^n$, tedy $n$-tice reálných čísel se sčítáním po složkách. Pro $n = 2, 3$ jsou to šipky z kapitol~\ref{kap:analyticka} a~\ref{kap:prostor}.
+    \item $\mathcal{P}_n$, mnohočleny stupně nejvýše $n$. Sečtením dvou takových mnohočlenů i vynásobením číslem dostaneme zase mnohočlen stupně nejvýše $n$.
+    \item Matice typu $m\times n$ se sčítáním a násobením číslem z kapitoly~\ref{kap:rovnice}.
+    \item Všechny funkce $\mathbb{R}\to\mathbb{R}$, se sčítáním $(f + g)(x) = f(x) + g(x)$. Také všechny spojité funkce, nebo všechny posloupnosti.
+    \item Množina řešení soustavy $A\mathbf{x} = \mathbf{o}$ (s nulovou pravou stranou). Součet dvou řešení je řešení a násobek řešení je řešení.
+  \end{itemize}
+  Naopak množina mnohočlenů stupně \textit{přesně} $2$ vektorový prostor není: $(x^2 + 1) + (-x^2) = 1$ má stupeň $0$, a navíc v ní chybí nula.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Podprostor} je podmnožina $W\subseteq V$, která je sama vektorovým prostorem se stejnými operacemi. Stačí ověřit, že $\vec{o}\in W$ a že $W$ je uzavřená na sčítání a násobení skalárem.
+\end{definitionbox}
+
+Podprostory $\mathbb{R}^3$ jsou: počátek samotný, přímky procházející počátkem, roviny procházející počátkem a celý prostor. Přímka, která počátkem neprochází, podprostor není (neobsahuje nulový vektor). Proto je množina řešení soustavy s nenulovou pravou stranou jen posunutý podprostor, ne podprostor. To je přesně ten parametrický tvar řešení $X = A + t\vec{u}$ z kapitoly~\ref{kap:rovnice}.
+
+\section{Báze a dimenze}
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Lineární kombinace} vektorů $\vec{v}_1, \ldots, \vec{v}_k$ je vektor $c_1\vec{v}_1 + \cdots + c_k\vec{v}_k$.
+    \item \textbf{Lineární obal} $\langle\vec{v}_1, \ldots, \vec{v}_k\rangle$ je množina všech jejich lineárních kombinací. Je to vždy podprostor.
+    \item Vektory jsou \textbf{lineárně nezávislé}, pokud jediná jejich lineární kombinace rovná nulovému vektoru je ta triviální:
+    \begin{equation*}
+      c_1\vec{v}_1 + \cdots + c_k\vec{v}_k = \vec{o}\quad\Rightarrow\quad c_1 = \cdots = c_k = 0.
+    \end{equation*}
+    Jinak jsou \textbf{lineárně závislé} (některý z nich je kombinací ostatních).
+    \item \textbf{Báze} prostoru $V$ je lineárně nezávislá množina vektorů, jejíž lineární obal je celé $V$.
+    \item \textbf{Věta}: Všechny báze prostoru mají stejný počet prvků. Tento počet je \textbf{dimenze} $\dim V$.
+  \end{itemize}
+\end{definitionbox}
+
+Báze je minimální sada `stavebních kamenů', ze kterých se dá poskládat každý vektor, a to \textbf{jednoznačně}. Pokud $\vec{v} = c_1\vec{b}_1 + \cdots + c_n\vec{b}_n$, nazýváme čísla $(c_1, \ldots, c_n)$ \textbf{souřadnicemi} vektoru $\vec{v}$ v bázi $(\vec{b}_1, \ldots, \vec{b}_n)$. Jednoznačnost plyne z nezávislosti: kdyby šel $\vec{v}$ zapsat dvěma způsoby, jejich rozdíl by byla netriviální kombinace dávající $\vec{o}$.
+
+\begin{example}
+  \begin{itemize}
+    \item \textbf{Standardní báze} $\mathbb{R}^3$ je $\vec{e}_1 = (1, 0, 0)$, $\vec{e}_2 = (0, 1, 0)$, $\vec{e}_3 = (0, 0, 1)$. Dimenze je $3$.
+    \item Báze $\mathcal{P}_2$ je $1, x, x^2$, takže $\dim\mathcal{P}_2 = 3$. Mnohočlen $5 - 2x + 3x^2$ má v této bázi souřadnice $(5, -2, 3)$. Mnohočleny stupně nejvýš $2$ jsou tedy `totéž' co $\mathbb{R}^3$, jen v jiném převleku.
+    \item Vektory $(1, 2, 3)$, $(4, 5, 6)$, $(7, 8, 9)$ jsou lineárně závislé, protože $(7, 8, 9) = 2(4, 5, 6) - (1, 2, 3)$. Leží v jedné rovině a bázi $\mathbb{R}^3$ netvoří. Odpovídá tomu i to, že determinant matice z nich sestavené je nulový.
+    \item Prostor všech funkcí $\mathbb{R}\to\mathbb{R}$ nemá konečnou bázi. Má \textbf{nekonečnou dimenzi}. Těmito prostory se zabývá kapitola~\ref{kap:hilbert}.
+  \end{itemize}
+\end{example}
+
+\begin{note}
+  Lineární nezávislost se v praxi ověřuje Gaussovou eliminací z kapitoly~\ref{kap:rovnice}. Vektory zapíšeme do řádků matice a převedeme ji do odstupňovaného tvaru. Počet nenulových řádků, tedy \textbf{hodnost}, je dimenze lineárního obalu. Vektory jsou nezávislé, právě když nevznikne žádný nulový řádek.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Rozhodněte, zda vektory $(1, 1, 0)$, $(0, 1, 1)$, $(1, 0, 1)$ tvoří bázi $\mathbb{R}^3$.
+    \item Najděte bázi a dimenzi roviny $x + y + z = 0$ v $\mathbb{R}^3$.
+    \item Je množina $\{(x, y)\in\mathbb{R}^2\ |\ xy = 0\}$ (sjednocení obou os) podprostorem $\mathbb{R}^2$?
+    \item Jaké souřadnice má vektor $(3, 1)$ v bázi $(1, 1)$, $(1, -1)$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Determinant $\begin{vmatrix} 1 & 1 & 0\\ 0 & 1 & 1\\ 1 & 0 & 1\end{vmatrix} = 1 + 1 + 0 - 0 - 0 - 0 = 2\neq 0$, takže jsou nezávislé a tvoří bázi.
+    \item Řešení jsou $(x, y, -x - y) = x(1, 0, -1) + y(0, 1, -1)$. Báze $(1, 0, -1)$, $(0, 1, -1)$, dimenze $2$. Rovina je dvourozměrná, jak má být.
+    \item Není. $(1, 0)$ a $(0, 1)$ v ní leží, ale jejich součet $(1, 1)$ ne.
+    \item $c_1(1, 1) + c_2(1, -1) = (3, 1)$ dává $c_1 + c_2 = 3$, $c_1 - c_2 = 1$, tedy $(c_1, c_2) = (2, 1)$.
+  \end{enumerate}
+\end{solution}
+
+\section{Lineární zobrazení}
+
+\begin{definitionbox}
+  Zobrazení $L: V\to W$ mezi vektorovými prostory je \textbf{lineární}, pokud pro všechny vektory $\vec{u}, \vec{v}$ a skaláry $c$
+  \begin{equation*}
+    L(\vec{u} + \vec{v}) = L(\vec{u}) + L(\vec{v}),\qquad L(c\vec{u}) = cL(\vec{u}).
+  \end{equation*}
+  \begin{itemize}
+    \item \textbf{Jádro} $\mathrm{Ker}\,L = \{\vec{v}\in V\ |\ L(\vec{v}) = \vec{o}\}$,
+    \item \textbf{Obraz} $\mathrm{Im}\,L = \{L(\vec{v})\ |\ \vec{v}\in V\}$.
+  \end{itemize}
+  Obojí jsou podprostory a platí \textbf{věta o dimenzi jádra a obrazu}:
+  \begin{equation*}
+    \dim\mathrm{Ker}\,L + \dim\mathrm{Im}\,L = \dim V.
+  \end{equation*}
+\end{definitionbox}
+
+Lineární zobrazení je takové, které `respektuje' strukturu prostoru: je jedno, jestli vektory nejdřív sečtete a pak zobrazíte, nebo naopak. V rovině jsou lineární zobrazení přesně ta, která zachovávají počátek a převádějí rovnoběžné přímky na rovnoběžné (nebo je zplácnou do bodu): otočení kolem počátku, osové souměrnosti podle přímek přes počátek, stejnolehlosti se středem v počátku, zkosení a projekce. Posunutí lineární není, protože posune i počátek.
+
+\begin{definitionbox}
+  \textbf{Matice lineárního zobrazení}: Nechť $(\vec{b}_1, \ldots, \vec{b}_n)$ je báze $V$. Lineární zobrazení je jednoznačně určeno tím, kam pošle vektory báze, protože
+  \begin{equation*}
+    L(c_1\vec{b}_1 + \cdots + c_n\vec{b}_n) = c_1L(\vec{b}_1) + \cdots + c_nL(\vec{b}_n).
+  \end{equation*}
+  Pokud souřadnice obrazů $L(\vec{b}_j)$ zapíšeme do \textbf{sloupců} matice $A$, pak souřadnice obrazu libovolného vektoru dostaneme jako $A\mathbf{x}$.
+
+  \vspace{0.2cm}
+
+  \textbf{Věta}: Složení lineárních zobrazení odpovídá \textbf{součinu} jejich matic.
+\end{definitionbox}
+
+Tady konečně přichází vysvětlení, které jsme slíbili v kapitole~\ref{kap:rovnice}: násobení matic je definováno `divně' proto, že odpovídá skládání zobrazení. A skládání zobrazení není komutativní (kapitola~\ref{kap:funkce}), takže ani násobení matic není.
+
+\begin{example}
+  \begin{itemize}
+    \item \textbf{Otočení} roviny o úhel $\varphi$: vektor $\vec{e}_1 = (1, 0)$ se otočí na $(\cos\varphi, \sin\varphi)$, vektor $\vec{e}_2 = (0, 1)$ na $(-\sin\varphi, \cos\varphi)$. Matice je
+    \begin{equation*}
+      R_\varphi = \begin{pmatrix}\cos\varphi & -\sin\varphi\\ \sin\varphi & \cos\varphi\end{pmatrix}.
+    \end{equation*}
+    Složení dvou otočení je otočení o součet úhlů, takže $R_\alpha R_\beta = R_{\alpha + \beta}$. Roznásobte si to a uvidíte, že jste právě znovu odvodili součtové vzorce z kapitoly~\ref{kap:goniometrie}.
+    \item \textbf{Derivace} na $\mathcal{P}_2$: $D(a + bx + cx^2) = b + 2cx$. Je lineární, protože derivace součtu je součet derivací. V bázi $1, x, x^2$ je $D(1) = 0$, $D(x) = 1$, $D(x^2) = 2x$, takže
+    \begin{equation*}
+      D = \begin{pmatrix} 0 & 1 & 0\\ 0 & 0 & 2\\ 0 & 0 & 0\end{pmatrix}.
+    \end{equation*}
+    Jádro jsou konstanty (dimenze $1$), obraz jsou mnohočleny stupně nejvýš $1$ (dimenze $2$), a $1 + 2 = 3 = \dim\mathcal{P}_2$. Derivace je tedy matice. To je myšlenka, která o kus dál povede ke kvantové mechanice.
+  \end{itemize}
+\end{example}
+
+\section{Determinant znovu a pořádně}
+
+V kapitole~\ref{kap:rovnice} jsme determinant zavedli jako číslo, které se objeví při řešení soustavy. Teď můžeme říct, co doopravdy znamená.
+
+\begin{definitionbox}
+  \textbf{Geometrický význam}: Lineární zobrazení s maticí $A$ (typu $n\times n$) zvětší každý obsah (v $\mathbb{R}^2$) nebo objem (v $\mathbb{R}^3$) $|\det A|$-krát. Znaménko determinantu říká, zda zobrazení zachovává ($+$), nebo mění ($-$) orientaci.
+
+  \textbf{Vlastnosti}:
+  \begin{enumerate}
+    \item $\det(AB) = \det A\cdot\det B$,
+    \item $A$ je invertibilní, právě když $\det A\neq 0$,
+    \item prohození dvou řádků změní znaménko, přičtení násobku jednoho řádku k jinému determinant nezmění,
+    \item determinant trojúhelníkové matice je součin prvků na diagonále.
+  \end{enumerate}
+\end{definitionbox}
+
+Vlastnost 1 je teď zřejmá: pokud jedno zobrazení zvětší objem dvakrát a druhé třikrát, jejich složení ho zvětší šestkrát. Vlastnost 2 také: zobrazení s nulovým determinantem `zplácne' prostor do nižší dimenze (například rovinu do přímky) a to se nedá vrátit zpátky, protože jsme ztratili informaci. A vlastnosti 3 a 4 dávají nejrychlejší způsob, jak determinant velké matice spočítat: Gaussovou eliminací ji převedeme na trojúhelníkovou a vynásobíme diagonálu. Pro matici $10\times 10$ je to pár stovek operací, zatímco obecný vzorec (zobecnění Sarrusova pravidla) má $10! = 3\,628\,800$ členů.
+
+\section{Vlastní čísla a vlastní vektory}
+
+Většina vektorů při lineárním zobrazení změní směr. Některé ale ne: zobrazení je jen natáhne nebo zkrátí. Tyto výjimečné směry prozradí o zobrazení skoro všechno.
+
+\begin{definitionbox}
+  Nenulový vektor $\vec{v}$ je \textbf{vlastní vektor} matice $A$ s \textbf{vlastním číslem} $\lambda$, pokud
+  \begin{equation*}
+    A\vec{v} = \lambda\vec{v}.
+  \end{equation*}
+  Vlastní čísla jsou kořeny \textbf{charakteristického polynomu}
+  \begin{equation*}
+    \det(A - \lambda I) = 0.
+  \end{equation*}
+\end{definitionbox}
+
+Proč determinant? Rovnice $A\vec{v} = \lambda\vec{v}$ je totéž co $(A - \lambda I)\vec{v} = \vec{o}$. Tato homogenní soustava má nenulové řešení, právě když matice $A - \lambda I$ není invertibilní, tedy když má nulový determinant (Frobeniova věta z kapitoly~\ref{kap:rovnice}).
+
+\begin{example}
+  Najděme vlastní čísla a vektory matice $A = \begin{pmatrix} 2 & 1\\ 1 & 2\end{pmatrix}$.
+  \begin{equation*}
+    \det(A - \lambda I) = \begin{vmatrix} 2 - \lambda & 1\\ 1 & 2 - \lambda\end{vmatrix} = {(2 - \lambda)}^2 - 1 = \lambda^2 - 4\lambda + 3 = (\lambda - 1)(\lambda - 3).
+  \end{equation*}
+  Vlastní čísla jsou $1$ a $3$. Pro $\lambda = 3$ řešíme $\begin{pmatrix}-1 & 1\\ 1 & -1\end{pmatrix}\vec{v} = \vec{o}$, tedy $\vec{v} = (1, 1)$. Pro $\lambda = 1$ řešíme $\begin{pmatrix}1 & 1\\ 1 & 1\end{pmatrix}\vec{v} = \vec{o}$, tedy $\vec{v} = (1, -1)$.
+
+  Geometricky: zobrazení natáhne rovinu třikrát ve směru úhlopříčky $y = x$ a ve směru $y = -x$ ji nechá být. Celý efekt matice se dá popsat dvěma čísly a dvěma směry.
+\end{example}
+
+\begin{example}
+  Otočení o úhel $\varphi\notin\{0, \pi\}$ nemá žádný reálný vlastní vektor, protože otočí \textit{každý} směr. Charakteristický polynom $\lambda^2 - 2\lambda\cos\varphi + 1$ má záporný diskriminant a jeho kořeny jsou komplexní: $\lambda = \cos\varphi\pm i\sin\varphi$. To je přesně komplexní číslo, jehož násobení je otočením, jak jsme viděli v kapitole~\ref{kap:komplexni}. Matematika je zkrátka jeden velký propojený celek.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Diagonalizace}: Pokud má matice $A$ typu $n\times n$ celkem $n$ lineárně nezávislých vlastních vektorů, zapíšeme je do sloupců matice $P$ a vlastní čísla na diagonálu matice $D$. Pak
+  \begin{equation*}
+    A = PDP^{-1},\qquad\text{a tedy}\qquad A^k = PD^kP^{-1}.
+  \end{equation*}
+  Mocnina diagonální matice je přitom triviální: stačí umocnit čísla na diagonále.
+\end{definitionbox}
+
+Tohle je ta slíbená `správná volba báze'. V bázi z vlastních vektorů je zobrazení jen natažením podél os, tedy diagonální maticí. A s diagonální maticí se počítá jako s čísly. Násilí souřadnic jsme nahradili souřadnicemi, které si zobrazení vybralo samo.
+
+\begin{example}\label{ex:binet}
+  Fibonacciho posloupnost z kapitoly~\ref{kap:posloupnosti} se dá zapsat maticově:
+  \begin{equation*}
+    \begin{pmatrix} F_{n+1}\\ F_n\end{pmatrix} = \begin{pmatrix} 1 & 1\\ 1 & 0\end{pmatrix}\begin{pmatrix} F_n\\ F_{n-1}\end{pmatrix},\qquad\text{tedy}\qquad\begin{pmatrix} F_{n+1}\\ F_n\end{pmatrix} = {\begin{pmatrix} 1 & 1\\ 1 & 0\end{pmatrix}}^n\begin{pmatrix} 1\\ 0\end{pmatrix}.
+  \end{equation*}
+  Charakteristický polynom je $\lambda^2 - \lambda - 1$, s kořeny $\varphi = \frac{1 + \sqrt{5}}{2}$ (zlatý řez!) a $\psi = \frac{1 - \sqrt{5}}{2}$. Po diagonalizaci vyjde \textbf{Binetův vzorec}
+  \begin{equation*}
+    F_n = \frac{\varphi^n - \psi^n}{\sqrt{5}}.
+  \end{equation*}
+  Vzorec plný iracionálních čísel dává pro každé $n$ celé číslo. A protože $|\psi| < 1$, je $\psi^n$ pro velká $n$ zanedbatelné, a tedy $\frac{F_{n+1}}{F_n}\to\varphi$. To je důkaz toho, co jsme v kapitole o posloupnostech jen pozorovali.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Najděte vlastní čísla a vektory matice $\begin{pmatrix} 4 & 1\\ 2 & 3\end{pmatrix}$.
+    \item Jaká jsou vlastní čísla a vektory osové souměrnosti podle přímky $y = x$? Najděte nejdřív její matici.
+    \item Ověřte Binetův vzorec pro $n = 1, 2, 3$.
+    \item Dokažte, že součin vlastních čísel matice $2\times 2$ je roven jejímu determinantu a součet stopě (součtu prvků na diagonále).
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (d) použijte Vietovy vzorce z kapitoly~\ref{kap:kvadraticke} na charakteristický polynom.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\lambda^2 - 7\lambda + 10 = 0$, $\lambda\in\{2, 5\}$. Pro $5$: $\vec{v} = (1, 1)$. Pro $2$: $\vec{v} = (1, -2)$.
+    \item Matice $\begin{pmatrix} 0 & 1\\ 1 & 0\end{pmatrix}$ (prohodí souřadnice). Vlastní číslo $1$ s vektorem $(1, 1)$ (body na ose se nehnou), vlastní číslo $-1$ s vektorem $(1, -1)$ (kolmý směr se překlopí).
+    \item $n = 1$: $\frac{\varphi - \psi}{\sqrt{5}} = \frac{\sqrt{5}}{\sqrt{5}} = 1$. $n = 2$: $\frac{\varphi^2 - \psi^2}{\sqrt{5}} = \frac{(\varphi - \psi)(\varphi + \psi)}{\sqrt{5}} = 1\cdot 1 = 1$. $n = 3$: $\varphi^3 - \psi^3 = (\varphi - \psi)(\varphi^2 + \varphi\psi + \psi^2)$, kde $\varphi^2 + \psi^2 = (\varphi + \psi)^2 - 2\varphi\psi = 1 + 2 = 3$ a $\varphi\psi = -1$, takže $F_3 = 2$.
+    \item Pro $A = \begin{pmatrix} a & b\\ c & d\end{pmatrix}$ je $\det(A - \lambda I) = \lambda^2 - (a + d)\lambda + (ad - bc)$. Podle Vieta je součet kořenů $a + d$ a součin $ad - bc = \det A$.
+  \end{enumerate}
+\end{solution}
+
+\section{Skalární součin a ortogonalita}
+
+\begin{definitionbox}
+  \textbf{Skalární součin} na reálném vektorovém prostoru je zobrazení $\langle\vec{u}, \vec{v}\rangle$, které je symetrické, lineární v každé složce a pozitivně definitní ($\langle\vec{u}, \vec{u}\rangle > 0$ pro $\vec{u}\neq\vec{o}$). Definuje \textbf{normu} (délku) $\|\vec{u}\| = \sqrt{\langle\vec{u}, \vec{u}\rangle}$ a pojem kolmosti: $\vec{u}\perp\vec{v}\Leftrightarrow\langle\vec{u}, \vec{v}\rangle = 0$.
+
+  \vspace{0.2cm}
+
+  \textbf{Cauchyova--Schwarzova nerovnost}: $|\langle\vec{u}, \vec{v}\rangle|\leq\|\vec{u}\|\cdot\|\vec{v}\|$.
+
+  \textbf{Ortonormální báze} je báze z navzájem kolmých jednotkových vektorů. V ní se souřadnice počítají snadno: $c_i = \langle\vec{v}, \vec{b}_i\rangle$.
+\end{definitionbox}
+
+Na $\mathbb{R}^n$ je to známý součin $u_1v_1 + \cdots + u_nv_n$. Ale na prostoru spojitých funkcí na $[a, b]$ můžeme definovat
+\begin{equation*}
+  \langle f, g\rangle = \int_a^b f(x)g(x)\,\mathrm{d}x
+\end{equation*}
+a najednou můžeme mluvit o `délce funkce' a o tom, že dvě funkce jsou `kolmé'. Funkce $\sin x$ a $\cos x$ jsou na $[0, 2\pi]$ kolmé, protože $\int_0^{2\pi}\sin x\cos x\,\mathrm{d}x = 0$. Tahle zdánlivě šílená myšlenka je základem Fourierových řad v kapitole~\ref{kap:rady} a celé kapitoly~\ref{kap:hilbert}.
+
+Cauchyova--Schwarzova nerovnost je důvod, proč je korelační koeficient z kapitoly~\ref{kap:statistika} vždy mezi $-1$ a $1$ a proč je kosinus úhlu mezi vektory vůbec dobře definovaný.
+
+\section{Odbočka --- Proč jsou matice symetrické zajímavé}
+
+Matice $A$ je \textbf{symetrická}, pokud $A = A^T$, tedy $a_{ij} = a_{ji}$. Matice $\begin{pmatrix} 2 & 1\\ 1 & 2\end{pmatrix}$ z našeho příkladu je symetrická a její vlastní vektory $(1, 1)$ a $(1, -1)$ jsou na sebe kolmé. To není náhoda.
+
+\begin{definitionbox}
+  \textbf{Spektrální věta}: Každá reálná symetrická matice má pouze reálná vlastní čísla a existuje ortonormální báze složená z jejích vlastních vektorů. Neboli $A = QDQ^T$, kde $Q$ je ortogonální matice (otočení nebo zrcadlení) a $D$ diagonální.
+\end{definitionbox}
+
+\begin{proof}[(kolmosti vlastních vektorů)]
+  Nechť $A\vec{u} = \lambda\vec{u}$ a $A\vec{v} = \mu\vec{v}$ s $\lambda\neq\mu$. Pro symetrickou matici je $\langle A\vec{u}, \vec{v}\rangle = \langle\vec{u}, A\vec{v}\rangle$ (rozepište si to v souřadnicích). Tedy $\lambda\langle\vec{u}, \vec{v}\rangle = \mu\langle\vec{u}, \vec{v}\rangle$, neboli $(\lambda - \mu)\langle\vec{u}, \vec{v}\rangle = 0$. Protože $\lambda\neq\mu$, je $\langle\vec{u}, \vec{v}\rangle = 0$.
+\end{proof}
+
+Geometricky věta říká, že každé zobrazení se symetrickou maticí je jen natažení podél několika navzájem kolmých os. Žádné kroucení. Tyto osy se nazývají \textbf{hlavní osy}. Právě tak se dá libovolná elipsa $ax^2 + 2bxy + cy^2 = 1$ (s členem $xy$, který jsme v kapitole~\ref{kap:kuzelosecky} radši vynechali) otočit do polohy, kde je člen $xy$ nulový. Ve statistice se stejný nápad jmenuje \textbf{analýza hlavních komponent} a používá se k nalezení nejdůležitějších směrů v datech. V kvantové mechanice jsou měřitelné veličiny symetrické (přesněji hermitovské) matice a vlastní čísla jsou možné výsledky měření. A v mechanice určují vlastní vektory matice setrvačnosti osy, kolem kterých se těleso může stabilně otáčet. Proto se hozený mobil točí klidně kolem nejdelší a nejkratší osy, ale kolem prostřední se divoce převrací. (Zkuste to, nad postelí.)
+
+\section{Příběh --- Muž se zbraní v holi}
+
+Slovo \textit{matice} (anglicky \textit{matrix}, z latinského `děloha', protože z ní `rodí' determinanty) zavedl v roce 1850 britský matematik James Joseph Sylvester. Spolu se svým přítelem Arthurem Cayleym, se kterým se seznámil u soudu, protože oba v té době živila advokacie, položil základy teorie matic.
+
+Sylvester byl Žid a v tehdejší Anglii proto nemohl získat titul na Cambridge ani tam učit, protože to vyžadovalo přísahu věrnosti anglikánské církvi. Odešel tedy v roce 1841 učit na University of Virginia ve Spojených státech. Vydržel tam jen několik měsíců. Podle historek se mu studenti z bohatých plantážnických rodin vysmívali, a když ho jeden z nich napadl, Sylvester tasil meč ukrytý ve vycházkové holi a bodl ho. Student přežil, Sylvester prchl do New Yorku a odtud zpátky do Anglie, kde se živil jako pojistný matematik a advokát.
+
+K matematice na univerzitě se vrátil až v jednašedesáti letech, kdy ho pozvali na nově založenou univerzitu Johnse Hopkinse v Baltimoru, a v osmašedesáti se konečně stal profesorem v Oxfordu. Zemřel v roce 1897 s pověstí jednoho z nejvýznamnějších matematiků své doby. Sám sebe rád nazýval `matematickým Adamem', protože pojmenoval tolik nových věcí.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je vektorový prostor? Uveďte příklady, které nejsou šipkami.
+    \item Co je lineární nezávislost, báze a dimenze? Proč jsou souřadnice v bázi jednoznačné?
+    \item Co je lineární zobrazení a jeho matice? Proč násobení matic odpovídá skládání zobrazení?
+    \item Co je geometrický význam determinantu? Proč platí $\det(AB) = \det A\det B$?
+    \item Co jsou vlastní čísla a vlastní vektory? Proč je hledáme pomocí $\det(A - \lambda I) = 0$?
+    \item Co je diagonalizace a k čemu se hodí? Jak z ní plyne Binetův vzorec?
+    \item Co říká spektrální věta a kde se používá?
+  \end{enumerate}
+\end{problem}

@@ -2,7 +2,7 @@
 \usepackage[czech]{babel}
 \usepackage{graphicx} 
 \usepackage{tikz}
-\usetikzlibrary{decorations.pathmorphing, calc, babel}
+\usetikzlibrary{decorations.pathmorphing, decorations.pathreplacing, calc, babel}
 \usepackage{xcolor}
 \usepackage{halloweenmath}
 \usepackage{amsmath, amssymb}
@@ -107,7 +107,7 @@
   \begin{tcolorbox}[colback=white, sharp corners]}{\end{tcolorbox}}
 
   \newenvironment{definitionbox}[1][]{
-    \begin{tcolorbox}[enhanced, breakable,
+    \begin{tcolorbox}[enhanced jigsaw, breakable, pad at break*=2mm,
       colback=black!05!white,
       colframe=black,
       fonttitle=\bfseries,
@@ -117,7 +117,8 @@
       boxrule=0.5mm,
       frame style={ultra thick, double distance=1pt, decorate, decoration={random steps, segment length=3mm, amplitude=0.5mm}},
       drop fuzzy shadow,
-      overlay={
+      % netopyr jen na prvni casti rozdeleneho ramecku
+      overlay unbroken and first={
         \node[anchor=north east, font=\small] at (frame.north east) {$\mathleftbat$};
       }
     ]
@@ -125,16 +126,28 @@
     \end{tcolorbox}
   }
 
+% Krychle ABCDEFGH s hranou 1 ve volnem rovnobeznem promitani (pro stereometrii)
+\tikzset{krychle/.style={x={(1cm,0cm)}, y={(0.45cm,0.35cm)}, z={(0cm,1cm)}}}
+\newcommand{\krychle}{%
+  \coordinate (A) at (0,0,0); \coordinate (B) at (1,0,0); \coordinate (C) at (1,1,0); \coordinate (D) at (0,1,0);
+  \coordinate (E) at (0,0,1); \coordinate (F) at (1,0,1); \coordinate (G) at (1,1,1); \coordinate (H) at (0,1,1);
+  \draw[thick] (A) -- (B) -- (C) -- (G) -- (H) -- (E) -- cycle;
+  \draw[thick] (B) -- (F) -- (G) (E) -- (F);
+  \draw[dashed, gray] (A) -- (D) -- (C) (D) -- (H);
+  \node[below left] at (A) {\scriptsize $A$}; \node[below right] at (B) {\scriptsize $B$}; \node[right] at (C) {\scriptsize $C$}; \node[left] at (D) {\scriptsize $D$};
+  \node[left] at (E) {\scriptsize $E$}; \node[right] at (F) {\scriptsize $F$}; \node[above right] at (G) {\scriptsize $G$}; \node[above left] at (H) {\scriptsize $H$};
+}
+
 % Ornament na konec kapitoly
 \newcommand{\koneckapitoly}{%
-  \par\vspace{1.5em}
-  \begin{center}
+  % \nopagebreak drzi ornament u posledniho odstavce, aby nikdy nebyl sam na nove strance
+  \par\nopagebreak[4]\vspace{1.5em}\nopagebreak[4]
+  \noindent\makebox[\linewidth]{%
     \begin{tikzpicture}
       \draw[thick, decorate, decoration={random steps, segment length=3mm, amplitude=0.4mm}] (-4,0) -- (-0.7,0);
       \node[scale=1.8] at (0,0) {$\mathbat$};
       \draw[thick, decorate, decoration={random steps, segment length=3mm, amplitude=0.4mm}] (0.7,0) -- (4,0);
-    \end{tikzpicture}
-  \end{center}
+    \end{tikzpicture}}\par
 }
 
 % Nadpisy kapitol: "Kapitola N" frakturou (Euler Fraktur nema ceske znaky,
@@ -187,6 +200,8 @@
 \addcontentsline{toc}{chapter}{Úvod}
 \input{chapters/uvod.tex}
 
+
+\part{Maturita}
 
 \chapter{Matematická logika a důkazy}
 \input{chapters/dukazy.tex}
@@ -287,5 +302,15 @@
 \chapter{Integrály}
 \input{chapters/ustni/integraly.tex}
 \koneckapitoly
+
+\part{Za hranicí maturity}
+
+\chapter{Lineární algebra}
+\input{chapters/hloubka/linearni_algebra.tex}
+\koneckapitoly
+
+\chapter*{Poznámka o použití umělé inteligence}
+\addcontentsline{toc}{chapter}{Poznámka o použití umělé inteligence}
+\input{chapters/ai.tex}
 
 \end{document}
