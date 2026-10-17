@@ -1,0 +1,775 @@
+\mathquote{Do not worry about your difficulties in mathematics. I can assure you mine are still greater.}{Albert Einstein}
+
+Rovnice jsou pravděpodobně to první, co si člověk představí pod slovem `matematika'. Najdi $x$. V této kapitole si ale ukážeme, že řešení rovnic není jen mechanické přehazování čísel z jedné strany na druhou. Za každým krokem stojí logika z první kapitoly a pokud ji pochopíme, vyhneme se většině chyb. Začneme lineárními rovnicemi, pak se podíváme na nerovnice a nakonec na soustavy rovnic.
+
+\section{Co je to rovnice?}
+
+V první kapitole jsme si řekli, že výrok je tvrzení, o kterém lze rozhodnout, zda je pravdivé. Je tedy $2x + 1 = 7$ výrok? Není! Dokud nevíme, co je $x$, nemůžeme o pravdivosti rozhodnout. Pro $x = 3$ je to pravda, pro $x = 0$ nepravda. Takovým tvrzením jsme v odbočce o predikátové logice říkali predikáty.
+
+\begin{definitionbox}
+  \textbf{Rovnice} s neznámou $x$ je zápis $L(x) = P(x)$, kde $L$ a $P$ jsou výrazy. Výraz $L(x)$ nazýváme \textbf{levá strana} a $P(x)$ \textbf{pravá strana} rovnice.
+
+  \vspace{0.2cm}
+
+  \textbf{Definiční obor rovnice} $D$ je množina všech čísel, pro která mají smysl obě strany rovnice.
+
+  \textbf{Řešení} (také kořen) rovnice je každé číslo $x_0\in D$, pro které je $L(x_0) = P(x_0)$ pravdivý výrok.
+
+  \textbf{Množina všech řešení} (značíme $K$, jako kořeny) je tedy
+  \begin{equation*}
+    K = \{x\in D\ |\ L(x) = P(x)\}.
+  \end{equation*}
+  \textbf{Vyřešit rovnici} znamená najít množinu $K$, tedy najít \textit{všechna} řešení a ukázat, že jiná neexistují.
+\end{definitionbox}
+
+Poslední věta je důležitá. Pokud uhodnete, že $x = 3$ je řešením $2x + 1 = 7$, ještě jste rovnici nevyřešili. Musíte také ukázat, že žádné jiné řešení neexistuje. K tomu nám slouží ekvivalentní úpravy.
+
+\begin{definitionbox}
+  \textbf{Ekvivalentní úprava} rovnice je úprava, po které má nová rovnice \textbf{stejnou} množinu řešení jako původní rovnice. Mezi ekvivalentní úpravy patří:
+  \begin{enumerate}
+    \item přičtení (odečtení) stejného čísla nebo výrazu, který je definovaný na celém $D$, k oběma stranám,
+    \item vynásobení (vydělení) obou stran stejným \textbf{nenulovým} číslem nebo výrazem, který je na $D$ definovaný a nenulový,
+    \item záměna stran rovnice,
+    \item úprava jedné strany rovnice (roznásobení, sečtení podobných členů, \ldots), pokud se nezmění definiční obor.
+  \end{enumerate}
+
+  \textbf{Důsledková úprava} je úprava, po které nová rovnice obsahuje \textbf{všechna} řešení té původní, ale může obsahovat i nějaká navíc. Typicky je to \textbf{umocnění obou stran} nebo vynásobení výrazem, který může být nulový. Po důsledkové úpravě je \textbf{nutné provést zkoušku}.
+\end{definitionbox}
+
+Pokud se na to podíváme optikou první kapitoly, ekvivalentní úprava znamená, že mezi původní a novou rovnicí platí ekvivalence $\Leftrightarrow$. Důsledková úprava zaručuje jen implikaci $\Rightarrow$. Proto ty názvy.
+
+\begin{example}
+  Proč je násobení nulou zakázané? Vezměme rovnici $x = 2$, která má jediné řešení. Pokud obě strany vynásobíme nulou, dostaneme $0 = 0$, což platí pro všechna $x$. Najednou máme nekonečně mnoho `řešení'.
+
+  Proč umocnění není ekvivalentní? Vezměme opět $x = 2$. Umocněním dostaneme $x^2 = 4$, která má řešení $2$ a $-2$. Řešení $-2$ přibylo. Z $a = b$ plyne $a^2 = b^2$, ale z $a^2 = b^2$ plyne jen $a = b$ \textbf{nebo} $a = -b$.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Zkouška} je dosazení nalezeného čísla do \textbf{původní} rovnice (zvlášť levá a pravá strana). Zkouška je \textbf{nutnou} součástí řešení, pokud jsme použili důsledkovou úpravu. Pokud jsme používali jen ekvivalentní úpravy, je zkouška pouze kontrolou, zda jsme neudělali početní chybu. I tak ji doporučujeme dělat vždy.
+\end{definitionbox}
+
+\section{Lineární rovnice}
+
+\begin{definitionbox}
+  \textbf{Lineární rovnice} s neznámou $x$ je rovnice, kterou lze ekvivalentními úpravami převést na tvar
+  \begin{equation*}
+    ax + b = 0,\qquad a, b\in\mathbb{R}.
+  \end{equation*}
+\end{definitionbox}
+
+Lineární rovnici umíme vyřešit úplně obecně. To je vzácná věc, takže si to užijme.
+
+\begin{definitionbox}
+  \textbf{Věta (o řešení lineární rovnice)}: Pro rovnici $ax + b = 0$ s neznámou $x\in\mathbb{R}$ platí:
+  \begin{enumerate}
+    \item Pokud $a\neq 0$, má rovnice právě jedno řešení $x = -\frac{b}{a}$, tedy $K = \left\{-\frac{b}{a}\right\}$.
+    \item Pokud $a = 0$ a $b\neq 0$, nemá rovnice žádné řešení, tedy $K = \emptyset$.
+    \item Pokud $a = 0$ a $b = 0$, je řešením každé reálné číslo, tedy $K = \mathbb{R}$.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{proof}
+  \begin{enumerate}
+    \item Pokud $a\neq 0$, můžeme k oběma stranám přičíst $-b$ a obě strany vydělit číslem $a$. Obě úpravy jsou ekvivalentní, takže
+    \begin{equation*}
+      ax + b = 0\quad\Leftrightarrow\quad ax = -b\quad\Leftrightarrow\quad x = -\frac{b}{a}.
+    \end{equation*}
+    \item Pokud $a = 0$, má rovnice tvar $0\cdot x + b = 0$, neboli $b = 0$. To je ale výrok, který vůbec nezávisí na $x$. Pokud $b\neq 0$, je nepravdivý pro všechna $x$, takže $K = \emptyset$.
+    \item Ze stejného důvodu je pro $b = 0$ výrok $0 = 0$ pravdivý pro všechna $x$, takže $K = \mathbb{R}$.
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Vyřešme rovnici $3(x - 2) - 2(x + 1) = 4 - x$.
+  \begin{align*}
+    3x - 6 - 2x - 2 &= 4 - x,\\
+    x - 8 &= 4 - x,\\
+    2x &= 12,\\
+    x &= 6.
+  \end{align*}
+  Zkouška: $L(6) = 3\cdot 4 - 2\cdot 7 = -2$, $P(6) = 4 - 6 = -2$. Tedy $L(6) = P(6)$ a $K = \{6\}$.
+\end{example}
+
+\begin{example}
+  Vyřešme rovnici $2(x + 3) = 2x + 5$. Roznásobením dostaneme $2x + 6 = 2x + 5$ a po odečtení $2x$ dostaneme $6 = 5$. To je nepravdivý výrok, tedy $K = \emptyset$.
+
+  Naopak rovnice $2(x + 3) = 2x + 6$ po stejné úpravě vede na $6 = 6$, a tedy $K = \mathbb{R}$. Takovým rovnicím se někdy říká \textbf{identity}. Například všechny vzorce z předchozí kapitoly jsou identity.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $5x - 3 = 2x + 9$,
+    \item $\dfrac{x - 1}{2} - \dfrac{x + 2}{3} = 1$,
+    \item $(x - 2)^2 - (x + 1)^2 = 3$,
+    \item $\dfrac{2x + 1}{4} - \dfrac{x}{2} = \dfrac{1}{4}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (b) a (d) vynásobte obě strany nejmenším společným násobkem jmenovatelů. U (c) se nelekněte druhých mocnin. Po roznásobení se $x^2$ odečtou.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $3x = 12$, tedy $K = \{4\}$.
+    \item Vynásobíme šesti: $3(x - 1) - 2(x + 2) = 6$, tedy $x - 7 = 6$ a $K = \{13\}$.
+    \item $x^2 - 4x + 4 - x^2 - 2x - 1 = 3$, tedy $-6x + 3 = 3$ a $K = \{0\}$.
+    \item Vynásobíme čtyřmi: $2x + 1 - 2x = 1$, tedy $1 = 1$ a $K = \mathbb{R}$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Rovnice s neznámou ve jmenovateli}
+
+Pokud se neznámá objeví ve jmenovateli, musíme nejdříve určit definiční obor. Pak rovnici vynásobíme společným jmenovatelem. Tato úprava je ekvivalentní jen na definičním oboru, protože na něm je jmenovatel nenulový. Proto musíme nakonec zkontrolovat, zda výsledek do definičního oboru patří.
+
+\begin{example}
+  Vyřešme rovnici
+  \begin{equation*}
+    \frac{3}{x - 2} + \frac{1}{x} = \frac{6}{x(x - 2)}.
+  \end{equation*}
+  Podmínky: $x\neq 0$, $x\neq 2$. Vynásobíme $x(x - 2)$:
+  \begin{align*}
+    3x + (x - 2) &= 6,\\
+    4x &= 8,\\
+    x &= 2.
+  \end{align*}
+  Jenže $x = 2$ nepatří do definičního oboru! Rovnice tedy nemá řešení, $K = \emptyset$. Pokud bychom zapomněli na podmínky, napsali bychom špatný výsledek. Zkouškou bychom chybu odhalili také, protože bychom zjistili, že do původní rovnice $2$ dosadit nejde.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\dfrac{x + 1}{x - 1} = 3$,
+    \item $\dfrac{2}{x + 3} - \dfrac{1}{x - 3} = \dfrac{x - 15}{x^2 - 9}$,
+    \item $\dfrac{x}{x - 1} - \dfrac{1}{x + 1} = \dfrac{x^2 + 1}{x^2 - 1}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x\neq 1$. Pak $x + 1 = 3x - 3$, tedy $x = 2$ a $K = \{2\}$.
+    \item $x\neq\pm 3$. Vynásobíme $(x + 3)(x - 3)$: $2(x - 3) - (x + 3) = x - 15$, tedy $x - 9 = x - 15$, neboli $-9 = -15$. $K = \emptyset$.
+    \item $x\neq\pm 1$. Vynásobíme $(x - 1)(x + 1)$: $x(x + 1) - (x - 1) = x^2 + 1$, tedy $x^2 + 1 = x^2 + 1$. To platí vždy, ale musíme vyřadit čísla mimo definiční obor: $K = \mathbb{R}\setminus\{-1, 1\}$.
+  \end{enumerate}
+  Výsledek (c) je pěkná past. Rovnice je `skoro' identita, ale podmínky z ní vyřazují dva body.
+\end{solution}
+
+\subsection{Rovnice s parametrem}
+
+Občas v rovnici kromě neznámé vystupuje ještě nějaké další písmeno, takzvaný \textbf{parametr}. Parametr je číslo, které neznáme, ale je pevně dané. Úkolem je vyřešit rovnici pro \textit{všechny} možné hodnoty parametru. Tomuto rozboru říkáme \textbf{diskuze}. Pro lineární rovnice nám přesně řekne, co dělat, věta o řešení lineární rovnice.
+
+\begin{example}
+  Vyřešme rovnici $a(x - 1) = 2x + 3$ s neznámou $x\in\mathbb{R}$ a parametrem $a\in\mathbb{R}$.
+
+  Převedeme na tvar z věty:
+  \begin{equation*}
+    ax - a = 2x + 3\quad\Leftrightarrow\quad (a - 2)x = a + 3.
+  \end{equation*}
+  Nyní musíme rozlišit, zda je koeficient u $x$ nulový.
+  \begin{itemize}
+    \item Pokud $a\neq 2$, můžeme dělit a $x = \frac{a + 3}{a - 2}$.
+    \item Pokud $a = 2$, dostáváme $0\cdot x = 5$, což nemá řešení.
+  \end{itemize}
+  Výsledek se obvykle zapisuje do tabulky:
+  \begin{center}
+    \begin{tabular}{|c|c|}
+      \hline
+      Parametr & Množina řešení \\
+      \hline
+      $a = 2$ & $K = \emptyset$ \\
+      $a\in\mathbb{R}\setminus\{2\}$ & $K = \left\{\frac{a + 3}{a - 2}\right\}$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{example}
+
+\begin{problem}
+  Vyřešte s neznámou $x\in\mathbb{R}$ a parametrem $p\in\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $px + 1 = x + p$,
+    \item $p^2x - 4 = 2p + 4x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $(p - 1)x = p - 1$. Pro $p\neq 1$ je $K = \{1\}$. Pro $p = 1$ dostaneme $0 = 0$, tedy $K = \mathbb{R}$.
+    \item $(p^2 - 4)x = 2p + 4$, neboli $(p - 2)(p + 2)x = 2(p + 2)$.
+    \begin{itemize}
+      \item Pro $p = 2$: $0\cdot x = 8$, tedy $K = \emptyset$.
+      \item Pro $p = -2$: $0\cdot x = 0$, tedy $K = \mathbb{R}$.
+      \item Pro $p\neq\pm 2$: $x = \frac{2(p + 2)}{(p - 2)(p + 2)} = \frac{2}{p - 2}$, tedy $K = \left\{\frac{2}{p - 2}\right\}$.
+    \end{itemize}
+  \end{enumerate}
+\end{solution}
+
+\subsection{Vyjádření neznámé ze vzorce}
+
+Velice praktická dovednost, zejména pro fyziku, je vyjádřit jednu veličinu ze vzorce. Je to vlastně jen řešení rovnice, ve které je `neznámou' jedno písmeno a ostatní písmena se chovají jako parametry. Opět musíme dávat pozor, čím dělíme.
+
+\begin{example}
+  Ze vzorce pro obsah lichoběžníku $S = \frac{(a + c)v}{2}$ vyjádřeme $c$ (všechny veličiny jsou kladné):
+  \begin{equation*}
+    2S = (a + c)v\quad\Rightarrow\quad \frac{2S}{v} = a + c\quad\Rightarrow\quad c = \frac{2S}{v} - a.
+  \end{equation*}
+\end{example}
+
+\begin{problem}
+  Vyjádřete:
+  \begin{enumerate}[label=(\alph*)]
+    \item ze vzorce $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$ (zobrazovací rovnice čočky) veličinu $b$,
+    \item ze vzorce $v = v_0 + at$ veličinu $t$,
+    \item ze vzorce $R = \dfrac{R_1R_2}{R_1 + R_2}$ veličinu $R_1$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\dfrac{1}{b} = \dfrac{1}{f} - \dfrac{1}{a} = \dfrac{a - f}{af}$, tedy $b = \dfrac{af}{a - f}$ (pro $a\neq f$).
+    \item $t = \dfrac{v - v_0}{a}$ (pro $a\neq 0$).
+    \item $R(R_1 + R_2) = R_1R_2$, tedy $RR_1 - R_1R_2 = -RR_2$, neboli $R_1(R - R_2) = -RR_2$ a $R_1 = \dfrac{RR_2}{R_2 - R}$ (pro $R\neq R_2$).
+  \end{enumerate}
+\end{solution}
+
+\section{Intervaly}
+
+Než se pustíme do nerovnic, potřebujeme si zavést šikovný způsob zápisu jejich řešení. Řešením nerovnice totiž většinou není jedno číslo, ale celý `kus' reálné osy.
+
+\begin{definitionbox}
+  \textbf{Intervaly}: Nechť $a, b\in\mathbb{R}$, $a < b$. Definujeme
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|l|}
+      \hline
+      Název & Zápis & Množina \\
+      \hline
+      uzavřený & $[a, b]$ & $\{x\in\mathbb{R}\ |\ a\leq x\leq b\}$ \\
+      otevřený & $(a, b)$ & $\{x\in\mathbb{R}\ |\ a < x < b\}$ \\
+      zleva uzavřený, zprava otevřený & $[a, b)$ & $\{x\in\mathbb{R}\ |\ a\leq x < b\}$ \\
+      zleva otevřený, zprava uzavřený & $(a, b]$ & $\{x\in\mathbb{R}\ |\ a < x\leq b\}$ \\
+      \hline
+      neomezené & $[a, \infty)$ & $\{x\in\mathbb{R}\ |\ x\geq a\}$ \\
+       & $(a, \infty)$ & $\{x\in\mathbb{R}\ |\ x > a\}$ \\
+       & $(-\infty, b]$ & $\{x\in\mathbb{R}\ |\ x\leq b\}$ \\
+       & $(-\infty, b)$ & $\{x\in\mathbb{R}\ |\ x < b\}$ \\
+       & $(-\infty, \infty)$ & $\mathbb{R}$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  Hranatá závorka znamená, že krajní bod do intervalu \textbf{patří}, kulatá, že \textbf{nepatří}. U nekonečna je vždy kulatá závorka, protože $\infty$ není reálné číslo, a tedy do intervalu patřit nemůže.
+\end{definitionbox}
+
+\begin{note}
+  V mnoha českých učebnicích se uzavřený konec intervalu značí lomenou závorkou, například $\langle a, b)$ místo $[a, b)$. Oba zápisy znamenají totéž. U maturity můžete použít kterýkoli z nich.
+\end{note}
+
+Intervaly si můžeme znázornit na číselné ose. Bod, který do intervalu patří, kreslíme jako plné kolečko, bod, který nepatří, jako prázdné kolečko.
+
+\begin{example}
+  Interval $[-1, 3)$ na číselné ose:
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[->, thick] (-3,0) -- (5,0) node[right] {$x$};
+      \foreach \x in {-2,-1,0,1,2,3,4} \draw (\x,0.1) -- (\x,-0.1) node[below] {$\x$};
+      \draw[line width=3pt, colorofwisdom] (-1,0) -- (3,0);
+      \filldraw[colorofwisdom] (-1,0) circle (3pt);
+      \filldraw[fill=white, draw=colorofwisdom, thick] (3,0) circle (3pt);
+    \end{tikzpicture}
+  \end{center}
+\end{example}
+
+Protože intervaly jsou množiny, můžeme s nimi provádět všechny množinové operace z předchozí kapitoly. Průnik a sjednocení intervalů budeme při řešení nerovnic potřebovat neustále.
+
+\begin{problem}
+  Určete:
+  \begin{enumerate}[label=(\alph*)]
+    \item $[-2, 5)\cap(1, 7]$,
+    \item $(-\infty, 3]\cup(0, 10)$,
+    \item $(-\infty, 1)\cap[1, \infty)$,
+    \item $\mathbb{R}\setminus(-1, 2]$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $(1, 5)$,
+    \item $(-\infty, 10)$,
+    \item $\emptyset$ (bod $1$ do prvního intervalu nepatří),
+    \item $(-\infty, -1]\cup(2, \infty)$.
+  \end{enumerate}
+\end{solution}
+
+\section{Lineární nerovnice}
+
+\begin{definitionbox}
+  \textbf{Nerovnice} je zápis $L(x) < P(x)$, případně se znaky $>$, $\leq$, $\geq$. Definiční obor, řešení a množina řešení se definují stejně jako u rovnic.
+
+  \textbf{Lineární nerovnice} je nerovnice, kterou lze ekvivalentními úpravami převést na jeden z tvarů
+  \begin{equation*}
+    ax + b < 0,\quad ax + b > 0,\quad ax + b\leq 0,\quad ax + b\geq 0.
+  \end{equation*}
+\end{definitionbox}
+
+S nerovnicemi pracujeme téměř stejně jako s rovnicemi. Je zde ale jeden zásadní rozdíl, který je potřeba si vrýt do paměti.
+
+\begin{definitionbox}
+  \textbf{Ekvivalentní úpravy nerovnic}:
+  \begin{enumerate}
+    \item Přičtení stejného čísla nebo výrazu k oběma stranám \textbf{nemění} znak nerovnosti.
+    \item Vynásobení obou stran stejným \textbf{kladným} číslem \textbf{nemění} znak nerovnosti.
+    \item Vynásobení obou stran stejným \textbf{záporným} číslem \textbf{obrátí} znak nerovnosti ($<$ na $>$, $\leq$ na $\geq$ a naopak).
+  \end{enumerate}
+  Z toho plyne, že nerovnici \textbf{nikdy nesmíme násobit výrazem s neznámou}, pokud nevíme, jaké má znaménko!
+\end{definitionbox}
+
+Proč se znak otočí? Intuitivně: $2 < 3$, ale $-2 > -3$, protože na záporné straně osy je `větší' číslo blíže nule. Dokažme si to.
+
+\begin{proof}
+  Nechť $a < b$ a $c < 0$. Chceme ukázat, že $ac > bc$. Z $a < b$ plyne, že $b - a > 0$. Z $c < 0$ plyne, že $-c > 0$. Součin dvou kladných čísel je kladný, tedy
+  \begin{equation*}
+    (b - a)(-c) > 0\quad\Leftrightarrow\quad -bc + ac > 0\quad\Leftrightarrow\quad ac > bc.
+  \end{equation*}
+\end{proof}
+
+\begin{example}
+  Vyřešme nerovnici $3 - 2x\geq x - 6$.
+  \begin{align*}
+    -2x - x &\geq -6 - 3,\\
+    -3x &\geq -9 \quad\Big|\ :(-3),\\
+    x &\leq 3.
+  \end{align*}
+  V posledním kroku jsme dělili záporným číslem, a proto se znak otočil. Množina řešení je $K = (-\infty, 3]$.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $4x + 7 < 2x - 1$,
+    \item $\dfrac{x}{3} - \dfrac{x - 1}{2}\geq 1$,
+    \item $2(x - 1) > 2x + 3$,
+    \item $(x + 2)^2\leq x^2 + 4x + 4$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $2x < -8$, tedy $x < -4$ a $K = (-\infty, -4)$.
+    \item Vynásobíme šesti: $2x - 3x + 3\geq 6$, tedy $-x\geq 3$ a $x\leq -3$. $K = (-\infty, -3]$.
+    \item $-2 > 3$, což neplatí nikdy. $K = \emptyset$.
+    \item Levá strana se po roznásobení rovná pravé, tedy $0\leq 0$, což platí vždy. $K = \mathbb{R}$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Soustavy nerovnic}
+
+Pokud má neznámá splňovat několik nerovnic zároveň, mluvíme o soustavě nerovnic. Každou nerovnici vyřešíme zvlášť a výsledná množina řešení je \textbf{průnik} jednotlivých množin řešení. Opět se zde krásně potkává logická spojka $\land$ s množinovým průnikem $\cap$.
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    2x - 1 &> -5,\\
+    3 - x &\geq 2x - 6.
+  \end{align*}
+  První nerovnice: $2x > -4$, tedy $x > -2$ a $K_1 = (-2, \infty)$. Druhá nerovnice: $-3x\geq -9$, tedy $x\leq 3$ a $K_2 = (-\infty, 3]$. Celkem
+  \begin{equation*}
+    K = K_1\cap K_2 = (-2, 3].
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  Zápis $-1 < 2x + 3\leq 7$ je zkrácený zápis soustavy dvou nerovnic $-1 < 2x + 3$ a $2x + 3\leq 7$. Takovou `dvojitou' nerovnici můžeme upravovat najednou, pokud provádíme stejnou úpravu se všemi třemi částmi:
+  \begin{equation*}
+    -1 < 2x + 3\leq 7\quad\Leftrightarrow\quad -4 < 2x\leq 4\quad\Leftrightarrow\quad -2 < x\leq 2.
+  \end{equation*}
+  Tedy $K = (-2, 2]$.
+\end{example}
+
+\subsection{Nerovnice v součinovém a podílovém tvaru}
+
+Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vynásobit $(x + 2)$ nemůžeme, protože nevíme, zda je tento výraz kladný nebo záporný. Místo toho využijeme toho, že znaménko součinu (i podílu) závisí jen na znaménkách jednotlivých činitelů.
+
+\begin{definitionbox}
+  \textbf{Metoda nulových bodů} (také metoda intervalů) pro nerovnice tvaru $\frac{A(x)}{B(x)}\gtrless 0$ nebo $A(x)\cdot B(x)\gtrless 0$:
+  \begin{enumerate}
+    \item Převedeme všechno na jednu stranu, aby na druhé byla nula. \textbf{Nikdy nenásobíme jmenovatelem!}
+    \item Čitatele i jmenovatele rozložíme na součin lineárních činitelů.
+    \item Najdeme \textbf{nulové body}, tedy čísla, ve kterých je některý činitel nulový.
+    \item Nulové body rozdělí reálnou osu na intervaly. V každém z nich má každý činitel stálé znaménko. Znaménka zapíšeme do tabulky.
+    \item Vybereme intervaly, kde má výraz požadované znaménko. Pozor na nulové body jmenovatele, ty do řešení nepatří nikdy.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}\label{ex:podilova-nerovnice}
+  Vyřešme nerovnici
+  \begin{equation*}
+    \frac{x - 1}{x + 2}\geq 0.
+  \end{equation*}
+  Podmínka: $x\neq -2$. Nulové body: $x = 1$ (čitatel) a $x = -2$ (jmenovatel). Sestavíme tabulku znamének. Znaménko výrazu $x - 1$ v každém intervalu zjistíme například dosazením libovolného čísla z daného intervalu.
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+       & $(-\infty, -2)$ & $(-2, 1)$ & $(1, \infty)$ \\
+      \hline
+      $x - 1$ & $-$ & $-$ & $+$ \\
+      $x + 2$ & $-$ & $+$ & $+$ \\
+      \hline
+      $\frac{x - 1}{x + 2}$ & $+$ & $-$ & $+$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  Hledáme, kde je výraz kladný nebo nulový. Kladný je na $(-\infty, -2)$ a $(1, \infty)$, nulový je pro $x = 1$. Bod $x = -2$ do řešení nepatří. Celkem
+  \begin{equation*}
+    K = (-\infty, -2)\cup[1, \infty).
+  \end{equation*}
+\end{example}
+
+\begin{note}
+  Proč nemůžeme v příkladu~\ref{ex:podilova-nerovnice} jednoduše vynásobit obě strany $(x + 2)$? Dostali bychom $x - 1\geq 0$, tedy $x\geq 1$, a přišli bychom o celý interval $(-\infty, -2)$. Pro $x < -2$ je totiž $x + 2$ záporné a znak nerovnosti by se měl otočit. Pokud bychom chtěli přesto násobit, museli bychom rozlišit dva případy ($x + 2 > 0$ a $x + 2 < 0$). To je také správný postup, jen je pracnější.
+\end{note}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $(x + 3)(2 - x) > 0$,
+    \item $\dfrac{2x + 4}{x - 3}\leq 0$,
+    \item $\dfrac{x + 1}{x - 2} > 2$,
+    \item $\dfrac{x(x - 4)}{x + 1}\geq 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (c) nejdříve odečtěte dvojku a převeďte levou stranu na společný jmenovatel. U (b) a (c) si dejte pozor na nulový bod jmenovatele.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Nulové body $-3$ a $2$. Výraz je kladný mezi nimi, $K = (-3, 2)$.
+    \item Nulové body $-2$ a $3$. Výraz je záporný na $(-2, 3)$, nulový v $-2$. $K = [-2, 3)$.
+    \item $\dfrac{x + 1 - 2(x - 2)}{x - 2} > 0$, tedy $\dfrac{5 - x}{x - 2} > 0$. Nulové body $2$ a $5$, $K = (2, 5)$.
+    \item Nulové body $-1$, $0$ a $4$. Tabulka:
+    \begin{center}
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{|c|c|c|c|c|}
+        \hline
+         & $(-\infty, -1)$ & $(-1, 0)$ & $(0, 4)$ & $(4, \infty)$ \\
+        \hline
+        $x$ & $-$ & $-$ & $+$ & $+$ \\
+        $x - 4$ & $-$ & $-$ & $-$ & $+$ \\
+        $x + 1$ & $-$ & $+$ & $+$ & $+$ \\
+        \hline
+        celkem & $-$ & $+$ & $-$ & $+$ \\
+        \hline
+      \end{tabular}
+    \end{center}
+    $K = (-1, 0]\cup[4, \infty)$.
+  \end{enumerate}
+\end{solution}
+
+\section{Soustavy lineárních rovnic}
+
+Často máme víc neznámých a víc podmínek najednou. Například: součet dvou čísel je $10$ a jejich rozdíl je $4$. Která čísla to jsou? Zde potřebujeme vyřešit dvě rovnice zároveň.
+
+\begin{definitionbox}
+  \textbf{Soustava dvou lineárních rovnic o dvou neznámých} je soustava
+  \begin{align*}
+    a_1x + b_1y &= c_1,\\
+    a_2x + b_2y &= c_2,
+  \end{align*}
+  kde $a_1, a_2, b_1, b_2, c_1, c_2\in\mathbb{R}$. \textbf{Řešením} soustavy je každá uspořádaná dvojice $(x, y)\in\mathbb{R}\times\mathbb{R}$, která splňuje \textbf{obě} rovnice zároveň.
+\end{definitionbox}
+
+Všimněte si, že řešení je uspořádaná dvojice, tedy prvek kartézského součinu z předchozí kapitoly. Množina řešení soustavy je tedy podmnožinou $\mathbb{R}\times\mathbb{R}$, neboli relace!
+
+\begin{definitionbox}
+  \textbf{Metody řešení soustav}:
+  \begin{enumerate}
+    \item \textbf{Dosazovací metoda}: Z jedné rovnice vyjádříme jednu neznámou a dosadíme ji do druhé rovnice. Tím dostaneme jednu rovnici o jedné neznámé.
+    \item \textbf{Sčítací} (eliminační) \textbf{metoda}: Rovnice vynásobíme vhodnými nenulovými čísly tak, aby se po jejich sečtení jedna neznámá vyrušila.
+    \item \textbf{Srovnávací metoda}: Z obou rovnic vyjádříme stejnou neznámou a výrazy porovnáme.
+    \item \textbf{Grafická metoda}: Každá rovnice popisuje přímku v rovině. Řešením je jejich průsečík.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    x + y &= 10,\\
+    x - y &= 4.
+  \end{align*}
+  \textbf{Dosazovací metoda}: Z první rovnice $y = 10 - x$. Dosadíme do druhé: $x - (10 - x) = 4$, tedy $2x = 14$ a $x = 7$. Pak $y = 10 - 7 = 3$.
+
+  \textbf{Sčítací metoda}: Sečteme obě rovnice: $2x = 14$, tedy $x = 7$. Odečteme je: $2y = 6$, tedy $y = 3$.
+
+  Obě metody dají samozřejmě stejný výsledek, $K = \{(7, 3)\}$. Zkouška: $7 + 3 = 10$ a $7 - 3 = 4$.
+\end{example}
+
+\begin{example}
+  Sčítací metoda ukáže svou sílu u `ošklivějších' koeficientů. Vyřešme
+  \begin{align*}
+    3x + 4y &= 2,\\
+    5x - 6y &= 16.
+  \end{align*}
+  Chceme se zbavit $y$. Nejmenší společný násobek $4$ a $6$ je $12$. První rovnici vynásobíme $3$ a druhou $2$:
+  \begin{align*}
+    9x + 12y &= 6,\\
+    10x - 12y &= 32.
+  \end{align*}
+  Sečtením dostaneme $19x = 38$, tedy $x = 2$. Dosazením do první rovnice $6 + 4y = 2$, tedy $y = -1$. $K = \{(2, -1)\}$.
+\end{example}
+
+\subsection{Geometrický význam a počet řešení}
+
+Každá rovnice $ax + by = c$ (kde $a, b$ nejsou obě nulová) popisuje v rovině přímku. Vyřešit soustavu tedy znamená najít body, které leží na obou přímkách zároveň. A jak mohou dvě přímky v rovině ležet? Buď se protínají v jednom bodě, nebo jsou rovnoběžné různé, nebo splývají.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    % protínající
+    \begin{scope}
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom] (-0.3,3.8) -- (3.8,-0.3);
+      \draw[thick] (-0.3,0.3) -- (3.5,2.2);
+      \filldraw (2.33,1.47) circle (2.5pt);
+      \node[below] at (1.75,-0.6) {\small jedno řešení};
+    \end{scope}
+    % rovnobezne
+    \begin{scope}[xshift=6cm]
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom] (-0.3,1) -- (3.8,3.5);
+      \draw[thick] (-0.3,-0.2) -- (3.8,2.3);
+      \node[below] at (1.75,-0.6) {\small žádné řešení};
+    \end{scope}
+    % splyvajici
+    \begin{scope}[xshift=12cm]
+      \draw[->] (-0.5,0) -- (4,0) node[right] {\small $x$};
+      \draw[->] (0,-0.5) -- (0,4) node[above] {\small $y$};
+      \draw[line width=3pt, colorofwisdom!40] (-0.3,0.5) -- (3.8,3.3);
+      \draw[thick] (-0.3,0.5) -- (3.8,3.3);
+      \node[below] at (1.75,-0.6) {\small nekonečně mnoho};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Počet řešení soustavy dvou lineárních rovnic o dvou neznámých}: Soustava má buď
+  \begin{itemize}
+    \item \textbf{právě jedno} řešení (přímky jsou různoběžné),
+    \item \textbf{žádné} řešení (přímky jsou rovnoběžné a různé), nebo
+    \item \textbf{nekonečně mnoho} řešení (přímky splývají).
+  \end{itemize}
+  Nikdy nemůže mít například právě dvě řešení.
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    2x - y &= 3,\\
+    -4x + 2y &= 1.
+  \end{align*}
+  Vynásobíme první rovnici dvěma a sečteme: $0 = 7$. Spor, soustava nemá řešení, $K = \emptyset$. Geometricky: obě přímky mají tvar $y = 2x + \text{něco}$, takže jsou rovnoběžné.
+
+  Kdyby druhá rovnice byla $-4x + 2y = -6$, dostali bychom $0 = 0$. Druhá rovnice by byla jen dvojnásobkem první, přímky by splývaly a řešením by byly všechny dvojice $(x, 2x - 3)$, kde $x\in\mathbb{R}$. To zapisujeme
+  \begin{equation*}
+    K = \{(t, 2t - 3)\ |\ t\in\mathbb{R}\}.
+  \end{equation*}
+  Písmeno $t$ se zde nazývá parametr a každá jeho hodnota nám dá jedno řešení.
+\end{example}
+
+\begin{problem}
+  Vyřešte soustavy v $\mathbb{R}\times\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\begin{aligned}[t] 2x + 3y &= 12,\\ x - y &= 1,\end{aligned}$
+    \item $\begin{aligned}[t] \tfrac{x}{2} + \tfrac{y}{3} &= 3,\\ \tfrac{x}{3} - \tfrac{y}{4} &= \tfrac{7}{12},\end{aligned}$
+    \item $\begin{aligned}[t] 6x - 9y &= 3,\\ 4x - 6y &= 2.\end{aligned}$
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Z druhé $x = 1 + y$, dosazením $2 + 2y + 3y = 12$, tedy $y = 2$ a $x = 3$. $K = \{(3, 2)\}$.
+    \item Odstraníme zlomky: první rovnici vynásobíme $6$, druhou $12$. Dostaneme $3x + 2y = 18$ a $4x - 3y = 7$. První vynásobíme $3$, druhou $2$ a sečteme: $17x = 68$, tedy $x = 4$ a z první rovnice $y = \frac{18 - 12}{2} = 3$. $K = \{(4, 3)\}$.
+    \item První rovnice je $\frac{3}{2}$-násobkem druhé, přímky splývají. Z druhé rovnice vyjádříme $x = \frac{1 + 3y}{2}$ a za $y$ zvolíme parametr $t$. Tedy $K = \left\{\left(\frac{1 + 3t}{2}, t\right)\ \middle|\ t\in\mathbb{R}\right\}$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Soustavy tří rovnic o třech neznámých}
+
+Se třemi neznámými postupujeme stejně: postupně eliminujeme neznámé, až zbude jedna rovnice s jednou neznámou. Nejsystematičtější postup se nazývá \textbf{Gaussova eliminační metoda}. Soustavu upravujeme tak, aby z druhé a třetí rovnice zmizelo $x$ a pak ze třetí rovnice zmizelo $y$. Dostaneme takzvaný \textbf{trojúhelníkový tvar}, ze kterého neznámé dopočítáme odspodu.
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    x + y + z &= 6, \tag{I}\\
+    2x - y + z &= 3, \tag{II}\\
+    x + 2y - z &= 2. \tag{III}
+  \end{align*}
+  Eliminujeme $x$: (II) $- 2\cdot$(I) a (III) $-$ (I):
+  \begin{align*}
+    x + y + z &= 6,\\
+    -3y - z &= -9,\\
+    y - 2z &= -4.
+  \end{align*}
+  Eliminujeme $y$ ze třetí rovnice: $3\cdot$(III') $+$ (II'):
+  \begin{align*}
+    x + y + z &= 6,\\
+    -3y - z &= -9,\\
+    -7z &= -21.
+  \end{align*}
+  Odspodu: $z = 3$, pak $-3y - 3 = -9$, tedy $y = 2$, a nakonec $x = 6 - 2 - 3 = 1$. $K = \{(1, 2, 3)\}$. Zkoušku si proveďte sami.
+\end{example}
+
+\begin{note}
+  Geometricky popisuje každá rovnice $ax + by + cz = d$ rovinu v prostoru. Tři roviny se mohou protnout v jednom bodě (jedno řešení), v přímce (nekonečně mnoho řešení), nebo nemusí mít žádný společný bod. Více o tom v kapitole o analytické geometrii v prostoru.
+\end{note}
+
+\begin{problem}
+  Vyřešte soustavu
+  \begin{align*}
+    x + 2y - z &= 3,\\
+    3x - y + 2z &= 7,\\
+    2x + 3y + z &= 11.
+  \end{align*}
+\end{problem}
+
+\begin{solution}
+  (II) $- 3\cdot$(I): $-7y + 5z = 8$. (III) $- 2\cdot$(I): $-y + 3z = 8$. Z poslední rovnice $y = 3z - 8$, dosazením do předposlední $-21z + 56 + 5z = 8$, tedy $-16z = -48$ a $z = 3$. Pak $y = 1$ a z první rovnice $x = 1 - 2 + 3 = 2$. $K = \{(2, 1, 3)\}$.
+\end{solution}
+
+\section{Odbočka --- Determinanty a Cramerovo pravidlo}
+
+Podívejme se na soustavu dvou rovnic úplně obecně. Vyřešme
+\begin{align*}
+  a_1x + b_1y &= c_1,\\
+  a_2x + b_2y &= c_2
+\end{align*}
+sčítací metodou. První rovnici vynásobíme $b_2$, druhou $-b_1$ a sečteme. Členy s $y$ se vyruší a zůstane
+\begin{equation*}
+  (a_1b_2 - a_2b_1)x = c_1b_2 - c_2b_1.
+\end{equation*}
+Podobně vynásobením $-a_2$ a $a_1$ dostaneme
+\begin{equation*}
+  (a_1b_2 - a_2b_1)y = a_1c_2 - a_2c_1.
+\end{equation*}
+Ve všech třech výrazech se opakuje stejný vzor: `křížem' vynásobíme a odečteme. To si zaslouží vlastní název.
+
+\begin{definitionbox}
+  \textbf{Determinant} matice $2\times 2$ je číslo
+  \begin{equation*}
+    \begin{vmatrix} a & b\\ c & d \end{vmatrix} = ad - bc.
+  \end{equation*}
+
+  \textbf{Cramerovo pravidlo}: Označme
+  \begin{equation*}
+    D = \begin{vmatrix} a_1 & b_1\\ a_2 & b_2 \end{vmatrix},\quad
+    D_x = \begin{vmatrix} c_1 & b_1\\ c_2 & b_2 \end{vmatrix},\quad
+    D_y = \begin{vmatrix} a_1 & c_1\\ a_2 & c_2 \end{vmatrix}.
+  \end{equation*}
+  Pokud $D\neq 0$, má soustava právě jedno řešení
+  \begin{equation*}
+    x = \frac{D_x}{D},\qquad y = \frac{D_y}{D}.
+  \end{equation*}
+  Pokud $D = 0$, má soustava buď žádné, nebo nekonečně mnoho řešení.
+\end{definitionbox}
+
+Determinant $D_x$ vznikne z $D$ tak, že sloupec koeficientů u $x$ nahradíme pravými stranami. Podobně $D_y$. Výše uvedené odvození je zároveň důkazem Cramerova pravidla. Podmínka $D\neq 0$ geometricky znamená, že přímky nejsou rovnoběžné.\footnote{Determinant má i krásný geometrický význam: $|D|$ je obsah rovnoběžníku, který vytvoří vektory $(a_1, a_2)$ a $(b_1, b_2)$. Pokud je nulový, vektory leží na jedné přímce. Více se dozvíte v kapitole o vektorech.}
+
+\begin{example}
+  Vyřešme pomocí Cramerova pravidla soustavu
+  \begin{align*}
+    3x + 4y &= 2,\\
+    5x - 6y &= 16.
+  \end{align*}
+  \begin{equation*}
+    D = \begin{vmatrix} 3 & 4\\ 5 & -6 \end{vmatrix} = -18 - 20 = -38,\quad
+    D_x = \begin{vmatrix} 2 & 4\\ 16 & -6 \end{vmatrix} = -12 - 64 = -76,\quad
+    D_y = \begin{vmatrix} 3 & 2\\ 5 & 16 \end{vmatrix} = 48 - 10 = 38.
+  \end{equation*}
+  Tedy $x = \frac{-76}{-38} = 2$ a $y = \frac{38}{-38} = -1$. Stejný výsledek jako dříve sčítací metodou.
+\end{example}
+
+\section{Slovní úlohy}
+
+Slovní úlohy jsou místo, kde se matematika potkává se skutečným světem. Postup je vždy stejný:
+\begin{definitionbox}
+  \textbf{Postup řešení slovní úlohy}:
+  \begin{enumerate}
+    \item Pozorně si přečíst zadání a určit, co hledáme. To označíme neznámou (a napíšeme si, co neznámá znamená a v jakých jednotkách).
+    \item Přeložit vztahy ze zadání do rovnic.
+    \item Rovnice vyřešit.
+    \item Provést zkoušku \textbf{dosazením do zadání} (ne do rovnic, protože v nich můžeme mít chybu).
+    \item Napsat slovní odpověď.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}[ (pohyb)]
+  Z Prahy vyjede v $8{:}00$ nákladní auto rychlostí $60\ \si{km/h}$. V $9{:}00$ za ním vyjede osobní auto rychlostí $90\ \si{km/h}$. Kdy a jak daleko od Prahy osobní auto dohoní nákladní?
+
+  Označme $t$ dobu jízdy osobního auta v hodinách. Nákladní auto jede o hodinu déle, tedy $t + 1$ hodin. V okamžiku setkání ujela obě auta stejnou dráhu:
+  \begin{equation*}
+    90t = 60(t + 1)\quad\Leftrightarrow\quad 30t = 60\quad\Leftrightarrow\quad t = 2.
+  \end{equation*}
+  Zkouška: osobní auto ujede za $2$ hodiny $180\ \si{km}$, nákladní za $3$ hodiny také $180\ \si{km}$. Odpověď: Osobní auto dohoní nákladní v $11{:}00$, $180\ \si{km}$ od Prahy.
+\end{example}
+
+\begin{example}[ (společná práce)]
+  Jeden bazén napustí první čerpadlo za $6$ hodin a druhé za $3$ hodiny. Za jak dlouho ho napustí obě čerpadla dohromady?
+
+  Klíčová myšlenka: první čerpadlo napustí za hodinu $\frac{1}{6}$ bazénu, druhé $\frac{1}{3}$ bazénu. Pokud obě pracují $t$ hodin, napustí dohromady celý bazén, tedy
+  \begin{equation*}
+    \frac{t}{6} + \frac{t}{3} = 1\quad\Leftrightarrow\quad t + 2t = 6\quad\Leftrightarrow\quad t = 2.
+  \end{equation*}
+  Odpověď: Obě čerpadla napustí bazén za $2$ hodiny. Častá chyba je výsledky zprůměrovat nebo sečíst. Rozumná kontrola: dohromady to musí být rychlejší než rychlejší z čerpadel, tedy méně než $3$ hodiny.
+\end{example}
+
+\begin{example}[ (směsi)]
+  Kolik litrů $80\%$ roztoku a kolik litrů $30\%$ roztoku musíme smíchat, abychom dostali $10$ litrů $50\%$ roztoku?
+
+  Označme $x$ litrů $80\%$ roztoku a $y$ litrů $30\%$ roztoku. Celkový objem je $x + y = 10$. Množství čisté látky se nemění: $0{,}8x + 0{,}3y = 0{,}5\cdot 10 = 5$. Z první rovnice $y = 10 - x$, dosazením
+  \begin{equation*}
+    0{,}8x + 3 - 0{,}3x = 5\quad\Leftrightarrow\quad 0{,}5x = 2\quad\Leftrightarrow\quad x = 4.
+  \end{equation*}
+  Tedy $y = 6$. Zkouška: $0{,}8\cdot 4 + 0{,}3\cdot 6 = 3{,}2 + 1{,}8 = 5$ litrů čisté látky v $10$ litrech, tedy $50\%$. Odpověď: $4$ litry $80\%$ a $6$ litrů $30\%$ roztoku.
+\end{example}
+
+\begin{problem}
+  Otci je dnes $42$ let a synovi $12$. Za kolik let bude otec třikrát starší než syn?
+\end{problem}
+
+\begin{solution}
+  Za $x$ let: $42 + x = 3(12 + x)$, tedy $42 + x = 36 + 3x$ a $x = 3$. Zkouška: za $3$ roky bude otci $45$ a synovi $15$, $45 = 3\cdot 15$. Odpověď: Za $3$ roky.
+\end{solution}
+
+\begin{problem}
+  Na výletě bylo $35$ dětí. Kdyby přišli ještě $3$ chlapci, bylo by chlapců dvakrát více než dívek. Kolik bylo na výletě chlapců a kolik dívek?
+\end{problem}
+
+\begin{solution}
+  Označme $c$ počet chlapců a $d$ počet dívek. Pak $c + d = 35$ a $c + 3 = 2d$. Z první $c = 35 - d$, dosazením $38 - d = 2d$, tedy $d = \frac{38}{3}$. To není celé číslo! Úloha tedy nemá řešení. I takový závěr je u slovní úlohy správnou odpovědí. Kdyby přišli $4$ chlapci, dostali bychom $39 = 3d$, tedy $13$ dívek a $22$ chlapců.
+\end{solution}
+
+\begin{problem}
+  Dva cyklisté vyjedou současně proti sobě z míst vzdálených $72\ \si{km}$. První jede rychlostí $20\ \si{km/h}$, druhý $16\ \si{km/h}$. Za jak dlouho se potkají?
+\end{problem}
+
+\begin{solution}
+  Za čas $t$ ujedou dohromady $20t + 16t = 72$, tedy $t = 2$. Potkají se za $2$ hodiny.
+\end{solution}
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je rovnice a co znamená ji vyřešit? Proč rovnice není výrok?
+    \item Jaký je rozdíl mezi ekvivalentní a důsledkovou úpravou? Uveďte příklady. Kdy je zkouška nutná?
+    \item Rozeberte všechny případy řešení rovnice $ax + b = 0$.
+    \item Jak se mění znak nerovnosti při násobení? Dokažte to.
+    \item Proč nesmíme nerovnici násobit výrazem s neznámou? Jak se řeší nerovnice v podílovém tvaru?
+    \item Co jsou intervaly a jak se zapisují? Jak souvisí soustava nerovnic s průnikem množin?
+    \item Jaké znáte metody řešení soustav lineárních rovnic? Kolik řešení může soustava dvou rovnic o dvou neznámých mít a proč? Nakreslete.
+    \item Co je to determinant a k čemu se hodí?
+  \end{enumerate}
+\end{problem}

@@ -1,0 +1,801 @@
+\mathquote{Algebra is generous; she often gives more than is asked of her.}{Jean le Rond d'Alembert}
+
+V předchozí kapitole jsme si postavili číselné množiny. Teď s čísly konečně začneme pořádně počítat. Tato kapitola je takovou `posilovnou' celé maturity --- mocniny, odmocniny a úpravy výrazů se objeví úplně všude, od rovnic přes funkce až po derivace. Pokud zde něco nebude sedět, bude to bolet později. Budeme se tedy snažit každé pravidlo nejen uvést, ale i ukázat, \textit{proč} platí. Většina těchto pravidel totiž není nic, co by se muselo biflovat, ale přirozeně vyplývá z definic.
+
+\section{Mocniny s přirozeným exponentem}
+
+Začněme tím nejjednodušším. Pokud chceme číslo vynásobit samo sebou několikrát, bylo by nepraktické to vždy vypisovat. Místo $2\cdot 2\cdot 2\cdot 2\cdot 2$ je mnohem příjemnější napsat $2^5$.
+
+\begin{definitionbox}
+  \textbf{Mocnina s přirozeným exponentem}: Pro každé $a\in\mathbb{R}$ a $n\in\mathbb{N}$ definujeme
+  \begin{equation*}
+    a^n = \underbrace{a\cdot a\cdot\ \cdots\ \cdot a}_{n\text{-krát}}.
+  \end{equation*}
+  Číslo $a$ nazýváme \textbf{základ} (mocněnec) a číslo $n$ nazýváme \textbf{exponent} (mocnitel).
+
+  \vspace{0.2cm}
+
+  Pro ty, kterým tečky v definici nejsou dost formální\footnote{Tečky $\cdots$ jsou totiž v matematice trochu podvod. Předpokládají, že čtenář `ví, jak to pokračuje'.}, můžeme mocninu zadefinovat i \textbf{rekurzivně}:
+  \begin{align*}
+    a^1 &= a,\\
+    a^{n+1} &= a^n\cdot a \quad\text{pro } n\in\mathbb{N}.
+  \end{align*}
+\end{definitionbox}
+
+Rekurzivní definice je ve skutečnosti velice podobná matematické indukci z první kapitoly. Řekneme, co se stane pro $n = 1$, a pak řekneme, jak se z $n$ dostat na $n+1$. To nám zaručí, že mocnina je definovaná pro všechna přirozená čísla.
+
+\begin{example}
+  Spočítejme několik mocnin:
+  \begin{align*}
+    3^4 &= 3\cdot 3\cdot 3\cdot 3 = 81,\\
+    {(-2)}^3 &= (-2)\cdot(-2)\cdot(-2) = -8,\\
+    {(-2)}^4 &= (-2)\cdot(-2)\cdot(-2)\cdot(-2) = 16,\\
+    -2^4 &= -(2\cdot 2\cdot 2\cdot 2) = -16,\\
+    {\left(\tfrac{1}{2}\right)}^3 &= \tfrac{1}{2}\cdot\tfrac{1}{2}\cdot\tfrac{1}{2} = \tfrac{1}{8}.
+  \end{align*}
+  Všimněte si rozdílu mezi ${(-2)}^4$ a $-2^4$. Mocnina má přednost před znaménkem mínus, takže $-2^4$ znamená `minus (dva na čtvrtou)'. Tohle je jedna z nejčastějších chyb u maturity, takže si na ni dávejte extra pozor.
+\end{example}
+
+\begin{note}
+  Z příkladu výše je vidět, že záporné číslo umocněné na sudý exponent je kladné a na lichý exponent záporné. Je to proto, že každá dvojice mínusů se `vyruší'. Zkuste si to dokázat matematickou indukcí.
+\end{note}
+
+Teď přijdou pravidla pro počítání s mocninami. Ta vypadají na první pohled jako něco, co se musí naučit nazpaměť, ale ve skutečnosti jsou to jen důsledky toho, že počítáme, kolik máme kde činitelů.
+
+\begin{definitionbox}
+  \textbf{Pravidla pro počítání s mocninami}: Pro každé $a, b\in\mathbb{R}$ a $m, n\in\mathbb{N}$ platí:
+  \begin{enumerate}
+    \item $a^m\cdot a^n = a^{m+n}$,
+    \item $\dfrac{a^m}{a^n} = a^{m-n}$, pokud $a\neq 0$ a $m > n$,
+    \item ${(a^m)}^n = a^{m\cdot n}$,
+    \item ${(a\cdot b)}^n = a^n\cdot b^n$,
+    \item ${\left(\dfrac{a}{b}\right)}^n = \dfrac{a^n}{b^n}$, pokud $b\neq 0$.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}\label{ex:mocniny-soucin}
+  Dokažme si první pravidlo. Nejdříve neformálně, tak jak by to udělal každý rozumný člověk:
+  \begin{equation*}
+    a^m\cdot a^n = \underbrace{a\cdot\ \cdots\ \cdot a}_{m\text{-krát}}\cdot\underbrace{a\cdot\ \cdots\ \cdot a}_{n\text{-krát}} = \underbrace{a\cdot\ \cdots\ \cdot a}_{(m+n)\text{-krát}} = a^{m+n}.
+  \end{equation*}
+  A nyní formálně, pomocí matematické indukce a rekurzivní definice.
+
+  \begin{proof}
+    Zvolme pevně $m\in\mathbb{N}$ a indukcí podle $n$ dokážeme, že $a^m\cdot a^n = a^{m+n}$.
+
+    \textbf{Základní krok}: Pro $n = 1$ máme $a^m\cdot a^1 = a^m\cdot a = a^{m+1}$, což je přesně rekurzivní definice.
+
+    \textbf{Indukční krok}: Předpokládejme, že pro nějaké $n$ platí $a^m\cdot a^n = a^{m+n}$.
+
+    \textbf{Závěr}: Potom
+    \begin{equation*}
+      a^m\cdot a^{n+1} = a^m\cdot(a^n\cdot a) = (a^m\cdot a^n)\cdot a = a^{m+n}\cdot a = a^{m+n+1},
+    \end{equation*}
+    kde jsme použili postupně definici, asociativitu násobení (jeden z axiomů tělesa!), indukční předpoklad a opět definici.
+  \end{proof}
+\end{example}
+
+\begin{problem}\label{pr:mocniny-mocnina}
+  Dokažte (alespoň neformálně) pravidla 3 a 4.
+\end{problem}
+
+\begin{hint}
+  U pravidla 3 si rozmyslete, že ${(a^m)}^n$ znamená, že máme $n$ `balíčků' a v každém z nich je $m$ činitelů $a$. U pravidla 4 si pomozte komutativitou násobení a přeskládejte činitele.
+\end{hint}
+
+\begin{solution}
+  Pravidlo 3:
+  \begin{equation*}
+    {(a^m)}^n = \underbrace{a^m\cdot a^m\cdot\ \cdots\ \cdot a^m}_{n\text{-krát}} = a^{\overbrace{m + m + \cdots + m}^{n\text{-krát}}} = a^{m\cdot n},
+  \end{equation*}
+  kde jsme opakovaně použili pravidlo 1.
+
+  Pravidlo 4:
+  \begin{equation*}
+    {(ab)}^n = \underbrace{(ab)\cdot(ab)\cdot\ \cdots\ \cdot(ab)}_{n\text{-krát}} = \underbrace{a\cdot\ \cdots\ \cdot a}_{n\text{-krát}}\cdot\underbrace{b\cdot\ \cdots\ \cdot b}_{n\text{-krát}} = a^n b^n.
+  \end{equation*}
+\end{solution}
+
+\begin{problem}
+  Zjednodušte následující výrazy:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^3\cdot x^5\cdot x$,
+    \item ${(2a^2b)}^3$,
+    \item $\dfrac{{(x^2y)}^4}{x^5y^2}$, kde $x, y\neq 0$,
+    \item $\dfrac{3^{10}\cdot 9^2}{27^4}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^{3+5+1} = x^9$,
+    \item $2^3\cdot{(a^2)}^3\cdot b^3 = 8a^6b^3$,
+    \item $\dfrac{x^8y^4}{x^5y^2} = x^3y^2$,
+    \item Vše převedeme na základ $3$: $\dfrac{3^{10}\cdot{(3^2)}^2}{{(3^3)}^4} = \dfrac{3^{10}\cdot 3^4}{3^{12}} = 3^{2} = 9$.
+  \end{enumerate}
+  Poslední příklad je typický maturitní trik. Pokud vidíte různé základy, které jsou mocninami stejného čísla, vždy se je vyplatí převést na společný základ.
+\end{solution}
+
+\begin{definitionbox}
+  Upozorňujeme, že pro sčítání \textbf{žádné} podobné pravidlo neexistuje! Obecně
+  \begin{equation*}
+    {(a + b)}^n \neq a^n + b^n \qquad\text{a}\qquad a^m + a^n \neq a^{m+n}.
+  \end{equation*}
+  Stačí si vzít $a = b = 1$ a $n = 2$. Potom ${(1 + 1)}^2 = 4$, ale $1^2 + 1^2 = 2$. Tomuto chybnému `pravidlu' se v anglicky mluvících zemích přezdívá \textit{freshman's dream}, tedy sen prváka.
+\end{definitionbox}
+
+\section{Mocniny s celým exponentem}
+
+Doposud jsme měli v exponentu jen přirozená čísla. Co by ale mělo znamenat $2^0$ nebo $2^{-3}$? Vynásobit dvojku samu sebou nulakrát nebo dokonce mínus třikrát? To zní jako nesmysl. Zde přichází na řadu typický matematický přístup: chceme, aby naše pravidla platila i nadále, a podle toho si novou definici \textit{vynutíme}.
+
+Podívejme se na pravidlo $\frac{a^m}{a^n} = a^{m-n}$. Pokud bychom chtěli, aby fungovalo i pro $m = n$, musí platit
+\begin{equation*}
+  1 = \frac{a^n}{a^n} = a^{n-n} = a^0.
+\end{equation*}
+Podobně pokud by mělo platit pro $m = 0$, musí platit
+\begin{equation*}
+  \frac{1}{a^n} = \frac{a^0}{a^n} = a^{0-n} = a^{-n}.
+\end{equation*}
+
+\begin{definitionbox}
+  \textbf{Mocnina s nulovým a záporným exponentem}: Pro každé $a\in\mathbb{R}\setminus\{0\}$ a $n\in\mathbb{N}$ definujeme
+  \begin{align*}
+    a^0 &= 1,\\
+    a^{-n} &= \frac{1}{a^n}.
+  \end{align*}
+  Při této definici platí všech pět pravidel z předchozí sekce pro všechna $m, n\in\mathbb{Z}$ (pokud nedělíme nulou) a pravidlo pro podíl už nepotřebuje podmínku $m > n$.
+\end{definitionbox}
+
+\begin{note}
+  Výraz $0^0$ jsme nechali nedefinovaný. V některých oblastech matematiky (například v kombinatorice) se dodefinovává jako $0^0 = 1$, protože je to praktické. V analýze se ale objevuje jako takzvaný neurčitý výraz, protože se k němu můžeme `blížit' různými způsoby a dostávat různé výsledky. U maturity tento výraz považujte za nedefinovaný.
+\end{note}
+
+\begin{example}
+  Spočítejme:
+  \begin{align*}
+    5^{-2} &= \frac{1}{5^2} = \frac{1}{25},\\
+    {\left(\frac{2}{3}\right)}^{-3} &= \frac{1}{{\left(\frac{2}{3}\right)}^3} = \frac{1}{\frac{8}{27}} = \frac{27}{8} = {\left(\frac{3}{2}\right)}^3,\\
+    {(-7)}^0 &= 1,\\
+    \frac{a^{-3}b^2}{a^2b^{-4}} &= a^{-3-2}b^{2-(-4)} = a^{-5}b^6 = \frac{b^6}{a^5}.
+  \end{align*}
+  Z druhého řádku si odneste užitečný trik: záporný exponent u zlomku zlomek `otočí', tedy ${\left(\frac{a}{b}\right)}^{-n} = {\left(\frac{b}{a}\right)}^{n}$.
+\end{example}
+
+\begin{problem}
+  Zjednodušte a výsledek zapište bez záporných exponentů ($x, y \neq 0$):
+  \begin{enumerate}[label=(\alph*)]
+    \item ${(x^{-2}y^3)}^{-2}$,
+    \item $\dfrac{2^{-1} + 2^{-2}}{2^{-3}}$,
+    \item ${\left(\dfrac{x^{-1}}{3y^{2}}\right)}^{-2}\cdot\dfrac{1}{9x^{2}}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^{4}y^{-6} = \dfrac{x^4}{y^6}$,
+    \item Pozor, zde se jedná o součet, nemůžeme tedy jen sečíst exponenty. $\dfrac{\frac{1}{2} + \frac{1}{4}}{\frac{1}{8}} = \dfrac{\frac{3}{4}}{\frac{1}{8}} = 6$,
+    \item ${\left(\dfrac{3y^2}{x^{-1}}\right)}^{2}\cdot\dfrac{1}{9x^2} = {(3xy^2)}^2\cdot\dfrac{1}{9x^2} = \dfrac{9x^2y^4}{9x^2} = y^4$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Zápis čísla v desítkovém tvaru}
+
+Mocniny s celým exponentem se nám hodí i v praxi, například ve fyzice a chemii. Velká a malá čísla se totiž zapisují pomocí takzvaného \textbf{vědeckého zápisu}.
+
+\begin{definitionbox}
+  Každé kladné reálné číslo $x$ lze jednoznačně zapsat ve tvaru
+  \begin{equation*}
+    x = a\cdot 10^n,
+  \end{equation*}
+  kde $1\leq a < 10$ a $n\in\mathbb{Z}$. Tomuto tvaru říkáme \textbf{vědecký} (také semilogaritmický) \textbf{zápis} čísla.
+\end{definitionbox}
+
+\begin{example}
+  Rychlost světla je přibližně $300\,000\,000\ \si{m/s} = 3\cdot 10^8\ \si{m/s}$. Hmotnost elektronu je přibližně $0{,}000\,000\,000\,000\,000\,000\,000\,000\,000\,911\ \si{kg} = 9{,}11\cdot 10^{-31}\ \si{kg}$. Doufám, že je jasné, proč fyzici dávají přednost druhému zápisu.
+\end{example}
+
+\section{Odmocniny}
+
+Odmocňování je opačná operace k mocnění. Pokud víme, že $x^2 = 9$, chceme se nějak dostat k číslu $x$. Zde ale narážíme na první problém: rovnice $x^2 = 9$ má dvě řešení, $3$ a $-3$. Která z nich by měla být `ta' odmocnina? Matematici se dohodli, že ta nezáporná.
+
+\begin{definitionbox}
+  \textbf{$n$-tá odmocnina}: Nechť $a \geq 0$ a $n\in\mathbb{N}$. Pak \textbf{$n$-tá odmocnina} z čísla $a$ je to \textbf{nezáporné} číslo $x$, pro které platí $x^n = a$. Značíme ji $\sqrt[n]{a}$. Pro $n = 2$ píšeme zkráceně $\sqrt{a}$ a mluvíme o druhé odmocnině.
+
+  \vspace{0.2cm}
+
+  Symbolicky:
+  \begin{equation*}
+    \sqrt[n]{a} = x \quad\Leftrightarrow\quad x\geq 0\ \land\ x^n = a.
+  \end{equation*}
+\end{definitionbox}
+
+Na tom, že takové číslo $x$ vůbec existuje a je jen jedno, stojí kus teorie reálných čísel, který tu dokazovat nebudeme.\footnote{Existence plyne z takzvané úplnosti reálných čísel, jednoznačnost z toho, že funkce $x^n$ je na $[0, \infty)$ rostoucí. Obojí uvidíte v pozdějších kapitolách.} Mimochodem, v racionálních číslech by to neplatilo --- v první kapitole jsme dokázali, že žádné racionální číslo umocněné na druhou nedá $2$.
+
+\begin{definitionbox}
+  \textbf{Dvě velmi důležité poznámky}:
+  \begin{enumerate}
+    \item Odmocnina je \textbf{vždy nezáporná}. Tedy $\sqrt{9} = 3$, a ne $\pm 3$. Znaménko $\pm$ se objeví až při řešení rovnice $x^2 = 9$, ne při počítání odmocniny.
+    \item Pro každé $x\in\mathbb{R}$ platí
+    \begin{equation*}
+      \sqrt{x^2} = |x|.
+    \end{equation*}
+    Například $\sqrt{{(-5)}^2} = \sqrt{25} = 5 = |-5|$. Pokud byste napsali $\sqrt{x^2} = x$, pro záporná $x$ by vám vyšlo záporné číslo, což je spor s bodem 1.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{note}
+  Pro liché $n$ se v některých učebnicích definuje i odmocnina ze záporného čísla, například $\sqrt[3]{-8} = -2$, protože ${(-2)}^3 = -8$. Je to rozumné, protože pro liché $n$ je takové číslo opět jediné. V tomto textu (a ve většině českých učebnic) budeme ale pro jednoduchost odmocňovat jen nezáporná čísla a místo $\sqrt[3]{-8}$ budeme psát $-\sqrt[3]{8}$.
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Pravidla pro počítání s odmocninami}: Pro každé $a, b\geq 0$ a $m, n, k\in\mathbb{N}$ platí:
+  \begin{enumerate}
+    \item $\sqrt[n]{a}\cdot\sqrt[n]{b} = \sqrt[n]{a\cdot b}$,
+    \item $\dfrac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\dfrac{a}{b}}$, pokud $b\neq 0$,
+    \item ${\left(\sqrt[n]{a}\right)}^m = \sqrt[n]{a^m}$,
+    \item $\sqrt[m]{\sqrt[n]{a}} = \sqrt[m\cdot n]{a}$,
+    \item $\sqrt[n]{a^m} = \sqrt[n\cdot k]{a^{m\cdot k}}$.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}\label{ex:odmocniny-soucin}
+  Dokažme si první pravidlo. Krásně na něm uvidíme, jak se s definicí odmocniny pracuje.
+
+  \begin{proof}
+    Označme $x = \sqrt[n]{a}$ a $y = \sqrt[n]{b}$. Podle definice je $x, y\geq 0$, $x^n = a$ a $y^n = b$. Chceme ukázat, že $x\cdot y$ je $n$-tá odmocnina z $ab$. Podle definice tedy musíme ověřit dvě věci:
+    \begin{itemize}
+      \item $xy \geq 0$. To platí, protože součin dvou nezáporných čísel je nezáporný.
+      \item ${(xy)}^n = ab$. To platí, protože podle pravidel pro mocniny je ${(xy)}^n = x^ny^n = ab$.
+    \end{itemize}
+    Tedy $xy = \sqrt[n]{ab}$, což jsme chtěli dokázat.
+  \end{proof}
+
+  Všimněte si, že jsme nic nepočítali. Jen jsme ověřili, že kandidát na odmocninu splňuje definici. Tento postup je v matematice velice častý.
+\end{example}
+
+\begin{problem}
+  Stejným způsobem jako v příkladu~\ref{ex:odmocniny-soucin} dokažte pravidlo 4.
+\end{problem}
+
+\begin{hint}
+  Označte $x = \sqrt[m]{\sqrt[n]{a}}$ a umocněte postupně na $m$ a pak na $n$.
+\end{hint}
+
+\begin{solution}
+  \begin{proof}
+    Nechť $x = \sqrt[m]{\sqrt[n]{a}}$. Podle definice je $x\geq 0$ a $x^m = \sqrt[n]{a}$. Umocněním na $n$ dostaneme ${(x^m)}^n = a$, tedy $x^{mn} = a$. Protože $x \geq 0$, je podle definice $x = \sqrt[mn]{a}$.
+  \end{proof}
+\end{solution}
+
+\begin{definitionbox}
+  Opět pozor, pro sčítání nic takového neplatí:
+  \begin{equation*}
+    \sqrt{a + b} \neq \sqrt{a} + \sqrt{b}.
+  \end{equation*}
+  Protipříklad: $\sqrt{9 + 16} = \sqrt{25} = 5$, ale $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$.
+\end{definitionbox}
+
+\subsection{Částečné odmocnění a usměrňování}
+
+Dvě techniky, které budete u maturity potřebovat neustále, jsou částečné odmocnění a usměrňování zlomků.
+
+\begin{definitionbox}
+  \textbf{Částečné odmocnění}: Pokud pod odmocninou najdeme činitel, který je $n$-tou mocninou, můžeme ho `vytáhnout' před odmocninu:
+  \begin{equation*}
+    \sqrt[n]{a^n b} = a\sqrt[n]{b}, \qquad a, b\geq 0.
+  \end{equation*}
+
+  \textbf{Usměrnění zlomku}: Úprava zlomku tak, aby ve jmenovateli nebyla odmocnina. Zlomek rozšíříme vhodným výrazem:
+  \begin{equation*}
+    \frac{1}{\sqrt{a}} = \frac{1}{\sqrt{a}}\cdot\frac{\sqrt{a}}{\sqrt{a}} = \frac{\sqrt{a}}{a}, \qquad
+    \frac{1}{\sqrt{a} + \sqrt{b}} = \frac{1}{\sqrt{a} + \sqrt{b}}\cdot\frac{\sqrt{a} - \sqrt{b}}{\sqrt{a} - \sqrt{b}} = \frac{\sqrt{a} - \sqrt{b}}{a - b}.
+  \end{equation*}
+  Ve druhém případě jsme využili vzorec $(x + y)(x - y) = x^2 - y^2$, ke kterému se brzy dostaneme.
+\end{definitionbox}
+
+\begin{example}
+  Částečně odmocníme:
+  \begin{align*}
+    \sqrt{72} &= \sqrt{36\cdot 2} = 6\sqrt{2},\\
+    \sqrt[3]{54} &= \sqrt[3]{27\cdot 2} = 3\sqrt[3]{2},\\
+    \sqrt{50} - \sqrt{18} + \sqrt{8} &= 5\sqrt{2} - 3\sqrt{2} + 2\sqrt{2} = 4\sqrt{2}.
+  \end{align*}
+  Poslední příklad ukazuje, proč se částečné odmocnění vyplatí. Zdánlivě nesouvisející odmocniny se najednou daly sečíst, protože jsme je převedli na `stejný druh', podobně jako když sčítáme $5x - 3x + 2x$.
+\end{example}
+
+\begin{example}
+  Usměrníme:
+  \begin{align*}
+    \frac{6}{\sqrt{3}} &= \frac{6\sqrt{3}}{3} = 2\sqrt{3},\\
+    \frac{2}{\sqrt{5} - 1} &= \frac{2(\sqrt{5} + 1)}{(\sqrt{5} - 1)(\sqrt{5} + 1)} = \frac{2(\sqrt{5} + 1)}{5 - 1} = \frac{\sqrt{5} + 1}{2}.
+  \end{align*}
+  Mimochodem, číslo $\frac{1 + \sqrt{5}}{2}\approx 1{,}618$ je slavný \textbf{zlatý řez}, který se objevuje v umění, architektuře i v přírodě.
+\end{example}
+
+\begin{problem}
+  Zjednodušte (částečně odmocněte a usměrněte):
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sqrt{12} + \sqrt{27} - \sqrt{75}$,
+    \item $\dfrac{10}{\sqrt{5}}$,
+    \item $\dfrac{\sqrt{3}}{2 + \sqrt{3}}$,
+    \item $\sqrt{a^5b^2}$, kde $a\geq 0$ a $b < 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $2\sqrt{3} + 3\sqrt{3} - 5\sqrt{3} = 0$,
+    \item $\dfrac{10\sqrt{5}}{5} = 2\sqrt{5}$,
+    \item $\dfrac{\sqrt{3}(2 - \sqrt{3})}{(2 + \sqrt{3})(2 - \sqrt{3})} = \dfrac{2\sqrt{3} - 3}{4 - 3} = 2\sqrt{3} - 3$,
+    \item $\sqrt{a^4\cdot a\cdot b^2} = a^2\cdot|b|\cdot\sqrt{a} = -a^2b\sqrt{a}$. Pozor na to, že $b$ je záporné, takže $\sqrt{b^2} = |b| = -b$.
+  \end{enumerate}
+\end{solution}
+
+\section{Mocniny s racionálním exponentem}
+
+Udělejme ještě jeden krok. Stejně jako jsme si vynutili definici záporného exponentu, vynutíme si nyní definici zlomku v exponentu. Pokud by pravidlo ${(a^m)}^n = a^{mn}$ mělo platit i pro zlomky, pak musí platit
+\begin{equation*}
+  {\left(a^{\frac{1}{n}}\right)}^n = a^{\frac{1}{n}\cdot n} = a^1 = a.
+\end{equation*}
+Tedy $a^{\frac{1}{n}}$ je číslo, které umocněné na $n$ dá $a$. To už ale známe, je to přece $\sqrt[n]{a}$!
+
+\begin{definitionbox}
+  \textbf{Mocnina s racionálním exponentem}: Pro každé $a > 0$, $m\in\mathbb{Z}$ a $n\in\mathbb{N}$ definujeme
+  \begin{equation*}
+    a^{\frac{m}{n}} = \sqrt[n]{a^m}.
+  \end{equation*}
+  Pro $a = 0$ a kladný exponent klademe $0^{\frac{m}{n}} = 0$.
+
+  \vspace{0.2cm}
+
+  Pro mocniny s racionálním exponentem opět platí všechna pravidla pro počítání s mocninami (pro kladné základy). Díky tomu můžeme \textbf{odmocniny převádět na mocniny} a počítat s nimi mnohem pohodlněji.
+\end{definitionbox}
+
+\begin{note}
+  Proč požadujeme $a > 0$? Zkusme definici použít na $a = -8$. Na jednu stranu bychom mohli chtít ${(-8)}^{\frac{1}{3}} = -2$. Na druhou stranu ale $\frac{1}{3} = \frac{2}{6}$, takže by mělo platit ${(-8)}^{\frac{1}{3}} = {(-8)}^{\frac{2}{6}} = \sqrt[6]{{(-8)}^2} = \sqrt[6]{64} = 2$. Dostali jsme dva různé výsledky pro stejné číslo, což je katastrofa. Proto se omezíme na kladné základy.
+\end{note}
+
+\begin{example}
+  Převod na mocniny je velice silná zbraň. Zjednodušme
+  \begin{equation*}
+    \frac{\sqrt{a}\cdot\sqrt[3]{a^2}}{\sqrt[6]{a}}, \qquad a > 0.
+  \end{equation*}
+  Převedeme vše na mocniny a sečteme exponenty:
+  \begin{equation*}
+    \frac{a^{\frac{1}{2}}\cdot a^{\frac{2}{3}}}{a^{\frac{1}{6}}} = a^{\frac{1}{2} + \frac{2}{3} - \frac{1}{6}} = a^{\frac{3 + 4 - 1}{6}} = a^1 = a.
+  \end{equation*}
+  Zkuste si to samé spočítat jen s pravidly pro odmocniny. Bude to fungovat, ale bude to mnohem více bolet.
+\end{example}
+
+\begin{problem}
+  Zjednodušte ($x > 0$):
+  \begin{enumerate}[label=(\alph*)]
+    \item $8^{\frac{2}{3}}$,
+    \item $16^{-\frac{3}{4}}$,
+    \item $\sqrt{x\sqrt{x\sqrt{x}}}$,
+    \item $\dfrac{\sqrt[4]{x^3}\cdot x^{-\frac{1}{2}}}{\sqrt[8]{x^2}}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (c) postupujte zevnitř: $x\sqrt{x} = x^{\frac{3}{2}}$ a tak dále.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item ${(\sqrt[3]{8})}^2 = 2^2 = 4$,
+    \item $\dfrac{1}{{(\sqrt[4]{16})}^3} = \dfrac{1}{2^3} = \dfrac{1}{8}$,
+    \item $x\sqrt{x} = x^{\frac{3}{2}}$, pak $x\cdot\sqrt{x^{\frac{3}{2}}} = x\cdot x^{\frac{3}{4}} = x^{\frac{7}{4}}$ a nakonec $\sqrt{x^{\frac{7}{4}}} = x^{\frac{7}{8}} = \sqrt[8]{x^7}$,
+    \item $x^{\frac{3}{4} - \frac{1}{2} - \frac{2}{8}} = x^{0} = 1$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Iracionální exponent}
+
+Co by mělo znamenat $2^{\sqrt{2}}$? Exponent $\sqrt{2}$ není zlomek, takže žádná z našich definic nefunguje. Myšlenka je ale jednoduchá. Číslo $\sqrt{2}$ můžeme libovolně přesně aproximovat zlomky:
+\begin{equation*}
+  1{,}4 = \tfrac{14}{10},\quad 1{,}41 = \tfrac{141}{100},\quad 1{,}414 = \tfrac{1414}{1000},\quad \ldots
+\end{equation*}
+A mocniny $2^{1{,}4}$, $2^{1{,}41}$, $2^{1{,}414}$, \ldots už spočítat umíme. Ukazuje se, že tato čísla se `blíží' k nějakému konkrétnímu číslu a to prohlásíme za $2^{\sqrt{2}}\approx 2{,}665$. Formálně se to dělá pomocí limit, ke kterým se dostaneme v pozdějších kapitolách. Důležité je, že i pro iracionální exponenty platí všechna pravidla pro mocniny s kladným základem.
+
+Na závěr odbočky si ukážeme jeden z nejkrásnějších krátkých důkazů v matematice. Využijeme v něm princip \textit{tertium non datur} z první kapitoly.
+
+\begin{definitionbox}
+  \textbf{Věta}: Existují iracionální čísla $a, b$ taková, že $a^b$ je racionální.
+\end{definitionbox}
+
+\begin{proof}
+  Uvažujme číslo $\sqrt{2}^{\sqrt{2}}$. Podle principu \textit{tertium non datur} je toto číslo buď racionální, nebo iracionální.
+  \begin{itemize}
+    \item Pokud je $\sqrt{2}^{\sqrt{2}}$ racionální, jsme hotovi. Stačí zvolit $a = b = \sqrt{2}$, o kterém víme, že je iracionální.
+    \item Pokud je $\sqrt{2}^{\sqrt{2}}$ iracionální, zvolme $a = \sqrt{2}^{\sqrt{2}}$ a $b = \sqrt{2}$. Obě čísla jsou iracionální a
+    \begin{equation*}
+      a^b = {\left(\sqrt{2}^{\sqrt{2}}\right)}^{\sqrt{2}} = \sqrt{2}^{\sqrt{2}\cdot\sqrt{2}} = \sqrt{2}^2 = 2,
+    \end{equation*}
+    což je racionální číslo.
+  \end{itemize}
+  V obou případech jsme taková čísla našli.
+\end{proof}
+
+Na tomto důkazu je zvláštní to, že na jeho konci \textit{nevíme}, která z možností nastala. Víme jen, že jedna z nich určitě funguje. Takovým důkazům se říká \textbf{nekonstruktivní}.\footnote{Pro zvědavé: díky hluboké Gelfondově--Schneiderově větě dnes víme, že $\sqrt{2}^{\sqrt{2}}$ je iracionální, takže nastal druhý případ. Pro důkaz výše to ale vůbec nepotřebujeme.} Někteří matematici (takzvaní intuicionisté) takové důkazy odmítají přijmout, protože odmítají právě princip \textit{tertium non datur}.
+
+\section{Algebraické výrazy}
+
+Nyní už máme v ruce všechny operace a můžeme se podívat na výrazy. Výraz je, zjednodušeně řečeno, `smysluplně' zapsaná kombinace čísel, proměnných, operací a závorek.
+
+\begin{definitionbox}
+  \textbf{Algebraický výraz} je zápis složený z čísel, proměnných ($x, y, a, b, \ldots$), znaků operací ($+, -, \cdot, :,$ mocnin a odmocnin) a závorek, který dává smysl.
+
+  \textbf{Hodnota výrazu} je číslo, které dostaneme, když za všechny proměnné dosadíme konkrétní čísla a výraz spočítáme.
+
+  \textbf{Definiční obor výrazu} (také \textbf{podmínky}) je množina všech hodnot proměnných, pro které má výraz smysl. Výraz typicky nemá smysl, pokud:
+  \begin{itemize}
+    \item dělíme nulou (jmenovatel se nesmí rovnat nule),
+    \item odmocňujeme záporné číslo (pod sudou odmocninou musí být nezáporné číslo),
+    \item a později také logaritmujeme nekladné číslo.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Určeme definiční obor výrazu
+  \begin{equation*}
+    V(x) = \frac{\sqrt{x + 3}}{x^2 - 4}.
+  \end{equation*}
+  Pod odmocninou musí být nezáporné číslo, tedy $x + 3\geq 0$, neboli $x\geq -3$. Jmenovatel nesmí být nula, tedy $x^2\neq 4$, neboli $x\neq 2$ a $x\neq -2$. Celkem dostáváme
+  \begin{equation*}
+    D(V) = \{x\in\mathbb{R}\ |\ x\geq -3,\ x\neq\pm 2\} = [-3, -2)\cup(-2, 2)\cup(2, \infty).
+  \end{equation*}
+  Zápis pomocí intervalů si podrobně vysvětlíme v další kapitole. Všimněte si, že definiční obor je \textit{průnik} podmínek, protože všechny musí platit zároveň. Opět se nám zde hodí množiny z předchozí kapitoly.
+\end{example}
+
+\begin{note}
+  Definiční obor \textbf{vždy} určujeme z původního výrazu, ještě před jakoukoli úpravou! Například výraz $\frac{x^2}{x}$ se dá upravit na $x$, ale zatímco $x$ je definované pro všechna reálná čísla, původní výraz pro $x = 0$ definovaný není. Správně tedy píšeme $\frac{x^2}{x} = x$ pro $x\neq 0$. U ústní maturity se na podmínky zkoušející ptají velice rádi.
+\end{note}
+
+\subsection{Mnohočleny}
+
+Nejdůležitějším typem výrazů jsou mnohočleny (také polynomy). Jsou to výrazy, ve kterých proměnnou jen sčítáme, odčítáme, násobíme číslem a umocňujeme na přirozené číslo.
+
+\begin{definitionbox}
+  \textbf{Mnohočlen} (polynom) v proměnné $x$ je výraz tvaru
+  \begin{equation*}
+    a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0,
+  \end{equation*}
+  kde $n\in\mathbb{N}_0$ a $a_0, a_1, \ldots, a_n\in\mathbb{R}$ jsou takzvané \textbf{koeficienty}. Pokud $a_n\neq 0$, říkáme, že mnohočlen má \textbf{stupeň} $n$. Jednotlivé sčítance $a_kx^k$ nazýváme \textbf{členy} mnohočlenu, $a_0$ je \textbf{absolutní člen}.
+
+  \vspace{0.2cm}
+
+  Mnohočleny stupně $1$ nazýváme \textbf{lineární} ($ax + b$), stupně $2$ \textbf{kvadratické} ($ax^2 + bx + c$) a stupně $3$ \textbf{kubické}.
+\end{definitionbox}
+
+\begin{example}
+  Výraz $3x^4 - x^2 + 7$ je mnohočlen stupně $4$ s koeficienty $a_4 = 3$, $a_3 = 0$, $a_2 = -1$, $a_1 = 0$ a $a_0 = 7$. Výrazy $\frac{1}{x}$ nebo $\sqrt{x}$ mnohočleny nejsou, protože $x^{-1}$ a $x^{\frac{1}{2}}$ nemají přirozený exponent.
+\end{example}
+
+Mnohočleny sčítáme tak, že sečteme členy se stejnou mocninou (tzv. \textbf{sčítání podobných členů}). Násobíme je tak, že vynásobíme `každý s každým' (to je vlastně jen opakované použití distributivního zákona z axiomů tělesa) a pak sečteme podobné členy.
+
+\begin{example}
+  Mějme mnohočleny $P(x) = 2x^2 - 3x + 1$ a $Q(x) = x - 2$. Potom
+  \begin{align*}
+    P(x) + Q(x) &= 2x^2 - 3x + 1 + x - 2 = 2x^2 - 2x - 1,\\
+    P(x)\cdot Q(x) &= (2x^2 - 3x + 1)(x - 2)\\
+    &= 2x^3 - 4x^2 - 3x^2 + 6x + x - 2\\
+    &= 2x^3 - 7x^2 + 7x - 2.
+  \end{align*}
+  Všimněte si, že stupeň součinu je součet stupňů ($2 + 1 = 3$). Proč tomu tak je?
+\end{example}
+
+\subsection{Vzorce}
+
+Některé součiny se objevují tak často, že se vyplatí si je pamatovat. Ani ty si ale nemusíte pamatovat slepě. Stačí je jednou odvodit (roznásobit) a pochopit.
+
+\begin{definitionbox}
+  \textbf{Základní algebraické vzorce}: Pro všechna $a, b\in\mathbb{R}$ platí
+  \begin{align*}
+    {(a + b)}^2 &= a^2 + 2ab + b^2,\\
+    {(a - b)}^2 &= a^2 - 2ab + b^2,\\
+    (a + b)(a - b) &= a^2 - b^2,\\
+    {(a + b)}^3 &= a^3 + 3a^2b + 3ab^2 + b^3,\\
+    {(a - b)}^3 &= a^3 - 3a^2b + 3ab^2 - b^3,\\
+    a^3 + b^3 &= (a + b)(a^2 - ab + b^2),\\
+    a^3 - b^3 &= (a - b)(a^2 + ab + b^2).
+  \end{align*}
+\end{definitionbox}
+
+\begin{example}\label{ex:vzorec-ctverec}
+  Vzorec ${(a + b)}^2 = a^2 + 2ab + b^2$ má krásný geometrický význam, který znali už staří Řekové. Představte si čtverec o straně $a + b$. Jeho obsah je ${(a + b)}^2$. Zároveň se ale dá rozdělit na čtverec o straně $a$, čtverec o straně $b$ a dva obdélníky o stranách $a$ a $b$:
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+      \fill[colorofwisdom!25] (0,0) rectangle (3,3);
+      \fill[black!15] (3,3) rectangle (5,5);
+      \fill[black!5] (3,0) rectangle (5,3);
+      \fill[black!5] (0,3) rectangle (3,5);
+      \draw[thick] (0,0) rectangle (5,5);
+      \draw[thick] (3,0) -- (3,5);
+      \draw[thick] (0,3) -- (5,3);
+      \node at (1.5,1.5) {$a^2$};
+      \node at (4,4) {$b^2$};
+      \node at (4,1.5) {$ab$};
+      \node at (1.5,4) {$ab$};
+      \node[below] at (1.5,0) {$a$};
+      \node[below] at (4,0) {$b$};
+      \node[left] at (0,1.5) {$a$};
+      \node[left] at (0,4) {$b$};
+    \end{tikzpicture}
+  \end{center}
+  Sečtením obsahů dostaneme přesně $a^2 + 2ab + b^2$. Tento obrázek je mimochodem také důkazem toho, že ${(a + b)}^2 \neq a^2 + b^2$ --- ty dva obdélníky tam prostě jsou.
+\end{example}
+
+\begin{problem}
+  Dokažte roznásobením vzorce pro $(a + b)(a - b)$, ${(a + b)}^3$ a $a^3 - b^3$.
+\end{problem}
+
+\begin{solution}
+  \begin{align*}
+    (a + b)(a - b) &= a^2 - ab + ab - b^2 = a^2 - b^2,\\
+    {(a + b)}^3 &= {(a + b)}^2(a + b) = (a^2 + 2ab + b^2)(a + b)\\
+    &= a^3 + a^2b + 2a^2b + 2ab^2 + ab^2 + b^3 = a^3 + 3a^2b + 3ab^2 + b^3,\\
+    (a - b)(a^2 + ab + b^2) &= a^3 + a^2b + ab^2 - a^2b - ab^2 - b^3 = a^3 - b^3.
+  \end{align*}
+\end{solution}
+
+\begin{note}
+  Koeficienty ve vzorcích $1, 2, 1$ a $1, 3, 3, 1$ nejsou náhodné. Pokud si je napíšete pod sebe, dostanete začátek takzvaného \textbf{Pascalova trojúhelníku}, ve kterém je každé číslo součtem dvou čísel nad ním:
+  \begin{center}
+    \begin{tabular}{ccccccccc}
+      &&&& 1 &&&& \\
+      &&& 1 && 1 &&& \\
+      && 1 && 2 && 1 && \\
+      & 1 && 3 && 3 && 1 & \\
+      1 && 4 && 6 && 4 && 1
+    \end{tabular}
+  \end{center}
+  Poslední řádek nám tedy říká, že ${(a + b)}^4 = a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4$. Obecně to popisuje \textbf{binomická věta}, kterou si dokážeme v kapitole o kombinatorice.
+\end{note}
+
+\begin{problem}
+  Upravte pomocí vzorců:
+  \begin{enumerate}[label=(\alph*)]
+    \item ${(3x - 2y)}^2$,
+    \item $(2a + 5)(2a - 5)$,
+    \item ${(x + 1)}^3 - {(x - 1)}^3$,
+    \item $101^2 - 99^2$ (zpaměti!).
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $9x^2 - 12xy + 4y^2$,
+    \item $4a^2 - 25$,
+    \item $(x^3 + 3x^2 + 3x + 1) - (x^3 - 3x^2 + 3x - 1) = 6x^2 + 2$,
+    \item $(101 + 99)(101 - 99) = 200\cdot 2 = 400$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Rozklad mnohočlenu na součin}
+
+Roznásobování je snadné, to zvládne každý. Opačný směr --- tedy zapsat mnohočlen jako součin jednodušších výrazů --- je mnohem zajímavější a důležitější. Pokud totiž máme mnohočlen zapsaný jako součin, můžeme snadno zjistit, kdy je roven nule, krátit zlomky nebo zjišťovat znaménko. Proč je to tak, vychází z následující jednoduché, ale klíčové vlastnosti reálných čísel.
+
+\begin{definitionbox}
+  \textbf{Věta (o nulovém součinu)}: Pro všechna $a, b\in\mathbb{R}$ platí
+  \begin{equation*}
+    a\cdot b = 0\quad\Leftrightarrow\quad a = 0\ \lor\ b = 0.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Implikace zprava doleva je jasná, protože $0\cdot b = 0$ a $a\cdot 0 = 0$.\footnote{I toto se dá dokázat z axiomů tělesa: $0\cdot b = (0 + 0)\cdot b = 0\cdot b + 0\cdot b$ a po odečtení $0\cdot b$ od obou stran dostaneme $0 = 0\cdot b$.} Zleva doprava: předpokládejme, že $ab = 0$. Pokud $a = 0$, jsme hotovi. Pokud $a\neq 0$, existuje podle axiomů tělesa inverzní prvek $a^{-1}$ a platí
+  \begin{equation*}
+    b = 1\cdot b = (a^{-1}a)\cdot b = a^{-1}(ab) = a^{-1}\cdot 0 = 0.
+  \end{equation*}
+\end{proof}
+
+\begin{definitionbox}
+  \textbf{Metody rozkladu na součin}:
+  \begin{enumerate}
+    \item \textbf{Vytýkání}: $ab + ac = a(b + c)$. Vždy zkuste jako první!
+    \item \textbf{Použití vzorců}: zejména $a^2 - b^2 = (a - b)(a + b)$ a ${(a\pm b)}^2$.
+    \item \textbf{Postupné vytýkání}: rozdělíme členy do skupin, z každé skupiny vytkneme a pak vytkneme společnou závorku.
+    \item \textbf{Rozklad kvadratického trojčlenu}: hledáme čísla $r, s$ taková, že
+    \begin{equation*}
+      x^2 + px + q = (x - r)(x - s),\qquad\text{kde } r + s = -p,\ r\cdot s = q.
+    \end{equation*}
+    Obecně tuto metodu rozebereme v kapitole o kvadratických rovnicích.
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  Rozložme na součin:
+  \begin{align*}
+    6x^3 - 9x^2 &= 3x^2(2x - 3),\\
+    4x^2 - 25 &= (2x - 5)(2x + 5),\\
+    x^2 - 6x + 9 &= {(x - 3)}^2,\\
+    x^3 - 2x^2 + 3x - 6 &= x^2(x - 2) + 3(x - 2) = (x - 2)(x^2 + 3),\\
+    x^2 - 5x + 6 &= (x - 2)(x - 3),\\
+    x^4 - 1 &= (x^2 - 1)(x^2 + 1) = (x - 1)(x + 1)(x^2 + 1).
+  \end{align*}
+  U pátého řádku jsme hledali dvě čísla, jejichž součet je $5$ a součin $6$. To jsou čísla $2$ a $3$. Na posledním řádku jsme vzorec použili dvakrát. Výraz $x^2 + 1$ už v reálných číslech dále rozložit nejde (proč?).
+\end{example}
+
+\begin{problem}
+  Rozložte na součin co nejvíce činitelů:
+  \begin{enumerate}[label=(\alph*)]
+    \item $2a^2b - 8b^3$,
+    \item $x^2 + 2x - 15$,
+    \item $ax - ay + bx - by$,
+    \item $x^3 + 8$,
+    \item $3x^3 - 12x^2 + 12x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $2b(a^2 - 4b^2) = 2b(a - 2b)(a + 2b)$,
+    \item hledáme čísla se součinem $-15$ a součtem $-2$, tedy $-5$ a $3$: $(x - 3)(x + 5)$,
+    \item $a(x - y) + b(x - y) = (x - y)(a + b)$,
+    \item $x^3 + 2^3 = (x + 2)(x^2 - 2x + 4)$,
+    \item $3x(x^2 - 4x + 4) = 3x{(x - 2)}^2$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Lomené výrazy}
+
+Lomený výraz je zlomek, v jehož jmenovateli se vyskytuje proměnná. S lomenými výrazy počítáme úplně stejně jako se zlomky, jen si musíme pamatovat na podmínky.
+
+\begin{definitionbox}
+  \textbf{Počítání s lomenými výrazy}: Pro výrazy $A, B, C, D$ (kde jmenovatelé jsou nenulové) platí:
+  \begin{align*}
+    \frac{A\cdot C}{B\cdot C} &= \frac{A}{B} &&\text{(krácení, resp. rozšiřování),}\\
+    \frac{A}{B} + \frac{C}{D} &= \frac{AD + BC}{BD} &&\text{(sčítání),}\\
+    \frac{A}{B}\cdot\frac{C}{D} &= \frac{AC}{BD} &&\text{(násobení),}\\
+    \frac{A}{B} : \frac{C}{D} &= \frac{A}{B}\cdot\frac{D}{C} = \frac{AD}{BC} &&\text{(dělení, navíc } C\neq 0\text{).}
+  \end{align*}
+  Při sčítání se vyplatí místo součinu jmenovatelů $BD$ použít \textbf{nejmenší společný násobek} jmenovatelů. Ten najdeme tak, že jmenovatele rozložíme na součin.
+
+  \vspace{0.2cm}
+
+  \textbf{Postup úpravy lomeného výrazu}:
+  \begin{enumerate}
+    \item Rozložit všechny čitatele a jmenovatele na součin.
+    \item Určit podmínky (všechny činitele ve jmenovatelích $\neq 0$, u dělení i čitatel dělitele).
+    \item Upravit a krátit. Krátit můžeme jen \textbf{činitele}, nikdy sčítance!
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{example}
+  Upravme a určeme podmínky:
+  \begin{equation*}
+    \frac{x^2 - 9}{x^2 + 3x}.
+  \end{equation*}
+  Rozložíme: $\frac{(x - 3)(x + 3)}{x(x + 3)}$. Podmínky: $x\neq 0$ a $x\neq -3$. Nyní můžeme krátit činitelem $(x + 3)$:
+  \begin{equation*}
+    \frac{x^2 - 9}{x^2 + 3x} = \frac{x - 3}{x}, \qquad x\neq 0,\ x\neq -3.
+  \end{equation*}
+  Podmínku $x\neq -3$ musíme uvést, i když se ve výsledku už nijak neprojevuje. Původní výraz totiž pro $x = -3$ neexistuje, zatímco upravený ano.
+\end{example}
+
+\begin{example}
+  Sečtěme:
+  \begin{equation*}
+    \frac{2}{x - 1} - \frac{3}{x + 1} + \frac{6}{x^2 - 1}.
+  \end{equation*}
+  Rozložíme poslední jmenovatel: $x^2 - 1 = (x - 1)(x + 1)$. Podmínky: $x\neq\pm 1$. Společný jmenovatel je tedy $(x - 1)(x + 1)$ a
+  \begin{equation*}
+    \frac{2(x + 1) - 3(x - 1) + 6}{(x - 1)(x + 1)} = \frac{2x + 2 - 3x + 3 + 6}{(x - 1)(x + 1)} = \frac{11 - x}{(x - 1)(x + 1)}, \qquad x\neq\pm 1.
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  Častým postrachem jsou \textbf{složené zlomky}. Zjednodušme
+  \begin{equation*}
+    \frac{\dfrac{1}{x} - \dfrac{1}{y}}{\dfrac{1}{x^2} - \dfrac{1}{y^2}}.
+  \end{equation*}
+  Podmínky: $x\neq 0$, $y\neq 0$ a jmenovatel hlavního zlomku nesmí být nula, tedy $x^2\neq y^2$, neboli $x\neq\pm y$. Upravíme čitatele a jmenovatele zvlášť:
+  \begin{equation*}
+    \frac{\dfrac{y - x}{xy}}{\dfrac{y^2 - x^2}{x^2y^2}} = \frac{y - x}{xy}\cdot\frac{x^2y^2}{(y - x)(y + x)} = \frac{xy}{x + y}.
+  \end{equation*}
+\end{example}
+
+\begin{problem}
+  Zjednodušte a určete podmínky:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\dfrac{a^2 - 4a + 4}{a^2 - 4}$,
+    \item $\dfrac{x}{x - 2} - \dfrac{4}{x^2 - 2x}$,
+    \item $\dfrac{x^2 - 1}{x^2 + x}\ :\ \dfrac{x - 1}{x^2}$,
+    \item $\left(\dfrac{a}{a - b} - \dfrac{b}{a + b}\right)\cdot\dfrac{a^2 - b^2}{a^2 + b^2}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\dfrac{{(a - 2)}^2}{(a - 2)(a + 2)} = \dfrac{a - 2}{a + 2}$, $a\neq\pm 2$.
+    \item $x^2 - 2x = x(x - 2)$, podmínky $x\neq 0, 2$. Pak $\dfrac{x^2 - 4}{x(x - 2)} = \dfrac{(x - 2)(x + 2)}{x(x - 2)} = \dfrac{x + 2}{x}$.
+    \item Podmínky: $x\neq 0$, $x\neq -1$ (jmenovatel prvního zlomku), $x\neq 1$ (čitatel dělitele). Pak
+    \begin{equation*}
+      \frac{(x - 1)(x + 1)}{x(x + 1)}\cdot\frac{x^2}{x - 1} = x.
+    \end{equation*}
+    \item Podmínky: $a\neq\pm b$ (výraz $a^2 + b^2$ je nulový jen pro $a = b = 0$, což už je vyloučeno). Závorka je $\dfrac{a(a + b) - b(a - b)}{(a - b)(a + b)} = \dfrac{a^2 + b^2}{(a - b)(a + b)}$ a po vynásobení dostaneme $1$.
+  \end{enumerate}
+  Výsledek (d) je typický. Pokud vám v maturitním příkladu vyjde nějaké `hezké' číslo, je to dobré znamení.
+\end{solution}
+
+\subsection{Dělení mnohočlenu mnohočlenem}
+
+Stejně jako umíme dělit čísla `pod sebou' se zbytkem, umíme dělit i mnohočleny.
+
+\begin{definitionbox}
+  \textbf{Věta (o dělení se zbytkem)}: Pro mnohočleny $P$ a $Q$, kde $Q$ není nulový, existují jednoznačně určené mnohočleny $S$ (podíl) a $R$ (zbytek) takové, že
+  \begin{equation*}
+    P(x) = Q(x)\cdot S(x) + R(x),
+  \end{equation*}
+  a stupeň $R$ je menší než stupeň $Q$ (nebo je $R$ nulový).
+\end{definitionbox}
+
+\begin{example}
+  Vydělme $(2x^3 - 3x^2 + 4x - 5) : (x - 1)$. Postupujeme jako u čísel: vždy vydělíme člen s nejvyšší mocninou, výsledek vynásobíme dělitelem a odečteme.
+  \shorthandoff{-}% babel czech dela z - aktivni znak, coz rozbiji \cline
+  \begin{equation*}
+    \begin{array}{rrrrl}
+      2x^3 & -\ 3x^2 & +\ 4x & -\ 5 & : (x - 1) = 2x^2 - x + 3\\
+      -(2x^3 & -\ 2x^2) & & & \\ \cline{1-2}
+      & -x^2 & +\ 4x & & \\
+      & -(-x^2 & +\ x) & & \\ \cline{2-3}
+      & & 3x & -\ 5 & \\
+      & & -(3x & -\ 3) & \\ \cline{3-4}
+      & & & -2 &
+    \end{array}
+  \end{equation*}
+  Tedy $2x^3 - 3x^2 + 4x - 5 = (x - 1)(2x^2 - x + 3) - 2$. Zkuste si to roznásobit a ověřit.
+\end{example}
+
+\begin{note}
+  Všimněte si, že zbytek $-2$ je přesně hodnota $P(1) = 2 - 3 + 4 - 5 = -2$. To není náhoda. Pokud dělíme mnohočlen $P(x)$ dvojčlenem $(x - r)$, je zbytek vždy roven $P(r)$. Stačí do rovnosti $P(x) = (x - r)S(x) + R$ dosadit $x = r$. Speciálně: pokud je $P(r) = 0$, je mnohočlen $P$ dělitelný dvojčlenem $(x - r)$. Toto pozorování nám velice pomůže při řešení rovnic vyšších stupňů.
+\end{note}
+
+\begin{problem}
+  Vydělte $(x^3 - 6x^2 + 11x - 6) : (x - 1)$ a výsledný podíl dále rozložte na součin.
+\end{problem}
+
+\begin{solution}
+  Podíl je $x^2 - 5x + 6$ se zbytkem $0$ (ověřte: $P(1) = 1 - 6 + 11 - 6 = 0$). Dále $x^2 - 5x + 6 = (x - 2)(x - 3)$, takže
+  \begin{equation*}
+    x^3 - 6x^2 + 11x - 6 = (x - 1)(x - 2)(x - 3).
+  \end{equation*}
+\end{solution}
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+U ústní maturity se od vás nečeká jen to, že umíte počítat, ale i to, že rozumíte, \textit{proč} věci fungují. Zkuste si zodpovědět následující otázky. Pokud to zvládnete bez nahlížení do textu, máte toto téma v kapse.
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak je definována mocnina s přirozeným, celým a racionálním exponentem? Proč je $a^0 = 1$?
+    \item Proč u racionálních exponentů požadujeme kladný základ?
+    \item Jaký je rozdíl mezi $\sqrt{9}$ a řešením rovnice $x^2 = 9$? Čemu se rovná $\sqrt{x^2}$?
+    \item Co je definiční obor výrazu a proč ho určujeme ještě před úpravami?
+    \item Co je mnohočlen a jeho stupeň? Jak se mnohočleny sčítají, násobí a dělí?
+    \item Odvoďte vzorec pro ${(a - b)}^2$ a nakreslete jeho geometrický význam.
+    \item Jaké znáte metody rozkladu mnohočlenu na součin? Proč je rozklad užitečný?
+    \item Proč můžeme krátit jen činitele a ne sčítance? Uveďte protipříklad.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Na závěr jeden těžší příklad pro odvážné. Zjednodušte pro $a > 0$, $a\neq 1$:
+  \begin{equation*}
+    \left(\frac{a^{\frac{3}{2}} - 1}{a^{\frac{1}{2}} - 1} - a^{\frac{1}{2}}\right)\cdot\frac{a - 1}{a + 1}.
+  \end{equation*}
+\end{problem}
+
+\begin{hint}
+  Označte $t = a^{\frac{1}{2}} = \sqrt{a}$. Pak $a^{\frac{3}{2}} = t^3$, $a = t^2$ a můžete použít vzorec pro $t^3 - 1$.
+\end{hint}
+
+\begin{solution}
+  Se substitucí $t = \sqrt{a}$ ($t > 0$, $t\neq 1$) dostaneme
+  \begin{equation*}
+    \left(\frac{t^3 - 1}{t - 1} - t\right)\cdot\frac{t^2 - 1}{t^2 + 1} = \left(t^2 + t + 1 - t\right)\cdot\frac{t^2 - 1}{t^2 + 1} = (t^2 + 1)\cdot\frac{t^2 - 1}{t^2 + 1} = t^2 - 1 = a - 1.
+  \end{equation*}
+  Substituce je velice užitečný trik. Složitý výraz se tím `převlékne' za jednoduchý, který už umíme upravit.
+\end{solution}
