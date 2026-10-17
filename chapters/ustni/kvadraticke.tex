@@ -1,0 +1,536 @@
+\label{kap:kvadraticke}
+\mathquote{Mathematics is the art of giving the same name to different things.}{Henri Poincaré}
+
+Lineární rovnice jsme v předchozí kapitole vyřešili úplně a definitivně. Teď přidáme neznámou na druhou a najednou se začnou dít zajímavé věci. Rovnice může mít dvě řešení, jedno, nebo žádné. Objeví se diskriminant, Vietovy vzorce a parabola. Kvadratické rovnice jsou pravděpodobně nejčastějším typem rovnic, se kterým se u maturity potkáte, a to nejen v této kapitole, ale i v geometrii, ve fyzice a vlastně všude.
+
+\section{Kvadratická rovnice}
+
+\begin{definitionbox}
+  \textbf{Kvadratická rovnice} s neznámou $x$ je rovnice, kterou lze ekvivalentními úpravami převést na tvar
+  \begin{equation*}
+    ax^2 + bx + c = 0,\qquad a, b, c\in\mathbb{R},\ a\neq 0.
+  \end{equation*}
+  Výraz $ax^2$ nazýváme \textbf{kvadratický člen}, $bx$ \textbf{lineární člen} a $c$ \textbf{absolutní člen}. Pokud $a = 1$, mluvíme o \textbf{normovaném} tvaru $x^2 + px + q = 0$.
+\end{definitionbox}
+
+Podmínka $a\neq 0$ je důležitá. Pokud by $a = 0$, dostali bychom lineární rovnici z předchozí kapitoly a nic by se nedělo.
+
+\subsection{Neúplné kvadratické rovnice}
+
+Než se pustíme do obecného vzorce, podívejme se na dva speciální případy, které se dají vyřešit mnohem rychleji. Používat na ně vzorec je jako jet do vedlejší místnosti autem. Jde to, ale proč.
+
+\begin{definitionbox}
+  \textbf{Ryze kvadratická rovnice} ($b = 0$): $ax^2 + c = 0$. Řešíme ji osamostatněním $x^2$:
+  \begin{equation*}
+    x^2 = -\frac{c}{a}.
+  \end{equation*}
+  Pokud $-\frac{c}{a} > 0$, má rovnice dvě řešení $x_{1,2} = \pm\sqrt{-\frac{c}{a}}$. Pokud $-\frac{c}{a} = 0$, má jedno řešení $x = 0$. Pokud $-\frac{c}{a} < 0$, nemá v $\mathbb{R}$ řešení.
+
+  \vspace{0.2cm}
+
+  \textbf{Kvadratická rovnice bez absolutního členu} ($c = 0$): $ax^2 + bx = 0$. Řešíme ji vytknutím a větou o nulovém součinu z kapitoly~\ref{kap:vyrazy}:
+  \begin{equation*}
+    x(ax + b) = 0\quad\Leftrightarrow\quad x = 0\ \lor\ x = -\frac{b}{a}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme:
+  \begin{align*}
+    4x^2 - 9 = 0 &\quad\Leftrightarrow\quad x^2 = \tfrac{9}{4} &&\Leftrightarrow\quad x = \pm\tfrac{3}{2}, &&K = \left\{-\tfrac{3}{2}, \tfrac{3}{2}\right\},\\
+    x^2 + 16 = 0 &\quad\Leftrightarrow\quad x^2 = -16 && &&K = \emptyset,\\
+    3x^2 - 12x = 0 &\quad\Leftrightarrow\quad 3x(x - 4) = 0 && &&K = \{0, 4\}.
+  \end{align*}
+\end{example}
+
+\begin{note}
+  U rovnice $3x^2 = 12x$ by vás mohlo napadnout vydělit obě strany číslem $3x$. Nedělejte to! Výraz $3x$ může být nulový a dělením byste přišli o řešení $x = 0$. Tohle je jedna z nejčastějších chyb vůbec. Vytýkejte, nedělte.
+\end{note}
+
+\subsection{Doplnění na čtverec a obecný vzorec}
+
+Jak vyřešit rovnici $x^2 + 6x + 5 = 0$? Trik je přepsat levou stranu tak, aby v ní byl `celý čtverec'. Víme, že ${(x + 3)}^2 = x^2 + 6x + 9$. Naše rovnice má místo $9$ jen $5$, takže
+\begin{equation*}
+  x^2 + 6x + 5 = (x^2 + 6x + 9) - 4 = {(x + 3)}^2 - 4.
+\end{equation*}
+Rovnice tedy zní ${(x + 3)}^2 = 4$, a to už je v podstatě ryze kvadratická rovnice: $x + 3 = \pm 2$, tedy $x = -1$ nebo $x = -5$. Tomuto postupu se říká \textbf{doplnění na čtverec} a je to jedna z nejužitečnějších technik celé středoškolské matematiky. Uvidíme ji znovu u paraboly, u kružnice i u integrálů.
+
+Pokud stejný postup provedeme s obecnou rovnicí, dostaneme slavný vzorec.
+
+\begin{definitionbox}
+  \textbf{Diskriminant} kvadratické rovnice $ax^2 + bx + c = 0$ je číslo
+  \begin{equation*}
+    D = b^2 - 4ac.
+  \end{equation*}
+
+  \textbf{Věta (o řešení kvadratické rovnice)}:
+  \begin{itemize}
+    \item Pokud $D > 0$, má rovnice dvě různá reálná řešení
+    \begin{equation*}
+      x_{1,2} = \frac{-b\pm\sqrt{D}}{2a}.
+    \end{equation*}
+    \item Pokud $D = 0$, má rovnice jedno (tzv. \textbf{dvojnásobné}) řešení $x = -\frac{b}{2a}$.
+    \item Pokud $D < 0$, nemá rovnice v $\mathbb{R}$ žádné řešení.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{proof}
+  Protože $a\neq 0$, můžeme rovnici vydělit číslem $a$:
+  \begin{equation*}
+    x^2 + \frac{b}{a}x + \frac{c}{a} = 0.
+  \end{equation*}
+  Doplníme na čtverec. Platí ${\left(x + \frac{b}{2a}\right)}^2 = x^2 + \frac{b}{a}x + \frac{b^2}{4a^2}$, a tedy
+  \begin{equation*}
+    {\left(x + \frac{b}{2a}\right)}^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0\quad\Leftrightarrow\quad {\left(x + \frac{b}{2a}\right)}^2 = \frac{b^2 - 4ac}{4a^2} = \frac{D}{4a^2}.
+  \end{equation*}
+  Levá strana je druhá mocnina, a tedy je vždy nezáporná. Jmenovatel $4a^2$ je kladný.
+  \begin{itemize}
+    \item Pokud $D < 0$, je pravá strana záporná a rovnice nemá řešení.
+    \item Pokud $D = 0$, dostaneme ${\left(x + \frac{b}{2a}\right)}^2 = 0$, a tedy $x = -\frac{b}{2a}$.
+    \item Pokud $D > 0$, je $x + \frac{b}{2a} = \pm\sqrt{\frac{D}{4a^2}} = \pm\frac{\sqrt{D}}{2|a|}$. Protože před zlomkem stejně stojí $\pm$, můžeme absolutní hodnotu vynechat a dostaneme $x = \frac{-b\pm\sqrt{D}}{2a}$.
+  \end{itemize}
+\end{proof}
+
+Všimněte si, že vzorec platí i pro $D = 0$, jen obě řešení splynou. Proto se mluví o dvojnásobném kořeni.
+
+\begin{example}\label{ex:kvadr-vzorec}
+  Vyřešme rovnici $2x^2 - 3x - 2 = 0$. Máme $a = 2$, $b = -3$, $c = -2$, takže
+  \begin{equation*}
+    D = {(-3)}^2 - 4\cdot 2\cdot(-2) = 9 + 16 = 25,\qquad x_{1,2} = \frac{3\pm 5}{4}.
+  \end{equation*}
+  Tedy $x_1 = 2$ a $x_2 = -\frac{1}{2}$, $K = \left\{-\frac{1}{2}, 2\right\}$.
+
+  Rovnice $x^2 - 6x + 9 = 0$ má $D = 36 - 36 = 0$, a tedy jediné řešení $x = 3$. To jsme ale mohli vidět rovnou, protože levá strana je ${(x - 3)}^2$.
+
+  Rovnice $x^2 + 2x + 5 = 0$ má $D = 4 - 20 = -16 < 0$, a tedy $K = \emptyset$. V kapitole o komplexních číslech uvidíme, že řešení přece jen má, jen ne mezi reálnými čísly.
+\end{example}
+
+\begin{note}
+  Nejčastější chyba ve vzorci je znaménko u $b$. Pokud je $b = -3$, je $-b = 3$ a $b^2 = 9$, ne $-9$. Druhá mocnina záporného čísla je kladná, i když vám kalkulačka po zadání \texttt{-3\^{}2} tvrdí opak.\footnote{Kalkulačka má pravdu, protože $-3^2 = -9$, jak víme z kapitoly~\ref{kap:vyrazy}. Problém je v tom, co jste do ní napsali.}
+\end{note}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^2 - 7x + 12 = 0$,
+    \item $3x^2 + 5x - 2 = 0$,
+    \item $4x^2 - 4x + 1 = 0$,
+    \item $x^2 - 2x - 1 = 0$,
+    \item $(x + 1)(x - 3) = 2x - 7$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $D = 49 - 48 = 1$, $x_{1,2} = \frac{7\pm 1}{2}$, $K = \{3, 4\}$.
+    \item $D = 25 + 24 = 49$, $x_{1,2} = \frac{-5\pm 7}{6}$, $K = \left\{-2, \frac{1}{3}\right\}$.
+    \item $D = 16 - 16 = 0$, $x = \frac{4}{8} = \frac{1}{2}$. Levá strana je ${(2x - 1)}^2$.
+    \item $D = 4 + 4 = 8$, $x_{1,2} = \frac{2\pm\sqrt{8}}{2} = \frac{2\pm 2\sqrt{2}}{2} = 1\pm\sqrt{2}$.
+    \item Roznásobíme: $x^2 - 2x - 3 = 2x - 7$, tedy $x^2 - 4x + 4 = 0$, neboli ${(x - 2)}^2 = 0$. $K = \{2\}$.
+  \end{enumerate}
+\end{solution}
+
+\begin{example}
+  Kvadratická rovnice se skrývá i za zlatým řezem z kapitoly~\ref{kap:vyrazy}. Zlatý řez je takové kladné číslo $\varphi$, pro které platí $\varphi^2 = \varphi + 1$. Neboli $\varphi^2 - \varphi - 1 = 0$, a tedy
+  \begin{equation*}
+    \varphi = \frac{1\pm\sqrt{1 + 4}}{2} = \frac{1\pm\sqrt{5}}{2}.
+  \end{equation*}
+  Kladné řešení je $\frac{1 + \sqrt{5}}{2}\approx 1{,}618$. Druhé řešení je záporné, takže ho zlatý řez nepotřebuje.
+\end{example}
+
+\section{Vietovy vzorce a rozklad na součin}
+
+Podívejme se, co se stane, když kořeny kvadratické rovnice sečteme a vynásobíme.
+
+\begin{definitionbox}
+  \textbf{Vietovy vzorce}: Pokud $x_1, x_2$ jsou kořeny rovnice $ax^2 + bx + c = 0$, platí
+  \begin{equation*}
+    x_1 + x_2 = -\frac{b}{a},\qquad x_1\cdot x_2 = \frac{c}{a}.
+  \end{equation*}
+  Pro normovanou rovnici $x^2 + px + q = 0$ speciálně $x_1 + x_2 = -p$ a $x_1x_2 = q$.
+
+  \vspace{0.2cm}
+
+  \textbf{Rozklad kvadratického trojčlenu}: Pokud $D\geq 0$, platí pro všechna $x\in\mathbb{R}$
+  \begin{equation*}
+    ax^2 + bx + c = a(x - x_1)(x - x_2).
+  \end{equation*}
+  Pokud $D < 0$, nelze trojčlen v $\mathbb{R}$ rozložit na součin lineárních činitelů.
+\end{definitionbox}
+
+\begin{proof}
+  Sečteme kořeny ze vzorce:
+  \begin{equation*}
+    x_1 + x_2 = \frac{-b + \sqrt{D}}{2a} + \frac{-b - \sqrt{D}}{2a} = \frac{-2b}{2a} = -\frac{b}{a}.
+  \end{equation*}
+  Vynásobíme je (a použijeme vzorec $(u + v)(u - v) = u^2 - v^2$):
+  \begin{equation*}
+    x_1x_2 = \frac{(-b + \sqrt{D})(-b - \sqrt{D})}{4a^2} = \frac{b^2 - D}{4a^2} = \frac{b^2 - b^2 + 4ac}{4a^2} = \frac{c}{a}.
+  \end{equation*}
+  Rozklad pak plyne z roznásobení pravé strany:
+  \begin{equation*}
+    a(x - x_1)(x - x_2) = a\left(x^2 - (x_1 + x_2)x + x_1x_2\right) = a\left(x^2 + \frac{b}{a}x + \frac{c}{a}\right) = ax^2 + bx + c.
+  \end{equation*}
+\end{proof}
+
+François Viète byl francouzský právník, který matematiku dělal ve volném čase. Mimo jiné prý během války rozluštil šifrovanou korespondenci španělského krále tak spolehlivě, že si Španělé stěžovali u papeže, že Francouzi používají černou magii.\footnote{Papež stížnost neřešil. Jeho vlastní luštitelé tu šifru totiž prý také dávno prolomili.}
+
+Vietovy vzorce mají spoustu využití:
+\begin{itemize}
+  \item Kořeny normované rovnice s `hezkými' kořeny často uhodneme zpaměti. Pro $x^2 - 5x + 6 = 0$ hledáme dvě čísla se součtem $5$ a součinem $6$. To jsou $2$ a $3$.
+  \item Můžeme sestavit rovnici se zadanými kořeny.
+  \item Můžeme počítat s kořeny, aniž bychom je znali.
+  \item Můžeme ověřit, zda jsme rovnici vyřešili správně.
+\end{itemize}
+
+\begin{example}
+  Sestavme normovanou kvadratickou rovnici s kořeny $3$ a $-2$. Podle Vietových vzorců je $p = -(3 + (-2)) = -1$ a $q = 3\cdot(-2) = -6$. Hledaná rovnice je $x^2 - x - 6 = 0$. Ekvivalentně $(x - 3)(x + 2) = 0$.
+\end{example}
+
+\begin{example}
+  Bez řešení rovnice $x^2 - 5x + 3 = 0$ spočítejme $x_1^2 + x_2^2$ a $\frac{1}{x_1} + \frac{1}{x_2}$. Víme, že $x_1 + x_2 = 5$ a $x_1x_2 = 3$ (a že kořeny existují, protože $D = 13 > 0$). Pak
+  \begin{align*}
+    x_1^2 + x_2^2 &= {(x_1 + x_2)}^2 - 2x_1x_2 = 25 - 6 = 19,\\
+    \frac{1}{x_1} + \frac{1}{x_2} &= \frac{x_1 + x_2}{x_1x_2} = \frac{5}{3}.
+  \end{align*}
+  Kořeny jsou přitom $\frac{5\pm\sqrt{13}}{2}$, se kterými by se počítalo podstatně hůř.
+\end{example}
+
+\begin{example}
+  Rozložme $6x^2 - x - 2$ na součin. $D = 1 + 48 = 49$, kořeny jsou $\frac{1\pm 7}{12}$, tedy $\frac{2}{3}$ a $-\frac{1}{2}$. Potom
+  \begin{equation*}
+    6x^2 - x - 2 = 6\left(x - \frac{2}{3}\right)\left(x + \frac{1}{2}\right) = (3x - 2)(2x + 1).
+  \end{equation*}
+  V posledním kroku jsme $6$ rozdělili jako $3\cdot 2$ a každý činitel jsme jedním vynásobili, abychom se zbavili zlomků. Roznásobením si ověřte, že výsledek sedí.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Uhodněte kořeny rovnic $x^2 + 7x + 10 = 0$ a $x^2 - x - 20 = 0$.
+    \item Sestavte kvadratickou rovnici s celočíselnými koeficienty a kořeny $\frac{1}{2}$ a $-3$.
+    \item Rozložte na součin $2x^2 + 5x - 3$ a $x^2 - 6x + 7$.
+    \item Zkraťte $\dfrac{x^2 - x - 6}{x^2 - 9}$.
+    \item Pro kořeny rovnice $2x^2 - 6x + 1 = 0$ spočítejte $x_1^2x_2 + x_1x_2^2$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Součin $10$, součet $-7$: kořeny $-2$ a $-5$. Součin $-20$, součet $1$: kořeny $5$ a $-4$.
+    \item $\left(x - \frac{1}{2}\right)(x + 3) = 0$, po vynásobení dvěma $(2x - 1)(x + 3) = 0$, tedy $2x^2 + 5x - 3 = 0$.
+    \item Z (b) víme, že $2x^2 + 5x - 3 = (2x - 1)(x + 3)$. Pro druhý trojčlen je $D = 36 - 28 = 8$, kořeny $3\pm\sqrt{2}$, tedy $x^2 - 6x + 7 = (x - 3 - \sqrt{2})(x - 3 + \sqrt{2})$.
+    \item $\dfrac{(x - 3)(x + 2)}{(x - 3)(x + 3)} = \dfrac{x + 2}{x + 3}$ pro $x\neq\pm 3$.
+    \item $x_1x_2(x_1 + x_2) = \frac{1}{2}\cdot 3 = \frac{3}{2}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Kvadratické rovnice s parametrem}
+
+U lineárních rovnic s parametrem jsme rozhodovali podle toho, zda je koeficient u $x$ nulový. U kvadratických rovnic rozhoduje hlavně diskriminant. A pozor: pokud parametr stojí u $x^2$, musíme zvlášť vyšetřit i případ, kdy rovnice přestane být kvadratická.
+
+\begin{example}
+  Určeme počet řešení rovnice $x^2 + 2x + m = 0$ v závislosti na parametru $m\in\mathbb{R}$. Diskriminant je $D = 4 - 4m$.
+  \begin{itemize}
+    \item $D > 0\Leftrightarrow m < 1$: dvě řešení $x_{1,2} = -1\pm\sqrt{1 - m}$,
+    \item $D = 0\Leftrightarrow m = 1$: jedno řešení $x = -1$,
+    \item $D < 0\Leftrightarrow m > 1$: žádné řešení.
+  \end{itemize}
+\end{example}
+
+\begin{example}
+  Vyřešme rovnici $mx^2 - 2x + 1 = 0$ s parametrem $m\in\mathbb{R}$.
+
+  Pro $m = 0$ dostaneme lineární rovnici $-2x + 1 = 0$, tedy $x = \frac{1}{2}$. Tento případ se strašně snadno přehlédne.
+
+  Pro $m\neq 0$ je rovnice kvadratická s $D = 4 - 4m$. Pro $m < 1$ (a $m\neq 0$) má dvě řešení $x_{1,2} = \frac{2\pm\sqrt{4 - 4m}}{2m} = \frac{1\pm\sqrt{1 - m}}{m}$, pro $m = 1$ jedno řešení $x = 1$ a pro $m > 1$ žádné.
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|c|c|}
+      \hline
+      Parametr & Množina řešení \\
+      \hline
+      $m\in(-\infty, 0)\cup(0, 1)$ & $K = \left\{\frac{1 - \sqrt{1 - m}}{m}, \frac{1 + \sqrt{1 - m}}{m}\right\}$ \\
+      $m = 0$ & $K = \left\{\frac{1}{2}\right\}$ \\
+      $m = 1$ & $K = \{1\}$ \\
+      $m\in(1, \infty)$ & $K = \emptyset$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Pro která $p\in\mathbb{R}$ má rovnice $x^2 - px + 4 = 0$ dvojnásobný kořen? Určete ho.
+    \item Pro která $k\in\mathbb{R}$ má rovnice $x^2 + kx + 9 = 0$ dva různé reálné kořeny?
+    \item Určete $c$ tak, aby jeden kořen rovnice $x^2 - 8x + c = 0$ byl trojnásobkem druhého.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $D = p^2 - 16 = 0$, tedy $p = \pm 4$. Pro $p = 4$ je kořen $x = 2$, pro $p = -4$ je $x = -2$.
+    \item $D = k^2 - 36 > 0$, tedy $|k| > 6$, neboli $k\in(-\infty, -6)\cup(6, \infty)$.
+    \item Podle Vieta $x_1 + 3x_1 = 8$, tedy $x_1 = 2$, $x_2 = 6$ a $c = x_1x_2 = 12$.
+  \end{enumerate}
+\end{solution}
+
+\section{Rovnice vyšších stupňů}
+
+Pro rovnice třetího a čtvrtého stupně existují obecné vzorce, ale jsou tak ošklivé, že se u maturity nepoužívají.\footnote{Vzorec pro kubickou rovnici má na svědomí jeden z nejdramatičtějších příběhů dějin matematiky, viz odbočka na konci kapitoly.} Pro pátý a vyšší stupeň obecný vzorec neexistuje, jak jsme zmínili u Galoise v kapitole~\ref{kap:rovnice}. U maturity se proto objevují jen rovnice, které se dají na kvadratické převést nějakým trikem.
+
+\subsection{Substituce}
+
+\begin{definitionbox}
+  \textbf{Substituce}: Pokud se v rovnici opakovaně vyskytuje stejný výraz $V(x)$, označíme ho novou proměnnou $t = V(x)$, vyřešíme rovnici pro $t$ a pak se vrátíme k $x$ řešením rovnic $V(x) = t_i$.
+
+  \vspace{0.2cm}
+
+  Typickým příkladem je \textbf{bikvadratická rovnice} $ax^4 + bx^2 + c = 0$, kterou substitucí $t = x^2$ převedeme na kvadratickou rovnici $at^2 + bt + c = 0$. Záporná řešení $t$ zahodíme, protože $x^2$ nemůže být záporné.
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme $x^4 - 5x^2 + 4 = 0$. Substituce $t = x^2$: $t^2 - 5t + 4 = 0$, tedy $t_1 = 1$, $t_2 = 4$. Zpět: $x^2 = 1$ dává $x = \pm 1$ a $x^2 = 4$ dává $x = \pm 2$. Celkem $K = \{-2, -1, 1, 2\}$.
+
+  Rovnice $x^4 + 3x^2 - 4 = 0$ dává $t^2 + 3t - 4 = 0$, tedy $t_1 = 1$, $t_2 = -4$. Rovnice $x^2 = -4$ nemá řešení, takže $K = \{-1, 1\}$.
+\end{example}
+
+\begin{example}
+  Substituce funguje i pro složitější výrazy. Vyřešme ${(x^2 - 2x)}^2 - 2(x^2 - 2x) - 3 = 0$. Substituce $t = x^2 - 2x$ dává $t^2 - 2t - 3 = 0$, tedy $t = 3$ nebo $t = -1$.
+  \begin{itemize}
+    \item $x^2 - 2x = 3\Leftrightarrow x^2 - 2x - 3 = 0\Leftrightarrow x\in\{-1, 3\}$,
+    \item $x^2 - 2x = -1\Leftrightarrow{(x - 1)}^2 = 0\Leftrightarrow x = 1$.
+  \end{itemize}
+  $K = \{-1, 1, 3\}$. Kdo by roznásobil závorku, dostal by rovnici čtvrtého stupně a pravděpodobně by se rozplakal.
+\end{example}
+
+\subsection{Celočíselné kořeny}
+
+\begin{definitionbox}
+  \textbf{Věta (o celočíselných kořenech)}: Nechť $P(x) = a_nx^n + \cdots + a_1x + a_0$ je mnohočlen s \textbf{celočíselnými} koeficienty. Pokud je celé číslo $r$ jeho kořenem, pak $r$ dělí absolutní člen $a_0$.
+\end{definitionbox}
+
+\begin{proof}
+  Pokud $P(r) = 0$, pak $a_nr^n + \cdots + a_1r + a_0 = 0$, a tedy
+  \begin{equation*}
+    a_0 = -r\left(a_nr^{n-1} + \cdots + a_2r + a_1\right).
+  \end{equation*}
+  Výraz v závorce je celé číslo, takže $a_0$ je celočíselným násobkem $r$.
+\end{proof}
+
+Strategie je tedy jasná. Vyzkoušíme dělitele absolutního členu. Když najdeme kořen $r$, vydělíme mnohočlen dvojčlenem $(x - r)$, jak jsme to dělali v kapitole~\ref{kap:vyrazy}, a dostaneme mnohočlen o stupeň nižší.
+
+\begin{example}
+  Vyřešme $x^3 - 2x^2 - 5x + 6 = 0$. Dělitelé čísla $6$ jsou $\pm 1, \pm 2, \pm 3, \pm 6$. Zkusíme $x = 1$: $1 - 2 - 5 + 6 = 0$. Máme kořen! Vydělíme:
+  \begin{equation*}
+    (x^3 - 2x^2 - 5x + 6) : (x - 1) = x^2 - x - 6 = (x - 3)(x + 2).
+  \end{equation*}
+  Tedy $x^3 - 2x^2 - 5x + 6 = (x - 1)(x - 3)(x + 2)$ a $K = \{-2, 1, 3\}$.
+\end{example}
+
+\begin{note}
+  Věta nám nezaručuje, že nějaký celočíselný kořen existuje. Například $x^3 - 2 = 0$ má jediný reálný kořen $\sqrt[3]{2}$, který celý není. Věta nám jen říká, kde hledat, pokud tam něco je.
+\end{note}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^4 - 10x^2 + 9 = 0$,
+    \item $2x^4 - 7x^2 - 4 = 0$,
+    \item $x^3 + x^2 - 4x - 4 = 0$,
+    \item $x^3 - 3x + 2 = 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{hint}
+  U (c) zkuste postupné vytýkání z kapitoly~\ref{kap:vyrazy}.
+\end{hint}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $t^2 - 10t + 9 = 0$, $t\in\{1, 9\}$, $K = \{-3, -1, 1, 3\}$.
+    \item $2t^2 - 7t - 4 = 0$, $D = 49 + 32 = 81$, $t = \frac{7\pm 9}{4}$, tedy $t = 4$ nebo $t = -\frac{1}{2}$. Záporné $t$ zahodíme, $K = \{-2, 2\}$.
+    \item $x^2(x + 1) - 4(x + 1) = (x + 1)(x^2 - 4) = (x + 1)(x - 2)(x + 2)$, $K = \{-2, -1, 2\}$.
+    \item $x = 1$ je kořen ($1 - 3 + 2 = 0$). Dělením $x^2 + x - 2 = (x - 1)(x + 2)$, celkem $(x - 1)^2(x + 2)$ a $K = \{-2, 1\}$. Kořen $1$ je dvojnásobný.
+  \end{enumerate}
+\end{solution}
+
+\section{Kvadratické nerovnice}
+
+\begin{definitionbox}
+  \textbf{Kvadratická nerovnice} je nerovnice, kterou lze převést na tvar $ax^2 + bx + c > 0$ (případně $<$, $\geq$, $\leq$), kde $a\neq 0$.
+
+  \vspace{0.2cm}
+
+  \textbf{Postup řešení}:
+  \begin{enumerate}
+    \item Převedeme vše na jednu stranu.
+    \item Najdeme kořeny $x_1, x_2$ rovnice $ax^2 + bx + c = 0$.
+    \item Pokud kořeny existují, rozložíme trojčlen na $a(x - x_1)(x - x_2)$ a použijeme metodu nulových bodů z kapitoly~\ref{kap:rovnice}.
+    \item Pokud $D < 0$, má trojčlen všude stejné znaménko jako $a$. Nerovnice tedy platí buď pro všechna $x$, nebo pro žádné.
+  \end{enumerate}
+\end{definitionbox}
+
+Nejrychlejší je ale představit si graf. Funkce $y = ax^2 + bx + c$ má jako graf parabolu (podrobně ji rozebereme v kapitole o elementárních funkcích). Pokud $a > 0$, je parabola otevřená nahoru, pokud $a < 0$, dolů. Kořeny jsou body, kde parabola protíná osu $x$. Řešit nerovnici $ax^2 + bx + c > 0$ pak znamená zjistit, kde je parabola nad osou $x$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \begin{scope}
+      \draw[->] (-3.2,0) -- (3.4,0) node[right] {\small $x$};
+      \draw[->] (0,-2.6) -- (0,3.4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-2.6:2.6, samples=60] plot (\x, {0.5*\x*\x - 2});
+      \filldraw (-2,0) circle (2pt) node[below left] {\small $x_1$};
+      \filldraw (2,0) circle (2pt) node[below right] {\small $x_2$};
+      \node at (0,-3.4) {\small $a > 0,\ D > 0$};
+    \end{scope}
+    \begin{scope}[xshift=8cm]
+      \draw[->] (-3.2,0) -- (3.4,0) node[right] {\small $x$};
+      \draw[->] (0,-2.6) -- (0,3.4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-0.7:2.7, samples=60] plot (\x, {(\x-1)*(\x-1)});
+      \filldraw (1,0) circle (2pt) node[below] {\small $x_0$};
+      \node at (0,-3.4) {\small $a > 0,\ D = 0$};
+    \end{scope}
+    \begin{scope}[xshift=16cm]
+      \draw[->] (-3.2,0) -- (3.4,0) node[right] {\small $x$};
+      \draw[->] (0,-2.6) -- (0,3.4) node[above] {\small $y$};
+      \draw[thick, colorofwisdom, domain=-2.4:2.4, samples=60] plot (\x, {0.4*\x*\x + 0.8});
+      \node at (0,-3.4) {\small $a > 0,\ D < 0$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Vyřešme nerovnice:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^2 - x - 6 < 0$. Rozklad $(x - 3)(x + 2) < 0$. Parabola je otevřená nahoru a pod osou je mezi kořeny, $K = (-2, 3)$.
+    \item $x^2 - 4x + 4 > 0$. Levá strana je ${(x - 2)}^2$, která je kladná všude kromě $x = 2$. $K = \mathbb{R}\setminus\{2\}$.
+    \item $x^2 + x + 1\geq 0$. $D = 1 - 4 < 0$ a $a > 0$, takže je trojčlen vždy kladný. $K = \mathbb{R}$.
+    \item $-x^2 + 2x + 3\geq 0$. Vynásobíme $-1$ (a otočíme znak): $x^2 - 2x - 3\leq 0$, tedy $(x - 3)(x + 1)\leq 0$ a $K = [-1, 3]$.
+  \end{enumerate}
+\end{example}
+
+\begin{note}
+  Proč je $x^2 + x + 1$ vždy kladné? Doplněním na čtverec: $x^2 + x + 1 = {\left(x + \frac{1}{2}\right)}^2 + \frac{3}{4}$. Druhá mocnina je nezáporná a přičteme k ní kladné číslo. To je důkaz celého bodu 4 v postupu výše, jen pro konkrétní čísla.
+\end{note}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x^2 - 5x + 4\geq 0$,
+    \item $2x^2 + x - 1 < 0$,
+    \item $x^2 + 4 < 4x$,
+    \item $-2x^2 + 3x - 5 > 0$,
+    \item $x^2\leq 9$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $(x - 1)(x - 4)\geq 0$, $K = (-\infty, 1]\cup[4, \infty)$.
+    \item Kořeny $\frac{-1\pm 3}{4}$, tedy $-1$ a $\frac{1}{2}$. $K = \left(-1, \frac{1}{2}\right)$.
+    \item ${(x - 2)}^2 < 0$, to neplatí nikdy. $K = \emptyset$.
+    \item Vynásobíme $-1$: $2x^2 - 3x + 5 < 0$. $D = 9 - 40 < 0$ a $a > 0$, levá strana je vždy kladná. $K = \emptyset$.
+    \item $(x - 3)(x + 3)\leq 0$, $K = [-3, 3]$. Častá chyba je odmocnit a napsat $x\leq 3$. Tím se ztratí celá levá polovina.
+  \end{enumerate}
+\end{solution}
+
+\section{Soustavy s kvadratickou rovnicí}
+
+Pokud je v soustavě alespoň jedna rovnice kvadratická, metody z předchozí kapitoly (sčítací, matice) přestanou fungovat. Zůstane nám ale dosazovací metoda, která funguje vždy.
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    x + y &= 5,\\
+    xy &= 6.
+  \end{align*}
+  Z první rovnice $y = 5 - x$, dosazením $x(5 - x) = 6$, tedy $x^2 - 5x + 6 = 0$ a $x\in\{2, 3\}$. Dopočítáme $y$: $K = \{(2, 3), (3, 2)\}$.
+
+  Alternativně: podle Vietových vzorců jsou $x$ a $y$ kořeny rovnice $t^2 - 5t + 6 = 0$. Vietovy vzorce zde fungují obráceně a ušetří nám práci.
+\end{example}
+
+\begin{example}
+  Vyřešme soustavu
+  \begin{align*}
+    x^2 + y^2 &= 25,\\
+    x - y &= 1.
+  \end{align*}
+  Z druhé rovnice $x = y + 1$, dosazením ${(y + 1)}^2 + y^2 = 25$, tedy $2y^2 + 2y - 24 = 0$, neboli $y^2 + y - 12 = 0$, a tedy $y = 3$ nebo $y = -4$. Odpovídající $x$ jsou $4$ a $-3$. $K = \{(4, 3), (-3, -4)\}$.
+
+  Geometricky: první rovnice je kružnice se středem v počátku a poloměrem $5$, druhá je přímka. Přímka protíná kružnici ve dvou bodech. Kdyby ji jen tečně škrtla, měli bychom jedno řešení, a kdyby ji minula, žádné. Více v kapitole o kuželosečkách.
+\end{example}
+
+\begin{problem}
+  Vyřešte soustavy:
+  \begin{enumerate}[label=(\alph*)]
+    \item $x - y = 2$, $xy = 15$,
+    \item $x^2 - y^2 = 16$, $x + y = 8$,
+    \item $y = x^2 - 3$, $y = 2x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x = y + 2$, $(y + 2)y = 15$, $y^2 + 2y - 15 = 0$, $y\in\{3, -5\}$. $K = \{(5, 3), (-3, -5)\}$.
+    \item $x^2 - y^2 = (x - y)(x + y) = 8(x - y) = 16$, tedy $x - y = 2$. Spolu s $x + y = 8$: $K = \{(5, 3)\}$. Zde stačilo všimnout si vzorce.
+    \item $x^2 - 3 = 2x$, $x^2 - 2x - 3 = 0$, $x\in\{-1, 3\}$. $K = \{(-1, -2), (3, 6)\}$. Geometricky průsečíky paraboly a přímky.
+  \end{enumerate}
+\end{solution}
+
+\section{Slovní úlohy}
+
+\begin{example}
+  Obdélníková zahrada má obvod $34\ \si{m}$ a obsah $60\ \si{m^2}$. Jaké má rozměry?
+
+  Označme strany $a, b$. Pak $2(a + b) = 34$ a $ab = 60$, tedy $a + b = 17$ a $ab = 60$. Podle Vieta jsou $a, b$ kořeny $t^2 - 17t + 60 = 0$, tedy $t\in\{5, 12\}$. Zahrada má rozměry $5\ \si{m}\times 12\ \si{m}$. Mimochodem, její úhlopříčka je přesně $13\ \si{m}$, protože $5^2 + 12^2 = 169$.
+\end{example}
+
+\begin{example}
+  Kámen pustíme z věže a za $t$ sekund spadne o $s = 5t^2$ metrů (zaokrouhlili jsme $g\approx 10\ \si{m/s^2}$). Za jak dlouho dopadne kámen z výšky $45\ \si{m}$?
+
+  $5t^2 = 45$, tedy $t^2 = 9$ a $t = \pm 3$. Záporný čas nedává smysl, takže kámen dopadne za $3$ sekundy. U slovních úloh je vždy potřeba zkontrolovat, zda řešení dává smysl ve skutečném světě. Matematika nám klidně nabídne i kámen, který dopadl před třemi sekundami, ještě než jsme ho pustili.
+\end{example}
+
+\begin{problem}
+  Součin dvou po sobě jdoucích přirozených čísel je $156$. Která jsou to čísla?
+\end{problem}
+
+\begin{solution}
+  $n(n + 1) = 156$, $n^2 + n - 156 = 0$, $D = 1 + 624 = 625$, $n = \frac{-1\pm 25}{2}$. Přirozené řešení je $n = 12$, čísla jsou $12$ a $13$.
+\end{solution}
+
+\begin{problem}
+  Skupina kamarádů si pronajala chatu za $12\,000$ Kč a náklady si rozdělila rovným dílem. Kdyby jich jelo o dva víc, zaplatil by každý o $500$ Kč méně. Kolik jich jelo?
+\end{problem}
+
+\begin{solution}
+  Označme $n$ počet lidí. Pak $\frac{12000}{n} - \frac{12000}{n + 2} = 500$. Vynásobíme $n(n + 2)$: $12000(n + 2) - 12000n = 500n(n + 2)$, tedy $24000 = 500n^2 + 1000n$, neboli $n^2 + 2n - 48 = 0$. Kořeny jsou $6$ a $-8$, jelo jich tedy $6$. Zkouška: $2000 - 1500 = 500$.
+\end{solution}
+
+\section{Odbočka --- Kubická rovnice a jeden skandál}
+
+Vzorec pro kvadratickou rovnici znali v nějaké podobě už Babyloňané před čtyřmi tisíci lety. Na vzorec pro rovnici třetího stupně se čekalo až do renesanční Itálie, a když konečně přišel, provázel ho skandál.
+
+Kolem roku 1515 našel řešení některých kubických rovnic Scipione del Ferro, ale nikomu ho neřekl. V té době se matematika dělala formou veřejných soubojů, ve kterých si soupeři navzájem zadávali úlohy, a tajný vzorec byl cennější než diplom. Nezávisle na něm vzorec objevil Niccolò Fontana, kterému se říkalo Tartaglia, tedy `koktavec'. Jako dítě mu totiž při francouzském plenění města Brescie voják rozsekl mečem čelist a od té doby špatně mluvil.\footnote{Matka ho prý ošetřovala tak, že mu rány olizovala, jako to dělají psi. Přežil. Vousy si pak nechal narůst, aby zakryl jizvy.}
+
+Tartagliův vzorec chtěl za každou cenu znát Gerolamo Cardano, lékař, astrolog a vášnivý hráč. Tartaglia mu ho nakonec prozradil pod podmínkou, že ho nikdy nezveřejní. Cardano ho v roce 1545 zveřejnil ve své knize \textit{Ars Magna}. Bránil se tím, že si mezitím přečetl starší poznámky del Ferra, takže vlastně publikuje jeho vzorec, ne Tartagliův. Tartaglia to neviděl stejně a zbytek života strávil hádkami. Dnes se vzorci říká \textbf{Cardanův vzorec}, takže si můžete udělat obrázek o tom, jak funguje spravedlnost.
+
+Ani Cardano ale nedopadl dobře. Jeho nejstaršího syna popravili za otrávení manželky, sám byl uvězněn inkvizicí za to, že sestavil horoskop Ježíše Krista, a podle legendy si předpověděl datum vlastní smrti. Když se ten den blížil a on byl stále zdravý, prý přestal jíst, aby jeho předpověď vyšla.\footnote{Pro přesnost: tohle je opravdu jen legenda. Ale stojí za to ji vyprávět.}
+
+Mimochodem, právě při řešení kubických rovnic se poprvé objevily odmocniny ze záporných čísel. Cardanův vzorec totiž někdy vede přes $\sqrt{-1}$, i když je výsledek nakonec úplně obyčejné reálné číslo. Komplexní čísla tedy nevznikla proto, že by je někdo chtěl, ale proto, že se jim nedalo vyhnout. K tomu se vrátíme v kapitole o komplexních číslech.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je kvadratická rovnice? Jak se řeší neúplné kvadratické rovnice?
+    \item Odvoďte vzorec pro kořeny kvadratické rovnice doplněním na čtverec.
+    \item Co je diskriminant a co nám říká o počtu řešení?
+    \item Vyslovte a dokažte Vietovy vzorce. K čemu se hodí?
+    \item Jak rozložíte kvadratický trojčlen na součin? Kdy to nejde?
+    \item Jak se řeší kvadratická rovnice s parametrem? Na co si dát pozor, když parametr stojí u $x^2$?
+    \item Jak se řeší bikvadratické rovnice a rovnice vyšších stupňů? Vyslovte a dokažte větu o celočíselných kořenech.
+    \item Jak se řeší kvadratické nerovnice? Načrtněte, jak souvisí s grafem paraboly.
+    \item Jak se řeší soustavy, ve kterých je kvadratická rovnice? Jaký mají geometrický význam?
+  \end{enumerate}
+\end{problem}

@@ -1,3 +1,4 @@
+\label{kap:vyrazy}
 \mathquote{Algebra is generous; she often gives more than is asked of her.}{Jean le Rond d'Alembert}
 
 V předchozí kapitole jsme si postavili číselné množiny. Teď s čísly konečně začneme pořádně počítat. Tato kapitola je takovou `posilovnou'\footnote{Prý se tam pořád dokola opakují stejné pohyby, dokud to nebolí. Sedí to.} celé maturity --- mocniny, odmocniny a úpravy výrazů se objeví úplně všude, od rovnic přes funkce až po derivace. Pokud zde něco nebude sedět, bude to bolet později. Budeme se tedy snažit každé pravidlo nejen uvést, ale i ukázat, \textit{proč} platí. Většina těchto pravidel totiž není nic, co by se muselo biflovat, ale přirozeně vyplývá z definic.
@@ -194,12 +195,6 @@ Mocniny s celým exponentem se nám hodí i v praxi, například ve fyzice a che
   Rychlost světla je přibližně $300\,000\,000\ \si{m/s} = 3\cdot 10^8\ \si{m/s}$. Hmotnost elektronu je přibližně $0{,}000\,000\,000\,000\,000\,000\,000\,000\,000\,911\ \si{kg} = 9{,}11\cdot 10^{-31}\ \si{kg}$. Doufám, že je jasné, proč fyzici dávají přednost druhému zápisu. Počítat ty nuly by bavilo leda upíra. Podle starých pověstí totiž upír nedokáže odolat a musí spočítat všechno, co vidí. Proto se prý na hroby sypalo mák nebo rýže, aby měl do rána co dělat.
 \end{example}
 
-\begin{hrbitov}
-  \hrob{$-2^4 = 16$}{Mocnina má přednost před znaménkem mínus.}{$-2^4 = -(2^4) = -16$, zatímco ${(-2)}^4 = 16$.}
-  \hrob{$a^m + a^n = a^{m+n}$}{Pravidlo pro sčítání exponentů platí jen pro součin.}{$a^m\cdot a^n = a^{m+n}$. Součet $a^m + a^n$ se takto zjednodušit nedá.}
-  \hrob{$2^{-3} = -8$}{Záporný exponent neznamená záporný výsledek.}{$2^{-3} = \frac{1}{2^3} = \frac{1}{8}$.}
-\end{hrbitov}
-
 \section{Odmocniny}
 
 Odmocňování je opačná operace k mocnění. Pokud víme, že $x^2 = 9$, chceme se nějak dostat k číslu $x$. Zde ale narážíme na první problém: rovnice $x^2 = 9$ má dvě řešení, $3$ a $-3$. Která z nich by měla být `ta' odmocnina? Matematici se dohodli, že ta nezáporná. Odmocnina je tak v podstatě jediná věc v celé této knize, která je vždy pozitivní.
@@ -336,12 +331,6 @@ Dvě techniky, které budete u maturity potřebovat neustále, jsou částečné
     \item $\sqrt{a^4\cdot a\cdot b^2} = a^2\cdot|b|\cdot\sqrt{a} = -a^2b\sqrt{a}$. Pozor na to, že $b$ je záporné, takže $\sqrt{b^2} = |b| = -b$.
   \end{enumerate}
 \end{solution}
-
-\begin{hrbitov}
-  \hrob{$\sqrt{9} = \pm 3$}{Odmocnina je vždy nezáporná. Znaménko $\pm$ patří k řešení rovnice $x^2 = 9$.}{$\sqrt{9} = 3$.}
-  \hrob{$\sqrt{x^2} = x$}{Pro $x = -3$ by vyšlo $\sqrt{9} = -3$.}{$\sqrt{x^2} = |x|$.}
-  \hrob{$\sqrt{a + b} = \sqrt{a} + \sqrt{b}$}{Odmocnina se součtem nekamarádí.}{$\sqrt{9 + 16} = 5$, ale $\sqrt{9} + \sqrt{16} = 7$.}
-\end{hrbitov}
 
 \section{Mocniny s racionálním exponentem}
 
@@ -774,12 +763,6 @@ Stejně jako umíme dělit čísla `pod sebou' se zbytkem, umíme dělit i mnoho
     x^3 - 6x^2 + 11x - 6 = (x - 1)(x - 2)(x - 3).
   \end{equation*}
 \end{solution}
-
-\begin{hrbitov}
-  \hrob{$\dfrac{x + 2}{2} = x$}{Krácení sčítance. Krátit lze jen činitele.}{$\dfrac{x + 2}{2} = \dfrac{x}{2} + 1$.}
-  \hrob{$\dfrac{x^2}{x} = x$ pro všechna $x\in\mathbb{R}$}{Podmínky se určily až po úpravě, nebo vůbec.}{$\dfrac{x^2}{x} = x$ pro $x\neq 0$.}
-  \hrob{$\dfrac{1}{a + b} = \dfrac{1}{a} + \dfrac{1}{b}$}{Zlomky se takhle nerozdělují. Zkuste $a = b = 1$.}{$\dfrac{1}{a} + \dfrac{1}{b} = \dfrac{a + b}{ab}$, a to je něco úplně jiného.}
-\end{hrbitov}
 
 \section{Shrnutí a otázky k ústní zkoušce}
 

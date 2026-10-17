@@ -1,0 +1,360 @@
+\label{kap:absolutni}
+\mathquote{Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding.}{William Paul Thurston}
+
+V této kapitole se podíváme na dva typy rovnic, které vypadají nevinně, ale umí potrápit. Rovnice s absolutní hodnotou, u kterých musíme rozebírat případy, a iracionální rovnice, tedy rovnice s neznámou pod odmocninou, u kterých se poprvé setkáme s tím, že správně provedený výpočet vyprodukuje špatné řešení. Obojí spojuje jedna věc: musíme hodně dávat pozor na to, co přesně děláme.
+
+\section{Absolutní hodnota}
+
+\begin{definitionbox}
+  \textbf{Absolutní hodnota} reálného čísla $a$ je číslo
+  \begin{equation*}
+    |a| = \begin{cases}
+      a & \text{pro } a\geq 0,\\
+      -a & \text{pro } a < 0.
+    \end{cases}
+  \end{equation*}
+  \textbf{Geometrický význam}: $|a|$ je vzdálenost čísla $a$ od nuly na číselné ose. Obecněji $|a - b|$ je \textbf{vzdálenost} čísel $a$ a $b$.
+\end{definitionbox}
+
+Definice na první pohled děsí tím, že se v ní objevuje $-a$. Absolutní hodnota přece nemůže být záporná! A taky není. Pokud je $a < 0$, je $-a$ kladné číslo. Například $|-5| = -(-5) = 5$. Absolutní hodnota z čísla prostě udělá kladné číslo, bez ohledu na to, čím si prošlo.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[->, thick] (-4.5,0) -- (4.5,0) node[right] {$x$};
+    \foreach \x in {-4,...,4} \draw (\x,0.1) -- (\x,-0.1) node[below] {\small $\x$};
+    \draw[colorofwisdom, line width=2pt] (-3,0.4) -- (0,0.4);
+    \node[above, colorofwisdom] at (-1.5,0.4) {$|-3| = 3$};
+    \draw[line width=2pt] (1,-0.8) -- (4,-0.8);
+    \node[below] at (2.5,-0.8) {$|4 - 1| = |1 - 4| = 3$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti absolutní hodnoty}: Pro všechna $a, b\in\mathbb{R}$ platí
+  \begin{enumerate}
+    \item $|a|\geq 0$ a $|a| = 0\Leftrightarrow a = 0$,
+    \item $|-a| = |a|$,
+    \item $|a\cdot b| = |a|\cdot|b|$ a $\left|\frac{a}{b}\right| = \frac{|a|}{|b|}$ pro $b\neq 0$,
+    \item $|a|^2 = a^2$ a $\sqrt{a^2} = |a|$,
+    \item $-|a|\leq a\leq|a|$,
+    \item $|a + b|\leq|a| + |b|$ \quad (\textbf{trojúhelníková nerovnost}).
+  \end{enumerate}
+\end{definitionbox}
+
+Většina vlastností plyne přímo z definice rozebráním případů $a\geq 0$ a $a < 0$. Zkuste si to. Nejzajímavější je ta poslední, a tak si ji dokážeme.
+
+\begin{proof}[(trojúhelníkové nerovnosti)]
+  Obě strany jsou nezáporné, takže stačí dokázat nerovnost pro jejich druhé mocniny.\footnote{Pro nezáporná čísla $u, v$ platí $u\leq v\Leftrightarrow u^2\leq v^2$. Pro záporná čísla by to neplatilo, viz $-3\leq 1$, ale $9 > 1$.} Podle vlastnosti 4 je
+  \begin{equation*}
+    |a + b|^2 = {(a + b)}^2 = a^2 + 2ab + b^2,\qquad {(|a| + |b|)}^2 = a^2 + 2|a||b| + b^2 = a^2 + 2|ab| + b^2.
+  \end{equation*}
+  Podle vlastnosti 5 je $ab\leq|ab|$, a tedy $|a + b|^2\leq{(|a| + |b|)}^2$.
+\end{proof}
+
+Proč se jí říká trojúhelníková? Ve vektorech (kapitola o analytické geometrii) bude mít tvar $|\vec{u} + \vec{v}|\leq|\vec{u}| + |\vec{v}|$ a říká, že žádná strana trojúhelníku není delší než součet zbylých dvou. Neboli: přímá cesta je vždy nejkratší. Rovnost nastává, právě když $a$ a $b$ mají stejné znaménko (nebo je jedno z nich nula).
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Spočítejte $|3 - \pi|$, $|\sqrt{2} - 1|$ a $|1 - \sqrt{3}|$.
+    \item Zjednodušte $|x - 2| + |x + 1|$ pro $x\in(-1, 2)$.
+    \item Najděte $a, b$ taková, aby $|a + b| < |a| + |b|$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\pi > 3$, takže $|3 - \pi| = \pi - 3$. Dále $\sqrt{2} > 1$, takže $|\sqrt{2} - 1| = \sqrt{2} - 1$, a $\sqrt{3} > 1$, takže $|1 - \sqrt{3}| = \sqrt{3} - 1$.
+    \item Pro $x\in(-1, 2)$ je $x - 2 < 0$ a $x + 1 > 0$, takže výraz je $-(x - 2) + (x + 1) = 3$. Pro všechna taková $x$ vychází stejně. To je geometricky jasné: součet vzdáleností bodu mezi $-1$ a $2$ od těchto dvou bodů je přesně vzdálenost mezi nimi.
+    \item Stačí čísla s opačným znaménkem, například $a = 1$, $b = -1$: $0 < 2$.
+  \end{enumerate}
+\end{solution}
+
+\section{Rovnice a nerovnice s absolutní hodnotou}
+
+\subsection{Jednoduché případy}
+
+Pokud je v rovnici jen jedna absolutní hodnota tvaru $|x - a|$, nejrychlejší je myslet geometricky.
+
+\begin{definitionbox}
+  Pro $b > 0$ platí:
+  \begin{align*}
+    |x - a| = b &\quad\Leftrightarrow\quad x = a - b\ \lor\ x = a + b,\\
+    |x - a| < b &\quad\Leftrightarrow\quad a - b < x < a + b,\\
+    |x - a| > b &\quad\Leftrightarrow\quad x < a - b\ \lor\ x > a + b.
+  \end{align*}
+  Slovy: hledáme čísla, jejichž vzdálenost od $a$ je rovna, menší nebo větší než $b$. Pro $b < 0$ nemá rovnice $|x - a| = b$ řešení (vzdálenost nemůže být záporná) a pro $b = 0$ má jediné řešení $x = a$.
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme:
+  \begin{enumerate}[label=(\alph*)]
+    \item $|x - 3| = 5$. Čísla ve vzdálenosti $5$ od $3$ jsou $-2$ a $8$. $K = \{-2, 8\}$.
+    \item $|x + 2|\leq 1$. Protože $x + 2 = x - (-2)$, hledáme čísla ve vzdálenosti nejvýše $1$ od $-2$. $K = [-3, -1]$.
+    \item $|2x - 1| > 3$. Buď $2x - 1 > 3$, tedy $x > 2$, nebo $2x - 1 < -3$, tedy $x < -1$. $K = (-\infty, -1)\cup(2, \infty)$.
+    \item $|x - 7| = -2$. Absolutní hodnota nemůže být záporná, $K = \emptyset$. Nic nepočítáme.
+  \end{enumerate}
+\end{example}
+
+\subsection{Metoda nulových bodů}
+
+Co když je v rovnici absolutních hodnot víc, nebo je kombinovaná s dalšími výrazy? Pak použijeme obecnou metodu. Myšlenka je jednoduchá: absolutní hodnota je `problém' jen proto, že nevíme, jestli je výraz uvnitř kladný, nebo záporný. Rozdělíme tedy osu na intervaly, na kterých to víme.
+
+\begin{definitionbox}
+  \textbf{Metoda nulových bodů pro absolutní hodnoty}:
+  \begin{enumerate}
+    \item Najdeme \textbf{nulové body} všech výrazů v absolutních hodnotách.
+    \item Nulové body rozdělí reálnou osu na intervaly. Na každém intervalu má každý výraz stálé znaménko, takže absolutní hodnoty můžeme \textbf{odstranit} (výraz buď opíšeme, nebo vezmeme s opačným znaménkem).
+    \item Na každém intervalu zvlášť vyřešíme vzniklou rovnici bez absolutních hodnot.
+    \item \textbf{Ověříme}, zda nalezené řešení leží v daném intervalu. Pokud ne, zahodíme ho.
+    \item Výsledek je sjednocení řešení ze všech intervalů.
+  \end{enumerate}
+\end{definitionbox}
+
+Krok 4 je důležitý a zapomíná se na něj nejčastěji. Na každém intervalu řešíme jinou rovnici, která platí \textit{jen} na tom intervalu. Řešení mimo interval je řešením špatné rovnice.
+
+\begin{example}\label{ex:abs-dve}
+  Vyřešme $|x + 1| + |x - 2| = 5$. Nulové body jsou $-1$ a $2$. Sestavíme tabulku (do které bodu nulové body přiřadíme, je jedno, jen musíme být konzistentní):
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+       & $(-\infty, -1)$ & $[-1, 2)$ & $[2, \infty)$ \\
+      \hline
+      $|x + 1|$ & $-x - 1$ & $x + 1$ & $x + 1$ \\
+      $|x - 2|$ & $-x + 2$ & $-x + 2$ & $x - 2$ \\
+      \hline
+      rovnice & $-2x + 1 = 5$ & $3 = 5$ & $2x - 1 = 5$ \\
+      řešení & $x = -2$ & --- & $x = 3$ \\
+      leží v intervalu? & ano & --- & ano \\
+      \hline
+    \end{tabular}
+  \end{center}
+  $K = \{-2, 3\}$. Geometricky: hledáme body, jejichž součet vzdáleností od $-1$ a od $2$ je $5$. Body mezi $-1$ a $2$ mají tento součet vždy $3$, takže musíme jít ven. A vyjít musíme o $1$ na každou stranu.
+\end{example}
+
+\begin{example}
+  Vyřešme $|x - 1| = 2x + 4$. Nulový bod je $1$.
+  \begin{itemize}
+    \item Pro $x < 1$: $-x + 1 = 2x + 4$, tedy $x = -1$. To leží v $(-\infty, 1)$, takže je to řešení.
+    \item Pro $x\geq 1$: $x - 1 = 2x + 4$, tedy $x = -5$. To \textbf{neleží} v $[1, \infty)$, zahodíme.
+  \end{itemize}
+  $K = \{-1\}$. Zkouška: $|-2| = 2 = 2\cdot(-1) + 4$. Kdybychom zapomněli na krok 4, tvrdili bychom, že $x = -5$ je řešení, ale $|-6| = 6\neq -6$.
+\end{example}
+
+\begin{example}
+  Nerovnice se řeší úplně stejně. Vyřešme $|x - 3| - |x| < 1$. Nulové body $0$ a $3$.
+  \begin{itemize}
+    \item Pro $x < 0$: $-(x - 3) - (-x) = 3 < 1$. Neplatí, $K_1 = \emptyset$.
+    \item Pro $0\leq x < 3$: $-(x - 3) - x = 3 - 2x < 1$, tedy $x > 1$. Průnik s intervalem: $K_2 = (1, 3)$.
+    \item Pro $x\geq 3$: $(x - 3) - x = -3 < 1$. Platí vždy, $K_3 = [3, \infty)$.
+  \end{itemize}
+  $K = K_1\cup K_2\cup K_3 = (1, \infty)$. U nerovnic neděláme `kontrolu, zda řešení leží v intervalu', ale rovnou děláme průnik s intervalem.
+\end{example}
+
+\begin{note}
+  Někdy se vyplatí oběma stranám umocnit. Pokud jsou obě strany nezáporné, je to ekvivalentní úprava. Například
+  \begin{equation*}
+    |x - 1| > |x + 3|\quad\Leftrightarrow\quad{(x - 1)}^2 > {(x + 3)}^2\quad\Leftrightarrow\quad -2x + 1 > 6x + 9\quad\Leftrightarrow\quad x < -1.
+  \end{equation*}
+  Geometricky hledáme body, které jsou dál od $1$ než od $-3$. To jsou všechny body vlevo od středu, tedy od $-1$.
+\end{note}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $|3x + 2| = 7$,
+    \item $|x - 4| < 2x + 1$,
+    \item $|x| + |x - 4| = 4$,
+    \item $|x + 2| - |x - 1| = x$,
+    \item $|x^2 - 4| = 3x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $3x + 2 = \pm 7$, tedy $x = \frac{5}{3}$ nebo $x = -3$.
+    \item Pro $x < 4$: $4 - x < 2x + 1$, tedy $x > 1$, průnik $(1, 4)$. Pro $x\geq 4$: $x - 4 < 2x + 1$, tedy $x > -5$, průnik $[4, \infty)$. $K = (1, \infty)$.
+    \item Pro $x < 0$: $-2x + 4 = 4$, tedy $x = 0$, neleží v intervalu. Pro $0\leq x < 4$: $4 = 4$, platí vždy. Pro $x\geq 4$: $2x - 4 = 4$, tedy $x = 4$, leží v intervalu. $K = [0, 4]$. Geometricky: součet vzdáleností od $0$ a $4$ je roven $4$ přesně pro body mezi nimi.
+    \item Nulové body $-2$ a $1$. Pro $x < -2$: $-x - 2 + x - 1 = -3 = x$, tedy $x = -3$, leží. Pro $-2\leq x < 1$: $x + 2 + x - 1 = 2x + 1 = x$, tedy $x = -1$, leží. Pro $x\geq 1$: $x + 2 - x + 1 = 3 = x$, leží. $K = \{-3, -1, 3\}$.
+    \item Pravá strana musí být nezáporná, tedy $x\geq 0$. Pro $0\leq x < 2$: $4 - x^2 = 3x$, $x^2 + 3x - 4 = 0$, $x\in\{1, -4\}$, v intervalu je jen $1$. Pro $x\geq 2$: $x^2 - 4 = 3x$, $x^2 - 3x - 4 = 0$, $x\in\{4, -1\}$, v intervalu je jen $4$. $K = \{1, 4\}$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Absolutní hodnota s parametrem}
+
+\begin{example}
+  Určeme počet řešení rovnice $|x - 2| = a$ v závislosti na parametru $a\in\mathbb{R}$. Podle geometrického významu: pro $a < 0$ žádné, pro $a = 0$ jedno ($x = 2$), pro $a > 0$ dvě ($x = 2\pm a$).
+
+  Zajímavější je rovnice $|x - 1| + |x + 1| = a$. Z příkladu~\ref{ex:abs-dve} už tušíme, že součet vzdáleností od $-1$ a $1$ je vždy alespoň $2$ (vzdálenost těch dvou bodů), a to přesně pro body mezi nimi. Tedy pro $a < 2$ žádné řešení, pro $a = 2$ celý interval $[-1, 1]$ a pro $a > 2$ dvě řešení $x = \pm\frac{a}{2}$. Kdo nevěří, ať si to rozepíše metodou nulových bodů.
+\end{example}
+
+\section{Iracionální rovnice}
+
+\begin{definitionbox}
+  \textbf{Iracionální rovnice} je rovnice, ve které se neznámá vyskytuje pod odmocninou.
+
+  \vspace{0.2cm}
+
+  \textbf{Postup řešení}:
+  \begin{enumerate}
+    \item Určíme definiční obor (výrazy pod sudými odmocninami $\geq 0$).
+    \item Odmocninu \textbf{osamostatníme} na jedné straně rovnice.
+    \item Obě strany \textbf{umocníme}. To je \textbf{důsledková} úprava!
+    \item Pokud v rovnici zbyly odmocniny, opakujeme kroky 2 a 3.
+    \item Vyřešíme vzniklou rovnici.
+    \item Provedeme \textbf{zkoušku}. Ta je zde \textbf{nutnou součástí řešení}, ne jen kontrolou.
+  \end{enumerate}
+\end{definitionbox}
+
+Proč je zkouška nutná? V kapitole~\ref{kap:rovnice} jsme si řekli, že umocnění není ekvivalentní úprava. Z $a = b$ sice plyne $a^2 = b^2$, ale z $a^2 = b^2$ plyne jen $a = \pm b$. Umocněním tedy do rovnice `propašujeme' i řešení rovnice $a = -b$, která nás vůbec nezajímala. Takovým řešením se říká \textbf{falešné kořeny} a zkouška je jediný spolehlivý způsob, jak je odhalit.
+
+\begin{example}
+  Vyřešme $\sqrt{x + 3} = x + 1$. Definiční obor: $x\geq -3$. Umocníme:
+  \begin{equation*}
+    x + 3 = x^2 + 2x + 1\quad\Leftrightarrow\quad x^2 + x - 2 = 0\quad\Leftrightarrow\quad x\in\{1, -2\}.
+  \end{equation*}
+  Zkouška:
+  \begin{itemize}
+    \item $x = 1$: $L = \sqrt{4} = 2$, $P = 2$. Vyhovuje.
+    \item $x = -2$: $L = \sqrt{1} = 1$, $P = -1$. \textbf{Nevyhovuje!}
+  \end{itemize}
+  $K = \{1\}$. Kořen $-2$ je falešný. Přišel z rovnice $\sqrt{x + 3} = -(x + 1)$, kterou jsme umocněním omylem vyřešili také.
+\end{example}
+
+\begin{note}
+  Místo zkoušky můžeme na začátku přidat podmínku, že strana, na které není odmocnina, musí být nezáporná (protože odmocnina je nezáporná). V předchozím příkladu $x + 1\geq 0$, tedy $x\geq -1$, a kořen $-2$ by vypadl rovnou. Za těchto podmínek už je umocnění ekvivalentní úprava. U maturity ale doporučujeme dělat zkoušku tak jako tak. Podmínka se snadno pokazí, zkouška ne.
+\end{note}
+
+\begin{example}
+  Vyřešme $\sqrt{2x + 3} - \sqrt{x + 1} = 1$. Definiční obor: $x\geq -1$. Osamostatníme jednu odmocninu a umocníme:
+  \begin{align*}
+    \sqrt{2x + 3} &= 1 + \sqrt{x + 1},\\
+    2x + 3 &= 1 + 2\sqrt{x + 1} + x + 1,\\
+    x + 1 &= 2\sqrt{x + 1}.
+  \end{align*}
+  Znovu umocníme: $x^2 + 2x + 1 = 4x + 4$, tedy $x^2 - 2x - 3 = 0$ a $x\in\{3, -1\}$. Zkouška: $x = 3$: $\sqrt{9} - \sqrt{4} = 1$, vyhovuje. $x = -1$: $\sqrt{1} - \sqrt{0} = 1$, vyhovuje. $K = \{-1, 3\}$.
+
+  Tentokrát falešné kořeny nevznikly. Ze zkoušky jsme se to ale dozvěděli až na konci, takže ji rozhodně nebylo zbytečné dělat.
+\end{example}
+
+\begin{note}
+  Ve třetím řádku předchozího příkladu by vás mohlo lákat vydělit rovnici výrazem $\sqrt{x + 1}$. Pak byste přišli o kořen $x = -1$, pro který je $\sqrt{x + 1} = 0$. Vytýkejte, nedělte. Pořád dokola.
+\end{note}
+
+\begin{example}
+  Někdy stačí podívat se na definiční obor. Rovnice $\sqrt{x - 5} + \sqrt{2 - x} = 1$ vyžaduje $x\geq 5$ a zároveň $x\leq 2$. To nesplňuje žádné číslo, takže $K = \emptyset$ a nemusíme vůbec nic počítat. Kdo by začal umocňovat, dostal by po chvíli nějaká čísla, zkouškou by je pak pracně vyloučil a měl by pocit dobře vykonané práce. Zbytečně.
+\end{example}
+
+\begin{example}
+  Substituce funguje i tady. Rovnice $x - 5\sqrt{x} + 6 = 0$ se substitucí $t = \sqrt{x}\geq 0$ změní na $t^2 - 5t + 6 = 0$, tedy $t\in\{2, 3\}$ a $x\in\{4, 9\}$. Zkouška: $4 - 10 + 6 = 0$ a $9 - 15 + 6 = 0$.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sqrt{x + 7} = x - 5$,
+    \item $\sqrt{3x - 2} = \sqrt{x + 4}$,
+    \item $\sqrt{x + 5} + \sqrt{x} = 5$,
+    \item $x + \sqrt{x} = 12$,
+    \item $\sqrt{x^2 + 9} = x - 3$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x + 7 = x^2 - 10x + 25$, $x^2 - 11x + 18 = 0$, $x\in\{2, 9\}$. Zkouška: $x = 9$: $4 = 4$. $x = 2$: $3\neq -3$. $K = \{9\}$.
+    \item $3x - 2 = x + 4$, $x = 3$. Zkouška: $\sqrt{7} = \sqrt{7}$. $K = \{3\}$.
+    \item $\sqrt{x + 5} = 5 - \sqrt{x}$, umocníme: $x + 5 = 25 - 10\sqrt{x} + x$, tedy $10\sqrt{x} = 20$, $\sqrt{x} = 2$, $x = 4$. Zkouška: $3 + 2 = 5$. $K = \{4\}$.
+    \item Substituce $t = \sqrt{x}$: $t^2 + t - 12 = 0$, $t\in\{3, -4\}$. Záporné $t$ zahodíme, $x = 9$. $K = \{9\}$.
+    \item $x^2 + 9 = x^2 - 6x + 9$, tedy $x = 0$. Zkouška: $L = 3$, $P = -3$. $K = \emptyset$. Podmínka $x - 3\geq 0$ by to řekla rovnou.
+  \end{enumerate}
+\end{solution}
+
+\section{Iracionální nerovnice}
+
+U nerovnic je situace složitější, protože zkouška nefunguje. Nemůžeme dosadit celý interval. Musíme tedy umocňovat jen tehdy, když víme, že jsou obě strany nezáporné, a ostatní případy rozebrat zvlášť.
+
+\begin{example}
+  Vyřešme $\sqrt{x - 1} < 3$. Definiční obor $x\geq 1$. Obě strany jsou nezáporné, takže umocnění je ekvivalentní: $x - 1 < 9$, tedy $x < 10$. S definičním oborem $K = [1, 10)$.
+\end{example}
+
+\begin{example}
+  Vyřešme $\sqrt{x + 2} > x$. Definiční obor $x\geq -2$. Pravá strana může mít libovolné znaménko, a tak rozebereme dva případy.
+  \begin{itemize}
+    \item $x\in[-2, 0)$: pravá strana je záporná a levá nezáporná, takže nerovnice platí vždy. $K_1 = [-2, 0)$.
+    \item $x\geq 0$: obě strany jsou nezáporné a můžeme umocnit: $x + 2 > x^2$, tedy $x^2 - x - 2 < 0$, neboli $(x - 2)(x + 1) < 0$, a tedy $x\in(-1, 2)$. Průnik s $[0, \infty)$ je $K_2 = [0, 2)$.
+  \end{itemize}
+  $K = K_1\cup K_2 = [-2, 2)$.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[->] (-2.8,0) -- (3.5,0) node[right] {\small $x$};
+    \draw[->] (0,-2.5) -- (0,3) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-2:3.2, samples=80] plot (\x, {sqrt(\x+2)}) node[right] {\small $y = \sqrt{x + 2}$};
+    \draw[thick, domain=-2.4:2.9] plot (\x, \x) node[above right] {\small $y = x$};
+    \filldraw (2,2) circle (2pt);
+    \filldraw[colorofwisdom] (-2,0) circle (2pt);
+    \draw[line width=3pt, colorofwisdom!50] (-2,-0.05) -- (2,-0.05);
+    \node[below] at (2,0) {\small $2$};
+    \node[below] at (-2,-0.1) {\small $-2$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je vidět, že graf odmocniny leží nad přímkou $y = x$ přesně na intervalu $[-2, 2)$. Obrázek je u iracionálních nerovnic velice dobrá kontrola.
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sqrt{2x + 1}\geq 3$,
+    \item $\sqrt{x + 6} < x$,
+    \item $\sqrt{4 - x^2} > -1$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x\geq -\frac{1}{2}$, umocníme: $2x + 1\geq 9$, $x\geq 4$. $K = [4, \infty)$.
+    \item Definiční obor $x\geq -6$. Pro $x < 0$ je pravá strana záporná a nerovnice neplatí. Pro $x\geq 0$ umocníme: $x + 6 < x^2$, $(x - 3)(x + 2) > 0$, tedy $x > 3$ (průnik s $x\geq 0$). $K = (3, \infty)$.
+    \item Odmocnina je vždy nezáporná, takže je větší než $-1$ všude, kde je definovaná. $K = [-2, 2]$. Opět žádné počítání.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Taxíková geometrie}
+
+Absolutní hodnota měří vzdálenost na přímce. Jak měřit vzdálenost v rovině? Obvykle podle Pythagorovy věty: vzdálenost bodů $A = (a_1, a_2)$ a $B = (b_1, b_2)$ je
+\begin{equation*}
+  d(A, B) = \sqrt{{(a_1 - b_1)}^2 + {(a_2 - b_2)}^2}.
+\end{equation*}
+Představte si ale, že jste v městě s pravoúhlou sítí ulic, jako je Manhattan. Diagonálně přes domy projít nemůžete, takže skutečná vzdálenost, kterou ujdete, je
+\begin{equation*}
+  d_{\text{taxi}}(A, B) = |a_1 - b_1| + |a_2 - b_2|.
+\end{equation*}
+Tomu se říká \textbf{taxíková} (také manhattanská) \textbf{vzdálenost}.\footnote{V Praze to nefunguje, protože ulice nejsou pravoúhlé a taxikář vás stejně poveze oklikou.} Splňuje všechny rozumné vlastnosti vzdálenosti, včetně trojúhelníkové nerovnosti (dokažte si to pomocí té naší). Geometrie se ale chová velice zvláštně. Co je třeba `kružnice' se středem v počátku a poloměrem $1$? Je to množina bodů, pro které $|x| + |y| = 1$. Metodou nulových bodů (pro každý kvadrant zvlášť) zjistíte, že to je čtverec postavený na špičku:
+\begin{center}
+  \begin{tikzpicture}[scale=1.3]
+    \draw[->] (-1.6,0) -- (1.6,0) node[right] {\small $x$};
+    \draw[->] (0,-1.4) -- (0,1.5) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;
+    \draw[dashed] (0,0) circle (1);
+    \node[below right] at (1,0) {\small $1$};
+    \node[above right] at (0,1) {\small $1$};
+    \node[colorofwisdom, right] at (0.55,0.55) {\small $|x| + |y| = 1$};
+  \end{tikzpicture}
+\end{center}
+Čárkovaně je pro srovnání obyčejná kružnice. Taxíková geometrie není jen hříčka. Používá se v robotice, při zpracování obrazu i ve strojovém učení, kde se mezi `vzdálenostmi' vybírá podle toho, která se pro danou úlohu hodí víc.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak je definována absolutní hodnota a jaký má geometrický význam?
+    \item Jaké má absolutní hodnota vlastnosti? Dokažte trojúhelníkovou nerovnost.
+    \item Jak se řeší rovnice a nerovnice tvaru $|x - a| = b$, $|x - a| < b$ a $|x - a| > b$?
+    \item Popište metodu nulových bodů. Proč musíme kontrolovat, zda řešení leží v daném intervalu?
+    \item Co je iracionální rovnice a jak se řeší? Proč je zkouška nutnou součástí řešení?
+    \item Co jsou falešné kořeny a odkud se berou?
+    \item Jak se řeší iracionální nerovnice a proč u nich nemůžeme spoléhat na zkoušku?
+  \end{enumerate}
+\end{problem}

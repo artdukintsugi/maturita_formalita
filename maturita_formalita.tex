@@ -26,6 +26,9 @@
 
 \tcbuselibrary{skins, breakable, theorems}
 
+% povoli TeXu trochu vic mezer, aby radky nepretekaly za okraj
+\setlength{\emergencystretch}{2em}
+
 
 
 \fancyhf{} 
@@ -118,33 +121,6 @@
     \end{tcolorbox}
   }
 
-% Hrbitov chyb: nahrobky typickych maturitnich chyb
-\newenvironment{hrbitov}{
-  \begin{tcolorbox}[enhanced, breakable,
-    colback=black!05!white,
-    colframe=black,
-    title={$\dagger$\ Hřbitov chyb\ $\dagger$},
-    fonttitle=\bfseries,
-    coltitle=white,
-    colbacktitle=black,
-    sharp corners,
-    boxrule=0.5mm,
-    drop fuzzy shadow,
-    overlay={
-      \node[anchor=north east, font=\small, text=white] at (frame.north east) {$\mathghost$};
-    }
-  ]
-}{
-  \end{tcolorbox}
-}
-
-% Jeden hrob: co zemrelo, proc a jak to melo byt spravne
-\newcommand{\hrob}[3]{%
-  \par\noindent\textbf{Zde leží:} #1\\
-  \textbf{Příčina smrti:} #2\\
-  \textbf{Správně:} #3\par\medskip
-}
-
 % Ornament na konec kapitoly
 \newcommand{\koneckapitoly}{%
   \par\vspace{1.5em}
@@ -222,6 +198,14 @@
 
 \chapter{Lineární rovnice, nerovnice, soustavy a matice}
 \input{chapters/ustni/rovnice.tex}
+\koneckapitoly
+
+\chapter{Kvadratické rovnice a nerovnice}
+\input{chapters/ustni/kvadraticke.tex}
+\koneckapitoly
+
+\chapter{Absolutní hodnota a iracionální rovnice}
+\input{chapters/ustni/absolutni.tex}
 \koneckapitoly
 
 \end{document}

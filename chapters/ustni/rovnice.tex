@@ -1,3 +1,4 @@
+\label{kap:rovnice}
 \mathquote{Do not worry about your difficulties in mathematics. I can assure you mine are still greater.}{Albert Einstein}
 
 Rovnice jsou pravděpodobně to první, co si člověk představí pod slovem `matematika'. Najdi $x$.\footnote{Klasický vtip: student dostane obrázek trojúhelníku se zadáním \textit{Najdi $x$}, zakroužkuje písmeno $x$ a připíše `tady je'. Tento přístup nedoporučujeme, i když je technicky vzato nepopiratelný.} V této kapitole si ale ukážeme, že řešení rovnic není jen mechanické přehazování čísel z jedné strany na druhou. Za každým krokem stojí logika z první kapitoly a pokud ji pochopíme, vyhneme se většině chyb. Začneme lineárními rovnicemi, pak se podíváme na nerovnice a nakonec na soustavy rovnic.
@@ -154,12 +155,6 @@ Pokud se neznámá objeví ve jmenovateli, musíme nejdříve určit definiční
   \end{enumerate}
   Výsledek (c) je pěkná past. Rovnice je `skoro' identita, ale podmínky z ní vyřazují dva body. Přesně tohle zkoušející milují.
 \end{solution}
-
-\begin{hrbitov}
-  \hrob{$x^2 = x\ \Rightarrow\ x = 1$}{Dělení výrazem $x$, který může být nulový. Řešení $x = 0$ tím zmizelo.}{$x^2 - x = 0$, tedy $x(x - 1) = 0$ a $K = \{0, 1\}$.}
-  \hrob{Řešení $x = 2$, které nepatří do definičního oboru}{Podmínky se neurčily, nebo se na ně na konci zapomnělo.}{Podmínky vždy na začátku a výsledek s nimi na konci porovnat.}
-  \hrob{Zkouška dosazením do upravené rovnice}{Pokud byla chyba v úpravě, zkouška ji nenajde.}{Zkouška se dělá dosazením do \textbf{původní} rovnice.}
-\end{hrbitov}
 
 \subsection{Rovnice s parametrem}
 
@@ -472,12 +467,6 @@ Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vyn�
     $K = (-1, 0]\cup[4, \infty)$.
   \end{enumerate}
 \end{solution}
-
-\begin{hrbitov}
-  \hrob{$-3x\geq -9\ \Rightarrow\ x\geq 3$}{Dělení záporným číslem bez otočení znaku.}{$x\leq 3$.}
-  \hrob{$\dfrac{x - 1}{x + 2}\geq 0\ \Rightarrow\ x - 1\geq 0$}{Násobení jmenovatelem, jehož znaménko neznáme. Zmizel celý interval $(-\infty, -2)$.}{Metoda nulových bodů, $K = (-\infty, -2)\cup[1, \infty)$.}
-  \hrob{$[3, \infty]$}{Nekonečno není reálné číslo, takže do intervalu patřit nemůže.}{$[3, \infty)$.}
-\end{hrbitov}
 
 \section{Soustavy lineárních rovnic}
 
@@ -1097,12 +1086,6 @@ Pozor, musíme násobit \textbf{zleva} na obou stranách. Násobení matic není
 \begin{solution}
   $D = \begin{vmatrix} 1 & 2\\ 2 & a \end{vmatrix} = a - 4$. Pro $a\neq 4$ je $D\neq 0$ a soustava má právě jedno řešení. Z Cramerova pravidla $D_x = 3a - 12$ a $D_y = 0$, takže řešení je $(3, 0)$, a to pro všechna $a\neq 4$. Pro $a = 4$ je druhá rovnice dvojnásobkem první, přímky splývají a soustava má nekonečně mnoho řešení $\{(3 - 2t, t)\ |\ t\in\mathbb{R}\}$. Žádné řešení nenastane nikdy.
 \end{solution}
-
-\begin{hrbitov}
-  \hrob{$AB = BA$}{Násobení matic není komutativní.}{Obecně $AB\neq BA$, viz příklad s maticí, která prohazuje řádky a sloupce.}
-  \hrob{Sarrusovo pravidlo na matici $4\times 4$}{Sarrusovo pravidlo funguje jen pro $3\times 3$.}{Rozvoj podle řádku nebo Gaussova eliminace.}
-  \hrob{$\mathbf{x} = \dfrac{\mathbf{b}}{A}$}{Maticí se dělit nedá.}{$\mathbf{x} = A^{-1}\mathbf{b}$, a to jen pokud $\det A\neq 0$.}
-\end{hrbitov}
 
 \section{Slovní úlohy}
 
