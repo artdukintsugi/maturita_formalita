@@ -276,7 +276,7 @@ U lineárních rovnic s parametrem jsme rozhodovali podle toho, zda je koeficien
 
 \section{Rovnice vyšších stupňů}
 
-Pro rovnice třetího a čtvrtého stupně existují obecné vzorce, ale jsou tak ošklivé, že se u maturity nepoužívají.\footnote{Vzorec pro kubickou rovnici má na svědomí jeden z nejdramatičtějších příběhů dějin matematiky, viz příběh na konci kapitoly.} Pro pátý a vyšší stupeň obecný vzorec neexistuje, jak jsme zmínili u Galoise v kapitole~\ref{kap:rovnice}. U maturity se proto objevují jen rovnice, které se dají na kvadratické převést nějakým trikem.
+Pro rovnice třetího a čtvrtého stupně existují obecné vzorce, ale jsou tak ošklivé, že se u maturity nepoužívají.\footnote{Vzorec pro kubickou rovnici má na svědomí jeden z nejdramatičtějších příběhů dějin matematiky, viz příběh na konci kapitoly.} Pro pátý a vyšší stupeň obecný vzorec neexistuje, jak jsme zmínili u Galoise v kapitole~\ref{kap:rovnice}. Proč tomu tak je, rozebíráme v odbočce v sekci~\ref{sec:kubicke}. U maturity se proto objevují jen rovnice, které se dají na kvadratické převést nějakým trikem.
 
 \subsection{Substituce}
 
@@ -353,6 +353,96 @@ Strategie je tedy jasná. Vyzkoušíme dělitele absolutního členu. Když najd
     \item $x = 1$ je kořen ($1 - 3 + 2 = 0$). Dělením $x^2 + x - 2 = (x - 1)(x + 2)$, celkem $(x - 1)^2(x + 2)$ a $K = \{-2, 1\}$. Kořen $1$ je dvojnásobný.
   \end{enumerate}
 \end{solution}
+
+\section{Odbočka --- Proč jsou kubické rovnice tak těžké}\label{sec:kubicke}
+
+U maturity se rovnice třetího a vyššího stupně řeší jen tehdy, když `jdou' (substituce, celočíselný kořen, vytýkání). Co když ale nejdou? Pojďme se podívat, co se skrývá za větou `vzorce existují, ale jsou ošklivé', a proč od pátého stupně neexistují vůbec.
+
+\subsection*{Jak vypadají kubické rovnice graficky}
+
+Graf mnohočlenu třetího stupně $ax^3 + bx^2 + cx + d$ (s $a > 0$) jde vlevo do $-\infty$ a vpravo do $+\infty$. Někde tedy \textit{musí} protnout osu $x$. Každá kubická rovnice má proto aspoň jeden reálný kořen.\footnote{Přesně to říká Bolzanova věta z kapitoly~\ref{kap:limity}. Totéž platí pro každý lichý stupeň. Rovnice $x^4 + 1 = 0$ sudého stupně reálný kořen mít nemusí.} Uprostřed ale graf může udělat `vlnku', a podle toho, jak vysoko vlnka leží, má rovnice jeden, dva, nebo tři kořeny:
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \begin{scope}[xshift=0cm]
+      \draw[->] (-1.6,0) -- (1.5,0) node[right, font=\scriptsize] {$x$};
+      \draw[->] (0,-1.2) -- (0,1.6);
+      \draw[thick, colorofwisdom, domain=-1.4:1.25, samples=60] plot (\x, {0.25*((1.6*\x)^3 - 3*1.6*\x + 3)});
+      \node[font=\small] at (0,-1.6) {$x^3 - 3x + 3$: jeden kořen};
+    \end{scope}
+    \begin{scope}[xshift=4cm]
+      \draw[->] (-1.6,0) -- (1.5,0) node[right, font=\scriptsize] {$x$};
+      \draw[->] (0,-1.2) -- (0,1.6);
+      \draw[thick, colorofwisdom, domain=-1.4:1.25, samples=60] plot (\x, {0.25*((1.6*\x)^3 - 3*1.6*\x + 2)});
+      \node[font=\small] at (0,-1.6) {$x^3 - 3x + 2$: dva kořeny};
+    \end{scope}
+    \begin{scope}[xshift=8cm]
+      \draw[->] (-1.6,0) -- (1.5,0) node[right, font=\scriptsize] {$x$};
+      \draw[->] (0,-1.2) -- (0,1.6);
+      \draw[thick, colorofwisdom, domain=-1.4:1.25, samples=60] plot (\x, {0.25*((1.6*\x)^3 - 3*1.6*\x)});
+      \node[font=\small] at (0,-1.6) {$x^3 - 3x$: tři kořeny};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Obecně má rovnice stupně $n$ nejvýše $n$ reálných kořenů. Každý kořen $r$ totiž znamená, že lze vytknout $(x - r)$, a víc než $n$ takových závorek se do stupně $n$ nevejde.
+
+\subsection*{Cardanův trik}
+
+Ukažme si, jak vzorec pro kubickou rovnici vzniká. Je to krásný postup a používá jen věci, které už známe.
+
+\textbf{Krok 1: zbavíme se $x^2$.} Rovnici vydělíme $a$ a dosadíme $x = y - \frac{b}{3a}$. Po roznásobení se členy s $y^2$ odečtou (podobně jako u doplnění na čtverec) a zbude tzv. \textbf{redukovaná kubická rovnice}
+\begin{equation*}
+  y^3 + py + q = 0.
+\end{equation*}
+Geometricky jsme jen posunuli graf vodorovně tak, aby jeho `střed souměrnosti' ležel na ose $y$.
+
+\textbf{Krok 2: hledáme řešení ve tvaru $y = u + v$.} Dosadíme a použijeme ${(u + v)}^3 = u^3 + v^3 + 3uv(u + v)$:
+\begin{equation*}
+  u^3 + v^3 + (3uv + p)(u + v) + q = 0.
+\end{equation*}
+Máme dvě neznámé místo jedné, takže si jednu podmínku můžeme \textit{vybrat}. Zvolíme $3uv = -p$, aby prostřední závorka zmizela. Zbude
+\begin{equation*}
+  u^3 + v^3 = -q,\qquad u^3\cdot v^3 = -\frac{p^3}{27}.
+\end{equation*}
+
+\textbf{Krok 3: Vietovy vzorce.} Známe součet a součin čísel $u^3$ a $v^3$. Podle Vietových vzorců jsou to tedy kořeny \textit{kvadratické} rovnice $t^2 + qt - \frac{p^3}{27} = 0$. Tu umíme vyřešit, a po odmocnění dostaneme \textbf{Cardanův vzorec}
+\begin{equation*}
+  y = \sqrt[3]{-\frac{q}{2} + \sqrt{\frac{q^2}{4} + \frac{p^3}{27}}} + \sqrt[3]{-\frac{q}{2} - \sqrt{\frac{q^2}{4} + \frac{p^3}{27}}}.
+\end{equation*}
+Kubickou rovnici jsme tedy převedli na kvadratickou a dvě třetí odmocniny. To je celá pointa: \textbf{rovnici vyššího stupně se snažíme převést na rovnici nižšího stupně}.
+
+\begin{example}
+  Vyřešme $y^3 + 6y - 20 = 0$. Zde $p = 6$, $q = -20$, takže $u^3 + v^3 = 20$ a $u^3v^3 = -8$. Kvadratická rovnice $t^2 - 20t - 8 = 0$ má kořeny $t = 10\pm\sqrt{108}$, tedy
+  \begin{equation*}
+    y = \sqrt[3]{10 + \sqrt{108}} + \sqrt[3]{10 - \sqrt{108}}.
+  \end{equation*}
+  Vypadá to strašidelně, ale je to jen převlečená dvojka. Platí totiž ${(1 + \sqrt{3})}^3 = 10 + 6\sqrt{3} = 10 + \sqrt{108}$ a podobně ${(1 - \sqrt{3})}^3 = 10 - \sqrt{108}$. Proto $y = (1 + \sqrt{3}) + (1 - \sqrt{3}) = 2$. Zkouška: $8 + 12 - 20 = 0$. Kdybychom zkusili dělitele čísla $20$, měli bychom to za minutu. Vzorec tedy funguje, ale výsledek schovává.
+\end{example}
+
+\subsection*{Když vzorec potřebuje komplexní čísla}
+
+Ještě horší je, co se stane s rovnicí $x^3 - 15x - 4 = 0$ (zkoumal ji Rafael Bombelli kolem roku 1572). Ta má tři reálné kořeny, mimo jiné $x = 4$. Cardanův vzorec ale dá
+\begin{equation*}
+  x = \sqrt[3]{2 + \sqrt{-121}} + \sqrt[3]{2 - \sqrt{-121}},
+\end{equation*}
+tedy odmocninu ze záporného čísla! Bombelli si všiml, že ${(2 + i)}^3 = 2 + 11i$, kde $i = \sqrt{-1}$, takže první sčítanec je $2 + i$, druhý $2 - i$ a součet je $4$. Imaginární části se vyruší. Dá se dokázat, že tomu nelze utéct: když má kubická rovnice tři různé reálné kořeny, které nejsou racionální, Cardanův vzorec \textit{vždy} vede přes komplexní čísla (tzv. \textit{casus irreducibilis}). Právě tady začala historie komplexních čísel, ke kterým se dostaneme v kapitole~\ref{kap:komplexni}.
+
+\subsection*{Čtvrtý stupeň a dál}
+
+Rovnici čtvrtého stupně vyřešil Cardanův žák Lodovico Ferrari stejným trikem: převedl ji na pomocnou rovnici \textit{třetího} stupně. Výsledný vzorec se vypsaný nevejde na jednu stránku.
+
+Vzorec postupně snižuje stupeň: $2\to 1$, $3\to 2$, $4\to 3$. Pro pátý stupeň vychází pomocná rovnice \textit{šestého} stupně, tedy horší než ta původní. Matematici to zkoušeli skoro tři sta let. Nakonec Paolo Ruffini (1799) a Niels Henrik Abel (1824) dokázali, že \textbf{obecný vzorec pro rovnici pátého stupně pomocí sčítání, odčítání, násobení, dělení a odmocnin neexistuje}. Proč se to láme právě u pětky, vysvětlil Évariste Galois. Sledoval, jak lze kořeny rovnice mezi sebou prohazovat, aby platily všechny algebraické vztahy mezi nimi. Každá odmocnina ve vzorci odpovídá jednomu `rozbití' těchto symetrií na jednodušší kousky. Pro $2$, $3$ a $4$ kořeny to jde. Pro $5$ kořenů je v symetriích jádro, které rozbít nejde.\footnote{Je to grupa symetrií pravidelného dvacetistěnu (ikosaedru) z kapitoly~\ref{kap:stereometrie}. Odmocninami se nedá rozložit, protože je tzv. \textit{jednoduchá}. Tento obor se jmenuje Galoisova teorie a učí se na vysoké škole.} Například rovnice $x^5 - x - 1 = 0$ se odmocninami vyřešit nedá.
+
+\begin{definitionbox}
+  \textbf{Shrnutí}:
+  \begin{itemize}
+    \item stupeň $1$ a $2$: jednoduché vzorce,
+    \item stupeň $3$ (Cardano, 1545) a $4$ (Ferrari): vzorce existují, ale jsou velmi složité a mohou vést přes komplexní čísla, i když jsou kořeny reálné,
+    \item stupeň $5$ a vyšší: obecný vzorec pomocí odmocnin \textbf{neexistuje} (Abel--Ruffini, Galois).
+  \end{itemize}
+  Kořeny přitom \textit{existují}: rovnice stupně $n$ má v komplexních číslech vždy přesně $n$ kořenů, pokud je počítáme i s násobností (základní věta algebry). Jen je nejde zapsat vzorcem. V praxi se proto počítají přibližně, numerickými metodami, třeba půlením intervalu z kapitoly~\ref{kap:limity}.
+\end{definitionbox}
 
 \section{Kvadratické nerovnice}
 
@@ -530,6 +620,7 @@ Mimochodem, právě při řešení kubických rovnic se poprvé objevily odmocni
     \item Jak rozložíte kvadratický trojčlen na součin? Kdy to nejde?
     \item Jak se řeší kvadratická rovnice s parametrem? Na co si dát pozor, když parametr stojí u $x^2$?
     \item Jak se řeší bikvadratické rovnice a rovnice vyšších stupňů? Vyslovte a dokažte větu o celočíselných kořenech.
+    \item Kolik reálných kořenů může mít kubická rovnice a proč vždy aspoň jeden? Proč je obtížné řešit rovnice třetího a vyšších stupňů?
     \item Jak se řeší kvadratické nerovnice? Načrtněte, jak souvisí s grafem paraboly.
     \item Jak se řeší soustavy, ve kterých je kvadratická rovnice? Jaký mají geometrický význam?
   \end{enumerate}
