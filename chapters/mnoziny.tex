@@ -1,7 +1,7 @@
 \mathquote{From the paradise that Cantor created for us no-one shall be able to expel us.}{David Hilbert}
 
 \section{Odbočka --- Axiomatická teorie množin}
-Než se pustíme do pro nás více relevatních témat, pojďme se seznámit s rigorózní teorií množin na které je postavena celá matematika. Tato teorie byla vytvořena Georgem Cantorem na konci 19. století a je základem pro všechny matematické koncepty, které se týkají množin. Tato teorie je ale velice složitá a zmiňuji ji zde jen proto, abychom měli představu o tom, jak by mohla matematika vypadat, kdybychom se snažili být formální.
+Než se pustíme do pro nás více relevantních témat, pojďme se seznámit s rigorózní teorií množin na které je postavena celá matematika. Teorii množin vytvořil Georg Cantor na konci 19. století, axiomy, které si zde ukážeme, ale sepsali až na začátku 20. století Ernst Zermelo a Abraham Fraenkel. Je základem pro všechny matematické koncepty, které se týkají množin. Tato teorie je ale velice složitá a zmiňuji ji zde jen proto, abychom měli představu o tom, jak by mohla matematika vypadat, kdybychom se snažili být formální.
 
 Hlavní roli v této teorii hrají axiomy, což jsou základní pravidla, která musíme přijmout jako pravdivá, abychom mohli dále pracovat. Než se pustíme na samotné axiomy, vysvětleme si rychle následující znaky, které nám usnadní zápis. Množiny značíme velkými písmeny, například $X$, $Y$, $Z$, atd. Prvky množin značíme malými písmeny, například $x$, $y$, $z$, atd. Pokud prvek $x$ patří do množiny $X$, značíme to $x\in X$ a pokud nepatří, tak $x\notin X$. Systém množin je vlastně také množina, která obsahuje množiny a značíme ji $\mathcal{X}$, $\mathcal{Y}$, $\mathcal{Z}$, atd. Projděme si nyní axiomy množinové teorie a pak si ukážeme základní příklady a vysvetlení těchto axiomů. 
 
@@ -11,7 +11,7 @@ Hlavní roli v této teorii hrají axiomy, což jsou základní pravidla, která
     \item \textbf{Axiom of extension}: Dvě množiny jsou rovny právě tehdy, když obsahují stejné prvky.
     \item \textbf{Axiom of the empty set}: Existuje množina, která neobsahuje žádné prvky. Tato množina se nazývá prázdná množina a značí se $\emptyset$.
     \item \textbf{Axiom schema of separation}: Pro každou množinu $x$ a každou vlastnost $P$ existuje množina, která obsahuje všechny prvky množiny $x$ splňující vlastnost $P$.
-    \item \textbf{Axiom of pairing}: Pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. 
+    \item \textbf{Axiom of pairing}: Pro každé dvě množiny $X$ a $Y$ existuje množina $\{X, Y\}$, jejímiž prvky jsou právě množiny $X$ a $Y$. 
     \item \textbf{Axiom of union}: Pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Tato množina se nazývá sjednocení množin v systému $\mathcal{S}$ a značí se $\bigcup \mathcal{S}$. Pokud bychom chtěli sjednotit pouze množiny $X$ a $Y$, značili bychom to $X\cup Y$.
     \item \textbf{Axiom of power set}: Pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Tento systém se nazývá potenční množina množiny $X$ a značí se $\mathcal{P}(X)$. 
     \item \textbf{Axiom of infinity}: Existuje systém množin $\mathcal{S}$ takový, že $\emptyset\in\mathcal{S}$ a pro každou množinu $x\in\mathcal{S}$ platí $x\cup\{x\}\in\mathcal{S}$. 
@@ -34,9 +34,9 @@ I tento axiom je poměrně jednoduchý. Prázdná množina je množina, která n
 \subsection{Axiom schema of separation}
 Tento axiom nám říká, že pro každou množinu $x$ a každou vlastnost $P$ existuje množina, která obsahuje všechny prvky množiny $x$ splňující vlastnost $P$. Například, pokud máme množinu $X = \{1, 2, 3, 4, 5\}$ a vlastnost $P$, že prvek $x$ je sudý, můžeme vytvořit množinu $Y = \{2, 4\}$.
 \subsection{Axiom of pairing}
-Tento axiom nám říká, že pro každé dvě množiny $X$ a $Y$ existuje množina, která obsahuje všechny prvky množin $X$ a $Y$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{3, 4\}$, můžeme vytvořit množinu $Z = \{\{1, 2\}, \{3, 4\}\}$. Tento axiom využijeme při důležité definici kartézského součinu množin.
+Tento axiom nám říká, že pro každé dvě množiny $X$ a $Y$ existuje množina, jejímiž prvky jsou právě množiny $X$ a $Y$ (ne jejich prvky, to dělá až axiom sjednocení). Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{3, 4\}$, můžeme vytvořit množinu $Z = \{\{1, 2\}, \{3, 4\}\}$. Tento axiom využijeme při důležité definici kartézského součinu množin.
 \subsection{Axiom of union}
-Tento axiom nám říká, že pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{2, 3\}$, můžeme vytvořit množinu $Z = X\cup Y \{1, 2, 3\}$.
+Tento axiom nám říká, že pro každý systém množin $\mathcal{S}$ existuje množina, která obsahuje všechny prvky všech množin v systému $\mathcal{S}$. Například, pokud máme množiny $X = \{1, 2\}$ a $Y = \{2, 3\}$, můžeme vytvořit množinu $Z = X\cup Y = \{1, 2, 3\}$.
 \subsection{Axiom of power set}
 Tento axiom nám říká, že pro každou množinu $X$ existuje systém všech podmnožin množiny $X$. Například, pokud máme množinu $X = \{1, 2\}$, můžeme vytvořit množinu $\mathcal{P}(X) = \{\emptyset, \{1\}, \{2\}, \{1, 2\}\}$. Této množině se říká potenční množina množiny $X$.
 \subsection{Axiom of infinity} \label{axiom_of_infinity}
@@ -49,7 +49,7 @@ Tento axiom nám říká, že existuje systém množin $\mathcal{S}$ takový, ž
   &\vdots
 \end{align*}
 \subsection{Axiom of choice}
-Tento axiom je nejkontroverznější z celé množinové teorie, protože pokud ho pokud ho nepřijmeme, spousta zajímavých matematických konceptů se nám zhroutí. Například bez tohoto axiomu nefungují limity, protože potřebujeme vybrat prvek z nekonečné množiny posloupností a tento axiom nám zaručuje, že tam nějaký takový prvek je. K tomuto axiomu se ještě vrátíme, až se budeme zabývat konkrétními matematickými koncepty. Znamým paradoxem spojeným s tímto axiomem je Banach-Tarski paradox, který říká, že můžeme rozložit kouli na konečně mnoho koulí, které mají stejný objem jako původní koule. 
+Tento axiom je nejkontroverznější z celé množinové teorie, protože pokud ho nepřijmeme, spousta zajímavých matematických konceptů se nám zhroutí. Bez něj například nejde dokázat, že každý vektorový prostor má bázi, a i některé věty z analýzy potřebují alespoň jeho slabší verzi (například když z nekonečně mnoha množin potřebujeme vybrat posloupnost prvků). Obyčejné limity, se kterými budeme počítat, se bez něj ale obejdou. K tomuto axiomu se ještě vrátíme, až se budeme zabývat konkrétními matematickými koncepty. Známým paradoxem spojeným s tímto axiomem je Banachův--Tarského paradox, který říká, že kouli můžeme rozložit na konečně mnoho kusů a ty pak poskládat do dvou koulí, z nichž každá má stejný objem jako ta původní. 
 \subsection{Axiom schema of replacement}
 Tento axiom nám říká, že pro každou množinu $X$ a každou funkci $f$ existuje množina, která obsahuje všechny prvky $f(x)$ pro každý prvek $x\in X$. Například, pokud máme množinu $X = \{1, 2, 3\}$ a funkci $f(x) = x^2$\footnote{Zde předpokládáme, že víte, co dělá základní operace na druhou.}, můžeme vytvořit množinu $Y = \{1, 4, 9\}$.
 
@@ -171,7 +171,7 @@ V tomto případě máme relaci zadanou explicitně a slouží jen na ukázání
 Vlastnosti relací se nejlépe ukazující na číselných množinách a proto si nejprve pojďme říct něco o nich.
 
 \section{Odbočka --- Tělesa}
-Těleso je ve zkratce množina prvků, který splňuje  `hezké' vlastnosti. Jdou mezi sebou `hezky' sčítat a násobit. Pojďme si nyní zadefinovat co přesně těleso je.
+Těleso je ve zkratce množina prvků, která splňuje `hezké' vlastnosti. Jdou mezi sebou `hezky' sčítat a násobit. Pojďme si nyní zadefinovat co přesně těleso je.
 
 \begin{definitionbox}
   \textbf{Těleso} je zadáno množinou $\mathbb{F}$ a obsahuje dvě funkce, které jdou abstraktně zadefinovat, ale pro nás bude stačit, že to je sčítaní a násobení. Těleso musí splňovat následující axiomy:
@@ -179,19 +179,19 @@ Těleso je ve zkratce množina prvků, který splňuje  `hezké' vlastnosti. Jdo
   \begin{enumerate}
     \item Axiomy pro sčítání skalárů (Skaláry jsou prvky tělesa. Například v případě $\mathbb{R}$ jsou skaláry reálná čísla. To že jsou reálná čísla těleso si řekneme později.):
     \begin{enumerate}
-      \item Existence nulového prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $0\in\mathbb{F}$ takový, že $x + 0 = x$. Tento prvek se nazývá nulový prvek.
+      \item Existence nulového prvku: Existuje prvek $0\in\mathbb{F}$ takový, že pro každý prvek $x\in\mathbb{F}$ platí $x + 0 = x$. Tento prvek se nazývá nulový prvek.
       \item Komutativita sčítání: Pro každé dva prvky $x, y\in\mathbb{F}$ platí, že $x + y = y + x$.
       \item Asociativita sčítání: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $(x + y) + z = x + (y + z)$.
       \item Existence opačného prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $-x\in\mathbb{F}$ takový, že $x + (-x) = 0$.
     \end{enumerate}
     \item Axiomy pro násobení skalárů:
     \begin{enumerate}
-      \item Existence jednotkového prvku: Pro každý prvek $x\in\mathbb{F}$ existuje prvek $1\in\mathbb{F}$ takový, že $x\cdot 1 = x$. Tento prvek se nazývá jednotkový prvek.
+      \item Existence jednotkového prvku: Existuje prvek $1\in\mathbb{F}$, $1\neq 0$, takový, že pro každý prvek $x\in\mathbb{F}$ platí $x\cdot 1 = x$. Tento prvek se nazývá jednotkový prvek.
       \item Komutativita násobení: Pro každé dva prvky $x, y\in\mathbb{F}$ platí, že $x\cdot y = y\cdot x$.
       \item Asociativita násobení: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $(x\cdot y)\cdot z = x\cdot (y\cdot z)$.
     \end{enumerate}
     \item Distributivní zákon: Pro každé tři prvky $x, y, z\in\mathbb{F}$ platí, že $x\cdot (y + z) = x\cdot y + x\cdot z$.
-    \item Test invertibility: Pro každý nenulový prvek $x\in\mathbb{F}$ existuje prvek $x^{-1}\in\mathbb{F}$ takový, že $x\cdot x^{-1} = 1$. Tento prvek se nazývá inverzní prvek.
+    \item Existence inverzního prvku: Pro každý nenulový prvek $x\in\mathbb{F}$ existuje prvek $x^{-1}\in\mathbb{F}$ takový, že $x\cdot x^{-1} = 1$. Tento prvek se nazývá inverzní prvek.
   \end{enumerate}
   
 
@@ -230,7 +230,7 @@ Přirozená čísla, jak jejich název napovídá, jsou čísla, která se nejč
 \end{definitionbox}
 
 \begin{problem}
-  Jsou přirozená čísla těleso?
+  Jsou celá čísla těleso?
 \end{problem}
 
 \begin{solution}
@@ -268,7 +268,7 @@ Přirozená čísla, jak jejich název napovídá, jsou čísla, která se nejč
 Proč ale existují reálná čísla? Proč nestačí racionální čísla? Odpověď je jednoduchá, ale zároveň složitá. Ukažme si příklad, který nám ukáže číslo, které není racionální.
 
 \begin{example}
-  Mějme číslo čtverec o stranách délky $1$. Jaká je délka úhlopříčky čtverce? Pokud si vzpomenete na Pythagorovu větu\footnote{K této větě se ještě dostaneme, takže pokud nevíte o co jde, tak stačí, když mi budete věřit.}, tak délka úhlopříčky je $\sqrt{1^2 + 1^2} = \sqrt{2}$. Nyní si pojďme ukázat, že číslo $\sqrt{2}$ není racionální.
+  Mějme čtverec o stranách délky $1$. Jaká je délka úhlopříčky čtverce? Pokud si vzpomenete na Pythagorovu větu\footnote{K této větě se ještě dostaneme, takže pokud nevíte o co jde, tak stačí, když mi budete věřit.}, tak délka úhlopříčky je $\sqrt{1^2 + 1^2} = \sqrt{2}$. Nyní si pojďme ukázat, že číslo $\sqrt{2}$ není racionální.
 
   \begin{proof}
     Sporem. Předpokládejme, že číslo $\sqrt{2}$ je racionální. To znamená, že existují nesoudělná\footnote{Nemají žádného společného dělitele.} celá čísla $a$ a $b$ taková, že $\sqrt{2} = \frac{a}{b}$. Potom můžeme napsat:
@@ -299,13 +299,13 @@ Když tedy $\sqrt{2}$ není racionální číslo, co tedy je? Těmto číslům s
 
 \subsection{Komplexní čísla}
 \begin{definitionbox}
-  \textbf{Komplexní čísla} jsou množina čísel, která zahrnují reálná čísla, ale také imaginární čísla. Značíme je $\mathbb{C} = \{a + bi\ |\ a, b\in\mathbb{R}\}$, kde $i$ je imaginární jednotka, která je definována jako $i = \sqrt{-1}$
+  \textbf{Komplexní čísla} jsou množina čísel, která zahrnují reálná čísla, ale také imaginární čísla. Značíme je $\mathbb{C} = \{a + bi\ |\ a, b\in\mathbb{R}\}$, kde $i$ je imaginární jednotka, která je definována vztahem $i^2 = -1$ (neformálně se píše $i = \sqrt{-1}$).
 \end{definitionbox}
 
 Proč potřebujeme další číselnou množinu? Odpověď je opět jednoduchá, ale zároveň složitá. Komplexní čísla nám umožňují řešit rovnice, které nemají řešení v reálných číslech. Například rovnice $x^2 + 1 = 0$ nemá řešení v reálných číslech, protože v nich $\sqrt{-1}$ není definované, ale má řešení v komplexních číslech.
 
 % TODO add chapter here
-Ke komplexním číslům se ještě vratíme, protože jsou velice zajímavé a důležité. Nyní si jen pojďme uvědomit množinový vztah mezi výše zmíněnými číslenými množiny.
+Ke komplexním číslům se ještě vrátíme, protože jsou velice zajímavé a důležité. Nyní si jen pojďme uvědomit množinový vztah mezi výše zmíněnými číselnými množinami.
 \begin{equation}
-  \mathbb{N} \in \mathbb{Z} \in \mathbb{Q} \in \mathbb{R} \in \mathbb{C}
+  \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}
 \end{equation}

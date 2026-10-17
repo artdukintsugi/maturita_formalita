@@ -154,17 +154,17 @@ Toto se nám bude hodit při důkazech, kde budeme chtít mluvit o všech prvcí
       \neg (\exists x \in M: P(x)) \Leftrightarrow \forall x \in M: \neg P(x)  
     \end{aligned}
   \end{equation}
-  Je to celkem intuitivní. Pokud něco platí pro všechny, stačí nám najít jedno, kde to neplatí. Pokud neexistuje ani jedno, kde to platí, tak to neplatí pro všechny.
+  Je to celkem intuitivní. Pokud něco platí pro všechny, stačí nám najít jedno, kde to neplatí. Pokud neexistuje ani jedno, kde to platí, tak to pro všechny neplatí, tedy pro každé platí negace.
   \end{definitionbox}
 \end{example}
 
 \section{Odbočka --- Přirozená dedukce}
-Jeden z formálních dokazovacích systémů je přirozená dedukce. Tento systém je založen na pravidlech, které nám umožňují odvodit nové výroky z již známých.\footnote{Přirozený důsledek lze zavést i pro predikátovou logika, ale to je nad rámec tohoto textu.} Většina pravidel je intuitivních a vychází z toho, jak my lidé přirozeně uvažujeme. Tato sekce je uvedena opět jako odbočka, ale doporučuji si ji projít abyste v dalších kapitolách chápali jak se dělají důkazy.
+Jeden z formálních dokazovacích systémů je přirozená dedukce. Tento systém je založen na pravidlech, které nám umožňují odvodit nové výroky z již známých.\footnote{Přirozenou dedukci lze zavést i pro predikátovou logiku, ale to je nad rámec tohoto textu.} Většina pravidel je intuitivních a vychází z toho, jak my lidé přirozeně uvažujeme. Tato sekce je uvedena opět jako odbočka, ale doporučuji si ji projít abyste v dalších kapitolách chápali jak se dělají důkazy.
 
 Je zde pár pravidel, ale ty si uvádět nebudeme. Koukneme se na příklady a vysvětlíme si to u nich.
 
 \begin{definitionbox}
-  Většinou našim cílem bude odvodit nějaký výrok $q$ z předpokladů $p_1, p_2, \ldots, p_n$. To značíme jako $p_1, p_2, \ldots, p_n \vdash q$.  Předpoklad je výrok, který považujeme za pravdivý. Nutno ještě zmínit co znamená pomocný předpoklad. Pro větší přehlednost si kreslíme box kolem našeho `světa' ve kterém se pohybujeme. Pokud si vytvoříme nový box, tak to znamená, že v něm a jen v něm platí ty předpoklady, které jsme si tam napsali. Pokud z něj odejdeme, tak už ty předpoklady neplatí. Může se to zdát zbytečné, ale většinou nám to pomůže důkaz dokončit viz příklad~\ref{ex:1.3.2}.
+  Většinou naším cílem bude odvodit nějaký výrok $q$ z předpokladů $p_1, p_2, \ldots, p_n$. To značíme jako $p_1, p_2, \ldots, p_n \vdash q$.  Předpoklad je výrok, který považujeme za pravdivý. Nutno ještě zmínit co znamená pomocný předpoklad. Pro větší přehlednost si kreslíme box kolem našeho `světa' ve kterém se pohybujeme. Pokud si vytvoříme nový box, tak to znamená, že v něm a jen v něm platí ty předpoklady, které jsme si tam napsali. Pokud z něj odejdeme, tak už ty předpoklady neplatí. Může se to zdát zbytečné, ale většinou nám to pomůže důkaz dokončit viz příklad~\ref{ex:1.3.2}.
 \end{definitionbox}
 
 \begin{example}
@@ -175,7 +175,7 @@ Je zde pár pravidel, ale ty si uvádět nebudeme. Koukneme se na příklady a v
     3. $q$ (eliminace konjunkce z 1) \\
     4. $q \land p$ (zavedení konjunkce z 3 a 2)
   \end{proofbox}
-  Tímto jsme dokázali, že $p \land q \vdash q \land p$. Zde jsme použili pravidla eliminace konjunkce a zavedení konjunkce. Tyto pravidla vychází z toho, že pokud víme, že platí $p \land q$, tak víme, že platí $p$ a $q$ samostatně a naopak. U ostatních pravidel to tak jednoduché nebude.
+  Tímto jsme dokázali, že $p \land q \vdash q \land p$. Zde jsme použili pravidla eliminace konjunkce a zavedení konjunkce. Tato pravidla vychází z toho, že pokud víme, že platí $p \land q$, tak víme, že platí $p$ a $q$ samostatně a naopak. U ostatních pravidel to tak jednoduché nebude.
 \end{example}
 
 Provedeme si nyní nějakou přípravu, která bude působit zbytečně, ale v dalších kapitolách se nám to bude hodit.
@@ -189,10 +189,10 @@ Provedeme si nyní nějakou přípravu, která bude působit zbytečně, ale v d
     \end{proofbox}
     4. $\neg q \Rightarrow \neg p$ (zavedení implikace z 2 a 3)
   \end{proofbox}
-  Tímto jsme dokázali, že $p \Rightarrow q \vdash \neg q \Rightarrow \neg p$. Zde jsme použili pravidlo modus tollens. To říká, že pokud víme, že platí $p \Rightarrow q$ a $\neg q$, tak můžeme odvodit $\neg p$. To vychází přímo z definice implikace. Pokud někdo něco nesplnil, ale slib `vyšel' pozitivně, tak to znamená, že to ani neslíbíl. Zde je krásně vidět, jak nám pomocný předpoklad pomohl. Protože jsme viděli, že když budeme předpokládat $\neg q$, tak můžeme odvodit $\neg p$ a z toho jsme zavedli chtěnou implikaci.
+  Tímto jsme dokázali, že $p \Rightarrow q \vdash \neg q \Rightarrow \neg p$. Zde jsme použili pravidlo modus tollens. To říká, že pokud víme, že platí $p \Rightarrow q$ a $\neg q$, tak můžeme odvodit $\neg p$. To vychází přímo z definice implikace. Pokud někdo něco nesplnil, ale slib `vyšel' pozitivně, tak to znamená, že to ani neslíbil. Zde je krásně vidět, jak nám pomocný předpoklad pomohl. Protože jsme viděli, že když budeme předpokládat $\neg q$, tak můžeme odvodit $\neg p$ a z toho jsme zavedli chtěnou implikaci.
 \end{example}
 
-Pozorného čtenáře jistě napadlo, že místo tohoto postupu si můžeme napsat pravdivostní tabulku a zjistit, že tvrzení platí. To bychom se připravili o všechnu zábavu a pro složitější trvrzení by tabulka rostla exponenciálně.
+Pozorného čtenáře jistě napadlo, že místo tohoto postupu si můžeme napsat pravdivostní tabulku a zjistit, že tvrzení platí. To bychom se připravili o všechnu zábavu a pro složitější tvrzení by tabulka rostla exponenciálně.
 Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.2}
 \begin{center}
   \begin{tabular}{|c|c|c|c|c|c|}
@@ -208,7 +208,7 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
 \end{center}
 
 \begin{example}
-  Podívejme si nyní na důležitý příklad $p\Rightarrow q \dashv\vdash \neg p\lor q$. 
+  Podívejme se nyní na důležitý příklad $p\Rightarrow q \dashv\vdash \neg p\lor q$. 
   \begin{proofbox}
     1. $p \Rightarrow q$ (předpoklad) \\
     2. $p \lor \neg p$ (tertium non datur) 
@@ -221,7 +221,7 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
       6. $\neg p$ (pomocný předpoklad) \\
       7. $\neg p \lor q$ (zavedení disjunkce z 6)
     \end{proofbox}
-    8. $\neg p \lor q$ (elimiace disjunkce z 2, 3--5 a 6--7)
+    8. $\neg p \lor q$ (eliminace disjunkce z 2, 3--5 a 6--7)
   \end{proofbox}
   \begin{proofbox}
     1. $\neg p \lor q$ (předpoklad) 
@@ -235,11 +235,11 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
 \end{example}
 
 \begin{note}
-  Pro zajímavost existují další bežné logické spojky, které se dají odvodit z těchto základních. Máme zde například XOR (exclusive OR) $\oplus$, který říká, že platí buď $p$ nebo $q$, ale ne oba zároveň. Dalšími jsou NAND $\mid$ a NOR $\downarrow$, které jsou negacemi AND a OR.\@ 
+  Pro zajímavost existují další běžné logické spojky, které se dají odvodit z těchto základních. Máme zde například XOR (exclusive OR) $\oplus$, který říká, že platí buď $p$ nebo $q$, ale ne oba zároveň. Dalšími jsou NAND $\mid$ a NOR $\downarrow$, které jsou negacemi AND a OR.\@ 
 \end{note}
 
 \begin{problem}
-  Napište si, jak by vypadali výše zmíněné spojky pomocí základních spojek.
+  Napište si, jak by vypadaly výše zmíněné spojky pomocí základních spojek.
 \end{problem}
 
 \begin{example}
@@ -250,7 +250,7 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
     \item Jestliže pojede Tomáš, pojede i Renata.
     \item Jestliže pojede Simona, pojede Tomáš.
   \end{itemize}
-  Chceme zjistit, zda je pravda trvzení `Petr pojede na výlet'.\footnote{Toto lze také převést na problém sématického důsledku a řešit resoluční metodou. Tímto spojením se zabýva věta o úplnosti, která je též nad rámec této středoškolské knihy.} Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpoklady, které máme a budeme chtít dokázat, že Petr pojede na výlet. Pojmenujeme si výroky $p$: Petr pojede na výlet, $q$: Quido pojede na výlet, $s$: Simona pojede na výlet, $t$: Tomáš pojede na výlet, $r$: Renata pojede na výlet.
+  Chceme zjistit, zda je pravdivé tvrzení `Petr pojede na výlet'.\footnote{Toto lze také převést na problém sémantického důsledku a řešit rezoluční metodou. Tímto spojením se zabývá věta o úplnosti, která je též nad rámec této středoškolské knihy.} Budeme postupovat pomocí přirozené dedukce. Začneme tedy předpoklady, které máme a budeme chtít dokázat, že Petr pojede na výlet. Pojmenujeme si výroky $p$: Petr pojede na výlet, $q$: Quido pojede na výlet, $s$: Simona pojede na výlet, $t$: Tomáš pojede na výlet, $r$: Renata pojede na výlet.
 
   \begin{proofbox}
     1. $p \lor q$ (předpoklad) \\
@@ -259,12 +259,12 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
     4. $s \Rightarrow t$ (předpoklad) 
   \begin{proofbox}
     5. $\neg p$ (pomocný předpoklad) \\
-    6. $q$ (eliminace disjunkce z 1) \\
+    6. $q$ (eliminace disjunkce z 1 a 5) \\
     7. $s \land \neg r$ (modus ponens z 2 a 6) \\
     8. $s$ (eliminace konjunkce z 7) \\
     9. $t$ (modus ponens z 4 a 8) \\
     10. $r$ (modus ponens z 3 a 9) \\
-    11. $\neg r$ (elimace konjunkce z 7) \\
+    11. $\neg r$ (eliminace konjunkce z 7) \\
     12. $\perp$ (eliminace negace z 10 a 11)
   \end{proofbox}
     13. $\lnot\lnot p$ (reductio ad absurdum z 5--12) \\
@@ -273,8 +273,8 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
   Tímto jsme dokázali, že Petr pojede na výlet. Zde jsme použili pravidla eliminace disjunkce, modus ponens a reductio ad absurdum. Pojďme si spolu pravidla vysvětlit. 
   \begin{itemize}
     \item Eliminace disjunkce: Pokud víme, že platí $p \lor q$ a víme, že jedno z nich neplatí, tak můžeme odvodit to druhé. 
-    \item Modus ponens: Pokud víme, že platí $p \Rightarrow q$ a $p$, tak můžeme odvodit $q$. Někdo mi něco slíbil a já vím, že slib byl úspešný, takže to i splnil.
-    \item Reductio ad absurdum: Pokud předpokládáme něco a dokážeme, že z toho vyplývá spor, tak můžeme odvodit, že to, že platí negace našeho předpokladu.
+    \item Modus ponens: Pokud víme, že platí $p \Rightarrow q$ a $p$, tak můžeme odvodit $q$. Někdo mi něco slíbil a já vím, že slib byl úspěšný, takže to i splnil.
+    \item Reductio ad absurdum: Pokud předpokládáme něco a dokážeme, že z toho vyplývá spor, tak můžeme odvodit negaci našeho předpokladu.
   \end{itemize}
 \end{example}
 
@@ -291,7 +291,7 @@ Uvedeme si zde pro představu jak by vypadala tabulka pro příklad~\ref{ex:1.3.
   \begin{proofbox}
     3. $p$ (pomocný předpoklad) \\
     4. $q$ (modus ponens z 1 a 3) \\
-    5. $r$ (modus ponens z 3 a 4)
+    5. $r$ (modus ponens z 2 a 4)
   \end{proofbox}
     6. $p \Rightarrow r$ (zavedení implikace z 3--5)
   \end{proofbox}
@@ -312,7 +312,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
     \end{aligned}
   \end{equation}
 
-  Tyto zákony se dají dokázat pomocí pravdivostní tabulky, ale my si je zde formálně dokážeme. Dají se zobecnit metematickou indukcí (už se brzy dozvíte co to je) na libovolný počet výroků následujícím způsobem:
+  Tyto zákony se dají dokázat pomocí pravdivostní tabulky, ale my si je zde formálně dokážeme. Dají se zobecnit matematickou indukcí (už se brzy dozvíte co to je) na libovolný počet výroků následujícím způsobem:
   \begin{equation}
     \begin{aligned}
       \neg \left(\bigwedge_{i=1}^{n} p_i\right) &\dashv\vdash \bigvee_{i=1}^{n} \neg p_i \\
@@ -344,7 +344,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
       11. $p \land q$ (zavedení konjunkce z 6 a 10) \\
       12. $\perp$ (eliminace negace z 11 a 1)
     \end{proofbox}
-    13. $\neg\neg(\neg p \lor \neg q)$ (reductio ad absurdum z 1--12) \\
+    13. $\neg\neg(\neg p \lor \neg q)$ (reductio ad absurdum z 2--12) \\
     14. $\neg p \lor \neg q$ (eliminace dvojí negace z 13)
   \end{proofbox}
 
@@ -354,7 +354,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
 
     1. $\neg p \lor \neg q$ (předpoklad)
     \begin{proofbox}
-      2. $p \land q$ (pomocný předpoklad)
+      2. $p \land q$ (pomocný předpoklad) \\
       3. $p$ (eliminace konjunkce z 2) \\
       4. $q$ (eliminace konjunkce z 2)
       \begin{proofbox}
@@ -365,7 +365,7 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
         7. $\neg q$ (pomocný předpoklad) \\
         8. $\perp$ (eliminace negace z 4 a 7)
       \end{proofbox}
-      9. $\perp$ (eliminace konjunkce z 6 a 8)
+      9. $\perp$ (eliminace disjunkce z 1, 5--6 a 7--8)
     \end{proofbox}
     10. $\neg(p \land q)$ (reductio ad absurdum z 2--9)
   \end{proofbox}
@@ -374,13 +374,13 @@ Nebudeme vás nadále trápit, ale ještě si ukážeme odkud se berou vzorečky
 
 Mohli bychom pokračovat dál, ale máme tu ještě spoustu dalších zajímavých věcí, které chceme probrat. Pokud vás téma logiky zaujalo, tak si doporučuji přečíst si knihu 
 \bookcitation{Jiří Velebil}{\href{https://math.fel.cvut.cz/en/people/velebil/files/y01mlo/logika.pdf}{Velmi jemný úvod do matematické logiky}}{Praha 2007}
-Chcete-li jít více do hloubky a dozvědět se i více to těch prapodivných boxech, které jsme používali, tak si přečtěte knihu
+Chcete-li jít více do hloubky a dozvědět se i více o těch prapodivných boxech, které jsme používali, tak si přečtěte knihu
 \bookcitation{M. Demlová a B. Pondělíček}{Matematická logika}{skriptum FEL ČVUT, Praha, 1997}
 \section{Důkazy}
 Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali daleko. V této kapitole si ukážeme několik základních typů důkazů, které se v matematice používají. V úvodní kapitole byl zmíněn systém definice-věta-důkaz. Než tedy přejdeme k důkazům, tak si ještě jednou připomeneme co tento systém znamená.
 
 \begin{definitionbox}
-  \textbf{Definice} je vymezení pojmu, ze kterým hodláme pracovat. Definice obsahuje název a charakteristické vlastnosti daného pojmu.
+  \textbf{Definice} je vymezení pojmu, se kterým hodláme pracovat. Definice obsahuje název a charakteristické vlastnosti daného pojmu.
 
   \textbf{Věta} je výrok, který je pravdivý a musí být dokázán. Většinou rozvíjíme nějaký pojem, který jsme si definovali.
 
@@ -446,11 +446,11 @@ Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali da
 \end{problem}
 
 \begin{example} 
-  Představte si, že máte dokázat větu: \textit{Pokud je číslo $n^2$ sudé, tak je i $n$ sudé.} Zde zkusíme použít nepřímý důkaz. Provedeme obměněnou implikaci a dostaneme výrok $\neg p \Rightarrow \neg q$. Tedy pokud je $n$ liché, tak je i $n^2$ liché. Toto jste již udělali ve cvičení~\ref{pr:1.4.4}.
+  Představte si, že máte dokázat větu: \textit{Pokud je číslo $n^2$ sudé, tak je i $n$ sudé.} Zde zkusíme použít nepřímý důkaz. Provedeme obměněnou implikaci a dostaneme výrok $\neg q \Rightarrow \neg p$. Tedy pokud je $n$ liché, tak je i $n^2$ liché. Toto jste již udělali ve cvičení~\ref{pr:1.4.4}.
 \end{example}
 
 \begin{example}
-  Přejděme na důkaz sporem. Oblíbeným příkladem je důkaz iracionality čísla $\sqrt{2}$. Chceme ukázat, že $\sqrt{2}\in\mathbb{Q}$. Provedením negace dostaneme tedy předpoklad, že $\sqrt{2}$ je racionální číslo. To znamená, že existují čísla $p$ a $q$ taková, že $\sqrt{2} = \frac{p}{q}$.\footnote{Definice racionálních čísel.} Dále si můžeme předpokládat, že $p$ a $q$ jsou nesoudělná čísla. To znamená, že nemají žádný společný dělitel. Nyní si můžeme napsat:
+  Přejděme na důkaz sporem. Oblíbeným příkladem je důkaz iracionality čísla $\sqrt{2}$. Chceme ukázat, že $\sqrt{2}\notin\mathbb{Q}$. Provedením negace dostaneme tedy předpoklad, že $\sqrt{2}$ je racionální číslo. To znamená, že existují čísla $p$ a $q$ taková, že $\sqrt{2} = \frac{p}{q}$.\footnote{Definice racionálních čísel.} Dále si můžeme předpokládat, že $p$ a $q$ jsou nesoudělná čísla. To znamená, že nemají žádný společný dělitel. Nyní si můžeme napsat:
   \begin{equation}
     \sqrt{2} = \frac{p}{q} \Rightarrow 2 = \frac{p^2}{q^2} \Rightarrow 2q^2 = p^2.
   \end{equation}
@@ -474,7 +474,7 @@ Důkazy jsou základním nástrojem matematiky a bez nich bychom se nedostali da
 \end{definitionbox}
 
 \begin{example}
-  Ukažme si nyní důkaz matematickou indukcí na příkladu. Mějme následující větu: \textit{Pro každé přirozené číslo $n$ platí, že $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.}\footnote{Zkuste první se zamyslet, proč byt to mohlo platit. Legenda praví, že toto tvrzení objevil slavný matematik Gauss, když byl ještě dítě.}  
+  Ukažme si nyní důkaz matematickou indukcí na příkladu. Mějme následující větu: \textit{Pro každé přirozené číslo $n$ platí, že $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.}\footnote{Zkuste se nejdřív zamyslet, proč by to mohlo platit. Legenda praví, že toto tvrzení objevil slavný matematik Gauss, když byl ještě dítě.}  
 
   \begin{proof}
 
