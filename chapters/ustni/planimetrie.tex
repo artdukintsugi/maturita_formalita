@@ -1,0 +1,411 @@
+\label{kap:planimetrie}
+\mathquote{Geometry is the art of correct reasoning from incorrectly drawn figures.}{George Pólya}
+
+Planimetrie je geometrie v rovině. Je to nejstarší systematicky budovaná část matematiky. Eukleidovy \textit{Základy} ze 3. století před naším letopočtem jsou po Bibli pravděpodobně nejčastěji vydávanou knihou v dějinách a po dva tisíce let se z nich učilo, co je to důkaz. Právě v geometrii se poprvé objevila myšlenka, že z několika málo axiomů lze logicky odvodit všechno ostatní. Tu samou myšlenku jsme viděli u teorie množin v kapitole 2.
+
+\section{Základní pojmy}
+
+\begin{definitionbox}
+  \textbf{Základní útvary}: Bod, přímka a rovina jsou základní pojmy, které nedefinujeme (podobně jako množinu). Značíme body velkými písmeny ($A, B, \ldots$) a přímky malými ($p, q, \ldots$).
+  \begin{itemize}
+    \item \textbf{Polopřímka} $\overrightarrow{AB}$: část přímky začínající v bodě $A$ a obsahující bod $B$.
+    \item \textbf{Úsečka} $AB$: množina bodů přímky $AB$ ležících mezi $A$ a $B$ (včetně nich). Její délku značíme $|AB|$.
+    \item \textbf{Polorovina} $pA$: část roviny ohraničená přímkou $p$ a obsahující bod $A$.
+    \item \textbf{Úhel} $\angle AVB$: část roviny ohraničená dvěma polopřímkami $\overrightarrow{VA}$ a $\overrightarrow{VB}$ se společným počátkem $V$ (vrcholem).
+  \end{itemize}
+
+  \textbf{Vzájemná poloha dvou přímek v rovině}: \textbf{rovnoběžné různé} (žádný společný bod), \textbf{totožné} (všechny body společné), \textbf{různoběžné} (právě jeden společný bod, průsečík). Různoběžky jsou \textbf{kolmé}, pokud svírají pravý úhel.
+\end{definitionbox}
+
+\begin{definitionbox}
+  \textbf{Dvojice úhlů}:
+  \begin{itemize}
+    \item \textbf{Vedlejší úhly} mají společné jedno rameno a další dvě ramena tvoří přímku. Jejich součet je $180^\circ$.
+    \item \textbf{Vrcholové úhly} mají společný vrchol a jejich ramena tvoří dvě přímky. Jsou \textbf{shodné}.
+    \item Pokud dvě \textbf{rovnoběžky} protneme třetí přímkou, jsou \textbf{souhlasné} úhly shodné a \textbf{střídavé} úhly shodné.
+  \end{itemize}
+  Úhel je \textbf{ostrý} ($< 90^\circ$), \textbf{pravý} ($= 90^\circ$), \textbf{tupý} ($> 90^\circ$ a $< 180^\circ$), \textbf{přímý} ($= 180^\circ$).
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[thick] (-1,0) -- (6,0) node[right] {\small $p$};
+    \draw[thick] (-1,2) -- (6,2) node[right] {\small $q$};
+    \draw[thick] (0.5,-0.8) -- (4.3,2.8);
+    \coordinate (A) at (1.35,0);
+    \coordinate (B) at (3.46,2);
+    \draw[colorofwisdom, thick] ($(A)+(0.5,0)$) arc (0:43.5:0.5);
+    \draw[colorofwisdom, thick] ($(B)+(0.5,0)$) arc (0:43.5:0.5);
+    \draw[thick] ($(B)+(-0.5,0)$) arc (180:223.5:0.5);
+    \node[colorofwisdom] at ($(A)+(0.75,0.25)$) {\small $\alpha$};
+    \node[colorofwisdom] at ($(B)+(0.75,0.25)$) {\small $\alpha$};
+    \node at ($(B)+(-0.75,-0.25)$) {\small $\alpha$};
+    \node[below] at (3,-0.9) {\small souhlasné (červeně) a střídavé úhly jsou shodné};
+  \end{tikzpicture}
+\end{center}
+
+\section{Trojúhelník}
+
+\begin{definitionbox}
+  \textbf{Trojúhelník} $ABC$ je útvar určený třemi body, které neleží na jedné přímce. Strany značíme $a = |BC|$, $b = |AC|$, $c = |AB|$ (strana proti vrcholu), úhly $\alpha, \beta, \gamma$ při vrcholech $A, B, C$.
+
+  \vspace{0.2cm}
+
+  \textbf{Věta (o součtu úhlů)}: $\alpha + \beta + \gamma = 180^\circ$.
+
+  \textbf{Trojúhelníková nerovnost}: Součet každých dvou stran je větší než strana třetí: $a + b > c$, $a + c > b$, $b + c > a$.
+
+  \textbf{Vztah stran a úhlů}: Proti větší straně leží větší úhel a naopak.
+\end{definitionbox}
+
+\begin{proof}[(součtu úhlů)]
+  Veďme vrcholem $C$ přímku $p$ rovnoběžnou se stranou $AB$. Přímka $p$ a ramena $CA$, $CB$ tvoří u vrcholu $C$ tři úhly, které dohromady dávají přímý úhel $180^\circ$. Prostřední z nich je $\gamma$. Levý je střídavý s úhlem $\alpha$ (rovnoběžky $p$ a $AB$ protnuté přímkou $AC$), a tedy má velikost $\alpha$. Pravý je ze stejného důvodu roven $\beta$. Tedy $\alpha + \gamma + \beta = 180^\circ$.
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \coordinate (A) at (0,0); \coordinate (B) at (5,0); \coordinate (C) at (1.8,2.6);
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \draw[dashed] (-1,2.6) -- (6,2.6) node[right] {\small $p\parallel AB$};
+    \node[below left] at (A) {$A$}; \node[below right] at (B) {$B$}; \node[above] at ($(C)+(0,0.1)$) {$C$};
+    \draw[colorofwisdom, thick] (0.6,0) arc (0:55.3:0.6); \node[colorofwisdom] at (0.85,0.35) {\small $\alpha$};
+    \draw[thick] (4.4,0) arc (180:140.9:0.6); \node at (4.15,0.25) {\small $\beta$};
+    \draw[colorofwisdom, thick] ($(C)+(-0.6,0)$) arc (180:235.3:0.6); \node[colorofwisdom] at ($(C)+(-0.85,-0.3)$) {\small $\alpha$};
+    \draw[thick] ($(C)+(0.6,0)$) arc (0:-39.1:0.6); \node at ($(C)+(0.9,-0.25)$) {\small $\beta$};
+    \node at ($(C)+(0.1,-0.55)$) {\small $\gamma$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{note}
+  Tento důkaz používá vlastnost rovnoběžek, která stojí na Eukleidově pátém postulátu. Bez něj věta o součtu úhlů neplatí! Na kouli může mít trojúhelník třeba tři pravé úhly. Více v odbočce na konci kapitoly.
+\end{note}
+
+\begin{definitionbox}
+  \textbf{Rozdělení trojúhelníků}:
+  \begin{itemize}
+    \item podle stran: \textbf{různostranný}, \textbf{rovnoramenný} (dvě strany shodné, ramena; třetí je základna; úhly při základně jsou shodné), \textbf{rovnostranný} (všechny strany shodné, všechny úhly $60^\circ$),
+    \item podle úhlů: \textbf{ostroúhlý}, \textbf{pravoúhlý} (strana proti pravému úhlu je \textbf{přepona}, ostatní \textbf{odvěsny}), \textbf{tupoúhlý}.
+  \end{itemize}
+\end{definitionbox}
+
+\subsection{Významné přímky a body trojúhelníku}
+
+\begin{definitionbox}
+  \begin{itemize}
+    \item \textbf{Těžnice} je úsečka spojující vrchol se středem protější strany. Tři těžnice se protínají v \textbf{těžišti} $T$, které dělí každou těžnici v poměru $2:1$ (delší část je u vrcholu).
+    \item \textbf{Výška} je úsečka z vrcholu kolmá na protější stranu (nebo její prodloužení). Přímky, na kterých leží výšky, se protínají v \textbf{ortocentru} $V$.
+    \item \textbf{Osy stran} (přímky kolmé na stranu v jejím středu) se protínají ve středu $S$ \textbf{kružnice opsané}. Bod $S$ má od všech vrcholů stejnou vzdálenost $r$.
+    \item \textbf{Osy úhlů} se protínají ve středu $O$ \textbf{kružnice vepsané}. Bod $O$ má od všech stran stejnou vzdálenost $\rho$.
+    \item \textbf{Střední příčka} spojuje středy dvou stran. Je rovnoběžná se třetí stranou a má poloviční délku.
+  \end{itemize}
+\end{definitionbox}
+
+Proč se osy stran protínají v jednom bodě? Osa úsečky $AB$ je množina bodů, které mají od $A$ a $B$ stejnou vzdálenost. Průsečík os $AB$ a $BC$ má tedy stejnou vzdálenost od $A$ a $B$ a zároveň od $B$ a $C$. Má proto stejnou vzdálenost od $A$ a $C$ a leží i na ose $AC$. Pro osy úhlů je argument stejný, jen se místo vzdálenosti od bodů mluví o vzdálenosti od přímek.
+
+\begin{note}
+  Těžiště $T$, ortocentrum $V$ a střed kružnice opsané $S$ leží v každém trojúhelníku na jedné přímce, a navíc $|VT| = 2|TS|$. Této přímce se říká \textbf{Eulerova přímka}. Euler ji objevil v roce 1765, tedy přes dva tisíce let poté, co si Řekové s trojúhelníky začali hrát. Někdy jsou věci zajímavé i po dvou tisících letech.
+\end{note}
+
+\subsection{Shodnost a podobnost}
+
+\begin{definitionbox}
+  Dva trojúhelníky jsou \textbf{shodné}, pokud mají shodné všechny odpovídající si strany a úhly. Stačí ale ověřit jen některé z nich.
+
+  \textbf{Věty o shodnosti trojúhelníků}:
+  \begin{itemize}
+    \item \textbf{sss}: shodují se ve všech třech stranách,
+    \item \textbf{sus}: shodují se ve dvou stranách a úhlu jimi sevřeném,
+    \item \textbf{usu}: shodují se v jedné straně a dvou úhlech k ní přilehlých,
+    \item \textbf{Ssu}: shodují se ve dvou stranách a úhlu proti \textbf{větší} z nich.
+  \end{itemize}
+
+  Dva trojúhelníky jsou \textbf{podobné}, pokud existuje číslo $k > 0$ (\textbf{koeficient podobnosti}) takové, že strany jednoho jsou $k$-násobkem odpovídajících stran druhého. Podobné trojúhelníky mají shodné odpovídající úhly.
+
+  \textbf{Věty o podobnosti trojúhelníků}:
+  \begin{itemize}
+    \item \textbf{uu}: shodují se ve dvou úhlech,
+    \item \textbf{sus}: shodují se v poměru dvou stran a úhlu jimi sevřeném,
+    \item \textbf{sss}: shodují se v poměrech všech tří stran.
+  \end{itemize}
+  Obvody podobných trojúhelníků jsou v poměru $k$, obsahy v poměru $k^2$.
+\end{definitionbox}
+
+Proč ve větě Ssu musí být úhel proti větší straně? Je to přesně nejednoznačný případ ze sinové věty v kapitole~\ref{kap:goniometrie}. Se dvěma stranami a úhlem proti kratší z nich lze sestrojit dva různé trojúhelníky.
+
+\begin{example}
+  Strom vrhá stín dlouhý $12\ \si{m}$. Ve stejnou chvíli vrhá metrová tyč stín dlouhý $1{,}5\ \si{m}$. Jak vysoký je strom?
+
+  Paprsky slunce jsou rovnoběžné, takže dopadají na strom i na tyč pod stejným úhlem. Strom se stínem a tyč se stínem tvoří pravoúhlé trojúhelníky, které jsou podle věty uu podobné. Tedy $\frac{h}{12} = \frac{1}{1{,}5}$ a $h = 8\ \si{m}$. Podle legendy takhle změřil Thalés z Milétu výšku egyptských pyramid.
+\end{example}
+
+\subsection{Pythagorova a Eukleidovy věty}
+
+\begin{definitionbox}
+  \textbf{Pythagorova věta}: V pravoúhlém trojúhelníku s odvěsnami $a, b$ a přeponou $c$ platí
+  \begin{equation*}
+    a^2 + b^2 = c^2.
+  \end{equation*}
+  Platí i \textbf{obrácená věta}: pokud pro strany trojúhelníku platí $a^2 + b^2 = c^2$, je trojúhelník pravoúhlý s pravým úhlem proti straně $c$.
+
+  \vspace{0.2cm}
+
+  \textbf{Eukleidovy věty}: Nechť $v$ je výška na přeponu, která ji rozdělí na úseky $c_a$ (přilehlý k odvěsně $a$) a $c_b$. Pak
+  \begin{equation*}
+    v^2 = c_a\cdot c_b\quad\text{(o výšce)},\qquad a^2 = c\cdot c_a,\quad b^2 = c\cdot c_b\quad\text{(o odvěsně)}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}[(Pythagorovy věty)]
+  Vezměme čtverec o straně $a + b$ a umístěme do něj čtyři kopie našeho trojúhelníku tak, aby jejich přepony ohraničovaly vnitřní čtverec o straně $c$ (viz obrázek). Obsah velkého čtverce spočítáme dvakrát:
+  \begin{equation*}
+    {(a + b)}^2 = 4\cdot\frac{ab}{2} + c^2\quad\Leftrightarrow\quad a^2 + 2ab + b^2 = 2ab + c^2\quad\Leftrightarrow\quad a^2 + b^2 = c^2.
+  \end{equation*}
+  (To, že vnitřní útvar je opravdu čtverec, plyne z toho, že u každého jeho vrcholu se úhly trojúhelníků $\alpha$ a $\beta = 90^\circ - \alpha$ doplňují na $90^\circ$, takže zbývající úhel je také $90^\circ$.)
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \draw[thick] (0,0) rectangle (5,5);
+    \fill[colorofwisdom!20] (2,0) -- (5,2) -- (3,5) -- (0,3) -- cycle;
+    \draw[thick, colorofwisdom] (2,0) -- (5,2) -- (3,5) -- (0,3) -- cycle;
+    \node[below] at (1,0) {\small $a$}; \node[below] at (3.5,0) {\small $b$};
+    \node[right] at (5,1) {\small $a$}; \node[right] at (5,3.5) {\small $b$};
+    \node[above] at (4,5) {\small $a$}; \node[above] at (1.5,5) {\small $b$};
+    \node[left] at (0,4) {\small $a$}; \node[left] at (0,1.5) {\small $b$};
+    \node[colorofwisdom] at (2.5,2.5) {$c^2$};
+    \node[colorofwisdom] at (3.7,0.75) {\small $c$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(Eukleidových vět)]
+  Výška na přeponu rozdělí trojúhelník na dva menší pravoúhlé trojúhelníky. Oba mají s původním společný jeden ostrý úhel, a tedy jsou mu podle věty uu podobné, a tedy i sobě navzájem. Z podobnosti obou malých trojúhelníků plyne $\frac{v}{c_a} = \frac{c_b}{v}$, tedy $v^2 = c_ac_b$. Z podobnosti malého trojúhelníku u odvěsny $a$ s původním plyne $\frac{c_a}{a} = \frac{a}{c}$, tedy $a^2 = c\cdot c_a$.
+\end{proof}
+
+Pythagorovu větu znali Babyloňané přes tisíc let před Pythagorem. Existuje jí přes 370 různých důkazů, jeden z nich vymyslel i americký prezident James Garfield. Sám Pythagoras byl mimochodem spíš vůdce náboženské sekty než matematik. Jeho následovníci nesměli jíst fazole a podle jedné legendy Pythagoras zemřel, když utíkal před nepřáteli a odmítl proběhnout fazolovým polem.
+
+\begin{example}
+  Výška na přeponu dělí přeponu na úseky $c_a = 9$ a $c_b = 16$. Dopočítejme ostatní. Přepona je $c = 25$, výška $v = \sqrt{9\cdot 16} = 12$, odvěsny $a = \sqrt{25\cdot 9} = 15$ a $b = \sqrt{25\cdot 16} = 20$. Kontrola: $15^2 + 20^2 = 625 = 25^2$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Je trojúhelník se stranami $7$, $24$, $25$ pravoúhlý? A se stranami $6$, $7$, $9$?
+    \item Určete výšku rovnostranného trojúhelníku o straně $a$ a jeho obsah.
+    \item Úhlopříčka obdélníku má délku $10$ a jedna strana $6$. Určete obsah obdélníku.
+    \item V pravoúhlém trojúhelníku je $a = 6$ a $c_a = 3{,}6$. Určete $c$, $b$ a $v$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $49 + 576 = 625$, ano. $36 + 49 = 85\neq 81$, ne. Protože $85 > 81$, je úhel proti nejdelší straně ostrý a trojúhelník je ostroúhlý.
+    \item $v = \sqrt{a^2 - \frac{a^2}{4}} = \frac{\sqrt{3}}{2}a$, $S = \frac{1}{2}a\cdot\frac{\sqrt{3}}{2}a = \frac{\sqrt{3}}{4}a^2$.
+    \item Druhá strana $\sqrt{100 - 36} = 8$, obsah $48$.
+    \item $c = \frac{a^2}{c_a} = 10$, $b = \sqrt{100 - 36} = 8$, $c_b = 6{,}4$, $v = \sqrt{3{,}6\cdot 6{,}4} = 4{,}8$.
+  \end{enumerate}
+\end{solution}
+
+\subsection{Obsah trojúhelníku}
+
+\begin{definitionbox}
+  \begin{equation*}
+    S = \frac{a\cdot v_a}{2} = \frac{1}{2}ab\sin\gamma = \rho\cdot s = \sqrt{s(s - a)(s - b)(s - c)},
+  \end{equation*}
+  kde $s = \frac{a + b + c}{2}$ je poloviční obvod a $\rho$ poloměr kružnice vepsané. Poslední vzorec se nazývá \textbf{Heronův vzorec}.
+\end{definitionbox}
+
+Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojúhelník na tři trojúhelníky s výškou $\rho$ a základnami $a$, $b$, $c$. Jejich obsahy dohromady dávají $\frac{\rho a + \rho b + \rho c}{2} = \rho s$.
+
+\begin{example}
+  Trojúhelník se stranami $13$, $14$, $15$ má $s = 21$ a podle Heronova vzorce
+  \begin{equation*}
+    S = \sqrt{21\cdot 8\cdot 7\cdot 6} = \sqrt{7056} = 84.
+  \end{equation*}
+  Poloměr kružnice vepsané je $\rho = \frac{S}{s} = 4$.
+\end{example}
+
+\section{Mnohoúhelníky}
+
+\begin{definitionbox}
+  \textbf{Konvexní $n$-úhelník} je mnohoúhelník, jehož každý vnitřní úhel je menší než $180^\circ$. \textbf{Úhlopříčka} spojuje dva nesousední vrcholy.
+  \begin{itemize}
+    \item Součet vnitřních úhlů konvexního $n$-úhelníku je $(n - 2)\cdot 180^\circ$.
+    \item Počet úhlopříček je $\frac{n(n - 3)}{2}$.
+    \item \textbf{Pravidelný} $n$-úhelník má všechny strany i úhly shodné. Každý jeho vnitřní úhel má velikost $\frac{(n - 2)\cdot 180^\circ}{n}$. Má kružnici opsanou i vepsanou se společným středem.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{proof}
+  Z jednoho vrcholu vedeme všechny úhlopříčky. Ty rozdělí $n$-úhelník na $n - 2$ trojúhelníků, jejichž úhly dohromady tvoří přesně vnitřní úhly $n$-úhelníku. Součet je tedy $(n - 2)\cdot 180^\circ$.
+
+  Z každého z $n$ vrcholů vede úhlopříčka do $n - 3$ vrcholů (ne do sebe ani do dvou sousedů). To dává $n(n - 3)$, ale každou úhlopříčku jsme započítali dvakrát (z obou konců).
+\end{proof}
+
+\begin{example}
+  Pravidelný šestiúhelník má součet úhlů $720^\circ$, každý úhel $120^\circ$ a $9$ úhlopříček. Hlavní úhlopříčky ho rozdělí na $6$ rovnostranných trojúhelníků, takže pro stranu $a$ je jeho obsah $S = 6\cdot\frac{\sqrt{3}}{4}a^2 = \frac{3\sqrt{3}}{2}a^2$ a poloměr kružnice opsané je $r = a$. Proto mají včelí plástve tvar šestiúhelníků: ze všech pravidelných mnohoúhelníků, kterými lze vydláždit rovinu (trojúhelník, čtverec, šestiúhelník), uzavře šestiúhelník největší plochu při daném obvodu.
+\end{example}
+
+\subsection{Čtyřúhelníky}
+
+\begin{definitionbox}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|l|p{6.4cm}|l|}
+      \hline
+      Čtyřúhelník & Vlastnosti & Obsah \\
+      \hline
+      \textbf{rovnoběžník} & protější strany rovnoběžné a shodné, protější úhly shodné, úhlopříčky se půlí & $S = a\cdot v_a$ \\
+      \textbf{obdélník} & rovnoběžník s pravými úhly, úhlopříčky shodné & $S = ab$ \\
+      \textbf{kosočtverec} & rovnoběžník se shodnými stranami, úhlopříčky na sebe kolmé & $S = \frac{u_1u_2}{2}$ \\
+      \textbf{čtverec} & obdélník i kosočtverec zároveň & $S = a^2 = \frac{u^2}{2}$ \\
+      \textbf{lichoběžník} & právě jedna dvojice rovnoběžných stran (základny $a$, $c$) & $S = \frac{(a + c)v}{2}$ \\
+      \textbf{deltoid} & dvě dvojice shodných sousedních stran, úhlopříčky na sebe kolmé & $S = \frac{u_1u_2}{2}$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{definitionbox}
+
+Čtverec je zároveň obdélník, kosočtverec i rovnoběžník. Obdélník ale obecně čtverec není. Vztahy mezi čtyřúhelníky jsou vlastně inkluze množin: množina čtverců je průnikem množin obdélníků a kosočtverců. Opět se nám vrací kapitola 2.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Kosočtverec má úhlopříčky $6$ a $8$. Určete jeho stranu a obsah.
+    \item Lichoběžník má základny $10$ a $4$ a výšku $5$. Jaký je jeho obsah?
+    \item Rovnoramenný lichoběžník má základny $12$ a $6$ a ramena $5$. Určete výšku a obsah.
+    \item Kolik úhlopříček má osmiúhelník a jaký je součet jeho vnitřních úhlů?
+    \item Jaký pravidelný mnohoúhelník má vnitřní úhel $144^\circ$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Úhlopříčky se půlí a jsou kolmé, strana je přepona trojúhelníku s odvěsnami $3$ a $4$, tedy $5$. Obsah $\frac{6\cdot 8}{2} = 24$.
+    \item $\frac{(10 + 4)\cdot 5}{2} = 35$.
+    \item Rameno je přepona pravoúhlého trojúhelníku s odvěsnou $\frac{12 - 6}{2} = 3$, takže $v = 4$ a $S = \frac{18\cdot 4}{2} = 36$.
+    \item $\frac{8\cdot 5}{2} = 20$ úhlopříček, součet úhlů $1080^\circ$.
+    \item $\frac{(n - 2)180}{n} = 144$, tedy $180n - 360 = 144n$ a $n = 10$. Desetiúhelník.
+  \end{enumerate}
+\end{solution}
+
+\section{Kružnice a kruh}
+
+\begin{definitionbox}
+  \textbf{Kružnice} $k(S, r)$ je množina všech bodů roviny, které mají od středu $S$ vzdálenost $r > 0$. \textbf{Kruh} $K(S, r)$ je množina bodů, které mají od $S$ vzdálenost nejvýše $r$.
+
+  \vspace{0.2cm}
+
+  \textbf{Vzájemná poloha přímky a kružnice} (kde $d$ je vzdálenost středu od přímky):
+  \begin{itemize}
+    \item $d > r$: \textbf{vnější přímka} (žádný společný bod),
+    \item $d = r$: \textbf{tečna} (jeden společný bod, bod dotyku). Tečna je \textbf{kolmá} na poloměr v bodě dotyku.
+    \item $d < r$: \textbf{sečna} (dva společné body). Úsečka mezi nimi je \textbf{tětiva}.
+  \end{itemize}
+
+  \textbf{Obvod a obsah}:
+  \begin{equation*}
+    o = 2\pi r,\qquad S = \pi r^2.
+  \end{equation*}
+  \textbf{Oblouk} příslušný středovému úhlu $\alpha$ (ve stupních) má délku $l = \frac{\pi r\alpha}{180^\circ}$ a \textbf{kruhová výseč} obsah $S_v = \frac{\pi r^2\alpha}{360^\circ}$. V radiánech prostě $l = r\alpha$ a $S_v = \frac{1}{2}r^2\alpha$.
+\end{definitionbox}
+
+Číslo $\pi$ je definováno jako poměr obvodu kružnice k jejímu průměru. Že je tento poměr stejný pro všechny kružnice, plyne z toho, že všechny kružnice jsou si podobné. Číslo $\pi$ je iracionální (dokázal Lambert v roce 1761), takže jeho desetinný rozvoj nikdy nekončí a neopakuje se. Rekord v počítání jeho cifer je dnes přes sto bilionů míst. Pro všechny praktické účely přitom stačí asi čtyřicet: s nimi lze spočítat obvod pozorovatelného vesmíru s přesností na průměr atomu vodíku.
+
+\subsection{Středový a obvodový úhel}
+
+\begin{definitionbox}
+  Nechť $AB$ je tětiva kružnice se středem $S$ a $V$ je bod kružnice, který neleží na oblouku $AB$.
+  \begin{itemize}
+    \item \textbf{Středový úhel} je $\angle ASB$.
+    \item \textbf{Obvodový úhel} je $\angle AVB$.
+  \end{itemize}
+
+  \textbf{Věta (o obvodovém a středovém úhlu)}: Obvodový úhel je polovinou středového úhlu příslušného ke stejnému oblouku. Všechny obvodové úhly nad stejným obloukem jsou tedy shodné.
+
+  \textbf{Thaletova věta}: Pokud je $AB$ průměr kružnice, je každý obvodový úhel nad ním pravý. Neboli: všechny body $V$, pro které je úhel $AVB$ pravý, leží na kružnici s průměrem $AB$ (\textbf{Thaletova kružnice}).
+\end{definitionbox}
+
+\begin{proof}
+  Dokážeme speciální případ, kdy střed $S$ leží na rameni $VB$. Trojúhelník $AVS$ je rovnoramenný ($|SA| = |SV| = r$), takže úhly při jeho základně jsou shodné, oba označme $\varphi$. Úhel $ASB$ je vnějším úhlem trojúhelníku $AVS$ a je roven součtu dvou vnitřních úhlů, které k němu nepřiléhají\footnote{Vedlejší úhel k $\angle ASB$ je třetí úhel trojúhelníku $AVS$, tedy $180^\circ - 2\varphi$. Odtud $|\angle ASB| = 180^\circ - (180^\circ - 2\varphi) = 2\varphi$.}, tedy $2\varphi$. Obvodový úhel je $\varphi$, středový $2\varphi$. Obecný případ dostaneme rozdělením úhlu průměrem jdoucím z $V$ na dva takové speciální případy (a jejich sečtením nebo odečtením).
+
+  Thaletova věta je speciální případ: středový úhel nad průměrem je přímý, tedy $180^\circ$, a obvodový je jeho polovina, $90^\circ$.
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \draw[thick] (0,0) circle (1);
+    \coordinate (S) at (0,0);
+    \coordinate (A) at (-30:1); \coordinate (B) at (210:1); \coordinate (V) at (100:1);
+    \filldraw (S) circle (0.8pt) node[below] {\small $S$};
+    \draw[thick, colorofwisdom] (A) -- (S) -- (B);
+    \draw[thick] (A) -- (V) -- (B);
+    \node[right] at (A) {\small $A$}; \node[left] at (B) {\small $B$}; \node[above] at (V) {\small $V$};
+    \draw[colorofwisdom] ($(S)+(-30:0.25)$) arc (-30:-150:0.25);
+    \node[colorofwisdom] at (0,-0.4) {\small $2\varphi$};
+    \node at ($(V)+(-0.03,-0.33)$) {\small $\varphi$};
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=1.6]
+    \draw[thick] (0,0) circle (1);
+    \coordinate (A) at (-1,0); \coordinate (B) at (1,0); \coordinate (V) at (60:1);
+    \draw[thick, colorofwisdom] (A) -- (B);
+    \draw[thick] (A) -- (V) -- (B);
+    \filldraw (0,0) circle (0.8pt);
+    \node[left] at (A) {\small $A$}; \node[right] at (B) {\small $B$}; \node[above] at (V) {\small $V$};
+    \coordinate (P1) at ($(V)!0.15!(A)$); \coordinate (P2) at ($(V)!0.15!(B)$);
+    \draw (P1) -- ($(P1)+(P2)-(V)$) -- (P2);
+    \node[below] at (0,-1.1) {\small Thaletova kružnice};
+  \end{tikzpicture}
+\end{center}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Kružnice má poloměr $6$. Určete délku oblouku a obsah výseče se středovým úhlem $60^\circ$.
+    \item Bod $P$ má od středu kružnice o poloměru $5$ vzdálenost $13$. Jak dlouhé jsou tečny z bodu $P$ ke kružnici?
+    \item Tětiva kružnice o poloměru $10$ má délku $16$. Jak daleko je od středu?
+    \item Obvodový úhel nad tětivou $AB$ má velikost $35^\circ$. Jaká je velikost středového úhlu? A obvodového úhlu na druhé straně tětivy?
+    \item Kolikrát se zvětší obsah kruhu, když zdvojnásobíme poloměr?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $l = \frac{\pi\cdot 6\cdot 60}{180} = 2\pi$, $S_v = \frac{\pi\cdot 36\cdot 60}{360} = 6\pi$.
+    \item Tečna je kolmá na poloměr, takže tvoří s poloměrem a úsečkou $SP$ pravoúhlý trojúhelník: $t = \sqrt{169 - 25} = 12$.
+    \item Kolmice ze středu na tětivu ji půlí: $d = \sqrt{100 - 64} = 6$.
+    \item Středový úhel $70^\circ$. Obvodové úhly na opačné straně tětivy příslušejí k doplňkovému oblouku se středovým úhlem $290^\circ$, mají tedy velikost $145^\circ = 180^\circ - 35^\circ$. (Odtud mimochodem plyne, že protější úhly čtyřúhelníku vepsaného do kružnice dávají dohromady $180^\circ$.)
+    \item Čtyřikrát. Obsah roste s druhou mocninou, jako u všech podobných útvarů.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Pátý postulát}
+
+Eukleidés postavil celou geometrii na pěti postulátech. První čtyři jsou krátké a samozřejmé (například `všechny pravé úhly jsou si rovny'). Pátý je dlouhý a nepříjemný. V moderní podobě zní: \textit{bodem mimo přímku vede právě jedna rovnoběžka s touto přímkou}. Matematici měli dva tisíce let pocit, že tohle přece musí jít dokázat z ostatních čtyř, a pokoušeli se o to. Nikomu se to nepovedlo.
+
+Maďarský matematik Farkas Bolyai se o důkaz pokoušel celý život. Když zjistil, že se do stejného problému pustil i jeho syn János, napsal mu v roce 1820 dopis:
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \textit{`Pro Boha tě prosím, nech toho. Boj se toho stejně jako smyslných vášní, protože ti to také může vzít všechen čas a připravit tě o zdraví, klid mysli a štěstí v životě. Tahle bezedná tma by mohla pohltit tisíc newtonovských velikánů. Na zemi se nikdy nerozjasní.'}
+  \end{minipage}
+\end{center}
+János neposlechl. Místo důkazu ale objevil, že pátý postulát dokázat nejde, protože existuje úplně jiná, stejně bezesporná geometrie, ve které neplatí: bodem mimo přímku v ní vede nekonečně mnoho rovnoběžek a součet úhlů v trojúhelníku je menší než $180^\circ$. Tutéž geometrii nezávisle objevil i Rus Nikolaj Lobačevskij. Když otec poslal synovu práci svému příteli Gaussovi, ten odpověděl, že ji nemůže pochválit, protože by tím chválil sám sebe. Na totéž prý přišel už před lety, jen se to bál zveřejnit. János se z toho nikdy nevzpamatoval a už nikdy nic dalšího nepublikoval.
+
+Takovým geometriím říkáme \textbf{neeukleidovské}. Na povrchu koule (kde `přímkami' jsou hlavní kružnice, jako rovník) žádné rovnoběžky neexistují a součet úhlů v trojúhelníku je větší než $180^\circ$. Trojúhelník se dvěma vrcholy na rovníku a jedním na severním pólu může mít všechny tři úhly pravé. Einsteinova obecná teorie relativity pak ukázala, že náš vesmír sám není eukleidovský: hmota zakřivuje prostor. GPS ve vašem telefonu musí tohle zakřivení započítávat, jinak by se každý den mýlila o několik kilometrů.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jaké jsou vzájemné polohy dvou přímek v rovině? Co jsou vedlejší, vrcholové, souhlasné a střídavé úhly?
+    \item Dokažte větu o součtu úhlů v trojúhelníku. Na kterém předpokladu stojí?
+    \item Co je těžnice, výška, osa strany a osa úhlu? Jaké významné body trojúhelníku znáte a proč se příslušné přímky protínají v jednom bodě?
+    \item Vyslovte věty o shodnosti a podobnosti trojúhelníků. Proč musí být ve větě Ssu úhel proti větší straně?
+    \item Vyslovte a dokažte Pythagorovu větu a Eukleidovy věty. Platí obrácená Pythagorova věta?
+    \item Jaké znáte vzorce pro obsah trojúhelníku?
+    \item Odvoďte vzorec pro součet vnitřních úhlů a počet úhlopříček konvexního $n$-úhelníku.
+    \item Popište druhy čtyřúhelníků a jejich vlastnosti. Jak se počítají jejich obsahy?
+    \item Jaké jsou vzájemné polohy přímky a kružnice? Jakou vlastnost má tečna?
+    \item Vyslovte a dokažte větu o obvodovém a středovém úhlu. Jak z ní plyne Thaletova věta?
+    \item Jak se počítá délka oblouku a obsah kruhové výseče?
+  \end{enumerate}
+\end{problem}
