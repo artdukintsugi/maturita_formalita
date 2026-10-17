@@ -3,7 +3,7 @@
 
 Tři poslední kapitoly této knihy jsou o \textbf{matematické analýze}, tedy o limitách, derivacích a integrálech. Je to matematika, kterou v 17. století vymysleli Newton a Leibniz, aby mohli popsat pohyb, a která od té doby pohání skoro celou fyziku a techniku. Všechno začíná limitou. Limitu posloupnosti už známe z kapitoly~\ref{kap:posloupnosti}. Teď se podíváme na limitu funkce: co se děje s hodnotami $f(x)$, když se $x$ blíží k nějakému bodu?
 
-\section{Limita funkce}
+\section{Limita funkce}\label{sec:limita-funkce}
 
 Podívejme se na funkci
 \begin{equation*}
@@ -116,7 +116,7 @@ Obrázkově: soupeř si zvolí vodorovný pás kolem $L$ o šířce $\varepsilon
 \end{center}
 Představte si dva poutníky, kteří jdou po grafu k bodu $0$, jeden zprava a druhý zleva. Limita existuje jen tehdy, když oba dojdou do stejné výšky. Tady jeden skončí ve výšce $1$ a druhý ve výšce $-1$.
 
-\section{Počítání limit}
+\section{Počítání limit}\label{sec:pocitani-limit}
 
 \begin{definitionbox}
   \textbf{Pravidla}: Pokud $\lim_{x\to a} f(x) = A$ a $\lim_{x\to a} g(x) = B$ (konečné), pak
@@ -142,7 +142,7 @@ Představte si dva poutníky, kteří jdou po grafu k bodu $0$, jeden zprava a d
   \end{align*}
 \end{example}
 
-\subsection{Limita $\frac{\sin x}{x}$}
+\subsection{Limita $\frac{\sin x}{x}$}\label{sec:limita-sinx-x}
 
 \begin{definitionbox}
   \textbf{Věta}:
@@ -237,7 +237,7 @@ Na obrázku je vidět, jak to funguje: červená křivka $\frac{\sin x}{x}$ je n
   \end{enumerate}
 \end{solution}
 
-\section{Spojitost}
+\section{Spojitost}\label{sec:spojitost}
 
 \begin{definitionbox}
   Funkce $f$ je \textbf{spojitá v bodě} $a$, pokud
@@ -315,7 +315,7 @@ Tužka v prvním případě musí přeskočit jediný chybějící (nebo `přem�
   Parametr $a$ je směrnice pravé části grafu. Přímka $y = ax + 2$ prochází pro každé $a$ bodem $[0, 2]$ a my ji natáčíme, dokud se v $x = 1$ nenapojí na parabolu.
 \end{example}
 
-\subsection{Věty o spojitých funkcích}
+\subsection{Věty o spojitých funkcích}\label{sec:vety-spojite}
 
 \begin{definitionbox}
   \textbf{Weierstrassova věta}: Funkce spojitá na \textbf{uzavřeném} intervalu $[a, b]$ je na něm omezená a nabývá na něm svého maxima i minima.
@@ -327,7 +327,7 @@ Obě věty zní samozřejmě a obě potřebují předpoklady, které nejsou samo
 
 Bolzanova věta má velice praktický důsledek: dá se podle ní hledat kořen rovnice, i když ji neumíme vyřešit. Této metodě se říká \textbf{metoda půlení intervalu} (bisekce).
 
-\begin{example}
+\begin{example}\label{ex:puleni-intervalu}
   Rovnice $x^3 + x - 1 = 0$ nemá celočíselný kořen a vzorec pro kubickou rovnici nechceme. Ale $f(0) = -1 < 0$ a $f(1) = 1 > 0$, takže podle Bolzanovy věty má kořen v $(0, 1)$. Půlíme:
   \begin{itemize}
     \item $f(0{,}5) = -0{,}375 < 0$, kořen je v $(0{,}5; 1)$,

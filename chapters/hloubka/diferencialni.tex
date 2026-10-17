@@ -1,0 +1,578 @@
+\label{kap:diferencialni}
+\mathquote{Je užitečné řešit diferenciální rovnice.}{Isaac Newton, šifrovaný anagram z roku 1676 ve volném překladu V.\,I. Arnolda}
+
+Fyzikální zákony skoro nikdy neříkají, \textit{kde} něco bude. Říkají, \textit{jak rychle se to mění}. Newtonův zákon dává zrychlení, zákon ochlazování rychlost poklesu teploty, populace roste tím rychleji, čím je větší. Rovnici, ve které vystupuje neznámá funkce spolu se svými derivacemi, říkáme \textbf{diferenciální rovnice}. Derivace z kapitoly~\ref{kap:derivace} a integrály z kapitoly~\ref{kap:integraly} jsou slovíčka, diferenciální rovnice jsou věty, kterými mluví příroda. V této kapitole půjdeme od nejjednodušších rovnic přes kmitání, dravce a kořist a chaos až k parciálním rovnicím pro teplo a vlny, kde se nám vrátí Fourierovy řady z kapitoly~\ref{kap:rady}.
+
+\section{Co je diferenciální rovnice}
+
+\begin{definitionbox}
+  \textbf{Obyčejná diferenciální rovnice} (ODR) prvního řádu je rovnice tvaru
+  \begin{equation*}
+    y' = f(x, y),
+  \end{equation*}
+  kde $y = y(x)$ je neznámá funkce. \textbf{Řešením} je každá funkce $y$, která na nějakém intervalu splňuje $y'(x) = f(x, y(x))$. \textbf{Počáteční podmínka} $y(x_0) = y_0$ vybírá z mnoha řešení jedno. \textbf{Řád} rovnice je řád nejvyšší derivace, která se v ní vyskytuje.
+\end{definitionbox}
+
+Důležitý posun v myšlení: řešením není číslo, ale \textit{funkce}. Rovnice $y' = 2x$ má řešení $y = x^2 + C$ pro libovolnou konstantu $C$. Je to vlastně hledání primitivní funkce. Celá jedna nekonečná rodina parabol, posunutých nahoru a dolů. Teprve podmínka, třeba $y(0) = 3$, vybere jednu z nich: $y = x^2 + 3$.
+
+\begin{example}
+  Ověřme, že $y = \mathrm{e}^{-x} + x - 1$ řeší rovnici $y' = x - y$. Vlevo: $y' = -\mathrm{e}^{-x} + 1$. Vpravo: $x - (\mathrm{e}^{-x} + x - 1) = 1 - \mathrm{e}^{-x}$. Sedí to. Ověřit řešení je vždycky snadné, najít ho je umění.
+\end{example}
+
+\subsection{Směrové pole}
+
+Rovnice $y' = f(x, y)$ má krásný geometrický význam. V každém bodě $[x, y]$ roviny nám říká, jaký \textit{sklon} musí mít graf řešení, které tímto bodem prochází. Nakreslíme do mřížky bodů krátké úsečky se sklonem $f(x, y)$ a dostaneme \textbf{směrové pole}. Řešení jsou pak křivky, které se v každém bodě `poslušně' drží směru úseček, jako stébla trávy unášená proudem.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.95]
+    \foreach \x in {-3,-2.5,...,3} \foreach \y in {-3,-2.5,...,3} {
+      \pgfmathsetmacro{\s}{\x-\y}
+      \pgfmathsetmacro{\d}{0.17/sqrt(1+\s*\s)}
+      \draw[gray] ({\x-\d},{\y-\d*\s}) -- ({\x+\d},{\y+\d*\s});
+    }
+    \begin{scope}
+      \clip (-3.2,-3.2) rectangle (3.2,3.2);
+      \foreach \C in {-2,1,3} {
+        \draw[thick, colorofwisdom, domain=-3.2:3.2, samples=80] plot (\x, {\x-1+\C*exp(-\x)});
+      }
+      \draw[very thick, colorofwisdom!50] (-3.2,-4.2) -- (3.2,2.2);
+    \end{scope}
+    \foreach \y in {-3,0,2} \fill (0,\y) circle (2pt);
+    \fill (0,-1) circle (2pt);
+    \draw[->] (-3.4,0) -- (3.5,0) node[right] {\small $x$};
+    \draw[->] (0,-3.4) -- (0,3.5) node[above] {\small $y$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt] at (2.3,0.8) {$y = x - 1$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je směrové pole rovnice $y' = x - y$ a čtyři řešení s počátečními podmínkami $y(0) = -3$, $-1$, $0$, $2$. Obecné řešení je $y = x - 1 + C\mathrm{e}^{-x}$ (příklad výše byl případ $C = 1$). Všechna řešení se pro rostoucí $x$ přimykají k přímce $y = x - 1$, protože člen $C\mathrm{e}^{-x}$ zmizí. Tohle se dá vyčíst z obrázku dřív, než cokoli spočítáme: nad přímkou $y = x - 1$ mají úsečky menší sklon než přímka, pod ní větší, takže řešení jsou k přímce tlačena z obou stran.
+
+\section{Separace proměnných}
+
+Nejjednodušší rovnice, které umíme vyřešit `ručně', jsou ty, ve kterých jde pravou stranu rozdělit na součin části s $x$ a části s $y$.
+
+\begin{definitionbox}
+  \textbf{Rovnice se separovanými proměnnými} $y' = g(x)\,h(y)$ se řeší takto: pro $h(y)\neq 0$ přepíšeme $\frac{\mathrm{d}y}{\mathrm{d}x} = g(x)h(y)$ na
+  \begin{equation*}
+    \int\frac{\mathrm{d}y}{h(y)} = \int g(x)\,\mathrm{d}x
+  \end{equation*}
+  a obě strany zintegrujeme. Body, kde $h(y_0) = 0$, dávají navíc \textbf{konstantní řešení} $y = y_0$.
+\end{definitionbox}
+
+`Násobit $\mathrm{d}x$' vypadá jako podvod, ale je to jen zkratka za substituci. Pokud $y(x)$ řeší rovnici, je $\frac{y'(x)}{h(y(x))} = g(x)$, a integrujeme-li obě strany podle $x$, vlevo substitucí $y = y(x)$ vyjde přesně $\int\frac{\mathrm{d}y}{h(y)}$.
+
+\begin{example}[ (růst a rozpad)]
+  Rovnice $y' = ky$ říká: \textit{rychlost změny je úměrná množství}. Separace dá $\int\frac{\mathrm{d}y}{y} = \int k\,\mathrm{d}x$, tedy $\ln|y| = kx + c$ a
+  \begin{equation*}
+    y = y_0\,\mathrm{e}^{kx}.
+  \end{equation*}
+  Pro $k > 0$ je to exponenciální růst bakterií, pro $k < 0$ radioaktivní rozpad z kapitoly~\ref{kap:exponencialni}. Poločas rozpadu je $T = \frac{\ln 2}{|k|}$. Teď konečně vidíme, \textit{proč} se v přírodě objevuje právě exponenciála: je to jediná funkce, která je sama sobě (až na konstantu) derivací.
+\end{example}
+
+\begin{example}[ (Newtonův zákon ochlazování)]
+  Hrnek kávy o teplotě $T$ v místnosti s teplotou $T_\mathrm{o} = 20\,^\circ$C chladne tím rychleji, čím větší je rozdíl teplot:
+  \begin{equation*}
+    T' = -k(T - T_\mathrm{o}).
+  \end{equation*}
+  Substituce $u = T - T_\mathrm{o}$ dá $u' = -ku$, takže $T(t) = T_\mathrm{o} + (T_0 - T_\mathrm{o})\,\mathrm{e}^{-kt}$. Káva má na začátku $90\,^\circ$C a po $10$ minutách $60\,^\circ$C. Pak $70\mathrm{e}^{-10k} = 40$, tedy $k = \frac{1}{10}\ln\frac{7}{4}\approx 0{,}056\ \mathrm{min}^{-1}$. Pitných $40\,^\circ$C bude mít v čase $t = \frac{\ln 3{,}5}{k}\approx 22{,}4$ minuty.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.17cm, y=0.042cm]
+    \draw[dashed, gray] (0,20) -- (62,20) node[right, font=\scriptsize] {$T_\mathrm{o} = 20$};
+    \draw[very thick, colorofwisdom, domain=0:60, samples=80] plot (\x, {20+70*exp(-0.05596*\x)});
+    \draw[dashed] (10,0) -- (10,60) -- (0,60);
+    \draw[dashed] (22.39,0) -- (22.39,40) -- (0,40);
+    \fill (10,60) circle (1.5pt) (22.39,40) circle (1.5pt) (0,90) circle (1.5pt);
+    \draw[->] (0,0) -- (64,0) node[right] {\small $t$ [min]};
+    \draw[->] (0,0) -- (0,100) node[above] {\small $T$ [$^\circ$C]};
+    \foreach \t in {10,20,30,40,50,60} \draw (\t,1.5) -- (\t,-1.5) node[below, font=\scriptsize] {$\t$};
+    \foreach \T in {20,40,60,90} \node[left, font=\scriptsize] at (0,\T) {$\T$};
+    \node[font=\scriptsize, anchor=west] at (24,47) {pitná káva po $22{,}4$ min};
+  \end{tikzpicture}
+\end{center}
+
+Všimněte si, že káva nikdy nedosáhne přesně teploty místnosti. Rozdíl teplot se každých $\frac{\ln 2}{k}\approx 12{,}4$ minuty zmenší na polovinu, jako by to byl radioaktivní rozpad.
+
+\subsection{Logistická rovnice}
+
+Exponenciální růst nemůže trvat věčně. Bakterie se v Petriho misce nevejdou do celého vesmíru. Belgický matematik Pierre-François Verhulst proto v roce 1838 navrhl, aby rychlost růstu klesala, když se populace $P$ blíží \textbf{kapacitě prostředí} $K$:
+\begin{equation*}
+  P' = rP\left(1 - \frac{P}{K}\right).
+\end{equation*}
+Pro malé $P$ je závorka skoro $1$ a růst je exponenciální. Pro $P$ blízké $K$ je závorka skoro $0$ a růst se zastaví. Konstantní řešení jsou $P = 0$ (žádná populace) a $P = K$ (nasycení).
+
+\begin{proof}[(řešení logistické rovnice)]
+  Separujeme a rozložíme na parciální zlomky, $\frac{K}{P(K - P)} = \frac{1}{P} + \frac{1}{K - P}$:
+  \begin{equation*}
+    \int\left(\frac{1}{P} + \frac{1}{K - P}\right)\mathrm{d}P = \int r\,\mathrm{d}t\quad\Longrightarrow\quad\ln\left|\frac{P}{K - P}\right| = rt + c\quad\Longrightarrow\quad\frac{P}{K - P} = A\,\mathrm{e}^{rt}.
+  \end{equation*}
+  Z podmínky $P(0) = P_0$ je $A = \frac{P_0}{K - P_0}$. Vyjádříme $P$:
+  \begin{equation*}
+    P(t) = \frac{K}{1 + \frac{K - P_0}{P_0}\,\mathrm{e}^{-rt}}.
+  \end{equation*}
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=0.3cm]
+    \draw[dashed, gray] (0,10) -- (10.3,10) node[right, font=\scriptsize] {$K$};
+    \draw[dotted, gray] (0,5) -- (2.944,5) -- (2.944,0) node[below, font=\scriptsize] {$\ln 19$};
+    \begin{scope}
+      \clip (0,0) rectangle (10.3,15.5);
+      \draw[thick, gray, dashed, domain=0:3.5, samples=40] plot (\x, {0.5*exp(\x)});
+    \end{scope}
+    \draw[very thick, colorofwisdom, domain=0:10, samples=80] plot (\x, {10/(1+19*exp(-\x))});
+    \draw[thick, colorofwisdom!60, domain=0:10, samples=80] plot (\x, {10/(1+4*exp(-\x))});
+    \draw[thick, colorofwisdom!60, domain=0:10, samples=80] plot (\x, {10/(1-exp(-\x)/3)});
+    \fill (2.944,5) circle (2pt);
+    \draw[->] (0,0) -- (10.6,0) node[right] {\small $t$};
+    \draw[->] (0,0) -- (0,16) node[above] {\small $P$};
+    \node[font=\scriptsize, gray, anchor=west] at (2.9,14.5) {$0{,}5\,\mathrm{e}^{t}$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt, anchor=west] at (3.2,4.2) {inflexní bod $P = \frac{K}{2}$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je $K = 10$, $r = 1$ a počáteční hodnoty $0{,}5$, $2$ a $15$. Tmavá křivka je slavná \textbf{esovitá (sigmoidní) křivka}: nejdřív roste skoro jako exponenciála (čárkovaně), v polovině kapacity má inflexní bod, kde roste nejrychleji, a pak se zpomaluje. Populace, která začne nad kapacitou, klesá dolů ke $K$. Esovitá křivka popisuje šíření nových technologií, růst nádoru i učení neuronových sítí (tam se jí říká \textit{sigmoida}).
+
+\section{Lineární rovnice prvního řádu}
+
+\begin{definitionbox}
+  \textbf{Lineární rovnice prvního řádu} má tvar $y' + p(x)y = q(x)$. Řeší se \textbf{integračním faktorem} $\mu(x) = \mathrm{e}^{\int p(x)\,\mathrm{d}x}$: po vynásobení rovnice číslem $\mu$ je levá strana derivací součinu,
+  \begin{equation*}
+    (\mu y)' = \mu y' + \mu p y = \mu q,\qquad\text{tedy}\qquad y = \frac{1}{\mu(x)}\left(\int\mu(x)q(x)\,\mathrm{d}x + C\right).
+  \end{equation*}
+\end{definitionbox}
+
+Trik spočívá v tom, že $\mu' = p\mu$. Ze vzorce pro derivaci součinu pak `vypadne' přesně to, co máme na levé straně. Rovnice $y' = x - y$ ze směrového pole je lineární s $p = 1$, $q = x$. Integrační faktor je $\mathrm{e}^x$, $(\mathrm{e}^xy)' = x\mathrm{e}^x$ a per partes $\mathrm{e}^xy = (x - 1)\mathrm{e}^x + C$, tedy $y = x - 1 + C\mathrm{e}^{-x}$, jak jsme slíbili.
+
+\begin{example}[ (nabíjení kondenzátoru)]
+  Kondenzátor o kapacitě $C$ nabíjíme přes rezistor $R$ ze zdroje o napětí $U_0$. Proud je $I = CU'$, napětí na rezistoru je $RI$, a podle Kirchhoffova zákona $RCU' + U = U_0$. Označme $\tau = RC$. Rovnice $U' + \frac{1}{\tau}U = \frac{U_0}{\tau}$ má integrační faktor $\mathrm{e}^{t/\tau}$ a s podmínkou $U(0) = 0$
+  \begin{equation*}
+    U(t) = U_0\left(1 - \mathrm{e}^{-t/\tau}\right).
+  \end{equation*}
+  Za čas $\tau$ (\textbf{časovou konstantu}) se kondenzátor nabije na $1 - \mathrm{e}^{-1}\approx 63\,\%$, za $5\tau$ na víc než $99\,\%$. Pro $R = 10\ \mathrm{k}\Omega$ a $C = 100\ \mu\mathrm{F}$ je $\tau = 1$ s. Na tomto principu stojí jednoduché časovače v elektronice.
+\end{example}
+
+\begin{problem}
+  Nádrž obsahuje $100$ litrů čisté vody. Přitéká do ní $5$ litrů za minutu solanky s $0{,}2$ kg soli na litr, a stejně rychle odtéká dobře promíchaná směs. Kolik soli je v nádrži po čase $t$? Kolik jí tam bude po dlouhé době?
+\end{problem}
+
+\begin{solution}
+  Přitéká $5\cdot 0{,}2 = 1$ kg soli za minutu, odtéká $5\cdot\frac{m}{100} = \frac{m}{20}$ kg za minutu. Tedy $m' = 1 - \frac{m}{20}$, $m(0) = 0$, a stejně jako u kondenzátoru $m(t) = 20\left(1 - \mathrm{e}^{-t/20}\right)$. Po dlouhé době $20$ kg, tedy přesně tolik, aby koncentrace v nádrži byla stejná jako v přítoku.
+\end{solution}
+
+\section{Eulerova metoda: když to nejde ručně}
+
+Většinu diferenciálních rovnic \textit{nelze} vyřešit vzorcem. Počítač ale umí následovat směrové pole po malých krocích. To je \textbf{Eulerova metoda}: z bodu $[x_n, y_n]$ uděláme krok délky $h$ po tečně,
+\begin{equation*}
+  x_{n+1} = x_n + h,\qquad y_{n+1} = y_n + h\,f(x_n, y_n).
+\end{equation*}
+Místo hladké křivky dostaneme lomenou čáru. V každém kroku se trochu odchýlíme, protože tečna se od křivky vzdaluje, a chyby se sčítají.
+
+\begin{center}
+  \begin{tikzpicture}[x=4cm, y=0.5cm]
+    \draw[very thick, domain=0:2.05, samples=60] plot (\x, {exp(\x)});
+    \draw[thick, colorofwisdom] (0,1) -- (0.5,1.5) -- (1,2.25) -- (1.5,3.375) -- (2,5.0625);
+    \foreach \p in {(0,1),(0.5,1.5),(1,2.25),(1.5,3.375),(2,5.0625)} \fill[colorofwisdom] \p circle (1.5pt);
+    \draw[thick, colorofwisdom!50, dashed] (0,1) -- (0.25,1.25) -- (0.5,1.5625) -- (0.75,1.9531) -- (1,2.4414) -- (1.25,3.0518) -- (1.5,3.8147) -- (1.75,4.7684) -- (2,5.9605);
+    \draw[->] (0,0) -- (2.25,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,8) node[above] {\small $y$};
+    \foreach \x/\l in {0.5/{0{,}5},1/1,1.5/{1{,}5},2/2} \draw (\x,0.12) -- (\x,-0.12) node[below, font=\scriptsize] {$\l$};
+    \node[font=\scriptsize, anchor=west] at (2.03,7.39) {$\mathrm{e}^2\approx 7{,}39$};
+    \node[font=\scriptsize, anchor=west, colorofwisdom!60] at (2.03,5.96) {$h = 0{,}25$: $5{,}96$};
+    \node[font=\scriptsize, anchor=west, colorofwisdom] at (2.03,5.06) {$h = 0{,}5$: $5{,}06$};
+    \node[font=\scriptsize] at (0.5,6) {$y' = y$, $y(0) = 1$};
+  \end{tikzpicture}
+\end{center}
+
+Pro rovnici $y' = y$ je krok $y_{n+1} = y_n + hy_n = (1 + h)y_n$, takže po $n$ krocích délky $h = \frac{x}{n}$ máme ${\left(1 + \frac{x}{n}\right)}^n$. Pro $n\to\infty$ to jde k $\mathrm{e}^x$, což je známá limita z kapitoly~\ref{kap:exponencialni}. Chyba v bodě $x = 2$:
+
+\begin{center}
+  \begin{tabular}{c|cccc}
+    krok $h$ & $0{,}5$ & $0{,}25$ & $0{,}1$ & $0{,}01$\\\hline
+    $y(2)$ & $5{,}063$ & $5{,}960$ & $6{,}727$ & $7{,}316$\\
+    chyba & $2{,}33$ & $1{,}43$ & $0{,}66$ & $0{,}07$
+  \end{tabular}
+\end{center}
+
+Desetkrát menší krok dá zhruba desetkrát menší chybu. Eulerova metoda je \textbf{prvního řádu}: chyba je úměrná $h$. Proč? V jednom kroku uděláme chybu velikosti zhruba $\frac{1}{2}y''h^2$ (Taylorův rozvoj z kapitoly~\ref{kap:rady}: tečna zanedbává kvadratický člen). Kroků je $\frac{x}{h}$, dohromady tedy chyba úměrná $h$. Lepší metody, jako slavná \textbf{metoda Runge--Kutta čtvrtého řádu}, se v každém kroku `podívají' na sklon na několika místech a mají chybu úměrnou $h^4$. Polovina kroku pak znamená šestnáctkrát menší chybu. Tak počítají fyzikální enginy her, předpovědi počasí i dráhy sond. Obrázky dravců, kořisti a chaosu dále v této kapitole jsou spočítané právě metodou Runge--Kutta.
+
+\section{Odbočka --- Existence a jednoznačnost}
+
+Má každá rozumná rovnice $y' = f(x, y)$, $y(x_0) = y_0$ řešení? A je jediné? Překvapivě to není samozřejmé.
+
+\begin{example}
+  Rovnice $y' = 2\sqrt{y}$ s podmínkou $y(0) = 0$ má řešení $y = 0$. Ale také $y = x^2$ pro $x\geq 0$, protože $(x^2)' = 2x = 2\sqrt{x^2}$. A dokonce celou rodinu: pro libovolné $c\geq 0$ je řešením funkce, která je až do bodu $c$ nulová a pak pokračuje jako ${(x - c)}^2$.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.6cm, y=0.55cm]
+    \draw[very thick, gray] (0,0) -- (4.2,0);
+    \foreach \c/\col in {0/colorofwisdom, 1/colorofwisdom!70, 2/colorofwisdom!45} {
+      \draw[very thick, \col, domain=\c:{\c+2.4}, samples=40] plot (\x, {(\x-\c)*(\x-\c)});
+      \fill[\col] (\c,0) circle (2pt);
+    }
+    \draw[->] (-0.2,0) -- (4.4,0) node[right] {\small $x$};
+    \draw[->] (0,-0.3) -- (0,6.3) node[above] {\small $y$};
+    \foreach \c in {1,2} \node[below, font=\scriptsize] at (\c,0) {$\c$};
+    \node[font=\scriptsize, anchor=west] at (2.5,1.5) {řešení `čeká' a pak se rozjede};
+  \end{tikzpicture}
+\end{center}
+
+Fyzikálně je to absurdní, jako by kulička ležela na vrcholu kopce a pak se v náhodný okamžik sama rozjela. Problém je v tom, že $\sqrt{y}$ má v nule nekonečnou derivaci. Pravá strana se mění `příliš divoce'.
+
+\begin{definitionbox}
+  \textbf{Picardova--Lindelöfova věta}: Nechť je $f$ spojitá v okolí bodu $[x_0, y_0]$ a \textbf{lipschitzovská} v proměnné $y$, tj. existuje $L$ takové, že $|f(x, y_1) - f(x, y_2)|\leq L|y_1 - y_2|$. Pak má úloha $y' = f(x, y)$, $y(x_0) = y_0$ v nějakém okolí bodu $x_0$ právě jedno řešení.
+\end{definitionbox}
+
+Lipschitzovská podmínka platí například vždy, když má $f$ omezenou parciální derivaci podle $y$ (kapitola~\ref{kap:vice-promennych}). Pro všechny `slušné' rovnice z fyziky tedy platí, že přítomnost jednoznačně určuje budoucnost. Na tom stojí celý newtonovský determinismus. Geometricky: dvě různá řešení se nikdy nemohou protnout, protože v průsečíku by úloha měla dvě řešení.
+
+Důkaz je konstruktivní a stojí za to vidět jeho myšlenku. Rovnici s podmínkou zintegrujeme na \textbf{integrální rovnici} $y(x) = y_0 + \int_{x_0}^{x}f(s, y(s))\,\mathrm{d}s$ a řešení hledáme \textbf{Picardovými iteracemi}: začneme konstantou $y_0$ a opakovaně ji dosazujeme do pravé strany. Pro $y' = y$, $y(0) = 1$:
+\begin{equation*}
+  y_0 = 1,\quad y_1 = 1 + \int_0^x1\,\mathrm{d}s = 1 + x,\quad y_2 = 1 + \int_0^x(1 + s)\,\mathrm{d}s = 1 + x + \frac{x^2}{2},\quad\dots
+\end{equation*}
+Iterace postupně vyrábějí Taylorův polynom funkce $\mathrm{e}^x$! Lipschitzova konstanta zaručí, že se každou iterací rozdíl dvou funkcí zmenší (pro dost malý interval) aspoň na polovinu, takže iterace konvergují, stejně jako geometrická řada.
+
+\section{Rovnice druhého řádu: kmitání}
+
+Newtonův zákon $F = ma$ je rovnice \textit{druhého} řádu, protože zrychlení je druhá derivace polohy. Těleso o hmotnosti $m$ na pružině s tuhostí $k$ cítí sílu $-kx$, která ho táhne zpátky (Hookův zákon). Přidáme-li tření úměrné rychlosti, dostaneme
+\begin{equation*}
+  mx'' + bx' + kx = 0.
+\end{equation*}
+
+\begin{definitionbox}
+  \textbf{Lineární rovnice s konstantními koeficienty} $ay'' + by' + cy = 0$ řešíme odhadem $y = \mathrm{e}^{\lambda t}$. Po dosazení a vydělení $\mathrm{e}^{\lambda t}\neq 0$ zbude \textbf{charakteristická rovnice}
+  \begin{equation*}
+    a\lambda^2 + b\lambda + c = 0.
+  \end{equation*}
+  \begin{itemize}
+    \item Dva různé reálné kořeny $\lambda_1$, $\lambda_2$: $y = C_1\mathrm{e}^{\lambda_1t} + C_2\mathrm{e}^{\lambda_2t}$.
+    \item Dvojnásobný kořen $\lambda$: $y = (C_1 + C_2t)\,\mathrm{e}^{\lambda t}$.
+    \item Komplexní kořeny $\alpha\pm i\omega$: $y = \mathrm{e}^{\alpha t}(C_1\cos\omega t + C_2\sin\omega t)$.
+  \end{itemize}
+\end{definitionbox}
+
+Diferenciální rovnice se proměnila v kvadratickou rovnici z kapitoly~\ref{kap:kvadraticke}! Komplexní kořeny přitom nejsou nepříjemnost, ale to nejzajímavější: podle Eulerova vzorce je $\mathrm{e}^{(\alpha + i\omega)t} = \mathrm{e}^{\alpha t}(\cos\omega t + i\sin\omega t)$, takže imaginární část kořene je frekvence kmitů a reálná část říká, jak rychle kmity rostou nebo slábnou. Rovnice je \textbf{lineární}: součet dvou řešení je řešení a násobek řešení je řešení. Řešení tvoří vektorový prostor dimenze $2$ (kapitola~\ref{kap:linearni-algebra}) a dvě konstanty určí počáteční poloha a rychlost.
+
+\begin{example}[ (harmonický oscilátor)]
+  Bez tření: $mx'' + kx = 0$, charakteristická rovnice $m\lambda^2 + k = 0$ má kořeny $\pm i\omega_0$, kde $\omega_0 = \sqrt{k/m}$. Řešení $x = A\cos(\omega_0t + \varphi)$ kmitá věčně s periodou $T = 2\pi\sqrt{m/k}$. Perioda nezávisí na amplitudě! Těžší závaží kmitá pomaleji, tužší pružina rychleji.
+\end{example}
+
+Se třením napíšeme rovnici jako $x'' + 2\zeta\omega_0x' + \omega_0^2x = 0$, kde $\zeta$ je bezrozměrný \textbf{útlum}. Kořeny jsou $\lambda = \omega_0\big(-\zeta\pm\sqrt{\zeta^2 - 1}\big)$ a podle znaménka diskriminantu jsou tři režimy:
+
+\begin{center}
+  \begin{tikzpicture}[x=0.7cm, y=1.7cm]
+    \draw[gray!60] (0,0) -- (15,0);
+    \draw[thick, colorofwisdom, domain=0:15, samples=200] plot (\x, {exp(-0.15*\x)*(cos(deg(0.98869*\x))+0.15172*sin(deg(0.98869*\x)))});
+    \draw[very thick, domain=0:15, samples=80] plot (\x, {(1+\x)*exp(-\x)});
+    \draw[thick, gray, dashed, domain=0:15, samples=80] plot (\x, {1.07735*exp(-0.26795*\x)-0.07735*exp(-3.73205*\x)});
+    \draw[->] (0,-0.9) -- (0,1.25) node[above] {\small $x$};
+    \draw[->] (15,0) -- (15.5,0) node[right] {\small $t$};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (3.6,-0.72) {podkritický útlum, $\zeta = 0{,}15$};
+    \node[font=\scriptsize, anchor=west] at (2.4,0.55) {kritický, $\zeta = 1$};
+    \node[font=\scriptsize, gray, anchor=west] at (7.5,0.3) {nadkritický, $\zeta = 2$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+  \item $\zeta < 1$ (\textbf{podkritický útlum}): komplexní kořeny, těleso kmitá a kmity exponenciálně slábnou. Kytarová struna, houpačka.
+  \item $\zeta = 1$ (\textbf{kritický útlum}): dvojnásobný kořen, těleso se vrátí do rovnováhy nejrychleji, jak to jde bez překmitnutí. Na to se ladí tlumiče aut a zavírače dveří.
+  \item $\zeta > 1$ (\textbf{nadkritický útlum}): dva záporné reálné kořeny, těleso se plíží do rovnováhy pomalu, jako lžička v medu.
+\end{itemize}
+
+Proč odhad $\mathrm{e}^{\lambda t}$ funguje? Zavedeme-li rychlost $v = x'$, máme soustavu dvou rovnic prvního řádu
+\begin{equation*}
+  \begin{pmatrix} x\\ v\end{pmatrix}' = \begin{pmatrix} 0 & 1\\ -\omega_0^2 & -2\zeta\omega_0\end{pmatrix}\begin{pmatrix} x\\ v\end{pmatrix}.
+\end{equation*}
+Charakteristický polynom této matice je přesně $\lambda^2 + 2\zeta\omega_0\lambda + \omega_0^2$. Kořeny charakteristické rovnice jsou tedy \textbf{vlastní čísla} matice z kapitoly~\ref{kap:linearni-algebra}. Ve směru vlastního vektoru se soustava chová jako jediná rovnice $u' = \lambda u$, a ta má řešení $\mathrm{e}^{\lambda t}$. Diagonalizace rozloží složitý pohyb na nezávislé exponenciály.
+
+\subsection{Rezonance}
+
+Teď budeme oscilátor rozhoupávat vnější periodickou silou s frekvencí $\Omega$:
+\begin{equation*}
+  x'' + 2\zeta\omega_0x' + \omega_0^2x = F\cos\Omega t.
+\end{equation*}
+Po odeznění počátečních kmitů těleso kmitá s frekvencí \textit{buzení} $\Omega$ a s amplitudou
+\begin{equation*}
+  A(\Omega) = \frac{F}{\sqrt{{\left(\omega_0^2 - \Omega^2\right)}^2 + {\left(2\zeta\omega_0\Omega\right)}^2}}.
+\end{equation*}
+(Dostaneme ji dosazením odhadu $x = \mathrm{Re}\,(c\,\mathrm{e}^{i\Omega t})$, z čehož vyjde $c = \frac{F}{\omega_0^2 - \Omega^2 + 2i\zeta\omega_0\Omega}$ a $A = |c|$.)
+
+\begin{center}
+  \begin{tikzpicture}[x=4cm, y=0.6cm]
+    \draw[dashed, gray] (1,0) -- (1,5.4);
+    \foreach \z/\col in {0.1/colorofwisdom, 0.25/colorofwisdom!60, 0.5/gray} {
+      \draw[thick, \col, domain=0:2.5, samples=150] plot (\x, {1/sqrt((1-\x*\x)*(1-\x*\x)+4*\z*\z*\x*\x)});
+    }
+    \draw[->] (0,0) -- (2.6,0) node[right] {\small $\Omega$};
+    \draw[->] (0,0) -- (0,5.6) node[above] {\small $A$};
+    \node[below, font=\scriptsize] at (1,0) {$\omega_0$};
+    \node[left, font=\scriptsize] at (0,1) {$1$};
+    \draw (0.02,1) -- (-0.02,1);
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (1.05,4.8) {$\zeta = 0{,}1$};
+    \node[font=\scriptsize, colorofwisdom!60, anchor=west] at (1.1,2.2) {$\zeta = 0{,}25$};
+    \node[font=\scriptsize, gray, anchor=west] at (1.35,0.95) {$\zeta = 0{,}5$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je $\omega_0 = F = 1$. Když se frekvence buzení trefí do vlastní frekvence $\omega_0$, je amplituda u slabého útlumu obrovská, zhruba $\frac{F}{2\zeta\omega_0^2}$. To je \textbf{rezonance}. Proto se houpačka rozhoupe, i když ji strkáme slabě, ale ve správném rytmu. Zpěvák umí sklenici rozbít tónem její vlastní frekvence a inženýři musí hlídat, aby vlastní frekvence mostů a budov neležely blízko frekvencí kroků, motorů nebo zemětřesení.
+
+\begin{note}
+  Často citovaný `učebnicový' příklad rezonance, zřícení mostu přes Tacoma Narrows v roce 1940, ve skutečnosti obyčejná rezonance nebyla. Vítr foukal zhruba stálou rychlostí, žádný periodický rytmus mostu nevnucoval. Příčinou byl \textbf{aeroelastický flutter}: kroutivé kmity mostovky samy měnily obtékání větrem tak, že jim vítr v každém kmitu dodal víc energie, než ztratily třením. Matematicky je to spíš rovnice se \textit{záporným} útlumem, kdy kmity exponenciálně rostou, než rovnice s vnější silou.
+\end{note}
+
+\section{Soustavy a fázový portrét}
+
+Mnoho systémů se nedá popsat jednou veličinou. Nejslavnější příklad je model dravce a kořisti, který nezávisle na sobě navrhli Alfred Lotka (1925) a Vito Volterra (1926). Volterru k němu přivedl biolog Umberto D'Ancona, který si vzal Volterrovu dceru. D'Ancona si všiml, že v době první světové války, kdy se v Jaderském moři méně rybařilo, stoupl v úlovcích podíl dravých ryb.
+
+\begin{definitionbox}
+  \textbf{Lotkovy--Volterrovy rovnice}: $x$ je počet kořisti (zajíců), $y$ počet dravců (rysů), $\alpha, \beta, \gamma, \delta > 0$:
+  \begin{equation*}
+    x' = \alpha x - \beta xy,\qquad y' = -\gamma y + \delta xy.
+  \end{equation*}
+\end{definitionbox}
+
+Zajíci se bez rysů množí exponenciálně ($\alpha x$) a ubývají při setkáních s rysy, kterých je úměrně $xy$. Rysi bez zajíců vymírají ($-\gamma y$) a při setkáních se množí. Rovnice neumíme vyřešit vzorcem, ale Runge--Kutta s parametry $\alpha = \gamma = 1$, $\beta = 0{,}5$, $\delta = 0{,}25$ a počátečním stavem $x = 8$, $y = 1$ dá tohle:
+
+\begin{center}
+  \begin{tikzpicture}[x=0.52cm, y=0.33cm]
+    \draw[very thick, colorofwisdom] plot[smooth] coordinates {(0.00,8.00) (0.10,8.39) (0.20,8.74) (0.30,9.04) (0.40,9.27) (0.50,9.40) (0.60,9.42) (0.70,9.31) (0.80,9.05) (0.90,8.65) (1.00,8.12) (1.10,7.49) (1.20,6.80) (1.30,6.08) (1.40,5.38) (1.50,4.72) (1.60,4.13) (1.70,3.60) (1.80,3.15) (1.90,2.77) (2.00,2.46) (2.10,2.19) (2.20,1.98) (2.30,1.80) (2.40,1.66) (2.50,1.54) (2.60,1.45) (2.70,1.37) (2.80,1.31) (2.90,1.27) (3.00,1.24) (3.10,1.22) (3.20,1.21) (3.30,1.21) (3.40,1.21) (3.50,1.23) (3.60,1.25) (3.70,1.28) (3.80,1.32) (3.90,1.36) (4.00,1.41) (4.10,1.47) (4.20,1.54) (4.30,1.61) (4.40,1.70) (4.50,1.79) (4.60,1.90) (4.70,2.01) (4.80,2.14) (4.90,2.27) (5.00,2.42) (5.10,2.59) (5.20,2.76) (5.30,2.96) (5.40,3.17) (5.50,3.39) (5.60,3.64) (5.70,3.90) (5.80,4.18) (5.90,4.48) (6.00,4.81) (6.10,5.15) (6.20,5.51) (6.30,5.89) (6.40,6.28) (6.50,6.69) (6.60,7.10) (6.70,7.52) (6.80,7.93) (6.90,8.32) (7.00,8.68) (7.10,8.99) (7.20,9.24) (7.30,9.39) (7.40,9.43) (7.50,9.34) (7.60,9.11) (7.70,8.73) (7.80,8.22) (7.90,7.61) (8.00,6.92) (8.10,6.20) (8.20,5.50) (8.30,4.83) (8.40,4.22) (8.50,3.69) (8.60,3.23) (8.70,2.83) (8.80,2.51) (8.90,2.23) (9.00,2.01) (9.10,1.83) (9.20,1.68) (9.30,1.56) (9.40,1.46) (9.50,1.38) (9.60,1.32) (9.70,1.28) (9.80,1.24) (9.90,1.22) (10.00,1.21) (10.10,1.21) (10.20,1.21) (10.30,1.23) (10.40,1.25) (10.50,1.27) (10.60,1.31) (10.70,1.35) (10.80,1.40) (10.90,1.46) (11.00,1.53) (11.10,1.60) (11.20,1.68) (11.30,1.78) (11.40,1.88) (11.50,1.99) (11.60,2.11) (11.70,2.25) (11.80,2.40) (11.90,2.56) (12.00,2.73) (12.10,2.92) (12.20,3.13) (12.30,3.35) (12.40,3.59) (12.50,3.85) (12.60,4.13) (12.70,4.43) (12.80,4.75) (12.90,5.09) (13.00,5.44) (13.10,5.82) (13.20,6.21) (13.30,6.62) (13.40,7.03) (13.50,7.45) (13.60,7.86) (13.70,8.26) (13.80,8.63) (13.90,8.95) (14.00,9.20) (14.10,9.37) (14.20,9.43) (14.30,9.36) (14.40,9.16) (14.50,8.80) (14.60,8.32) (14.70,7.72) (14.80,7.04) (14.90,6.33) (15.00,5.62) (15.10,4.94) (15.20,4.32) (15.30,3.77) (15.40,3.30) (15.50,2.90) (15.60,2.56) (15.70,2.28) (15.80,2.05) (15.90,1.86) (16.00,1.70) (16.10,1.58) (16.20,1.48) (16.30,1.40) (16.40,1.33) (16.50,1.28) (16.60,1.25) (16.70,1.23) (16.80,1.21) (16.90,1.21) (17.00,1.21) (17.10,1.22) (17.20,1.24) (17.30,1.27) (17.40,1.30) (17.50,1.34) (17.60,1.39) (17.70,1.45) (17.80,1.51) (17.90,1.59) (18.00,1.67) (18.10,1.76) (18.20,1.86) (18.30,1.97) (18.40,2.09) (18.50,2.22) (18.60,2.37) (18.70,2.53) (18.80,2.70) (18.90,2.89) (19.00,3.09) (19.10,3.31) (19.20,3.55) (19.30,3.81) (19.40,4.08) (19.50,4.38) (19.60,4.69) (19.70,5.03) (19.80,5.38) (19.90,5.76) (20.00,6.15)};
+    \draw[thick, dashed] plot[smooth] coordinates {(0.00,1.00) (0.10,1.11) (0.20,1.24) (0.30,1.41) (0.40,1.60) (0.50,1.83) (0.60,2.10) (0.70,2.40) (0.80,2.73) (0.90,3.08) (1.00,3.44) (1.10,3.78) (1.20,4.09) (1.30,4.35) (1.40,4.54) (1.50,4.66) (1.60,4.71) (1.70,4.70) (1.80,4.62) (1.90,4.51) (2.00,4.35) (2.10,4.17) (2.20,3.98) (2.30,3.77) (2.40,3.56) (2.50,3.36) (2.60,3.15) (2.70,2.95) (2.80,2.76) (2.90,2.58) (3.00,2.41) (3.10,2.25) (3.20,2.10) (3.30,1.96) (3.40,1.83) (3.50,1.70) (3.60,1.59) (3.70,1.48) (3.80,1.39) (3.90,1.30) (4.00,1.22) (4.10,1.14) (4.20,1.07) (4.30,1.01) (4.40,0.95) (4.50,0.90) (4.60,0.85) (4.70,0.81) (4.80,0.77) (4.90,0.74) (5.00,0.71) (5.10,0.68) (5.20,0.66) (5.30,0.64) (5.40,0.63) (5.50,0.61) (5.60,0.61) (5.70,0.60) (5.80,0.60) (5.90,0.61) (6.00,0.62) (6.10,0.63) (6.20,0.66) (6.30,0.68) (6.40,0.72) (6.50,0.77) (6.60,0.82) (6.70,0.90) (6.80,0.98) (6.90,1.09) (7.00,1.22) (7.10,1.38) (7.20,1.57) (7.30,1.79) (7.40,2.05) (7.50,2.34) (7.60,2.67) (7.70,3.02) (7.80,3.38) (7.90,3.73) (8.00,4.04) (8.10,4.31) (8.20,4.52) (8.30,4.65) (8.40,4.71) (8.50,4.70) (8.60,4.64) (8.70,4.53) (8.80,4.38) (8.90,4.20) (9.00,4.01) (9.10,3.81) (9.20,3.60) (9.30,3.39) (9.40,3.19) (9.50,2.99) (9.60,2.80) (9.70,2.61) (9.80,2.44) (9.90,2.28) (10.00,2.12) (10.10,1.98) (10.20,1.85) (10.30,1.72) (10.40,1.61) (10.50,1.50) (10.60,1.40) (10.70,1.31) (10.80,1.23) (10.90,1.15) (11.00,1.08) (11.10,1.02) (11.20,0.96) (11.30,0.91) (11.40,0.86) (11.50,0.82) (11.60,0.78) (11.70,0.74) (11.80,0.71) (11.90,0.69) (12.00,0.66) (12.10,0.64) (12.20,0.63) (12.30,0.62) (12.40,0.61) (12.50,0.60) (12.60,0.60) (12.70,0.61) (12.80,0.62) (12.90,0.63) (13.00,0.65) (13.10,0.68) (13.20,0.71) (13.30,0.76) (13.40,0.81) (13.50,0.88) (13.60,0.97) (13.70,1.07) (13.80,1.20) (13.90,1.35) (14.00,1.53) (14.10,1.75) (14.20,2.00) (14.30,2.29) (14.40,2.61) (14.50,2.96) (14.60,3.32) (14.70,3.67) (14.80,3.99) (14.90,4.27) (15.00,4.49) (15.10,4.63) (15.20,4.70) (15.30,4.71) (15.40,4.65) (15.50,4.55) (15.60,4.41) (15.70,4.24) (15.80,4.04) (15.90,3.84) (16.00,3.63) (16.10,3.43) (16.20,3.22) (16.30,3.02) (16.40,2.83) (16.50,2.64) (16.60,2.47) (16.70,2.30) (16.80,2.15) (16.90,2.00) (17.00,1.87) (17.10,1.74) (17.20,1.63) (17.30,1.52) (17.40,1.42) (17.50,1.33) (17.60,1.24) (17.70,1.17) (17.80,1.09) (17.90,1.03) (18.00,0.97) (18.10,0.92) (18.20,0.87) (18.30,0.82) (18.40,0.78) (18.50,0.75) (18.60,0.72) (18.70,0.69) (18.80,0.67) (18.90,0.65) (19.00,0.63) (19.10,0.62) (19.20,0.61) (19.30,0.60) (19.40,0.60) (19.50,0.61) (19.60,0.62) (19.70,0.63) (19.80,0.65) (19.90,0.67) (20.00,0.71)};
+    \draw[->] (0,0) -- (20.6,0) node[right] {\small $t$};
+    \draw[->] (0,0) -- (0,10.5);
+    \foreach \t in {5,10,15,20} \draw (\t,0.2) -- (\t,-0.2) node[below, font=\scriptsize] {$\t$};
+    \foreach \v in {2,4,6,8} \draw (0.15,\v) -- (-0.15,\v) node[left, font=\scriptsize] {$\v$};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (2.4,9.8) {kořist $x(t)$};
+    \node[font=\scriptsize, anchor=west] at (4.5,5.2) {dravci $y(t)$};
+  \end{tikzpicture}
+\end{center}
+
+Obě populace periodicky kolísají a dravci se zpožďují za kořistí. Když je hodně zajíců, rysům se daří a množí se. Pak zajíce vyjedí, zajíců ubude, rysové hladoví a vymírají, a zajíci se mohou zase množit. Podobné cykly opravdu vidíme ve výkupech kožešin Hudsonovy zátoky z 19. století, kde se počty zajíců a rysů střídaly s periodou kolem deseti let.
+
+Ještě víc prozradí \textbf{fázový portrét}: místo dvou grafů v čase kreslíme bod $[x(t), y(t)]$ v rovině, jehož pohyb popisuje stav celého systému. Čas z obrázku zmizí, zůstane tvar trajektorie.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.68cm, y=0.68cm]
+    \draw[thick, colorofwisdom!40] plot[smooth] coordinates {(6.00,2.00) (5.98,2.10) (5.94,2.21) (5.86,2.32) (5.75,2.42) (5.62,2.53) (5.46,2.63) (5.28,2.72) (5.08,2.80) (4.87,2.87) (4.66,2.92) (4.44,2.97) (4.23,2.99) (4.03,3.00) (3.83,2.99) (3.65,2.97) (3.48,2.94) (3.32,2.90) (3.18,2.84) (3.05,2.78) (2.94,2.71) (2.84,2.64) (2.76,2.56) (2.69,2.48) (2.63,2.40) (2.58,2.32) (2.55,2.23) (2.52,2.15) (2.51,2.07) (2.50,2.00) (2.51,1.93) (2.52,1.86) (2.54,1.79) (2.58,1.73) (2.62,1.67) (2.66,1.61) (2.72,1.56) (2.78,1.51) (2.86,1.47) (2.94,1.43) (3.02,1.39) (3.12,1.36) (3.22,1.33) (3.34,1.31) (3.46,1.29) (3.58,1.27) (3.72,1.26) (3.86,1.25) (4.00,1.25) (4.16,1.25) (4.31,1.26) (4.47,1.27) (4.64,1.29) (4.80,1.32) (4.97,1.34) (5.13,1.38) (5.28,1.42) (5.43,1.47) (5.57,1.53) (5.69,1.59) (5.80,1.66) (5.89,1.74) (5.95,1.83) (5.99,1.92) (6.00,2.00)};
+    \draw[thick, colorofwisdom!70] plot[smooth] coordinates {(8.00,2.00) (7.96,2.21) (7.83,2.44) (7.62,2.67) (7.32,2.92) (6.95,3.16) (6.52,3.38) (6.06,3.58) (5.57,3.74) (5.09,3.87) (4.63,3.96) (4.19,4.00) (3.79,3.99) (3.43,3.96) (3.12,3.88) (2.85,3.79) (2.61,3.67) (2.41,3.53) (2.24,3.39) (2.10,3.24) (1.98,3.08) (1.88,2.93) (1.80,2.77) (1.74,2.62) (1.70,2.48) (1.66,2.34) (1.64,2.20) (1.63,2.08) (1.63,1.96) (1.63,1.84) (1.65,1.74) (1.68,1.64) (1.71,1.55) (1.75,1.46) (1.81,1.38) (1.87,1.31) (1.93,1.24) (2.01,1.18) (2.10,1.13) (2.20,1.08) (2.30,1.03) (2.42,0.99) (2.55,0.95) (2.69,0.92) (2.84,0.89) (3.00,0.87) (3.18,0.85) (3.37,0.83) (3.57,0.82) (3.79,0.81) (4.02,0.81) (4.27,0.82) (4.53,0.82) (4.80,0.84) (5.08,0.86) (5.38,0.88) (5.68,0.92) (5.99,0.96) (6.30,1.01) (6.61,1.08) (6.91,1.16) (7.19,1.25) (7.45,1.36) (7.67,1.48) (7.84,1.63) (7.95,1.80) (8.00,2.00)};
+    \draw[thick, colorofwisdom] plot[smooth] coordinates {(11.00,2.00) (10.90,2.38) (10.58,2.82) (10.03,3.30) (9.28,3.80) (8.38,4.29) (7.39,4.73) (6.38,5.09) (5.44,5.33) (4.58,5.47) (3.85,5.50) (3.24,5.43) (2.73,5.30) (2.33,5.10) (2.01,4.88) (1.75,4.62) (1.54,4.36) (1.38,4.09) (1.25,3.82) (1.15,3.57) (1.07,3.32) (1.01,3.08) (0.96,2.86) (0.93,2.65) (0.90,2.45) (0.88,2.27) (0.88,2.10) (0.88,1.94) (0.88,1.79) (0.89,1.66) (0.91,1.54) (0.94,1.42) (0.97,1.32) (1.00,1.22) (1.04,1.13) (1.09,1.05) (1.15,0.98) (1.21,0.91) (1.28,0.85) (1.36,0.80) (1.44,0.75) (1.54,0.70) (1.64,0.66) (1.76,0.62) (1.88,0.59) (2.02,0.56) (2.18,0.54) (2.34,0.51) (2.53,0.49) (2.72,0.48) (2.94,0.46) (3.18,0.45) (3.43,0.44) (3.71,0.44) (4.01,0.44) (4.34,0.44) (4.69,0.45) (5.07,0.46) (5.47,0.47) (5.91,0.49) (6.36,0.52) (6.85,0.55) (7.36,0.60) (7.88,0.65) (8.41,0.72) (8.95,0.81) (9.47,0.93) (9.96,1.07) (10.39,1.25) (10.73,1.47) (10.94,1.74) (11.00,2.00)};
+    \fill (4,2) circle (2pt) node[below right, font=\scriptsize] {$[4, 2]$};
+    \draw[->, thick, colorofwisdom] (11,2) -- (11,2.6);
+    \draw[->, thick, colorofwisdom] (4,5.5) -- (3.4,5.5);
+    \draw[->] (0,0) -- (12.3,0) node[right] {\small $x$ (kořist)};
+    \draw[->] (0,0) -- (0,6.3) node[above] {\small $y$ (dravci)};
+    \foreach \v in {2,4,6,8,10} \draw (\v,0.1) -- (\v,-0.1) node[below, font=\scriptsize] {$\v$};
+    \foreach \v in {2,4} \draw (0.1,\v) -- (-0.1,\v) node[left, font=\scriptsize] {$\v$};
+  \end{tikzpicture}
+\end{center}
+
+Trajektorie jsou \textbf{uzavřené křivky} kolem rovnovážného bodu $\left[\frac{\gamma}{\delta}, \frac{\alpha}{\beta}\right] = [4, 2]$, a obíhají se proti směru hodinových ručiček. Že jsou opravdu uzavřené (a ne třeba spirály), se dá dokázat. Funkce
+\begin{equation*}
+  V(x, y) = \delta x - \gamma\ln x + \beta y - \alpha\ln y
+\end{equation*}
+je podél každého řešení konstantní. Stačí zderivovat: $V' = \left(\delta - \frac{\gamma}{x}\right)x' + \left(\beta - \frac{\alpha}{y}\right)y' = (\delta x - \gamma)(\alpha - \beta y) + (\beta y - \alpha)(\delta x - \gamma) = 0$. Trajektorie jsou tedy vrstevnice funkce $V$ (kapitola~\ref{kap:vice-promennych}), a ta má v bodě $[4, 2]$ minimum, takže vrstevnice kolem něj jsou uzavřené. Je to taková `energie' ekosystému, která se zachovává.
+
+\begin{example}[ (kyvadlo)]
+  Kyvadlo s úhlem výchylky $\theta$ splňuje $\theta'' = -\frac{g}{l}\sin\theta$. Pro malé výchylky je $\sin\theta\approx\theta$ a dostaneme harmonický oscilátor. Pro velké ne. Zvolme $\frac{g}{l} = 1$ a $\omega = \theta'$. Zákon zachování energie dává $\frac{1}{2}\omega^2 - \cos\theta = E$, takže fázové trajektorie jsou křivky $\omega = \pm\sqrt{2(E + \cos\theta)}$.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.2cm, y=0.95cm]
+    \begin{scope}
+      \clip (-4.1,-3.1) rectangle (4.1,3.1);
+      \draw[thick, colorofwisdom!45] plot[smooth] coordinates {(0.00,0.78) (0.08,0.77) (0.17,0.76) (0.25,0.74) (0.33,0.71) (0.40,0.67) (0.47,0.62) (0.54,0.57) (0.59,0.51) (0.65,0.45) (0.69,0.38) (0.73,0.31) (0.76,0.23) (0.78,0.16) (0.80,0.08) (0.80,0.00) (0.80,-0.08) (0.78,-0.16) (0.76,-0.23) (0.73,-0.31) (0.69,-0.38) (0.65,-0.45) (0.59,-0.51) (0.54,-0.57) (0.47,-0.62) (0.40,-0.67) (0.33,-0.71) (0.25,-0.74) (0.17,-0.76) (0.08,-0.77) (0.00,-0.78) (-0.08,-0.77) (-0.17,-0.76) (-0.25,-0.74) (-0.33,-0.71) (-0.40,-0.67) (-0.47,-0.62) (-0.54,-0.57) (-0.59,-0.51) (-0.65,-0.45) (-0.69,-0.38) (-0.73,-0.31) (-0.76,-0.23) (-0.78,-0.16) (-0.80,-0.08) (-0.80,-0.00) (-0.80,0.08) (-0.78,0.16) (-0.76,0.23) (-0.73,0.31) (-0.69,0.38) (-0.65,0.45) (-0.59,0.51) (-0.54,0.57) (-0.47,0.62) (-0.40,0.67) (-0.33,0.71) (-0.25,0.74) (-0.17,0.76) (-0.08,0.77) (-0.00,0.78)};
+      \draw[thick, colorofwisdom!70] plot[smooth] coordinates {(0.00,1.43) (0.17,1.42) (0.33,1.40) (0.49,1.35) (0.65,1.28) (0.80,1.20) (0.94,1.11) (1.07,1.01) (1.19,0.90) (1.29,0.78) (1.39,0.65) (1.46,0.53) (1.52,0.40) (1.57,0.26) (1.59,0.13) (1.60,0.00) (1.59,-0.13) (1.57,-0.26) (1.52,-0.40) (1.46,-0.53) (1.39,-0.65) (1.29,-0.78) (1.19,-0.90) (1.07,-1.01) (0.94,-1.11) (0.80,-1.20) (0.65,-1.28) (0.49,-1.35) (0.33,-1.40) (0.17,-1.42) (0.00,-1.43) (-0.17,-1.42) (-0.33,-1.40) (-0.49,-1.35) (-0.65,-1.28) (-0.80,-1.20) (-0.94,-1.11) (-1.07,-1.01) (-1.19,-0.90) (-1.29,-0.78) (-1.39,-0.65) (-1.46,-0.53) (-1.52,-0.40) (-1.57,-0.26) (-1.59,-0.13) (-1.60,-0.00) (-1.59,0.13) (-1.57,0.26) (-1.52,0.40) (-1.46,0.53) (-1.39,0.65) (-1.29,0.78) (-1.19,0.90) (-1.07,1.01) (-0.94,1.11) (-0.80,1.20) (-0.65,1.28) (-0.49,1.35) (-0.33,1.40) (-0.17,1.42) (-0.00,1.43)};
+      \draw[thick, colorofwisdom] plot[smooth] coordinates {(0.00,1.86) (0.25,1.85) (0.50,1.80) (0.74,1.72) (0.98,1.61) (1.20,1.48) (1.41,1.34) (1.61,1.19) (1.78,1.03) (1.94,0.87) (2.08,0.71) (2.19,0.56) (2.28,0.41) (2.35,0.27) (2.39,0.13) (2.40,0.00) (2.39,-0.13) (2.35,-0.27) (2.28,-0.41) (2.19,-0.56) (2.08,-0.71) (1.94,-0.87) (1.78,-1.03) (1.61,-1.19) (1.41,-1.34) (1.20,-1.48) (0.98,-1.61) (0.74,-1.72) (0.50,-1.80) (0.25,-1.85) (0.00,-1.86) (-0.25,-1.85) (-0.50,-1.80) (-0.74,-1.72) (-0.98,-1.61) (-1.20,-1.48) (-1.41,-1.34) (-1.61,-1.19) (-1.78,-1.03) (-1.94,-0.87) (-2.08,-0.71) (-2.19,-0.56) (-2.28,-0.41) (-2.35,-0.27) (-2.39,-0.13) (-2.40,-0.00) (-2.39,0.13) (-2.35,0.27) (-2.28,0.41) (-2.19,0.56) (-2.08,0.71) (-1.94,0.87) (-1.78,1.03) (-1.61,1.19) (-1.41,1.34) (-1.20,1.48) (-0.98,1.61) (-0.74,1.72) (-0.50,1.80) (-0.25,1.85) (-0.00,1.86)};
+      \draw[very thick, domain=-4.1:4.1, samples=80] plot (\x, {2*cos(deg(\x/2))});
+      \draw[very thick, domain=-4.1:4.1, samples=80] plot (\x, {-2*cos(deg(\x/2))});
+      \foreach \s in {1,-1} {
+        \draw[thick, gray, domain=-4.1:4.1, samples=80] plot (\x, {\s*sqrt(2*(1.6+cos(deg(\x))))});
+        \draw[thick, gray, domain=-4.1:4.1, samples=80] plot (\x, {\s*sqrt(2*(3+cos(deg(\x))))});
+      }
+    \end{scope}
+    \draw[->] (-4.3,0) -- (4.4,0) node[right] {\small $\theta$};
+    \draw[->] (0,-3.2) -- (0,3.4) node[above] {\small $\omega$};
+    \foreach \x/\l in {-3.1416/-\pi, 3.1416/\pi} {
+      \fill (\x,0) circle (2pt);
+      \node[below left, font=\scriptsize] at (\x,0) {$\l$};
+    }
+    \draw[->, thick, gray] (-1.2,2.53) -- (-0.8,2.62);
+    \draw[->, thick, gray] (0.8,-2.62) -- (0.4,-2.67);
+  \end{tikzpicture}
+\end{center}
+
+Uzavřené barevné křivky kolem počátku jsou kývání tam a zpět. Šedé vlnovky nahoře a dole jsou kyvadlo, které má tolik energie, že se protáčí dokola (jako dítě na houpačce, které to přehnalo). Mezi nimi leží tlustá \textbf{separatrix} $\omega = \pm2\cos\frac{\theta}{2}$ s energií $E = 1$: kyvadlo, které se nekonečně dlouho blíží k vrcholu $\theta = \pi$ a nikdy ho nedosáhne. Body $\pm\pi$ jsou rovnováha nestabilní (tužka postavená na hrot), počátek je stabilní. Jediný obrázek shrnuje \textit{všechny} možné pohyby kyvadla, aniž bychom jednu rovnici vyřešili.
+
+\section{Chaos}
+
+Dlouho se věřilo, že deterministická rovnice znamená předvídatelnou budoucnost. Pierre-Simon Laplace si představoval démona, který zná polohy a rychlosti všech částic a spočítá z nich budoucnost celého vesmíru. Věta o jednoznačnosti mu dává za pravdu: počáteční stav určuje budoucnost jednoznačně. Co ale nestačí, je \textit{přesnost}.
+
+V roce 1963 publikoval meteorolog Edward Lorenz z MIT drasticky zjednodušený model proudění vzduchu ohřívaného zespodu:
+\begin{equation*}
+  x' = 10(y - x),\qquad y' = x(28 - z) - y,\qquad z' = xy - \frac{8}{3}z.
+\end{equation*}
+Jsou to jen tři rovnice s dvěma součiny. Přesto řešení nikdy neusne v rovnováze ani se neuzavře do periodické smyčky. Bloudí po podivném tvaru, kterému se dnes říká \textbf{Lorenzův atraktor}:
+
+\begin{center}
+  \begin{tikzpicture}[x=0.26cm, y=0.13cm]
+    \draw[colorofwisdom, line width=0.35pt] plot[smooth] coordinates {(-8.39,24.84) (-8.82,25.42) (-9.24,26.18) (-9.59,27.05) (-9.84,27.94) (-9.95,28.72) (-9.90,29.31) (-9.68,29.62) (-9.34,29.64) (-8.90,29.38) (-8.43,28.89) (-7.97,28.24) (-7.56,27.50) (-7.24,26.74) (-7.03,26.00) (-6.93,25.33) (-6.95,24.78) (-7.08,24.38) (-7.31,24.16) (-7.64,24.15) (-8.04,24.37) (-8.49,24.82) (-8.96,25.50) (-9.39,26.35) (-9.74,27.30) (-9.98,28.23) (-10.05,29.02) (-9.94,29.58) (-9.67,29.83) (-9.27,29.76) (-8.79,29.41) (-8.28,28.83) (-7.80,28.10) (-7.39,27.31) (-7.08,26.50) (-6.89,25.73) (-6.82,25.06) (-6.87,24.51) (-7.03,24.13) (-7.31,23.94) (-7.68,23.98) (-8.12,24.27) (-8.60,24.81) (-9.09,25.58) (-9.54,26.52) (-9.90,27.55) (-10.11,28.52) (-10.14,29.32) (-9.98,29.84) (-9.66,30.03) (-9.20,29.87) (-8.67,29.42) (-8.13,28.76) (-7.64,27.96) (-7.23,27.11) (-6.93,26.26) (-6.75,25.47) (-6.70,24.78) (-6.78,24.23) (-6.99,23.87) (-7.30,23.72) (-7.71,23.81) (-8.19,24.17) (-8.71,24.79) (-9.23,25.66) (-9.69,26.69) (-10.05,27.79) (-10.24,28.82) (-10.23,29.62) (-10.02,30.11) (-9.64,30.22) (-9.12,29.97) (-8.55,29.43) (-7.98,28.69) (-7.47,27.82) (-7.06,26.91) (-6.76,26.02) (-6.61,25.20) (-6.59,24.50) (-6.70,23.96) (-6.93,23.60) (-7.28,23.48) (-7.73,23.63) (-8.25,24.05) (-8.81,24.76) (-9.36,25.72) (-9.84,26.85) (-10.20,28.03) (-10.37,29.10) (-10.33,29.92) (-10.07,30.37) (-9.62,30.41) (-9.05,30.08) (-8.43,29.45) (-7.83,28.62) (-7.30,27.68) (-6.89,26.72) (-6.60,25.79) (-6.46,24.94) (-6.46,24.22) (-6.60,23.67) (-6.87,23.33) (-7.25,23.23) (-7.74,23.42) (-8.30,23.90) (-8.89,24.69) (-9.48,25.74) (-9.98,26.98) (-10.35,28.24) (-10.51,29.38) (-10.43,30.21) (-10.12,30.64) (-9.62,30.62) (-8.99,30.21) (-8.33,29.49) (-7.69,28.58) (-7.14,27.57) (-6.72,26.55) (-6.44,25.57) (-6.30,24.69) (-6.32,23.95) (-6.48,23.39) (-6.78,23.04) (-7.20,22.96) (-7.72,23.17) (-8.32,23.71) (-8.96,24.57) (-9.58,25.72) (-10.12,27.05) (-10.50,28.42) (-10.65,29.63) (-10.55,30.50) (-10.19,30.91) (-9.64,30.84) (-8.96,30.36) (-8.24,29.56) (-7.57,28.58) (-6.99,27.50) (-6.55,26.42) (-6.27,25.39) (-6.14,24.47) (-6.17,23.69) (-6.34,23.10) (-6.66,22.74) (-7.11,22.65) (-7.66,22.88) (-8.30,23.45) (-8.99,24.37) (-9.66,25.61) (-10.23,27.05) (-10.64,28.53) (-10.81,29.84) (-10.69,30.77) (-10.30,31.20) (-9.70,31.10) (-8.96,30.56) (-8.19,29.69) (-7.46,28.63) (-6.85,27.48) (-6.39,26.33) (-6.09,25.25) (-5.96,24.27) (-5.99,23.45) (-6.17,22.81) (-6.50,22.42) (-6.97,22.30) (-7.56,22.52) (-8.24,23.10) (-8.97,24.07) (-9.69,25.38) (-10.32,26.93) (-10.78,28.55) (-10.98,29.98) (-10.87,31.02) (-10.46,31.50) (-9.81,31.42) (-9.01,30.84) (-8.18,29.91) (-7.40,28.77) (-6.74,27.55) (-6.24,26.33) (-5.91,25.17) (-5.76,24.13) (-5.78,23.24) (-5.96,22.54) (-6.29,22.09) (-6.77,21.92) (-7.38,22.09) (-8.09,22.64) (-8.87,23.61) (-9.66,24.98) (-10.36,26.64) (-10.90,28.40) (-11.16,30.02) (-11.09,31.22) (-10.68,31.82) (-10.00,31.79) (-9.15,31.21) (-8.25,30.24) (-7.39,29.03) (-6.67,27.73) (-6.11,26.43) (-5.74,25.19) (-5.55,24.06) (-5.54,23.09) (-5.70,22.31) (-6.02,21.76) (-6.49,21.50) (-7.11,21.58) (-7.84,22.06) (-8.66,22.98) (-9.52,24.35) (-10.32,26.08) (-10.96,28.01) (-11.33,29.85) (-11.35,31.30) (-10.99,32.12) (-10.31,32.24) (-9.41,31.71) (-8.43,30.73) (-7.48,29.46) (-6.67,28.08) (-6.02,26.69) (-5.58,25.35) (-5.33,24.12) (-5.26,23.04) (-5.38,22.14) (-5.67,21.47) (-6.11,21.07) (-6.71,21.00) (-7.45,21.33) (-8.30,22.13) (-9.22,23.42) (-10.13,25.17) (-10.91,27.23) (-11.45,29.34) (-11.63,31.14) (-11.39,32.32) (-10.76,32.72) (-9.84,32.36) (-8.78,31.43) (-7.73,30.14) (-6.78,28.68) (-6.02,27.18) (-5.46,25.73) (-5.11,24.37) (-4.97,23.16) (-5.01,22.11) (-5.23,21.27) (-5.62,20.69) (-6.17,20.41) (-6.88,20.51) (-7.73,21.07) (-8.69,22.16) (-9.70,23.79) (-10.65,25.89) (-11.42,28.24) (-11.86,30.48) (-11.85,32.21) (-11.38,33.12) (-10.52,33.13) (-9.41,32.39) (-8.23,31.14) (-7.12,29.63) (-6.18,28.02) (-5.46,26.43) (-4.96,24.93) (-4.69,23.55) (-4.61,22.33) (-4.73,21.29) (-5.01,20.47) (-5.48,19.92) (-6.10,19.70) (-6.90,19.90) (-7.84,20.61) (-8.90,21.90) (-10.01,23.81) (-11.03,26.22) (-11.83,28.86) (-12.22,31.30) (-12.11,33.05) (-11.47,33.81) (-10.42,33.58) (-9.15,32.57) (-7.85,31.08) (-6.67,29.39) (-5.71,27.65) (-4.98,25.97) (-4.50,24.40) (-4.24,22.96) (-4.19,21.68) (-4.33,20.59) (-4.64,19.72) (-5.12,19.12) (-5.78,18.85) (-6.62,19.00) (-7.62,19.69) (-8.77,21.02) (-9.99,23.05) (-11.15,25.70) (-12.09,28.69) (-12.60,31.51) (-12.53,33.58) (-11.86,34.53) (-10.70,34.30) (-9.28,33.19) (-7.82,31.55) (-6.51,29.69) (-5.42,27.81) (-4.61,26.00) (-4.07,24.31) (-3.76,22.76) (-3.66,21.37) (-3.74,20.15) (-4.00,19.13) (-4.44,18.34) (-5.04,17.86) (-5.83,17.75) (-6.82,18.13) (-7.98,19.15) (-9.30,20.93) (-10.67,23.52) (-11.92,26.76) (-12.82,30.23) (-13.15,33.21) (-12.77,35.06) (-11.72,35.48) (-10.21,34.65) (-8.54,33.02) (-6.95,31.02) (-5.59,28.95) (-4.53,26.94) (-3.77,25.06) (-3.28,23.32) (-3.02,21.73) (-2.95,20.29) (-3.06,19.02) (-3.33,17.93) (-3.75,17.06) (-4.34,16.45) (-5.13,16.19) (-6.11,16.39) (-7.32,17.21) (-8.74,18.84) (-10.29,21.43) (-11.83,24.96) (-13.10,29.07) (-13.79,32.98) (-13.65,35.75) (-12.66,36.77) (-11.01,36.14) (-9.07,34.41) (-7.17,32.17) (-5.51,29.85) (-4.20,27.62) (-3.24,25.54) (-2.58,23.64) (-2.17,21.89) (-1.96,20.28) (-1.92,18.82) (-2.01,17.50) (-2.22,16.33) (-2.55,15.31) (-3.02,14.48) (-3.65,13.89) (-4.48,13.63) (-5.54,13.81) (-6.86,14.64) (-8.45,16.39) (-10.28,19.31) (-12.18,23.53) (-13.83,28.71) (-14.82,33.84) (-14.75,37.52) (-13.54,38.82) (-11.47,37.89) (-9.05,35.64) (-6.70,32.91) (-4.71,30.23) (-3.16,27.76) (-2.03,25.54) (-1.23,23.52) (-0.69,21.69) (-0.33,20.01) (-0.09,18.47) (0.08,17.05) (0.21,15.74) (0.32,14.54) (0.43,13.43) (0.56,12.41) (0.71,11.48) (0.90,10.63) (1.16,9.87) (1.50,9.20) (1.95,8.66) (2.55,8.27) (3.36,8.11) (4.43,8.33) (5.84,9.14) (7.66,10.93) (9.90,14.21) (12.45,19.49) (14.96,26.76) (16.73,34.74) (17.01,40.84) (15.45,42.98) (12.49,41.41) (9.02,37.99) (5.75,34.33) (3.08,31.13) (1.05,28.46) (-0.43,26.24) (-1.50,24.35) (-2.30,22.73) (-2.95,21.35) (-3.55,20.20) (-4.17,19.31) (-4.86,18.71) (-5.66,18.48) (-6.62,18.71) (-7.72,19.51) (-8.95,21.01) (-10.24,23.24) (-11.44,26.12) (-12.38,29.29) (-12.82,32.19) (-12.63,34.19) (-11.81,34.93) (-10.52,34.46) (-8.99,33.14) (-7.48,31.35) (-6.14,29.39) (-5.07,27.46) (-4.28,25.62) (-3.76,23.91) (-3.47,22.34) (-3.39,20.93) (-3.49,19.70) (-3.76,18.65) (-4.20,17.84) (-4.81,17.32) (-5.61,17.17) (-6.60,17.51) (-7.80,18.48) (-9.16,20.25) (-10.61,22.90) (-11.96,26.30) (-12.98,30.02) (-13.41,33.31) (-13.07,35.41) (-12.00,35.97) (-10.42,35.14) (-8.65,33.44) (-6.95,31.35) (-5.49,29.18) (-4.36,27.09) (-3.53,25.14) (-2.99,23.34) (-2.69,21.69) (-2.58,20.20) (-2.64,18.85) (-2.84,17.67) (-3.20,16.68) (-3.71,15.91) (-4.39,15.43) (-5.28,15.33) (-6.39,15.75) (-7.74,16.90) (-9.30,18.98) (-10.99,22.14) (-12.58,26.28) (-13.78,30.82) (-14.22,34.75) (-13.71,37.07) (-12.30,37.38) (-10.33,36.08) (-8.21,33.89) (-6.25,31.43) (-4.63,29.01) (-3.39,26.77) (-2.50,24.70) (-1.90,22.82) (-1.54,21.09) (-1.34,19.50) (-1.28,18.04) (-1.32,16.71) (-1.46,15.50) (-1.69,14.41) (-2.02,13.46) (-2.47,12.67) (-3.07,12.08) (-3.86,11.75) (-4.88,11.83) (-6.18,12.50) (-7.81,14.04) (-9.75,16.83) (-11.88,21.14) (-13.91,26.86) (-15.35,33.06) (-15.66,38.00) (-14.59,40.21) (-12.39,39.56) (-9.63,37.12) (-6.91,34.08) (-4.58,31.12) (-2.75,28.47) (-1.40,26.14) (-0.43,24.07) (0.25,22.21) (0.76,20.54) (1.16,19.02) (1.52,17.66) (1.89,16.45) (2.31,15.39) (2.81,14.52) (3.45,13.88) (4.26,13.55) (5.29,13.63) (6.57,14.33) (8.13,15.89) (9.93,18.59) (11.85,22.61) (13.60,27.71) (14.75,33.01) (14.90,37.09) (13.87,38.85) (11.91,38.26) (9.49,36.15) (7.09,33.44) (5.01,30.71) (3.37,28.20) (2.15,25.92) (1.30,23.87) (0.71,22.01) (0.32,20.31) (0.05,18.74) (-0.14,17.30) (-0.29,15.98) (-0.42,14.76) (-0.56,13.64) (-0.71,12.61) (-0.90,11.67) (-1.15,10.83) (-1.47,10.09) (-1.89,9.46) (-2.45,8.99) (-3.20,8.73) (-4.19,8.80) (-5.49,9.41) (-7.17,10.86) (-9.26,13.63) (-11.70,18.22) (-14.19,24.79) (-16.17,32.50) (-16.89,39.13) (-15.87,42.37) (-13.32,41.76) (-10.02,38.81) (-6.74,35.22) (-3.95,31.91) (-1.79,29.10) (-0.20,26.75) (0.94,24.74) (1.78,23.00) (2.44,21.50) (3.03,20.22) (3.60,19.17) (4.24,18.37) (4.97,17.90) (5.85,17.83) (6.89,18.27) (8.10,19.36) (9.44,21.22) (10.81,23.89) (12.04,27.19) (12.89,30.62) (13.13,33.50) (12.66,35.17) (11.55,35.42) (10.01,34.47) (8.35,32.78) (6.78,30.77) (5.46,28.70) (4.43,26.71) (3.71,24.84) (3.25,23.12) (3.01,21.56) (2.97,20.14) (3.10,18.89) (3.38,17.83) (3.83,16.99) (4.44,16.42) (5.25,16.21) (6.27,16.48) (7.50,17.40) (8.94,19.15) (10.50,21.87) (12.01,25.50) (13.22,29.63) (13.81,33.43) (13.56,35.97) (12.46,36.75) (10.76,35.94) (8.81,34.11) (6.94,31.86) (5.33,29.54) (4.06,27.33) (3.15,25.28) (2.53,23.40) (2.15,21.67) (1.97,20.09) (1.94,18.65) (2.05,17.35) (2.28,16.20) (2.63,15.21) (3.13,14.42) (3.79,13.87) (4.65,13.67) (5.75,13.95) (7.12,14.91) (8.76,16.84) (10.60,19.97) (12.48,24.38) (14.05,29.62) (14.87,34.58) (14.61,37.88) (13.22,38.76) (11.07,37.55) (8.64,35.17) (6.35,32.43) (4.44,29.79) (2.96,27.37) (1.89,25.18) (1.15,23.20) (0.65,21.40) (0.31,19.74) (0.09,18.22) (-0.07,16.82) (-0.18,15.53) (-0.28,14.34) (-0.38,13.24) (-0.49,12.24) (-0.63,11.31) (-0.81,10.47) (-1.04,9.71) (-1.35,9.04) (-1.75,8.47) (-2.30,8.05) (-3.03,7.82) (-4.01,7.91) (-5.31,8.51) (-7.00,9.95) (-9.12,12.71) (-11.63,17.35) (-14.25,24.15) (-16.39,32.29) (-17.23,39.44) (-16.23,42.99) (-13.58,42.39) (-10.12,39.27) (-6.68,35.52) (-3.76,32.12) (-1.50,29.28) (0.15,26.94) (1.34,24.98) (2.22,23.31) (2.92,21.88) (3.54,20.69) (4.15,19.76) (4.83,19.11) (5.61,18.82) (6.52,18.97) (7.58,19.66) (8.76,21.01) (10.01,23.06) (11.19,25.75) (12.14,28.78) (12.64,31.62) (12.56,33.70) (11.86,34.62) (10.68,34.36) (9.24,33.20) (7.77,31.53) (6.44,29.66) (5.36,27.76) (4.55,25.94) (4.00,24.25) (3.69,22.69) (3.60,21.29) (3.68,20.06) (3.94,19.03) (4.37,18.24) (4.98,17.74) (5.77,17.62) (6.75,17.99) (7.93,18.99) (9.25,20.75) (10.64,23.34) (11.91,26.62) (12.85,30.14) (13.21,33.21) (12.84,35.13) (11.80,35.59) (10.28,34.77) (8.59,33.13) (6.97,31.12) (5.59,29.02) (4.50,27.00) (3.73,25.10) (3.22,23.34) (2.95,21.74) (2.87,20.29) (2.96,19.00) (3.22,17.89) (3.62,16.98) (4.20,16.33) (4.95,16.01) (5.92,16.14) (7.11,16.86) (8.51,18.38) (10.07,20.86) (11.65,24.32) (13.00,28.47) (13.81,32.55) (13.81,35.59) (12.91,36.89) (11.31,36.44) (9.35,34.79) (7.39,32.56) (5.67,30.20) (4.29,27.92) (3.26,25.81) (2.55,23.87) (2.11,22.09) (1.86,20.46) (1.78,18.97) (1.84,17.61) (2.01,16.39) (2.30,15.33) (2.71,14.43) (3.28,13.74) (4.02,13.32) (4.97,13.30) (6.19,13.82) (7.69,15.15) (9.46,17.57) (11.39,21.31) (13.26,26.29) (14.64,31.78) (15.08,36.41) (14.33,38.85) (12.52,38.78) (10.11,36.90) (7.62,34.21) (5.41,31.42) (3.63,28.82) (2.30,26.47) (1.35,24.37) (0.69,22.46) (0.24,20.72) (-0.07,19.12) (-0.30,17.66) (-0.48,16.31) (-0.66,15.08) (-0.85,13.95) (-1.07,12.92) (-1.34,12.00) (-1.70,11.20) (-2.16,10.53) (-2.77,10.04) (-3.57,9.80) (-4.62,9.95) (-5.99,10.69) (-7.72,12.37) (-9.83,15.42) (-12.19,20.25) (-14.47,26.79) (-16.10,33.93) (-16.40,39.51) (-15.08,41.72) (-12.48,40.61) (-9.34,37.64) (-6.31,34.25) (-3.78,31.13) (-1.84,28.44) (-0.42,26.14) (0.61,24.14) (1.36,22.39) (1.95,20.84) (2.47,19.49) (2.98,18.34) (3.55,17.42) (4.23,16.77) (5.05,16.47) (6.05,16.62) (7.24,17.38) (8.64,18.93) (10.16,21.41) (11.68,24.81) (12.94,28.80)};
+    \draw[->] (-19,0) -- (19.5,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,50) node[above] {\small $z$};
+    \foreach \v in {-15,15} \draw (\v,0.6) -- (\v,-0.6) node[below, font=\scriptsize] {$\v$};
+    \foreach \v in {20,40} \draw (0.3,\v) -- (-0.3,\v) node[left, font=\scriptsize] {$\v$};
+  \end{tikzpicture}
+\end{center}
+
+Obrázek je průmět trajektorie do roviny $xz$ pro časy $t\in[2, 26]$. Trajektorie krouží kolem jednoho `oka', pak nepředvídatelně přeskočí k druhému, udělá tam pár obrátek a zase přeskočí. Má tvar motýlích křídel, což je náhoda, ale pěkná.
+
+Podstatná je jiná vlastnost. Spočítáme dvě řešení, která se na začátku liší o $0{,}0001$ v souřadnici $x$:
+
+\begin{center}
+  \begin{tikzpicture}[x=0.37cm, y=0.075cm]
+    \draw[gray!50] (0,0) -- (30,0);
+    \draw[thick, colorofwisdom] plot[smooth] coordinates {(0.00,1.00) (0.10,2.13) (0.20,6.54) (0.30,16.68) (0.40,15.37) (0.50,1.20) (0.60,-4.83) (0.70,-7.05) (0.80,-8.64) (0.90,-9.69) (1.00,-9.38) (1.10,-8.08) (1.20,-7.17) (1.30,-7.36) (1.40,-8.48) (1.50,-9.67) (1.60,-9.64) (1.70,-8.35) (1.80,-7.20) (1.90,-7.15) (2.00,-8.17) (2.10,-9.54) (2.20,-9.87) (2.30,-8.67) (2.40,-7.29) (2.50,-6.96) (2.60,-7.83) (2.70,-9.32) (2.80,-10.04) (2.90,-9.04) (3.00,-7.46) (3.10,-6.82) (3.20,-7.48) (3.30,-9.01) (3.40,-10.13) (3.50,-9.44) (3.60,-7.71) (3.70,-6.73) (3.80,-7.13) (3.90,-8.62) (4.00,-10.09) (4.10,-9.85) (4.20,-8.07) (4.30,-6.73) (4.40,-6.80) (4.50,-8.16) (4.60,-9.91) (4.70,-10.22) (4.80,-8.54) (4.90,-6.83) (5.00,-6.51) (5.10,-7.65) (5.20,-9.57) (5.30,-10.50) (5.40,-9.10) (5.50,-7.06) (5.60,-6.29) (5.70,-7.12) (5.80,-9.07) (5.90,-10.60) (6.00,-9.74) (6.10,-7.46) (6.20,-6.18) (6.30,-6.60) (6.40,-8.42) (6.50,-10.46) (6.60,-10.38) (6.70,-8.06) (6.80,-6.22) (6.90,-6.13) (7.00,-7.66) (7.10,-10.02) (7.20,-10.91) (7.30,-8.87) (7.40,-6.47) (7.50,-5.76) (7.60,-6.86) (7.70,-9.27) (7.80,-11.14) (7.90,-9.87) (8.00,-7.01) (8.10,-5.57) (8.20,-6.09) (8.30,-8.24) (8.40,-10.87) (8.50,-10.90) (8.60,-7.94) (8.70,-5.64) (8.80,-5.42) (8.90,-7.06) (9.00,-9.98) (9.10,-11.62) (9.20,-9.32) (9.30,-6.13) (9.40,-4.96) (9.50,-5.88) (9.60,-8.53) (9.70,-11.52) (9.80,-10.99) (9.90,-7.30) (10.00,-4.90) (10.10,-4.85) (10.20,-6.76) (10.30,-10.19) (10.40,-12.23) (10.50,-9.37) (10.60,-5.57) (10.70,-4.19) (10.80,-5.03) (10.90,-7.81) (11.00,-11.66) (11.10,-12.01) (11.20,-7.59) (11.30,-4.31) (11.40,-3.72) (11.50,-5.16) (11.60,-8.63) (11.70,-12.71) (11.80,-11.49) (11.90,-6.24) (12.00,-3.34) (12.10,-3.09) (12.20,-4.71) (12.30,-8.49) (12.40,-13.26) (12.50,-11.90) (12.60,-5.77) (12.70,-2.50) (12.80,-1.95) (12.90,-2.93) (13.00,-5.74) (13.10,-11.23) (13.20,-14.85) (13.30,-8.64) (13.40,-2.55) (13.50,-0.38) (13.60,0.23) (13.70,0.63) (13.80,1.44) (13.90,3.52) (14.00,8.73) (14.10,16.52) (14.20,11.93) (14.30,1.98) (14.40,-2.18) (14.50,-4.27) (14.60,-7.15) (14.70,-11.26) (14.80,-12.54) (14.90,-8.22) (15.00,-4.39) (15.10,-3.39) (15.20,-4.48) (15.30,-7.59) (15.40,-12.16) (15.50,-12.62) (15.60,-7.22) (15.70,-3.43) (15.80,-2.59) (15.90,-3.61) (16.00,-6.60) (16.10,-11.81) (16.20,-13.86) (16.30,-7.86) (16.40,-2.90) (16.50,-1.36) (16.60,-1.49) (16.70,-2.75) (16.80,-5.94) (16.90,-12.23) (17.00,-15.30) (17.10,-7.35) (17.20,-1.21) (17.30,0.96) (17.40,2.23) (17.50,4.42) (17.60,9.01) (17.70,14.62) (17.80,11.52) (17.90,4.13) (18.00,0.79) (18.10,-0.17) (18.20,-0.63) (18.30,-1.41) (18.40,-3.34) (18.50,-8.17) (18.60,-15.91) (18.70,-12.80) (18.80,-2.80) (18.90,1.66) (19.00,3.70) (19.10,6.35) (19.20,10.59) (19.30,13.11) (19.40,9.18) (19.50,4.58) (19.60,2.99) (19.70,3.58) (19.80,6.08) (19.90,10.76) (20.00,13.79) (20.10,9.14) (20.20,3.89) (20.30,2.04) (20.40,2.23) (20.50,3.92) (20.60,7.90) (20.70,13.83) (20.80,12.91) (20.90,5.34) (21.00,1.25) (21.10,0.06) (21.20,-0.33) (21.30,-0.78) (21.40,-1.83) (21.50,-4.61) (21.60,-11.20) (21.70,-17.20) (21.80,-8.35) (21.90,-0.09) (22.00,3.02) (22.10,5.20) (22.20,8.56) (22.30,12.26) (22.40,11.32) (22.50,6.65) (22.60,3.94) (22.70,3.79) (22.80,5.63) (22.90,9.48) (23.00,13.12) (23.10,10.55) (23.20,5.38) (23.30,3.06) (23.40,3.16) (23.50,5.10) (23.60,9.28) (23.70,13.73) (23.80,10.99) (23.90,4.93) (24.00,2.17) (24.10,1.86) (24.20,2.97) (24.30,5.97) (24.40,11.72) (24.50,14.86) (24.60,8.03) (24.70,2.12) (24.80,0.07) (24.90,-0.63) (25.00,-1.39) (25.10,-3.14) (25.20,-7.41) (25.30,-14.81) (25.40,-13.90) (25.50,-4.17) (25.60,0.75) (25.70,2.72) (25.80,4.90) (25.90,8.88) (26.00,13.39) (26.10,11.39) (26.20,5.45) (26.30,2.51) (26.40,2.16) (26.50,3.38) (26.60,6.60) (26.70,12.29) (26.80,14.19) (26.90,7.31) (27.00,2.15) (27.10,0.51) (27.20,0.19) (27.30,0.24) (27.40,0.52) (27.50,1.30) (27.60,3.46) (27.70,9.13) (27.80,17.47) (27.90,11.16) (28.00,0.73) (28.10,-3.37) (28.20,-5.64) (28.30,-8.59) (28.40,-11.54) (28.50,-10.86) (28.60,-7.19) (28.70,-4.90) (28.80,-4.93) (28.90,-6.90) (29.00,-10.33) (29.10,-12.17) (29.20,-9.18) (29.30,-5.49) (29.40,-4.24) (29.50,-5.17) (29.60,-8.02) (29.70,-11.80) (29.80,-11.80) (29.90,-7.36) (30.00,-4.26)};
+    \draw[thick, dashed] plot[smooth] coordinates {(0.00,1.00) (0.10,2.13) (0.20,6.54) (0.30,16.69) (0.40,15.37) (0.50,1.20) (0.60,-4.83) (0.70,-7.05) (0.80,-8.64) (0.90,-9.69) (1.00,-9.38) (1.10,-8.08) (1.20,-7.17) (1.30,-7.36) (1.40,-8.48) (1.50,-9.67) (1.60,-9.64) (1.70,-8.35) (1.80,-7.20) (1.90,-7.15) (2.00,-8.17) (2.10,-9.54) (2.20,-9.87) (2.30,-8.67) (2.40,-7.29) (2.50,-6.96) (2.60,-7.83) (2.70,-9.32) (2.80,-10.04) (2.90,-9.04) (3.00,-7.46) (3.10,-6.82) (3.20,-7.48) (3.30,-9.01) (3.40,-10.13) (3.50,-9.44) (3.60,-7.71) (3.70,-6.73) (3.80,-7.13) (3.90,-8.62) (4.00,-10.09) (4.10,-9.85) (4.20,-8.07) (4.30,-6.73) (4.40,-6.80) (4.50,-8.16) (4.60,-9.91) (4.70,-10.22) (4.80,-8.54) (4.90,-6.83) (5.00,-6.51) (5.10,-7.65) (5.20,-9.57) (5.30,-10.50) (5.40,-9.10) (5.50,-7.06) (5.60,-6.29) (5.70,-7.12) (5.80,-9.07) (5.90,-10.60) (6.00,-9.74) (6.10,-7.46) (6.20,-6.18) (6.30,-6.60) (6.40,-8.42) (6.50,-10.46) (6.60,-10.38) (6.70,-8.06) (6.80,-6.22) (6.90,-6.13) (7.00,-7.66) (7.10,-10.02) (7.20,-10.91) (7.30,-8.87) (7.40,-6.47) (7.50,-5.76) (7.60,-6.86) (7.70,-9.27) (7.80,-11.14) (7.90,-9.87) (8.00,-7.01) (8.10,-5.57) (8.20,-6.09) (8.30,-8.24) (8.40,-10.87) (8.50,-10.90) (8.60,-7.94) (8.70,-5.64) (8.80,-5.42) (8.90,-7.06) (9.00,-9.98) (9.10,-11.62) (9.20,-9.32) (9.30,-6.13) (9.40,-4.96) (9.50,-5.88) (9.60,-8.53) (9.70,-11.52) (9.80,-10.99) (9.90,-7.30) (10.00,-4.90) (10.10,-4.85) (10.20,-6.76) (10.30,-10.19) (10.40,-12.23) (10.50,-9.37) (10.60,-5.57) (10.70,-4.19) (10.80,-5.03) (10.90,-7.81) (11.00,-11.66) (11.10,-12.01) (11.20,-7.59) (11.30,-4.31) (11.40,-3.72) (11.50,-5.16) (11.60,-8.63) (11.70,-12.71) (11.80,-11.49) (11.90,-6.24) (12.00,-3.34) (12.10,-3.09) (12.20,-4.71) (12.30,-8.49) (12.40,-13.26) (12.50,-11.90) (12.60,-5.77) (12.70,-2.50) (12.80,-1.95) (12.90,-2.93) (13.00,-5.74) (13.10,-11.23) (13.20,-14.85) (13.30,-8.64) (13.40,-2.55) (13.50,-0.38) (13.60,0.23) (13.70,0.63) (13.80,1.44) (13.90,3.52) (14.00,8.73) (14.10,16.52) (14.20,11.92) (14.30,1.98) (14.40,-2.18) (14.50,-4.27) (14.60,-7.15) (14.70,-11.26) (14.80,-12.54) (14.90,-8.22) (15.00,-4.39) (15.10,-3.39) (15.20,-4.48) (15.30,-7.59) (15.40,-12.16) (15.50,-12.62) (15.60,-7.22) (15.70,-3.43) (15.80,-2.59) (15.90,-3.61) (16.00,-6.60) (16.10,-11.81) (16.20,-13.86) (16.30,-7.87) (16.40,-2.90) (16.50,-1.36) (16.60,-1.49) (16.70,-2.75) (16.80,-5.93) (16.90,-12.22) (17.00,-15.31) (17.10,-7.37) (17.20,-1.22) (17.30,0.97) (17.40,2.23) (17.50,4.42) (17.60,9.01) (17.70,14.62) (17.80,11.52) (17.90,4.13) (18.00,0.80) (18.10,-0.16) (18.20,-0.61) (18.30,-1.37) (18.40,-3.26) (18.50,-7.99) (18.60,-15.78) (18.70,-13.08) (18.80,-2.96) (18.90,1.62) (19.00,3.69) (19.10,6.32) (19.20,10.51) (19.30,13.08) (19.40,9.26) (19.50,4.66) (19.60,3.04) (19.70,3.62) (19.80,6.11) (19.90,10.76) (20.00,13.75) (20.10,9.13) (20.20,3.93) (20.30,2.10) (20.40,2.32) (20.50,4.08) (20.60,8.17) (20.70,13.97) (20.80,12.56) (20.90,5.12) (21.00,1.26) (21.10,0.18) (21.20,-0.10) (21.30,-0.29) (21.40,-0.69) (21.50,-1.78) (21.60,-4.77) (21.70,-12.03) (21.80,-17.62) (21.90,-7.05) (22.00,1.08) (22.10,4.12) (22.20,6.48) (22.30,9.69) (22.40,11.87) (22.50,9.75) (22.60,6.18) (22.70,4.67) (22.80,5.35) (22.90,7.91) (23.00,11.36) (23.10,11.67) (23.20,7.80) (23.30,4.80) (23.40,4.31) (23.50,5.87) (23.60,9.28) (23.70,12.49) (23.80,10.57) (23.90,6.05) (24.00,3.86) (24.10,4.10) (24.20,6.30) (24.30,10.39) (24.40,13.09) (24.50,9.43) (24.60,4.76) (24.70,3.07) (24.80,3.60) (24.90,6.04) (25.00,10.64) (25.10,13.75) (25.20,9.28) (25.30,4.02) (25.40,2.14) (25.50,2.34) (25.60,4.08) (25.70,8.14) (25.80,13.92) (25.90,12.59) (26.00,5.18) (26.10,1.31) (26.20,0.24) (26.30,0.00) (26.40,-0.08) (26.50,-0.21) (26.60,-0.53) (26.70,-1.44) (26.80,-4.06) (26.90,-10.92) (27.00,-18.38) (27.10,-8.31) (27.20,1.13) (27.30,4.59) (27.40,6.87) (27.50,9.59) (27.60,11.22) (27.70,9.50) (27.80,6.65) (27.90,5.46) (28.00,6.23) (28.10,8.59) (28.20,11.14) (28.30,10.67) (28.40,7.52) (28.50,5.42) (28.60,5.45) (28.70,7.32) (28.80,10.34) (28.90,11.62) (29.00,8.91) (29.10,5.81) (29.20,4.88) (29.30,6.01) (29.40,8.85) (29.50,11.76) (29.60,10.74) (29.70,6.91) (29.80,4.70) (29.90,4.84) (30.00,6.93)};
+    \draw[->] (0,-21) -- (0,23) node[above] {\small $x$};
+    \draw[->] (30,0) -- (30.8,0) node[right] {\small $t$};
+    \foreach \t in {10,20,30} \node[below, font=\scriptsize] at (\t,-20) {$\t$};
+    \foreach \t in {10,20,30} \draw[gray!50] (\t,-19) -- (\t,-20);
+  \end{tikzpicture}
+\end{center}
+
+Zhruba do času $t\approx 20$ jsou křivky k nerozeznání. Pak se rozejdou a dál spolu nemají nic společného. Malá odchylka v čase roste zhruba exponenciálně, přibližně jako $\mathrm{e}^{0{,}9t}$, takže desetkrát přesnější měření prodlouží předpověď jen o pevný kousek času, asi o $2{,}5$ časové jednotky. Tomu se říká \textbf{citlivá závislost na počátečních podmínkách} neboli \textbf{chaos}. Lorenz na ni přišel už v roce 1961 u jiného, většího modelu počasí, když výpočet zopakoval od poloviny a ze zkrácené číselné sestavy opsal hodnotu $0{,}506$ místo uložených $0{,}506127$. Předpověď se po čase úplně rozešla s původní. V roce 1972 pak měl přednášku s názvem `Způsobí mávnutí křídel motýla v Brazílii tornádo v Texasu?' a odtud pochází \textbf{motýlí efekt}.
+
+Poctivě: chaos neznamená, že je všechno náhodné. Krátkodobá předpověď funguje (počasí na tři dny je dnes velmi spolehlivé), a dlouhodobé \textit{statistické} vlastnosti, jako tvar atraktoru, jsou stabilní. Klima předpovědět jde, počasí na konkrétní den za měsíc ne. Chaos se navíc může objevit jen u nelineárních rovnic a nejméně ve třech rozměrech (pro autonomní soustavy). V rovině se trajektorie nemohou křížit, a tak nemají dost místa, aby se `zamotaly'.
+
+\section{Parciální diferenciální rovnice}
+
+Zatím neznámá funkce závisela na jedné proměnné, čase. Teplota tyče ale závisí na čase \textit{i} na místě, $u = u(x, t)$. Rovnice s parciálními derivacemi (kapitola~\ref{kap:vice-promennych}) se nazývají \textbf{parciální diferenciální rovnice} (PDR). Píšeme $u_t = \frac{\partial u}{\partial t}$, $u_{xx} = \frac{\partial^2u}{\partial x^2}$.
+
+\subsection{Rovnice vedení tepla}
+
+\begin{definitionbox}
+  \textbf{Rovnice vedení tepla}: $u_t = k\,u_{xx}$, kde $k > 0$ je tepelná vodivost (přesněji teplotní vodivost) materiálu.
+\end{definitionbox}
+
+Proč zrovna druhá derivace? Druhá derivace měří, jak se hodnota v bodě liší od průměru okolí. Pokud je bod chladnější než jeho sousedé ($u_{xx} > 0$, graf je `miska'), teplo do něj přitéká a teplota roste. Pokud je teplejší než okolí (`kopec', $u_{xx} < 0$), chladne. Diskrétně: $u_{xx}\approx\frac{u(x - h) - 2u(x) + u(x + h)}{h^2}$, tedy dvakrát rozdíl mezi průměrem sousedů a hodnotou v bodě, děleno $h^2$. Rovnice tepla říká: \textit{každý bod se snaží vyrovnat se svým okolím}.
+
+Vezměme tyč délky $\pi$, která má na začátku všude teplotu $1$ a jejíž konce ponoříme do ledu (teplota $0$). Řešení hledáme \textbf{separací proměnných} ve tvaru $u = X(x)T(t)$. Dosazení dá $XT' = kX''T$, tedy
+\begin{equation*}
+  \frac{T'}{kT} = \frac{X''}{X} = -\lambda.
+\end{equation*}
+Levá strana závisí jen na $t$, prostřední jen na $x$, takže obě musí být rovny konstantě. Podmínky $X(0) = X(\pi) = 0$ splní jen $X = \sin nx$ s $\lambda = n^2$, a pak $T = \mathrm{e}^{-kn^2t}$. Rovnice je lineární, takže řešení můžeme sčítat. Počáteční podmínku $u(x, 0) = 1$ rozložíme do Fourierovy řady, přesně jako obdélníkovou vlnu v kapitole~\ref{kap:rady}:
+\begin{equation*}
+  u(x, t) = \frac{4}{\pi}\left(\mathrm{e}^{-kt}\sin x + \frac{\mathrm{e}^{-9kt}}{3}\sin 3x + \frac{\mathrm{e}^{-25kt}}{5}\sin 5x + \cdots\right).
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=3cm, y=3cm]
+    \draw[thick, gray] (0,0) -- (0,1) -- (3.1416,1) -- (3.1416,0);
+    \foreach \T/\col in {0.02/colorofwisdom!35, 0.1/colorofwisdom!55, 0.4/colorofwisdom!80, 1.2/colorofwisdom} {
+      \draw[thick, \col, domain=0:3.1416, samples=120] plot (\x, {4/pi*(exp(-\T)*sin(deg(\x))+exp(-9*\T)*sin(deg(3*\x))/3+exp(-25*\T)*sin(deg(5*\x))/5+exp(-49*\T)*sin(deg(7*\x))/7+exp(-81*\T)*sin(deg(9*\x))/9+exp(-121*\T)*sin(deg(11*\x))/11+exp(-169*\T)*sin(deg(13*\x))/13+exp(-225*\T)*sin(deg(15*\x))/15)});
+    }
+    \draw[->] (-0.05,0) -- (3.35,0) node[right] {\small $x$};
+    \draw[->] (0,-0.05) -- (0,1.2) node[above] {\small $u$};
+    \node[below, font=\scriptsize] at (3.1416,0) {$\pi$};
+    \foreach \y/\l in {0.997/{0{,}02}, 0.82/{0{,}1}, 0.493/{0{,}4}, 0.217/{1{,}2}} \node[font=\scriptsize, fill=white, inner sep=1pt] at (2.54,\y) {$t = \l$};
+  \end{tikzpicture}
+\end{center}
+
+Obrázek je pro $k = 1$. Ostré rohy počátečního stavu (šedě) se okamžitě zakulatí a profil se postupně propadá k nule. Vzorec ukazuje proč: člen s frekvencí $n$ slábne jako $\mathrm{e}^{-n^2t}$, takže vysoké frekvence, tedy ostré detaily, zmizí skoro hned. Brzy zbude jen první člen, jediná sinusová `vlna', která pomalu klesá. Teplo všechno rozmaže. Mimochodem, právě kvůli této rovnici Fourier své řady vymyslel.
+
+\begin{note}
+  V roce 1862 použil William Thomson (pozdější lord Kelvin) rovnici vedení tepla k odhadu stáří Země. Předpokládal, že Země vznikla jako žhavá koule a od té doby jen chladne vedením. Z toho, jak rychle roste teplota s hloubkou v dolech, mu vyšlo $20$ až $400$ milionů let, později dokonce jen $20$ až $40$ milionů. Darwinovi, jehož evoluce potřebovala mnohem víc času, to působilo velké starosti. Matematika byla v pořádku, chybný byl model: Kelvin nevěděl o teple z radioaktivního rozpadu (objeven až v roce 1896) a hlavně předpokládal pevnou Zemi, kde se teplo šíří jen vedením, a ne prouděním hornin v plášti, na což upozornil už v roce 1895 John Perry. Dnes víme, že Zemi je asi $4{,}5$ miliardy let.
+\end{note}
+
+\subsection{Vlnová rovnice}
+
+\begin{definitionbox}
+  \textbf{Vlnová rovnice}: $u_{tt} = c^2u_{xx}$, kde $c$ je rychlost šíření vlny.
+\end{definitionbox}
+
+Rozdíl proti rovnici tepla je jediný: místo první derivace podle času je druhá. Je to Newtonův zákon pro strunu. Každý kousek struny je zrychlován (to je $u_{tt}$) tím víc, čím víc je struna v jeho okolí prohnutá (to je $u_{xx}$). Napnutá struna délky $\pi$ s upevněnými konci se separací proměnných rozloží na \textbf{vlastní kmity} (módy)
+\begin{equation*}
+  u_n(x, t) = \sin nx\,\cos nct,\qquad n = 1, 2, 3, \dots
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=3cm, y=0.55cm]
+    \foreach \n in {1,2,3} {
+      \begin{scope}[yshift={-(\n-1)*1.5cm}]
+        \draw[gray!50] (0,0) -- (3.1416,0);
+        \foreach \a/\col in {1/colorofwisdom, 0.5/colorofwisdom!45, -0.5/colorofwisdom!45, -1/colorofwisdom} {
+          \draw[thick, \col, domain=0:3.1416, samples=60] plot (\x, {\a*sin(deg(\n*\x))});
+        }
+        \fill (0,0) circle (2pt) (3.1416,0) circle (2pt);
+        \node[font=\scriptsize, anchor=west] at (3.3,0) {$n = \n$};
+      \end{scope}
+    }
+    \fill[gray] (1.5708,-2.727) circle (1.6pt);
+    \fill[gray] (1.0472,-5.454) circle (1.6pt) (2.0944,-5.454) circle (1.6pt);
+  \end{tikzpicture}
+\end{center}
+
+Struna kmitá jako celek ($n = 1$, základní tón), nebo ve dvou polovinách s uzlem uprostřed ($n = 2$, o oktávu výš), nebo ve třetinách. Body, které stojí na místě (šedě), jsou \textbf{uzly}. Obecný pohyb struny je součtem módů, $u = \sum\big(a_n\cos nct + b_n\sin nct\big)\sin nx$, a koeficienty se zase spočítají jako Fourierovy koeficienty počáteční polohy a rychlosti. Na rozdíl od tepla tady vysoké frekvence nezanikají, protože $\cos nct$ jen kmitá a neslábne.
+
+Jean le Rond d'Alembert našel v roce 1747 i jiný pohled. Každé řešení vlnové rovnice na nekonečné struně je tvaru
+\begin{equation*}
+  u(x, t) = F(x - ct) + G(x + ct),
+\end{equation*}
+tedy součet dvou tvarů, které beze změny jedou rychlostí $c$ doprava a doleva. (Dosazením: $u_{tt} = c^2F'' + c^2G''$ a $u_{xx} = F'' + G''$.) Pokud strunu na začátku jen vychýlíme do tvaru $f$ a pustíme, je $u = \frac{1}{2}\big(f(x - ct) + f(x + ct)\big)$: hrbol se rozdělí na dva poloviční, které se rozjedou na opačné strany. Pro strunu s pevnými konci se tytéž hrboly na koncích odrážejí převrácené, a když je sečteme, dostaneme právě stojaté vlny z obrázku.
+
+\subsection{Laplaceova rovnice}
+
+Když se teplota v desce přestane měnit, je $u_t = 0$ a ve dvou rozměrech zbude \textbf{Laplaceova rovnice}
+\begin{equation*}
+  \Delta u = u_{xx} + u_{yy} = 0.
+\end{equation*}
+Řešení se nazývají \textbf{harmonické funkce} a mají krásnou vlastnost: hodnota v každém bodě je \textit{průměrem} hodnot na libovolné kružnici kolem něj. Proto harmonická funkce nemůže mít uvnitř oblasti maximum ani minimum, nejvyšší a nejnižší hodnoty jsou vždy na okraji. Laplaceovu rovnici splňuje ustálená teplota, gravitační a elektrický potenciál v prázdném prostoru i (přibližně) tvar mýdlové blány napnuté na drátěném rámu. A reálná i imaginární část každé komplexně derivovatelné funkce je harmonická (kapitola~\ref{kap:komplexni-analyza}).
+
+Tři rovnice, teplo, vlna a Laplace, jsou tři základní typy PDR: \textbf{parabolický} (rozmazávání), \textbf{hyperbolický} (šíření) a \textbf{eliptický} (rovnováha). Jména nejsou náhodná. Pochází z kuželoseček z kapitoly~\ref{kap:kuzelosecky}: když v rovnici $u_t = u_{xx}$, $u_{tt} = u_{xx}$, $u_{tt} + u_{xx} = 0$ nahradíme derivace proměnnými, dostaneme $t = x^2$ (parabola), $t^2 = x^2$ (degenerovaná hyperbola, dvě přímky, po kterých se šíří vlny) a $t^2 + x^2 = 0$ (bod, degenerovaná elipsa).
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Vyřešte $y' = xy^2$, $y(0) = 1$. Kde řešení `vybuchne'?
+    \item Najděte obecné řešení rovnice $y'' - 3y' + 2y = 0$ a rovnice $y'' + 2y' + 5y = 0$.
+    \item Jakou periodu má kmitání závaží $0{,}5$ kg na pružině s tuhostí $50\ \mathrm{N}/\mathrm{m}$?
+    \item Ověřte, že $u = \mathrm{e}^{-t}\sin x$ řeší rovnici vedení tepla s $k = 1$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\int y^{-2}\,\mathrm{d}y = \int x\,\mathrm{d}x$, $-\frac{1}{y} = \frac{x^2}{2} + c$, z podmínky $c = -1$, tedy $y = \frac{2}{2 - x^2}$. Řešení existuje jen pro $|x| < \sqrt{2}$, kde jde do nekonečna, i když pravá strana rovnice je všude hezká. Picardova věta slibuje řešení jen \textit{lokálně}, a tohle je důvod.
+    \item $\lambda^2 - 3\lambda + 2 = 0$ má kořeny $1$, $2$: $y = C_1\mathrm{e}^t + C_2\mathrm{e}^{2t}$. $\lambda^2 + 2\lambda + 5 = 0$ má kořeny $-1\pm 2i$: $y = \mathrm{e}^{-t}(C_1\cos 2t + C_2\sin 2t)$.
+    \item $\omega_0 = \sqrt{50/0{,}5} = 10\ \mathrm{s}^{-1}$, $T = \frac{2\pi}{10}\approx 0{,}63$ s.
+    \item $u_t = -\mathrm{e}^{-t}\sin x$, $u_{xx} = -\mathrm{e}^{-t}\sin x$.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Profesorka z Palibina}
+
+Sofja Vasiljevna Korvin-Krukovská se narodila v roce 1850 v Moskvě a dětství strávila na rodinném statku Palibino. Podle jejích vlastních vzpomínek došly při tapetování dětského pokoje tapety, a tak jednu stěnu polepili listy ze starých litografovaných přednášek matematika Ostrogradského o diferenciálním a integrálním počtu. Malá Sofja před nimi stála celé hodiny a snažila se rozluštit podivné symboly. Když se pak jako dospívající učila analýzu, učitel žasl, jak rychle ji chápe, `jako by ji už znala'.
+
+V Rusku tehdy ženy nesměly studovat na univerzitě a bez souhlasu otce nebo manžela nemohly ani vycestovat. Otec o studiu v cizině nechtěl slyšet. Sofja proto v osmnácti letech uzavřela \textit{fiktivní} sňatek s mladým studentem Vladimirem Kovalevským, který byl ochoten si ji vzít jen proto, aby mohla odjet. V Heidelbergu směla přednášky jen poslouchat se svolením profesorů, v Berlíně ji na univerzitu nepustili vůbec. Slavný Karl Weierstrass jí podle vyprávění dal, snad aby se jí zbavil, sadu těžkých úloh. Za týden se vrátila s vyřešenými, a on ji pak čtyři roky učil soukromě.
+
+V roce 1874 jí univerzita v Göttingenu udělila doktorát s nejvyšší pochvalou, bez ústní zkoušky, za tři práce. Je považována za první ženu, která získala doktorát z matematiky v dnešním smyslu. Jedna z prací obsahovala dnešní \textbf{Cauchyovu--Kovalevské větu}, základní větu o existenci řešení parciálních diferenciálních rovnic, tedy o rovnicích z poslední části této kapitoly.
+
+Pak přišla léta bez práce: žádná univerzita ji nechtěla zaměstnat. Fiktivní manželství se mezitím změnilo ve skutečné a v roce 1878 se jim narodila dcera. Vladimir se ale zapletl do nepoctivých obchodů, finančně se zruinoval a v roce 1883 si vzal život. Sofja zůstala sama s malou dcerou. Zachránil ji švédský matematik Gösta Mittag-Leffler, který jí vymohl místo na nové univerzitě ve Stockholmu. V roce 1888 vyhrála prestižní Prix Bordin pařížské Akademie věd za práci o rotaci tuhého tělesa kolem pevného bodu. Práce byla podána anonymně pod heslem `Říkej, co víš, dělej, co musíš, ať se stane, co se má stát', a porota ji ohodnotila tak vysoko, že cenu zvýšila z $3\,000$ na $5\,000$ franků. V roce 1889 se stala řádnou profesorkou, jako jedna z prvních žen na světě.
+
+Užívala si toho jen krátce. V zimě roku 1891 se nachladila na zpáteční cestě do Stockholmu, nemoc přešla v zápal plic a 10.~února zemřela ve Stockholmu. Bylo jí jedenačtyřicet let. Kromě matematiky po ní zůstaly i romány a vzpomínky z dětství, ve kterých popsala i tu stěnu polepenou kalkulem.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je řešením diferenciální rovnice a k čemu slouží počáteční podmínka? Co je směrové pole?
+    \item Jak se řeší rovnice se separovanými proměnnými? Odvoďte řešení logistické rovnice a popište jeho tvar.
+    \item Co je integrační faktor a proč funguje?
+    \item Jak funguje Eulerova metoda a proč je její chyba úměrná délce kroku?
+    \item Co říká Picardova věta? Uveďte rovnici, jejíž řešení není jednoznačné.
+    \item Proč u lineárních rovnic s konstantními koeficienty zkoušíme $\mathrm{e}^{\lambda t}$? Jak souvisí kořeny charakteristické rovnice s vlastními čísly?
+    \item Popište tři režimy tlumeného oscilátoru a vysvětlete rezonanci. Proč Tacoma Narrows nebyla obyčejná rezonance?
+    \item Co je fázový portrét? Proč jsou trajektorie Lotkových--Volterrových rovnic uzavřené?
+    \item Co je chaos a proč nejde dlouhodobě předpovídat počasí, i když jsou rovnice deterministické?
+    \item Jak se separací proměnných řeší rovnice vedení tepla a proč vysoké frekvence mizí nejrychleji? Čím se liší vlnová rovnice?
+  \end{enumerate}
+\end{problem}

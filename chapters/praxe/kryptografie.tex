@@ -1,0 +1,471 @@
+\label{kap:kryptografie}
+\mathquote{Nikdo dosud neobjevil žádný válečný účel, kterému by mohla sloužit teorie čísel nebo relativita, a zdá se velmi nepravděpodobné, že by se to v příštích mnoha letech podařilo.}{G.\,H. Hardy, \textit{Obrana matematikova}, 1940}
+
+Hardy byl hrdý na to, že jeho obor je zcela neužitečný. Mýlil se dvakrát. Pět let po vydání jeho knihy dopadly na Japonsko atomové bomby, a o další tři desetiletí později se teorie čísel stala páteří vojenské i civilní komunikace. Pokaždé, když zaplatíte kartou na internetu, odemknete telefon nebo pošlete zprávu, běží na pozadí malá Fermatova věta z kapitoly~\ref{kap:teorie-cisel}.
+
+\textbf{Kryptografie} je umění poslat zprávu tak, aby jí rozuměl jen adresát. V této kapitole projdeme cestu od římských šifer, které rozluští každý desetiletý, přes Enigmu až k šifrování s veřejným klíčem, které funguje, i když se odesílatel s adresátem nikdy neviděli. Ukážeme také, proč to funguje, tedy dokážeme to.
+
+\section{Klasické šifry}
+
+Terminologie: zprávě, kterou chceme utajit, říkáme \textbf{otevřený text}, zašifrované podobě \textbf{šifrový text}. Postup závisí na \textbf{klíči}, tajemství, které znají jen odesílatel a příjemce.
+
+\subsection{Caesarova šifra}
+
+Podle Suetonia psal Julius Caesar důvěrné dopisy tak, že každé písmeno nahradil písmenem o tři místa dál v abecedě. Ztotožníme-li písmena s čísly $A = 0$, $B = 1$, \dots, $Z = 25$, je to obyčejné sčítání modulo $26$:
+\begin{equation*}
+  E(x) = x + k\bmod 26,\qquad D(y) = y - k\bmod 26.
+\end{equation*}
+Fyzicky se šifra realizuje dvěma kotouči s abecedou, vnitřní pootočený o $k$ míst.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick] (0,0) circle (2.25);
+    \draw[thick, fill=colorofwisdom!10] (0,0) circle (1.7);
+    \draw (0,0) circle (1.15);
+    \foreach \l [count=\i from 0] in {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z} {
+      \node[font=\small] at ({90-360/26*\i}:1.98) {\l};
+      \draw[gray!60] ({90-360/26*(\i+0.5)}:1.7) -- ({90-360/26*(\i+0.5)}:2.25);
+    }
+    \foreach \l [count=\i from 0] in {D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,A,B,C} {
+      \node[font=\small, colorofwisdom] at ({90-360/26*\i}:1.43) {\l};
+    }
+    \node[font=\scriptsize, align=center] at (0,0) {$k = 3$\\venku: otevřený\\uvnitř: šifrový};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{minipage}[b]{4.5cm}
+    \small
+    \texttt{VENI VIDI VICI}\\
+    $\downarrow$ $+3$\\
+    \texttt{\textcolor{colorofwisdom}{YHQL YLGL YLFL}}
+
+    \medskip
+    \scriptsize Klíčů je jen $25$. Útočník je prostě všechny vyzkouší.
+  \end{minipage}
+\end{center}
+
+\subsection{Substituční šifra a frekvenční analýza}
+
+Místo posunu můžeme abecedu libovolně \textit{zamíchat}: $A\to Q$, $B\to W$, \dots. Klíčem je permutace $26$ písmen, a těch je podle kapitoly~\ref{kap:kombinatorika} $26!\approx 4\cdot 10^{26}$. Kdyby útočník zkoušel miliardu klíčů za sekundu, trvalo by mu to přes deset miliard let. A přesto tuto šifru luští luštitelé křížovek v novinách.
+
+Trik popsal arabský učenec al-Kindí už v 9. století. V přirozeném jazyce nejsou písmena stejně častá. Substituce sice písmena přejmenuje, ale jejich četnosti zachová. Nejčastější písmeno šifrového textu je tedy nejspíš obraz nejčastějšího písmene jazyka.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.42cm, y=0.3cm]
+    \foreach \l/\f [count=\i from 0] in {A/8.2,B/1.5,C/2.8,D/4.3,E/12.7,F/2.2,G/2.0,H/6.1,I/7.0,J/0.15,K/0.8,L/4.0,M/2.4,N/6.7,O/7.5,P/1.9,Q/0.1,R/6.0,S/6.3,T/9.1,U/2.8,V/1.0,W/2.4,X/0.15,Y/2.0,Z/0.07} {
+      \pgfmathsetmacro{\shade}{\f > 6 ? 70 : 30}
+      \fill[colorofwisdom!\shade] (\i+0.12,0) rectangle (\i+0.88,\f);
+      \node[font=\scriptsize] at (\i+0.5,-0.7) {\l};
+    }
+    \draw (0,0) -- (26,0);
+    \foreach \y in {0,4,8,12} {
+      \draw[gray!40] (0,\y) -- (26,\y);
+      \node[left, font=\scriptsize] at (0,\y) {$\y\,\%$};
+    }
+    \node[font=\scriptsize, anchor=west] at (14,12.5) {přibližné četnosti písmen v angličtině};
+  \end{tikzpicture}
+\end{center}
+
+V angličtině vede E (asi $12{,}7\,\%$), pak T, A, O, I, N. V češtině je nejčastější O, pak E, A, N (a háčky situaci komplikují jen trochu). Kromě jednotlivých písmen pomáhají i dvojice: v angličtině je nejčastější TH, a za Q skoro vždy následuje U. Delší zprávu tak lze rozluštit tužkou a papírem za pár hodin.
+
+\subsection{Vigenèrova šifra}
+
+Obranou proti frekvenční analýze je použít \textit{více} Caesarových šifer střídavě. Klíčem je slovo, třeba \texttt{KLIC}, a jeho písmena udávají posuny $10, 11, 8, 2$, které se opakují dokola.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.62cm, y=0.62cm]
+    \foreach \p/\k/\c [count=\i from 0] in {U/K/E,T/L/E,O/I/W,K/C/M,Z/K/J,A/L/L,C/I/K,N/C/P,E/K/O,Z/L/K,R/I/Z,A/C/C,N/K/X,A/L/L} {
+      \node[font=\small\ttfamily] at (\i,2) {\p};
+      \node[font=\small\ttfamily, gray] at (\i,1) {\k};
+      \node[font=\small\ttfamily, colorofwisdom] at (\i,0) {\c};
+    }
+    \foreach \i in {0,4,8,12} \draw[gray!60, rounded corners=2pt] (\i-0.45,0.55) rectangle (\i+3.45,1.45);
+    \node[font=\scriptsize, anchor=east] at (-0.6,2) {text};
+    \node[font=\scriptsize, anchor=east] at (-0.6,1) {klíč};
+    \node[font=\scriptsize, anchor=east] at (-0.6,0) {šifra};
+    \draw[->, thick, colorofwisdom!60] (0.3,1.85) .. controls (0.6,1.1) .. (0.3,0.25);
+    \node[font=\scriptsize, anchor=west] at (14,1) {$U + K = 20 + 10 = 30\equiv 4 = E$};
+  \end{tikzpicture}
+\end{center}
+
+Písmeno Z se jednou zašifrovalo na J, podruhé na K, a A na L i na C. Četnosti se rozmazaly. Šifra se tři sta let považovala za nerozluštitelnou, `le chiffre indéchiffrable'. (Mimochodem ji poprvé popsal Giovan Battista Bellaso v roce 1553, Vigenère dostal jméno omylem.) Její slabinou je ale opakování klíče. Zjistíme-li jeho délku $L$, rozpadne se šifrový text na $L$ obyčejných Caesarových šifer, každou z nich rozluštíme frekvenční analýzou. Délku klíče prozradí opakující se úseky šifry. Tuto metodu našel Charles Babbage kolem roku 1854 (nepublikoval ji) a nezávisle Friedrich Kasiski, který ji v roce 1863 vydal.
+
+\section{Dokonalá šifra: jednorázová tabulka}
+
+Co kdyby byl klíč stejně dlouhý jako zpráva, zcela náhodný a použitý jen jednou? V počítači pracujeme s bity a místo sčítání modulo $26$ použijeme sčítání modulo $2$, operaci \textbf{XOR} ($\oplus$): $0\oplus 0 = 1\oplus 1 = 0$, $0\oplus 1 = 1\oplus 0 = 1$.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.55cm, y=0.6cm]
+    \foreach \m/\k/\c [count=\i from 0] in {1/0/1,0/1/1,1/1/0,1/0/1,0/1/1,0/0/0,1/1/0,0/1/1} {
+      \node[draw, minimum size=0.5cm, font=\small\ttfamily] at (\i,2) {\m};
+      \node[draw, minimum size=0.5cm, font=\small\ttfamily, fill=gray!20] at (\i,1) {\k};
+      \node[draw, minimum size=0.5cm, font=\small\ttfamily, fill=colorofwisdom!25] at (\i,0) {\c};
+    }
+    \node[font=\scriptsize, anchor=east] at (-0.7,2) {zpráva $m$};
+    \node[font=\scriptsize, anchor=east] at (-0.7,1) {$\oplus$ klíč $k$};
+    \node[font=\scriptsize, anchor=east] at (-0.7,0) {$=$ šifra $c$};
+    \draw (-0.5,0.5) -- (7.5,0.5);
+    \node[font=\scriptsize, anchor=west, align=left] at (8.2,1) {dešifrování:\\$c\oplus k = m\oplus k\oplus k = m$,\\protože $k\oplus k = 0$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Věta} (Shannon, 1949): Je-li klíč $k\in\{0, 1\}^n$ zvolen rovnoměrně náhodně a nezávisle na zprávě, pak šifrový text $c = m\oplus k$ neprozradí o zprávě $m$ vůbec nic: pro každou zprávu $m$ a každý šifrový text $c$ je
+  \begin{equation*}
+    P(C = c\mid M = m) = 2^{-n}.
+  \end{equation*}
+  Rozložení šifrového textu je tedy stejné, ať byla poslána jakákoli zpráva.
+\end{definitionbox}
+
+\begin{proof}
+  Pro dané $m$ a $c$ existuje právě jeden klíč, který $m$ převede na $c$, totiž $k = m\oplus c$. Ten byl zvolen s pravděpodobností $2^{-n}$.
+\end{proof}
+
+Intuitivně: daný šifrový text mohl stejně dobře vzniknout ze zprávy \texttt{ANO} jako ze zprávy \texttt{NE!}, jen s jiným klíčem. Útočník s neomezeným výpočetním výkonem je na tom stejně jako bez něj. Háček je praktický. Klíč musí být stejně dlouhý jako všechny zprávy dohromady a doručený předem, třeba diplomatickou poštou. A nikdy se nesmí použít dvakrát: z $c_1 = m_1\oplus k$ a $c_2 = m_2\oplus k$ dostane útočník $c_1\oplus c_2 = m_1\oplus m_2$, a z toho se oba texty dají vyluštit. Přesně to se stalo Sovětskému svazu ve 40. letech. Kvůli nedostatku materiálu se část tabulek vytiskla dvakrát a americký projekt Venona díky tomu přečetl tisíce zpráv sovětských zpravodajců.
+
+\section{Enigma a Kerckhoffsův princip}
+
+Ve 20. letech 20. století začala německá armáda používat \textbf{Enigmu}, elektromechanický stroj se třemi otočnými \textbf{rotory}. Stisk klávesy pustil proud přes propojovací desku (která prohodila několik dvojic písmen), přes tři rotory, odrazil se v \textbf{reflektoru} a vrátil se jinou cestou zpět, až rozsvítil žárovku se šifrovým písmenem. Po každém stisku se rychlý rotor pootočil o jedno místo, takže se šifrování měnilo s každým písmenem. Je to Vigenère s neuvěřitelně dlouhým klíčem.
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=0.55cm]
+    \foreach \x/\lab in {1.2/{deska}, 3/{rotor 3}, 4.6/{rotor 2}, 6.2/{rotor 1}} {
+      \draw[thick, fill=colorofwisdom!8] (\x-0.3,-0.4) rectangle (\x+0.3,5.4);
+      \node[font=\scriptsize] at (\x,-1) {\lab};
+    }
+    \draw[thick, fill=gray!25] (7.6,-0.4) rectangle (8.1,5.4);
+    \node[font=\scriptsize] at (7.85,-1) {reflektor};
+    \draw[very thick, colorofwisdom, ->] (-0.6,4) -- (0.9,4) -- (1.5,1.5) -- (2.7,1.5) -- (3.3,3.5) -- (4.3,3.5) -- (4.9,0.5) -- (5.9,0.5) -- (6.5,2.5) -- (7.6,2.5);
+    \draw[very thick, colorofwisdom, dashed, ->] (7.6,2.5) -- (7.85,2.5) -- (7.85,4.8) -- (7.6,4.8) -- (6.5,4.8) -- (5.9,3) -- (4.9,3) -- (4.3,4.8) -- (3.3,4.8) -- (2.7,0.2) -- (1.5,0.2) -- (0.9,2.4) -- (-0.6,2.4);
+    \node[font=\scriptsize, anchor=east] at (-0.7,4) {klávesa A};
+    \node[font=\scriptsize, anchor=east] at (-0.7,2.4) {žárovka G};
+  \end{tikzpicture}
+\end{center}
+
+Reflektor měl elegantní vedlejší účinek: stejné nastavení šifruje i dešifruje, protože cesta proudu je vratná. A měl i fatální slabinu: \textbf{žádné písmeno se nikdy nezašifruje samo na sebe} (proud se nemůže vrátit stejným drátem, kterým přišel). Počet všech nastavení armádní Enigmy s deseti kabely na desce je přibližně $1{,}59\cdot 10^{20}$. Hrubou silou to v roce 1940 nešlo. Šlo to chytrostí a matematikou, jak uvidíme v příběhu na konci kapitoly.
+
+\begin{definitionbox}
+  \textbf{Kerckhoffsův princip} (1883): Šifrovací systém musí zůstat bezpečný, i když nepřítel zná vše kromě klíče.
+\end{definitionbox}
+
+Spojenci znali konstrukci Enigmy (polští matematici ji zrekonstruovali už v roce 1932), a na tajemství stroje tedy nebylo možné spoléhat. Moderní šifry jako AES jsou proto veřejné, roky je zkoumají tisíce odborníků a tajný je jen klíč. Firma, která tvrdí, že má `vlastní tajný šifrovací algoritmus', vám tím obvykle říká, že ho nikdo neprověřil.
+
+\section{Šifrování s veřejným klíčem}
+
+Všechny dosavadní šifry jsou \textbf{symetrické}: kdo umí šifrovat, umí i dešifrovat. Odesílatel a příjemce se proto musí předem dohodnout na klíči. Jak to ale udělat s e-shopem na druhém konci světa, když jediný kanál, který máte, je odposlouchávaný internet? Dlouho se zdálo, že to nejde. V roce 1976 Whitfield Diffie a Martin Hellman ukázali, že ano.
+
+\subsection{Diffie--Hellman: míchání barev}
+
+Představte si, že Alice a Bob chtějí získat společnou barvu, kterou Eva, která vidí všechno, co si pošlou, nezná. Barvy se snadno míchají, ale směs se nedá rozdělit zpět na složky.
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=1cm, pot/.style={circle, draw, minimum size=0.75cm, inner sep=0pt, font=\scriptsize}]
+    \node[font=\small\bfseries] at (0,4.3) {Alice};
+    \node[font=\small\bfseries] at (4,4.3) {veřejně (Eva)};
+    \node[font=\small\bfseries] at (8,4.3) {Bob};
+    \draw[gray!50, dashed] (2,4.6) -- (2,-0.6) (6,4.6) -- (6,-0.6);
+    \node[pot, fill=gray!25] at (4,3.4) {};
+    \node[font=\scriptsize, anchor=west] at (4.45,3.4) {společná};
+    \node[pot, fill=gray!25] (a0) at (-0.5,3.4) {}; \node[pot, fill=colorofwisdom!70] at (0.5,3.4) {};
+    \node[font=\scriptsize] at (0,2.85) {+ tajná Alice};
+    \node[pot, fill=gray!25] at (7.5,3.4) {}; \node[pot, fill=black!70] at (8.5,3.4) {};
+    \node[font=\scriptsize] at (8,2.85) {+ tajná Bob};
+    \node[pot, fill=colorofwisdom!40] (am) at (0,1.9) {};
+    \node[pot, fill=black!35] (bm) at (8,1.9) {};
+    \node[pot, fill=colorofwisdom!40] (am2) at (3.5,1.9) {};
+    \node[pot, fill=black!35] (bm2) at (4.5,1.9) {};
+    \draw[->, thick] (am) -- (am2);
+    \draw[->, thick] (bm) -- (bm2);
+    \draw[->, thick] (am2) to[out=-30, in=170] (7.6,0.5);
+    \draw[->, thick] (bm2) to[out=-150, in=10] (0.4,0.5);
+    \node[pot, fill=black!35] at (-0.5,0.4) {}; \node[pot, fill=colorofwisdom!70] at (0.5,0.4) {};
+    \node[pot, fill=colorofwisdom!40] at (7.5,0.4) {}; \node[pot, fill=black!70] at (8.5,0.4) {};
+    \node[pot, fill=colorofwisdom!50!black!70, minimum size=0.95cm] at (0,-0.5) {};
+    \node[pot, fill=colorofwisdom!50!black!70, minimum size=0.95cm] at (8,-0.5) {};
+    \node[font=\scriptsize, align=center] at (4,-0.35) {stejná výsledná barva;\\Eva má jen dvě směsi\\a neumí je rozmíchat};
+  \end{tikzpicture}
+\end{center}
+
+Obě strany do výsledné barvy přimíchaly společnou barvu, tajnou barvu Alice i tajnou barvu Boba, jen v jiném pořadí. Matematicky potřebujeme operaci, která se snadno provede, ale těžko vrací, a ve které nezáleží na pořadí. Tou je umocňování modulo prvočíslo.
+
+\begin{definitionbox}
+  \textbf{Protokol Diffie--Hellman}: Veřejně se zvolí velké prvočíslo $p$ a číslo $g$.
+  \begin{enumerate}
+    \item Alice si tajně zvolí $a$ a pošle $A = g^a\bmod p$. Bob si tajně zvolí $b$ a pošle $B = g^b\bmod p$.
+    \item Alice spočítá $B^a$, Bob spočítá $A^b$. Oba dostanou stejný \textbf{sdílený klíč}
+    \begin{equation*}
+      s = B^a = {(g^b)}^a = g^{ab} = {(g^a)}^b = A^b\pmod p.
+    \end{equation*}
+  \end{enumerate}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=0.62cm, box/.style={draw, rounded corners=2pt, font=\small, inner sep=3pt, minimum width=2.7cm}]
+    \node[box, fill=colorofwisdom!10] (al) at (0,3) {tajné $a = 6$};
+    \node[box, fill=colorofwisdom!10] (bo) at (8,3) {tajné $b = 15$};
+    \node[box, fill=gray!15] (pub) at (4,3) {$p = 23$, $g = 5$};
+    \node[box] (A) at (0,1.4) {$A = 5^6\bmod 23 = 8$};
+    \node[box] (B) at (8,1.4) {$B = 5^{15}\bmod 23 = 19$};
+    \draw[->, thick] (A.east) -- node[above, font=\scriptsize] {$8$} (B.west);
+    \draw[->, thick] (B.west) ++(0,-0.3) -- node[below, font=\scriptsize] {$19$} ($(A.east)+(0,-0.3)$);
+    \node[box, fill=colorofwisdom!30] at (0,-0.5) {$19^6\bmod 23 = 2$};
+    \node[box, fill=colorofwisdom!30] at (8,-0.5) {$8^{15}\bmod 23 = 2$};
+    \node[font=\scriptsize, align=center] at (4,-0.5) {Eva zná $23, 5, 8, 19$;\\potřebuje $a$ z $5^a\equiv 8$};
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Diskrétní logaritmus}
+
+Eva by potřebovala vyřešit rovnici $g^a\equiv A\pmod p$, tedy spočítat \textbf{diskrétní logaritmus} $a$. Pro reálná čísla je logaritmus snadný, protože $2^x$ je rostoucí funkce a stačí `půlit interval'. Modulo prvočíslo ale mocniny skáčou chaoticky. Na grafu je $2^x\bmod 101$ pro $x = 0, 1, \ldots, 99$. Z hodnoty se o exponentu nedá nic vyčíst.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.105cm, y=0.04cm]
+    \draw[->] (0,0) -- (106,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,110) node[above, font=\scriptsize] {$2^x\bmod 101$};
+    \foreach \x in {0,20,40,60,80,100} \node[below, font=\scriptsize] at (\x,0) {$\x$};
+    \foreach \y in {50,100} \node[left, font=\scriptsize] at (0,\y) {$\y$};
+    \draw[gray, dashed, domain=0:6.7, samples=30] plot (\x, {2^\x});
+    \foreach \y [count=\x from 0] in {1,2,4,8,16,32,64,27,54,7,14,28,56,11,22,44,88,75,49,98,95,89,77,53,5,10,20,40,80,59,17,34,68,35,70,39,78,55,9,18,36,72,43,86,71,41,82,63,25,50,100,99,97,93,85,69,37,74,47,94,87,73,45,90,79,57,13,26,52,3,6,12,24,48,96,91,81,61,21,42,84,67,33,66,31,62,23,46,92,83,65,29,58,15,30,60,19,38,76,51} {
+      \fill[colorofwisdom] (\x,\y) circle (1.2pt);
+    }
+    \node[font=\scriptsize, gray, anchor=west] at (7,100) {$2^x$ v $\mathbb{R}$};
+  \end{tikzpicture}
+\end{center}
+
+Umocňovat je přitom rychlé i pro tisícimístné exponenty: \textbf{opakovaným umocňováním na druhou} spočítáme $g^2, g^4, g^8, \ldots$ a vynásobíme ty, které odpovídají jedničkám ve dvojkovém zápisu exponentu. Na $g^{1000}$ stačí asi patnáct násobení. Pro opačný směr nikdo nezná algoritmus, který by byl pro $p$ s~$600$ ciframi rychlejší než miliardy let. Takovým funkcím říkáme \textbf{jednosměrné}.
+
+\section{RSA}
+
+Diffie--Hellman umožní dohodnout klíč. V roce 1977 přišli Ron Rivest, Adi Shamir a Leonard Adleman s něčím ještě silnějším: \textbf{veřejným klíčem}. Představte si visací zámky. Bob jich rozdá tisíce, zaklapnout je umí každý, ale klíček k nim má jen on. Kdokoli mu tak může poslat zamčenou zprávu, aniž by se předtím domlouvali.
+
+\begin{definitionbox}
+  \textbf{RSA}:
+  \begin{enumerate}
+    \item Bob zvolí dvě velká prvočísla $p, q$ a spočítá $n = pq$ a $\varphi(n) = (p - 1)(q - 1)$.
+    \item Zvolí $e$ nesoudělné s $\varphi(n)$ a Eukleidovým algoritmem najde $d$ s $ed\equiv 1\pmod{\varphi(n)}$.
+    \item \textbf{Veřejný klíč} je $(n, e)$, \textbf{soukromý klíč} je $d$. Čísla $p$, $q$, $\varphi(n)$ zahodí.
+  \end{enumerate}
+  Šifrování zprávy $0\leq m < n$: $c = m^e\bmod n$. Dešifrování: $m = c^d\bmod n$.
+\end{definitionbox}
+
+\begin{example}
+  $p = 61$, $q = 53$, tedy $n = 3233$ a $\varphi(n) = 60\cdot 52 = 3120$. Zvolíme $e = 17$. Rozšířený Eukleidův algoritmus dá $d = 2753$; zkouška: $17\cdot 2753 = 46\,801 = 15\cdot 3120 + 1$. Alice chce poslat $m = 65$:
+  \begin{equation*}
+    c = 65^{17}\bmod 3233 = 2790,\qquad 2790^{2753}\bmod 3233 = 65.
+  \end{equation*}
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=1cm, box/.style={draw, rounded corners=3pt, font=\small, inner sep=4pt, align=center}]
+    \node[box] (m) at (0,0) {Alice\\$m = 65$};
+    \node[box, fill=colorofwisdom!25] (c) at (5,0) {$c = 2790$};
+    \node[box] (m2) at (10,0) {Bob\\$m = 65$};
+    \draw[->, thick] (m) -- node[above, font=\scriptsize] {$m^{17}\bmod 3233$} node[below, font=\scriptsize, gray] {veřejný klíč $(3233, 17)$} (c);
+    \draw[->, thick] (c) -- node[above, font=\scriptsize] {$c^{2753}\bmod 3233$} node[below, font=\scriptsize, colorofwisdom] {soukromý klíč $2753$} (m2);
+    \node[font=\scriptsize, gray] at (5,0.75) {vidí každý};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(správnosti RSA)]
+  Máme ukázat $m^{ed}\equiv m\pmod n$. Protože $ed = 1 + k(p - 1)(q - 1)$, platí modulo $p$: je-li $p\mid m$, jsou obě strany nula. Jinak podle malé Fermatovy věty
+  \begin{equation*}
+    m^{ed} = m\cdot{\left(m^{p-1}\right)}^{k(q-1)}\equiv m\cdot 1 = m\pmod p.
+  \end{equation*}
+  Stejně $m^{ed}\equiv m\pmod q$. Číslo $m^{ed} - m$ je tedy dělitelné $p$ i $q$, a tím i $n = pq$ (čínská věta o zbytcích z kapitoly~\ref{kap:teorie-cisel}).
+\end{proof}
+
+Proč je to bezpečné? Útočník zná $n$ a $e$. Kdyby znal $\varphi(n)$, spočítal by $d$ stejně jako Bob. Jenže zjistit $\varphi(n)$ je stejně těžké jako rozložit $n$ na $p\cdot q$. Násobit umíme okamžitě, rozkládat ne. Největší rozložené číslo typu RSA, RSA-250 s $250$ ciframi ($829$ bitů), padlo v únoru 2020 po výpočtu, který by na jednom procesorovém jádru trval asi $2700$ let. Dnes se běžně používá $n$ s $2048$ bity, tedy $617$ ciframi.
+
+Zajímavost: stejný systém objevil už v roce 1973 Clifford Cocks z britské zpravodajské služby GCHQ. Byl ale přísně tajný a svět se o něm dozvěděl až v roce 1997.
+
+\subsection{Digitální podpis}
+
+RSA funguje i obráceně. Bob `zašifruje' zprávu svým \textit{soukromým} klíčem, $s = m^d\bmod n$, a pošle $m$ i $s$. Kdokoli ověří veřejným klíčem, že $s^e\equiv m$. Podpis $s$ mohl vyrobit jen ten, kdo zná $d$. V našem příkladu je podpis zprávy $65$ číslo $s = 65^{2753}\bmod 3233 = 588$ a skutečně $588^{17}\bmod 3233 = 65$. V praxi se nepodepisuje celá zpráva, ale její otisk, hash.
+
+\section{Hashovací funkce}
+
+\begin{definitionbox}
+  \textbf{Kryptografická hashovací funkce} $h$ přiřadí libovolně dlouhým datům krátký otisk pevné délky (například $256$ bitů u SHA-256) tak, že
+  \begin{itemize}
+    \item z otisku $h(x)$ nelze prakticky najít $x$ (jednosměrnost),
+    \item nelze prakticky najít dvě různá $x\neq y$ s $h(x) = h(y)$ (odolnost vůči kolizím),
+    \item malá změna vstupu změní otisk k nepoznání (\textbf{lavinový efekt}).
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  \small
+  \texttt{SHA-256("matematika") = 2bbdbedf819c7eab...1941dc08}\\
+  \texttt{SHA-256("Matematika") = fa67515751f6297f...3d547de2}\\
+  \normalsize
+  Jediné velké písmeno a z $256$ bitů se jich změnilo $131$, tedy zhruba polovina, jak by se čekalo u náhodných čísel.
+\end{example}
+
+\subsection{Narozeninový paradox}
+
+Kolizí musí existovat nekonečně mnoho, protože dat je víc než otisků. Kolik pokusů útočník potřebuje, než nějakou najde? V kapitole~\ref{kap:pravdepodobnost} jsme spočítali, že mezi $23$ lidmi mají dva narozeniny ve stejný den s pravděpodobností přes polovinu:
+\begin{equation*}
+  1 - \frac{365}{365}\cdot\frac{364}{365}\cdots\frac{343}{365}\approx 0{,}507.
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.18cm, y=4cm]
+    \draw[->] (0,0) -- (63,0) node[right] {\small počet lidí};
+    \draw[->] (0,0) -- (0,1.12) node[above, font=\scriptsize] {$P(\text{shoda})$};
+    \foreach \x in {10,20,30,40,50,60} \node[below, font=\scriptsize] at (\x,0) {$\x$};
+    \foreach \y/\l in {0.5/0{,}5, 1/1} {
+      \draw[gray!40] (0,\y) -- (60,\y);
+      \node[left, font=\scriptsize] at (0,\y) {$\l$};
+    }
+    \draw[thick, colorofwisdom] plot coordinates {(0,0) (1,0.0000) (2,0.0027) (3,0.0082) (4,0.0164) (5,0.0271) (6,0.0405) (7,0.0562) (8,0.0743) (9,0.0946) (10,0.1169) (11,0.1411) (12,0.1670) (13,0.1944) (14,0.2231) (15,0.2529) (16,0.2836) (17,0.3150) (18,0.3469) (19,0.3791) (20,0.4114) (21,0.4437) (22,0.4757) (23,0.5073) (24,0.5383) (25,0.5687) (26,0.5982) (27,0.6269) (28,0.6545) (29,0.6810) (30,0.7063) (31,0.7305) (32,0.7533) (33,0.7750) (34,0.7953) (35,0.8144) (36,0.8322) (37,0.8487) (38,0.8641) (39,0.8782) (40,0.8912) (41,0.9032) (42,0.9140) (43,0.9239) (44,0.9329) (45,0.9410) (46,0.9483) (47,0.9548) (48,0.9606) (49,0.9658) (50,0.9704) (51,0.9744) (52,0.9780) (53,0.9811) (54,0.9839) (55,0.9863) (56,0.9883) (57,0.9901) (58,0.9917) (59,0.9930) (60,0.9941)};
+    \draw[dashed] (23,0) -- (23,0.5073);
+    \fill[colorofwisdom] (23,0.5073) circle (2pt);
+    \node[font=\scriptsize, anchor=west] at (24,0.42) {$23$ lidí: $0{,}507$};
+    \node[font=\scriptsize, anchor=west] at (40,0.8) {$57$ lidí: $0{,}99$};
+    \fill (57,0.9901) circle (1.5pt);
+  \end{tikzpicture}
+\end{center}
+
+Párů lidí je totiž $\binom{23}{2} = 253$, a každý pár má šanci $\frac{1}{365}$. Obecně: mezi $N$ možnostmi čekáme první shodu po zhruba $\sqrt{N}$ pokusech. Pro $256$bitový hash je to $2^{128}\approx 3\cdot 10^{38}$ pokusů, což je bezpečné. Pro starou funkci SHA-1 se $160$ bity a matematickými slabinami to bylo málo: v roce 2017 předvedli výzkumníci z Googlu a CWI Amsterdam dva různé PDF soubory se stejným otiskem.
+
+\subsection{Hesla a sůl}
+
+Slušný server nikdy neukládá vaše heslo, jen jeho hash. Při přihlášení zahashuje, co jste napsali, a porovná. Když databázi někdo ukradne, hesla přímo nevidí. Může ale předem zahashovat milion nejčastějších hesel a hledat shody, a stejná hesla mají stejný otisk. Proto se ke každému heslu přidá náhodná \textbf{sůl}, uložená vedle: ukládá se $(r,\ h(r\,\|\,\text{heslo}))$. Předpočítané tabulky jsou pak k ničemu a útočník musí lámat každé heslo zvlášť. Navíc se používají záměrně pomalé funkce (bcrypt, Argon2), aby jeden pokus trval zlomek sekundy místo nanosekundy. Když v roce 2012 unikla z LinkedInu hesla uložená jako nesolené otisky SHA-1, velkou část z nich útočníci rozluštili během několika dní.
+
+\section{Eliptické křivky}
+
+Diffie--Hellman funguje v libovolné struktuře, kde se dá `násobit' a kde je diskrétní logaritmus těžký. Nejlepší dnes známá taková struktura pochází z geometrie.
+
+\begin{definitionbox}
+  \textbf{Eliptická křivka} je množina bodů $[x, y]$ s $y^2 = x^3 + ax + b$ (kde $4a^3 + 27b^2\neq 0$) spolu se zvláštním `bodem v nekonečnu' $O$. Body se \textbf{sčítají} takto: přímka bodů $P$, $Q$ protne křivku ve třetím bodě $R'$; jeho obraz v souměrnosti podle osy $x$ je $P + Q$. Pro $P = Q$ použijeme tečnu.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \draw[->, gray] (-1.7,0) -- (2.2,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-2.6) -- (0,2.7) node[above] {\small $y$};
+    \draw[thick, domain=-1.3247:1.9, samples=200] plot (\x, {sqrt(max(0,\x*\x*\x-\x+1))});
+    \draw[thick, domain=-1.3247:1.9, samples=200] plot (\x, {-sqrt(max(0,\x*\x*\x-\x+1))});
+    \draw[colorofwisdom, thick] (-1.6,1) -- (2,1);
+    \draw[dashed] (1,1) -- (1,-1);
+    \fill (-1,1) circle (1.8pt) node[above left, font=\scriptsize] {$P$};
+    \fill (0,1) circle (1.8pt) node[above right, font=\scriptsize] {$Q$};
+    \fill (1,1) circle (1.8pt) node[above right, font=\scriptsize] {$R'$};
+    \fill[colorofwisdom] (1,-1) circle (2.2pt) node[right, font=\scriptsize] {$P + Q$};
+    \node[font=\scriptsize] at (0.3,-2.95) {$y^2 = x^3 - x + 1$};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=1.15]
+    \draw[->, gray] (-1.7,0) -- (2.2,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-2.6) -- (0,2.7) node[above] {\small $y$};
+    \draw[thick, domain=-1.3247:1.9, samples=200] plot (\x, {sqrt(max(0,\x*\x*\x-\x+1))});
+    \draw[thick, domain=-1.3247:1.9, samples=200] plot (\x, {-sqrt(max(0,\x*\x*\x-\x+1))});
+    \draw[colorofwisdom, thick] (-1.5,-1.5) -- (2,2);
+    \draw[dashed] (-1,-1) -- (-1,1);
+    \fill (1,1) circle (1.8pt) node[below right, font=\scriptsize] {$P$};
+    \fill (-1,-1) circle (1.8pt) node[below left, font=\scriptsize] {$R'$};
+    \fill[colorofwisdom] (-1,1) circle (2.2pt) node[above left, font=\scriptsize] {$2P$};
+    \node[font=\scriptsize] at (0.3,-2.95) {tečna v $P$};
+  \end{tikzpicture}
+\end{center}
+
+Ověřme obrázek. Vlevo: body $P = [-1, 1]$ a $Q = [0, 1]$ leží na přímce $y = 1$. Dosazením do rovnice křivky $1 = x^3 - x + 1$, tedy $x(x - 1)(x + 1) = 0$, a třetí průsečík je $R' = [1, 1]$. Proto $P + Q = [1, -1]$. Vpravo: v bodě $P = [1, 1]$ má křivka (implicitní derivací $2yy' = 3x^2 - 1$) směrnici $y' = 1$, tečna je $y = x$. Dosazením $x^2 = x^3 - x + 1$, tedy ${(x - 1)}^2(x + 1) = 0$. Dvojnásobný kořen $x = 1$ je bod dotyku, třetí průsečík je $R' = [-1, -1]$, a tedy $2P = [-1, 1]$.
+
+Obecně pro $P = [x_1, y_1]$, $Q = [x_2, y_2]$ se směrnicí $\lambda = \frac{y_2 - y_1}{x_2 - x_1}$ (u tečny $\lambda = \frac{3x_1^2 + a}{2y_1}$) vyjde
+\begin{equation*}
+  x_3 = \lambda^2 - x_1 - x_2,\qquad y_3 = \lambda(x_1 - x_3) - y_1.
+\end{equation*}
+Tyto vzorce dávají smysl i modulo prvočíslo $p$, kde už žádný obrázek není, jen konečná množina bodů. Sčítání je komutativní a (což je překvapivě pracné ověřit) asociativní. Místo $g^a$ počítáme $aP = P + P + \cdots + P$ a diskrétní logaritmus je úloha: ze známých $P$ a $aP$ najít $a$. Pro eliptické křivky neznáme ani triky, které pomáhají modulo $p$, a tak stačí mnohem kratší klíče. Klíč s $256$ bity na eliptické křivce odpovídá zhruba $3072$bitovému RSA. Proto dnes eliptické křivky šifrují většinu webu i zpráv v telefonech.
+
+\section{Kvantová hrozba}
+
+V roce 1994 Peter Shor ukázal, že \textbf{kvantový počítač} by uměl rozkládat čísla i počítat diskrétní logaritmy rychle, v čase, který roste jen jako polynom v počtu cifer. Klíčová myšlenka: rozklad $n$ se dá převést na hledání periody funkce $x\mapsto a^x\bmod n$, tedy čísla $r$ s $a^r\equiv 1$. A periody kvantový počítač najde pomocí kvantové Fourierovy transformace, příbuzné Fourierových řad z kapitoly~\ref{kap:rady}. Najdeme-li sudé $r$, je $(a^{r/2} - 1)(a^{r/2} + 1)\equiv 0\pmod n$ a $\operatorname{NSD}(a^{r/2} - 1, n)$ je často netriviální dělitel $n$.
+
+Dosud postavené kvantové počítače jsou na to příliš malé a nepřesné. Data zašifrovaná dnes se ale dají uložit a rozluštit za dvacet let. Proto americký úřad NIST v roce 2024 standardizoval první \textbf{postkvantové} algoritmy, většinou založené na těžkých úlohách s mřížemi, na které Shorův algoritmus nestačí.
+
+\section{Odbočka --- Důkaz s nulovou znalostí}
+
+Jde dokázat, že něco vím, a přitom o tom nic neprozradit? Třeba že znám heslo, aniž bych ho řekl? Zní to jako paradox. Klasické vysvětlení (Quisquater a kol., 1989) používá jeskyni Ali Baby.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \fill[gray!20, even odd rule] (0,0.4) circle (1.9) (0,0.4) circle (1.2);
+    \draw[thick] (0,0.4) circle (1.9);
+    \draw[thick] (0,0.4) circle (1.2);
+    \fill[white] (-0.35,-1.7) rectangle (0.35,-0.65);
+    \fill[gray!20] (-0.35,-2.6) rectangle (0.35,-1.4);
+    \draw[thick] (-0.35,-2.6) -- (-0.35,-1.47) (0.35,-2.6) -- (0.35,-1.47);
+    \fill[colorofwisdom] (-0.08,1.6) rectangle (0.08,2.4);
+    \node[font=\scriptsize, colorofwisdom, above] at (0,2.4) {kouzelné dveře};
+    \node[font=\small] at (-1.55,0.4) {A};
+    \node[font=\small] at (1.55,0.4) {B};
+    \fill (-1.2,-0.9) circle (2.5pt);
+    \node[font=\scriptsize, anchor=east] at (-1.85,-1.1) {Petra (zná heslo)};
+    \fill (0,-2.3) circle (2.5pt);
+    \node[font=\scriptsize, anchor=west] at (0.5,-2.3) {Viktor čeká u vchodu};
+    \node[font=\scriptsize, align=left, anchor=west] at (2.6,0.4) {1.\ Petra jde tajně do A nebo B.\\2.\ Viktor zavolá: `vyjdi z A!'\\\phantom{2.\ }nebo `vyjdi z B!'\\3.\ Petra vyjde požadovanou\\\phantom{3.\ }stranou, je-li třeba,\\\phantom{3.\ }projde dveřmi.};
+  \end{tikzpicture}
+\end{center}
+
+Jeskyně má tvar okruhu a v jeho nejzazším místě jsou dveře, které otevře jen heslo. Kdo heslo zná, vyjde vždy tou stranou, kterou Viktor chce. Kdo ho nezná, musel na začátku hádat a uspěje s pravděpodobností $\frac{1}{2}$. Po $20$ kolech je šance podvodníka $2^{-20}<10^{-6}$. Viktor je přesvědčen.
+
+A přitom se nedozvěděl nic, co by nevěděl sám. Celý záznam (`zavolal jsem A, vyšla z A, zavolal jsem B, vyšla z B, \dots') by si mohl vyrobit i bez Petry, třeba domluvou s hercem, který se vždy předem dozví, co Viktor zavolá. Záznam tedy nikoho třetího nepřesvědčí. Přesvědčivá je jen \textit{interakce}, ve které Viktor volí náhodně až \textit{po} Petřině kroku. Tohle je přesná definice nulové znalosti: vše, co ověřovatel vidí, by si dokázal nasimulovat sám.
+
+Matematická verze. Petra zná $x$ s $y = g^x\bmod p$ (číslo $y$ je veřejné). V každém kole:
+\begin{enumerate}
+  \item Petra zvolí náhodné $r$ a pošle $t = g^r\bmod p$ (`vejde do jeskyně').
+  \item Viktor zvolí náhodně bit $c\in\{0, 1\}$ (`zavolá stranu').
+  \item Petra pošle $z = r + cx$ a Viktor ověří $g^z\equiv t\cdot y^c\pmod p$.
+\end{enumerate}
+Pro $c = 0$ Petra jen ukáže $r$, což o $x$ nic neříká. Pro $c = 1$ ukáže $r + x$, což je kvůli náhodnému $r$ také jen náhodné číslo. Kdo $x$ nezná, umí připravit odpověď jen na jednu z otázek, přesně jako v jeskyni. Takové protokoly dnes umožňují třeba prokázat, že je vám přes $18$ let, bez ukázání data narození.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Rozluštěte Caesarovu šifru \texttt{PDWHPDWLND} (posun neznáte).
+    \item RSA s $p = 5$, $q = 11$, $e = 3$: spočítejte $n$, $\varphi(n)$, $d$ a zašifrujte $m = 7$.
+    \item Diffie--Hellman s $p = 11$, $g = 2$, $a = 3$, $b = 4$: jaký je sdílený klíč?
+    \item Kolik pokusů zhruba potřebuje útočník na nalezení kolize $64$bitového hashe?
+    \item Proč u jednorázové tabulky nesmíme použít klíč dvakrát?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item Posun $3$: \texttt{MATEMATIKA}. Stačí vyzkoušet všech $25$ posunů. Rychleji: nejčastější písmeno \texttt{D} je nejspíš \texttt{A} nebo \texttt{E}, a posun $3$ dává smysl.
+    \item $n = 55$, $\varphi(n) = 40$, $d = 27$ ($3\cdot 27 = 81 = 2\cdot 40 + 1$). $c = 7^3 = 343 = 6\cdot 55 + 13$, tedy $c = 13$. Zkouška: $13^{27}\bmod 55 = 7$.
+    \item $A = 2^3 = 8$, $B = 2^4 = 16\equiv 5$. Klíč $B^a = 5^3 = 125\equiv 4$, a také $A^b = 8^4 = 4096\equiv 4\pmod{11}$.
+    \item Asi $\sqrt{2^{64}} = 2^{32}\approx 4\cdot 10^9$, to zvládne notebook.
+    \item Protože $c_1\oplus c_2 = m_1\oplus m_2$: klíč zmizí a zbude `součet' dvou zpráv, který se dá luštit statisticky.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Jablko u postele}
+
+Alan Turing se narodil v roce 1912 v Londýně. Ve čtyřiadvaceti letech napsal článek o `vyčíslitelných číslech', v němž popsal abstraktní stroj, který čte a píše symboly na nekonečnou pásku. Dnes mu říkáme Turingův stroj a je to matematický model každého počítače, včetně toho, na kterém byla vysázena tato kniha.
+
+Den poté, co Británie v září 1939 vyhlásila Německu válku, nastoupil do Bletchley Park, tajného britského luštitelského centra. Navázal na práci polských matematiků Mariana Rejewského, Jerzyho Różyckého a Henryka Zygalského, kteří Enigmu luštili už od roku 1932 a v červenci 1939, pár týdnů před německým útokem na Polsko, předali své poznatky Britům a Francouzům. Turing navrhl elektromechanický stroj zvaný \textit{bomba}, který rychle procházel nastavení rotorů a vyřazoval ta, která byla ve sporu s uhodnutým kouskem textu. Využíval přitom i slabinu reflektoru: písmeno se nikdy nezašifruje samo na sebe, takže uhodnuté slovo nemůže ležet na místě, kde by se s šifrou v nějakém písmeni shodovalo. Turing pak vedl tým Hut 8, který luštil šifry německého námořnictva, a s nimi zprávy ponorek, jež potápěly konvoje v Atlantiku. Historik Harry Hinsley, který sám v Bletchley Park pracoval, odhadoval, že luštění zkrátilo válku o dva až čtyři roky.
+
+Po válce navrhl jeden z prvních elektronických počítačů s uloženým programem a v roce 1950 se v článku zeptal, zda stroje mohou myslet. Jeho test, při kterém člověk konverzuje se strojem a má poznat, že to není člověk, se dodnes jmenuje po něm. Vše, co dělal za války, ale zůstalo přísně tajné.
+
+V lednu 1952 se mu vloupali do domu v Manchesteru. Turing krádež nahlásil a při vyšetřování přiznal, že má vztah s mužem. Homosexualita byla tehdy v Británii trestná. Byl obviněn z `hrubé neslušnosti' a odsouzen. Místo vězení zvolil hormonální `léčbu' syntetickým estrogenem, tedy chemickou kastraci, která trvala rok. Přišel o bezpečnostní prověrku a nesměl dál pracovat pro tajné služby.
+
+Sedmého června 1954 zemřel na otravu kyanidem, bylo mu jednačtyřicet. Úřední vyšetřování konstatovalo sebevraždu. U postele leželo napůl snědené jablko. Předpokládá se, že kyanid byl v něm, ale jablko nikdy nikdo neotestoval. Jeho matka věřila, že šlo o nehodu při chemických pokusech, které doma prováděl.
+
+V roce 2009 se za `otřesné zacházení' s Turingem veřejně omluvil britský premiér Gordon Brown. V roce 2013 mu královna Alžběta II. udělila posmrtnou milost. Od roku 2021 je jeho portrét na britské padesátilibrové bankovce. Hardy, který si myslel, že teorie čísel nikdy nebude sloužit válce, zemřel v roce 1947 a o Bletchley Park se nikdy nedozvěděl. Celý příběh zůstal utajený až do 70. let.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Proč je substituční šifra s $26!$ klíči slabá? Jak funguje frekvenční analýza?
+    \item V čem je Vigenèrova šifra lepší než Caesarova a jak se luští?
+    \item Proč je jednorázová tabulka dokonale bezpečná a proč se přesto běžně nepoužívá?
+    \item Co říká Kerckhoffsův princip? Jakou slabinu měl reflektor Enigmy?
+    \item Vysvětlete Diffie--Hellmanův protokol pomocí barev a pomocí mocnin modulo $p$.
+    \item Co je diskrétní logaritmus a proč je jeho výpočet těžký?
+    \item Popište generování klíčů v RSA a dokažte, že dešifrování vrátí původní zprávu.
+    \item Jak funguje digitální podpis?
+    \item Co je lavinový efekt a jak souvisí narozeninový paradox s kolizemi hashů? K čemu je sůl?
+    \item Jak se sčítají body na eliptické křivce a proč je kvantový počítač hrozbou pro RSA?
+  \end{enumerate}
+\end{problem}

@@ -1,0 +1,534 @@
+\label{kap:fyzika}
+\mathquote{Ta kniha je napsána jazykem matematiky a jejími písmeny jsou trojúhelníky, kružnice a jiné geometrické obrazce.}{Galileo Galilei, Il Saggiatore, 1623}
+
+Fyzika je místo, kde se matematika z celé této knihy setkává se skutečností. Pohyb planet jsou kuželosečky z kapitoly~\ref{kap:kuzelosecky}, Newtonovy zákony jsou diferenciální rovnice z kapitoly~\ref{kap:diferencialni}, elektromagnetismus je řeč vektorových polí z kapitoly~\ref{kap:vice-promennych} a kvantová mechanika je lineární algebra z kapitoly~\ref{kap:linearni-algebra} v nekonečně mnoha rozměrech. V této kapitole projdeme fyziku jako turisté: od hozeného míče přes oběžné dráhy, zákony zachování a světlo až k Einsteinovi a kvantům. Nebudeme se snažit o úplnost. Budeme hledat místa, kde je matematika nejkrásnější.
+
+\section{Newtonovy zákony jako diferenciální rovnice}
+
+\begin{definitionbox}
+  \textbf{Newtonovy pohybové zákony}:
+  \begin{enumerate}
+    \item Těleso, na které nepůsobí žádná síla, se pohybuje rovnoměrně přímočaře (nebo stojí).
+    \item Síla je rovna hmotnosti krát zrychlení: $\vec{F} = m\vec{a} = m\,\vec{r}\,''(t)$.
+    \item Působí-li těleso $A$ na těleso $B$ silou $\vec{F}$, působí $B$ na $A$ silou $-\vec{F}$.
+  \end{enumerate}
+\end{definitionbox}
+
+Druhý zákon je diferenciální rovnice druhého řádu pro polohu $\vec{r}(t)$. Pokud známe síly, počáteční polohu a počáteční rychlost, je podle Picardovy věty z kapitoly~\ref{kap:diferencialni} celý budoucí pohyb určen jednoznačně. Fyzika se tak dělí na dvě části: zjistit, jaké síly působí (to je fyzika), a vyřešit rovnici (to je matematika).
+
+\subsection{Šikmý vrh}
+
+Míč vrhneme rychlostí $v_0$ pod úhlem $\alpha$. Odpor vzduchu zanedbáme, takže jedinou silou je tíha $m\vec{g}$ směrem dolů. Druhý Newtonův zákon se rozpadne na dvě nezávislé rovnice:
+\begin{equation*}
+  x'' = 0,\qquad y'' = -g.
+\end{equation*}
+Dvojím integrováním a dosazením počátečních podmínek $x'(0) = v_0\cos\alpha$, $y'(0) = v_0\sin\alpha$ dostaneme
+\begin{equation*}
+  x(t) = v_0t\cos\alpha,\qquad y(t) = v_0t\sin\alpha - \frac{1}{2}gt^2.
+\end{equation*}
+Vyloučíme-li čas $t = \frac{x}{v_0\cos\alpha}$, vyjde rovnice dráhy $y = x\tg\alpha - \frac{g}{2v_0^2\cos^2\alpha}x^2$. Je to \textbf{parabola}, jak si všiml už Galileo.
+
+\begin{center}
+  \begin{tikzpicture}[x=9cm, y=9cm]
+    \foreach \a/\col in {15/gray, 30/colorofwisdom!50, 45/colorofwisdom, 60/colorofwisdom!50, 75/gray} {
+      \draw[thick, \col, domain=0:{sin(2*\a)}, samples=60] plot (\x, {\x*tan(\a)-\x*\x/(2*cos(\a)*cos(\a))});
+    }
+    \draw[very thick, colorofwisdom, domain=0:1, samples=60] plot (\x, {\x-\x*\x});
+    \draw[->] (0,0) -- (1.1,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,0.52) node[above] {\small $y$};
+    \foreach \a/\x/\y in {75/0.13/0.47, 60/0.33/0.39, 45/0.5/0.27, 30/0.62/0.15, 15/0.42/0.025} \node[font=\scriptsize, fill=white, inner sep=1pt] at (\x,\y) {$\a^\circ$};
+    \node[below, font=\scriptsize] at (1,0) {$\frac{v_0^2}{g}$};
+    \node[below, font=\scriptsize] at (0.5,0) {$\frac{v_0^2}{2g}$};
+    \node[below, font=\scriptsize] at (0.866,0) {$\frac{\sqrt{3}\,v_0^2}{2g}$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}[ (nejdelší dostřel)]
+  Míč dopadne, když $y(t) = 0$, tedy v čase $t = \frac{2v_0\sin\alpha}{g}$. Dostřel je
+  \begin{equation*}
+    D(\alpha) = v_0\cos\alpha\cdot\frac{2v_0\sin\alpha}{g} = \frac{v_0^2}{g}\sin 2\alpha.
+  \end{equation*}
+  Derivace $D'(\alpha) = \frac{2v_0^2}{g}\cos 2\alpha$ je nulová pro $2\alpha = 90^\circ$. Nejdál tedy dohodíme pod úhlem $\alpha = 45^\circ$, a to do vzdálenosti $\frac{v_0^2}{g}$. Na obrázku je také vidět, že úhly $\alpha$ a $90^\circ - \alpha$ (třeba $30^\circ$ a $60^\circ$) dají stejný dostřel, protože $\sin 2\alpha = \sin(180^\circ - 2\alpha)$. Se skutečným odporem vzduchu je optimální úhel o něco menší než $45^\circ$.
+\end{example}
+
+\section{Gravitace a Keplerovy zákony}
+
+Johannes Kepler (o jehož dramatickém životě jsme psali v kapitole~\ref{kap:stereometrie}) strávil roky výpočty z pozorování Tychona Brahe a v letech 1609 a 1619 vyslovil tři zákony.
+
+\begin{definitionbox}
+  \textbf{Keplerovy zákony}:
+  \begin{enumerate}
+    \item Planety obíhají po elipsách, v jejichž jednom ohnisku je Slunce.
+    \item Průvodič planety (spojnice Slunce--planeta) opíše za stejnou dobu stejnou plochu.
+    \item Druhé mocniny oběžných dob jsou úměrné třetím mocninám velkých poloos: $T^2\sim a^3$.
+  \end{enumerate}
+  \textbf{Newtonův gravitační zákon}: Dvě tělesa o hmotnostech $M$, $m$ ve vzdálenosti $r$ se přitahují silou velikosti $F = G\frac{Mm}{r^2}$, $G\approx 6{,}674\cdot 10^{-11}\ \mathrm{N\,m^2\,kg^{-2}}$.
+\end{definitionbox}
+
+Kepler své zákony \textit{našel} v datech. Newton je o necelých osmdesát let později \textit{odvodil} z jediné rovnice $m\vec{r}\,'' = -\frac{GMm}{r^3}\vec{r}$. Byl to snad největší triumf matematiky v dějinách vědy.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.4]
+    \fill[colorofwisdom!25] (0,0) -- plot[smooth] coordinates {(0.362,-1.664) (0.672,-1.360) (0.940,-0.977) (1.130,-0.515) (1.200,0.000) (1.130,0.515) (0.940,0.977) (0.672,1.360) (0.362,1.664)} -- cycle;
+    \fill[colorofwisdom!25] (0,0) -- plot[smooth] coordinates {(-4.728,0.522) (-4.760,0.393) (-4.782,0.262) (-4.796,0.131) (-4.800,0.000) (-4.796,-0.131) (-4.782,-0.262) (-4.760,-0.393) (-4.728,-0.522)} -- cycle;
+    \draw[thick] (-1.8,0) ellipse (3 and 2.4);
+    \draw[colorofwisdom] (0,0) -- (0.362,-1.664) (0,0) -- (0.362,1.664) (0,0) -- (-4.728,0.522) (0,0) -- (-4.728,-0.522);
+    \fill[colorofwisdom] (0,0) circle (3pt);
+    \node[below, font=\scriptsize] at (0,-0.08) {Slunce};
+    \fill (-3.6,0) circle (1pt) node[below, font=\scriptsize] {$F_2$};
+    \fill (0.940,0.977) circle (2pt) node[right, font=\scriptsize] {planeta};
+    \node[font=\scriptsize] at (1.65,0) {perihelium};
+    \node[font=\scriptsize] at (-5.4,0) {afelium};
+    \node[font=\scriptsize, align=center] at (-2.4,0.9) {stejné plochy\\za stejnou dobu};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je elipsa s výstředností $0{,}6$ a dvě výseče, které planeta proběhne za stejný čas (desetinu oběžné doby). U Slunce je výseč krátká a široká, daleko od Slunce dlouhá a úzká. Planeta tedy blízko Slunce letí rychle a daleko pomalu.
+
+\begin{proof}[(druhý Keplerův zákon)]
+  Za krátký čas $\mathrm{d}t$ opíše průvodič trojúhelníček o obsahu $\frac{1}{2}|\vec{r}\times\vec{v}|\,\mathrm{d}t$ (obsah trojúhelníku přes vektorový součin z kapitoly~\ref{kap:prostor}). Stačí tedy ukázat, že vektor $\vec{L} = \vec{r}\times\vec{v}$ je konstantní. Derivace součinu dá
+  \begin{equation*}
+    \vec{L}\,' = \vec{v}\times\vec{v} + \vec{r}\times\vec{v}\,' = \vec{0} + \vec{r}\times\left(-\frac{GM}{r^3}\vec{r}\right) = \vec{0},
+  \end{equation*}
+  protože vektorový součin rovnoběžných vektorů je nulový.
+\end{proof}
+
+Důkaz použil jen to, že síla míří do středu. Druhý zákon je proto zákonem zachování \textbf{momentu hybnosti} $m\vec{r}\times\vec{v}$ a platí pro jakoukoli centrální sílu. Krasobruslařka, která při piruetě přitáhne ruce k tělu, se roztočí rychleji ze stejného důvodu.
+
+\subsection{Proč kuželosečky}
+
+První zákon dá víc práce. Zapíšeme dráhu v polárních souřadnicích $r(\theta)$ a použijeme substituci $u = \frac{1}{r}$. Po několika řádcích (dvakrát derivace složené funkce a zachování momentu hybnosti) se pohybová rovnice změní na
+\begin{equation*}
+  \frac{\mathrm{d}^2u}{\mathrm{d}\theta^2} + u = \frac{GM}{h^2},\qquad\text{kde } h = |\vec{r}\times\vec{v}|.
+\end{equation*}
+To je rovnice harmonického oscilátoru z kapitoly~\ref{kap:diferencialni}, jen s konstantou napravo! Její řešení je $u = \frac{GM}{h^2}(1 + e\cos\theta)$, tedy
+\begin{equation*}
+  r = \frac{p}{1 + e\cos\theta},\qquad p = \frac{h^2}{GM}.
+\end{equation*}
+To je přesně rovnice kuželosečky s ohniskem v počátku a výstředností $e$. Pro $e < 1$ je to elipsa, pro $e = 1$ parabola a pro $e > 1$ hyperbola.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \begin{scope}
+      \clip (-3.6,-2.4) rectangle (1.6,2.4);
+      \draw[thick, gray] (0,0) circle (1);
+      \draw[thick, colorofwisdom!60, domain=0:360, samples=100] plot ({cos(\x)/(1+0.5*cos(\x))}, {sin(\x)/(1+0.5*cos(\x))});
+      \draw[very thick, colorofwisdom, domain=-145:145, samples=100] plot ({cos(\x)/(1+cos(\x))}, {sin(\x)/(1+cos(\x))});
+      \draw[thick, dashed, domain=-125:125, samples=100] plot ({cos(\x)/(1+1.5*cos(\x))}, {sin(\x)/(1+1.5*cos(\x))});
+    \end{scope}
+    \fill[colorofwisdom] (0,0) circle (2.5pt);
+    \node[font=\scriptsize, gray] at (-0.45,0.55) {$e = 0$};
+    \node[font=\scriptsize, colorofwisdom!60, fill=white, inner sep=1pt] at (-1.75,0.35) {$e = 0{,}5$};
+    \node[font=\scriptsize, colorofwisdom, fill=white, inner sep=1pt] at (-2.75,1.95) {$e = 1$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt] at (-0.75,2.2) {$e = 1{,}5$};
+  \end{tikzpicture}
+\end{center}
+
+Kterou kuželosečku těleso opíše, rozhoduje jeho celková energie $E = \frac{1}{2}mv^2 - \frac{GMm}{r}$. Záporná energie znamená elipsu (těleso je `uvězněné'), nulová parabolu a kladná hyperbolu: těleso proletí kolem Slunce a už se nevrátí. Tak létají některé komety a tak se kolem planet `prakem' urychlují kosmické sondy.
+
+\begin{example}[ (úniková rychlost)]
+  Jakou rychlostí musíme vystřelit těleso z povrchu Země (bez odporu vzduchu), aby uniklo? Potřebujeme $E\geq 0$:
+  \begin{equation*}
+    \frac{1}{2}mv^2 - \frac{GMm}{R}\geq 0\quad\Longrightarrow\quad v\geq\sqrt{\frac{2GM}{R}} = \sqrt{\frac{2\cdot 3{,}986\cdot 10^{14}}{6{,}371\cdot 10^6}}\ \mathrm{m/s}\approx 11{,}2\ \mathrm{km/s}.
+  \end{equation*}
+  Hmotnost tělesa se zkrátila: z povrchu Země musí cihla i raketa letět stejně rychle. Pro kruhovou dráhu těsně nad povrchem stačí $\sqrt{GM/R}\approx 7{,}9$ km/s, což je přesně $\sqrt{2}$-krát méně.
+\end{example}
+
+\begin{example}[ (třetí Keplerův zákon)]
+  Pro kruhovou dráhu poloměru $r$ je gravitace dostředivou silou: $\frac{GMm}{r^2} = \frac{mv^2}{r}$, a za jednu oběžnou dobu planeta urazí $2\pi r = vT$. Odtud $T^2 = \frac{4\pi^2}{GM}r^3$. Pro elipsy platí totéž s velkou poloosou $a$ místo $r$.
+\end{example}
+
+Nejslavnějším úspěchem Newtonovy teorie bylo objevení planety výpočtem. Uran se nepohyboval přesně podle předpovědí, a Urbain Le Verrier spočítal, kde by musela být neznámá planeta, která ho ruší. 23.~září 1846 namířil Johann Galle v Berlíně dalekohled na udané místo a Neptun našel ještě tutéž noc, asi jeden stupeň od předpovědi.
+
+\section{Zákony zachování}
+
+Řešit pohybovou rovnici krok za krokem je pracné. Často je chytřejší najít veličinu, která se \textit{nemění}.
+
+\begin{definitionbox}
+  \textbf{Zákon zachování mechanické energie}: Je-li síla tvaru $F = -V'(x)$ pro nějakou funkci $V$ (\textbf{potenciální energii}), pak se celková energie
+  \begin{equation*}
+    E = \frac{1}{2}mv^2 + V(x)
+  \end{equation*}
+  během pohybu nemění.
+\end{definitionbox}
+
+\begin{proof}
+  $E' = mvv' + V'(x)x' = v\big(mx'' + V'(x)\big) = v\big(mx'' - F\big) = 0$ podle druhého Newtonova zákona.
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[thick] (-1,0) -- (1,0);
+    \foreach \i in {-0.9,-0.7,...,0.9} \draw (\i,0) -- ({\i+0.15},0.15);
+    \draw[dashed, gray, domain=-40:40, samples=40] plot ({3*sin(\x)}, {-3*cos(\x)});
+    \draw[thick, gray] (0,0) -- ({3*sin(-40)},{-3*cos(-40)});
+    \draw[thick, gray] (0,0) -- ({3*sin(40)},{-3*cos(40)});
+    \draw[thick] (0,0) -- (0,-3);
+    \fill[gray] ({3*sin(-40)},{-3*cos(-40)}) circle (5pt);
+    \fill[gray] ({3*sin(40)},{-3*cos(40)}) circle (5pt);
+    \fill[colorofwisdom] (0,-3) circle (5pt);
+    \draw[dashed] ({3*sin(40)},{-3*cos(40)}) -- (2.9,{-3*cos(40)});
+    \draw[dashed] (0.2,-3) -- (2.9,-3);
+    \draw[<->] (2.75,{-3*cos(40)}) -- (2.75,-3) node[midway, right, font=\scriptsize] {$h$};
+    \node[font=\scriptsize, align=center, anchor=east] at ({3*sin(-40)-0.25},{-3*cos(-40)}) {$v = 0$\\$E = mgh$};
+    \node[font=\scriptsize, align=center, below] at (0,-3.25) {$v = \sqrt{2gh}$, $E = \frac{1}{2}mv^2$};
+    \draw[->, thick, colorofwisdom] (0.25,-3.0) -- (0.85,-2.95);
+  \end{tikzpicture}
+\end{center}
+
+Kyvadlo neustále přelévá energii mezi polohovou a pohybovou. V krajní poloze stojí a má jen polohovou energii $mgh$ (měřeno od nejnižšího bodu). Dole je polohová energie nulová a všechno se přelilo do kinetické. Z $\frac{1}{2}mv^2 = mgh$ hned plyne $v = \sqrt{2gh}$, aniž bychom řešili rovnici kyvadla, kterou elementárními funkcemi vyřešit ani nejde. Kyvadlo vychýlené tak, že je závaží o $20$ cm výš než v nejnižším bodě, projde dolní polohou rychlostí $\sqrt{2\cdot 9{,}81\cdot 0{,}2}\approx 2$ m/s, ať je jakkoli dlouhé a těžké.
+
+\begin{definitionbox}
+  \textbf{Zákon zachování hybnosti}: V soustavě těles, na kterou nepůsobí vnější síly, se celková \textbf{hybnost} $\vec{p} = \sum m_i\vec{v}_i$ nemění.
+\end{definitionbox}
+
+Plyne to z třetího zákona: síly mezi tělesy se vyskytují v párech $\vec{F}$ a $-\vec{F}$, takže se při sčítání $\vec{p}\,' = \sum m_i\vec{a}_i = \sum\vec{F}_i$ vyruší. Proto dělo při výstřelu couvne a raketa letí i ve vzduchoprázdnu, kde se nemá `od čeho odrazit'. Odráží se od vlastních plynů: hybnost plynů vyfouknutých dozadu musí být vyrovnána hybností rakety dopředu.
+
+\begin{example}
+  Bruslař o hmotnosti $80$ kg a bruslařka o hmotnosti $50$ kg stojí na ledě a odstrčí se od sebe. Bruslařka odjíždí rychlostí $4$ m/s. Na začátku je hybnost nulová, takže $80v + 50\cdot 4 = 0$ a $v = -2{,}5$ m/s. Bruslař odjíždí na opačnou stranu, a pomaleji, protože je těžší.
+\end{example}
+
+\section{Odbočka --- Princip nejmenší akce a Noetherova věta}
+
+Existuje úplně jiný, překvapivě elegantní pohled na mechaniku. Místo `síla určuje zrychlení v každém okamžiku' řekneme: \textit{ze všech možných drah mezi dvěma polohami si těleso vybere tu, která má nejmenší akci}.
+
+\begin{definitionbox}
+  \textbf{Lagrangeova funkce} je rozdíl kinetické a potenciální energie, $L(q, q') = T - V$. \textbf{Akce} dráhy $q(t)$ mezi časy $t_1$ a $t_2$ je
+  \begin{equation*}
+    S[q] = \int_{t_1}^{t_2}L\big(q(t), q'(t)\big)\,\mathrm{d}t.
+  \end{equation*}
+  \textbf{Hamiltonův princip}: Skutečná dráha je ta, pro kterou je akce \textbf{stacionární} (nejčastěji minimální) mezi všemi drahami se stejnými koncovými body. To nastává právě tehdy, když platí \textbf{Eulerova--Lagrangeova rovnice}
+  \begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial q'} = \frac{\partial L}{\partial q}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[x=8cm, y=2.4cm]
+    \draw[thick, gray, dashed] (0,0) -- (1,0);
+    \draw[thick, gray, dashed, domain=0:1, samples=60] plot (\x, {8*\x*(1-\x)});
+    \draw[thick, gray, dashed, domain=0:1, samples=80] plot (\x, {4*\x*(1-\x)+0.45*sin(deg(3*pi*\x))*sin(deg(pi*\x))});
+    \draw[very thick, colorofwisdom, domain=0:1, samples=60] plot (\x, {4*\x*(1-\x)});
+    \fill (0,0) circle (1.5pt) (1,0) circle (1.5pt);
+    \draw[->] (0,0) -- (1.1,0) node[right] {\small $t$};
+    \draw[->] (0,0) -- (0,2.2) node[above] {\small výška};
+    \node[below, font=\scriptsize] at (0,0) {$t_1$};
+    \node[below, font=\scriptsize] at (1,0) {$t_2$};
+    \node[font=\scriptsize, colorofwisdom, fill=white, inner sep=1pt] at (0.5,1.05) {skutečná dráha};
+    \node[font=\scriptsize, gray, anchor=west] at (0.62,1.95) {jiné možné dráhy};
+  \end{tikzpicture}
+\end{center}
+
+Míč vyhozený svisle vzhůru, který po čase $t_2 - t_1$ dopadne zpět, by se mohl `rozhodnout' zůstat na zemi, vyletět výš a vrátit se rychleji, nebo se po cestě vlnit. Příroda vybere parabolu. Proč? Vysoko je velká potenciální energie, a ta akci snižuje. Rychlý pohyb ale znamená velkou kinetickou energii, a ta ji zvyšuje. Parabola je přesně ten kompromis, který dává nejmenší $\int(T - V)\,\mathrm{d}t$.
+
+\begin{proof}[(náčrt odvození Eulerovy--Lagrangeovy rovnice)]
+  Nechť $q$ je skutečná dráha a $\eta(t)$ libovolná funkce s $\eta(t_1) = \eta(t_2) = 0$. Pro dráhu $q + \varepsilon\eta$ je akce funkcí jedné proměnné $\varepsilon$ s minimem v $\varepsilon = 0$, takže tam má nulovou derivaci. Derivováním pod integrálem (parciální derivace z kapitoly~\ref{kap:vice-promennych}) a per partes ve druhém členu:
+  \begin{equation*}
+    0 = \int_{t_1}^{t_2}\left(\frac{\partial L}{\partial q}\eta + \frac{\partial L}{\partial q'}\eta'\right)\mathrm{d}t = \int_{t_1}^{t_2}\left(\frac{\partial L}{\partial q} - \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial q'}\right)\eta\,\mathrm{d}t.
+  \end{equation*}
+  Okrajový člen zmizel, protože $\eta$ je na koncích nulová. Integrál je nulový pro \textit{každou} funkci $\eta$, a to je možné jen tehdy, když je závorka všude nulová.
+\end{proof}
+
+Pro bod na přímce je $L = \frac{1}{2}mx'^2 - V(x)$, tedy $\frac{\partial L}{\partial x'} = mx'$ a $\frac{\partial L}{\partial x} = -V'(x)$. Eulerova--Lagrangeova rovnice je $mx'' = -V'(x)$, tedy Newtonův zákon. Nic nového, ale síla přístupu je v tom, že $q$ může být \textit{jakákoli} souřadnice. Pro kyvadlo vezmeme rovnou úhel: $L = \frac{1}{2}ml^2\theta'^2 + mgl\cos\theta$, a rovnice $ml^2\theta'' = -mgl\sin\theta$ vypadne na jeden řádek, bez kreslení sil a rozkládání do složek. Lagrange tímto způsobem v roce 1788 napsal celou mechaniku, ve své knize se chlubil, že v ní není jediný obrázek.
+
+\subsection{Symetrie a zákony zachování}
+
+Teď přichází jedna z nejhlubších myšlenek fyziky. Představte si, že $L$ nezávisí na $x$, například volná částice nebo soustava, kterou můžeme celou posunout a nic se nezmění. Pak $\frac{\partial L}{\partial x} = 0$ a Eulerova--Lagrangeova rovnice říká
+\begin{equation*}
+  \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial x'} = 0,\qquad\text{tedy hybnost } p = \frac{\partial L}{\partial x'}\text{ je konstantní.}
+\end{equation*}
+Podobně, pokud $L$ nezávisí výslovně na čase, je konstantní veličina $E = q'\frac{\partial L}{\partial q'} - L$. Pro $L = \frac{1}{2}mx'^2 - V$ vyjde $E = mx'^2 - \frac{1}{2}mx'^2 + V = \frac{1}{2}mx'^2 + V$, tedy energie. (Ověření: derivace $E$ podle času je $q''\frac{\partial L}{\partial q'} + q'\frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial q'} - \frac{\partial L}{\partial q}q' - \frac{\partial L}{\partial q'}q'' = 0$ podle Eulerovy--Lagrangeovy rovnice.)
+
+\begin{definitionbox}
+  \textbf{Noetherova věta} (1918, neformálně): Každé spojité symetrii fyzikálního zákona odpovídá zachovávající se veličina.
+  \begin{center}
+    \begin{tabular}{l|l}
+      symetrie & zachovává se\\\hline
+      posunutí v čase (zákony jsou zítra stejné jako dnes) & energie\\
+      posunutí v prostoru (zákony jsou tady stejné jako jinde) & hybnost\\
+      otočení (žádný směr v prostoru není význačný) & moment hybnosti
+    \end{tabular}
+  \end{center}
+\end{definitionbox}
+
+Zákon zachování energie tedy není nějaký nezávislý zázrak. Je to důsledek toho, že fyzikální zákony se s časem nemění. Moderní fyzika částic jde obráceně: nejdřív zvolí symetrie a z nich zkonstruuje Lagrangeovu funkci. O Emmy Noetherové, která větu dokázala, je příběh na konci kapitoly.
+
+\section{Kmity a vlny}
+
+Kmitání a vlněním jsme se podrobně zabývali v kapitole~\ref{kap:diferencialni}. Připomeňme jen, proč jsou ve fyzice všudypřítomné. Kolem každé stabilní rovnovážné polohy $x_0$ je potenciální energie podle Taylorova rozvoje (kapitola~\ref{kap:rady}) přibližně $V(x)\approx V(x_0) + \frac{1}{2}V''(x_0){(x - x_0)}^2$, protože $V'(x_0) = 0$. Každý systém blízko stabilní rovnováhy je tedy přibližně \textbf{harmonický oscilátor} s $\omega = \sqrt{V''(x_0)/m}$. Kyvadlo, atomy v krystalu, molekuly, elektrické obvody, most ve větru. Matematika je pokaždé stejná.
+
+\begin{example}
+  Kyvadlo s malými výchylkami má periodu $T = 2\pi\sqrt{\frac{l}{g}}$. Pro $l = 1$ m vychází $T\approx 2{,}006$ s, takže každý kyv z jedné krajní polohy do druhé trvá skoro přesně sekundu. Proto se metrem kdysi uvažovalo definovat jako délku `sekundového kyvadla'. Nakonec zvítězila definice přes délku poledníku, protože $g$ se na Zemi místo od místa mírně liší.
+\end{example}
+
+Spojíme-li mnoho oscilátorů vedle sebe (body struny, molekuly vzduchu), dostaneme vlnovou rovnici $u_{tt} = c^2u_{xx}$. Rychlost vln na struně s napětím $F$ a hmotností $\mu$ na jednotku délky je $c = \sqrt{F/\mu}$: napnutější struna znamená rychlejší vlny a vyšší tón. Nejslavnější vlna ze všech ale nepotřebuje žádnou strunu ani vzduch.
+
+\section{Elektromagnetismus}
+
+Elektrický náboj $Q$ působí na jiný náboj $q$ ve vzdálenosti $r$ silou $F = \frac{1}{4\pi\varepsilon_0}\frac{Qq}{r^2}$ (Coulombův zákon). Je to stejný tvar jako gravitace, jen náboje se mohou i odpuzovat. Michael Faraday přišel s myšlenkou, která změnila fyziku: síla nepůsobí na dálku. Náboj kolem sebe vytvoří \textbf{elektrické pole} $\vec{E}$, tedy vektorové pole z kapitoly~\ref{kap:vice-promennych}, a teprve pole působí na jiné náboje silou $q\vec{E}$. Pohybující se náboje (proudy) vytvářejí ještě \textbf{magnetické pole} $\vec{B}$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \foreach \a in {0,45,...,315} {
+      \draw[->, thick, colorofwisdom] ({0.5*cos(\a)},{0.5*sin(\a)}) -- ({1.15*cos(\a)},{1.15*sin(\a)});
+      \draw[->, colorofwisdom!60] ({1.45*cos(\a)},{1.45*sin(\a)}) -- ({1.75*cos(\a)},{1.75*sin(\a)});
+    }
+    \fill[colorofwisdom] (0,0) circle (0.28);
+    \node[white, font=\small] at (0,0) {$+$};
+    \node[font=\scriptsize, align=center] at (0,-2.4) {bodový náboj: pole vyvěrá\\$\mathrm{div}\,\vec{E}\neq 0$};
+    \begin{scope}[xshift=6cm]
+      \foreach \r in {0.7,1.2,1.7} {
+        \draw[thick, colorofwisdom!80] (0,0) circle (\r);
+        \foreach \a in {30,150,270} \draw[->, thick, colorofwisdom!80] ({\r*cos(\a)},{\r*sin(\a)}) -- ({\r*cos(\a+12)},{\r*sin(\a+12)});
+      }
+      \draw[thick] (0,0) circle (0.25);
+      \fill (0,0) circle (0.07);
+      \node[font=\scriptsize, align=center] at (0,-2.4) {vodič s proudem k nám: pole se točí\\$\mathrm{rot}\,\vec{B}\neq 0$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Vlevo je elektrické pole kladného náboje: `zdroj' z kapitoly~\ref{kap:vice-promennych}. Vpravo magnetické pole kolem vodiče, kterým teče proud kolmo k papíru směrem k nám: `vír'. Jak se ukázalo, celý elektromagnetismus se dá shrnout do čtyř rovnic, které v roce 1865 sjednotil James Clerk Maxwell. (Do dnešní úsporné podoby je přepsal o dvacet let později Oliver Heaviside.)
+
+\begin{definitionbox}
+  \textbf{Maxwellovy rovnice} (ve vakuu s náboji o hustotě $\rho$ a proudy o hustotě $\vec{J}$):
+  \begin{align*}
+    \mathrm{div}\,\vec{E} &= \frac{\rho}{\varepsilon_0} & &\text{náboje jsou zdroji elektrického pole,}\\
+    \mathrm{div}\,\vec{B} &= 0 & &\text{magnetické pole nemá zdroje (neexistují magnetické monopóly),}\\
+    \mathrm{rot}\,\vec{E} &= -\frac{\partial\vec{B}}{\partial t} & &\text{měnící se magnetické pole roztáčí elektrické (indukce),}\\
+    \mathrm{rot}\,\vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t} & &\text{proudy a měnící se elektrické pole roztáčí magnetické.}
+  \end{align*}
+\end{definitionbox}
+
+Divergence měří, kolik pole v bodě `vyvěrá', rotace, jak moc se kolem bodu točí. Druhá rovnice říká, že siločáry magnetického pole nikde nezačínají ani nekončí. Proto magnet rozlomený napůl dá dva menší magnety, a ne samostatný severní a jižní pól. Třetí rovnice je Faradayův zákon indukce, na kterém běží každá elektrárna: točící se magnet v generátoru vyrábí elektrické pole, a tedy proud.
+
+Poslední člen $\mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}$ přidal Maxwell ze zcela matematických důvodů. Bez něj by rovnice byly ve sporu se zachováním náboje. Tento drobný člen ale znamená, že se pole mohou udržovat navzájem: měnící se $\vec{B}$ vyrábí $\vec{E}$, měnící se $\vec{E}$ vyrábí $\vec{B}$, a tak dál, i v úplně prázdném prostoru. Spojením obou rovnic (bez nábojů a proudů) vyjde pro každou složku pole vlnová rovnice
+\begin{equation*}
+  \frac{\partial^2E}{\partial t^2} = \frac{1}{\mu_0\varepsilon_0}\Delta E,\qquad\text{s rychlostí}\qquad c = \frac{1}{\sqrt{\mu_0\varepsilon_0}}.
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x={(0.75cm,0cm)}, y={(0.42cm,0.32cm)}, z={(0cm,1cm)}]
+    \draw[->] (0,0,0) -- (13.6,0,0) node[right] {\small směr šíření};
+    \foreach \t in {0,0.3927,...,12.5} {
+      \draw[colorofwisdom!70] (\t,0,0) -- (\t,0,{1.2*sin(deg(\t))});
+      \draw[gray!70] (\t,0,0) -- (\t,{-1.2*sin(deg(\t))},0);
+    }
+    \draw[very thick, colorofwisdom, domain=0:12.566, samples=100] plot (\x,0,{1.2*sin(deg(\x))});
+    \draw[very thick, gray, domain=0:12.566, samples=100] plot (\x,{-1.2*sin(deg(\x))},0);
+    \node[font=\small, colorofwisdom] at (1.57,0,1.5) {$\vec{E}$};
+    \node[font=\small, gray] at (4.2,-1.7,0) {$\vec{B}$};
+  \end{tikzpicture}
+\end{center}
+
+Dosaďme naměřené konstanty $\varepsilon_0\approx 8{,}854\cdot 10^{-12}$ F/m a $\mu_0\approx 1{,}2566\cdot 10^{-6}$ H/m. Vyjde $c\approx 2{,}998\cdot 10^8$ m/s. To je rychlost světla! Maxwell z toho v roce 1865 usoudil, že \textbf{světlo je elektromagnetické vlnění}: kmitající elektrické a magnetické pole, navzájem kolmé a kolmé ke směru šíření. Konstanty změřené na stole s kondenzátory a cívkami předpověděly rychlost světla. V roce 1887 Heinrich Hertz elektromagnetické vlny vyrobil v laboratoři a dnes jimi posíláme rádio, wifi i mobilní data. Viditelné světlo, rentgen i mikrovlny se liší jen vlnovou délkou.
+
+\section{Speciální relativita}
+
+Maxwellovy rovnice přinesly hádanku. Říkají, že světlo letí rychlostí $c$. Ale vůči čemu? Pokud běžím za paprskem rychlostí $\frac{c}{2}$, měl bych podle Newtona naměřit rychlost světla $\frac{c}{2}$. Pokusy (nejslavnější je Michelsonův a Morleyho z roku 1887) ale vždy naměřily $c$. Albert Einstein v roce 1905 vzal výsledek vážně a postavil na něm novou fyziku.
+
+\begin{definitionbox}
+  \textbf{Postuláty speciální relativity}:
+  \begin{enumerate}
+    \item Fyzikální zákony jsou stejné ve všech inerciálních soustavách (pohybujících se vůči sobě rovnoměrně přímočaře).
+    \item Rychlost světla ve vakuu je ve všech inerciálních soustavách stejná, $c$.
+  \end{enumerate}
+\end{definitionbox}
+
+Z toho plynou podivné důsledky, a nejjednodušší je vidět na \textbf{světelných hodinách}: dvě zrcadla ve vzdálenosti $L$ nad sebou a mezi nimi kmitá záblesk světla. Jeden `tik' trvá v klidu $\Delta t_0 = \frac{2L}{c}$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.95]
+    \draw[very thick] (-0.5,0) -- (0.5,0) (-0.5,2.2) -- (0.5,2.2);
+    \draw[->, thick, colorofwisdom] (0,0.05) -- (0,2.15);
+    \draw[->, thick, colorofwisdom!50] (0.12,2.15) -- (0.12,0.05);
+    \draw[<->] (-0.8,0) -- (-0.8,2.2) node[midway, left, font=\scriptsize] {$L$};
+    \node[font=\scriptsize, align=center] at (0,-0.6) {hodiny v klidu};
+    \begin{scope}[xshift=3.2cm]
+      \foreach \x in {0,2.6,5.2} \draw[very thick, gray] ({\x-0.5},0) -- ({\x+0.5},0) ({\x-0.5},2.2) -- ({\x+0.5},2.2);
+      \draw[->, thick, colorofwisdom] (0,0.05) -- (2.6,2.15);
+      \draw[->, thick, colorofwisdom] (2.6,2.15) -- (5.2,0.05);
+      \draw[dashed] (2.6,0) -- (2.6,2.2);
+      \draw[<->] (0,-0.3) -- (2.6,-0.3) node[midway, below, font=\scriptsize] {$v\frac{\Delta t}{2}$};
+      \node[font=\scriptsize, colorofwisdom, fill=white, inner sep=1pt] at (0.9,1.35) {$c\frac{\Delta t}{2}$};
+      \node[font=\scriptsize, right] at (2.6,1.0) {$L$};
+      \draw[->, thick] (5.9,1.1) -- (6.7,1.1) node[right, font=\scriptsize] {$v$};
+      \node[font=\scriptsize, align=center] at (2.6,-1.0) {tytéž hodiny, které kolem nás letí rychlostí $v$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Když hodiny letí kolem nás rychlostí $v$, vidíme světlo letět po šikmé dráze. Je delší, a protože rychlost světla je pro nás také $c$, musí tik trvat déle. Pythagorova věta pro vybarvený trojúhelník:
+\begin{equation*}
+  {\left(\frac{c\Delta t}{2}\right)}^2 = L^2 + {\left(\frac{v\Delta t}{2}\right)}^2\quad\Longrightarrow\quad\Delta t = \frac{2L/c}{\sqrt{1 - v^2/c^2}} = \gamma\,\Delta t_0,\qquad\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}.
+\end{equation*}
+To je \textbf{dilatace času}: pohybující se hodiny jdou pomaleji, a to jakékoli hodiny, protože kdyby některé šly jinak než světelné, dalo by se poznat, že se pohybujeme, a to zakazuje první postulát.
+
+\begin{center}
+  \begin{tikzpicture}[x=9cm, y=0.55cm]
+    \draw[dashed, gray] (1,0) -- (1,7.5);
+    \draw[very thick, colorofwisdom, domain=0:0.99, samples=100] plot (\x, {1/sqrt(1-\x*\x)});
+    \draw[dashed] (0,2) -- (0.866,2) -- (0.866,0);
+    \draw[->] (0,0) -- (1.08,0) node[right] {\small $\frac{v}{c}$};
+    \draw[->] (0,0) -- (0,7.8) node[above] {\small $\gamma$};
+    \foreach \y in {1,2,4,6} \draw (0.005,\y) -- (-0.005,\y) node[left, font=\scriptsize] {$\y$};
+    \foreach \x/\l in {0.5/{0{,}5}, 0.866/{0{,}866}, 1/1} \node[below, font=\scriptsize] at (\x,0) {$\l$};
+    \node[font=\scriptsize, anchor=west] at (0.1,3.5) {do $\frac{v}{c}\approx 0{,}3$ je $\gamma$ skoro $1$};
+  \end{tikzpicture}
+\end{center}
+
+Pro běžné rychlosti je $\gamma$ k nerozeznání od $1$ (pro dopravní letadlo se liší řádově o $10^{-13}$), a proto jsme si ničeho nevšimli. U rychlosti světla roste nade všechny meze.
+
+\begin{example}[ (miony)]
+  Kosmické záření vytváří ve výšce kolem $15$ km částice zvané miony. Mion v klidu žije v průměru jen $2{,}2\ \mu$s. I kdyby letěl skoro rychlostí světla, urazí za tu dobu jen asi $660$ m a k povrchu by se téměř žádný nedostal. Přesto je u povrchu detekujeme ve velkém. Při rychlosti $v = 0{,}995c$ je $\gamma\approx 10$, takže z našeho pohledu žijí desetkrát déle a doletí desetkrát dál. Relativita není teorie `na papíře', měříme ji každý den.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Lorentzova transformace}: Pohybuje-li se soustava $S'$ vůči $S$ rychlostí $v$ ve směru osy $x$, pak
+  \begin{equation*}
+    x' = \gamma(x - vt),\qquad t' = \gamma\left(t - \frac{vx}{c^2}\right).
+  \end{equation*}
+\end{definitionbox}
+
+Pro $v\ll c$ je $\gamma\approx 1$ a $\frac{vx}{c^2}\approx 0$, takže dostaneme obyčejné Galileovo $x' = x - vt$, $t' = t$. Zajímavý je člen $\frac{vx}{c^2}$: události, které jsou pro jednoho pozorovatele současné (stejné $t$, různá $x$), nejsou současné pro druhého. Lorentzova transformace je lineární zobrazení roviny $(x, ct)$ (kapitola~\ref{kap:linearni-algebra}), které zachovává veličinu $c^2t^2 - x^2$, podobně jako otočení zachovává $x^2 + y^2$. Je to `otočení' v geometrii, kde má Pythagorova věta znaménko minus.
+
+Nejslavnější důsledek je \textbf{ekvivalence hmotnosti a energie}. Energie tělesa o hmotnosti $m$ s rychlostí $v$ je $E = \gamma mc^2$ a v kapitole~\ref{kap:rady} jsme z Taylorova rozvoje dostali $E\approx mc^2 + \frac{1}{2}mv^2$. Těleso v klidu má tedy energii
+\begin{equation*}
+  E = mc^2.
+\end{equation*}
+Jeden gram hmoty odpovídá $10^{-3}\cdot{\left(3\cdot 10^8\right)}^2 = 9\cdot 10^{13}$ J, zhruba energii výbuchu $21$ kilotun TNT. Ve Slunci se každou sekundu přemění na energii asi čtyři miliony tun hmoty.
+
+\section{Kvantová mechanika}
+
+Na začátku 20. století začala klasická fyzika selhávat u velmi malých věcí. Atomy by podle Maxwellových rovnic měly během zlomku sekundy zkolabovat, protože obíhající elektron vyzařuje energii. Světlo se v některých pokusech chovalo jako částice a elektrony jako vlny. Nová teorie, kterou ve dvacátých letech vybudovali Heisenberg, Schrödinger, Born, Dirac a další, je postavená na lineární algebře.
+
+\begin{definitionbox}
+  \textbf{Základy kvantové mechaniky}:
+  \begin{itemize}
+    \item \textbf{Stav} částice je vektor $\psi$ v (komplexním) Hilbertově prostoru (kapitola~\ref{kap:hilbert}), typicky funkce $\psi(x)$, \textbf{vlnová funkce}.
+    \item $|\psi(x)|^2$ je hustota pravděpodobnosti, že částici najdeme v bodě $x$ (\textbf{Bornovo pravidlo}).
+    \item \textbf{Měřitelné veličiny} jsou symetrické (hermitovské) lineární operátory. Naměřit lze jen jejich \textbf{vlastní čísla} a po měření je stav příslušným vlastním vektorem.
+    \item Vývoj v čase popisuje \textbf{Schrödingerova rovnice} $i\hbar\frac{\partial\psi}{\partial t} = \hat{H}\psi$, kde operátor energie je $\hat{H}\psi = -\frac{\hbar^2}{2m}\psi'' + V\psi$.
+  \end{itemize}
+\end{definitionbox}
+
+V odbočce kapitoly~\ref{kap:linearni-algebra} jsme viděli, že symetrické matice mají reálná vlastní čísla a navzájem kolmé vlastní vektory. Přesně proto jsou měřitelné veličiny symetrické operátory: výsledek měření musí být reálné číslo. Stav, který není vlastním vektorem, rozložíme do báze vlastních vektorů, $\psi = \sum c_n\psi_n$, a čísla $|c_n|^2$ jsou pravděpodobnosti jednotlivých výsledků. Lineární algebra se tu stává pravděpodobností.
+
+\subsection{Částice v krabici}
+
+Elektron zavřený v jednorozměrné `krabici' $[0, L]$ s nekonečně vysokými stěnami. Uvnitř je $V = 0$, venku se nemůže vyskytovat, takže $\psi(0) = \psi(L) = 0$. Stavy s určitou energií $E$ jsou vlastní vektory operátoru $\hat{H}$:
+\begin{equation*}
+  -\frac{\hbar^2}{2m}\psi'' = E\psi,\qquad\psi(0) = \psi(L) = 0.
+\end{equation*}
+To je stejná úloha jako u struny v kapitole~\ref{kap:diferencialni}! Řešení jsou $\psi_n = \sin\frac{n\pi x}{L}$ a dosazením
+\begin{equation*}
+  E_n = \frac{n^2\pi^2\hbar^2}{2mL^2} = \frac{n^2h^2}{8mL^2},\qquad n = 1, 2, 3, \dots
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=0.28cm]
+    \foreach \n/\l in {1/{E_1}, 2/{E_2 = 4E_1}, 3/{E_3 = 9E_1}, 4/{E_4 = 16E_1}} {
+      \draw[gray, dashed] (0,{\n*\n}) -- (4,{\n*\n});
+      \draw[thick, colorofwisdom, domain=0:4, samples=80] plot (\x, {\n*\n+1.4*sin(deg(\n*pi*\x/4))});
+      \node[font=\scriptsize, anchor=east] at (-0.15,{\n*\n}) {$\l$};
+    }
+    \draw[very thick] (0,-1) -- (0,20) (4,-1) -- (4,20) (0,-1) -- (4,-1);
+    \node[font=\scriptsize] at (2,-2.6) {vlnové funkce $\psi_n$};
+    \begin{scope}[xshift=6cm]
+      \foreach \n in {1,2,3,4} {
+        \draw[gray, dashed] (0,{\n*\n}) -- (4,{\n*\n});
+        \fill[colorofwisdom!30, domain=0:4, samples=80] plot (\x, {\n*\n+2.6*sin(deg(\n*pi*\x/4))*sin(deg(\n*pi*\x/4))}) -- cycle;
+        \draw[thick, colorofwisdom, domain=0:4, samples=80] plot (\x, {\n*\n+2.6*sin(deg(\n*pi*\x/4))*sin(deg(\n*pi*\x/4))});
+      }
+      \draw[very thick] (0,-1) -- (0,20) (4,-1) -- (4,20) (0,-1) -- (4,-1);
+      \node[font=\scriptsize] at (2,-2.6) {pravděpodobnosti $|\psi_n|^2$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Energie je \textbf{kvantovaná}: elektron nemůže mít libovolnou energii, jen $E_1$, $4E_1$, $9E_1$, \dots\ Okrajové podmínky vybraly z nekonečně mnoha řešení diferenciální rovnice jen některá, přesně jako struna může znít jen některými tóny. Slovo `kvantum' tedy znamená `vlastní číslo'. Navíc ani nejnižší energie není nulová: elektron v krabici nikdy nestojí. A v prostředních bodech stavu $n = 2$ je pravděpodobnost výskytu nulová, takže elektron `přeskakuje' z jedné poloviny krabice do druhé, aniž by kdy byl uprostřed. Pro elektron v krabici široké $1$ nm vyjde $E_1 = \frac{{(6{,}626\cdot 10^{-34})}^2}{8\cdot 9{,}109\cdot 10^{-31}\cdot 10^{-18}}\ \mathrm{J}\approx 6\cdot 10^{-20}$ J, asi $0{,}38$ eV, což je řádově energie, se kterou pracuje chemie.
+
+\subsection{Princip neurčitosti}
+
+Částice s hybností $p$ se podle de Broglieho chová jako vlna s vlnovým číslem $k = \frac{p}{\hbar}$. Částice s přesně určenou hybností by tedy byla nekonečná sinusovka, a ta je `všude'. Chceme-li částici lokalizovat, musíme sečíst mnoho sinusovek s různými $k$ tak, aby se mimo malou oblast vyrušily. To je Fourierova analýza z kapitoly~\ref{kap:rady}, jen se spojitým spektrem místo řady.
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=0.9cm]
+    \draw[->] (-2.6,0) -- (2.7,0) node[right] {\small $x$};
+    \draw[gray, dashed, domain=-2.5:2.5, samples=60] plot (\x, {exp(-(\x/0.45)*(\x/0.45))});
+    \draw[thick, colorofwisdom, domain=-2.5:2.5, samples=200] plot (\x, {exp(-(\x/0.45)*(\x/0.45))*cos(deg(9*\x))});
+    \node[font=\scriptsize] at (0,1.35) {úzký balík: poloha přesně};
+    \begin{scope}[xshift=6.3cm]
+      \draw[->] (-2.6,0) -- (2.7,0) node[right] {\small $k$};
+      \fill[colorofwisdom!30] (-2.5,0) -- plot[domain=-2.5:2.5, samples=60] (\x, {exp(-(\x*0.45/2)*(\x*0.45/2)*4)}) -- (2.5,0) -- cycle;
+      \draw[thick, colorofwisdom, domain=-2.5:2.5, samples=60] plot (\x, {exp(-(\x*0.45/2)*(\x*0.45/2)*4)});
+      \node[font=\scriptsize] at (0,1.35) {široké spektrum: hybnost neurčitá};
+    \end{scope}
+    \begin{scope}[yshift=-2.6cm]
+      \draw[->] (-2.6,0) -- (2.7,0) node[right] {\small $x$};
+      \draw[gray, dashed, domain=-2.5:2.5, samples=60] plot (\x, {exp(-(\x/1.6)*(\x/1.6))});
+      \draw[thick, colorofwisdom, domain=-2.5:2.5, samples=200] plot (\x, {exp(-(\x/1.6)*(\x/1.6))*cos(deg(9*\x))});
+      \node[font=\scriptsize] at (0,1.35) {široký balík: poloha neurčitá};
+      \begin{scope}[xshift=6.3cm]
+        \draw[->] (-2.6,0) -- (2.7,0) node[right] {\small $k$};
+        \fill[colorofwisdom!30, domain=-1.2:1.2, samples=60] plot (\x, {exp(-(\x*1.6)*(\x*1.6))}) -- cycle;
+        \draw[thick, colorofwisdom, domain=-2.5:2.5, samples=80] plot (\x, {exp(-(\x*1.6)*(\x*1.6))});
+        \node[font=\scriptsize] at (0,1.35) {úzké spektrum: hybnost přesně};
+      \end{scope}
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Vlevo jsou vlnové balíky v prostoru, vpravo jejich spektra, tedy jak velký podíl které hybnosti obsahují (spektrum je vykreslené kolem střední hodnoty $k_0$). Úzký balík potřebuje široké spektrum, úzké spektrum dá široký balík. Pro gaussovské balíky platí přesně, že součin šířek je konstantní, a obecně dostaneme \textbf{Heisenbergův princip neurčitosti}
+\begin{equation*}
+  \Delta x\cdot\Delta p\geq\frac{\hbar}{2}.
+\end{equation*}
+Není to tvrzení o nedokonalosti našich přístrojů. Je to matematická vlastnost Fourierovy transformace: funkce a její spektrum nemohou být zároveň úzké. Stejný jev znají zvukaři: velmi krátké cvaknutí nemá určitou výšku tónu, a čistý tón s přesnou frekvencí musí trvat dlouho.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Z jaké výšky musí spadnout těleso, aby dopadlo rychlostí $10$ m/s? ($g = 10\ \mathrm{m/s^2}$.)
+    \item Mars má velkou poloosu dráhy $1{,}52$ AU. Jak dlouho trvá jeho rok?
+    \item Jak rychle musí letět kosmická loď, aby na ní hodiny šly dvakrát pomaleji?
+    \item O kolik se zvětší energie elektronu v krabici, když krabici zúžíme na polovinu?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $mgh = \frac{1}{2}mv^2$, $h = \frac{v^2}{2g} = 5$ m.
+    \item Pro Zemi je $T = 1$ rok a $a = 1$ AU, takže $T^2 = a^3$ v těchto jednotkách. $T = 1{,}52^{3/2}\approx 1{,}87$ roku.
+    \item $\gamma = 2$, tedy $1 - \frac{v^2}{c^2} = \frac{1}{4}$ a $v = \frac{\sqrt{3}}{2}c\approx 0{,}866c$.
+    \item $E_n\sim\frac{1}{L^2}$, takže čtyřikrát. Čím víc částici stlačíme, tím víc se `vrtí'. To je princip neurčitosti v praxi.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Žena, která nesměla učit}
+
+Amalie Emmy Noetherová se narodila v roce 1882 v bavorském Erlangenu. Její otec Max Noether byl profesorem matematiky na tamní univerzitě. Ženy tehdy v Německu studovat nesměly. Emmy mohla přednášky jen neoficiálně navštěvovat jako hospitantka, se svolením každého profesora zvlášť, a v roce 1900 byla jednou ze dvou žen mezi téměř tisícem studentů. Když se pravidla v roce 1904 změnila, zapsala se a v roce 1907 získala doktorát. Dalších sedm let pracovala na erlangenském matematickém institutu bez platu.
+
+V roce 1915 ji David Hilbert a Felix Klein pozvali do Göttingenu, tehdy matematického centra světa. Řešili problém se zákonem zachování energie v Einsteinově nové obecné teorii relativity a Noetherová byla největší odbornicí na invarianty, tedy na veličiny, které se při transformacích nemění. Univerzita jí ale odmítla povolit habilitaci, a tedy i právo přednášet. Jeden z profesorů se prý ptal, co si pomyslí vojáci, až se vrátí z fronty a zjistí, že se mají učit u nohou ženy. Hilbert prý odpověděl: `Nevidím, proč by pohlaví kandidátky mělo být argumentem proti její habilitaci. Jsme přece univerzita, a ne lázně.' Nepomohlo to. Noetherová několik let přednášela pod Hilbertovým jménem, jako jeho `asistentka', bez nároku na plat.
+
+V roce 1918 publikovala práci, ve které dokázala větu o symetriích a zákonech zachování z odbočky této kapitoly. Fyzici ji dnes řadí mezi nejdůležitější matematické výsledky pro fyziku vůbec. Habilitovat se směla až v roce 1919, po pádu císařství. Pak se pustila do algebry a téměř sama vytvořila moderní abstraktní algebru. Dodnes se po ní jmenují \textit{noetherovské okruhy}. Kolem ní se vytvořila skupina studentů, kterým se říkalo `Noetherovi chlapci', a její styl přednášek, chaotický, nadšený a plný otevřených otázek, z nich vychoval celou generaci algebraiků.
+
+V dubnu 1933, krátce po nástupu nacistů k moci, byla jako Židovka spolu s dalšími profesory z univerzity vyhozena. Podle vzpomínek kolegů ji to příliš nerozhodilo a v semináři pokračovala doma ve svém bytě. Prý tam pustila i studenta, který přišel v uniformě SA. Na podzim téhož roku odešla do USA, kde dostala místo na ženské koleji Bryn Mawr v Pensylvánii a přednášela i na Institutu pro pokročilá studia v Princetonu. V Americe ji přijali vlídně, ale užívala si to jen rok a půl. V dubnu 1935 podstoupila operaci nádoru, zdálo se, že se zotavuje, ale o několik dní později náhle zemřela. Bylo jí třiapadesát let.
+
+Albert Einstein krátce nato napsal do deníku The New York Times dopis, ve kterém stálo, že `podle úsudku nejkompetentnějších žijících matematiků byla slečna Noetherová nejvýznamnějším tvůrčím matematickým géniem, jaký se zrodil od doby, kdy ženy začaly získávat vyšší vzdělání'.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Proč jsou Newtonovy zákony diferenciální rovnice? Odvoďte, že dráha šikmého vrhu je parabola a že největší dostřel je pod úhlem $45^\circ$.
+    \item Vyslovte Keplerovy zákony. Proč z centrální síly plyne druhý zákon?
+    \item Proč jsou oběžné dráhy kuželosečky? Co rozhoduje o tom, která to je? Spočítejte únikovou rychlost.
+    \item Dokažte zákon zachování energie z Newtonova zákona. Z čeho plyne zákon zachování hybnosti?
+    \item Co je akce a Hamiltonův princip? Jak z Eulerovy--Lagrangeovy rovnice dostaneme Newtonův zákon?
+    \item Co říká Noetherova věta? Kterým symetriím odpovídá zachování energie, hybnosti a momentu hybnosti?
+    \item Popište slovy Maxwellovy rovnice. Jak z nich plyne, že světlo je elektromagnetická vlna?
+    \item Odvoďte dilataci času ze světelných hodin. Jak souvisí $E = mc^2$ s Taylorovým rozvojem?
+    \item Proč jsou v kvantové mechanice měřitelné veličiny symetrické operátory? Proč je energie částice v krabici kvantovaná?
+    \item Vysvětlete princip neurčitosti pomocí Fourierovy analýzy.
+  \end{enumerate}
+\end{problem}

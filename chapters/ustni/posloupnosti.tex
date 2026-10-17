@@ -3,7 +3,7 @@
 
 Posloupnost je seznam čísel, který (obvykle) nikdy nekončí. Na první pohled nic zajímavého. Jenže právě na posloupnostech se matematici poprvé naučili pořádně zacházet s nekonečnem. Naučíme se tu sčítat nekonečně mnoho čísel a dostat konečný výsledek a ukážeme si, proč $0{,}999\ldots$ je přesně jedna. Všechno, co přijde v kapitolách o limitách, derivacích a integrálech, stojí na tom, co se naučíme tady.
 
-\section{Pojem posloupnosti}
+\section{Pojem posloupnosti}\label{sec:pojem-posloupnosti}
 
 \begin{definitionbox}
   \textbf{Posloupnost} je funkce, jejímž definičním oborem je množina přirozených čísel $\mathbb{N}$ (nebo její počáteční úsek $\{1, 2, \ldots, k\}$, pak mluvíme o \textbf{konečné} posloupnosti). Hodnotu v čísle $n$ značíme $a_n$ a nazýváme ji \textbf{$n$-tý člen}. Posloupnost zapisujeme ${(a_n)}_{n=1}^{\infty}$ nebo zkráceně $(a_n)$.
@@ -76,7 +76,7 @@ Body grafu nespojujeme čarou. Mezi $n = 1$ a $n = 2$ posloupnost žádnou hodno
   Je omezená: $0 < a_n < 1$. Posloupnost $b_n = {(-1)}^n$ ($-1, 1, -1, 1, \ldots$) je omezená, ale není monotónní.
 \end{example}
 
-\section{Aritmetická posloupnost}
+\section{Aritmetická posloupnost}\label{sec:aritmeticka-posloupnost}
 
 \begin{definitionbox}
   \textbf{Aritmetická posloupnost} je posloupnost, ve které je rozdíl každých dvou sousedních členů stejný. Tento rozdíl $d$ se nazývá \textbf{diference}:
@@ -195,7 +195,7 @@ Graficky: body aritmetické posloupnosti leží na \textbf{přímce}. Z každéh
   \end{enumerate}
 \end{solution}
 
-\section{Geometrická posloupnost}
+\section{Geometrická posloupnost}\label{sec:geometricka-posloupnost}
 
 \begin{definitionbox}
   \textbf{Geometrická posloupnost} je posloupnost, ve které je podíl každých dvou sousedních členů stejný. Tento podíl $q$ se nazývá \textbf{kvocient}:
@@ -282,7 +282,7 @@ Zatímco body aritmetické posloupnosti leží na přímce, body geometrické po
   \end{enumerate}
 \end{solution}
 
-\section{Limita posloupnosti}
+\section{Limita posloupnosti}\label{sec:limita-posloupnosti}
 
 Co se děje s posloupností $a_n = \frac{1}{n}$, když $n$ roste? Členy $1, \frac{1}{2}, \frac{1}{3}, \ldots, \frac{1}{1000}, \ldots$ se blíží k nule. Nikdy nule nejsou rovny, ale dostanou se k ní libovolně blízko. Tuhle představu `blížení se' potřebujeme zachytit přesně.
 
@@ -371,7 +371,7 @@ Na obrázku je $a_n = 1 + \frac{{(-1)}^n\cdot 1{,}5}{n}$ s limitou $a = 1$ a pá
   \end{enumerate}
 \end{solution}
 
-\section{Nekonečná geometrická řada}
+\section{Nekonečná geometrická řada}\label{sec:geometricka-rada}
 
 \begin{definitionbox}
   \textbf{Nekonečná řada} $\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots$ má \textbf{součet} $s$, pokud posloupnost částečných součtů $s_n = a_1 + \cdots + a_n$ má limitu $s$. Pak řada \textbf{konverguje}, jinak \textbf{diverguje}.
@@ -446,7 +446,7 @@ Na obrázku je $a_n = 1 + \frac{{(-1)}^n\cdot 1{,}5}{n}$ s limitou $a = 1$ a pá
   \end{enumerate}
 \end{solution}
 
-\begin{note}
+\begin{note}\label{note:harmonicka-rada}
   Pozor, z toho, že členy řady jdou k nule, ještě neplyne, že řada konverguje! Slavný protipříklad je \textbf{harmonická řada}
   \begin{equation*}
     1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots = \infty.

@@ -306,11 +306,64 @@ Funkce $\mathrm{e}^{-x^2}$ je základem normálního rozdělení z kapitoly~\ref
 \begin{equation*}
   I = \int_{-\infty}^{\infty}\mathrm{e}^{-x^2}\,\mathrm{d}x.
 \end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.3cm, y=2.4cm]
+    \fill[colorofwisdom!25, domain=-2.6:2.6, samples=80] (-2.6,0) -- plot (\x, {exp(-\x*\x)}) -- (2.6,0) -- cycle;
+    \draw[very thick, colorofwisdom, domain=-2.8:2.8, samples=100] plot (\x, {exp(-\x*\x)});
+    \draw[->] (-3,0) -- (3.1,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,1.25) node[above] {\small $y$};
+    \node[font=\scriptsize, left] at (0,1) {$1$};
+    \node[font=\small] at (0,0.35) {obsah $= \sqrt{\pi}\approx 1{,}772$};
+    \node[font=\small, colorofwisdom, anchor=west] at (0.8,0.75) {$y = \mathrm{e}^{-x^2}$};
+  \end{tikzpicture}
+\end{center}
+
 Trik je neuvěřitelně drzý: místo $I$ spočítáme $I^2$ a podíváme se na něj jako na dvojný integrál přes celou rovinu.
 \begin{equation*}
   I^2 = \int_{-\infty}^{\infty}\mathrm{e}^{-x^2}\,\mathrm{d}x\cdot\int_{-\infty}^{\infty}\mathrm{e}^{-y^2}\,\mathrm{d}y = \iint_{\mathbb{R}^2}\mathrm{e}^{-(x^2 + y^2)}\,\mathrm{d}S.
 \end{equation*}
-Funkce $\mathrm{e}^{-(x^2 + y^2)}$ je `zvon', který závisí jen na vzdálenosti $r$ od počátku, protože $x^2 + y^2 = r^2$. V polárních souřadnicích:
+Funkce $\mathrm{e}^{-(x^2 + y^2)}$ je `zvon', který závisí jen na vzdálenosti $r$ od počátku, protože $x^2 + y^2 = r^2$. Je souměrný kolem osy $z$, a tak se vyplatí krájet ho kolem dokola.
+
+\begin{center}
+  \begin{tikzpicture}[pohled3d, scale=1.35]
+    \draw[->] (0,0,0) -- (2.8,0,0) node[below left] {\small $x$};
+    \draw[->] (0,0,0) -- (0,2.8,0) node[right] {\small $y$};
+    \foreach \r in {0.4,1.2,1.6,2.0} {
+      \draw[gray!45] plot[variable=\t, domain=0:360, samples=60] ({\r*cos(\t)}, {\r*sin(\t)}, {2*exp(-\r*\r)});
+    }
+    \foreach \a in {0,30,...,330} {
+      \draw[gray!60] plot[variable=\r, domain=0:2.2, samples=30] ({\r*cos(\a)}, {\r*sin(\a)}, {2*exp(-\r*\r)});
+    }
+    \fill[colorofwisdom!30, opacity=0.6] plot[variable=\t, domain=0:360, samples=60] ({0.8*cos(\t)}, {0.8*sin(\t)}, 0);
+    \draw[colorofwisdom, thick] plot[variable=\t, domain=0:360, samples=60] ({0.8*cos(\t)}, {0.8*sin(\t)}, 0);
+    \draw[colorofwisdom, very thick] plot[variable=\t, domain=0:360, samples=60] ({0.8*cos(\t)}, {0.8*sin(\t)}, 1.0546);
+    \draw[colorofwisdom, thick] ({0.8*cos(118.8)}, {0.8*sin(118.8)}, 0) -- ({0.8*cos(118.8)}, {0.8*sin(118.8)}, 1.0546);
+    \draw[colorofwisdom, thick] ({0.8*cos(-61.2)}, {0.8*sin(-61.2)}, 0) -- ({0.8*cos(-61.2)}, {0.8*sin(-61.2)}, 1.0546);
+    \draw[->] (0,0,0) -- (0,0,2.5) node[above] {\small $z$};
+    \node[font=\small, anchor=west] at (0,2.3,1.7) {$z = \mathrm{e}^{-(x^2 + y^2)} = \mathrm{e}^{-r^2}$};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at ({0.8*cos(-61.2)}, {0.8*sin(-61.2)}, 0.5) {slupka o poloměru $r$};
+  \end{tikzpicture}
+  \hspace{0.6cm}
+  \begin{tikzpicture}[scale=1.1]
+    \foreach \r/\k in {2.0/4, 1.8/6, 1.6/10, 1.4/15, 1.2/22, 1.0/30, 0.8/40, 0.6/50, 0.4/58, 0.2/63} {
+      \fill[colorofwisdom!\k] (0,0) circle (\r);
+    }
+    \fill[colorofwisdom!90!black, even odd rule] (0,0) circle (1.0) (0,0) circle (0.8);
+    \draw[->, thick] (0,0) -- (-30:0.8) node[midway, below left, font=\scriptsize] {$r$};
+    \draw[decorate, decoration={brace, amplitude=2pt}] (40:1.02) -- (40:0.78);
+    \node[font=\scriptsize] at (40:1.3) {$\mathrm{d}r$};
+    \node[font=\scriptsize, align=center] at (0,-2.45) {pohled shora: mezikruží\\o obsahu $\approx 2\pi r\,\mathrm{d}r$};
+  \end{tikzpicture}
+\end{center}
+
+Představte si zvon rozkrájený na tenké válcové slupky, jako cibuli. Slupka o poloměru $r$ a tloušťce $\mathrm{d}r$ je vysoká $\mathrm{e}^{-r^2}$. Když ji rozřízneme a rozvineme, dostaneme skoro kvádr o rozměrech $2\pi r\times\mathrm{d}r\times\mathrm{e}^{-r^2}$. Celkový objem je součet všech slupek:
+\begin{equation*}
+  I^2 = \int_0^{\infty}\underbrace{2\pi r}_{\text{obvod}}\cdot\underbrace{\mathrm{e}^{-r^2}}_{\text{výška}}\,\mathrm{d}r.
+\end{equation*}
+Faktor $r$ tedy není žádný formální trik, je to obvod slupky. Vnější slupky jsou delší, a proto do objemu přispívají víc.
+
+Totéž v polárních souřadnicích:
 \begin{equation*}
   I^2 = \int_0^{2\pi}\int_0^{\infty}\mathrm{e}^{-r^2}\,r\,\mathrm{d}r\,\mathrm{d}\varphi = 2\pi\left[-\frac{1}{2}\mathrm{e}^{-r^2}\right]_0^{\infty} = 2\pi\cdot\frac{1}{2} = \pi.
 \end{equation*}

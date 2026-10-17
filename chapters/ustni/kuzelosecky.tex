@@ -87,7 +87,7 @@ Představte si přesýpací hodiny ze dvou kornoutů slepených špičkami a k t
 
 V analytické geometrii je ale budeme definovat jako množiny bodů s určitou vlastností vzdálenosti. A jejich rovnice budou rovnice druhého stupně v $x$ a $y$.
 
-\section{Kružnice}
+\section{Kružnice}\label{sec:kruznice-rovnice}
 
 \begin{definitionbox}
   \textbf{Kružnice} $k(S; r)$ je množina bodů, které mají od středu $S = [m, n]$ vzdálenost $r > 0$. Ze vzorce pro vzdálenost bodů dostaneme její \textbf{středovou rovnici}
@@ -137,7 +137,7 @@ Rovnice tečny plyne z toho, že tečna je kolmá na poloměr $ST$. Vektor $\ove
 \end{center}
 Vektor $\overrightarrow{ST}$ je normálovým vektorem tečny, odtud koeficienty $3$ a $4$ v její rovnici.
 
-\subsection{Vzájemná poloha přímky a kružnice}
+\subsection{Vzájemná poloha přímky a kružnice}\label{sec:primka-kruznice}
 
 Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdálenost středu od přímky s poloměrem (jako v kapitole~\ref{kap:planimetrie}), nebo vyřešíme soustavu rovnic. Dosazením přímky do rovnice kružnice dostaneme kvadratickou rovnici a o počtu průsečíků rozhodne diskriminant.
 
@@ -236,7 +236,7 @@ Všechny přímky $y = x + k$ jsou navzájem rovnoběžné. Měníme-li $k$, př
   \end{enumerate}
 \end{solution}
 
-\section{Elipsa}
+\section{Elipsa}\label{sec:elipsa}
 
 \begin{definitionbox}
   \textbf{Elipsa} je množina bodů roviny, které mají od dvou daných bodů $F_1$, $F_2$ (\textbf{ohnisek}) konstantní součet vzdáleností $2a$, kde $2a > |F_1F_2|$:
@@ -331,7 +331,7 @@ Vpravo je vidět, proč je konstanta v definici právě $2a$, tedy délka hlavn�
 \end{center}
 Všechny čtyři elipsy mají stejnou hlavní poloosu $a$. Čím dál jsou ohniska od sebe, tím je elipsa plošší.
 
-\section{Hyperbola}
+\section{Hyperbola}\label{sec:hyperbola}
 
 \begin{definitionbox}
   \textbf{Hyperbola} je množina bodů roviny, které mají od dvou daných bodů $F_1$, $F_2$ konstantní \textbf{absolutní hodnotu rozdílu} vzdáleností $2a$, kde $0 < 2a < |F_1F_2|$:
@@ -393,7 +393,7 @@ Tečkovaná kružnice se středem $S$ prochází rohy šedého obdélníku i ob�
   Graf nepřímé úměrnosti $y = \frac{k}{x}$ z kapitoly~\ref{kap:elementarni} je také hyperbola, jen otočená o $45^\circ$. Asymptotami jsou osy souřadnic a $a = b$, proto se jí říká \textbf{rovnoosá}. Hyperboly se ve skutečném světě objevují méně často než elipsy, ale potkáte je: po hyperbole letí kometa, která má dost energie, aby ze Sluneční soustavy unikla, a na hyperbolách stál starší navigační systém LORAN, který určoval polohu lodí z rozdílu časů, za které dorazily signály ze dvou vysílačů.
 \end{note}
 
-\section{Parabola}
+\section{Parabola}\label{sec:parabola}
 
 \begin{definitionbox}
   \textbf{Parabola} je množina bodů roviny, které mají stejnou vzdálenost od daného bodu $F$ (\textbf{ohniska}) a dané přímky $d$ (\textbf{řídicí přímky}), která bodem $F$ neprochází:
@@ -458,7 +458,7 @@ Na tom stojí satelitní talíř: signál z velmi vzdálené družice přicház�
 \end{center}
 Bod $X = [6, 3]$ paraboly má od ohniska i od řídicí přímky vzdálenost $4$. Bod $Y = \left[-1, \frac{17}{8}\right]$ má obě vzdálenosti rovny $\frac{25}{8}$ (čárkovaně). Vrchol $V$ leží přesně v půli mezi $F$ a $d$.
 
-\section{Rozpoznání kuželosečky a vzájemné polohy}
+\section{Rozpoznání kuželosečky a vzájemné polohy}\label{sec:rozpoznani-kuzelosecky}
 
 \begin{definitionbox}
   Rovnici $Ax^2 + Cy^2 + Dx + Ey + F = 0$ (bez členu $xy$) upravíme doplněním na čtverec. Podle koeficientů $A$ a $C$ jde o:
@@ -471,7 +471,7 @@ Bod $X = [6, 3]$ paraboly má od ohniska i od řídicí přímky vzdálenost $4$
   Ve výjimečných případech (tzv. \textbf{degenerované kuželosečky}) může rovnice popisovat jen bod, dvojici přímek nebo prázdnou množinu.
 \end{definitionbox}
 
-\begin{note}
+\begin{note}\label{note:jediny-bod-netecna}
   U paraboly a hyperboly může mít přímka s kuželosečkou jediný společný bod, a přesto nebýt tečnou. U paraboly je to přímka rovnoběžná s osou, u hyperboly přímka rovnoběžná s asymptotou. Po dosazení v tom případě nedostaneme kvadratickou, ale lineární rovnici, takže diskriminant nemá smysl.
 \end{note}
 

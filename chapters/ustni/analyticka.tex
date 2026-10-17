@@ -3,7 +3,7 @@
 
 Analytická geometrie je místo, kde se setkává geometrie s algebrou. Body popíšeme čísly (souřadnicemi), přímky a kružnice rovnicemi a geometrické úlohy pak řešíme počítáním. Místo kružítka a pravítka používáme soustavy rovnic z kapitol~\ref{kap:rovnice} a~\ref{kap:kvadraticke}. Tahle myšlenka je tak silná, že na ní dnes stojí počítačová grafika, navigace i fyzika. Váš telefon totiž neumí rýsovat. Umí jen počítat.
 
-\section{Soustava souřadnic}
+\section{Soustava souřadnic}\label{sec:soustava-souradnic}
 
 \begin{definitionbox}
   \textbf{Kartézská soustava souřadnic} v rovině je tvořena dvěma navzájem kolmými číselnými osami $x$ a $y$ se společným počátkem $O$ a stejnou jednotkou. Každému bodu $A$ roviny odpovídá právě jedna uspořádaná dvojice $[a_1, a_2]$ jeho \textbf{souřadnic}. Rovina tak odpovídá kartézskému součinu $\mathbb{R}\times\mathbb{R}$ z kapitoly 2.
@@ -47,7 +47,7 @@ Představte si, že jdete po městě s pravoúhlými ulicemi z $A$ do $B$. Po ul
   Pro $A = [1, 2]$ a $B = [4, 6]$ je $|AB| = \sqrt{9 + 16} = 5$ a $S_{AB} = \left[\frac{5}{2}, 4\right]$.
 \end{example}
 
-\section{Vektory}
+\section{Vektory}\label{sec:vektory}
 
 \begin{definitionbox}
   \textbf{Vektor} $\vec{u} = \overrightarrow{AB}$ je určen orientovanou úsečkou s počátečním bodem $A$ a koncovým bodem $B$. Dvě orientované úsečky určují stejný vektor, pokud mají stejnou délku, jsou rovnoběžné a stejně orientované. Vektor je tedy `posunutí', nezáleží na tom, odkud ho kreslíme.
@@ -137,7 +137,7 @@ Ano, ten determinant je ten samý jako v kapitole~\ref{kap:rovnice}. Tam jsme si
 \end{center}
 Vpravo jsou vektory kolineární a rovnoběžník se `splácl' do úsečky.
 
-\subsection{Skalární součin}
+\subsection{Skalární součin}\label{sec:skalarni-soucin}
 
 \begin{definitionbox}
   \textbf{Skalární součin} vektorů $\vec{u} = (u_1, u_2)$ a $\vec{v} = (v_1, v_2)$ je \textbf{číslo}
@@ -230,7 +230,7 @@ Tlustý úsek na přímce vektoru $\vec{u}$ je `stín' vektoru $\vec{v}$, tedy j
   Pozor na pořadí vrcholů: rovnoběžník $ABCD$ se obchází dokola, takže $D$ leží naproti $B$, ne naproti $C$.
 \end{solution}
 
-\section{Přímka v rovině}
+\section{Přímka v rovině}\label{sec:primka-v-rovine}
 
 Přímku můžeme popsat třemi způsoby. Každý se hodí na něco jiného, a proto je potřeba umět mezi nimi přecházet.
 
@@ -376,7 +376,7 @@ Vzdálenost bodu od přímky je délka \textbf{nejkratší} cesty k ní, a ta ve
   Přímka $y = kx + q$ má směrový vektor $(1, k)$. Dvě přímky jsou kolmé, právě když jsou kolmé jejich směrové vektory, tedy $(1, k_1)\cdot(1, k_2) = 1 + k_1k_2 = 0$.
 \end{proof}
 
-\begin{example}
+\begin{example}\label{ex:primka-vzdalenost}
   \begin{itemize}
     \item Průsečík přímek $x + y - 3 = 0$ a $2x - y = 0$: sečtením $3x = 3$, tedy $x = 1$ a $y = 2$. Průsečík je $[1, 2]$.
     \item Vzdálenost bodu $M = [3, 1]$ od přímky $4x - 3y + 2 = 0$ je $\frac{|12 - 3 + 2|}{\sqrt{16 + 9}} = \frac{11}{5}$.
@@ -424,7 +424,7 @@ Polorovinu si představte jako jednu stranu plotu. Dosazením bodu do levé stra
   \end{enumerate}
 \end{solution}
 
-\section{Aplikace na trojúhelník}
+\section{Aplikace na trojúhelník}\label{sec:aplikace-trojuhelnik}
 
 \begin{definitionbox}
   Pro trojúhelník $ABC$ se souřadnicemi vrcholů:

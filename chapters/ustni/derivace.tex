@@ -3,7 +3,7 @@
 
 Derivace měří, jak rychle se něco mění. Rychlost je derivace dráhy podle času, zrychlení je derivace rychlosti. Sklon tečny ke grafu je derivace funkce. A když chceme najít maximum nebo minimum čehokoli, od zisku firmy po tvar plechovky, hledáme místa, kde je derivace nulová. Je to pravděpodobně nejužitečnější nástroj, který středoškolská matematika nabízí. Pokud vám z celé analýzy zůstane jen jedna věc, ať je to tahle.
 
-\section{Pojem derivace}
+\section{Pojem derivace}\label{sec:pojem-derivace}
 
 Představte si auto, které ujede za čas $t$ dráhu $s(t)$. Průměrná rychlost mezi časy $t_0$ a $t_0 + h$ je
 \begin{equation*}
@@ -62,7 +62,7 @@ Představte si, že druhý bod sečny klouže po grafu směrem k prvnímu bodu. 
 
 Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně malá změna $y$ ku nekonečně malé změně $x$'. Newton psal tečku nad písmeno, $\dot{s}$. Značení $f'$ zavedl až Lagrange. Fyzici dodnes používají všechna tři, podle nálady.
 
-\begin{example}
+\begin{example}\label{ex:derivace-x2}
   Spočítejme derivaci $f(x) = x^2$ podle definice:
   \begin{equation*}
     f'(x) = \lim_{h\to 0}\frac{{(x + h)}^2 - x^2}{h} = \lim_{h\to 0}\frac{2xh + h^2}{h} = \lim_{h\to 0}(2x + h) = 2x.
@@ -70,7 +70,7 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
   Tečna ke grafu $y = x^2$ v bodě $x_0 = 3$ má směrnici $f'(3) = 6$ a rovnici $y - 9 = 6(x - 3)$, tedy $y = 6x - 9$.
 \end{example}
 
-\begin{note}
+\begin{note}\label{note:spojitost-derivace}
   Každá diferencovatelná funkce je spojitá. Obráceně to neplatí: funkce $|x|$ je v nule spojitá, ale derivaci tam nemá. Zprava je sklon $1$, zleva $-1$ a graf má `zlom'. Sečny zprava se přimknou k přímce $y = x$, sečny zleva k přímce $y = -x$, a jedna společná tečna tedy neexistuje.
   \begin{center}
     \begin{tikzpicture}[scale=0.7]
@@ -87,7 +87,7 @@ Leibniz derivaci značil $\frac{\mathrm{d}y}{\mathrm{d}x}$, tedy `nekonečně ma
   Weierstrassova funkce z odbočky v kapitole~\ref{kap:funkce} je spojitá, ale nemá derivaci v žádném bodě. Je to funkce, která se skládá jen ze zlomů.
 \end{note}
 
-\section{Pravidla pro derivování}
+\section{Pravidla pro derivování}\label{sec:pravidla-derivovani}
 
 \begin{definitionbox}
   \textbf{Derivace elementárních funkcí}:
@@ -232,7 +232,7 @@ Proč se u složené funkce derivace \textit{násobí}? Představte si soukolí.
   \end{enumerate}
 \end{solution}
 
-\section{Průběh funkce}
+\section{Průběh funkce}\label{sec:prubeh-funkce}
 
 \begin{definitionbox}
   \textbf{Monotonie}: Pokud je na intervalu $f'(x) > 0$, je $f$ na něm \textbf{rostoucí}. Pokud $f'(x) < 0$, je \textbf{klesající}.
@@ -347,7 +347,7 @@ Konvexní graf leží \textit{nad} svými tečnami, konkávní \textit{pod} nimi
 
 \section{Užití derivací}
 
-\subsection{Optimalizační úlohy}
+\subsection{Optimalizační úlohy}\label{sec:optimalizace}
 
 V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkcí, kde stačilo najít vrchol. S derivacemi umíme najít extrém téměř čehokoli.
 
@@ -398,7 +398,7 @@ V kapitole~\ref{kap:elementarni} jsme hledali maxima jen u kvadratických funkc�
   \end{enumerate}
 \end{solution}
 
-\subsection{L'Hospitalovo pravidlo}
+\subsection{L'Hospitalovo pravidlo}\label{sec:lhospital}
 
 \begin{definitionbox}
   \textbf{L'Hospitalovo pravidlo}: Pokud je limita $\lim_{x\to a}\frac{f(x)}{g(x)}$ typu $\frac{0}{0}$ nebo $\frac{\infty}{\infty}$ a existuje $\lim_{x\to a}\frac{f'(x)}{g'(x)}$, pak

@@ -3,7 +3,7 @@
 
 V předchozí kapitole jsme zkoumali útvary samotné. Teď se podíváme na to, jak s nimi hýbat: překlápět je, posouvat, otáčet a zvětšovat. Takovým operacím se říká geometrická zobrazení. Ve druhé části kapitoly pak využijeme všechno, co zatím o geometrii víme, k řešení konstrukčních úloh, tedy úloh, ve kterých máme útvar sestrojit jen pomocí pravítka a kružítka.
 
-\section{Geometrická zobrazení}
+\section{Geometrická zobrazení}\label{sec:geom-zobrazeni}
 
 \begin{definitionbox}
   \textbf{Zobrazení v rovině} je předpis, který každému bodu $X$ roviny přiřadí právě jeden bod $X'$ roviny. Bod $X$ se nazývá \textbf{vzor}, bod $X'$ \textbf{obraz}. Je to vlastně funkce z kapitoly~\ref{kap:funkce}, jejímž definičním oborem i oborem hodnot je rovina.
@@ -13,7 +13,7 @@ V předchozí kapitole jsme zkoumali útvary samotné. Teď se podíváme na to,
   \textbf{Samodružný bod} je bod, který se zobrazí sám na sebe: $X' = X$. \textbf{Samodružný útvar} je útvar, který se zobrazí sám na sebe (jeho jednotlivé body ale samodružné být nemusí).
 \end{definitionbox}
 
-\section{Shodná zobrazení}
+\section{Shodná zobrazení}\label{sec:shodna-zobrazeni}
 
 \begin{definitionbox}
   \textbf{Shodné zobrazení} (shodnost) je zobrazení, které zachovává vzdálenosti: pro každé dva body $X, Y$ a jejich obrazy $X', Y'$ platí $|X'Y'| = |XY|$.
@@ -23,7 +23,7 @@ V předchozí kapitole jsme zkoumali útvary samotné. Teď se podíváme na to,
   Shodné zobrazení převádí přímku na přímku, úsečku na stejně dlouhou úsečku, úhel na shodný úhel, rovnoběžky na rovnoběžky a každý útvar na útvar s ním shodný.
 \end{definitionbox}
 
-\subsection{Osová souměrnost}
+\subsection{Osová souměrnost}\label{sec:osova-soumernost}
 
 \begin{definitionbox}
   \textbf{Osová souměrnost} $O(o)$ s osou $o$ přiřadí bodu $X\notin o$ bod $X'$ tak, že přímka $o$ je osou úsečky $XX'$. Body osy $o$ jsou samodružné.
@@ -74,7 +74,7 @@ V předchozí kapitole jsme zkoumali útvary samotné. Teď se podíváme na to,
 
 Středově souměrný je například rovnoběžník (střed je průsečík úhlopříček), kružnice, elipsa nebo graf liché funkce (střed v počátku, viz kapitola~\ref{kap:funkce}). Trojúhelník středově souměrný není nikdy.
 
-\subsection{Posunutí a otočení}
+\subsection{Posunutí a otočení}\label{sec:posunuti-otoceni}
 
 \begin{definitionbox}
   \textbf{Posunutí} (translace) $T(\vec{u})$ o vektor $\vec{u}$ posune každý bod o tentýž vektor: $X' = X + \vec{u}$. Pokud $\vec{u}\neq\vec{0}$, nemá žádný samodružný bod. Samodružné jsou přímky rovnoběžné s vektorem $\vec{u}$.
@@ -165,7 +165,7 @@ Středově souměrný je například rovnoběžník (střed je průsečík úhlo
   \end{enumerate}
 \end{solution}
 
-\section{Podobná zobrazení}
+\section{Podobná zobrazení}\label{sec:podobna-zobrazeni}
 
 \begin{definitionbox}
   \textbf{Podobné zobrazení} s koeficientem $k > 0$ je zobrazení, pro které platí $|X'Y'| = k\cdot|XY|$ pro každé dva body. Pro $k = 1$ je to shodnost, pro $k > 1$ zvětšení, pro $k < 1$ zmenšení. Podobné zobrazení zachovává úhly a poměry délek.
@@ -220,7 +220,7 @@ Středově souměrný je například rovnoběžník (střed je průsečík úhlo
   \end{center}
 \end{example}
 
-\section{Konstrukční úlohy}
+\section{Konstrukční úlohy}\label{sec:konstrukcni-ulohy}
 
 Konstrukční úloha je úloha, ve které máme sestrojit útvar daných vlastností pouze pomocí pravítka (bez stupnice) a kružítka. Je to tradice, která sahá až k Eukleidovi. Proč jen pravítko a kružítko? Protože to jsou nástroje odpovídající dvěma nejjednodušším křivkám, přímce a kružnici. A protože Řekové měli rádi omezení.
 
@@ -245,7 +245,7 @@ Konstrukční úloha je úloha, ve které máme sestrojit útvar daných vlastno
   \end{itemize}
 \end{definitionbox}
 
-\subsection{Množiny bodů dané vlastnosti}
+\subsection{Množiny bodů dané vlastnosti}\label{sec:mnoziny-bodu}
 
 Jádrem většiny konstrukcí je hledání bodu, který má splňovat dvě podmínky zároveň. Každá podmínka určí nějakou množinu bodů a hledaný bod leží v jejich průniku. Opět množiny, opět průnik, opět kapitola 2.
 
@@ -331,7 +331,7 @@ Jádrem většiny konstrukcí je hledání bodu, který má splňovat dvě podm�
   \end{center}
 \end{example}
 
-\begin{example}
+\begin{example}\label{ex:tecny-z-bodu}
   Sestrojme tečny z bodu $P$ ke kružnici $k(S; r)$, kde $P$ leží vně kružnice.
 
   \textbf{Rozbor}: Tečna je kolmá na poloměr v bodě dotyku $T$. Úhel $STP$ je tedy pravý a bod $T$ leží na Thaletově kružnici nad $SP$.
@@ -420,7 +420,7 @@ Jádrem většiny konstrukcí je hledání bodu, který má splňovat dvě podm�
   \end{enumerate}
 \end{solution}
 
-\section{Odbočka --- Tři nemožné úlohy}
+\section{Odbočka --- Tři nemožné úlohy}\label{sec:nemozne-ulohy}
 
 Řekové nám zanechali tři konstrukční úlohy, které nedokázali vyřešit, a na kterých si pak dva tisíce let lámaly zuby generace matematiků i amatérů:
 \begin{enumerate}

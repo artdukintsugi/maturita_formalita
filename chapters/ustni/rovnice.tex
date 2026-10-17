@@ -3,7 +3,7 @@
 
 Rovnice jsou pravděpodobně to první, co si člověk představí pod slovem `matematika'. Najdi $x$.\footnote{Klasický vtip: student dostane obrázek trojúhelníku se zadáním \textit{Najdi $x$}, zakroužkuje písmeno $x$ a připíše `tady je'. Tento přístup nedoporučujeme, i když je technicky vzato nepopiratelný.} V této kapitole si ale ukážeme, že řešení rovnic není jen mechanické přehazování čísel z jedné strany na druhou. Za každým krokem stojí logika z první kapitoly a pokud ji pochopíme, vyhneme se většině chyb. Začneme lineárními rovnicemi, pak se podíváme na nerovnice a nakonec na soustavy rovnic.
 
-\section{Co je to rovnice?}
+\section{Co je to rovnice?}\label{sec:co-je-rovnice}
 
 V první kapitole jsme si řekli, že výrok je tvrzení, o kterém lze rozhodnout, zda je pravdivé. Je tedy $2x + 1 = 7$ výrok? Není! Dokud nevíme, co je $x$, nemůžeme o pravdivosti rozhodnout. Pro $x = 3$ je to pravda, pro $x = 0$ nepravda. Takovým tvrzením jsme v odbočce o predikátové logice říkali predikáty.
 
@@ -115,7 +115,7 @@ Je také vidět, proč nesmíme násobit nulou. Kdybychom z obou misek všechno 
   \textbf{Zkouška} je dosazení nalezeného čísla do \textbf{původní} rovnice (zvlášť levá a pravá strana). Zkouška je \textbf{nutnou} součástí řešení, pokud jsme použili důsledkovou úpravu. Pokud jsme používali jen ekvivalentní úpravy, je zkouška pouze kontrolou, zda jsme neudělali početní chybu. I tak ji doporučujeme dělat vždy. Trvá to minutu a zachrání to víc známek, než byste čekali.
 \end{definitionbox}
 
-\section{Lineární rovnice}
+\section{Lineární rovnice}\label{sec:linearni-rovnice}
 
 \begin{definitionbox}
   \textbf{Lineární rovnice} s neznámou $x$ je rovnice, kterou lze ekvivalentními úpravami převést na tvar
@@ -341,7 +341,7 @@ Velice praktická dovednost, zejména pro fyziku,\footnote{Ano, i fyzikové pot�
   \end{enumerate}
 \end{solution}
 
-\section{Intervaly}
+\section{Intervaly}\label{sec:intervaly}
 
 Než se pustíme do nerovnic, potřebujeme si zavést šikovný způsob zápisu jejich řešení. Řešením nerovnice totiž většinou není jedno číslo, ale celý `kus' reálné osy.
 
@@ -409,7 +409,7 @@ Protože intervaly jsou množiny, můžeme s nimi provádět všechny množinov�
   \end{enumerate}
 \end{solution}
 
-\section{Lineární nerovnice}
+\section{Lineární nerovnice}\label{sec:linearni-nerovnice}
 
 \begin{definitionbox}
   \textbf{Nerovnice} je zápis $L(x) < P(x)$, případně se znaky $>$, $\leq$, $\geq$. Definiční obor, řešení a množina řešení se definují stejně jako u rovnic.
@@ -539,7 +539,7 @@ Průnik si nejlépe představíme tak, že obě množiny řešení nakreslíme n
   Tedy $K = (-2, 2]$.
 \end{example}
 
-\subsection{Nerovnice v součinovém a podílovém tvaru}
+\subsection{Nerovnice v součinovém a podílovém tvaru}\label{sec:podilove-nerovnice}
 
 Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vynásobit $(x + 2)$ nemůžeme, protože nevíme, zda je tento výraz kladný nebo záporný. Místo toho využijeme toho, že znaménko součinu (i podílu) závisí jen na znaménkách jednotlivých činitelů.
 
@@ -639,7 +639,7 @@ Co když potřebujeme vyřešit nerovnici jako $\frac{x - 1}{x + 2}\geq 0$? Vyn�
   \end{enumerate}
 \end{solution}
 
-\section{Soustavy lineárních rovnic}
+\section{Soustavy lineárních rovnic}\label{sec:soustavy-linearnich}
 
 Často máme víc neznámých a víc podmínek najednou. Například: součet dvou čísel je $10$ a jejich rozdíl je $4$. Která čísla to jsou? Zde potřebujeme vyřešit dvě rovnice zároveň.
 
@@ -706,7 +706,7 @@ Všimněte si, že řešení je uspořádaná dvojice, tedy prvek kartézského 
   Sečtením dostaneme $19x = 38$, tedy $x = 2$. Dosazením do první rovnice $6 + 4y = 2$, tedy $y = -1$. $K = \{(2, -1)\}$.
 \end{example}
 
-\subsection{Geometrický význam a počet řešení}
+\subsection{Geometrický význam a počet řešení}\label{sec:soustavy-pocet-reseni}
 
 Každá rovnice $ax + by = c$ (kde $a, b$ nejsou obě nulová) popisuje v rovině přímku. Vyřešit soustavu tedy znamená najít body, které leží na obou přímkách zároveň. A jak mohou dvě přímky v rovině ležet? Buď se protínají v jednom bodě, nebo jsou rovnoběžné různé, nebo splývají.
 
@@ -873,7 +873,7 @@ Matici soustavy dostaneme tak, že vypíšeme koeficienty u neznámých. Pokud k
   \textbf{rozšířenou maticí soustavy}. Svislá čára tam je jen pro přehlednost a nahrazuje rovnítka.
 \end{definitionbox}
 
-\subsection{Gaussova eliminace na maticích}
+\subsection{Gaussova eliminace na maticích}\label{sec:gaussova-eliminace}
 
 S řádky rozšířené matice můžeme dělat přesně to, co jsme dělali s rovnicemi. Jen se nám u toho nebudou plést písmenka.
 
@@ -1068,7 +1068,7 @@ Věta zní složitě, ale říká přesně to, co jsme viděli v příkladech. P
   Ve druhém kroku jsme třetí řádek vydělili pěti a prohodili ho s druhým, ve třetím kroku jsme provedli $R_3 - 3R_2$. Odspodu: $z = 3$, $y = -1 + z = 2$ a $x = 5 + y - 2z = 1$. $K = \{(1, 2, 3)\}$.
 \end{solution}
 
-\subsection{Počítání s maticemi}
+\subsection{Počítání s maticemi}\label{sec:pocitani-s-maticemi}
 
 Matice nejsou jen úsporný zápis soustav. Dá se s nimi počítat skoro jako s čísly. Skoro.
 
@@ -1150,7 +1150,7 @@ je totiž přesně
 \end{equation*}
 Vynásobte si levou stranu a uvidíte. Soustava rovnic se tak `převlékla' za lineární rovnici $ax = b$. A tu umíme řešit: vydělíme $a$. Matici dělit nemůžeme, ale můžeme ji vynásobit její `převrácenou hodnotou'.
 
-\subsection{Determinant}
+\subsection{Determinant}\label{sec:determinant}
 
 Podívejme se na soustavu dvou rovnic úplně obecně a vyřešme ji sčítací metodou. První rovnici vynásobíme $b_2$, druhou $-b_1$ a sečteme. Členy s $y$ se vyruší a zůstane
 \begin{equation*}
@@ -1271,7 +1271,7 @@ Nulový determinant tedy znamená, že sloupce matice `ukazují stejným směrem
   Tedy $y = \frac{14}{7} = 2$ a $z = \frac{21}{7} = 3$.
 \end{solution}
 
-\section{Odbočka --- Inverzní matice}
+\section{Odbočka --- Inverzní matice}\label{sec:inverzni-matice}
 
 Slíbili jsme, že soustavu $A\mathbf{x} = \mathbf{b}$ vyřešíme podobně jako rovnici $ax = b$. U čísel bychom obě strany vynásobili číslem $a^{-1} = \frac{1}{a}$, protože $a^{-1}a = 1$. U matic potřebujeme matici, která po vynásobení s $A$ dá jednotkovou matici.
 

@@ -3,7 +3,7 @@
 
 Finanční matematika je ta část matematiky, která vás bude v životě pronásledovat nejdéle. Spořicí účty, hypotéky, splátky telefonu, kreditní karty, inflace. Banky a obchodníci s tím počítají každý den a spoléhají na to, že vy ne. Matematicky v této kapitole nic nového nebude: všechno jsou to procenta, geometrické posloupnosti z kapitoly~\ref{kap:posloupnosti} a exponenciála z kapitoly~\ref{kap:exponencialni}. Nové bude jen to, že tentokrát jde o vaše peníze.
 
-\section{Procenta}
+\section{Procenta}\label{sec:procenta}
 
 \begin{definitionbox}
   \textbf{Procento} je setina celku: $1\,\% = \frac{1}{100} = 0{,}01$. \textbf{Promile} je tisícina: $0{,}1\,\%$, tedy $0{,}001$.
@@ -69,7 +69,7 @@ Finanční matematika je ta část matematiky, která vás bude v životě pron�
   \end{enumerate}
 \end{solution}
 
-\section{Úročení}
+\section{Úročení}\label{sec:uroceni}
 
 \begin{definitionbox}
   Pojmy:
@@ -142,7 +142,7 @@ Představte si to takhle. Při jednoduchém úročení dostáváte každý rok s
   Skutečný roční výnos (\textbf{efektivní sazba}) je pak ${\left(1 + \frac{i}{m}\right)}^m - 1$, což je víc než $i$.
 \end{definitionbox}
 
-\begin{example}
+\begin{example}\label{ex:efektivni-sazba}
   Při sazbě $3\,\%$ a dani $15\,\%$ máme z $10\,000$ Kč za $4$ roky $10000\cdot 1{,}0255^4\approx 11\,059{,}68$ Kč.
 
   Při nominální sazbě $6\,\%$ s měsíčním připisováním je efektivní sazba ${(1 + 0{,}005)}^{12} - 1\approx 6{,}17\,\%$. Pokud bychom úroky připisovali nekonečně často (spojité úročení), dostali bychom efektivní sazbu $e^{0{,}06} - 1\approx 6{,}18\,\%$. Proč právě $e$? Připomeňme definici z kapitol~\ref{kap:exponencialni} a~\ref{kap:posloupnosti}:
@@ -209,7 +209,7 @@ Představte si to takhle. Při jednoduchém úročení dostáváte každý rok s
   \end{enumerate}
 \end{solution}
 
-\section{Spoření}
+\section{Spoření}\label{sec:sporeni}
 
 Při pravidelném spoření vkládáme každé období stejnou částku $a$. Každý vklad se pak úročí jinou dobu: ten první nejdéle, ten poslední nejkratší dobu nebo vůbec. Výsledná částka je součet geometrické posloupnosti.
 
@@ -267,7 +267,7 @@ Na obrázku je spoření po dobu $n = 5$ období. Každý vklad `jede' do konce 
   Vložili jsme $24\,000$ Kč, úroky dělají $703$ Kč. Na krátkou dobu se spoření moc nevyplatí. Na čtyřicet let by to ale bylo přes $925\,000$ Kč z vložených $480\,000$ Kč.
 \end{example}
 
-\section{Úvěry}
+\section{Úvěry}\label{sec:uvery}
 
 Úvěr je spoření obráceně. Banka nám půjčí částku $U$ a my ji splácíme pravidelnými splátkami. Každá splátka se skládá z \textbf{úroku} (z dosud nesplaceného dluhu) a \textbf{úmoru} (části, která skutečně snižuje dluh).
 
@@ -290,7 +290,7 @@ Na obrázku je spoření po dobu $n = 5$ období. Každý vklad `jede' do konce 
   Rovnice má mimochodem pěknou interpretaci: to, na kolik by narostl dluh, kdybychom nesplácali (vlevo), se musí rovnat tomu, na kolik by narostly splátky, kdybychom je místo toho spořili (vpravo).
 \end{proof}
 
-\begin{example}
+\begin{example}\label{ex:splatkovy-kalendar}
   Půjčíme si $200\,000$ Kč na $5$ let s úrokem $6\,\%$ ročně a splácíme jednou ročně. Roční splátka je
   \begin{equation*}
     a = 200000\cdot\frac{0{,}06\cdot 1{,}06^5}{1{,}06^5 - 1}\approx 47\,479{,}28\ \text{Kč}.
@@ -343,7 +343,7 @@ Na obrázku je spoření po dobu $n = 5$ období. Každý vklad `jede' do konce 
   Levý graf: všechny splátky jsou stejně vysoké, ale červená část (úrok) se zmenšuje a šedá (úmor) roste. Dluh proto neklesá rovnoměrně, ale zpočátku pomaleji a ke konci rychleji. U pětiletého úvěru je to skoro neznatelné, u dlouhé hypotéky už velmi. Pravý graf ukazuje zbývající dluh u hypotéky na $30$ let při $5\,\%$ ročně: po třetině doby splácení zbývá splatit ještě $81\,\%$ dluhu (dluh po $k$ letech je $U\cdot\frac{1{,}05^{30} - 1{,}05^k}{1{,}05^{30} - 1}$, což plyne ze stejného výpočtu jako v důkazu výše). Šedá přímka ukazuje, jak by dluh klesal, kdyby se splácel rovnoměrně.
 \end{example}
 
-\begin{note}
+\begin{note}\label{note:rpsn}
   Při porovnávání úvěrů se nedívejte jen na úrokovou sazbu, ale na \textbf{RPSN} (roční procentní sazba nákladů). Ta zahrnuje i poplatky za vedení úvěru, pojištění a další náklady. Půjčka `bez úroku' může mít RPSN klidně desítky procent. Nebankovní půjčky v minulosti nabízely RPSN v řádu stovek i tisíců procent, než zákon o spotřebitelském úvěru v roce 2016 výrazně zpřísnil pravidla pro jejich poskytovatele.
 \end{note}
 

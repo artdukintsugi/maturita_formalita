@@ -3,7 +3,7 @@
 
 Pravděpodobnost se ptá: když víme, jak funguje náhoda, co uvidíme? Statistika se ptá obráceně: když něco vidíme, co to říká o světě? V této kapitole se podíváme na \textbf{popisnou statistiku}, tedy na to, jak velké množství dat shrnout několika čísly a grafy. Je to ta část matematiky, kterou nejčastěji uvidíte ve zprávách, a také ta, se kterou se nejčastěji manipuluje.
 
-\section{Základní pojmy}
+\section{Základní pojmy}\label{sec:stat-zakladni-pojmy}
 
 \begin{definitionbox}
   \begin{itemize}
@@ -32,7 +32,7 @@ Pravděpodobnost se ptá: když víme, jak funguje náhoda, co uvidíme? Statist
   \end{center}
 \end{example}
 
-\section{Grafické znázornění}
+\section{Grafické znázornění}\label{sec:graficke-znazorneni}
 
 \begin{definitionbox}
   \begin{itemize}
@@ -104,7 +104,7 @@ Pravděpodobnost se ptá: když víme, jak funguje náhoda, co uvidíme? Statist
   Oba grafy ukazují stejná data. V levém je vidět, že strany jsou skoro vyrovnané. V pravém to vypadá, že strana B vede trojnásobně, protože osa začíná těsně pod $50\,\%$.
 \end{note}
 
-\section{Charakteristiky polohy}
+\section{Charakteristiky polohy}\label{sec:charakteristiky-polohy}
 
 Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
 
@@ -166,7 +166,7 @@ Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
   V řeči těžiště: jedna kulička daleko vpravo má dlouhé `rameno páky', takže přetáhne podpěru (průměr) doprava, přestože nalevo je kuliček devět. Medián se o vzdálenost nestará, jen o počet.
 \end{example}
 
-\begin{example}
+\begin{example}\label{ex:jine-prumery}
   Kdy použít jiné průměry?
   \begin{itemize}
     \item \textbf{Harmonický průměr} pro průměrnou rychlost. Pojedete do Brna rychlostí $60\ \si{km/h}$ a zpátky rychlostí $40\ \si{km/h}$. Průměrná rychlost není $50$, ale $\frac{2}{\frac{1}{60} + \frac{1}{40}} = 48\ \si{km/h}$, protože pomalejší cestou strávíte víc času. Pokud pochybujete, spočítejte to pro konkrétní vzdálenost, třeba $120\ \si{km}$: tam $2$ hodiny, zpátky $3$ hodiny, celkem $240\ \si{km}$ za $5$ hodin.
@@ -178,7 +178,7 @@ Charakteristiky polohy odpovídají na otázku `jaká je typická hodnota?'.
   Pro kladná čísla vždy platí $\bar{x}_H\leq\bar{x}_G\leq\bar{x}$, a rovnost nastává jen tehdy, když jsou všechna čísla stejná. Pro dvě čísla $a, b$ se nerovnost $\sqrt{ab}\leq\frac{a + b}{2}$ dokáže jednoduše: je ekvivalentní s $0\leq{(\sqrt{a} - \sqrt{b})}^2$. Geometricky to znamená, že ze všech obdélníků s daným obvodem má největší obsah čtverec, což jsme viděli v kapitole~\ref{kap:elementarni}.
 \end{note}
 
-\section{Charakteristiky variability}
+\section{Charakteristiky variability}\label{sec:charakteristiky-variability}
 
 Dva soubory mohou mít stejný průměr a přitom vypadat úplně jinak. Data $\{4, 5, 6\}$ a $\{0, 5, 10\}$ mají oba průměr $5$, ale ty druhé jsou mnohem víc `rozházené'. Charakteristiky variability měří, jak moc se data od průměru odchylují.
 
@@ -273,7 +273,7 @@ Pro naše známky je dolní polovina $1, 1, 2, 2, 2$ s mediánem $Q_1 = 2$ a hor
   \end{enumerate}
 \end{solution}
 
-\section{Závislost dvou znaků}
+\section{Závislost dvou znaků}\label{sec:zavislost-znaku}
 
 Často nás zajímá, jestli spolu dva znaky souvisí. Mají vyšší lidé větší boty? Mají studenti, kteří víc spí, lepší známky? Dvojice hodnot $(x_i, y_i)$ můžeme zakreslit jako body do roviny (\textbf{bodový graf}) a podívat se, zda tvoří nějaký trend.
 

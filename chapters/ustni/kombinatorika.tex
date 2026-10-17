@@ -3,7 +3,7 @@
 
 Kombinatorika je umění počítat, aniž bychom počítali. Kolik je možných PINů? Kolika způsoby se může seřadit třída na fotku? Kolik je tiketů ve Sportce? Vypisovat všechny možnosti by trvalo věčnost, takže potřebujeme chytřejší metodu. Kombinatorika je také základem celé pravděpodobnosti, které se věnuje další kapitola. Bez počítání možností totiž nelze spočítat ani šance.
 
-\section{Základní pravidla}
+\section{Základní pravidla}\label{sec:kombinatorika-pravidla}
 
 \begin{definitionbox}
   \textbf{Pravidlo součtu}: Pokud lze jednu věc vybrat $m$ způsoby a jinou (disjunktní, tedy se s ní nepřekrývající) $n$ způsoby, lze vybrat jednu z nich $m + n$ způsoby. Pro množiny: $|A\cup B| = |A| + |B|$, pokud $A\cap B = \emptyset$.
@@ -60,7 +60,7 @@ Nejlepší pomůcka pro pravidlo součinu je \textbf{strom možností}. Každé 
 
 Proč $0! = 1$? Ze stejného důvodu jako $a^0 = 1$ v kapitole~\ref{kap:vyrazy}: chceme, aby rekurentní vztah fungoval i pro $n = 0$, tedy $1! = 1\cdot 0!$. Navíc $n!$ bude počet způsobů, jak seřadit $n$ věcí, a nic se dá seřadit právě jedním způsobem. Faktoriály rostou neuvěřitelně rychle: $10! = 3\,628\,800$ a $52!$ (počet způsobů, jak zamíchat balíček karet) má $68$ cifer. Pokaždé, když pořádně zamícháte karty, s téměř jistotou vytvoříte pořadí, které v dějinách vesmíru ještě nikdy neexistovalo.
 
-\section{Výběry bez opakování}
+\section{Výběry bez opakování}\label{sec:vybery-bez-opakovani}
 
 \begin{definitionbox}
   Mějme $n$ různých prvků a vybíráme z nich $k$ (každý nejvýš jednou).
@@ -163,7 +163,7 @@ Na obrázku je to vidět pro výběr tří písmen: šest různých pořadí (va
   \end{enumerate}
 \end{solution}
 
-\section{Výběry s opakováním}
+\section{Výběry s opakováním}\label{sec:vybery-s-opakovanim}
 
 \begin{definitionbox}
   \textbf{Variace s opakováním} $k$-té třídy z $n$ prvků (uspořádané $k$-tice, prvky se mohou opakovat):
@@ -233,7 +233,7 @@ Odkud se bere vzorec pro kombinace s opakováním? Výběr $k$ kopečků z $n$ d
   \end{enumerate}
 \end{solution}
 
-\section{Kombinační čísla a binomická věta}
+\section{Kombinační čísla a binomická věta}\label{sec:binomicka-veta}
 
 \begin{definitionbox}
   \textbf{Vlastnosti kombinačních čísel}:

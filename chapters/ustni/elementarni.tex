@@ -3,7 +3,7 @@
 
 V minulé kapitole jsme si řekli, jak o funkcích mluvit. Teď se podíváme na konkrétní funkce, se kterými se budete potkávat neustále: lineární, kvadratické, lineární lomené a mocninné. Ke každé z nich budete u ústní maturity potřebovat umět nakreslit graf a popsat vlastnosti z předchozí kapitoly. Dobrá zpráva je, že když pochopíte, \textit{proč} graf vypadá tak, jak vypadá, nemusíte si skoro nic pamatovat.
 
-\section{Lineární funkce}
+\section{Lineární funkce}\label{sec:linearni-funkce}
 
 \begin{definitionbox}
   \textbf{Lineární funkce} je funkce $f: \mathbb{R}\to\mathbb{R}$ daná předpisem
@@ -66,7 +66,7 @@ Představte si, že jdete po grafu zleva doprava. Směrnice $a$ říká, o kolik
   \end{tikzpicture}
 \end{center}
 
-\begin{example}
+\begin{example}\label{ex:primka-dvema-body}
   Najděme lineární funkci, jejíž graf prochází body $A = (1, 3)$ a $B = (3, 7)$. Směrnice je podíl změny $y$ a změny $x$:
   \begin{equation*}
     a = \frac{7 - 3}{3 - 1} = 2.
@@ -111,7 +111,7 @@ Představte si, že jdete po grafu zleva doprava. Směrnice $a$ říká, o kolik
   \end{enumerate}
 \end{solution}
 
-\section{Kvadratická funkce}
+\section{Kvadratická funkce}\label{sec:kvadraticka-funkce}
 
 \begin{definitionbox}
   \textbf{Kvadratická funkce} je funkce $f: \mathbb{R}\to\mathbb{R}$ daná předpisem
@@ -202,7 +202,7 @@ Kořeny kvadratické rovnice $ax^2 + bx + c = 0$ jsou přesně místa, kde parab
 
 Z obrázku vyčteme i řešení kvadratické nerovnice. Na prvním obrázku je parabola pod osou $x$ (tedy $ax^2 + bx + c < 0$) přesně mezi kořeny, na zvýrazněném intervalu $(x_1, x_2)$, a nad osou vně tohoto intervalu. Pro $a < 0$ je to přesně naopak.
 
-\subsection{Úlohy na extrém}
+\subsection{Úlohy na extrém}\label{sec:ulohy-na-extrem}
 
 Protože kvadratická funkce má vždy jeden extrém ve vrcholu, umíme řešit jednoduché optimalizační úlohy, aniž bychom potřebovali derivace.
 
@@ -260,7 +260,7 @@ Protože kvadratická funkce má vždy jeden extrém ve vrcholu, umíme řešit 
   \end{enumerate}
 \end{solution}
 
-\section{Nepřímá úměrnost a lineární lomená funkce}
+\section{Nepřímá úměrnost a lineární lomená funkce}\label{sec:lomena-funkce}
 
 \begin{definitionbox}
   \textbf{Nepřímá úměrnost} je funkce $f(x) = \frac{k}{x}$, kde $k\neq 0$. Grafem je \textbf{rovnoosá hyperbola} se \textbf{asymptotami} $x = 0$ a $y = 0$.
@@ -354,7 +354,7 @@ A proč jsou u lineární lomené funkce $\frac{k}{x - m} + n$ asymptoty právě
   Nepřímá úměrnost je všude kolem nás. Pokud jedeme $120\ \si{km}$, je doba jízdy $t = \frac{120}{v}$. Dvakrát rychleji znamená dvakrát kratší dobu. Pokud si $n$ lidí dělí pizzu, dostane každý $\frac{1}{n}$ pizzy. Graf ukazuje, že pro velká $n$ se kousek blíží nule, ale nikdy jí nedosáhne. Což z vlastní zkušenosti z oslav nemusí být pravda.
 \end{example}
 
-\section{Mocninné funkce}
+\section{Mocninné funkce}\label{sec:mocninne-funkce}
 
 \begin{definitionbox}
   \textbf{Mocninná funkce} je funkce $f(x) = x^r$, kde $r\in\mathbb{R}$ je konstanta. U maturity nás zajímají hlavně tyto případy:

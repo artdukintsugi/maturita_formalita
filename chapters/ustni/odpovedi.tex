@@ -1,0 +1,1460 @@
+\label{kap:odpovedi}
+\mathquote{Solving problems is a practical art, like swimming, or skiing, or playing the piano: you can learn it only by imitation and practice.}{George Pólya}
+
+% otazka v odpovedich: tucne, odpoved zacina na novem radku
+\newcommand{\otazka}[1]{\textbf{#1}\par\nopagebreak\smallskip}
+% odkaz na podrobny vyklad
+\newcommand{\vizsekce}[1]{Podrobně viz sekce~\ref{#1} na straně~\pageref{#1}.}
+\newcommand{\vizpriklad}[1]{Podrobně viz příklad~\ref{#1} na straně~\pageref{#1}.}
+
+Každá kapitola první části končí seznamem otázek k ústní zkoušce. Tato kapitola na ně odpovídá, všechny pěkně pohromadě, abyste je před zkouškou nemuseli lovit po celé knize. Odpovědi jsou záměrně stručné: jsou to taháky na poslední opakování, ne náhrada výkladu. Zkuste si každou otázku nejdřív zodpovědět sami nahlas (u ústní maturity budete mluvit, ne psát) a teprve potom si odpověď přečtěte.
+
+Kde je pořádné vysvětlení nebo důkaz delší, najdete u odpovědi jádro myšlenky a odkaz na místo v textu, kde je vše rozepsané. Odkazy jsou v elektronické verzi klikací. Pokud si nejste jistí ani po přečtení odpovědi, je to signál vrátit se do příslušné kapitoly.
+
+\section{Mocniny, odmocniny a algebraické výrazy}
+
+Otázky ke kapitole~\ref{kap:vyrazy}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jak je definována mocnina s přirozeným, celým a racionálním exponentem? Proč je $a^0 = 1$?}
+  Pro $n\in\mathbb{N}$ je $a^n = a\cdot a\cdots a$ ($n$ činitelů), formálně rekurzivně $a^1 = a$, $a^{n+1} = a^n\cdot a$. Pro $a\neq 0$ definujeme $a^0 = 1$ a $a^{-n} = \frac{1}{a^n}$. Pro $a > 0$, $m\in\mathbb{Z}$ a $n\in\mathbb{N}$ je $a^{\frac{m}{n}} = \sqrt[n]{a^m}$. Rozšíření nejsou libovolná: volíme je tak, aby dál platila pravidla pro počítání s mocninami. Má-li platit $\frac{a^m}{a^n} = a^{m-n}$ i pro $m = n$, musí být
+  \begin{equation*}
+    a^0 = a^{n-n} = \frac{a^n}{a^n} = 1.
+  \end{equation*}
+  Stejně tak z ${(a^{\frac{1}{n}})}^n = a$ plyne, že $a^{\frac{1}{n}}$ musí být $\sqrt[n]{a}$. Výraz $0^0$ necháváme nedefinovaný. Podrobně viz sekce~\ref{sec:mocniny-cely} a~\ref{sec:mocniny-racionalni} od strany~\pageref{sec:mocniny-cely}.
+
+  \item \otazka{Proč u racionálních exponentů požadujeme kladný základ?}
+  Jeden zlomek lze zapsat mnoha způsoby a pro záporný základ by různé zápisy daly různé výsledky. Například $\frac{1}{3} = \frac{2}{6}$, ale
+  \begin{equation*}
+    {(-8)}^{\frac{1}{3}} \overset{?}{=} \sqrt[3]{-8} = -2, \qquad {(-8)}^{\frac{2}{6}} = \sqrt[6]{{(-8)}^2} = \sqrt[6]{64} = 2.
+  \end{equation*}
+  Mocnina by tedy nebyla jednoznačně definovaná. Pro $a > 0$ k tomu nedojde a navíc platí všechna pravidla pro mocniny.
+
+  \item \otazka{Jaký je rozdíl mezi $\sqrt{9}$ a řešením rovnice $x^2 = 9$? Čemu se rovná $\sqrt{x^2}$?}
+  Odmocnina je podle definice jediné \emph{nezáporné} číslo, jehož druhá mocnina je $9$, tedy $\sqrt{9} = 3$ (nikoli $\pm 3$). Rovnice $x^2 = 9$ se ptá na \emph{všechna} čísla s druhou mocninou $9$, a ta jsou dvě: $x = \pm 3$. Znaménko $\pm$ tedy patří k řešení rovnice, ne k odmocnině. Pro každé reálné $x$ platí
+  \begin{equation*}
+    \sqrt{x^2} = |x|,
+  \end{equation*}
+  protože výsledek musí být nezáporný; například $\sqrt{{(-5)}^2} = 5$.
+
+  \item \otazka{Co je definiční obor výrazu a proč ho určujeme ještě před úpravami?}
+  Definiční obor (podmínky) je množina všech hodnot proměnných, pro které má výraz smysl: nedělíme nulou, pod sudou odmocninou není záporné číslo a logaritmujeme jen kladná čísla. Je to průnik všech podmínek. Úpravy mohou podmínku `schovat': $\frac{x^2}{x}$ není pro $x = 0$ definováno, ale po zkrácení dostaneme $x$, které definované je. Správně tedy píšeme $\frac{x^2}{x} = x$ pro $x\neq 0$. Kdybychom podmínky určovali až z upraveného výrazu, některé bychom ztratili. \vizsekce{sec:algebraicke-vyrazy}
+
+  \item \otazka{Co je mnohočlen a jeho stupeň? Jak se mnohočleny sčítají, násobí a dělí?}
+  Mnohočlen v proměnné $x$ je výraz $a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0$ s reálnými koeficienty a $n\in\mathbb{N}_0$; je-li $a_n\neq 0$, má stupeň $n$. Sčítáme sečtením podobných členů (se stejnou mocninou $x$). Násobíme `každý s každým' (distributivní zákon) a pak sečteme podobné členy; stupeň součinu je součet stupňů. Dělíme podobně jako čísla pod sebou: vydělíme nejvyšší členy, výsledkem vynásobíme dělitel, odečteme a opakujeme. Platí věta o dělení se zbytkem
+  \begin{equation*}
+    P(x) = Q(x)\cdot S(x) + R(x), \qquad \text{st}\,R < \text{st}\,Q.
+  \end{equation*}
+  Při dělení dvojčlenem $(x - r)$ je zbytek roven $P(r)$. \vizsekce{sec:deleni-mnohoclenu}
+
+  \item \otazka{Odvoďte vzorec pro ${(a - b)}^2$ a nakreslete jeho geometrický význam.}
+  Roznásobením: ${(a - b)}^2 = (a - b)(a - b) = a^2 - ab - ba + b^2 = a^2 - 2ab + b^2$. Geometricky (pro $a > b > 0$): ze čtverce o straně $a$ odstřihneme horní a pravý pruh, každý o obsahu $ab$. Rožek $b\times b$ jsme tím ale odstřihli dvakrát, takže ho jednou musíme vrátit:
+  \begin{center}
+    \begin{tikzpicture}[scale=0.55]
+      \fill[colorofwisdom!25] (0,0) rectangle (2.8,2.8);
+      \fill[black!8] (0,2.8) rectangle (2.8,4);
+      \fill[black!8] (2.8,0) rectangle (4,2.8);
+      \fill[black!30] (2.8,2.8) rectangle (4,4);
+      \draw[thick] (0,0) rectangle (4,4);
+      \draw[thick, dashed] (2.8,0) -- (2.8,4);
+      \draw[thick, dashed] (0,2.8) -- (4,2.8);
+      \node[font=\small] at (1.4,1.4) {${(a - b)}^2$};
+      \node[font=\scriptsize] at (3.4,3.4) {$b^2$};
+      \node[below, font=\scriptsize] at (1.4,0) {$a - b$};
+      \node[below, font=\scriptsize] at (3.4,0) {$b$};
+      \node[left, font=\scriptsize] at (0,1.4) {$a - b$};
+      \node[left, font=\scriptsize] at (0,3.4) {$b$};
+    \end{tikzpicture}
+  \end{center}
+  Tedy ${(a - b)}^2 = a^2 - ab - ab + b^2$. \vizpriklad{ex:vzorec-rozdil-ctverec}
+
+  \item \otazka{Jaké znáte metody rozkladu mnohočlenu na součin? Proč je rozklad užitečný?}
+  Vytýkání ($ab + ac = a(b + c)$, zkoušíme vždy jako první), použití vzorců (hlavně $a^2 - b^2 = (a - b)(a + b)$ a ${(a\pm b)}^2$), postupné vytýkání ve skupinách a rozklad kvadratického trojčlenu $x^2 + px + q = (x - r)(x - s)$, kde $r + s = -p$ a $rs = q$. Například $x^3 - 2x^2 + 3x - 6 = x^2(x - 2) + 3(x - 2) = (x - 2)(x^2 + 3)$. Rozklad je užitečný díky větě o nulovém součinu ($ab = 0 \Leftrightarrow a = 0\lor b = 0$): ze součinu hned vidíme kořeny, umíme určit znaménko výrazu, krátit lomené výrazy a hledat společného jmenovatele. \vizsekce{sec:rozklad-soucin}
+
+  \item \otazka{Proč můžeme krátit jen činitele a ne sčítance? Uveďte protipříklad.}
+  Krácení je pravidlo $\frac{A\cdot C}{B\cdot C} = \frac{A}{B}$ (pro $C\neq 0$): vydělíme čitatele i jmenovatele stejným číslem, což hodnotu zlomku nezmění. Vydělit $C$ ale lze jen celého čitatele, a pokud je čitatel součet, musíme dělit každý sčítanec. `Škrtnutí' jednoho sčítance je úplně jiná operace a hodnotu změní. Protipříklad:
+  \begin{equation*}
+    \frac{2 + 3}{2} = \frac{5}{2}, \qquad\text{ale ne } 3.
+  \end{equation*}
+  Proto se lomené výrazy před krácením nejdřív rozkládají na součin. \vizsekce{sec:lomene-vyrazy}
+\end{enumerate}
+
+\section{Lineární rovnice, nerovnice, soustavy a matice}
+
+Otázky ke kapitole~\ref{kap:rovnice}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je rovnice a co znamená ji vyřešit? Proč rovnice není výrok?}
+  Rovnice s neznámou $x$ je zápis $L(x) = P(x)$, kde $L$ a $P$ jsou výrazy. Její definiční obor $D$ tvoří čísla, pro která mají smysl obě strany. Řešení (kořen) je každé $x_0\in D$, pro které je $L(x_0) = P(x_0)$ pravdivý výrok. Vyřešit rovnici znamená najít množinu \emph{všech} řešení $K$ a ukázat, že jiná nejsou; uhodnout jedno řešení nestačí. Rovnice sama není výrok, protože o její pravdivosti nelze rozhodnout, dokud nevíme, co je $x$ (pro $x = 3$ je $2x + 1 = 7$ pravda, pro $x = 0$ ne). Je to predikát, výrokem se stane až po dosazení. \vizsekce{sec:co-je-rovnice}
+
+  \item \otazka{Jaký je rozdíl mezi ekvivalentní a důsledkovou úpravou? Uveďte příklady. Kdy je zkouška nutná?}
+  Ekvivalentní úprava nemění množinu řešení (mezi rovnicemi platí $\Leftrightarrow$): přičtení stejného výrazu definovaného na celém $D$ k oběma stranám, vynásobení obou stran nenulovým číslem nebo výrazem, který je na $D$ nenulový, záměna stran. Důsledková úprava zaručí jen $\Rightarrow$: nová rovnice má všechna původní řešení, ale může mít i nějaká navíc. Typicky umocnění ($x = 2 \Rightarrow x^2 = 4$, přibude $-2$) nebo násobení výrazem, který může být nulový. Násobení nulou je zakázané úplně ($x = 2$ se změní na $0 = 0$). Zkouška dosazením do \emph{původní} rovnice je nutná po každé důsledkové úpravě, jinak je jen kontrolou početních chyb.
+
+  \item \otazka{Rozeberte všechny případy řešení rovnice $ax + b = 0$.}
+  \begin{itemize}
+    \item $a\neq 0$: odečteme $b$ a vydělíme $a$ (obojí jsou ekvivalentní úpravy), takže je právě jedno řešení, $K = \left\{-\frac{b}{a}\right\}$.
+    \item $a = 0$, $b\neq 0$: rovnice zní $b = 0$, což je nepravdivý výrok nezávislý na $x$, a $K = \emptyset$.
+    \item $a = 0$, $b = 0$: rovnice zní $0 = 0$, je pravdivá pro každé $x$, a $K = \mathbb{R}$.
+  \end{itemize}
+  Graficky: přímka $y = ax + b$ protne osu $x$ jednou (šikmá), nikdy (vodorovná mimo osu), nebo s ní splývá. \vizsekce{sec:linearni-rovnice}
+
+  \item \otazka{Jak se mění znak nerovnosti při násobení? Dokažte to.}
+  Přičtení čísla ani násobení kladným číslem znak nemění, násobení záporným číslem ho obrátí. Důkaz: nechť $a < b$ a $c < 0$. Pak $b - a > 0$ a $-c > 0$, takže jejich součin je kladný:
+  \begin{equation*}
+    (b - a)(-c) > 0 \quad\Leftrightarrow\quad ac - bc > 0 \quad\Leftrightarrow\quad ac > bc.
+  \end{equation*}
+  Názorně: násobení $-1$ zrcadlí číselnou osu podle nuly, a tím obrací pořadí bodů ($2 < 3$, ale $-2 > -3$). \vizsekce{sec:linearni-nerovnice}
+
+  \item \otazka{Proč nesmíme nerovnici násobit výrazem s neznámou? Jak se řeší nerovnice v podílovém tvaru?}
+  Neznáme jeho znaménko, a tedy nevíme, zda se má znak nerovnosti otočit; navíc výraz může být nulový. Například z $\frac{x - 1}{x + 2}\geq 0$ bychom násobením $(x + 2)$ dostali $x\geq 1$ a ztratili interval $(-\infty, -2)$. Správně použijeme metodu nulových bodů: vše převedeme na jednu stranu (na druhé je $0$), čitatele i jmenovatele rozložíme na lineární činitele, najdeme nulové body, ty rozdělí osu na intervaly se stálým znaménkem každého činitele, znaménka zapíšeme do tabulky a vybereme vyhovující intervaly. Nulové body jmenovatele do řešení nepatří nikdy. V příkladu vyjde $K = (-\infty, -2)\cup[1, \infty)$. \vizsekce{sec:podilove-nerovnice}
+
+  \item \otazka{Co jsou intervaly a jak se zapisují? Jak souvisí soustava nerovnic s průnikem množin?}
+  Interval je souvislá část reálné osy mezi dvěma mezemi, například $[a, b] = \{x\in\mathbb{R} \mid a\leq x\leq b\}$, $(a, b)$, $[a, b)$, $(-\infty, b]$, $(a, \infty)$. Hranatá závorka znamená, že krajní bod do intervalu patří (často se píše i lomená $\langle$), kulatá, že nepatří; u $\pm\infty$ je vždy kulatá, protože $\infty$ není reálné číslo. Na ose kreslíme patřící bod plným a nepatřící prázdným kolečkem. Řešení soustavy nerovnic musí splňovat všechny nerovnice zároveň (spojka $\land$), takže je to \emph{průnik} jejich množin řešení: z $x > -2$ a $x\leq 3$ dostaneme $K = (-2, 3]$. \vizsekce{sec:intervaly}
+
+  \item \otazka{Jaké znáte metody řešení soustav lineárních rovnic? Kolik řešení může soustava dvou rovnic o dvou neznámých mít a proč? Nakreslete.}
+  Dosazovací (vyjádříme neznámou z jedné rovnice a dosadíme do druhé), sčítací (rovnice vynásobíme tak, aby se po sečtení jedna neznámá vyrušila), srovnávací, grafická (průsečík přímek) a maticové metody (Gaussova eliminace, Cramerovo pravidlo, inverzní matice). Každá rovnice $ax + by = c$ popisuje přímku a řešení jsou společné body obou přímek. Dvě přímky v rovině jsou různoběžné, rovnoběžné různé, nebo splývají, takže soustava má právě jedno řešení, žádné, nebo nekonečně mnoho. Právě dvě řešení mít nemůže, protože dvě různé přímky mají nejvýš jeden společný bod.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.55]
+      \begin{scope}
+        \draw[->, gray] (-0.3,0) -- (3.2,0); \draw[->, gray] (0,-0.3) -- (0,3.2);
+        \draw[thick] (0,0.5) -- (3,2.9);
+        \draw[thick, colorofwisdom] (0,2.8) -- (3,0.4);
+        \fill (1.5,1.7) circle (2.5pt);
+        \node[font=\scriptsize] at (1.5,-0.7) {jedno řešení};
+      \end{scope}
+      \begin{scope}[xshift=5cm]
+        \draw[->, gray] (-0.3,0) -- (3.2,0); \draw[->, gray] (0,-0.3) -- (0,3.2);
+        \draw[thick] (0,0.3) -- (3,2.1);
+        \draw[thick, colorofwisdom] (0,1.3) -- (3,3.1);
+        \node[font=\scriptsize] at (1.5,-0.7) {žádné řešení};
+      \end{scope}
+      \begin{scope}[xshift=10cm]
+        \draw[->, gray] (-0.3,0) -- (3.2,0); \draw[->, gray] (0,-0.3) -- (0,3.2);
+        \draw[line width=2.5pt, colorofwisdom!50] (0,0.6) -- (3,2.7);
+        \draw[thick] (0,0.6) -- (3,2.7);
+        \node[font=\scriptsize] at (1.5,-0.7) {nekonečně mnoho};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:soustavy-pocet-reseni}
+
+  \item \otazka{Co je matice a rozšířená matice soustavy? Jaké znáte řádkové úpravy a proč nemění množinu řešení?}
+  Matice typu $m\times n$ je obdélníková tabulka čísel s $m$ řádky a $n$ sloupci; prvek $a_{ij}$ leží v $i$-tém řádku a $j$-tém sloupci. Matice soustavy obsahuje koeficienty u neznámých, rozšířená matice $(A\,|\,b)$ má navíc sloupec pravých stran. Řádkové úpravy jsou prohození dvou řádků, vynásobení řádku nenulovým číslem a přičtení násobku jednoho řádku k jinému. Odpovídají ekvivalentním úpravám rovnic a každou z nich lze vrátit jinou řádkovou úpravou (prohodit zpět, vynásobit $\frac{1}{c}$, odečíst týž násobek). Každé řešení staré soustavy je tedy řešením nové a naopak. Proto nesmíme násobit nulou, to vrátit nelze.
+
+  \item \otazka{Popište Gaussovu eliminaci. Jak z odstupňovaného tvaru poznáte počet řešení? Co říká Frobeniova věta?}
+  Rozšířenou matici převedeme řádkovými úpravami do odstupňovaného tvaru: nulové řádky jsou dole a pivot (první nenulový prvek) každého řádku leží ostře vpravo od pivotu v řádku nad ním. Postupujeme po sloupcích zleva doprava a pod každým pivotem vynulujeme vše, pak neznámé dopočítáme odspodu. Objeví-li se řádek $(0\ \cdots\ 0\,|\,c)$ s $c\neq 0$, znamená $0 = c$ a soustava nemá řešení. Jinak je řešení jedno, pokud má každá neznámá svůj pivot, a nekonečně mnoho, pokud ne (zbylé neznámé volíme jako parametry). Frobeniova věta to říká pomocí hodnosti $h$ (počtu nenulových řádků po úpravě): soustava o $n$ neznámých má řešení, právě když $h(A) = h(A\,|\,b)$; pak má právě jedno řešení pro $h(A) = n$ a nekonečně mnoho (s $n - h(A)$ parametry) pro $h(A) < n$. \vizsekce{sec:gaussova-eliminace}
+
+  \item \otazka{Jak se násobí matice? Je násobení matic komutativní? Uveďte protipříklad.}
+  Součin $AB$ existuje, má-li $A$ tolik sloupců, kolik má $B$ řádků; pro $A$ typu $m\times n$ a $B$ typu $n\times p$ je $AB$ typu $m\times p$ a
+  \begin{equation*}
+    (AB)_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj},
+  \end{equation*}
+  tedy $i$-tý řádek $A$ `krát' $j$-tý sloupec $B$. Komutativní není:
+  \begin{equation*}
+    \begin{pmatrix} 1 & 2\\ 3 & 4 \end{pmatrix}\begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 2 & 1\\ 4 & 3 \end{pmatrix}, \qquad
+    \begin{pmatrix} 0 & 1\\ 1 & 0 \end{pmatrix}\begin{pmatrix} 1 & 2\\ 3 & 4 \end{pmatrix} = \begin{pmatrix} 3 & 4\\ 1 & 2 \end{pmatrix}.
+  \end{equation*}
+  Díky této definici lze soustavu zapsat jako $A\mathbf{x} = \mathbf{b}$. \vizsekce{sec:pocitani-s-maticemi}
+
+  \item \otazka{Co je to determinant a jak se spočítá pro matice $2\times 2$ a $3\times 3$? Co říká Cramerovo pravidlo?}
+  Determinant je číslo přiřazené čtvercové matici. Pro $2\times 2$ je $\begin{vmatrix} a & b\\ c & d \end{vmatrix} = ad - bc$ (vynásobíme `křížem' a odečteme). Pro $3\times 3$ použijeme Sarrusovo pravidlo: opíšeme pod matici první dva řádky, sečteme součiny na třech hlavních diagonálách a odečteme součiny na třech vedlejších. Geometricky je $|\det A|$ obsah rovnoběžníku napnutého sloupci matice. Cramerovo pravidlo: je-li $D = \det A\neq 0$, má soustava $A\mathbf{x} = \mathbf{b}$ právě jedno řešení
+  \begin{equation*}
+    x_i = \frac{D_i}{D},
+  \end{equation*}
+  kde $D_i$ je determinant matice $A$, v níž jsme $i$-tý sloupec nahradili pravými stranami. Pro $D = 0$ nemá soustava žádné, nebo má nekonečně mnoho řešení. \vizsekce{sec:determinant}
+
+  \item \otazka{Co je inverzní matice, kdy existuje a jak pomocí ní vyřešit soustavu?}
+  Inverzní matice ke čtvercové matici $A$ je matice $A^{-1}$ s vlastností $A^{-1}A = AA^{-1} = I$. Existuje právě tehdy, když $\det A\neq 0$ (matice je regulární). Pro $2\times 2$ platí
+  \begin{equation*}
+    \begin{pmatrix} a & b\\ c & d \end{pmatrix}^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d & -b\\ -c & a \end{pmatrix}.
+  \end{equation*}
+  Soustavu $A\mathbf{x} = \mathbf{b}$ vynásobíme $A^{-1}$ \emph{zleva}: $A^{-1}A\mathbf{x} = A^{-1}\mathbf{b}$, tedy $\mathbf{x} = A^{-1}\mathbf{b}$. Na pořadí záleží, protože násobení matic není komutativní. \vizsekce{sec:inverzni-matice}
+\end{enumerate}
+
+\section{Kvadratické rovnice a nerovnice}
+
+Otázky ke kapitole~\ref{kap:kvadraticke}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je kvadratická rovnice? Jak se řeší neúplné kvadratické rovnice?}
+  Je to rovnice, kterou lze ekvivalentně převést na tvar $ax^2 + bx + c = 0$ s $a\neq 0$ (pro $a = 0$ by byla lineární). Neúplné rovnice řešíme bez vzorce:
+  \begin{itemize}
+    \item ryze kvadratická ($b = 0$): $ax^2 + c = 0 \Leftrightarrow x^2 = -\frac{c}{a}$; pro $-\frac{c}{a} > 0$ je $x_{1,2} = \pm\sqrt{-\frac{c}{a}}$, pro $-\frac{c}{a} = 0$ je $x = 0$, pro $-\frac{c}{a} < 0$ řešení v $\mathbb{R}$ není,
+    \item bez absolutního členu ($c = 0$): vytkneme, $x(ax + b) = 0$, a podle věty o nulovém součinu $x = 0$ nebo $x = -\frac{b}{a}$.
+  \end{itemize}
+  Pozor: rovnici $3x^2 = 12x$ nesmíme dělit $3x$, přišli bychom o kořen $x = 0$. \vizsekce{sec:neuplne-kvadraticke}
+
+  \item \otazka{Odvoďte vzorec pro kořeny kvadratické rovnice doplněním na čtverec.}
+  Vydělíme $a\neq 0$ a doplníme na čtverec pomocí ${\left(x + \frac{b}{2a}\right)}^2 = x^2 + \frac{b}{a}x + \frac{b^2}{4a^2}$:
+  \begin{equation*}
+    x^2 + \frac{b}{a}x + \frac{c}{a} = 0 \quad\Leftrightarrow\quad {\left(x + \frac{b}{2a}\right)}^2 = \frac{b^2 - 4ac}{4a^2} = \frac{D}{4a^2}.
+  \end{equation*}
+  Levá strana je nezáporná a $4a^2 > 0$. Pro $D < 0$ tedy řešení není, pro $D = 0$ je $x = -\frac{b}{2a}$ a pro $D > 0$ je $x + \frac{b}{2a} = \pm\frac{\sqrt{D}}{2|a|}$. Absolutní hodnotu můžeme vynechat, protože před ní stojí $\pm$, takže
+  \begin{equation*}
+    x_{1,2} = \frac{-b\pm\sqrt{D}}{2a}.
+  \end{equation*}
+  \vizsekce{sec:doplneni-na-ctverec}
+
+  \item \otazka{Co je diskriminant a co nám říká o počtu řešení?}
+  Diskriminant je číslo $D = b^2 - 4ac$. Pro $D > 0$ má rovnice dvě různá reálná řešení, pro $D = 0$ jedno (dvojnásobné) řešení $-\frac{b}{2a}$ a pro $D < 0$ žádné reálné řešení (jen dvě komplexně sdružená). Geometricky: kořeny leží souměrně kolem osy paraboly $x = -\frac{b}{2a}$, každý ve vzdálenosti $\frac{\sqrt{D}}{2|a|}$. Diskriminant tedy říká, jak daleko od osy kořeny jsou: pro $D = 0$ splynou ve vrcholu a pro $D < 0$ parabola osu $x$ vůbec neprotne.
+
+  \item \otazka{Vyslovte a dokažte Vietovy vzorce. K čemu se hodí?}
+  Jsou-li $x_1, x_2$ kořeny rovnice $ax^2 + bx + c = 0$, pak
+  \begin{equation*}
+    x_1 + x_2 = -\frac{b}{a}, \qquad x_1x_2 = \frac{c}{a}
+  \end{equation*}
+  (pro normovanou rovnici $x^2 + px + q = 0$ je součet $-p$ a součin $q$). Důkaz: sečteme kořeny ze vzorce, odmocniny se odečtou a zbude $\frac{-2b}{2a}$. Při násobení použijeme $(u + v)(u - v) = u^2 - v^2$:
+  \begin{equation*}
+    x_1x_2 = \frac{(-b + \sqrt{D})(-b - \sqrt{D})}{4a^2} = \frac{b^2 - D}{4a^2} = \frac{4ac}{4a^2} = \frac{c}{a}.
+  \end{equation*}
+  Hodí se k uhodnutí `hezkých' kořenů ($x^2 - 5x + 6 = 0$: součet $5$, součin $6$, tedy $2$ a $3$), k sestavení rovnice se zadanými kořeny, k výpočtům s kořeny bez jejich znalosti (např. $x_1^2 + x_2^2 = {(x_1 + x_2)}^2 - 2x_1x_2$) a ke kontrole řešení. \vizsekce{sec:vietovy-vzorce}
+
+  \item \otazka{Jak rozložíte kvadratický trojčlen na součin? Kdy to nejde?}
+  Najdeme kořeny $x_1, x_2$ (vzorcem nebo Vietovými vzorci) a pro $D\geq 0$ platí
+  \begin{equation*}
+    ax^2 + bx + c = a(x - x_1)(x - x_2),
+  \end{equation*}
+  což ověříme roznásobením a dosazením Vietových vzorců. Nezapomeňte na koeficient $a$: například $6x^2 - x - 2 = 6\left(x - \frac{2}{3}\right)\left(x + \frac{1}{2}\right) = (3x - 2)(2x + 1)$. Pro $D < 0$ trojčlen nemá reálné kořeny, a proto ho v $\mathbb{R}$ na součin lineárních činitelů rozložit nelze (například $x^2 + 1$).
+
+  \item \otazka{Jak se řeší kvadratická rovnice s parametrem? Na co si dát pozor, když parametr stojí u $x^2$?}
+  Provedeme diskuzi: spočítáme diskriminant v závislosti na parametru a rozlišíme $D > 0$ (dvě řešení), $D = 0$ (jedno) a $D < 0$ (žádné). Výsledek zapíšeme do tabulky. Například $x^2 + 2x + m = 0$ má $D = 4 - 4m$, tedy dvě řešení pro $m < 1$, jedno pro $m = 1$ a žádné pro $m > 1$. Stojí-li parametr u $x^2$, musíme zvlášť vyšetřit hodnotu, pro kterou je tento koeficient nulový. Rovnice pak není kvadratická, ale lineární, a vzorec s dělením $2a$ pro ni neplatí. Například $mx^2 - 2x + 1 = 0$ má pro $m = 0$ řešení $x = \frac{1}{2}$. \vizsekce{sec:kvadr-parametr}
+
+  \item \otazka{Jak se řeší bikvadratické rovnice a rovnice vyšších stupňů? Vyslovte a dokažte větu o celočíselných kořenech.}
+  Bikvadratickou rovnici $ax^4 + bx^2 + c = 0$ řešíme substitucí $t = x^2$, vyřešíme kvadratickou rovnici pro $t$, záporná $t$ zahodíme a z $x^2 = t$ dostaneme $x = \pm\sqrt{t}$. Obecně u vyšších stupňů hledáme substituci, vytýkáme, nebo uhodneme kořen $r$ a mnohočlen vydělíme $(x - r)$, čímž snížíme stupeň. Věta: má-li mnohočlen s \emph{celočíselnými} koeficienty celočíselný kořen $r$, pak $r$ dělí absolutní člen $a_0$. Důkaz: z $P(r) = 0$ plyne
+  \begin{equation*}
+    a_0 = -r\left(a_nr^{n-1} + \cdots + a_2r + a_1\right),
+  \end{equation*}
+  a závorka je celé číslo. Kandidáty na kořeny tedy hledáme mezi děliteli $a_0$; věta ale nezaručuje, že nějaký celočíselný kořen existuje. \vizsekce{sec:vyssi-stupne}
+
+  \item \otazka{Kolik reálných kořenů může mít kubická rovnice a proč vždy aspoň jeden? Proč je obtížné řešit rovnice třetího a vyšších stupňů?}
+  Jeden, dva (jeden z nich dvojnásobný), nebo tři; víc ne, protože každý kořen $r$ umožní vytknout $(x - r)$ a do stupně $3$ se vejdou nejvýš tři takové závorky. Aspoň jeden kořen existuje vždy: pro $a > 0$ jde graf $ax^3 + \cdots$ vlevo do $-\infty$ a vpravo do $+\infty$, a protože je spojitý, musí osu $x$ někde protnout (Bolzanova věta). Obecné vzorce pro třetí stupeň (Cardano) a čtvrtý stupeň (Ferrari) sice existují, ale jsou velmi složité a i pro tři reálné kořeny mohou vést přes odmocniny ze záporných čísel. Pro pátý a vyšší stupeň obecný vzorec pomocí odmocnin podle Abelovy--Ruffiniho věty vůbec neexistuje; kořeny přitom existují (základní věta algebry), jen se počítají numericky. \vizsekce{sec:kubicke}
+
+  \item \otazka{Jak se řeší kvadratické nerovnice? Načrtněte, jak souvisí s grafem paraboly.}
+  Převedeme vše na jednu stranu a najdeme kořeny trojčlenu. Existují-li, rozložíme ho na $a(x - x_1)(x - x_2)$ a použijeme metodu nulových bodů. Pro $D < 0$ má trojčlen všude znaménko $a$, takže nerovnice platí buď pro všechna $x$, nebo pro žádné. Nejrychlejší je ale představit si parabolu $y = ax^2 + bx + c$: nerovnice $> 0$ se ptá, kde je parabola nad osou $x$, a $< 0$, kde je pod ní. Pro $a > 0$ je parabola pod osou mezi kořeny. Například $x^2 - x - 6 < 0$ má řešení $(-2, 3)$:
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.6, yscale=0.3]
+      \draw[->, gray] (-3.5,0) -- (4.5,0) node[right, black] {\scriptsize $x$};
+      \draw[->, gray] (0,-7) -- (0,5.5) node[above, black] {\scriptsize $y$};
+      \draw[line width=3pt, colorofwisdom!40] (-2,0) -- (3,0);
+      \draw[thick, colorofwisdom, domain=-2.8:3.8, samples=50] plot (\x, {(\x)*(\x) - \x - 6});
+      \fill[white] (-2,0) circle (4pt); \draw (-2,0) circle (4pt);
+      \fill[white] (3,0) circle (4pt); \draw (3,0) circle (4pt);
+      \node[above left, font=\scriptsize] at (-2,0) {$-2$};
+      \node[above right, font=\scriptsize] at (3,0) {$3$};
+      \node[font=\scriptsize, colorofwisdom] at (3.4,3.8) {$y = x^2 - x - 6$};
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:kvadraticke-nerovnice}
+
+  \item \otazka{Jak se řeší soustavy, ve kterých je kvadratická rovnice? Jaký mají geometrický význam?}
+  Sčítací a maticová metoda obecně nefungují, ale dosazovací ano: z jednodušší (obvykle lineární) rovnice vyjádříme jednu neznámou, dosadíme do druhé, vyřešíme vzniklou kvadratickou rovnici a dopočítáme druhou neznámou. U symetrických soustav typu $x + y = s$, $xy = p$ lze použít Vietovy vzorce: $x, y$ jsou kořeny $t^2 - st + p = 0$. Geometricky je každá rovnice křivka v rovině (přímka, kružnice, parabola, hyperbola) a řešení jsou jejich průsečíky. Například $x^2 + y^2 = 25$ a $x - y = 1$ je kružnice a přímka; ty mají dva, jeden (tečna), nebo žádný společný bod. Zde vyjde $K = \{(4, 3), (-3, -4)\}$. \vizsekce{sec:soustavy-kvadraticke}
+\end{enumerate}
+
+\section{Absolutní hodnota a iracionální rovnice}
+
+Otázky ke kapitole~\ref{kap:absolutni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jak je definována absolutní hodnota a jaký má geometrický význam?}
+  \begin{equation*}
+    |a| = \begin{cases} a & \text{pro } a\geq 0,\\ -a & \text{pro } a < 0. \end{cases}
+  \end{equation*}
+  Výraz $-a$ pro $a < 0$ je kladné číslo, takže $|a|\geq 0$ vždy (např. $|-5| = -(-5) = 5$). Geometricky je $|a|$ vzdálenost čísla $a$ od nuly na číselné ose a $|a - b|$ je vzdálenost čísel $a$ a $b$. Graf $y = |x|$ má tvar písmene V se špičkou v počátku: část přímky $y = x$ pod osou $x$ se překlopí nahoru.
+
+  \item \otazka{Jaké má absolutní hodnota vlastnosti? Dokažte trojúhelníkovou nerovnost.}
+  Pro všechna $a, b\in\mathbb{R}$: $|a|\geq 0$ a $|a| = 0\Leftrightarrow a = 0$; $|-a| = |a|$; $|ab| = |a||b|$ a $\left|\frac{a}{b}\right| = \frac{|a|}{|b|}$; $|a|^2 = a^2$ a $\sqrt{a^2} = |a|$; $-|a|\leq a\leq |a|$; a trojúhelníková nerovnost $|a + b|\leq |a| + |b|$. Důkaz: obě strany jsou nezáporné, takže stačí porovnat jejich druhé mocniny:
+  \begin{equation*}
+    |a + b|^2 = a^2 + 2ab + b^2 \leq a^2 + 2|ab| + b^2 = {(|a| + |b|)}^2,
+  \end{equation*}
+  protože $ab\leq |ab|$. Rovnost nastane, právě když $a, b$ mají stejné znaménko (nebo je jedno z nich nula). Název pochází z vektorů: žádná strana trojúhelníku není delší než součet zbylých dvou. \vizsekce{sec:absolutni-hodnota}
+
+  \item \otazka{Jak se řeší rovnice a nerovnice tvaru $|x - a| = b$, $|x - a| < b$ a $|x - a| > b$?}
+  Geometricky: hledáme čísla, jejichž vzdálenost od $a$ je rovna, menší nebo větší než $b$. Pro $b > 0$
+  \begin{align*}
+    |x - a| = b &\quad\Leftrightarrow\quad x = a - b\ \lor\ x = a + b,\\
+    |x - a| < b &\quad\Leftrightarrow\quad a - b < x < a + b,\\
+    |x - a| > b &\quad\Leftrightarrow\quad x < a - b\ \lor\ x > a + b.
+  \end{align*}
+  Pro $b < 0$ nemá rovnice řešení (vzdálenost není záporná), pro $b = 0$ je jediné řešení $x = a$. Například $|x + 2|\leq 1$ jsou čísla nejvýš $1$ od $-2$, tedy $[-3, -1]$. \vizsekce{sec:abs-jednoduche}
+
+  \item \otazka{Popište metodu nulových bodů. Proč musíme kontrolovat, zda řešení leží v daném intervalu?}
+  Najdeme nulové body všech výrazů v absolutních hodnotách. Ty rozdělí osu na intervaly, na kterých má každý výraz stálé znaménko, a proto můžeme absolutní hodnoty odstranit (výraz opíšeme, nebo vezmeme s opačným znaménkem). Na každém intervalu vyřešíme vzniklou rovnici, ověříme, že řešení do intervalu patří, a výsledky sjednotíme. Kontrola je nutná, protože na každém intervalu řešíme jinou rovnici, která s původní souhlasí jen na tomto intervalu. Například u $|x - 1| = 2x + 4$ vyjde pro $x\geq 1$ hodnota $x = -5$, která v $[1, \infty)$ neleží, a opravdu $|-6| = 6\neq -6$. U nerovnic místo kontroly děláme průnik s intervalem. \vizsekce{sec:abs-nulove-body}
+
+  \item \otazka{Co je iracionální rovnice a jak se řeší? Proč je zkouška nutnou součástí řešení?}
+  Iracionální rovnice má neznámou pod odmocninou. Určíme definiční obor (výrazy pod sudými odmocninami $\geq 0$), odmocninu osamostatníme na jedné straně, obě strany umocníme a v případě potřeby opakujeme; vzniklou rovnici vyřešíme a provedeme zkoušku. Umocnění je jen důsledková úprava: z $a = b$ plyne $a^2 = b^2$, ale z $a^2 = b^2$ jen $a = \pm b$. Mohou proto přibýt řešení, která původní rovnici nesplňují, a jediný spolehlivý způsob, jak je odhalit, je zkouška. Příklad: $\sqrt{x + 3} = x + 1$ po umocnění dává $x\in\{1, -2\}$, ale pro $x = -2$ je $L = 1$, $P = -1$, takže $K = \{1\}$. \vizsekce{sec:iracionalni-rovnice}
+
+  \item \otazka{Co jsou falešné kořeny a odkud se berou?}
+  Falešné kořeny jsou čísla, která vyřeší upravenou rovnici, ale ne tu původní. Vznikají při důsledkových úpravách, typicky při umocnění: tím totiž současně řešíme i rovnici s opačným znaménkem. V příkladu výše je $-2$ řešením rovnice $\sqrt{x + 3} = -(x + 1)$. Graficky: $y^2 = x + 3$ je celá `ležatá' parabola, a umocněním jsme k horní polovině $y = \sqrt{x + 3}$ přibrali i dolní polovinu $y = -\sqrt{x + 3}$; falešný kořen je průsečík s ní. Falešné kořeny mohou vzniknout i násobením výrazem, který může být nulový. (Naopak dělením výrazem, který může být nulový, kořeny ztrácíme.)
+
+  \item \otazka{Jak se řeší iracionální nerovnice a proč u nich nemůžeme spoléhat na zkoušku?}
+  Řešením nerovnice bývá celý interval a nekonečně mnoho čísel dosadit nemůžeme, takže zkouška falešná řešení neodhalí. Musíme tedy dělat jen ekvivalentní úpravy: umocňovat smíme, jen když jsou obě strany nezáporné, a ostatní případy rozebrat zvlášť. Například $\sqrt{x + 2} > x$ (podmínka $x\geq -2$): pro $x\in[-2, 0)$ je pravá strana záporná a nerovnice platí vždy; pro $x\geq 0$ umocníme na $x^2 - x - 2 < 0$, tedy $x\in(-1, 2)$, a po průniku s $[0, \infty)$ zbude $[0, 2)$. Celkem $K = [-2, 2)$. Dobrou kontrolou je náčrt grafů obou stran. \vizsekce{sec:iracionalni-nerovnice}
+\end{enumerate}
+
+\section{Funkce a jejich vlastnosti}
+
+Otázky ke kapitole~\ref{kap:funkce}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je funkce? Jak souvisí s relacemi? Co je definiční obor, obor hodnot a graf?}
+  Funkce $f$ z množiny $A$ do $B$ je relace $f\subseteq A\times B$, ve které ke každému $x\in A$ existuje \emph{právě jedno} $y\in B$ s $(x, y)\in f$; píšeme $y = f(x)$. Funkce je tedy speciální relace: z každého $x$ vede právě jedna šipka, do jednoho $y$ jich ale může vést víc (např. $(-2)^2 = 2^2$). Definiční obor $D(f)$ je množina všech $x$, pro která je funkce definovaná (u předpisu bez dalšího určení největší množina, kde má předpis smysl). Obor hodnot je $H(f) = \{f(x) \mid x\in D(f)\}$. Graf je množina bodů $\{(x, f(x)) \mid x\in D(f)\}$ v rovině, tedy formálně funkce sama. \vizsekce{sec:pojem-funkce}
+
+  \item \otazka{Jak lze funkci zadat? Jak poznáte z obrázku, zda jde o graf funkce?}
+  Předpisem (např. $f(x) = 3x^2 - 1$), tabulkou, grafem, slovně, případně po částech (různými předpisy na různých intervalech, jako absolutní hodnota). Z obrázku to poznáme testem svislou přímkou: každá svislá přímka smí křivku protnout nejvýše jednou. Kdyby ji protnula dvakrát, patřily by k jednomu $x$ dvě hodnoty $y$. Kružnice $x^2 + y^2 = 1$ proto grafem funkce není.
+
+  \item \otazka{Definujte rostoucí, klesající, nerostoucí a neklesající funkci. Dokažte, že $\frac{1}{x}$ je klesající na $(0, \infty)$. Proč není klesající na $\mathbb{R}\setminus\{0\}$?}
+  Funkce $f$ je na množině $M$ rostoucí, pokud pro všechna $x_1, x_2\in M$ platí $x_1 < x_2\Rightarrow f(x_1) < f(x_2)$; klesající, pokud $x_1 < x_2\Rightarrow f(x_1) > f(x_2)$; neklesající, resp. nerostoucí s neostrými nerovnostmi $\leq$, resp. $\geq$. Důkaz: pro $0 < x_1 < x_2$ je
+  \begin{equation*}
+    \frac{1}{x_1} - \frac{1}{x_2} = \frac{x_2 - x_1}{x_1x_2} > 0,
+  \end{equation*}
+  protože čitatel i jmenovatel jsou kladné. Na $\mathbb{R}\setminus\{0\}$ klesající není, protože podmínka musí platit pro \emph{všechny} dvojice: $-1 < 1$, ale $\frac{1}{-1} = -1 < 1 = \frac{1}{1}$. Správně říkáme `klesající na $(-\infty, 0)$ a na $(0, \infty)$', ne na jejich sjednocení. \vizsekce{sec:monotonie}
+
+  \item \otazka{Co je prostá funkce? Jaký je vztah mezi prostou a ryze monotónní funkcí?}
+  Funkce je prostá, pokud $x_1\neq x_2\Rightarrow f(x_1)\neq f(x_2)$, ekvivalentně $f(x_1) = f(x_2)\Rightarrow x_1 = x_2$. Graficky: každá vodorovná přímka protne graf nejvýše jednou ($x^3$ je prostá, $x^2$ ne). Každá ryze monotónní funkce je prostá: je-li $f$ rostoucí a $x_1 < x_2$, je $f(x_1) < f(x_2)$, a tedy $f(x_1)\neq f(x_2)$. Obráceně to neplatí: $\frac{1}{x}$ je prostá, ale na svém definičním oboru monotónní není. \vizsekce{sec:prosta-funkce}
+
+  \item \otazka{Co je sudá a lichá funkce? Jak to poznáte z grafu?}
+  Funkce je sudá, pokud pro každé $x\in D(f)$ je i $-x\in D(f)$ a $f(-x) = f(x)$; lichá, pokud navíc $f(-x) = -f(x)$. Graf sudé funkce je souměrný podle osy $y$ (např. $x^2$, $\cos x$), graf liché funkce podle počátku (např. $x^3$, $\sin x$). Definiční obor musí být souměrný podle nuly, proto $\sqrt{x}$ není ani sudá, ani lichá. Většina funkcí není ani jedno; k vyvrácení stačí protipříklad, např. pro $h(x) = x^2 + x$ je $h(1) = 2$ a $h(-1) = 0$. \vizsekce{sec:sudost-lichost}
+
+  \item \otazka{Co je omezená funkce? Co je maximum a minimum? Může být funkce omezená a nemít extrém?}
+  Funkce je na $M$ shora omezená, pokud existuje $h$ s $f(x)\leq h$ pro všechna $x\in M$, zdola omezená, pokud existuje $d$ s $f(x)\geq d$, a omezená, je-li obojí; její graf se pak vejde do vodorovného pásu. Funkce má v bodě $a$ maximum na $M$, pokud $f(x)\leq f(a)$ pro všechna $x\in M$, a minimum, pokud $f(x)\geq f(a)$. Omezená funkce extrém mít nemusí: $\frac{1}{x}$ na $(0, \infty)$ je zdola omezená nulou, ale minimum nemá, protože se k nule jen blíží. Podobně $\frac{1}{1 + x^2}$ je omezená, maximum má, ale minimum ne. \vizsekce{sec:omezenost-extremy}
+
+  \item \otazka{Co je periodická funkce?}
+  Funkce je periodická s periodou $p > 0$, pokud pro každé $x\in D(f)$ je i $x\pm p\in D(f)$ a $f(x + p) = f(x)$. Graf pak stačí nakreslit na jednom úseku délky $p$ a `otiskovat' ho dál jako razítko. S periodou $p$ je periodou i $2p$, $3p$, \ldots, proto mluvíme o nejmenší, \emph{základní} periodě; například $\sin x$ má základní periodu $2\pi$ a $\tg x$ periodu $\pi$. Konstantní funkce je periodická s každou periodou, a základní periodu proto nemá. \vizsekce{sec:periodicnost}
+
+  \item \otazka{Co je složená funkce? Je skládání funkcí komutativní?}
+  Složená funkce $g\circ f$ je $(g\circ f)(x) = g(f(x))$: nejdřív použijeme vnitřní funkci $f$ a na výsledek vnější funkci $g$. Definiční obor tvoří ta $x\in D(f)$, pro která $f(x)\in D(g)$. Komutativní není: pro $f(x) = x + 1$ a $g(x) = x^2$ je
+  \begin{equation*}
+    (g\circ f)(x) = {(x + 1)}^2, \qquad (f\circ g)(x) = x^2 + 1.
+  \end{equation*}
+  (Jako ponožky a boty: na pořadí záleží.) \vizsekce{sec:skladani-funkci}
+
+  \item \otazka{Kdy existuje inverzní funkce? Jak ji najdeme a jak vypadá její graf?}
+  Inverzní funkce existuje právě k \emph{prosté} funkci, protože jen tehdy vzniklo každé $y$ z jediného $x$. Funkce $f^{-1}$ přiřazuje každému $y\in H(f)$ to $x$, pro které $f(x) = y$; platí $D(f^{-1}) = H(f)$, $H(f^{-1}) = D(f)$ a $f^{-1}(f(x)) = x$. Hledáme ji tak, že z $y = f(x)$ vyjádříme $x$ a pak písmena prohodíme: pro $f(x) = 2x - 3$ je $f^{-1}(x) = \frac{x + 3}{2}$. Graf $f^{-1}$ je souměrný s grafem $f$ podle přímky $y = x$, protože prohození souřadnic $[a, b]\mapsto[b, a]$ je právě toto překlopení. Není-li funkce prostá, můžeme zúžit definiční obor: $x^2$ na $[0, \infty)$ má inverzi $\sqrt{x}$. Pozor, $f^{-1}$ neznamená $\frac{1}{f}$. \vizsekce{sec:inverzni-funkce}
+
+  \item \otazka{Jak se změní graf funkce, když k ní přičteme konstantu, když ji posuneme v argumentu, když ji vynásobíme $-1$ a když na ni použijeme absolutní hodnotu?}
+  Pro $c > 0$: $f(x) + c$ posune graf o $c$ nahoru ($f(x) - c$ dolů); $f(x - c)$ posune graf o $c$ \emph{doprava} a $f(x + c)$ doleva, protože hodnota, která byla v nule, je teď v bodě $c$. Funkce $-f(x)$ překlopí graf podle osy $x$ (a $f(-x)$ podle osy $y$). Funkce $|f(x)|$ překlopí části grafu pod osou $x$ nahoru, zatímco $f(|x|)$ zahodí levou polovinu a nahradí ji zrcadlovým obrazem pravé. Například $y = {(x - 2)}^2 - 1$ je parabola $x^2$ s vrcholem posunutým do $(2, -1)$. \vizsekce{sec:transformace-grafu}
+\end{enumerate}
+
+\section{Elementární funkce}
+
+Otázky ke kapitole~\ref{kap:elementarni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je lineární funkce? Jaký význam mají koeficienty $a$ a $b$? Dokažte, kdy je lineární funkce rostoucí.}
+  Lineární funkce je $f(x) = ax + b$ na $\mathbb{R}$, jejím grafem je přímka. Směrnice $a$ udává, o kolik se změní $y$, když $x$ zvětšíme o $1$ (stoupání); svírá-li přímka s kladnou poloosou $x$ úhel $\alpha$, je $a = \tg\alpha$. Koeficient $b = f(0)$ je výška průsečíku s osou $y$. Pro $a = 0$ jde o konstantní funkci, pro $b = 0$ o přímou úměrnost. Funkce je rostoucí právě pro $a > 0$: pro $x_1 < x_2$ je
+  \begin{equation*}
+    f(x_2) - f(x_1) = a(x_2 - x_1),
+  \end{equation*}
+  a protože $x_2 - x_1 > 0$, má rozdíl znaménko $a$. Pro $a < 0$ je tedy klesající. \vizsekce{sec:linearni-funkce}
+
+  \item \otazka{Jak najdete lineární funkci, jejíž graf prochází dvěma danými body?}
+  Pro body $[x_1, y_1]$, $[x_2, y_2]$ s $x_1\neq x_2$ spočítáme směrnici jako podíl přírůstků a $b$ dopočítáme dosazením jednoho bodu:
+  \begin{equation*}
+    a = \frac{y_2 - y_1}{x_2 - x_1}, \qquad b = y_1 - ax_1.
+  \end{equation*}
+  Ekvivalentně řešíme soustavu $ax_1 + b = y_1$, $ax_2 + b = y_2$. Pro $[1, 3]$ a $[3, 7]$: $a = \frac{4}{2} = 2$, $b = 1$, tedy $f(x) = 2x + 1$. (Pro $x_1 = x_2$ je přímka svislá a grafem funkce není.) \vizpriklad{ex:primka-dvema-body}
+
+  \item \otazka{Co je kvadratická funkce? Jak najdete vrchol paraboly? Popište vlastnosti kvadratické funkce v závislosti na znaménku $a$.}
+  Kvadratická funkce je $f(x) = ax^2 + bx + c$ s $a\neq 0$, jejím grafem je parabola. Vrchol najdeme doplněním na čtverec na vrcholový tvar
+  \begin{equation*}
+    f(x) = a{(x - m)}^2 + n, \qquad m = -\frac{b}{2a}, \quad n = f(m);
+  \end{equation*}
+  vrchol je $V = [m, n]$ a osa souměrnosti $x = m$ (leží uprostřed mezi kořeny). Pro $a > 0$ je parabola otevřená nahoru, funkce je klesající na $(-\infty, m]$, rostoucí na $[m, \infty)$, má minimum $n$ ve vrcholu, $H(f) = [n, \infty)$ a je zdola omezená. Pro $a < 0$ je vše obráceně: otevřená dolů, maximum $n$, $H(f) = (-\infty, n]$. Čím větší $|a|$, tím užší parabola. Průsečík s osou $y$ je $[0, c]$. \vizsekce{sec:kvadraticka-funkce}
+
+  \item \otazka{Jak souvisí graf kvadratické funkce s řešením kvadratické rovnice a nerovnice?}
+  Kořeny rovnice $ax^2 + bx + c = 0$ jsou $x$-ové souřadnice průsečíků paraboly s osou $x$. Diskriminant říká, zda vrchol leží na opačné straně osy, než kam je parabola otevřená ($D > 0$, dva průsečíky), přímo na ose ($D = 0$, dotyk) nebo na stejné straně ($D < 0$, žádný průsečík). Nerovnice $ax^2 + bx + c > 0$ se ptá, kde je parabola nad osou $x$, a $< 0$, kde je pod ní. Pro $a > 0$ a $D > 0$ je parabola pod osou přesně mezi kořeny $(x_1, x_2)$ a nad osou vně tohoto intervalu; pro $a < 0$ naopak.
+
+  \item \otazka{Co je nepřímá úměrnost a lineární lomená funkce? Jak najdete asymptoty?}
+  Nepřímá úměrnost je $f(x) = \frac{k}{x}$, $k\neq 0$; grafem je rovnoosá hyperbola s asymptotami $x = 0$ a $y = 0$. Platí $D = H = \mathbb{R}\setminus\{0\}$, funkce je lichá a prostá, pro $k > 0$ klesající na $(-\infty, 0)$ i na $(0, \infty)$ (1. a 3. kvadrant), pro $k < 0$ rostoucí (2. a 4. kvadrant). Lineární lomená funkce je $f(x) = \frac{ax + b}{cx + d}$ s $c\neq 0$ a $ad - bc\neq 0$. Asymptoty najdeme tak, že ji upravíme (`vyrobíme' jmenovatel v čitateli) na tvar
+  \begin{equation*}
+    f(x) = \frac{k}{x - m} + n,
+  \end{equation*}
+  což je hyperbola $\frac{k}{x}$ posunutá o $m$ doprava a $n$ nahoru, s asymptotami $x = m$ a $y = n$. Například $\frac{2x + 1}{x - 1} = 2 + \frac{3}{x - 1}$ má asymptoty $x = 1$, $y = 2$. \vizsekce{sec:lomena-funkce}
+
+  \item \otazka{Proč v definici lineární lomené funkce požadujeme $ad - bc\neq 0$?}
+  Pro $ad - bc = 0$ je čitatel násobkem jmenovatele, výraz se zkrátí a dostaneme konstantní funkci (s jedním vyňatým bodem $x = -\frac{d}{c}$), tedy ne hyperbolu. Například $\frac{2x + 4}{x + 2} = 2$ pro $x\neq -2$; zde $ad - bc = 2\cdot 2 - 4\cdot 1 = 0$. Číslo $ad - bc$ je determinant matice $\begin{pmatrix} a & b\\ c & d \end{pmatrix}$, a jeho nulovost znamená, že řádky $(a, b)$ a $(c, d)$ jsou násobky. Podmínka $c\neq 0$ vylučuje obyčejnou lineární funkci.
+
+  \item \otazka{Popište vlastnosti mocninných funkcí s kladným celým, záporným celým a racionálním exponentem. Nakreslete grafy.}
+  \begin{itemize}
+    \item $x^n$, $n$ sudé: $D = \mathbb{R}$, $H = [0, \infty)$, sudá, klesající na $(-\infty, 0]$, rostoucí na $[0, \infty)$, minimum v $0$; $n$ liché: $H = \mathbb{R}$, lichá, rostoucí, prostá.
+    \item $x^{-n}$: $D = \mathbb{R}\setminus\{0\}$, asymptoty jsou osy; pro $n$ sudé sudá, $H = (0, \infty)$, rostoucí na $(-\infty, 0)$ a klesající na $(0, \infty)$; pro $n$ liché lichá, $H = \mathbb{R}\setminus\{0\}$, klesající na $(-\infty, 0)$ i na $(0, \infty)$.
+    \item $x^{\frac{1}{n}} = \sqrt[n]{x}$: $D = H = [0, \infty)$, rostoucí, inverzní k $x^n$ na $[0, \infty)$ (graf je její překlopení podle $y = x$).
+  \end{itemize}
+  Všechny grafy procházejí bodem $[1, 1]$. Na $(0, 1)$ je vyšší mocnina menší ($x^3 < x^2$), za jedničkou větší.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.75]
+      \begin{scope}
+        \draw[->, gray] (-1.8,0) -- (1.9,0); \draw[->, gray] (0,-1.8) -- (0,1.9);
+        \clip (-1.8,-1.8) rectangle (1.8,1.8);
+        \draw[thick, colorofwisdom, domain=-1.34:1.34, samples=40] plot (\x, {(\x)*(\x)});
+        \draw[thick, domain=-1.21:1.21, samples=40] plot (\x, {(\x)*(\x)*(\x)});
+      \end{scope}
+      \node[font=\scriptsize, colorofwisdom] at (-1.2,1.75) {$x^2$};
+      \node[font=\scriptsize] at (1.55,1.6) {$x^3$};
+      \begin{scope}[xshift=4.5cm]
+        \draw[->, gray] (-1.8,0) -- (1.9,0); \draw[->, gray] (0,-1.8) -- (0,1.9);
+        \draw[thick, colorofwisdom, domain=0.75:1.8, samples=30] plot (\x, {1/((\x)*(\x))});
+        \draw[thick, colorofwisdom, domain=-1.8:-0.75, samples=30] plot (\x, {1/((\x)*(\x))});
+        \draw[thick, domain=0.56:1.8, samples=30] plot (\x, {1/\x});
+        \draw[thick, domain=-1.8:-0.56, samples=30] plot (\x, {1/\x});
+        \node[font=\scriptsize, colorofwisdom] at (-1.3,1.25) {$x^{-2}$};
+        \node[font=\scriptsize] at (-1.3,-1.25) {$x^{-1}$};
+      \end{scope}
+      \begin{scope}[xshift=9cm]
+        \draw[->, gray] (-0.5,0) -- (2.6,0); \draw[->, gray] (0,-0.5) -- (0,1.9);
+        \draw[thick, colorofwisdom, domain=0:2.5, samples=50] plot (\x, {sqrt(\x)});
+        \draw[thick, domain=0.001:2.5, samples=50] plot (\x, {(\x)^(1/3)});
+        \draw[gray, dashed] (0,0) -- (1.8,1.8);
+        \node[font=\scriptsize, colorofwisdom] at (2.4,1.85) {$\sqrt{x}$};
+        \node[font=\scriptsize] at (2.45,1.05) {$\sqrt[3]{x}$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:mocninne-funkce}
+
+  \item \otazka{Uveďte příklady využití lineárních, kvadratických a lomených funkcí v praxi.}
+  Lineární: rovnoměrný pohyb ($s = vt + s_0$), cena za množství s pevným poplatkem, stoupání silnice ($10\,\%$ znamená směrnici $0{,}1$), přepočet stupňů Celsia na Fahrenheity. Kvadratické: volný pád ($s = \frac{1}{2}gt^2$, zhruba $5t^2$), dráha šikmého vrhu, obsah čtverce, optimalizační úlohy (ze $20\ \si{m}$ pletiva má největší obsah čtverec $5\times 5$, protože $S(x) = x(10 - x)$ má vrchol v $x = 5$), parabolické antény a reflektory. Lomené (nepřímá úměrnost): doba jízdy na pevnou vzdálenost $t = \frac{s}{v}$, dělení pizzy mezi $n$ lidí, Boyleův zákon $pV = \text{konst.}$ \vizsekce{sec:ulohy-na-extrem}
+\end{enumerate}
+
+\section{Exponenciální a logaritmické funkce}
+
+Otázky ke kapitole~\ref{kap:exponencialni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je exponenciální funkce? Proč požadujeme $a > 0$ a $a\neq 1$? Popište její vlastnosti pro $a > 1$ a pro $0 < a < 1$.}
+  Exponenciální funkce je $f(x) = a^x$ s $a > 0$, $a\neq 1$; proměnná je v exponentu (na rozdíl od mocninné funkce). Pro $a\leq 0$ by $a^x$ nebylo definováno pro mnoho $x$ (např. ${(-2)}^{\frac{1}{2}}$) a pro $a = 1$ bychom dostali konstantu $1$. Vždy platí $D = \mathbb{R}$, $H = (0, \infty)$, funkce je prostá, zdola omezená nulou, shora neomezená, bez extrémů, graf prochází body $[0, 1]$ a $[1, a]$ a osa $x$ je asymptota. Pro $a > 1$ je rostoucí (pro $x_1 < x_2$ je $a^{x_2} = a^{x_1}\cdot a^{x_2 - x_1}$ a druhý činitel je větší než $1$), pro $0 < a < 1$ klesající. Grafy $a^x$ a ${\left(\frac{1}{a}\right)}^x = a^{-x}$ jsou souměrné podle osy $y$. \vizsekce{sec:exponencialni-funkce}
+
+  \item \otazka{Co je Eulerovo číslo a jak ho můžeme získat?}
+  Je to iracionální (dokonce transcendentní) číslo $\mathrm{e} = 2{,}718\,28\ldots$, základ přirozeného logaritmu. Získáme ho jako limitu
+  \begin{equation*}
+    \mathrm{e} = \lim_{n\to\infty}{\left(1 + \frac{1}{n}\right)}^n.
+  \end{equation*}
+  Názorně: banka dává úrok $100\,\%$ ročně a připisuje ho $n$-krát za rok, vždy $\frac{1}{n}$. Z koruny máme za rok $2$ (ročně), $2{,}25$ (pololetně), $2{,}44$ (čtvrtletně), a při stále častějším připisování se částka blíží k $\mathrm{e}$, ale nikdy ho nepřesáhne. Funkce $\mathrm{e}^x$ je výjimečná tím, že je sama sobě derivací. \vizsekce{sec:eulerovo-cislo}
+
+  \item \otazka{Jak je definován logaritmus? Proč neexistuje logaritmus záporného čísla?}
+  Pro $a > 0$, $a\neq 1$ a $x > 0$ je $\log_a x$ to číslo $y$, pro které $a^y = x$:
+  \begin{equation*}
+    \log_a x = y \quad\Leftrightarrow\quad a^y = x.
+  \end{equation*}
+  Odpovídá na otázku `na kolikátou musím umocnit $a$, abych dostal $x$?'; např. $\log_2 8 = 3$, $\log_3\frac{1}{9} = -2$. Značíme $\log x = \log_{10} x$ a $\ln x = \log_{\mathrm{e}} x$. Logaritmus záporného čísla ani nuly v $\mathbb{R}$ neexistuje, protože $a^y > 0$ pro každé $y$: žádná mocnina kladného základu záporné číslo ani nulu nedá. \vizsekce{sec:logaritmus}
+
+  \item \otazka{Jaký je vztah mezi exponenciální a logaritmickou funkcí? Jak to vypadá na grafu?}
+  Logaritmická funkce $\log_a x$ je inverzní k exponenciální funkci $a^x$: platí $a^{\log_a x} = x$ pro $x > 0$ a $\log_a a^x = x$ pro všechna $x$. Proto se prohodí definiční obor a obor hodnot ($D = (0, \infty)$, $H = \mathbb{R}$), monotonie zůstane stejná (pro $a > 1$ rostoucí), graf prochází body $[1, 0]$ a $[a, 1]$ a asymptotou je osa $y$. Grafy jsou souměrné podle přímky $y = x$:
+  \begin{center}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->, gray] (-3.3,0) -- (3.4,0) node[right, black] {\scriptsize $x$};
+      \draw[->, gray] (0,-3.3) -- (0,3.4) node[above, black] {\scriptsize $y$};
+      \draw[gray, dashed] (-3,-3) -- (3.1,3.1) node[above right, black] {\scriptsize $y = x$};
+      \draw[thick, colorofwisdom, domain=-3.2:1.6, samples=50] plot (\x, {2^(\x)});
+      \draw[thick, domain=0.11:3.2, samples=60] plot (\x, {ln(\x)/ln(2)});
+      \fill[colorofwisdom] (0,1) circle (2pt); \fill (1,0) circle (2pt);
+      \node[font=\scriptsize, colorofwisdom] at (1.1,3.1) {$2^x$};
+      \node[font=\scriptsize] at (3.1,1.25) {$\log_2 x$};
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:logaritmicka-funkce}
+
+  \item \otazka{Vyslovte a dokažte pravidla pro počítání s logaritmy, včetně převodu základu.}
+  Pro $a, b > 0$, $a, b\neq 1$, $x, y > 0$ a $r\in\mathbb{R}$:
+  \begin{equation*}
+    \log_a(xy) = \log_a x + \log_a y,\quad \log_a\frac{x}{y} = \log_a x - \log_a y,\quad \log_a x^r = r\log_a x,\quad \log_a x = \frac{\log_b x}{\log_b a}.
+  \end{equation*}
+  Důkaz: označme $u = \log_a x$, $v = \log_a y$, tedy $a^u = x$, $a^v = y$. Pak $xy = a^{u + v}$, $\frac{x}{y} = a^{u - v}$ a $x^r = a^{ru}$, takže podle definice logaritmu dostaneme první tři pravidla. Pro převod základu zlogaritmujeme $x = a^u$ o základu $b$: $\log_b x = u\log_b a$, a protože $a\neq 1$, je $\log_b a\neq 0$ a můžeme dělit. Logaritmus tedy převádí násobení na sčítání; pro součet žádné pravidlo není. \vizsekce{sec:pravidla-logaritmy}
+
+  \item \otazka{Jaké znáte metody řešení exponenciálních rovnic?}
+  \begin{itemize}
+    \item Převod na stejný základ: díky prostotě $a^{f(x)} = a^{g(x)}\Leftrightarrow f(x) = g(x)$; např. $9^x = 27 \Leftrightarrow 3^{2x} = 3^3$, $x = \frac{3}{2}$.
+    \item Vytýkání: $2^x + 2^{x + 2} = 40 \Leftrightarrow 2^x(1 + 4) = 40$, tedy $2^x = 8$ a $x = 3$.
+    \item Substituce $t = a^x$, pokud se objeví $a^{2x} = {(a^x)}^2$; záporná $t$ zahodíme, protože $a^x > 0$.
+    \item Logaritmování, když stejný základ nenajdeme: $3^x = 7 \Leftrightarrow x = \frac{\log 7}{\log 3} = \log_3 7$.
+  \end{itemize}
+  Rovnice $a^x = c$ má pro $c > 0$ právě jedno řešení a pro $c\leq 0$ žádné. \vizsekce{sec:exponencialni-rovnice}
+
+  \item \otazka{Jak se řeší logaritmické rovnice? Proč je nutné kontrolovat podmínky?}
+  Určíme podmínky (argumenty logaritmů kladné, základy kladné a různé od $1$), pravidly převedeme rovnici na tvar $\log_a f(x) = \log_a g(x)$, resp. $\log_a f(x) = c$, a díky prostotě přejdeme k $f(x) = g(x)$, resp. $f(x) = a^c$. Často pomůže substituce $t = \log x$. Podmínky musíme kontrolovat, protože úprava $\log_a f + \log_a g = \log_a(fg)$ rozšiřuje definiční obor: vpravo stačí $fg > 0$, což platí i pro $f, g < 0$. Například $\log_2 x + \log_2(x - 2) = 3$ vede na $x^2 - 2x - 8 = 0$, $x\in\{4, -2\}$, ale podmínku $x > 2$ splňuje jen $4$. \vizsekce{sec:logaritmicke-rovnice}
+
+  \item \otazka{Jak se řeší exponenciální a logaritmické nerovnice? Kdy se otáčí znak nerovnosti?}
+  Převedeme obě strany na stejný základ a využijeme monotonie. Pro $a > 1$ jsou $a^x$ i $\log_a x$ rostoucí, takže znak zůstane: $a^{f} < a^{g}\Leftrightarrow f < g$. Pro $0 < a < 1$ jsou klesající a znak se \emph{otočí}: ${\left(\frac{1}{2}\right)}^x\geq 4 = {\left(\frac{1}{2}\right)}^{-2}\Leftrightarrow x\leq -2$. U logaritmických nerovnic navíc přidáme podmínky na kladnost argumentů a výsledek s nimi pronikneme: $\log_2(x + 3) < 2 \Leftrightarrow 0 < x + 3 < 4$, tedy $K = (-3, 1)$. \vizsekce{sec:exp-log-nerovnice}
+
+  \item \otazka{Uveďte příklady využití exponenciálních funkcí a logaritmů v praxi.}
+  Exponenciálně se mění vše, co roste nebo ubývá úměrně tomu, kolik toho právě je: radioaktivní rozpad ($N(t) = N_0{\left(\frac{1}{2}\right)}^{t/T}$, radiouhlíkové datování s poločasem $5\,730$ let), množení bakterií, složené úročení, chladnutí. Logaritmy měří veličiny v obrovském rozsahu: pH ($-\log[\mathrm{H}^+]$), decibely, Richterova stupnice zemětřesení, logaritmické stupnice v grafech. Historicky urychlily výpočty astronomů (logaritmické tabulky, logaritmické pravítko), protože převádějí násobení na sčítání. \vizsekce{sec:exp-vyuziti}
+\end{enumerate}
+
+\section{Goniometrie}
+
+Otázky ke kapitole~\ref{kap:goniometrie}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je stupňová a oblouková míra úhlu? Jak se mezi nimi převádí? Proč se v matematice dává přednost radiánům?}
+  Ve stupňové míře má plný úhel $360^\circ$ (a $1^\circ = 60'$, $1' = 60''$). V obloukové míře je velikost úhlu délka oblouku, který úhel vytne na jednotkové kružnici se středem ve vrcholu; plný úhel má tedy $2\pi$ radiánů a $1$ rad $\approx 57{,}3^\circ$ (oblouk dlouhý jako poloměr). Převod plyne z $180^\circ = \pi$ rad:
+  \begin{equation*}
+    \alpha_{\text{rad}} = \frac{\pi}{180}\cdot\alpha^\circ, \qquad \alpha^\circ = \frac{180}{\pi}\cdot\alpha_{\text{rad}}.
+  \end{equation*}
+  Číslo $360$ je libovolná babylonská volba, kdežto radián vychází přímo z geometrie kružnice. V radiánech platí jednoduché vzorce analýzy, např. $\lim_{x\to 0}\frac{\sin x}{x} = 1$ a $(\sin x)' = \cos x$; ve stupních by v nich byl navíc činitel $\frac{\pi}{180}$. \vizsekce{sec:mira-uhlu}
+
+  \item \otazka{Jak jsou definovány goniometrické funkce v pravoúhlém trojúhelníku a na jednotkové kružnici? Proč se obě definice pro ostré úhly shodují?}
+  V pravoúhlém trojúhelníku s ostrým úhlem $\alpha$, protilehlou odvěsnou $a$, přilehlou odvěsnou $b$ a přeponou $c$ je
+  \begin{equation*}
+    \sin\alpha = \frac{a}{c},\quad \cos\alpha = \frac{b}{c},\quad \tg\alpha = \frac{a}{b},\quad \cotg\alpha = \frac{b}{a};
+  \end{equation*}
+  hodnoty nezávisí na velikosti trojúhelníku, protože všechny takové trojúhelníky jsou podobné. Pro obecné $x\in\mathbb{R}$ otočíme bod $[1, 0]$ o orientovaný úhel $x$ kolem počátku do bodu $M$ na jednotkové kružnici a definujeme $M = [\cos x, \sin x]$, $\tg x = \frac{\sin x}{\cos x}$, $\cotg x = \frac{\cos x}{\sin x}$. Pro ostrý úhel tvoří $M$, jeho průmět na osu $x$ a počátek pravoúhlý trojúhelník s přeponou $1$, takže $y$-ová souřadnice je přesně `protilehlá lomeno přepona'. \vizsekce{sec:gon-obecny-uhel}
+
+  \item \otazka{Odvoďte hodnoty goniometrických funkcí pro $30^\circ$, $45^\circ$ a $60^\circ$.}
+  $45^\circ$: rovnoramenný pravoúhlý trojúhelník s odvěsnami $1$ má přeponu $\sqrt{2}$, takže $\sin 45^\circ = \cos 45^\circ = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$ a $\tg 45^\circ = 1$. $30^\circ$ a $60^\circ$: rovnostranný trojúhelník o straně $2$ rozpůlíme výškou; vznikne pravoúhlý trojúhelník s přeponou $2$, odvěsnou $1$ (proti úhlu $30^\circ$) a odvěsnou $\sqrt{4 - 1} = \sqrt{3}$. Tedy
+  \begin{equation*}
+    \sin 30^\circ = \cos 60^\circ = \frac{1}{2},\quad \cos 30^\circ = \sin 60^\circ = \frac{\sqrt{3}}{2},\quad \tg 30^\circ = \frac{\sqrt{3}}{3},\quad \tg 60^\circ = \sqrt{3}.
+  \end{equation*}
+  Pomůcka: sinus pro $0^\circ, 30^\circ, 45^\circ, 60^\circ, 90^\circ$ je $\frac{\sqrt{0}}{2}, \frac{\sqrt{1}}{2}, \frac{\sqrt{2}}{2}, \frac{\sqrt{3}}{2}, \frac{\sqrt{4}}{2}$, kosinus totéž pozpátku. \vizpriklad{ex:tabulka-hodnot}
+
+  \item \otazka{Nakreslete grafy sinu, kosinu a tangentu a popište jejich vlastnosti.}
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.55, yscale=0.8]
+      \draw[->, gray] (-3.6,0) -- (6.9,0) node[right, black] {\scriptsize $x$};
+      \draw[->, gray] (0,-1.4) -- (0,1.5);
+      \foreach \t/\l in {-3.1416/-\pi, 1.5708/\frac{\pi}{2}, 3.1416/\pi, 6.2832/2\pi} {\draw[gray] (\t,0.06) -- (\t,-0.06) node[below, black, font=\scriptsize] {$\l$};}
+      \draw[gray] (0.08,1) -- (-0.08,1) node[left, black, font=\scriptsize] {$1$};
+      \draw[thick, colorofwisdom, domain=-3.1416:6.2832, samples=80] plot (\x, {sin(deg(\x))});
+      \draw[thick, dashed, domain=-3.1416:6.2832, samples=80] plot (\x, {cos(deg(\x))});
+      \node[font=\scriptsize, colorofwisdom] at (2.2,1.3) {$\sin x$};
+      \node[font=\scriptsize] at (-0.9,1.3) {$\cos x$};
+      \begin{scope}[xshift=10.5cm, yscale=0.5]
+        \draw[->, gray] (-2.2,0) -- (5.4,0) node[right, black] {\scriptsize $x$};
+        \draw[->, gray] (0,-2.8) -- (0,2.9);
+        \draw[gray, dashed] (-1.5708,-2.6) -- (-1.5708,2.6) (1.5708,-2.6) -- (1.5708,2.6) (4.7124,-2.6) -- (4.7124,2.6);
+        \draw[thick, colorofwisdom, domain=-1.19:1.19, samples=40] plot (\x, {tan(deg(\x))});
+        \draw[thick, colorofwisdom, domain=1.952:4.332, samples=40] plot (\x, {tan(deg(\x))});
+        \node[below, font=\scriptsize] at (3.1416,0) {$\pi$};
+        \node[font=\scriptsize, colorofwisdom] at (0.6,3.1) {$\tg x$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Sinus a kosinus: $D = \mathbb{R}$, $H = [-1, 1]$, omezené, perioda $2\pi$; sinus je lichý s nulovými body $k\pi$ a maximy v $\frac{\pi}{2} + 2k\pi$, kosinus je sudý s nulovými body $\frac{\pi}{2} + k\pi$ a maximy v $2k\pi$. Graf kosinu je graf sinu posunutý o $\frac{\pi}{2}$ doleva, $\cos x = \sin\left(x + \frac{\pi}{2}\right)$. Tangens: $D = \mathbb{R}\setminus\left\{\frac{\pi}{2} + k\pi\right\}$, $H = \mathbb{R}$, perioda $\pi$, lichý, rostoucí na každém intervalu $\left(-\frac{\pi}{2} + k\pi, \frac{\pi}{2} + k\pi\right)$, nulové body $k\pi$ a svislé asymptoty $x = \frac{\pi}{2} + k\pi$. \vizsekce{sec:gon-grafy}
+
+  \item \otazka{Odvoďte vztah $\sin^2 x + \cos^2 x = 1$. Dokažte součtový vzorec pro kosinus a odvoďte z něj vzorce pro dvojnásobný úhel.}
+  Bod $M = [\cos x, \sin x]$ leží na kružnici o poloměru $1$ se středem v počátku, takže podle Pythagorovy věty je součet čtverců jeho souřadnic $1$. Součtový vzorec: vezmeme body $A = [\cos x, \sin x]$ a $B = [\cos y, \sin y]$ na jednotkové kružnici a $|AB|^2$ spočítáme dvakrát. Ze souřadnic
+  \begin{equation*}
+    |AB|^2 = {(\cos x - \cos y)}^2 + {(\sin x - \sin y)}^2 = 2 - 2(\cos x\cos y + \sin x\sin y).
+  \end{equation*}
+  Po otočení celého obrázku o $-y$ (vzdálenost se nezmění) je $B' = [1, 0]$ a $A' = [\cos(x - y), \sin(x - y)]$, takže $|AB|^2 = 2 - 2\cos(x - y)$. Porovnáním
+  \begin{equation*}
+    \cos(x - y) = \cos x\cos y + \sin x\sin y.
+  \end{equation*}
+  Dosazením $-y$ dostaneme $\cos(x + y) = \cos x\cos y - \sin x\sin y$ a z $\sin x = \cos\left(\frac{\pi}{2} - x\right)$ vzorec $\sin(x + y) = \sin x\cos y + \cos x\sin y$. Pro $y = x$ vyjde
+  \begin{equation*}
+    \sin 2x = 2\sin x\cos x, \qquad \cos 2x = \cos^2 x - \sin^2 x = 1 - 2\sin^2 x = 2\cos^2 x - 1.
+  \end{equation*}
+  \vizsekce{sec:gon-vzorce}
+
+  \item \otazka{Jak se řeší základní goniometrické rovnice? Proč mají nekonečně mnoho řešení?}
+  Najdeme řešení v jedné periodě (nejlépe na jednotkové kružnici) a přičteme celistvé násobky periody, $k\in\mathbb{Z}$:
+  \begin{itemize}
+    \item $\sin x = a$, $|a|\leq 1$: s $x_0\in\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ je $x = x_0 + 2k\pi$ nebo $x = \pi - x_0 + 2k\pi$; např. $\sin x = \frac{1}{2}$ má řešení $\frac{\pi}{6} + 2k\pi$ a $\frac{5\pi}{6} + 2k\pi$ (dva body kružnice ve výšce $\frac{1}{2}$),
+    \item $\cos x = a$, $|a|\leq 1$: s $x_0\in[0, \pi]$ je $x = \pm x_0 + 2k\pi$,
+    \item $\tg x = a$: s $x_0\in\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ je $x = x_0 + k\pi$.
+  \end{itemize}
+  Pro $|a| > 1$ nemají rovnice se sinem a kosinem řešení. Nekonečně mnoho řešení mají proto, že funkce jsou periodické: úhly lišící se o $2\pi$ odpovídají stejnému bodu kružnice. Pozor u $\sin 2x = 1$: z $2x = \frac{\pi}{2} + 2k\pi$ je $x = \frac{\pi}{4} + k\pi$, perioda se vydělí také. \vizsekce{sec:gon-rovnice}
+
+  \item \otazka{Jaké znáte metody řešení složitějších goniometrických rovnic?}
+  Převádíme je na základní rovnice: substitucí (např. $t = \sin x$ v $2\sin^2 x - \sin x - 1 = 0$, odkud $t = 1$ nebo $t = -\frac{1}{2}$), pomocí vzorců, abychom měli v rovnici jedinou funkci (např. $\cos^2 x = 1 - \sin^2 x$), a rozkladem na součin s větou o nulovém součinu. Například $\sin 2x = \sin x \Leftrightarrow \sin x(2\cos x - 1) = 0$, tedy $x = k\pi$ nebo $x = \pm\frac{\pi}{3} + 2k\pi$. Dělením $\sin x$ bychom řešení $k\pi$ ztratili.
+
+  \item \otazka{Vyslovte a dokažte sinovou a kosinovou větu. Jak souvisí kosinová věta s Pythagorovou větou?}
+  Pro trojúhelník se stranami $a, b, c$, protilehlými úhly $\alpha, \beta, \gamma$ a poloměrem kružnice opsané $r$ platí
+  \begin{equation*}
+    \frac{a}{\sin\alpha} = \frac{b}{\sin\beta} = \frac{c}{\sin\gamma} = 2r, \qquad c^2 = a^2 + b^2 - 2ab\cos\gamma.
+  \end{equation*}
+  Sinová věta: výška $v_c$ z vrcholu $C$ rozdělí trojúhelník na dva pravoúhlé, a tak $v_c = b\sin\alpha = a\sin\beta$, odkud $\frac{a}{\sin\alpha} = \frac{b}{\sin\beta}$. Kosinová věta: položíme $C = [0, 0]$, $B = [a, 0]$, $A = [b\cos\gamma, b\sin\gamma]$ a
+  \begin{equation*}
+    c^2 = {(b\cos\gamma - a)}^2 + b^2\sin^2\gamma = a^2 + b^2 - 2ab\cos\gamma.
+  \end{equation*}
+  Pro $\gamma = 90^\circ$ je $\cos\gamma = 0$ a dostaneme Pythagorovu větu; člen $-2ab\cos\gamma$ je oprava pro trojúhelníky, které pravoúhlé nejsou (pro tupé $\gamma$ je kladná). \vizsekce{sec:obecny-trojuhelnik}
+
+  \item \otazka{Kdy může mít úloha o trojúhelníku dvě řešení?}
+  Když známe dvě strany a úhel proti \emph{kratší} z nich (tzv. nejednoznačný případ; u věty Ssu je naopak úhel proti delší straně). Sinová věta pak dá $\sin\beta$ a protože $\sin\beta = \sin(180^\circ - \beta)$, mohou vyhovovat dva úhly: ostrý i tupý. Geometricky: známe $\alpha$, stranu $b = |AC|$ a $a < b$; bod $B$ leží na rameni úhlu $\alpha$ a na kružnici se středem $C$ a poloměrem $a$, a ta rameno může protnout dvakrát (dva trojúhelníky), jednou (dotyk) nebo vůbec. Je-li známý úhel proti delší straně, řešení je nejvýš jedno; kosinová věta tímto problémem netrpí, protože kosinus je na $(0^\circ, 180^\circ)$ prostý.
+\end{enumerate}
+
+\section{Planimetrie}
+
+Otázky ke kapitole~\ref{kap:planimetrie}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jaké jsou vzájemné polohy dvou přímek v rovině? Co jsou vedlejší, vrcholové, souhlasné a střídavé úhly?}
+  Dvě přímky v rovině jsou rovnoběžné různé (žádný společný bod), totožné (všechny body společné), nebo různoběžné (právě jeden společný bod, průsečík); speciálním případem různoběžek jsou kolmice. Vedlejší úhly mají jedno rameno společné a zbylá dvě tvoří přímku, takže jejich součet je $180^\circ$. Vrcholové úhly mají společný vrchol a jejich ramena tvoří dvě přímky; jsou shodné (oba jsou vedlejší k témuž úhlu). Protneme-li dvě rovnoběžky třetí přímkou, jsou souhlasné úhly (ve stejné poloze u obou průsečíků) shodné a střídavé úhly (na opačných stranách příčky, `do Z') také shodné. \vizsekce{sec:plan-zakladni-pojmy}
+
+  \item \otazka{Dokažte větu o součtu úhlů v trojúhelníku. Na kterém předpokladu stojí?}
+  Vrcholem $C$ vedeme přímku $p$ rovnoběžnou s $AB$. U vrcholu $C$ vzniknou tři úhly, které dohromady tvoří přímý úhel $180^\circ$: prostřední je $\gamma$, levý je střídavý s $\alpha$ a pravý střídavý s $\beta$ (rovnoběžky $p$ a $AB$ protnuté přímkami $AC$, resp. $BC$). Tedy $\alpha + \beta + \gamma = 180^\circ$. Důkaz stojí na existenci a vlastnostech rovnoběžek, tedy na Eukleidově pátém postulátu (bodem mimo přímku vede právě jedna rovnoběžka). Bez něj věta neplatí: na kouli může mít trojúhelník tři pravé úhly. \vizsekce{sec:paty-postulat}
+
+  \item \otazka{Co je těžnice, výška, osa strany a osa úhlu? Jaké významné body trojúhelníku znáte a proč se příslušné přímky protínají v jednom bodě?}
+  Těžnice spojuje vrchol se středem protější strany; těžnice se protínají v těžišti $T$, které je dělí v poměru $2:1$ (delší část u vrcholu). Výška je kolmice z vrcholu na protější stranu (nebo její prodloužení); přímky výšek se protínají v ortocentru $V$. Osy stran (kolmice ve středech stran) se protínají ve středu $S$ kružnice opsané. Osy úhlů se protínají ve středu $O$ kružnice vepsané. Proč v jednom bodě: osa úsečky je množina bodů stejně vzdálených od jejích krajních bodů. Průsečík os $AB$ a $BC$ je stejně daleko od $A$ a $B$ i od $B$ a $C$, tedy i od $A$ a $C$, a leží proto i na ose $AC$. Pro osy úhlů je úvaha stejná se vzdálenostmi od přímek stran. (Body $T$, $V$, $S$ navíc leží na Eulerově přímce.) \vizsekce{sec:vyznamne-body}
+
+  \item \otazka{Vyslovte věty o shodnosti a podobnosti trojúhelníků. Proč musí být ve větě Ssu úhel proti větší straně?}
+  Trojúhelníky jsou shodné, shodují-li se ve třech stranách (sss), ve dvou stranách a úhlu jimi sevřeném (sus), v jedné straně a dvou přilehlých úhlech (usu), nebo ve dvou stranách a úhlu proti větší z nich (Ssu). Jsou podobné (existuje $k > 0$, že strany jednoho jsou $k$-násobky stran druhého), shodují-li se ve dvou úhlech (uu), v poměru dvou stran a sevřeném úhlu (sus), nebo v poměrech všech tří stran (sss); obvody jsou pak v poměru $k$ a obsahy v poměru $k^2$. Ve větě Ssu musí být úhel proti větší straně, protože ze dvou stran a úhlu proti \emph{kratší} z nich lze někdy sestrojit dva různé trojúhelníky (jeden s ostrým, druhý s tupým úhlem): kružnice o poloměru kratší strany protne rameno úhlu dvakrát. To je nejednoznačný případ sinové věty.
+
+  \item \otazka{Vyslovte a dokažte Pythagorovu větu a Eukleidovy věty. Platí obrácená Pythagorova věta?}
+  V pravoúhlém trojúhelníku s odvěsnami $a, b$ a přeponou $c$ platí $a^2 + b^2 = c^2$. Důkaz: do čtverce o straně $a + b$ vložíme čtyři kopie trojúhelníku tak, že jejich přepony ohraničují vnitřní čtverec o straně $c$ (úhly $\alpha$ a $90^\circ - \alpha$ se u jeho vrcholů doplní na $90^\circ$). Obsah počítaný dvakrát dá
+  \begin{equation*}
+    {(a + b)}^2 = 4\cdot\frac{ab}{2} + c^2 \quad\Leftrightarrow\quad a^2 + b^2 = c^2.
+  \end{equation*}
+  Eukleidovy věty: výška $v$ na přeponu ji dělí na úseky $c_a$ (u odvěsny $a$) a $c_b$, a platí $v^2 = c_ac_b$ (o výšce), $a^2 = c\,c_a$ a $b^2 = c\,c_b$ (o odvěsně). Důkaz: výška rozdělí trojúhelník na dva menší pravoúhlé, které mají s původním společný ostrý úhel, a jsou mu tedy podle uu podobné; z poměrů stran plyne $\frac{v}{c_a} = \frac{c_b}{v}$ a $\frac{c_a}{a} = \frac{a}{c}$. Obrácená věta platí: je-li $a^2 + b^2 = c^2$, je trojúhelník pravoúhlý s pravým úhlem proti $c$. (Pravoúhlý trojúhelník s odvěsnami $a, b$ má přeponu $\sqrt{a^2 + b^2} = c$ a je s naším shodný podle sss.) \vizsekce{sec:pythagorova-veta}
+
+  \item \otazka{Jaké znáte vzorce pro obsah trojúhelníku?}
+  \begin{equation*}
+    S = \frac{a\cdot v_a}{2} = \frac{1}{2}ab\sin\gamma = \rho\cdot s = \sqrt{s(s - a)(s - b)(s - c)},
+  \end{equation*}
+  kde $s = \frac{a + b + c}{2}$ je poloviční obvod a $\rho$ poloměr kružnice vepsané; poslední je Heronův vzorec. Vzorec $S = \rho s$ plyne z rozdělení trojúhelníku středem kružnice vepsané na tři trojúhelníky s výškou $\rho$. Dále platí $S = \frac{abc}{4r}$ (z $\sin\gamma = \frac{c}{2r}$) a pro pravoúhlý trojúhelník $S = \frac{ab}{2}$. Příklad: strany $13, 14, 15$ dávají $s = 21$ a $S = \sqrt{21\cdot 8\cdot 7\cdot 6} = 84$. \vizsekce{sec:obsah-trojuhelniku}
+
+  \item \otazka{Odvoďte vzorec pro součet vnitřních úhlů a počet úhlopříček konvexního $n$-úhelníku.}
+  Úhlopříčky z jednoho vrcholu rozdělí konvexní $n$-úhelník na $n - 2$ trojúhelníků, jejichž úhly dohromady tvoří právě vnitřní úhly $n$-úhelníku; součet je tedy $(n - 2)\cdot 180^\circ$. Z každého z $n$ vrcholů vede úhlopříčka do $n - 3$ vrcholů (ne do sebe ani do dvou sousedů). Tím je každá úhlopříčka započtená dvakrát, takže jich je
+  \begin{equation*}
+    \frac{n(n - 3)}{2}.
+  \end{equation*}
+  Pravidelný $n$-úhelník má proto vnitřní úhel $\frac{(n - 2)\cdot 180^\circ}{n}$; např. šestiúhelník $120^\circ$ a $9$ úhlopříček. \vizsekce{sec:mnohouhelniky}
+
+  \item \otazka{Popište druhy čtyřúhelníků a jejich vlastnosti. Jak se počítají jejich obsahy?}
+  Rovnoběžník má protější strany rovnoběžné a shodné, protější úhly shodné a úhlopříčky se půlí; $S = a\cdot v_a$. Obdélník je rovnoběžník s pravými úhly a shodnými úhlopříčkami; $S = ab$. Kosočtverec je rovnoběžník se shodnými stranami a navzájem kolmými úhlopříčkami; $S = \frac{u_1u_2}{2}$. Čtverec je obdélník a kosočtverec zároveň; $S = a^2 = \frac{u^2}{2}$. Lichoběžník má právě jednu dvojici rovnoběžných stran (základny $a$, $c$); $S = \frac{(a + c)v}{2}$. Deltoid má dvě dvojice shodných sousedních stran a kolmé úhlopříčky; $S = \frac{u_1u_2}{2}$. Součet vnitřních úhlů každého konvexního čtyřúhelníku je $360^\circ$. Vztahy mezi druhy jsou inkluze množin: čtverce jsou průnikem obdélníků a kosočtverců. \vizsekce{sec:ctyruhelniky}
+
+  \item \otazka{Jaké jsou vzájemné polohy přímky a kružnice? Jakou vlastnost má tečna?}
+  Označme $d$ vzdálenost středu kružnice $k(S, r)$ od přímky. Pro $d > r$ je přímka vnější (žádný společný bod), pro $d = r$ je to tečna (jeden společný bod, bod dotyku) a pro $d < r$ sečna (dva společné body, úsečka mezi nimi je tětiva). Tečna je kolmá na poloměr v bodě dotyku: bod dotyku je bodem přímky nejbližším ke středu a nejkratší spojnice bodu s přímkou je kolmice. \vizsekce{sec:kruznice-kruh}
+
+  \item \otazka{Vyslovte a dokažte větu o obvodovém a středovém úhlu. Jak z ní plyne Thaletova věta?}
+  Obvodový úhel $AVB$ je polovinou středového úhlu $ASB$ příslušného ke stejnému oblouku; všechny obvodové úhly nad týmž obloukem jsou proto shodné. Důkaz pro případ, kdy $S$ leží na rameni $VB$: trojúhelník $AVS$ je rovnoramenný ($|SA| = |SV| = r$), takže má u $A$ i $V$ úhel $\varphi$. Úhel $ASB$ je jeho vnější úhel, a rovná se tedy součtu dvou nepřilehlých vnitřních úhlů, $2\varphi$. Obecný případ dostaneme rozdělením úhlu průměrem z bodu $V$ na dva takové případy a jejich sečtením nebo odečtením. Thaletova věta: je-li $AB$ průměr, je středový úhel přímý ($180^\circ$), a tedy každý obvodový úhel nad průměrem je pravý. \vizsekce{sec:stredovy-obvodovy}
+
+  \item \otazka{Jak se počítá délka oblouku a obsah kruhové výseče?}
+  Oblouk i výseč jsou úměrné středovému úhlu $\alpha$: tvoří stejnou část celé kružnice (obvodu $2\pi r$), resp. kruhu (obsahu $\pi r^2$), jakou část tvoří $\alpha$ z plného úhlu. Ve stupních
+  \begin{equation*}
+    l = \frac{\pi r\alpha}{180^\circ}, \qquad S_v = \frac{\pi r^2\alpha}{360^\circ},
+  \end{equation*}
+  v radiánech jednoduše $l = r\alpha$ a $S_v = \frac{1}{2}r^2\alpha = \frac{1}{2}lr$. \vizsekce{sec:kruznice-kruh}
+\end{enumerate}
+
+\section{Zobrazení a konstrukční úlohy}
+
+Otázky ke kapitole~\ref{kap:zobrazeni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je geometrické zobrazení? Co je samodružný bod a samodružný útvar?}
+  Zobrazení v rovině je předpis, který každému bodu $X$ (vzoru) přiřadí právě jeden bod $X'$ (obraz); je to funkce, jejímž definičním oborem i oborem hodnot je rovina. Samodružný bod se zobrazí sám na sebe, $X' = X$. Samodružný útvar se zobrazí sám na sebe jako celek, jeho jednotlivé body ale samodružné být nemusí: při středové souměrnosti je samodružná každá přímka středem, přestože jediným samodružným bodem je střed. \vizsekce{sec:geom-zobrazeni}
+
+  \item \otazka{Co je shodné zobrazení? Popište osovou a středovou souměrnost, posunutí a otočení. Jaké mají samodružné body?}
+  Shodné zobrazení zachovává vzdálenosti: $|X'Y'| = |XY|$ pro každé dva body. Převádí proto přímky na přímky, úhly na shodné úhly a útvary na shodné útvary.
+  \begin{itemize}
+    \item Osová souměrnost $O(o)$: přímka $o$ je osou úsečky $XX'$. Samodružné body jsou právě body osy.
+    \item Středová souměrnost $S(S)$: bod $S$ je středem úsečky $XX'$. Jediný samodružný bod je $S$; je to otočení o $180^\circ$.
+    \item Posunutí $T(\vec{u})$: $X' = X + \vec{u}$. Pro $\vec{u}\neq\vec{0}$ nemá samodružné body (samodružné jsou přímky rovnoběžné s $\vec{u}$).
+    \item Otočení $R(S, \varphi)$: $|SX'| = |SX|$ a orientovaný úhel $XSX'$ je $\varphi$. Jediný samodružný bod je $S$ (pokud $\varphi$ není násobek $360^\circ$).
+  \end{itemize}
+  \vizsekce{sec:shodna-zobrazeni}
+
+  \item \otazka{Která shodná zobrazení mění orientaci?}
+  Osová souměrnost (a obecně každé složení lichého počtu osových souměrností, např. posunuté zrcadlení). Jsou-li vrcholy trojúhelníku $ABC$ seřazeny proti směru hodinových ručiček, jsou vrcholy obrazu po směru, jako u levé a pravé ruky v zrcadle. Posunutí, otočení i středová souměrnost orientaci zachovávají; lze je totiž složit ze dvou osových souměrností a dvě změny orientace se vyruší. \vizsekce{sec:osova-soumernost}
+
+  \item \otazka{Co vznikne složením dvou osových souměrností?}
+  Záleží na poloze os. Jsou-li osy rovnoběžné ve vzdálenosti $d$, vznikne posunutí o $2d$ kolmo k osám. Jsou-li různoběžné a svírají úhel $\alpha$, vznikne otočení kolem jejich průsečíku o $2\alpha$; pro kolmé osy je to otočení o $180^\circ$, tedy středová souměrnost. Pro totožné osy dostaneme identitu. (Dvě zrcadla v pravém úhlu proto ukazují obraz `nepřevrácený', tak jak vás vidí ostatní.) Každé shodné zobrazení roviny lze složit z nejvýše tří osových souměrností. \vizsekce{sec:posunuti-otoceni}
+
+  \item \otazka{Co je podobné zobrazení a stejnolehlost? Jaké vlastnosti má stejnolehlost?}
+  Podobné zobrazení s koeficientem $k > 0$ splňuje $|X'Y'| = k\cdot|XY|$; zachovává úhly a poměry délek ($k = 1$ shodnost, $k > 1$ zvětšení, $k < 1$ zmenšení). Stejnolehlost $H(S, \kappa)$ se středem $S$ a koeficientem $\kappa\neq 0$ přiřadí bodu $X$ bod $X'$ s $\overrightarrow{SX'} = \kappa\cdot\overrightarrow{SX}$. Vlastnosti: pro $\kappa > 0$ leží $X'$ na polopřímce $SX$, pro $\kappa < 0$ na opačné; je to podobnost s $k = |\kappa|$; přímku zobrazí na rovnoběžnou přímku; samodružný je střed $S$ (pro $\kappa\neq 1$ jediný bod) a přímky jím procházející; pro $\kappa = -1$ jde o středovou souměrnost. V konstrukcích se hodí k `nafouknutí' pomocného útvaru na správnou velikost (např. čtverec vepsaný do trojúhelníku). \vizsekce{sec:podobna-zobrazeni}
+
+  \item \otazka{Uveďte příklady osově a středově souměrných útvarů.}
+  Osově souměrné: rovnoramenný trojúhelník (jedna osa), rovnostranný trojúhelník ($3$ osy), obdélník a kosočtverec ($2$), čtverec ($4$), pravidelný $n$-úhelník ($n$), kružnice (nekonečně mnoho, každá přímka středem), rovnoramenný lichoběžník, deltoid, parabola, graf sudé funkce. Středově souměrné: každý rovnoběžník (střed je průsečík úhlopříček), kružnice, elipsa, hyperbola, pravidelný $n$-úhelník pro sudé $n$, graf liché funkce (střed v počátku), úsečka. Trojúhelník středově souměrný není nikdy.
+
+  \item \otazka{Z jakých částí se skládá řešení konstrukční úlohy?}
+  Ze čtyř částí. Rozbor: předpokládáme, že je úloha vyřešená, nakreslíme náčrtek a hledáme vztahy, ze kterých lze útvar sestrojit. Postup konstrukce: krok za krokem, ideálně symbolicky (např. $C$; $C\in k\cap p$). Konstrukce: samotné narýsování pravítkem a kružítkem. Diskuze: kolik má úloha řešení a za jakých podmínek (např. trojúhelník se stranami $1, 2, 5$ neexistuje, protože porušuje trojúhelníkovou nerovnost). \vizsekce{sec:konstrukcni-ulohy}
+
+  \item \otazka{Jaké znáte množiny bodů dané vlastnosti a jak se využívají v konstrukčních úlohách?}
+  Body ve vzdálenosti $r$ od bodu $S$ tvoří kružnici $k(S; r)$; body stejně vzdálené od $A$ a $B$ tvoří osu úsečky $AB$; body ve vzdálenosti $d$ od přímky $p$ tvoří dvojici rovnoběžek s $p$; body stejně vzdálené od dvou různoběžek tvoří dvojici os jejich úhlů; body, z nichž je úsečka $AB$ vidět pod pravým úhlem, tvoří Thaletovu kružnici nad $AB$ (bez $A$, $B$); body, z nichž je $AB$ vidět pod úhlem $\alpha$, tvoří dva souměrné kruhové oblouky nad $AB$. V konstrukcích hledaný bod obvykle splňuje dvě podmínky; každá určí jednu množinu a bod najdeme jako jejich průsečík. Například vrchol $C$ trojúhelníku s $\gamma = 90^\circ$ a danou výškou $v_c$ leží na Thaletově kružnici nad $AB$ a na rovnoběžce s $AB$ ve vzdálenosti $v_c$. \vizsekce{sec:mnoziny-bodu}
+
+  \item \otazka{Jak sestrojíte tečnu ke kružnici z bodu ležícího vně kružnice?}
+  Tečna je kolmá na poloměr v bodě dotyku $T$, takže úhel $STP$ je pravý a $T$ leží na Thaletově kružnici nad úsečkou $SP$. Postup: $O$ je střed $SP$; sestrojíme kružnici $l(O; |OS|)$; její průsečíky s $k$ jsou body dotyku $T_1, T_2$; tečny jsou přímky $PT_1$ a $PT_2$. Úloha má vždy dvě řešení.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[thick] (0,0) circle (1);
+      \draw[gray, dashed] (1.25,0) circle (1.25);
+      \draw[gray] (0,0) -- (2.5,0);
+      \draw[thick, colorofwisdom] (2.5,0) -- ($(2.5,0)!1.3!(0.4,0.9165)$);
+      \draw[thick, colorofwisdom] (2.5,0) -- ($(2.5,0)!1.3!(0.4,-0.9165)$);
+      \draw[gray] (0,0) -- (0.4,0.9165) (0,0) -- (0.4,-0.9165);
+      \fill (0,0) circle (1.5pt) node[left, font=\scriptsize] {$S$};
+      \fill (2.5,0) circle (1.5pt) node[right, font=\scriptsize] {$P$};
+      \fill (1.25,0) circle (1.2pt) node[below, font=\scriptsize] {$O$};
+      \fill (0.4,0.9165) circle (1.5pt) node[above left, font=\scriptsize] {$T_1$};
+      \fill (0.4,-0.9165) circle (1.5pt) node[below left, font=\scriptsize] {$T_2$};
+      \node[font=\scriptsize] at (-0.85,0.85) {$k$};
+      \node[font=\scriptsize, gray] at (2.3,1.15) {$l$};
+    \end{tikzpicture}
+  \end{center}
+  \vizpriklad{ex:tecny-z-bodu}
+
+  \item \otazka{Které klasické konstrukční úlohy nelze vyřešit pravítkem a kružítkem a proč?}
+  Trisekce obecného úhlu (rozdělit úhel na tři shodné díly), zdvojení krychle (sestrojit $\sqrt[3]{2}$, délský problém) a kvadratura kruhu (sestrojit čtverec s obsahem kruhu, tedy délku $\sqrt{\pi}$). Pravítkem a kružítkem lze z daných délek získat jen to, co vznikne sčítáním, odčítáním, násobením, dělením a druhou odmocninou. Číslo $\sqrt[3]{2}$ ani obecnou trisekci (vede na kubickou rovnici) tak získat nejde, což dokázal Wantzel (1837). Kvadratura kruhu je nemožná, protože $\pi$ je transcendentní, není kořenem žádného mnohočlenu s celočíselnými koeficienty (Lindemann, 1882). \vizsekce{sec:nemozne-ulohy}
+\end{enumerate}
+
+\section{Stereometrie a tělesa}
+
+Otázky ke kapitole~\ref{kap:stereometrie}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jaké jsou vzájemné polohy dvou přímek v prostoru? Co jsou mimoběžky? Uveďte příklad na krychli.}
+  Dvě přímky v prostoru jsou totožné, rovnoběžné různé (leží v jedné rovině a nemají společný bod), různoběžné (mají právě jeden společný bod, a leží tedy v jedné rovině), nebo mimoběžné. Mimoběžky neleží v žádné společné rovině; nemají společný bod a nejsou rovnoběžné (jako dálnice a most nad ní). V krychli $ABCDEFGH$ jsou $AB$ a $HG$ rovnoběžné, $AB$ a $BF$ různoběžné (dokonce kolmé) a $AB$ a $CG$ mimoběžné; jejich nejkratší spojnicí je hrana $BC$, kolmá na obě.
+  \begin{center}
+    \begin{tikzpicture}[krychle, scale=1.6]
+      \krychle
+      \draw[line width=1.6pt, colorofwisdom] (A) -- (B);
+      \draw[line width=1.6pt, colorofwisdom] (C) -- (G);
+      \draw[dashed, thick, gray] (B) -- (C);
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:polohove-vlastnosti}
+
+  \item \otazka{Jaké jsou vzájemné polohy přímky a roviny a dvou rovin?}
+  Přímka v rovině leží, je s ní rovnoběžná (nemají společný bod), nebo je s ní různoběžná (protíná ji v jediném bodě, průsečíku). Dvě roviny jsou totožné, rovnoběžné různé, nebo různoběžné (protínají se v přímce, průsečnici). Užitečná kritéria: přímka je rovnoběžná s rovinou, je-li rovnoběžná s některou přímkou této roviny; dvě roviny jsou rovnoběžné, obsahuje-li jedna dvě různoběžky rovnoběžné s druhou; dvě rovnoběžné roviny protne třetí rovina v rovnoběžných průsečnicích; přímka je kolmá k rovině, je-li kolmá ke dvěma různoběžkám této roviny.
+
+  \item \otazka{Jak se konstruuje řez krychle rovinou? Jaká pravidla používáte?}
+  Řez je průnik tělesa s rovinou, u krychle mnohoúhelník se $3$ až $6$ stranami, jehož vrcholy leží na hranách a strany ve stěnách. Pravidla: (1) dva body řezu ležící ve stejné stěně spojíme (body, které ve společné stěně neleží, nikdy nespojujeme); (2) rovnoběžné stěny protíná rovina řezu v rovnoběžných úsečkách, takže známe-li stranu v jedné stěně a bod v protější, vedeme jím rovnoběžku; (3) nestačí-li to, prodloužíme stranu řezu až k průsečíku $X$ s \emph{přímkou} sousední hrany (obvykle mimo krychli). Bod $X$ leží v rovině řezu i v rovině sousední stěny, a můžeme ho tam použít podle pravidla 1. Řez je hotový, je-li uzavřený a v každé stěně má nejvýš jednu stranu; strany ve skrytých stěnách kreslíme čárkovaně. \vizsekce{sec:rezy-teles}
+
+  \item \otazka{Jak je definována vzdálenost bodu od roviny a vzdálenost mimoběžek?}
+  Vzdálenost bodu od roviny je vzdálenost bodu od jeho kolmého průmětu (paty kolmice) do roviny; měříme vždy kolmo, jako olovnice ze stropu na podlahu. Vzdálenost mimoběžek je délka jejich osy, tedy úsečky, která obě mimoběžky spojuje a je kolmá na obě; je to nejkratší spojnice bodů obou přímek. V krychli o hraně $a$ je vzdálenost mimoběžek $AB$ a $CG$ rovna $|BC| = a$. Vzdálenost rovnoběžných útvarů je vzdálenost libovolného bodu jednoho od druhého. \vizsekce{sec:metricke-vlastnosti}
+
+  \item \otazka{Jak je definována odchylka dvou přímek, přímky a roviny a dvou rovin?}
+  Odchylka dvou přímek je velikost ostrého (nebo pravého) úhlu, který svírají; u mimoběžek je to odchylka různoběžek s nimi rovnoběžných, vedených jedním bodem. Odchylka přímky a roviny je odchylka přímky a jejího kolmého průmětu do roviny (žebřík a jeho `polední stín' na podlaze). Odchylka dvou rovin je odchylka přímek, které leží v obou rovinách a jsou v jednom bodě kolmé na průsečnici. Všechny odchylky leží v intervalu $[0^\circ, 90^\circ]$. Prakticky vždy hledáme vhodný pravoúhlý trojúhelník a použijeme goniometrické funkce: např. tělesová úhlopříčka krychle svírá s podstavou úhel $\varphi$ s $\tg\varphi = \frac{a}{a\sqrt{2}} = \frac{\sqrt{2}}{2}$, tedy $\varphi\approx 35{,}26^\circ$.
+
+  \item \otazka{Odvoďte délku stěnové a tělesové úhlopříčky krychle.}
+  Stěnová úhlopříčka $AC$ je přepona pravoúhlého trojúhelníku $ABC$ s odvěsnami $a$, takže $|AC| = \sqrt{a^2 + a^2} = a\sqrt{2}$. Tělesová úhlopříčka $AG$ je přepona trojúhelníku $ACG$, který je pravoúhlý u $C$ (hrana $CG$ je kolmá na celou podstavu, tedy i na $AC$):
+  \begin{equation*}
+    |AG| = \sqrt{|AC|^2 + |CG|^2} = \sqrt{2a^2 + a^2} = a\sqrt{3}.
+  \end{equation*}
+  Pro kvádr $a\times b\times c$ stejně vyjde $\sqrt{a^2 + b^2 + c^2}$. \vizpriklad{ex:krychle-uhlopricky}
+
+  \item \otazka{Jaké znáte druhy těles? Uveďte vzorce pro jejich objemy a povrchy.}
+  Mnohostěny: hranol (dvě shodné rovnoběžné podstavy, boční stěny rovnoběžníky; kolmý, pravidelný, kvádr, krychle) a jehlan (podstava mnohoúhelník, boční stěny trojúhelníky se společným vrcholem). Rotační tělesa: válec, kužel a koule (rotace obdélníku, pravoúhlého trojúhelníku a půlkruhu). S obsahem podstavy $S_p$, pláště $S_{pl}$, výškou $v$, poloměrem $r$ a stranou kužele $s = \sqrt{r^2 + v^2}$:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{ll}
+      hranol: $V = S_pv$, $S = 2S_p + S_{pl}$ & kvádr: $V = abc$, $S = 2(ab + bc + ac)$\\
+      krychle: $V = a^3$, $S = 6a^2$ & jehlan: $V = \frac{1}{3}S_pv$, $S = S_p + S_{pl}$\\
+      válec: $V = \pi r^2v$, $S = 2\pi r^2 + 2\pi rv$ & kužel: $V = \frac{1}{3}\pi r^2v$, $S = \pi r^2 + \pi rs$\\
+      koule: $V = \frac{4}{3}\pi r^3$, $S = 4\pi r^2$ &
+    \end{tabular}
+  \end{center}
+  Plášť válce se rozvine na obdélník $2\pi r\times v$, plášť kužele na kruhovou výseč o poloměru $s$ a oblouku $2\pi r$, tedy s obsahem $\pi rs$. \vizsekce{sec:telesa}
+
+  \item \otazka{Co říká Cavalieriho princip? Proč má jehlan třetinový objem hranolu?}
+  Mají-li dvě tělesa stejnou výšku a každá rovina rovnoběžná s podstavou je protíná v řezech o stejném obsahu, mají obě tělesa stejný objem. (Balíček karet: když ho nakloníme, tvar se změní, objem ne; proto má šikmý hranol stejný objem jako kolmý.) Jehlan: krychli o hraně $a$ lze rozdělit na tři shodné jehlany se společným vrcholem $G$ a podstavami $ABCD$, $ABFE$, $ADHE$. Každý má podstavu $a^2$ a výšku $a$, takže objem každého je $\frac{1}{3}a^3 = \frac{1}{3}S_pv$. Pro obecný jehlan vzorec plyne z Cavalieriho principu (jehlany se stejnou podstavou a výškou mají v každé výšce řezy stejného obsahu) a z podobnosti řezů; kužel je `jehlan s kruhovou podstavou'. \vizpriklad{ex:jehlan-tretina}
+
+  \item \otazka{Jak se změní objem a povrch tělesa při podobnosti s koeficientem $k$?}
+  Délky se zvětší $k$-krát, povrch (obsahy) $k^2$-krát a objem $k^3$-krát. Důvod: obsah je součin dvou délek a objem součin tří, a každá se násobí $k$. Zdvojnásobením hrany krychle tedy vznikne krychle se čtyřnásobným povrchem a osminásobným objemem. Proto by obří člověk, desetkrát vyšší, vážil tisíckrát víc, ale průřez jeho kostí by byl jen stokrát větší (Galileův argument). Podrobně viz poznámka~\ref{note:podobnost-teles} na straně~\pageref{note:podobnost-teles}.
+
+  \item \otazka{Vyslovte Eulerovu větu o mnohostěnech. Proč existuje jen pět pravidelných mnohostěnů?}
+  Pro každý konvexní mnohostěn s $V$ vrcholy, $H$ hranami a $S$ stěnami platí $V - H + S = 2$ (krychle: $8 - 12 + 6 = 2$). Pravidelný mnohostěn má za stěny shodné pravidelné mnohoúhelníky a v každém vrcholu se jich stýká stejný počet. V každém vrcholu se stýkají aspoň tři stěny a součet jejich úhlů musí být menší než $360^\circ$, jinak by se vrchol rozložil do roviny. Trojúhelníky ($60^\circ$) se tak mohou stýkat po $3$, $4$ nebo $5$ (čtyřstěn, osmistěn, dvacetistěn), čtverce ($90^\circ$) jen po $3$ (krychle), pětiúhelníky ($108^\circ$) jen po $3$ (dvanáctistěn) a šestiúhelníky ($120^\circ$) už vůbec ne, protože $3\cdot 120^\circ = 360^\circ$. Celkem tedy $3 + 1 + 1 = 5$ možností. \vizsekce{sec:eulerova-veta}
+\end{enumerate}
+
+\section{Vektory a analytická geometrie v rovině}
+
+Otázky ke kapitole~\ref{kap:analyticka}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jak se počítá vzdálenost dvou bodů a střed úsečky? Odkud se vzorec pro vzdálenost bere?}
+  Pro $A = [a_1, a_2]$ a $B = [b_1, b_2]$ je
+  \begin{equation*}
+    |AB| = \sqrt{{(b_1 - a_1)}^2 + {(b_2 - a_2)}^2}, \qquad S_{AB} = \left[\frac{a_1 + b_1}{2}, \frac{a_2 + b_2}{2}\right].
+  \end{equation*}
+  Vzorec pro vzdálenost je Pythagorova věta: úsečka $AB$ je přeponou pravoúhlého trojúhelníku, jehož odvěsny jsou rovnoběžné s osami a mají délky $|b_1 - a_1|$ a $|b_2 - a_2|$. Střed má souřadnice rovné průměrům souřadnic krajních bodů. Například $A = [1, 2]$, $B = [4, 6]$ dává $|AB| = \sqrt{9 + 16} = 5$. \vizsekce{sec:soustava-souradnic}
+
+  \item \otazka{Co je vektor? Jak se určí jeho souřadnice a velikost? Jak se vektory sčítají a násobí číslem?}
+  Vektor $\overrightarrow{AB}$ je určen orientovanou úsečkou; orientované úsečky stejně dlouhé, rovnoběžné a stejně orientované určují tentýž vektor. Je to tedy `posunutí', nezáleží na tom, odkud ho kreslíme. Souřadnice jsou $\vec{u} = B - A = (b_1 - a_1, b_2 - a_2)$ a velikost $|\vec{u}| = \sqrt{u_1^2 + u_2^2}$. Sčítáme po složkách, $\vec{u} + \vec{v} = (u_1 + v_1, u_2 + v_2)$, geometricky připojením $\vec{v}$ na konec $\vec{u}$ (úhlopříčka rovnoběžníku). Násobíme číslem po složkách, $k\vec{u} = (ku_1, ku_2)$, což vektor prodlouží $|k|$-krát a pro $k < 0$ otočí jeho směr. (Body píšeme do hranatých, vektory do kulatých závorek.) \vizsekce{sec:vektory}
+
+  \item \otazka{Kdy jsou dva vektory kolineární? Jak to souvisí s determinantem?}
+  Vektory jsou kolineární (lineárně závislé), je-li jeden násobkem druhého, tedy leží-li na rovnoběžných přímkách. Nenulové vektory $(u_1, u_2)$ a $(v_1, v_2)$ jsou kolineární, právě když
+  \begin{equation*}
+    \begin{vmatrix} u_1 & v_1\\ u_2 & v_2 \end{vmatrix} = u_1v_2 - u_2v_1 = 0.
+  \end{equation*}
+  Absolutní hodnota determinantu je obsah rovnoběžníku, který vektory napnou; kolineární vektory vytvoří `splasklý' rovnoběžník s nulovým obsahem. \vizsekce{sec:vektory}
+
+  \item \otazka{Definujte skalární součin. Dokažte vztah se kosinem úhlu. Kdy jsou vektory kolmé?}
+  Skalární součin je číslo $\vec{u}\cdot\vec{v} = u_1v_1 + u_2v_2$. Pro úhel $\varphi\in[0^\circ, 180^\circ]$ nenulových vektorů platí $\vec{u}\cdot\vec{v} = |\vec{u}||\vec{v}|\cos\varphi$. Důkaz: vektory $\vec{u}$, $\vec{v}$ s $\vec{u} - \vec{v}$ tvoří trojúhelník; podle kosinové věty
+  \begin{equation*}
+    |\vec{u} - \vec{v}|^2 = |\vec{u}|^2 + |\vec{v}|^2 - 2|\vec{u}||\vec{v}|\cos\varphi
+  \end{equation*}
+  a v souřadnicích $|\vec{u} - \vec{v}|^2 = {(u_1 - v_1)}^2 + {(u_2 - v_2)}^2 = |\vec{u}|^2 + |\vec{v}|^2 - 2(u_1v_1 + u_2v_2)$; porovnáním dostaneme tvrzení. Nenulové vektory jsou kolmé, právě když $\vec{u}\cdot\vec{v} = 0$ (protože $\cos 90^\circ = 0$); např. $(3, 4)\perp(4, -3)$. Vektor kolmý k $(a, b)$ je $(-b, a)$. \vizsekce{sec:skalarni-soucin}
+
+  \item \otazka{Jaké znáte způsoby vyjádření přímky v rovině? Co je směrový a normálový vektor? Jak se mezi vyjádřeními přechází?}
+  Parametrické vyjádření $X = A + t\vec{u}$, $t\in\mathbb{R}$, kde $\vec{u}\neq\vec{o}$ je směrový vektor (míří podél přímky). Obecná rovnice $ax + by + c = 0$, kde $\vec{n} = (a, b)$ je normálový vektor (kolmý na přímku). Směrnicový tvar $y = kx + q$ se směrnicí $k = \tg\varphi$ (jen pro přímky nerovnoběžné s osou $y$). Přechody: ze směrového vektoru $(u_1, u_2)$ dostaneme normálový $(u_2, -u_1)$ a $c$ dopočítáme dosazením bodu, nebo z parametrických rovnic vyloučíme $t$. Z obecné rovnice vyjádříme $y$ (směrnicový tvar), nebo vezmeme směrový vektor $(-b, a)$ a libovolný bod. Příklad: přímka bodů $[1, 2]$ a $[4, 6]$ má $\vec{u} = (3, 4)$, $\vec{n} = (4, -3)$ a rovnici $4x - 3y + 2 = 0$, tedy $y = \frac{4}{3}x + \frac{2}{3}$. \vizsekce{sec:primka-v-rovine}
+
+  \item \otazka{Jak určíte vzájemnou polohu dvou přímek a jejich průsečík?}
+  Pro $p: a_1x + b_1y + c_1 = 0$ a $q: a_2x + b_2y + c_2 = 0$ porovnáme normálové vektory. Nejsou-li kolineární, jsou přímky různoběžné a průsečík najdeme řešením soustavy obou rovnic. Jsou-li kolineární a rovnice nejsou násobky, jsou přímky rovnoběžné různé (soustava nemá řešení). Je-li jedna rovnice násobkem druhé, jsou totožné. Je to přesně rozbor počtu řešení soustavy dvou lineárních rovnic. Příklad: $x + y - 3 = 0$ a $2x - y = 0$ se protínají v $[1, 2]$.
+
+  \item \otazka{Jak se počítá odchylka dvou přímek a vzdálenost bodu od přímky? Odvoďte vzorec pro vzdálenost.}
+  Odchylka $\varphi\in[0^\circ, 90^\circ]$:
+  \begin{equation*}
+    \cos\varphi = \frac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1||\vec{n}_2|}
+  \end{equation*}
+  (nebo totéž se směrovými vektory); absolutní hodnota zaručí ostrý úhel, protože vektory mohou svírat i úhel $180^\circ - \varphi$. Vzdálenost bodu $M = [m_1, m_2]$ od přímky $ax + by + c = 0$ je
+  \begin{equation*}
+    d = \frac{|am_1 + bm_2 + c|}{\sqrt{a^2 + b^2}}.
+  \end{equation*}
+  Odvození: zvolíme bod $P$ přímky ($ap_1 + bp_2 = -c$). Vzdálenost je délka průmětu vektoru $\overrightarrow{PM}$ do směru normály $\vec{n}$, tedy
+  \begin{equation*}
+    d = \frac{|\overrightarrow{PM}\cdot\vec{n}|}{|\vec{n}|} = \frac{|a(m_1 - p_1) + b(m_2 - p_2)|}{\sqrt{a^2 + b^2}} = \frac{|am_1 + bm_2 + c|}{\sqrt{a^2 + b^2}}.
+  \end{equation*}
+  \vizpriklad{ex:primka-vzdalenost}
+
+  \item \otazka{Kdy jsou dvě přímky ve směrnicovém tvaru rovnoběžné a kdy kolmé?}
+  Přímky $y = k_1x + q_1$ a $y = k_2x + q_2$ jsou rovnoběžné, právě když $k_1 = k_2$ (svírají s osou $x$ stejný úhel); pro $q_1 = q_2$ splývají. Kolmé jsou, právě když $k_1\cdot k_2 = -1$. Důkaz: přímka $y = kx + q$ má směrový vektor $(1, k)$, a přímky jsou kolmé, právě když $(1, k_1)\cdot(1, k_2) = 1 + k_1k_2 = 0$. (Svislé přímky směrnici nemají, proto tato podmínka nepokryje dvojici vodorovná--svislá.)
+
+  \item \otazka{Jak spočítáte těžiště a obsah trojúhelníku ze souřadnic jeho vrcholů?}
+  Těžiště je aritmetický průměr vrcholů,
+  \begin{equation*}
+    T = \left[\frac{a_1 + b_1 + c_1}{3}, \frac{a_2 + b_2 + c_2}{3}\right],
+  \end{equation*}
+  což plyne z toho, že těžiště dělí těžnici v poměru $2:1$. Obsah je polovina obsahu rovnoběžníku napnutého vektory $\overrightarrow{AB}$ a $\overrightarrow{AC}$:
+  \begin{equation*}
+    S = \frac{1}{2}\left|(b_1 - a_1)(c_2 - a_2) - (b_2 - a_2)(c_1 - a_1)\right|.
+  \end{equation*}
+  Pro $A = [0, 0]$, $B = [4, 0]$, $C = [1, 3]$ je $T = \left[\frac{5}{3}, 1\right]$ a $S = \frac{1}{2}|12 - 0| = 6$. \vizsekce{sec:aplikace-trojuhelnik}
+\end{enumerate}
+
+\section{Kuželosečky}
+
+Otázky ke kapitole~\ref{kap:kuzelosecky}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co jsou kuželosečky a jak vznikají řezem kužele?}
+  Kuželosečky jsou křivky, které vzniknou průnikem dvojitého kužele (dvou kuželů spojených vrcholy) s rovinou, která neprochází vrcholem: kružnice, elipsa, parabola a hyperbola. Záleží na sklonu roviny. Rovina kolmá k ose dá kružnici; mírně nakloněná rovina protne všechny povrchové přímky jednoho kužele a dá elipsu; rovina rovnoběžná s jednou povrchovou přímkou dá parabolu, která se neuzavře; ještě strmější rovina protne oba kužele a dá dvě větve hyperboly. (Rovina vrcholem dá degenerované případy: bod, přímku, dvojici přímek.) Analyticky jsou to množiny bodů s danou vlastností vzdáleností a jejich rovnice jsou druhého stupně v $x$ a $y$. Podrobně viz úvod kapitoly~\ref{kap:kuzelosecky}.
+
+  \item \otazka{Definujte kružnici. Napište její středovou a obecnou rovnici. Jak z obecné rovnice určíte střed a poloměr?}
+  Kružnice $k(S; r)$ je množina bodů, které mají od středu $S = [m, n]$ vzdálenost $r > 0$. Ze vzorce pro vzdálenost dostaneme středovou rovnici a roznásobením obecnou:
+  \begin{equation*}
+    {(x - m)}^2 + {(y - n)}^2 = r^2, \qquad x^2 + y^2 + ax + by + c = 0.
+  \end{equation*}
+  Z obecné rovnice získáme střed a poloměr doplněním na čtverec zvlášť pro $x$ a pro $y$: $x^2 + y^2 - 4x + 6y - 12 = 0 \Leftrightarrow {(x - 2)}^2 + {(y + 3)}^2 = 25$, tedy $S = [2, -3]$, $r = 5$. Vyjde-li vpravo nula, jde jen o bod, a vyjde-li záporné číslo, rovnici nesplňuje žádný bod. \vizsekce{sec:kruznice-rovnice}
+
+  \item \otazka{Jak zjistíte vzájemnou polohu přímky a kružnice? Jak vypadá rovnice tečny?}
+  Buď porovnáme vzdálenost $d$ středu od přímky s poloměrem ($d > r$ vnější přímka, $d = r$ tečna, $d < r$ sečna), nebo přímku dosadíme do rovnice kružnice a o počtu průsečíků rozhodne diskriminant vzniklé kvadratické rovnice ($D > 0$ dva, $D = 0$ jeden, $D < 0$ žádný). Tečna v bodě $T = [x_0, y_0]$ kružnice je kolmá na poloměr $ST$, takže $\overrightarrow{ST} = (x_0 - m, y_0 - n)$ je její normálový vektor a
+  \begin{equation*}
+    (x_0 - m)(x - m) + (y_0 - n)(y - n) = r^2.
+  \end{equation*}
+  Například tečna ke $x^2 + y^2 = 25$ v bodě $[3, 4]$ je $3x + 4y = 25$. \vizsekce{sec:primka-kruznice}
+
+  \item \otazka{Definujte elipsu. Jaký je vztah mezi $a$, $b$ a $e$? Napište středovou rovnici.}
+  Elipsa je množina bodů $X$, které mají od dvou ohnisek $F_1, F_2$ konstantní součet vzdáleností $|XF_1| + |XF_2| = 2a$, kde $2a > |F_1F_2|$ (provázek na dvou připínáčcích). Střed $S$ je střed $F_1F_2$, $a$ hlavní a $b$ vedlejší poloosa, $e = |SF_1|$ výstřednost a platí
+  \begin{equation*}
+    a^2 = b^2 + e^2:
+  \end{equation*}
+  vedlejší vrchol $C$ má od obou ohnisek stejnou vzdálenost, tedy $a$, a trojúhelník $SF_2C$ je pravoúhlý s odvěsnami $e$, $b$ a přeponou $a$. Středová rovnice (hlavní osa rovnoběžná s osou $x$) je
+  \begin{equation*}
+    \frac{{(x - m)}^2}{a^2} + \frac{{(y - n)}^2}{b^2} = 1.
+  \end{equation*}
+  Kružnice je elipsa s $e = 0$. \vizsekce{sec:elipsa}
+
+  \item \otazka{Definujte hyperbolu. Co jsou asymptoty a jak je najdete?}
+  Hyperbola je množina bodů $X$, pro které je absolutní hodnota rozdílu vzdáleností od dvou ohnisek konstantní: $\big||XF_1| - |XF_2|\big| = 2a$, kde $0 < 2a < |F_1F_2|$. Platí $e^2 = a^2 + b^2$ a středová rovnice je
+  \begin{equation*}
+    \frac{{(x - m)}^2}{a^2} - \frac{{(y - n)}^2}{b^2} = 1.
+  \end{equation*}
+  Asymptoty jsou přímky, ke kterým se větve hyperboly v nekonečnu neomezeně přibližují, ale neprotnou je: $y - n = \pm\frac{b}{a}(x - m)$. Najdeme je nejrychleji jako úhlopříčky obdélníku o stranách $2a$ a $2b$ se středem ve středu hyperboly (formálně: nahradíme jedničku v rovnici nulou). Pro $\frac{x^2}{16} - \frac{y^2}{9} = 1$ je to $y = \pm\frac{3}{4}x$. \vizsekce{sec:hyperbola}
+
+  \item \otazka{Definujte parabolu. Odvoďte její vrcholovou rovnici. Jak souvisí s grafem kvadratické funkce?}
+  Parabola je množina bodů, které mají stejnou vzdálenost od ohniska $F$ a od řídicí přímky $d$ ($F\notin d$); $p = |Fd|$ je parametr a vrchol leží v půli mezi $F$ a $d$. Pro $F = \left[0, \frac{p}{2}\right]$ a $d: y = -\frac{p}{2}$ umocníme rovnost vzdáleností:
+  \begin{equation*}
+    x^2 + {\left(y - \tfrac{p}{2}\right)}^2 = {\left(y + \tfrac{p}{2}\right)}^2 \quad\Leftrightarrow\quad x^2 = 2py.
+  \end{equation*}
+  Posunutím vrcholu do $[m, n]$ dostaneme ${(x - m)}^2 = \pm 2p(y - n)$, resp. ${(y - n)}^2 = \pm 2p(x - m)$ pro osu rovnoběžnou s $x$. Graf kvadratické funkce je tatáž křivka: $y = x^2$ je parabola $x^2 = 2py$ s $p = \frac{1}{2}$, ohniskem $\left[0, \frac{1}{4}\right]$ a řídicí přímkou $y = -\frac{1}{4}$; obecně $y = ax^2 + bx + c$ je parabola s osou rovnoběžnou s osou $y$. \vizsekce{sec:parabola}
+
+  \item \otazka{Jak z obecné rovnice poznáte, o jakou kuželosečku jde?}
+  Rovnici $Ax^2 + Cy^2 + Dx + Ey + F = 0$ (bez členu $xy$) doplníme na čtverec. O typu rozhodnou koeficienty u kvadrátů: $A = C\neq 0$ kružnice; $A$, $C$ stejného znaménka a $A\neq C$ elipsa; opačná znaménka hyperbola; právě jeden z nich nulový parabola. Doplnění na čtverec pak dá střed (vrchol) a poloosy. Pozor na degenerované případy: rovnice může popisovat jen bod, dvojici přímek nebo prázdnou množinu (např. ${(x + 1)}^2 + y^2 = -1$). \vizsekce{sec:rozpoznani-kuzelosecky}
+
+  \item \otazka{Kdy může mít přímka s kuželosečkou jediný společný bod, a přesto nebýt tečnou?}
+  U paraboly, je-li přímka rovnoběžná s její osou, a u hyperboly, je-li rovnoběžná s některou asymptotou. Přímka pak křivku protne, ne se jí dotkne. Po dosazení nevznikne kvadratická, ale lineární rovnice s jediným řešením, takže kritérium `$D = 0 \Leftrightarrow$ tečna' se nedá použít. U kružnice a elipsy to nastat nemůže.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.7]
+      \begin{scope}
+        \draw[->, gray] (-2.2,0) -- (2.4,0); \draw[->, gray] (0,-0.4) -- (0,2.7);
+        \draw[thick, colorofwisdom, domain=-2:2, samples=40] plot (\x, {(\x)*(\x)/2});
+        \draw[thick] (1,-0.4) -- (1,2.6);
+        \fill (1,0.5) circle (2pt);
+      \end{scope}
+      \begin{scope}[xshift=6.5cm]
+        \draw[->, gray] (-2.6,0) -- (2.8,0); \draw[->, gray] (0,-2.3) -- (0,2.4);
+        \draw[gray, dashed] (-2.2,-2.2) -- (2.2,2.2) (-2.2,2.2) -- (2.2,-2.2);
+        \draw[thick, colorofwisdom, domain=-1.5:1.5, samples=40] plot ({cosh(\x)}, {sinh(\x)});
+        \draw[thick, colorofwisdom, domain=-1.5:1.5, samples=40] plot ({-cosh(\x)}, {sinh(\x)});
+        \draw[thick] (-1.6,-2.1) -- (2.7,2.2);
+        \fill (1.25,0.75) circle (2pt);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Podrobně viz poznámka~\ref{note:jediny-bod-netecna} na straně~\pageref{note:jediny-bod-netecna}.
+
+  \item \otazka{Uveďte příklady kuželoseček v praxi.}
+  Planety obíhají Slunce po elipsách se Sluncem v jednom ohnisku (Keplerův zákon); dráha Země je skoro kruhová ($\varepsilon\approx 0{,}017$), Halleyovy komety velmi protáhlá. Kometa s dostatečnou energií letí po hyperbole a ze Sluneční soustavy unikne. Šikmo hozený kámen letí (bez odporu vzduchu) po parabole. Paraboly mají odrazovou vlastnost: paprsky rovnoběžné s osou se odrazí do ohniska, na čemž stojí satelitní talíře, reflektory aut a solární vařiče. Na hyperbolách stály navigační systémy (např. LORAN), které určovaly polohu z rozdílu časů příchodu signálů ze dvou vysílačů. Kružnice jsou všude, od kol po ozubená kola; elipsu vidíme jako šikmý pohled na kruh.
+\end{enumerate}
+
+\section{Analytická geometrie v prostoru}
+
+Otázky ke kapitole~\ref{kap:prostor}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Jak se počítá vzdálenost bodů, velikost vektoru a skalární součin v prostoru?}
+  Stejně jako v rovině, jen s třetí souřadnicí:
+  \begin{equation*}
+    |AB| = \sqrt{{(b_1 - a_1)}^2 + {(b_2 - a_2)}^2 + {(b_3 - a_3)}^2}, \quad |\vec{u}| = \sqrt{u_1^2 + u_2^2 + u_3^2}, \quad \vec{u}\cdot\vec{v} = u_1v_1 + u_2v_2 + u_3v_3.
+  \end{equation*}
+  Vzorec pro délku je dvakrát použitá Pythagorova věta (úhlopříčka podstavy `krabice' a pak s výškou). I v prostoru platí $\vec{u}\cdot\vec{v} = |\vec{u}||\vec{v}|\cos\varphi$ a kolmost $\Leftrightarrow$ $\vec{u}\cdot\vec{v} = 0$. Například $A = [1, 2, 3]$, $B = [3, -1, 9]$: $\overrightarrow{AB} = (2, -3, 6)$ a $|AB| = 7$. \vizsekce{sec:souradnice-prostor}
+
+  \item \otazka{Co je vektorový součin? Jaké má vlastnosti a k čemu se používá?}
+  Vektorový součin je vektor
+  \begin{equation*}
+    \vec{u}\times\vec{v} = (u_2v_3 - u_3v_2,\ u_3v_1 - u_1v_3,\ u_1v_2 - u_2v_1),
+  \end{equation*}
+  každá složka je determinant $2\times 2$ ze zbylých souřadnic (u prostřední s opačným znaménkem). Je kolmý na $\vec{u}$ i $\vec{v}$, jeho směr určuje pravidlo pravé ruky, velikost je $|\vec{u}||\vec{v}|\sin\varphi$, tedy obsah rovnoběžníku určeného $\vec{u}$, $\vec{v}$; platí $\vec{u}\times\vec{v} = -\vec{v}\times\vec{u}$ (není komutativní) a $\vec{u}\times\vec{v} = \vec{o}$, právě když jsou vektory kolineární. Používá se k nalezení normálového vektoru roviny, k výpočtu obsahu trojúhelníku ($\frac{1}{2}|\vec{u}\times\vec{v}|$), vzdálenosti mimoběžek a ve fyzice (točivý moment, magnetická síla). \vizsekce{sec:vektorovy-soucin}
+
+  \item \otazka{Jak vypadá parametrické vyjádření přímky a roviny v prostoru? Proč přímka v prostoru nemá obecnou rovnici?}
+  Přímka: $X = A + t\vec{u}$, $t\in\mathbb{R}$, tedy $x = a_1 + tu_1$, $y = a_2 + tu_2$, $z = a_3 + tu_3$. Rovina: $X = A + t\vec{u} + s\vec{v}$, $t, s\in\mathbb{R}$, s nekolineárními $\vec{u}$, $\vec{v}$ (dva parametry, dva rozměry); obecná rovnice roviny je $ax + by + cz + d = 0$ s normálovým vektorem $\vec{n} = (a, b, c)$. Jedna lineární rovnice $\vec{n}\cdot\overrightarrow{AX} = 0$ říká, že $\overrightarrow{AX}$ je kolmý na $\vec{n}$. V rovině tvoří takové body přímku, ale v prostoru tvoří všechny vektory kolmé na $\vec{n}$ celou rovinu: jedna podmínka ubere jen jeden rozměr ze tří. Přímku lze proto rovnicemi popsat jen jako průsečnici dvou rovin. \vizsekce{sec:primka-rovina-prostor}
+
+  \item \otazka{Jak najdete obecnou rovnici roviny procházející třemi body?}
+  Pro body $A$, $B$, $C$, které neleží na přímce, vezmeme vektory $\vec{u} = \overrightarrow{AB}$, $\vec{v} = \overrightarrow{AC}$ a normálový vektor $\vec{n} = \vec{u}\times\vec{v} = (a, b, c)$. Do rovnice $ax + by + cz + d = 0$ dosadíme bod $A$ a dopočítáme $d$; zbylé body poslouží jako kontrola. Příklad: $A = [1, 0, 0]$, $B = [0, 2, 0]$, $C = [0, 0, 3]$ dají $\vec{u} = (-1, 2, 0)$, $\vec{v} = (-1, 0, 3)$, $\vec{n} = (6, 3, 2)$ a rovnici $6x + 3y + 2z - 6 = 0$, neboli $\frac{x}{1} + \frac{y}{2} + \frac{z}{3} = 1$ (úsekový tvar). (Jinak lze dosadit všechny tři body a řešit soustavu pro koeficienty.) \vizpriklad{ex:rovina-tremi-body}
+
+  \item \otazka{Jak určíte vzájemnou polohu dvou přímek v prostoru? Jak poznáte mimoběžky?}
+  Pro $p: X = A + t\vec{u}$ a $q: X = B + s\vec{v}$: jsou-li $\vec{u}$ a $\vec{v}$ kolineární, jsou přímky rovnoběžné (totožné, pokud $B\in p$). Jinak řešíme soustavu $A + t\vec{u} = B + s\vec{v}$, tedy tři rovnice pro dvě neznámé $t, s$. Má-li řešení, jsou přímky různoběžné a dosazením dostaneme průsečík. Nemá-li řešení (soustava je sporná) a směrové vektory přitom nejsou kolineární, jsou přímky mimoběžné. Ekvivalentně: mimoběžky jsou to právě tehdy, když $\overrightarrow{AB}\cdot(\vec{u}\times\vec{v})\neq 0$, tedy vektory $\overrightarrow{AB}$, $\vec{u}$, $\vec{v}$ neleží v jedné rovině. \vizsekce{sec:vzajemne-polohy-prostor}
+
+  \item \otazka{Jak určíte vzájemnou polohu přímky a roviny a dvou rovin?}
+  Přímka $X = A + t\vec{u}$ a rovina s normálou $\vec{n}$: je-li $\vec{n}\cdot\vec{u}\neq 0$, jsou různoběžné a průsečík najdeme dosazením parametrického vyjádření přímky do rovnice roviny (vyjde jedno $t$). Je-li $\vec{n}\cdot\vec{u} = 0$ (směr přímky je kolmý na normálu), je přímka s rovinou rovnoběžná, nebo v ní leží, pokud $A$ leží v rovině. Dvě roviny jsou rovnoběžné, mají-li kolineární normálové vektory (a totožné, je-li jedna rovnice násobkem druhé); jinak jsou různoběžné a průsečnici dostaneme řešením soustavy jejich rovnic s jednou neznámou jako parametrem. Její směrový vektor je $\vec{n}_1\times\vec{n}_2$.
+
+  \item \otazka{Jak se počítá vzdálenost bodu od roviny a vzdálenost mimoběžek?}
+  Obojí je délka průmětu vhodného vektoru do kolmého směru. Vzdálenost bodu $M$ od roviny $ax + by + cz + d = 0$: zvolíme bod $P$ roviny a promítneme $\overrightarrow{PM}$ do směru normály, což dá
+  \begin{equation*}
+    v = \frac{|\overrightarrow{PM}\cdot\vec{n}|}{|\vec{n}|} = \frac{|am_1 + bm_2 + cm_3 + d|}{\sqrt{a^2 + b^2 + c^2}}.
+  \end{equation*}
+  Mimoběžky $X = A + t\vec{u}$ a $X = B + s\vec{v}$ leží ve dvou rovnoběžných rovinách se společnou normálou $\vec{u}\times\vec{v}$, a jejich vzdálenost je
+  \begin{equation*}
+    v = \frac{|\overrightarrow{AB}\cdot(\vec{u}\times\vec{v})|}{|\vec{u}\times\vec{v}|},
+  \end{equation*}
+  tedy objem rovnoběžnostěnu s hranami $\overrightarrow{AB}$, $\vec{u}$, $\vec{v}$ dělený obsahem podstavy. \vizsekce{sec:vzdalenost-bod-rovina}
+
+  \item \otazka{Jak se počítají odchylky přímek a rovin? Proč je u odchylky přímky a roviny sinus?}
+  \begin{equation*}
+    \text{přímky: } \cos\varphi = \frac{|\vec{u}\cdot\vec{v}|}{|\vec{u}||\vec{v}|}, \qquad \text{roviny: } \cos\varphi = \frac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1||\vec{n}_2|}, \qquad \text{přímka a rovina: } \sin\varphi = \frac{|\vec{u}\cdot\vec{n}|}{|\vec{u}||\vec{n}|}.
+  \end{equation*}
+  Absolutní hodnoty zaručí výsledek v $[0^\circ, 90^\circ]$. U dvou rovin stačí měřit úhel normál, protože se rozevřou stejně jako roviny (otevřená kniha). U přímky a roviny dává skalární součin s normálou úhel mezi přímkou a \emph{normálou}, který je doplňkem hledaného úhlu do $90^\circ$; a $\cos(90^\circ - \varphi) = \sin\varphi$. Příklad: tělesová úhlopříčka krychle $(1, 1, 1)$ a podstava s normálou $(0, 0, 1)$ dávají $\sin\varphi = \frac{1}{\sqrt{3}}$, $\varphi\approx 35{,}26^\circ$. \vizsekce{sec:odchylky-prostor}
+\end{enumerate}
+
+\section{Posloupnosti a řady}
+
+Otázky ke kapitole~\ref{kap:posloupnosti}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je posloupnost? Jakými způsoby ji lze zadat? Jak vypadá její graf?}
+  Posloupnost je funkce s definičním oborem $\mathbb{N}$ (konečná posloupnost: $\{1, \ldots, k\}$); hodnotu v $n$ značíme $a_n$ ($n$-tý člen) a píšeme ${(a_n)}_{n=1}^{\infty}$. Zadat ji lze vzorcem pro $n$-tý člen ($a_n = \frac{1}{n}$), rekurentně (první člen a pravidlo pro další, např. Fibonacciho $F_1 = F_2 = 1$, $F_{n+2} = F_{n+1} + F_n$), nebo výčtem prvních členů, je-li zřejmé, jak pokračovat. Graf tvoří izolované body $[1, a_1], [2, a_2], \ldots$, které nespojujeme, protože mezi přirozenými čísly posloupnost hodnoty nemá. \vizsekce{sec:pojem-posloupnosti}
+
+  \item \otazka{Kdy je posloupnost monotónní a kdy omezená?}
+  Posloupnost je rostoucí, pokud $a_{n+1} > a_n$ pro všechna $n$, klesající pro $a_{n+1} < a_n$, a neklesající, resp. nerostoucí s neostrými nerovnostmi; to vše jsou monotónní posloupnosti. Stačí tedy porovnat sousední členy, typicky znaménko rozdílu $a_{n+1} - a_n$ (nebo podíl $\frac{a_{n+1}}{a_n}$ u kladných členů). Je shora omezená, existuje-li $h$ s $a_n\leq h$ pro všechna $n$, zdola omezená, existuje-li $d$ s $a_n\geq d$, a omezená, je-li obojí. Například $\frac{n}{n + 1}$ je rostoucí (rozdíl je $\frac{1}{(n + 1)(n + 2)} > 0$) a omezená mezi $0$ a $1$; ${(-1)}^n$ je omezená, ale ne monotónní.
+
+  \item \otazka{Definujte aritmetickou posloupnost. Odvoďte vzorce pro $n$-tý člen a součet prvních $n$ členů.}
+  Aritmetická posloupnost má stálý rozdíl sousedních členů (diferenci) $d$: $a_{n+1} = a_n + d$. Od $a_1$ k $a_n$ uděláme $n - 1$ kroků o $d$, takže $a_n = a_1 + (n - 1)d$ (a obecně $a_r - a_s = (r - s)d$). Součet: napíšeme $s_n$ popředu a pozpátku pod sebe a sečteme. Každá dvojice $a_k + a_{n+1-k}$ má hodnotu $a_1 + a_n$, protože jeden člen o $d$ vzroste a druhý o $d$ klesne, a dvojic je $n$:
+  \begin{equation*}
+    2s_n = n(a_1 + a_n) \quad\Rightarrow\quad s_n = \frac{n(a_1 + a_n)}{2}.
+  \end{equation*}
+  (Gaussův trik: $1 + 2 + \cdots + 100 = 5050$.) \vizsekce{sec:aritmeticka-posloupnost}
+
+  \item \otazka{Definujte geometrickou posloupnost. Odvoďte vzorce pro $n$-tý člen a součet prvních $n$ členů.}
+  Geometrická posloupnost má stálý podíl sousedních členů (kvocient) $q$: $a_{n+1} = a_n\cdot q$ s $a_1\neq 0$, $q\neq 0$. Po $n - 1$ násobeních je $a_n = a_1q^{n-1}$ (obecně $a_r = a_sq^{r-s}$). Součet: od $qs_n$ odečteme $s_n$, skoro všechny členy se vyruší,
+  \begin{equation*}
+    qs_n - s_n = a_1q^n - a_1 \quad\Rightarrow\quad s_n = a_1\frac{q^n - 1}{q - 1}\quad (q\neq 1),
+  \end{equation*}
+  a pro $q = 1$ je $s_n = na_1$. Například šachovnice s rýží: $1 + 2 + 4 + \cdots + 2^{63} = 2^{64} - 1$. \vizsekce{sec:geometricka-posloupnost}
+
+  \item \otazka{Proč se posloupnostem říká aritmetická a geometrická?}
+  V aritmetické posloupnosti je každý člen aritmetickým průměrem svých sousedů, $a_n = \frac{a_{n-1} + a_{n+1}}{2}$ (protože $a_{n-1} = a_n - d$ a $a_{n+1} = a_n + d$). V geometrické posloupnosti s kladnými členy je každý člen geometrickým průměrem sousedů, $a_n = \sqrt{a_{n-1}a_{n+1}}$ (protože $a_{n-1}a_{n+1} = \frac{a_n}{q}\cdot a_nq = a_n^2$). Graficky leží body aritmetické posloupnosti na přímce (diskrétní lineární funkce se směrnicí $d$) a body geometrické na exponenciále.
+
+  \item \otazka{Co je limita posloupnosti? Vysvětlete definici. Jak se počítají limity podílů mnohočlenů?}
+  Posloupnost má limitu $a$, pokud ke každému $\varepsilon > 0$ existuje $n_0$ takové, že pro všechna $n\geq n_0$ je $|a_n - a| < \varepsilon$; píšeme $\lim_{n\to\infty} a_n = a$. Slovy: zvolíte libovolně úzký pás kolem $a$ a posloupnost do něj od jistého členu vletí a už ho neopustí; na prvních členech nezáleží. Pro $\lim\frac{1}{n} = 0$ stačí vzít $n_0 > \frac{1}{\varepsilon}$. Limity podílu mnohočlenů počítáme vydělením čitatele i jmenovatele nejvyšší mocninou $n$ ve jmenovateli a využitím $\lim\frac{1}{n^k} = 0$:
+  \begin{equation*}
+    \lim\frac{2n^2 + 1}{n^2 - 3} = \lim\frac{2 + \frac{1}{n^2}}{1 - \frac{3}{n^2}} = 2.
+  \end{equation*}
+  Rozhoduje nejvyšší mocnina: stejné stupně dají podíl vedoucích koeficientů, vyšší stupeň ve jmenovateli nulu, vyšší stupeň v čitateli $\pm\infty$. \vizsekce{sec:limita-posloupnosti}
+
+  \item \otazka{Co je nekonečná řada a její součet? Kdy konverguje geometrická řada a jaký má součet?}
+  Nekonečná řada $\sum_{n=1}^{\infty} a_n = a_1 + a_2 + \cdots$ má součet $s$, pokud posloupnost částečných součtů $s_n = a_1 + \cdots + a_n$ má limitu $s$; pak řada konverguje, jinak diverguje. Geometrická řada $a_1 + a_1q + a_1q^2 + \cdots$ ($a_1\neq 0$) konverguje, právě když $|q| < 1$, a
+  \begin{equation*}
+    s = \frac{a_1}{1 - q}.
+  \end{equation*}
+  Důkaz: $s_n = a_1\frac{1 - q^n}{1 - q}$ a pro $|q| < 1$ je $\lim q^n = 0$. Pro $|q|\geq 1$ členy nejdou k nule, a součet tedy neexistuje. Například $1 + \frac{1}{2} + \frac{1}{4} + \cdots = 2$. \vizsekce{sec:geometricka-rada}
+
+  \item \otazka{Proč je $0{,}\overline{9} = 1$? Jak převedete periodické číslo na zlomek?}
+  Číslo $0{,}\overline{9}$ je součet geometrické řady s $a_1 = \frac{9}{10}$ a $q = \frac{1}{10}$:
+  \begin{equation*}
+    0{,}\overline{9} = \frac{9}{10} + \frac{9}{100} + \cdots = \frac{\frac{9}{10}}{1 - \frac{1}{10}} = 1.
+  \end{equation*}
+  Není to `skoro jedna', je to jiný zápis čísla $1$: mezi dvěma různými reálnými čísly vždy leží další (např. průměr), ale mezi $0{,}\overline{9}$ a $1$ žádné není. Periodické číslo převedeme na zlomek stejně: periodu zapíšeme jako geometrickou řadu s kvocientem $10^{-k}$ ($k$ je délka periody). Například $0{,}\overline{12} = \frac{12/100}{1 - 1/100} = \frac{12}{99} = \frac{4}{33}$. (Rychlý trik: $x = 0{,}\overline{12}$, $100x - x = 12$, tedy $x = \frac{12}{99}$.) \vizpriklad{ex:0999}
+
+  \item \otazka{Uveďte příklad řady, jejíž členy jdou k nule, ale která nekonverguje.}
+  Harmonická řada $1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots = \infty$. Oresmův důkaz: členy seskupíme do skupin $\frac{1}{3} + \frac{1}{4}$, $\frac{1}{5} + \cdots + \frac{1}{8}$, $\frac{1}{9} + \cdots + \frac{1}{16}$, \ldots; skupina se $2^k$ členy má každý člen aspoň $\frac{1}{2^{k+1}}$, takže je celá aspoň $\frac{1}{2}$. Skupin je nekonečně mnoho, a součet proto roste nade všechny meze, i když velmi pomalu. Podmínka $a_n\to 0$ je tedy pro konvergenci nutná, ale ne postačující. Podrobně viz poznámka~\ref{note:harmonicka-rada} na straně~\pageref{note:harmonicka-rada}.
+
+  \item \otazka{Uveďte příklady využití posloupností v praxi.}
+  Aritmetické: pravidelné přírůstky (každý měsíc stejná částka v prasátku, řady sedadel v hledišti přibývající o stálý počet, jednoduché úročení). Geometrické: složené úročení ($a_n = a_0{(1 + i)}^n$), spoření a splátky úvěrů (kapitola~\ref{kap:financni}), růst populace a bakterií, radioaktivní rozpad (polovina za každý poločas), legenda o rýži na šachovnici. Rekurentní: Fibonacciho posloupnost v přírodě, numerické metody (půlení intervalu, postupné aproximace). Nekonečné řady: převod periodických čísel na zlomky, Zénónův paradox s Achillem a želvou, výpočty čísel jako $\mathrm{e}$ a $\pi$.
+\end{enumerate}
+
+\section{Finanční matematika}
+
+Otázky ke kapitole~\ref{kap:financni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je procento a procentní bod? Proč zdražení o $20\,\%$ a následné zlevnění o $20\,\%$ nevrátí původní cenu?}
+  Procento je setina celku, $1\,\% = 0{,}01$; $p\,\%$ ze základu $z$ je $\frac{p}{100}z$ a zvětšení o $p\,\%$ znamená násobení $1 + \frac{p}{100}$. Procentní bod je rozdíl dvou procentních údajů: růst sazby ze $2\,\%$ na $3\,\%$ je o $1$ procentní bod, ale o $50\,\%$. Zdražení a zlevnění se počítají z různých základů: zlevnění se počítá z vyšší ceny, takže ubere víc, než zdražení přidalo. Výsledná cena je
+  \begin{equation*}
+    z\cdot 1{,}2\cdot 0{,}8 = 0{,}96\,z,
+  \end{equation*}
+  tedy o $4\,\%$ nižší. Ke zrušení zdražení o $25\,\%$ je naopak potřeba zlevnit o $20\,\%$ ($\frac{1}{1{,}25} = 0{,}8$). \vizsekce{sec:procenta}
+
+  \item \otazka{Jaký je rozdíl mezi jednoduchým a složeným úročením? Jak souvisí s aritmetickou a geometrickou posloupností?}
+  Při jednoduchém úročení se úrok počítá stále z původní jistiny $K_0$, takže každé období přibude stejná částka: $K_n = K_0(1 + ni)$, což je aritmetická posloupnost s diferencí $K_0i$. Při složeném úročení se úrok připisuje k jistině a dál se úročí i on (úrok z úroku): $K_n = K_0{(1 + i)}^n$, geometrická posloupnost s kvocientem $1 + i$. Krátkodobě je rozdíl malý, dlouhodobě obrovský, protože geometrická posloupnost roste exponenciálně: $10\,000$ Kč při $3\,\%$ dá za $40$ let $22\,000$ Kč, resp. asi $32\,620$ Kč. \vizsekce{sec:uroceni}
+
+  \item \otazka{Jak se do výpočtu promítne daň z úroků a častější připisování úroků? Co je efektivní sazba?}
+  Daň z úroků (v ČR srážková daň $15\,\%$) sníží sazbu na $0{,}85\,i$, takže $K_n = K_0{(1 + 0{,}85\,i)}^n$. Při nominální roční sazbě $i$ a $m$ připsáních za rok se pokaždé připíše $\frac{i}{m}$ a
+  \begin{equation*}
+    K_n = K_0{\left(1 + \frac{i}{m}\right)}^{mn}.
+  \end{equation*}
+  Efektivní sazba je skutečný roční výnos, ${\left(1 + \frac{i}{m}\right)}^m - 1$, a je vyšší než $i$, protože se úročí i úroky připsané během roku. Pro $6\,\%$ s měsíčním připisováním vyjde asi $6{,}17\,\%$, při spojitém úročení ($m\to\infty$) $\mathrm{e}^{0{,}06} - 1\approx 6{,}18\,\%$. \vizpriklad{ex:efektivni-sazba}
+
+  \item \otazka{Co je inflace a reálný výnos?}
+  Inflace $\pi$ je růst cenové hladiny: za stejné peníze si koupíme méně. Reálný výnos udává, o kolik vzroste kupní síla vkladu, když se úročí sazbou $i$ a ceny přitom rostou o $\pi$:
+  \begin{equation*}
+    r = \frac{1 + i}{1 + \pi} - 1 \approx i - \pi.
+  \end{equation*}
+  Například úrok $4\,\%$ při inflaci $6\,\%$ dává reálný výnos asi $-1{,}89\,\%$: peněz na účtu přibývá, ale koupíme si za ně méně (a to ještě bez daně). \vizsekce{sec:uroceni}
+
+  \item \otazka{Odvoďte vzorec pro pravidelné spoření.}
+  Na konci každého z $n$ období vložíme $a$ při sazbě $i$ za období. Poslední vklad se neúročí, předposlední jedno období, \ldots, první $n - 1$ období. Na konci tedy máme součet geometrické posloupnosti s prvním členem $a$ a kvocientem $1 + i$:
+  \begin{equation*}
+    S_n = a + a(1 + i) + \cdots + a{(1 + i)}^{n-1} = a\cdot\frac{{(1 + i)}^n - 1}{i}.
+  \end{equation*}
+  Při vkladech na začátku období se každý vklad úročí o období déle a vzorec se vynásobí $(1 + i)$. Například $1\,000$ Kč měsíčně při $0{,}25\,\%$ měsíčně dá za $24$ měsíců asi $24\,703$ Kč. \vizsekce{sec:sporeni}
+
+  \item \otazka{Co je anuitní splácení? Odvoďte vzorec pro výši splátky.}
+  Úvěr $U$ splácíme $n$ stejnými splátkami (anuitami) $a$ na konci každého období při sazbě $i$. Dluh po prvním období je $U(1 + i) - a$, po druhém $U{(1 + i)}^2 - a(1 + i) - a$ a po $n$ obdobích musí být nulový:
+  \begin{equation*}
+    U{(1 + i)}^n = a\left({(1 + i)}^{n-1} + \cdots + (1 + i) + 1\right) = a\cdot\frac{{(1 + i)}^n - 1}{i}
+    \quad\Rightarrow\quad a = U\cdot\frac{i{(1 + i)}^n}{{(1 + i)}^n - 1}.
+  \end{equation*}
+  Interpretace: na kolik by narostl dluh bez splácení, se musí rovnat tomu, na kolik by narostly splátky, kdybychom je spořili. Například $200\,000$ Kč na $5$ let při $6\,\%$ ročně dá roční splátku asi $47\,479$ Kč. \vizsekce{sec:uvery}
+
+  \item \otazka{Z čeho se skládá splátka úvěru a jak se poměr mezi úrokem a úmorem v čase mění?}
+  Splátka se skládá z úroku (sazba krát dosud nesplacený dluh) a úmoru (zbytek splátky, který skutečně snižuje dluh). U anuity je splátka stále stejná, ale dluh postupně klesá, a tím klesá i úrok; úmor proto roste. Na začátku tvoří velkou část splátky úrok, ke konci skoro jen úmor, a dluh klesá zpočátku pomalu a ke konci rychle. U třicetileté hypotéky při $5\,\%$ zbývá po deseti letech splatit ještě asi $81\,\%$ dluhu. \vizpriklad{ex:splatkovy-kalendar}
+
+  \item \otazka{Co je RPSN a proč je důležitější než samotná úroková sazba?}
+  RPSN (roční procentní sazba nákladů) vyjadřuje v procentech za rok \emph{všechny} náklady úvěru: kromě úroků i poplatky za sjednání a vedení, povinné pojištění a další platby. Úroková sazba sama může být nízká, nebo dokonce nulová, a úvěr přesto drahý, pokud je zatížen poplatky; půjčka `bez úroku' může mít RPSN desítky procent. Proto se úvěry srovnávají podle RPSN. Nebankovní půjčky měly v minulosti RPSN ve stovkách i tisících procent. Podrobně viz poznámka~\ref{note:rpsn} na straně~\pageref{note:rpsn}.
+\end{enumerate}
+
+\section{Kombinatorika}
+
+Otázky ke kapitole~\ref{kap:kombinatorika}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Vysvětlete pravidlo součtu a součinu. Jak souvisí s množinami?}
+  Pravidlo součtu: lze-li jednu věc vybrat $m$ způsoby a jinou, s ní se nepřekrývající, $n$ způsoby, lze vybrat jednu z nich $m + n$ způsoby; pro množiny $|A\cup B| = |A| + |B|$, pokud $A\cap B = \emptyset$. Pravidlo součinu: skládá-li se výběr ze dvou kroků, kde první lze provést $m$ způsoby a druhý (pro každou volbu prvního) $n$ způsoby, je celkem $m\cdot n$ možností; pro množiny $|A\times B| = |A|\cdot|B|$, protože výsledek je uspořádaná dvojice (prvek kartézského součinu). Například $3$ trička a $4$ kalhoty dají $12$ outfitů; názorně to ukazuje strom možností. \vizsekce{sec:kombinatorika-pravidla}
+
+  \item \otazka{Co je faktoriál? Proč je $0! = 1$?}
+  Faktoriál je $n! = n\cdot(n - 1)\cdots 2\cdot 1$, rekurentně $0! = 1$ a $(n + 1)! = (n + 1)\cdot n!$; udává počet způsobů, jak seřadit $n$ různých prvků. Hodnota $0! = 1$ je jediná, se kterou rekurentní vztah funguje i pro $n = 0$: $1! = 1\cdot 0!$. Kombinatoricky: prázdnou množinu lze `seřadit' právě jedním způsobem (nedělat nic). Díky tomu platí i vzorce jako $\binom{n}{0} = \frac{n!}{0!\,n!} = 1$. Je to stejná úvaha jako u $a^0 = 1$.
+
+  \item \otazka{Co jsou variace, permutace a kombinace bez opakování? Odvoďte vzorce pro jejich počet.}
+  Z $n$ různých prvků vybíráme $k$, každý nejvýš jednou. Variace $k$-té třídy jsou uspořádané $k$-tice (na pořadí záleží). Na první místo máme $n$ možností, na druhé $n - 1$, \ldots, na $k$-té $n - k + 1$, takže podle pravidla součinu
+  \begin{equation*}
+    V(k, n) = n(n - 1)\cdots(n - k + 1) = \frac{n!}{(n - k)!}.
+  \end{equation*}
+  Permutace jsou variace $n$-té třídy (seřazení všech prvků), $P(n) = n!$. Kombinace $k$-té třídy jsou $k$-prvkové podmnožiny (na pořadí nezáleží). Každou z nich lze seřadit $k!$ způsoby, takže mezi variacemi je započtena $k!$-krát:
+  \begin{equation*}
+    C(k, n) = \binom{n}{k} = \frac{V(k, n)}{k!} = \frac{n!}{k!\,(n - k)!}.
+  \end{equation*}
+  \vizsekce{sec:vybery-bez-opakovani}
+
+  \item \otazka{Jak poznáte, který typ výběru v úloze použít?}
+  Položíme si dvě otázky. Záleží na pořadí? Ano (stupně vítězů, hesla, fronta, rozdělení funkcí) znamená variace nebo permutace; ne (výbor bez funkcí, karty v ruce, čísla ve Sportce) znamená kombinace. Mohou se prvky opakovat? Ano (PIN, kopečky zmrzliny stejného druhu, přesmyčky slova se stejnými písmeny) znamená výběr s opakováním. Vybíráme-li všechny prvky, jde o permutace. Například na stupních vítězů z $10$ běžců může stát $V(3, 10) = 720$ trojic, kdežto tříčlenný výbor z $10$ lidí lze vybrat $\binom{10}{3} = 120$ způsoby.
+
+  \item \otazka{Co jsou variace, permutace a kombinace s opakováním? Vysvětlete vzorec pro permutace s opakováním.}
+  Variace s opakováním jsou uspořádané $k$-tice z $n$ prvků, kde se prvky mohou opakovat: na každé místo máme $n$ možností, tedy $V'(k, n) = n^k$ (PIN: $10^4$). Kombinace s opakováním jsou neuspořádané výběry $k$ prvků z $n$ druhů: $C'(k, n) = \binom{n + k - 1}{k}$ (kódování hvězdičkami a $n - 1$ přepážkami). Permutace s opakováním jsou seřazení $n$ prvků, mezi nimiž je $n_1$ stejných prvního druhu, \ldots, $n_r$ stejných druhu $r$:
+  \begin{equation*}
+    P'(n_1, \ldots, n_r) = \frac{n!}{n_1!\,n_2!\cdots n_r!}.
+  \end{equation*}
+  Kdybychom všechny prvky rozlišovali, bylo by pořadí $n!$; ale prohozením stejných prvků mezi sebou ($n_1!$ způsobů pro první druh atd.) dostaneme totéž seřazení, a proto dělíme. Slovo MATEMATIKA má $\frac{10!}{2!\,3!\,2!} = 151\,200$ přesmyček. \vizsekce{sec:vybery-s-opakovanim}
+
+  \item \otazka{Jaké vlastnosti mají kombinační čísla? Dokažte Pascalův vztah.}
+  Platí $\binom{n}{0} = \binom{n}{n} = 1$, $\binom{n}{1} = n$, souměrnost $\binom{n}{k} = \binom{n}{n - k}$ (vybrat $k$ prvků, které vezmeme, je totéž jako vybrat $n - k$, které nevezmeme), Pascalův vztah
+  \begin{equation*}
+    \binom{n}{k} + \binom{n}{k + 1} = \binom{n + 1}{k + 1}
+  \end{equation*}
+  a součet řádku $\binom{n}{0} + \cdots + \binom{n}{n} = 2^n$. Důkaz Pascalova vztahu: vybíráme $k + 1$ prvků z $n + 1$ a jeden prvek označíme jako speciální. Buď ho vybereme a zbylých $k$ vybíráme z $n$ ostatních ($\binom{n}{k}$ možností), nebo ho nevybereme a všech $k + 1$ vybíráme z $n$ ostatních ($\binom{n}{k + 1}$ možností). Obě skupiny se nepřekrývají, takže podle pravidla součtu dají dohromady všech $\binom{n + 1}{k + 1}$ výběrů. \vizsekce{sec:binomicka-veta}
+
+  \item \otazka{Vyslovte a dokažte binomickou větu. Jak souvisí s Pascalovým trojúhelníkem?}
+  Pro všechna $a, b\in\mathbb{R}$ a $n\in\mathbb{N}$ platí
+  \begin{equation*}
+    {(a + b)}^n = \sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k.
+  \end{equation*}
+  Důkaz: při roznásobení $(a + b)(a + b)\cdots(a + b)$ vybíráme z každé z $n$ závorek buď $a$, nebo $b$. Člen $a^{n-k}b^k$ vznikne pokaždé, když vybereme $b$ z právě $k$ závorek, a tyto závorky lze zvolit $\binom{n}{k}$ způsoby; to je jeho koeficient. Pascalův trojúhelník má v $n$-tém řádku čísla $\binom{n}{0}, \ldots, \binom{n}{n}$, tedy právě koeficienty ${(a + b)}^n$ (např. $1, 4, 6, 4, 1$ pro $n = 4$); pravidlo `každé číslo je součtem dvou nad ním' je Pascalův vztah. \vizsekce{sec:binomicka-veta}
+
+  \item \otazka{Kolik podmnožin má $n$-prvková množina a proč?}
+  Má jich $2^n$. U každého z $n$ prvků se nezávisle rozhodneme, zda ho do podmnožiny vezmeme, nebo ne; podle pravidla součinu je to $2\cdot 2\cdots 2 = 2^n$ možností (počet prvků potenční množiny). Jinak: podmnožin s $k$ prvky je $\binom{n}{k}$, takže celkem $\sum_{k=0}^{n}\binom{n}{k}$, což je podle binomické věty pro $a = b = 1$ právě ${(1 + 1)}^n = 2^n$. Počítá se i prázdná množina a celá množina.
+\end{enumerate}
+
+\section{Pravděpodobnost}
+
+Otázky ke kapitole~\ref{kap:pravdepodobnost}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je náhodný pokus, prostor výsledků a jev? Jak souvisí operace s jevy s množinovými operacemi?}
+  Náhodný pokus je děj, jehož výsledek není předem jednoznačně určen (hod kostkou, losování). Prostor výsledků $\Omega$ je množina všech možných výsledků a jev je libovolná podmnožina $A\subseteq\Omega$; jev nastal, padl-li výsledek z $A$. Jistý jev je $\Omega$, nemožný $\emptyset$. Operace s jevy jsou množinové operace: $A\cup B$ znamená `nastal $A$ nebo $B$', $A\cap B$ `nastal $A$ i $B$', opačný jev $A' = \Omega\setminus A$ `nenastal $A$', a neslučitelné jevy mají $A\cap B = \emptyset$. Například u kostky je `sudé číslo' $\{2, 4, 6\}$ a `víc než $4$' $\{5, 6\}$, průnik je $\{6\}$. \vizsekce{sec:nahodny-pokus}
+
+  \item \otazka{Definujte klasickou pravděpodobnost. Za jakých předpokladů ji lze použít?}
+  \begin{equation*}
+    P(A) = \frac{|A|}{|\Omega|} = \frac{\text{počet příznivých výsledků}}{\text{počet všech výsledků}}.
+  \end{equation*}
+  Lze ji použít, jen má-li pokus konečně mnoho výsledků a jsou-li všechny \emph{stejně pravděpodobné} (symetrická kostka, dobře zamíchané karty). Na tom selhává úvaha `buď vyhraju v loterii, nebo ne, takže $50\,\%$': ty dva výsledky stejně pravděpodobné nejsou. Pozor také na volbu $\Omega$: u dvou kostek bereme $36$ uspořádaných dvojic, takže součet $7$ má pravděpodobnost $\frac{6}{36}$, ale součet $2$ jen $\frac{1}{36}$. \vizsekce{sec:klasicka-pravdepodobnost}
+
+  \item \otazka{Jaké vlastnosti má pravděpodobnost? Proč se u úloh se slovem `alespoň' vyplatí počítat opačný jev?}
+  Platí $0\leq P(A)\leq 1$, $P(\emptyset) = 0$, $P(\Omega) = 1$, $P(A') = 1 - P(A)$ a
+  \begin{equation*}
+    P(A\cup B) = P(A) + P(B) - P(A\cap B)
+  \end{equation*}
+  (průnik jsme započítali dvakrát), pro neslučitelné jevy prostě $P(A) + P(B)$. Jev `alespoň jeden' se rozpadá na mnoho případů (právě jeden, právě dva, \ldots), kdežto jeho opak `ani jeden' je jediný jednoduchý případ. Například pravděpodobnost aspoň jedné šestky ve čtyřech hodech je
+  \begin{equation*}
+    1 - {\left(\tfrac{5}{6}\right)}^4\approx 0{,}518.
+  \end{equation*}
+  \vizsekce{sec:klasicka-pravdepodobnost}
+
+  \item \otazka{Co je podmíněná pravděpodobnost? Kdy jsou jevy nezávislé?}
+  Podmíněná pravděpodobnost jevu $A$ za podmínky, že nastal $B$ (s $P(B) > 0$), je
+  \begin{equation*}
+    P(A\,|\,B) = \frac{P(A\cap B)}{P(B)}.
+  \end{equation*}
+  Informace, že nastal $B$, zmenší prostor výsledků na $B$: víme-li, že na kostce padlo sudé číslo, je šestka jedna ze tří možností, $P = \frac{1}{3}$. Jevy jsou nezávislé, pokud $P(A\cap B) = P(A)\cdot P(B)$, tedy $P(A\,|\,B) = P(A)$: výskyt $B$ šanci na $A$ nemění (hody kostkou, kola rulety). Gamblerův omyl je víra, že nezávislé pokusy si `pamatují' minulost. \vizsekce{sec:podminena-pravdepodobnost}
+
+  \item \otazka{Vysvětlete Bayesovu větu na příkladu lékařského testu.}
+  Bayesova věta obrací podmínku a s větou o úplné pravděpodobnosti zní
+  \begin{equation*}
+    P(B\,|\,A) = \frac{P(A\,|\,B)P(B)}{P(A)}, \qquad P(A) = P(A\,|\,B)P(B) + P(A\,|\,B')P(B').
+  \end{equation*}
+  Nemoc má $1\,\%$ lidí, test nemocného odhalí s pravděpodobností $99\,\%$ a u zdravého vyjde falešně pozitivní v $5\,\%$ případů. Pravděpodobnost pozitivního testu je $P(+) = 0{,}99\cdot 0{,}01 + 0{,}05\cdot 0{,}99 = 0{,}0594$ a
+  \begin{equation*}
+    P(N\,|\,+) = \frac{0{,}99\cdot 0{,}01}{0{,}0594} = \frac{1}{6}\approx 17\,\%.
+  \end{equation*}
+  Zdravých je tolik, že i malé procento falešných poplachů převáží skutečně nemocné; proto se pozitivní výsledky screeningu ověřují dalším testem. \vizpriklad{ex:lekarsky-test}
+
+  \item \otazka{Co je Bernoulliho schéma? Odvoďte vzorec pro pravděpodobnost $k$ úspěchů v $n$ pokusech.}
+  Pokus s pravděpodobností úspěchu $p$ opakujeme $n$-krát nezávisle. Jedno konkrétní pořadí s $k$ úspěchy a $n - k$ neúspěchy má díky nezávislosti pravděpodobnost $p^k{(1 - p)}^{n-k}$, a takových pořadí je tolik, kolika způsoby lze vybrat $k$ pozic pro úspěchy, tedy $\binom{n}{k}$. Tato pořadí se navzájem vylučují, takže
+  \begin{equation*}
+    P_n(k) = \binom{n}{k}p^k{(1 - p)}^{n - k}.
+  \end{equation*}
+  Tipující student v testu s $10$ otázkami po $4$ možnostech má právě $5$ správně s pravděpodobností $\binom{10}{5}{\left(\frac{1}{4}\right)}^5{\left(\frac{3}{4}\right)}^5\approx 0{,}058$. \vizsekce{sec:opakovane-pokusy}
+
+  \item \otazka{Co je geometrická pravděpodobnost?}
+  Vybíráme-li náhodně bod z oblasti $\Omega$ (úsečky, obrazce, tělesa) tak, že žádné místo není zvýhodněné, je pravděpodobnost, že padne do části $A$, poměr měr:
+  \begin{equation*}
+    P(A) = \frac{\text{míra } A}{\text{míra } \Omega},
+  \end{equation*}
+  kde mírou je délka, obsah nebo objem. Je to obdoba klasické pravděpodobnosti pro nekonečně mnoho výsledků. Například šipka hozená náhodně do čtverce o straně $2$ padne do vepsaného kruhu s pravděpodobností $\frac{\pi}{4}$; opakováním pokusu lze tak $\pi$ odhadnout (metoda Monte Carlo). \vizsekce{sec:opakovane-pokusy}
+
+  \item \otazka{Vysvětlete narozeninový paradox a úlohu Montyho Halla.}
+  Narozeninový paradox: ve skupině $23$ lidí je pravděpodobnost, že dva mají narozeniny ve stejný den, už přes $50\,\%$ (a ve třídě s $30$ žáky asi $70\,\%$), i když lidé tipují spíš stovky. Spočítáme opačný jev (všichni různě):
+  \begin{equation*}
+    \frac{365\cdot 364\cdots(365 - n + 1)}{365^n}\approx 0{,}493\quad\text{pro } n = 23.
+  \end{equation*}
+  Intuice selhává, protože nesrovnáváme jednoho člověka s ostatními, ale \emph{všechny dvojice}, a těch je $\binom{23}{2} = 253$. Monty Hall: za jedněmi ze tří dveří je auto, vyberete dveře, moderátor (který ví, kde je auto) otevře jiné dveře s kozou a nabídne výměnu. Výměna vyhraje s pravděpodobností $\frac{2}{3}$: původní volba trefila auto s pravděpodobností $\frac{1}{3}$ a moderátor na tom nic nezměnil, protože kozu ukázat může vždy. Zbylé $\frac{2}{3}$ se soustředí na jediné zavřené dveře (u sta dveří, z nichž moderátor otevře $98$, je to zřejmé). Podrobně viz cvičení~\ref{pr:narozeniny} a příklad~\ref{ex:monty-hall} na stranách~\pageref{pr:narozeniny} a~\pageref{ex:monty-hall}.
+\end{enumerate}
+
+\section{Statistika}
+
+Otázky ke kapitole~\ref{kap:statistika}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je statistický soubor, jednotka a znak? Jaké druhy znaků znáte?}
+  Statistický soubor je množina zkoumaných objektů (žáci třídy, výrobky z linky), jednotka je jeden jeho prvek a rozsah souboru $n$ je počet jednotek. Znak je vlastnost, kterou u jednotek sledujeme. Kvantitativní (číselný) znak je např. výška, známka nebo plat, kvalitativní (slovní) např. barva očí nebo oblíbený předmět. Často zkoumáme jen výběrový soubor (vzorek) místo celého základního souboru, a pak musí být výběr reprezentativní; jinak dopadneme jako \textit{Literary Digest} v roce 1936, který i z deseti milionů obeslaných předpověděl špatného vítěze. \vizsekce{sec:stat-zakladni-pojmy}
+
+  \item \otazka{Co je absolutní, relativní a kumulativní četnost?}
+  Absolutní četnost $n_i$ hodnoty $x_i$ je počet jednotek s touto hodnotou; součet všech je $n$. Relativní četnost je podíl $\frac{n_i}{n}$ (často v procentech); součet všech je $1$, resp. $100\,\%$. Kumulativní četnost je součet četností všech hodnot menších nebo rovných $x_i$ (kolik jednotek má hodnotu nejvýš $x_i$); může být absolutní i relativní. Například u známek $1, 2, 2, 3, 1, 4, 2, 3, 5, 2$ má dvojka absolutní četnost $4$, relativní $40\,\%$ a kumulativní četnost dvojky je $2 + 4 = 6$.
+
+  \item \otazka{Jaké znáte způsoby grafického znázornění dat? Jak lze grafem manipulovat?}
+  Sloupcový diagram (histogram) s výškou sloupce úměrnou četnosti, kruhový diagram s výsečemi o úhlu $\frac{n_i}{n}\cdot 360^\circ$ (podíly celku), spojnicový graf (vývoj v čase), bodový graf (dva znaky současně) a krabicový graf. Manipulovat lze bez jediné nepravdy: osou $y$, která nezačíná nulou (malý rozdíl vypadá obrovsky), trojrozměrnými koláčovými grafy (přední výseče vypadají větší), výběrem časového úseku nebo nevhodným měřítkem. U každého grafu se proto nejdřív podíváme na osy. \vizsekce{sec:graficke-znazorneni}
+
+  \item \otazka{Definujte aritmetický průměr, medián a modus. Kdy je lepší použít medián?}
+  Aritmetický průměr je $\bar{x} = \frac{1}{n}\sum x_i$ (pro opakované hodnoty vážený $\frac{\sum n_ix_i}{\sum n_i}$); fyzikálně je to těžiště hodnot na číselné ose. Medián $\tilde{x}$ je prostřední hodnota seřazených dat (pro sudé $n$ průměr dvou prostředních). Modus $\hat{x}$ je nejčastější hodnota. Medián je lepší, když data obsahují extrémní hodnoty, protože průměr je na ně citlivý a medián ne. Devět zaměstnanců s $30\,000$ Kč a ředitel s $300\,000$ Kč mají průměr $57\,000$ Kč, ale medián $30\,000$ Kč, který typického zaměstnance popisuje mnohem lépe (proto se u mezd uvádí medián). \vizsekce{sec:charakteristiky-polohy}
+
+  \item \otazka{Kdy se používá geometrický a harmonický průměr? Uveďte příklad.}
+  Geometrický průměr $\sqrt[n]{x_1\cdots x_n}$ se používá pro průměrný růst (veličiny, které se násobí): akcie, která vzrostla o $10\,\%$ a pak o $60\,\%$, rostla v průměru o $\sqrt{1{,}1\cdot 1{,}6} - 1\approx 32{,}7\,\%$ ročně, ne o $35\,\%$. Harmonický průměr $\frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}$ se používá pro průměrnou rychlost na stejných úsecích dráhy (a obecně pro průměrování poměrů): tam $60\ \si{km/h}$, zpět $40\ \si{km/h}$ dává průměr $\frac{2}{\frac{1}{60} + \frac{1}{40}} = 48\ \si{km/h}$, protože pomalejší cestou strávíme víc času. Pro kladná čísla platí $\bar{x}_H\leq\bar{x}_G\leq\bar{x}$. \vizpriklad{ex:jine-prumery}
+
+  \item \otazka{Co je rozptyl a směrodatná odchylka? Proč se v rozptylu odchylky umocňují?}
+  Rozptyl je průměrná druhá mocnina odchylky od průměru a směrodatná odchylka je jeho odmocnina:
+  \begin{equation*}
+    s^2 = \frac{1}{n}\sum_{i=1}^{n}{(x_i - \bar{x})}^2 = \overline{x^2} - \bar{x}^2, \qquad s = \sqrt{s^2}.
+  \end{equation*}
+  Směrodatná odchylka má stejné jednotky jako data a představuje `typickou vzdálenost' hodnoty od průměru. Odchylky se umocňují, protože prostý průměr odchylek $x_i - \bar{x}$ je vždy nula: kladné a záporné se přesně vyruší. Druhá mocnina udělá ze všech odchylek kladná čísla (a vzdálené hodnoty zváží víc). Absolutní hodnota by šla také, ale druhé mocniny se lépe počítají. Dalšími mírami variability jsou rozpětí $x_{\max} - x_{\min}$ a variační koeficient $\frac{s}{\bar{x}}$. \vizsekce{sec:charakteristiky-variability}
+
+  \item \otazka{Co jsou kvartily a krabicový graf?}
+  Kvartily dělí seřazená data na čtvrtiny: dolní kvartil $Q_1$ je medián dolní poloviny dat (pod ním leží čtvrtina dat), druhým kvartilem je medián a horní kvartil $Q_3$ je medián horní poloviny. Mezikvartilové rozpětí $Q_3 - Q_1$ je šířka prostřední poloviny dat. Krabicový graf zobrazuje minimum, $Q_1$, medián, $Q_3$ a maximum: krabice sahá od $Q_1$ do $Q_3$, čára uvnitř je medián a `vousy' vedou k extrémům. Pro známky $1, 1, 2, 2, 2, 2, 3, 3, 4, 5$:
+  \begin{center}
+    \begin{tikzpicture}[xscale=1.6, yscale=0.8]
+      \draw[->, gray] (0.6,0) -- (5.5,0);
+      \foreach \t in {1,...,5} {\draw[gray] (\t,0.07) -- (\t,-0.07) node[below, black, font=\scriptsize] {$\t$};}
+      \draw[thick] (1,0.8) -- (2,0.8) (3,0.8) -- (5,0.8);
+      \draw[thick] (1,0.6) -- (1,1) (5,0.6) -- (5,1);
+      \draw[thick, fill=colorofwisdom!20] (2,0.45) rectangle (3,1.15);
+      \draw[very thick, colorofwisdom] (2,0.45) -- (2,1.15);
+      \node[above, font=\scriptsize] at (1,1.05) {min};
+      \node[above, font=\scriptsize] at (2,1.15) {$Q_1 = \tilde{x}$};
+      \node[above, font=\scriptsize] at (3,1.15) {$Q_3$};
+      \node[above, font=\scriptsize] at (5,1.05) {max};
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:charakteristiky-variability}
+
+  \item \otazka{Co měří korelační koeficient? Proč korelace neznamená kauzalitu?}
+  Korelační koeficient
+  \begin{equation*}
+    r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum{(x_i - \bar{x})}^2}\sqrt{\sum{(y_i - \bar{y})}^2}}\in[-1, 1]
+  \end{equation*}
+  měří sílu \emph{lineární} závislosti dvou znaků: $r$ blízko $1$ znamená silnou přímou závislost, blízko $-1$ silnou nepřímou a blízko $0$ žádnou lineární závislost (jiná, např. kvadratická, být může). Je to kosinus úhlu mezi vektory odchylek, proto leží mezi $-1$ a $1$. Korelace neznamená kauzalitu, protože dva znaky mohou souviset, aniž jeden způsobuje druhý: oba mohou záviset na třetí příčině (prodej zmrzliny i počet utonulých roste kvůli teplému počasí), příčina může být opačná, nebo jde o náhodu (počet filmů s Nicolasem Cagem a utonulí v bazénech). \vizsekce{sec:zavislost-znaku}
+\end{enumerate}
+
+\section{Komplexní čísla}
+
+Otázky ke kapitole~\ref{kap:komplexni}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Proč potřebujeme komplexní čísla? Jak je definována imaginární jednotka?}
+  V reálných číslech nemají řešení ani jednoduché rovnice jako $x^2 + 1 = 0$, protože druhá mocnina reálného čísla není záporná. Historicky se ale komplexním číslům nedalo vyhnout ani u rovnic s reálnými kořeny: Cardanův vzorec pro kubické rovnice vede přes odmocniny ze záporných čísel. Imaginární jednotka $i$ je definována rovností $i^2 = -1$ a komplexní čísla jsou čísla $z = a + bi$ s $a, b\in\mathbb{R}$. Zápis $i = \sqrt{-1}$ je jen intuice: odmocnina ze záporného čísla není v $\mathbb{C}$ jednoznačná (i $-i$ splňuje ${(-i)}^2 = -1$) a pravidlo $\sqrt{a}\sqrt{b} = \sqrt{ab}$ tam neplatí. Dnes se komplexní čísla používají v elektrotechnice, kvantové fyzice i zpracování signálu. \vizsekce{sec:algebraicky-tvar}
+
+  \item \otazka{Co je algebraický tvar komplexního čísla? Jak se komplexní čísla sčítají, násobí a dělí?}
+  Algebraický tvar je $z = a + bi$, kde $a = \mathrm{Re}\,z$ je reálná a $b = \mathrm{Im}\,z$ imaginární část; dvě čísla se rovnají, rovnají-li se obě části. Sčítáme po částech, násobíme jako mnohočleny a nahradíme $i^2 = -1$:
+  \begin{equation*}
+    (a + bi) + (c + di) = (a + c) + (b + d)i, \qquad (a + bi)(c + di) = (ac - bd) + (ad + bc)i.
+  \end{equation*}
+  Dělíme rozšířením zlomku číslem komplexně sdruženým se jmenovatelem (jako při usměrňování): $\frac{z_1}{z_2} = \frac{z_1\bar{z}_2}{c^2 + d^2}$. Například $\frac{2 + 3i}{1 - i} = \frac{(2 + 3i)(1 + i)}{2} = -\frac{1}{2} + \frac{5}{2}i$. Mocniny $i$ se opakují s periodou $4$: $i, -1, -i, 1$. \vizsekce{sec:algebraicky-tvar}
+
+  \item \otazka{Co je komplexně sdružené číslo a absolutní hodnota? Jaký mají geometrický význam?}
+  Komplexně sdružené číslo k $z = a + bi$ je $\bar{z} = a - bi$; geometricky je to obraz $z$ v osové souměrnosti podle reálné osy. Platí $z\bar{z} = a^2 + b^2$, což je reálné nezáporné číslo, a proto se sdružené číslo hodí k dělení. Absolutní hodnota je
+  \begin{equation*}
+    |z| = \sqrt{a^2 + b^2} = \sqrt{z\bar{z}},
+  \end{equation*}
+  tedy vzdálenost bodu $z$ od počátku v Gaussově rovině (Pythagorova věta). Obecně $|z_1 - z_2|$ je vzdálenost bodů $z_1$, $z_2$ a rovnice $|z - z_0| = r$ popisuje kružnici. Pro reálná čísla splývá s obyčejnou absolutní hodnotou. \vizsekce{sec:gaussova-rovina}
+
+  \item \otazka{Proč komplexní čísla nelze uspořádat?}
+  Nelze je uspořádat tak, aby platila obvyklá pravidla pro nerovnosti (součin dvou kladných čísel je kladný, a tedy každý nenulový čtverec je kladný). Kdyby $i > 0$, pak $i\cdot i > 0$, tedy $-1 > 0$. Kdyby $i < 0$, pak $-i > 0$ a $(-i)(-i) > 0$, tedy opět $-1 > 0$. Obojí je spor (protože zároveň $1 = 1^2 > 0$). Proto v $\mathbb{C}$ neřešíme nerovnice a zápis typu $z_1 < z_2$ nemá smysl; porovnávat můžeme jen absolutní hodnoty, což jsou reálná čísla. Podrobně viz poznámka~\ref{note:komplexni-usporadani} na straně~\pageref{note:komplexni-usporadani}.
+
+  \item \otazka{Co je Gaussova rovina? Jak v ní vypadá sčítání?}
+  Komplexní číslo $a + bi$ je určeno dvojicí $(a, b)$, takže ho zakreslíme jako bod $[a, b]$ (nebo šipku z počátku) do roviny s reálnou vodorovnou a imaginární svislou osou; to je Gaussova (komplexní) rovina. Sčítání odpovídá sčítání vektorů: šipku $z_2$ přiložíme na konec šipky $z_1$, a kde skončíme, je $z_1 + z_2$; obě šipky a součet tvoří rovnoběžník. Například $(2 + 3i) + (1 - i) = 3 + 2i$. Komplexně sdružené číslo je zrcadlový obraz podle reálné osy a $|z|$ je délka šipky. \vizsekce{sec:gaussova-rovina}
+
+  \item \otazka{Co je goniometrický tvar? Jak se v něm násobí a dělí? Dokažte to.}
+  Každé nenulové $z$ lze zapsat jako $z = |z|(\cos\varphi + i\sin\varphi)$, kde $\varphi = \arg z$ je úhel šipky s kladnou reálnou poloosou ($\cos\varphi = \frac{a}{|z|}$, $\sin\varphi = \frac{b}{|z|}$; pozor na kvadrant). Při násobení se absolutní hodnoty násobí a argumenty sčítají, při dělení se absolutní hodnoty dělí a argumenty odečítají:
+  \begin{equation*}
+    z_1z_2 = r_1r_2\left(\cos(\varphi_1 + \varphi_2) + i\sin(\varphi_1 + \varphi_2)\right).
+  \end{equation*}
+  Důkaz: roznásobíme $(\cos\varphi_1 + i\sin\varphi_1)(\cos\varphi_2 + i\sin\varphi_2)$ a dostaneme reálnou část $\cos\varphi_1\cos\varphi_2 - \sin\varphi_1\sin\varphi_2 = \cos(\varphi_1 + \varphi_2)$ a imaginární část $\sin\varphi_1\cos\varphi_2 + \cos\varphi_1\sin\varphi_2 = \sin(\varphi_1 + \varphi_2)$ podle součtových vzorců. Pro dělení: podíl $w = \frac{z_1}{z_2}$ splňuje $wz_2 = z_1$, takže podle pravidla pro násobení $|w|r_2 = r_1$ a $\arg w + \varphi_2 = \varphi_1$. Geometricky je násobení otočení a natažení; násobení $i$ je otočení o $90^\circ$, a proto $i^2 = -1$ (otočení o $180^\circ$). \vizsekce{sec:goniometricky-tvar}
+
+  \item \otazka{Vyslovte a dokažte Moivreovu větu.}
+  Pro každé $n\in\mathbb{Z}$ platí
+  \begin{equation*}
+    {\left(r(\cos\varphi + i\sin\varphi)\right)}^n = r^n(\cos n\varphi + i\sin n\varphi).
+  \end{equation*}
+  Důkaz pro $n\in\mathbb{N}$ indukcí: pro $n = 1$ je to zřejmé; platí-li tvrzení pro $n$, pak podle pravidla pro násobení $z^{n+1} = z^n\cdot z = r^n\cdot r\left(\cos(n\varphi + \varphi) + i\sin(n\varphi + \varphi)\right)$. Pro $n = 0$ dostaneme $1$ a pro záporná $n$ tvrzení plyne z pravidla pro dělení ($z^{-n} = \frac{1}{z^n}$). Využití: ${(1 + i)}^8 = {(\sqrt{2})}^8(\cos 2\pi + i\sin 2\pi) = 16$; pro $r = 1$ a $n = 2$ dává vzorce pro $\sin 2\varphi$ a $\cos 2\varphi$. Mocniny $z, z^2, z^3, \ldots$ leží na spirále. Podrobně viz Moivreova věta na straně~\pageref{def:moivre}.
+
+  \item \otazka{Jak se řeší kvadratické rovnice se záporným diskriminantem? Co říká základní věta algebry?}
+  Pro $D < 0$ použijeme $\sqrt{D} = i\sqrt{-D}$ a dostaneme dva komplexně sdružené kořeny
+  \begin{equation*}
+    x_{1,2} = \frac{-b\pm i\sqrt{-D}}{2a};
+  \end{equation*}
+  Vietovy vzorce i rozklad $a(x - x_1)(x - x_2)$ platí dál. Například $x^2 + 2x + 5 = 0$: $D = -16$, $x_{1,2} = -1\pm 2i$; reálná část $-1$ je souřadnice vrcholu paraboly. Základní věta algebry: každý mnohočlen stupně $n\geq 1$ s komplexními koeficienty má v $\mathbb{C}$ alespoň jeden kořen. Opakovaným vytýkáním $(z - z_k)$ odtud plyne, že se rozloží na $n$ lineárních činitelů a má právě $n$ kořenů počítaných s násobností. Komplexní čísla jsou tedy `hotová': k řešení polynomiálních rovnic už nepotřebujeme žádná nová čísla. \vizsekce{sec:komplexni-kvadraticke}
+
+  \item \otazka{Jak se řeší binomické rovnice? Proč jejich řešení tvoří pravidelný mnohoúhelník?}
+  Rovnici $z^n = a$ s $a = r(\cos\alpha + i\sin\alpha)\neq 0$ řešíme v goniometrickém tvaru. Hledáme $z = s(\cos\varphi + i\sin\varphi)$; podle Moivreovy věty musí být $s^n = r$ a $n\varphi = \alpha + 2k\pi$ (úhly se smějí lišit o násobek $2\pi$). Tedy
+  \begin{equation*}
+    z_k = \sqrt[n]{r}\left(\cos\frac{\alpha + 2k\pi}{n} + i\sin\frac{\alpha + 2k\pi}{n}\right), \qquad k = 0, 1, \ldots, n - 1;
+  \end{equation*}
+  pro $k = n$ se už opakují. Všechna řešení mají stejnou absolutní hodnotu $\sqrt[n]{r}$, leží tedy na jedné kružnici se středem v počátku, a jejich argumenty se liší vždy o $\frac{2\pi}{n}$, takže kružnici dělí na $n$ stejných dílů. To jsou vrcholy pravidelného $n$-úhelníku. Například $z^3 = 1$ má řešení $1$ a $-\frac{1}{2}\pm\frac{\sqrt{3}}{2}i$ (rovnostranný trojúhelník):
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[->, gray] (-1.5,0) -- (1.6,0) node[right, black] {\scriptsize Re};
+      \draw[->, gray] (0,-1.3) -- (0,1.4) node[above, black] {\scriptsize Im};
+      \draw[gray, dashed] (0,0) circle (1);
+      \draw[thick, colorofwisdom, fill=colorofwisdom!15] (1,0) -- (-0.5,0.866) -- (-0.5,-0.866) -- cycle;
+      \foreach \p in {(1,0), (-0.5,0.866), (-0.5,-0.866)} {\fill \p circle (2pt);}
+      \node[above right, font=\scriptsize] at (1,0) {$z_0 = 1$};
+      \node[above left, font=\scriptsize] at (-0.5,0.866) {$z_1$};
+      \node[below left, font=\scriptsize] at (-0.5,-0.866) {$z_2$};
+    \end{tikzpicture}
+  \end{center}
+  \vizsekce{sec:binomicke-rovnice}
+\end{enumerate}
+
+\section{Limity a spojitost}
+
+Otázky ke kapitole~\ref{kap:limity}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je limita funkce v bodě? Vysvětlete definici. Proč nezáleží na hodnotě funkce v samotném bodě?}
+  Funkce $f$ má v bodě $a$ limitu $L$, $\lim_{x\to a} f(x) = L$, pokud ke každému $\varepsilon > 0$ existuje $\delta > 0$ takové, že pro všechna $x$ z prstencového okolí $(a - \delta, a)\cup(a, a + \delta)$, kde je $f$ definovaná, platí $|f(x) - L| < \varepsilon$. Slovy: hodnoty $f(x)$ budou libovolně blízko $L$, pokud zvolíme $x$ dost blízko $a$. Obrázkově: ke každému vodorovnému pásu kolem $L$ najdeme svislý pás kolem $a$ tak, aby v něm graf (kromě bodu $a$) ležel celý uvnitř vodorovného pásu. Na hodnotě $f(a)$ nezáleží, protože definice pracuje s \emph{prstencovým} okolím: limita popisuje, k čemu se hodnoty blíží, ne čemu se rovnají. Funkce v $a$ ani nemusí být definovaná: $\frac{x^2 - 4}{x - 2}$ má v bodě $2$ limitu $4$. \vizsekce{sec:limita-funkce}
+
+  \item \otazka{Co jsou jednostranné limity? Kdy limita existuje?}
+  Limita zprava $\lim_{x\to a^+} f(x)$ bere v úvahu jen $x > a$, limita zleva $\lim_{x\to a^-} f(x)$ jen $x < a$. Limita v bodě $a$ existuje, právě když existují obě jednostranné limity a jsou si rovny. Například signum má v nule limitu zprava $1$ a zleva $-1$, takže limitu nemá, i když jsou obě jednostranné limity konečné. Podobně $\frac{1}{x}$ má v nule jednostranné limity $+\infty$ a $-\infty$. (V krajním bodě definičního oboru, např. $\sqrt{x}$ v nule, má smysl jen jednostranná limita.)
+
+  \item \otazka{Co jsou nevlastní limity a limity v nekonečnu? Jak souvisí s asymptotami?}
+  Nevlastní limita $\lim_{x\to a} f(x) = \infty$ (nebo $-\infty$) znamená, že hodnoty rostou (klesají) nade všechny meze, když se $x$ blíží k $a$. Limita v nekonečnu $\lim_{x\to\infty} f(x) = L$ znamená, že se hodnoty blíží k $L$, když $x$ roste nade všechny meze (obdobně pro $x\to-\infty$). Je-li některá jednostranná limita v bodě $a$ nevlastní, je přímka $x = a$ svislou asymptotou grafu; je-li $\lim_{x\to\pm\infty} f(x) = L$, je $y = L$ vodorovnou asymptotou. Například $\frac{1}{x}$ má $\lim_{x\to 0^\pm}\frac{1}{x} = \pm\infty$ a $\lim_{x\to\pm\infty}\frac{1}{x} = 0$, odtud asymptoty $x = 0$ a $y = 0$. \vizsekce{sec:limita-funkce}
+
+  \item \otazka{Jak se počítají limity typu $\frac{0}{0}$? Co jsou neurčité výrazy?}
+  Neurčité výrazy jsou tvary jako $\frac{0}{0}$, $\frac{\infty}{\infty}$, $\infty - \infty$ nebo $0\cdot\infty$: dosazením dostaneme výraz, ze kterého nelze limitu poznat (může vyjít cokoli), a výraz musíme upravit. U $\frac{0}{0}$ rozložíme čitatele i jmenovatele na součin a zkrátíme společný činitel, nebo rozšíříme výrazem s odmocninou:
+  \begin{equation*}
+    \lim_{x\to 1}\frac{x^3 - 1}{x^2 - 1} = \lim_{x\to 1}\frac{x^2 + x + 1}{x + 1} = \frac{3}{2}, \qquad \lim_{x\to 0}\frac{\sqrt{x + 4} - 2}{x} = \lim_{x\to 0}\frac{1}{\sqrt{x + 4} + 2} = \frac{1}{4}.
+  \end{equation*}
+  Dalšími nástroji jsou známé limity typu $\frac{\sin x}{x}$ a l'Hospitalovo pravidlo. Krácení je v pořádku, protože na hodnotě v samotném bodě nezáleží. \vizsekce{sec:pocitani-limit}
+
+  \item \otazka{Dokažte, že $\lim_{x\to 0}\frac{\sin x}{x} = 1$.}
+  Pro $x\in\left(0, \frac{\pi}{2}\right)$ vezmeme na jednotkové kružnici body $A = [1, 0]$ a $M = [\cos x, \sin x]$ a bod $T$, kde polopřímka $OM$ protne tečnu $x = 1$; platí $|AT| = \tg x$. Trojúhelník $OAM$ leží uvnitř výseče $OAM$ a ta uvnitř trojúhelníku $OAT$, takže
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \fill[colorofwisdom!12] (0,0) -- (1,0) -- (1,1.192) -- cycle;
+      \fill[colorofwisdom!25] (0,0) -- (1,0) arc (0:50:1) -- cycle;
+      \fill[colorofwisdom!45] (0,0) -- (1,0) -- (0.643,0.766) -- cycle;
+      \draw[gray] (0,0) -- (1.2,0);
+      \draw[thick] (1,0) arc (0:70:1);
+      \draw[thick] (0,0) -- (1,1.192) -- (1,0) -- cycle;
+      \draw (0.643,0.766) -- (1,0);
+      \node[below left, font=\scriptsize] at (0,0) {$O$};
+      \node[below right, font=\scriptsize] at (1,0) {$A$};
+      \node[above left, font=\scriptsize] at (0.643,0.766) {$M$};
+      \node[right, font=\scriptsize] at (1,1.192) {$T$};
+      \node[font=\scriptsize] at (0.28,0.1) {$x$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{equation*}
+    \frac{1}{2}\sin x < \frac{1}{2}x < \frac{1}{2}\tg x \quad\Rightarrow\quad \sin x < x < \tg x.
+  \end{equation*}
+  (Obsah výseče s poloměrem $1$ a úhlem $x$ v radiánech je $\frac{1}{2}x$.) Vydělíme $\sin x > 0$ a přejdeme k převráceným hodnotám, čímž se nerovnosti otočí: $\cos x < \frac{\sin x}{x} < 1$. Pro $x\to 0^+$ jde $\cos x\to 1$, takže výraz sevřený mezi dvě funkce s limitou $1$ má limitu $1$ (věta o dvou policajtech). Pro $x < 0$ to plyne ze sudosti $\frac{\sin x}{x}$. \vizsekce{sec:limita-sinx-x}
+
+  \item \otazka{Co je spojitost funkce v bodě a na intervalu? Jaké znáte druhy nespojitosti?}
+  Funkce je spojitá v bodě $a$, pokud $\lim_{x\to a} f(x) = f(a)$; musí tedy existovat $f(a)$, musí existovat limita a obě se musí rovnat. Spojitá na intervalu je, je-li spojitá v každém jeho bodě (v krajních bodech uzavřeného intervalu jednostranně); intuitivně se dá graf nakreslit jedním tahem. Všechny elementární funkce jsou spojité na svých definičních oborech, a proto u nich limitu spočítáme dosazením. Druhy nespojitosti: odstranitelná (limita existuje, ale $f(a)$ chybí nebo je jiná; díra v grafu, např. $\frac{x^2 - 4}{x - 2}$ v bodě $2$), skok (jednostranné limity existují, ale liší se, např. signum v nule) a nekonečná, resp. podstatná (některá jednostranná limita je nekonečná nebo neexistuje, např. $\frac{1}{x}$ v nule). \vizsekce{sec:spojitost}
+
+  \item \otazka{Vyslovte Weierstrassovu a Bolzanovu větu. Proč jsou důležité jejich předpoklady?}
+  Weierstrassova věta: funkce spojitá na \emph{uzavřeném} intervalu $[a, b]$ je na něm omezená a nabývá na něm svého maxima i minima. Bolzanova věta: je-li $f$ spojitá na $[a, b]$ a mají-li $f(a)$ a $f(b)$ opačná znaménka, existuje $c\in(a, b)$ s $f(c) = 0$. Bez předpokladů věty neplatí: $\frac{1}{x}$ na $(0, 1]$, který není uzavřený, není shora omezená a maximum nemá; na uzavřeném intervalu, kde není spojitá, také ne. A $\frac{1}{x}$ má v bodech $-1$ a $1$ opačná znaménka, ale nulový bod nemá, protože na $[-1, 1]$ není spojitá (v nule přeskočí). \vizsekce{sec:vety-spojite}
+
+  \item \otazka{Jak se dá pomocí Bolzanovy věty přibližně najít kořen rovnice?}
+  Metodou půlení intervalu (bisekcí). Najdeme interval $[a, b]$, na jehož koncích má spojitá funkce opačná znaménka; podle Bolzanovy věty v něm leží kořen. Spočítáme hodnotu ve středu $s = \frac{a + b}{2}$ a ponecháme tu polovinu, na jejíchž koncích jsou znaménka stále opačná; postup opakujeme. Každým krokem se interval zmenší na polovinu, takže po $n$ krocích známe kořen s chybou nejvýš $\frac{b - a}{2^n}$. Například pro $x^3 + x - 1 = 0$ je $f(0) = -1 < 0$, $f(1) = 1 > 0$, pak $f(0{,}5) < 0$, $f(0{,}75) > 0$, \ldots, a po deseti krocích $x\approx 0{,}682$. \vizpriklad{ex:puleni-intervalu}
+\end{enumerate}
+
+\section{Derivace}
+
+Otázky ke kapitole~\ref{kap:derivace}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Definujte derivaci funkce v bodě. Jaký má geometrický a fyzikální význam?}
+  Derivace funkce $f$ v bodě $x_0$ je limita
+  \begin{equation*}
+    f'(x_0) = \lim_{h\to 0}\frac{f(x_0 + h) - f(x_0)}{h},
+  \end{equation*}
+  pokud existuje a je konečná (pak je $f$ v $x_0$ diferencovatelná). Zlomek je směrnice sečny grafem body $[x_0, f(x_0)]$ a $[x_0 + h, f(x_0 + h)]$; pro $h\to 0$ se sečna přimkne k tečně. Geometricky je tedy $f'(x_0)$ směrnice tečny ke grafu v bodě $[x_0, f(x_0)]$. Fyzikálně je to okamžitá rychlost změny: zlomek je průměrná rychlost na úseku délky $h$ a jeho limita okamžitá rychlost (derivace dráhy podle času je rychlost, derivace rychlosti zrychlení). \vizsekce{sec:pojem-derivace}
+
+  \item \otazka{Spočítejte derivaci $x^2$ podle definice. Jak vypadá rovnice tečny?}
+  \begin{equation*}
+    (x^2)' = \lim_{h\to 0}\frac{{(x + h)}^2 - x^2}{h} = \lim_{h\to 0}\frac{2xh + h^2}{h} = \lim_{h\to 0}(2x + h) = 2x.
+  \end{equation*}
+  Tečna ke grafu $f$ v bodě $[x_0, f(x_0)]$ je přímka tímto bodem se směrnicí $f'(x_0)$:
+  \begin{equation*}
+    y - f(x_0) = f'(x_0)(x - x_0).
+  \end{equation*}
+  Pro $y = x^2$ a $x_0 = 3$: směrnice $6$, tečna $y - 9 = 6(x - 3)$, tedy $y = 6x - 9$. \vizpriklad{ex:derivace-x2}
+
+  \item \otazka{Jaký je vztah mezi spojitostí a diferencovatelností? Uveďte příklad spojité funkce bez derivace.}
+  Každá funkce diferencovatelná v bodě je v něm spojitá: $f(x_0 + h) - f(x_0) = \frac{f(x_0 + h) - f(x_0)}{h}\cdot h\to f'(x_0)\cdot 0 = 0$. Obráceně to neplatí. Funkce $|x|$ je v nule spojitá, ale derivaci tam nemá: zprava je podíl $\frac{|h|}{h} = 1$, zleva $-1$, takže limita neexistuje. Graf má zlom a sečny zprava a zleva se přimknou k různým přímkám $y = x$ a $y = -x$. Extrémním příkladem je Weierstrassova funkce, spojitá všude a bez derivace v každém bodě. Podrobně viz poznámka~\ref{note:spojitost-derivace} na straně~\pageref{note:spojitost-derivace}.
+
+  \item \otazka{Uveďte derivace elementárních funkcí. Odvoďte derivaci $x^n$ a $\sin x$.}
+  \begin{gather*}
+    c' = 0,\quad (x^n)' = nx^{n-1},\quad (\mathrm{e}^x)' = \mathrm{e}^x,\quad (a^x)' = a^x\ln a,\quad (\ln x)' = \frac{1}{x},\quad (\log_a x)' = \frac{1}{x\ln a},\\
+    (\sin x)' = \cos x,\quad (\cos x)' = -\sin x,\quad (\tg x)' = \frac{1}{\cos^2 x},\quad (\cotg x)' = -\frac{1}{\sin^2 x}.
+  \end{gather*}
+  $x^n$ pro $n\in\mathbb{N}$: podle binomické věty ${(x + h)}^n = x^n + nx^{n-1}h + \binom{n}{2}x^{n-2}h^2 + \cdots$; po odečtení $x^n$ a vydělení $h$ zbude $nx^{n-1}$ plus členy s $h$, které pro $h\to 0$ zmizí. $\sin x$: podle součtového vzorce
+  \begin{equation*}
+    \frac{\sin(x + h) - \sin x}{h} = \sin x\cdot\frac{\cos h - 1}{h} + \cos x\cdot\frac{\sin h}{h}\ \longrightarrow\ \sin x\cdot 0 + \cos x\cdot 1,
+  \end{equation*}
+  protože $\frac{\sin h}{h}\to 1$ a $\frac{\cos h - 1}{h} = -\sin\frac{h}{2}\cdot\frac{\sin(h/2)}{h/2}\to 0$. (Platí jen v radiánech.) \vizsekce{sec:pravidla-derivovani}
+
+  \item \otazka{Uveďte pravidla pro derivaci součtu, součinu, podílu a složené funkce.}
+  \begin{equation*}
+    (f\pm g)' = f'\pm g', \quad (cf)' = cf', \quad (fg)' = f'g + fg', \quad \left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}, \quad \left(f(g(x))\right)' = f'(g(x))\cdot g'(x).
+  \end{equation*}
+  Složenou funkci derivujeme `zvenku dovnitř': derivace vnější funkce (vnitřek necháme) krát derivace vnitřku, např. $\left(\sin(x^2)\right)' = \cos(x^2)\cdot 2x$. Derivace se násobí jako převodové poměry ozubených kol: $\frac{\mathrm{d}f}{\mathrm{d}x} = \frac{\mathrm{d}f}{\mathrm{d}g}\cdot\frac{\mathrm{d}g}{\mathrm{d}x}$. Pravidlo pro součin si lze představit jako obdélník $f\times g$, který při malé změně přibere proužky $f\cdot\Delta g$ a $g\cdot\Delta f$ (rožek $\Delta f\Delta g$ je zanedbatelný). \vizsekce{sec:pravidla-derivovani}
+
+  \item \otazka{Jak souvisí znaménko první derivace s monotonií? Jak se hledají lokální extrémy? Je $f'(x_0) = 0$ postačující podmínka?}
+  Je-li na intervalu $f' > 0$, je $f$ na něm rostoucí, a je-li $f' < 0$, klesající (tečny stoupají, resp. klesají). Lokální extrémy diferencovatelné funkce mohou být jen ve stacionárních bodech, kde $f'(x_0) = 0$ (tečna je vodorovná); najdeme je řešením rovnice $f'(x) = 0$. Pak ověříme, zda $f'$ v bodě mění znaménko: z $+$ na $-$ znamená lokální maximum, z $-$ na $+$ lokální minimum. Ekvivalentně pro $f'(x_0) = 0$: $f''(x_0) < 0$ maximum, $f''(x_0) > 0$ minimum. Podmínka $f'(x_0) = 0$ je jen nutná, ne postačující: $x^3$ má $f'(0) = 0$, ale je všude rostoucí a extrém nemá. (Extrém může být i v bodě, kde derivace neexistuje, jako $|x|$ v nule.) \vizsekce{sec:prubeh-funkce}
+
+  \item \otazka{Co říká druhá derivace? Co je inflexní bod?}
+  Druhá derivace $f'' = (f')'$ udává, jak se mění sklon tečny (fyzikálně zrychlení). Je-li $f'' > 0$, sklon roste a funkce je konvexní (graf `drží vodu', $\cup$, leží nad svými tečnami); je-li $f'' < 0$, je konkávní ($\cap$, graf leží pod tečnami). Inflexní bod je bod, ve kterém se konvexnost mění v konkávnost nebo naopak; tečna v něm graf protíná. Typicky v něm $f''$ mění znaménko (nutně $f''(x_0) = 0$, ale to nestačí). Například $x^3$ má $f''(x) = 6x$ a inflexní bod $[0, 0]$. \vizsekce{sec:prubeh-funkce}
+
+  \item \otazka{Popište postup vyšetření průběhu funkce.}
+  (1) Definiční obor, sudost a lichost, periodicita. (2) Průsečíky s osami. (3) Limity v krajních bodech definičního oboru a asymptoty. (4) První derivace: intervaly monotonie a lokální extrémy. (5) Druhá derivace: intervaly konvexnosti a konkávnosti a inflexní body. (6) Obor hodnot a náčrt grafu. Příklad $f(x) = x^3 - 3x$: lichá, nulové body $0, \pm\sqrt{3}$, limity $\pm\infty$; $f'(x) = 3(x - 1)(x + 1)$, takže roste na $(-\infty, -1)$ a $(1, \infty)$, klesá na $(-1, 1)$, lokální maximum $f(-1) = 2$, minimum $f(1) = -2$; $f''(x) = 6x$, inflexní bod $[0, 0]$; $H = \mathbb{R}$. \vizsekce{sec:prubeh-funkce}
+
+  \item \otazka{Uveďte příklad optimalizační úlohy a vyřešte ji.}
+  Plechovka tvaru válce má mít objem $1000\ \si{cm^3}$ a co nejmenší povrch. Z $\pi r^2v = 1000$ je $v = \frac{1000}{\pi r^2}$, takže povrch jako funkce jedné proměnné je
+  \begin{equation*}
+    S(r) = 2\pi r^2 + 2\pi rv = 2\pi r^2 + \frac{2000}{r}, \qquad S'(r) = 4\pi r - \frac{2000}{r^2} = 0 \quad\Leftrightarrow\quad r^3 = \frac{500}{\pi}.
+  \end{equation*}
+  Tedy $r\approx 5{,}42\ \si{cm}$ a $v = \frac{1000}{\pi r^2} = 2r\approx 10{,}84\ \si{cm}$; protože $S''(r) = 4\pi + \frac{4000}{r^3} > 0$, jde o minimum. Optimální plechovka je stejně vysoká jako široká. Postup: zapsat veličinu jako funkci jedné proměnné (pomocí vazební podmínky), najít nulové body derivace, ověřit, že jde o hledaný extrém, a zkontrolovat krajní body. \vizsekce{sec:optimalizace}
+
+  \item \otazka{Co říká l'Hospitalovo pravidlo?}
+  Je-li limita $\lim_{x\to a}\frac{f(x)}{g(x)}$ typu $\frac{0}{0}$ nebo $\frac{\infty}{\infty}$ a existuje-li $\lim_{x\to a}\frac{f'(x)}{g'(x)}$, pak se obě limity rovnají:
+  \begin{equation*}
+    \lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f'(x)}{g'(x)}.
+  \end{equation*}
+  Derivujeme čitatele a jmenovatele \emph{zvlášť}, ne jako podíl. Platí i pro $a = \pm\infty$. Příklady: $\lim_{x\to 0}\frac{\mathrm{e}^x - 1}{x} = \lim_{x\to 0}\frac{\mathrm{e}^x}{1} = 1$ a $\lim_{x\to\infty}\frac{\ln x}{x} = \lim_{x\to\infty}\frac{1/x}{1} = 0$. Intuice: zblízka vypadají obě funkce jako tečny, $f(x)\approx f'(a)(x - a)$ a $g(x)\approx g'(a)(x - a)$, a podíl je podíl sklonů. Před použitím je nutné ověřit, že jde opravdu o neurčitý výraz. \vizsekce{sec:lhospital}
+\end{enumerate}
+
+\section{Integrály}
+
+Otázky ke kapitole~\ref{kap:integraly}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.8em]
+  \item \otazka{Co je primitivní funkce a neurčitý integrál? Proč se přidává konstanta $C$?}
+  Funkce $F$ je primitivní funkcí k $f$ na intervalu $I$, pokud $F'(x) = f(x)$ pro všechna $x\in I$; integrování je tedy derivování pozpátku a výsledek si ověříme zderivováním. Neurčitý integrál je množina všech primitivních funkcí, $\int f(x)\,\mathrm{d}x = F(x) + C$. Konstanta tam je, protože derivace konstanty je nula: s $F$ je primitivní i každá $F + C$, a na intervalu žádné jiné nejsou (rozdíl dvou primitivních funkcí má nulovou derivaci, a je tedy konstantní). Geometricky derivace zná jen sklon grafu, ne jeho výšku, takže primitivní funkce jsou grafy posunuté svisle. Konkrétní $C$ určí až podmínka typu $F(0) = 0$. \vizsekce{sec:primitivni-funkce}
+
+  \item \otazka{Uveďte základní integrály. Proč je $\int\frac{1}{x}\,\mathrm{d}x = \ln|x| + C$?}
+  Obrácením tabulky derivací:
+  \begin{gather*}
+    \int x^n\,\mathrm{d}x = \frac{x^{n+1}}{n + 1} + C\ (n\neq -1),\quad \int\frac{1}{x}\,\mathrm{d}x = \ln|x| + C,\quad \int\mathrm{e}^x\,\mathrm{d}x = \mathrm{e}^x + C,\quad \int a^x\,\mathrm{d}x = \frac{a^x}{\ln a} + C,\\
+    \int\sin x\,\mathrm{d}x = -\cos x + C,\quad \int\cos x\,\mathrm{d}x = \sin x + C,\quad \int\frac{\mathrm{d}x}{\cos^2 x} = \tg x + C,\quad \int\frac{\mathrm{d}x}{\sin^2 x} = -\cotg x + C,
+  \end{gather*}
+  a integrál je lineární. Funkce $\frac{1}{x}$ je definovaná i pro $x < 0$, kde $\ln x$ neexistuje. Pro $x > 0$ je $(\ln x)' = \frac{1}{x}$ a pro $x < 0$ je ${\left(\ln(-x)\right)}' = \frac{1}{-x}\cdot(-1) = \frac{1}{x}$; zápis $\ln|x|$ pokryje oba případy (na každém z intervalů $(-\infty, 0)$ a $(0, \infty)$ zvlášť). Vzorec pro $x^n$ pro $n = -1$ nefunguje, protože bychom dělili nulou. Podrobně viz tabulka na straně~\pageref{def:zakladni-integraly}.
+
+  \item \otazka{Popište substituční metodu a integraci per partes. Z jakých pravidel pro derivace vycházejí?}
+  Substituce vychází z pravidla pro derivaci složené funkce: najdeme-li v integrandu vnitřní funkci $g(x)$ i její derivaci, položíme $t = g(x)$, $\mathrm{d}t = g'(x)\,\mathrm{d}x$ a
+  \begin{equation*}
+    \int f(g(x))\,g'(x)\,\mathrm{d}x = \int f(t)\,\mathrm{d}t;
+  \end{equation*}
+  např. $\int 2x\cos(x^2)\,\mathrm{d}x = \sin(x^2) + C$. Per partes vychází z pravidla pro derivaci součinu $(uv)' = u'v + uv'$; jeho zintegrováním dostaneme
+  \begin{equation*}
+    \int uv'\,\mathrm{d}x = uv - \int u'v\,\mathrm{d}x.
+  \end{equation*}
+  Vyplatí se, je-li nový integrál jednodušší; za $u$ volíme mnohočlen nebo logaritmus. Například $\int x\mathrm{e}^x\,\mathrm{d}x = x\mathrm{e}^x - \mathrm{e}^x + C$ a $\int\ln x\,\mathrm{d}x = \int 1\cdot\ln x\,\mathrm{d}x = x\ln x - x + C$. \vizsekce{sec:substituce-per-partes}
+
+  \item \otazka{Co je určitý integrál? Jak souvisí s obsahem plochy?}
+  Interval $[a, b]$ rozdělíme na $n$ dílků šířky $\Delta x = \frac{b - a}{n}$, nad každým postavíme obdélník s výškou $f(x_i)$ a obsahy sečteme. Určitý (Riemannův) integrál je limita těchto součtů:
+  \begin{equation*}
+    \int_a^b f(x)\,\mathrm{d}x = \lim_{n\to\infty}\sum_{i=1}^{n}f(x_i)\,\Delta x;
+  \end{equation*}
+  pro spojitou funkci existuje vždy. Pro nezápornou $f$ je to obsah plochy pod grafem mezi $a$ a $b$; části pod osou $x$ se počítají záporně (`plocha se znaménkem'). Znak $\int$ je protažené S jako \textit{summa}. Platí linearita, $\int_a^b = \int_a^c + \int_c^b$ a $\int_a^b = -\int_b^a$. \vizsekce{sec:urcity-integral}
+
+  \item \otazka{Vyslovte základní větu integrálního počtu (obě části) a vysvětlete, proč platí. Jak z ní plyne Newtonova--Leibnizova formule?}
+  Nechť $f$ je spojitá na $[a, b]$. (1) Funkce $F(x) = \int_a^x f(t)\,\mathrm{d}t$ (plocha od $a$ do $x$) je diferencovatelná a $F'(x) = f(x)$; každá spojitá funkce tedy má primitivní funkci. (2) Je-li $G$ libovolná primitivní funkce k $f$, pak
+  \begin{equation*}
+    \int_a^b f(x)\,\mathrm{d}x = G(b) - G(a) = {\big[G(x)\big]}_a^b.
+  \end{equation*}
+  Proč (1): posuneme-li horní mez o $h$, přibude proužek $\int_x^{x+h} f$, který leží mezi obdélníky o výškách $m_h$ a $M_h$ (minimum a maximum $f$ na $[x, x + h]$), takže $m_h\leq\frac{F(x + h) - F(x)}{h}\leq M_h$. Ze spojitosti jdou $m_h$ i $M_h$ k $f(x)$ a podle věty o dvou policajtech $F'(x) = f(x)$: plocha roste rychlostí rovnou výšce grafu. Část (2), Newtonova--Leibnizova formule: $G$ i $F$ jsou primitivní k $f$, liší se tedy o konstantu, $G = F + C$, a ta se v rozdílu odečte: $G(b) - G(a) = F(b) - F(a) = \int_a^b f - 0$. Derivace a integrál jsou navzájem inverzní operace. Například $\int_0^1 x^2\,\mathrm{d}x = \left[\frac{x^3}{3}\right]_0^1 = \frac{1}{3}$. \vizsekce{sec:zvip}
+
+  \item \otazka{Jak spočítáte obsah plochy mezi dvěma grafy? Na co si dát pozor, když je funkce záporná?}
+  Je-li $f(x)\geq g(x)$ na $[a, b]$, je obsah plochy mezi grafy $S = \int_a^b\left(f(x) - g(x)\right)\mathrm{d}x$, horní funkce minus dolní (nezáleží na tom, zda jsou grafy nad osou, nebo pod ní). Meze obvykle najdeme jako průsečíky grafů. Například mezi $y = x$ a $y = x^2$: průsečíky $0$ a $1$, na $[0, 1]$ je $x\geq x^2$ a $S = \int_0^1(x - x^2)\,\mathrm{d}x = \frac{1}{6}$. Pozor: integrál počítá plochu pod osou záporně, takže části nad osou a pod osou se mohou vyrušit. $\int_0^{2\pi}\sin x\,\mathrm{d}x = 0$, ale obsah plochy mezi sinusoidou a osou je $2 + 2 = 4$. Interval proto rozdělíme v nulových bodech (resp. průsečících grafů) a záporné části vezmeme v absolutní hodnotě. \vizsekce{sec:obsah-utvaru}
+
+  \item \otazka{Jak spočítáte objem rotačního tělesa? Odvoďte vzorec pro objem koule a kužele.}
+  Rotací plochy pod grafem $f$ na $[a, b]$ kolem osy $x$ vznikne těleso, které rozřežeme na tenké kotoučky (válečky) o poloměru $f(x)$ a tloušťce $\mathrm{d}x$, s objemem $\pi f^2(x)\,\mathrm{d}x$. Jejich sečtením dostaneme
+  \begin{equation*}
+    V = \pi\int_a^b f^2(x)\,\mathrm{d}x.
+  \end{equation*}
+  Koule: rotace půlkružnice $f(x) = \sqrt{r^2 - x^2}$ na $[-r, r]$,
+  \begin{equation*}
+    V = \pi\int_{-r}^{r}(r^2 - x^2)\,\mathrm{d}x = \pi\left[r^2x - \frac{x^3}{3}\right]_{-r}^{r} = \pi\left(2r^3 - \frac{2r^3}{3}\right) = \frac{4}{3}\pi r^3.
+  \end{equation*}
+  Kužel: rotace úsečky $f(x) = \frac{r}{v}x$ na $[0, v]$, $V = \pi\frac{r^2}{v^2}\int_0^v x^2\,\mathrm{d}x = \pi\frac{r^2}{v^2}\cdot\frac{v^3}{3} = \frac{1}{3}\pi r^2v$; třetina pochází z $\int x^2 = \frac{x^3}{3}$. \vizpriklad{ex:objem-koule}
+
+  \item \otazka{Uveďte příklady využití integrálů ve fyzice.}
+  Dráha je integrál rychlosti, $s = \int_0^T v(t)\,\mathrm{d}t$ (počítadlo kilometrů a tachometr spojuje základní věta), a rychlost integrál zrychlení. Práce proměnné síly po dráze je $W = \int F(x)\,\mathrm{d}x$; pro pružinu s $F = kx$ vyjde energie $\frac{1}{2}kx^2$. Integrálem se počítají hmotnost tělesa s proměnnou hustotou, poloha těžiště, moment setrvačnosti, náboj prošlý obvodem ($Q = \int I\,\mathrm{d}t$), hydrostatická tlaková síla na hráz nebo práce plynu ($W = \int p\,\mathrm{d}V$). V pravděpodobnosti se integrálem počítají plochy pod Gaussovou křivkou. Více v kapitole~\ref{kap:fyzika}. \vizsekce{sec:zvip}
+\end{enumerate}

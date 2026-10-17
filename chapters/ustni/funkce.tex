@@ -3,7 +3,7 @@
 
 Funkce jsou pravděpodobně nejdůležitějším pojmem celé matematiky. Popisují, jak jedna veličina závisí na jiné: dráha na čase, cena na množství, teplota na nadmořské výšce. V této kapitole si funkce pořádně zadefinujeme (pomocí relací z kapitoly 2, takže se nám konečně vyplatí, že jsme je zaváděli), popíšeme jejich vlastnosti a naučíme se s nimi pracovat. Konkrétní funkce (lineární, kvadratické, exponenciální, goniometrické, \ldots) přijdou v dalších kapitolách. Tahle kapitola je o tom, jak o funkcích mluvit.
 
-\section{Pojem funkce}
+\section{Pojem funkce}\label{sec:pojem-funkce}
 
 Intuitivně je funkce předpis, který každému číslu $x$ přiřadí nějaké číslo $y$. Můžeme si ji představit jako automat: dáte do něj $x$ a vypadne jedno $y$. Důležité je slovo \textit{jedno}. Pokud by z automatu pro stejné $x$ jednou vypadlo jedno a podruhé jiné číslo, nebyl by to automat, ale loterie.
 
@@ -140,7 +140,7 @@ V tomto textu budeme pracovat s \textbf{reálnými funkcemi reálné proměnné}
 
 \section{Vlastnosti funkcí}
 
-\subsection{Monotonie}
+\subsection{Monotonie}\label{sec:monotonie}
 
 \begin{definitionbox}
   Nechť $M\subseteq D(f)$. Funkce $f$ je na množině $M$
@@ -200,7 +200,7 @@ Slovy: funkce je rostoucí, když s rostoucím $x$ roste i $y$. Graf rostoucí f
   Pozor, funkce $\frac{1}{x}$ \textbf{není} klesající na celém svém definičním oboru $\mathbb{R}\setminus\{0\}$! Stačí vzít $x_1 = -1 < 1 = x_2$, a $g(-1) = -1 < 1 = g(1)$. Je klesající na každém z intervalů $(-\infty, 0)$ a $(0, \infty)$ zvlášť, ale ne na jejich sjednocení. Tohle je oblíbená chyták otázka u ústní maturity. Správná odpověď je `klesající na $(-\infty, 0)$ a na $(0, \infty)$', nikdy `klesající na $\mathbb{R}\setminus\{0\}$'.
 \end{note}
 
-\subsection{Prostá funkce}
+\subsection{Prostá funkce}\label{sec:prosta-funkce}
 
 \begin{definitionbox}
   Funkce $f$ je \textbf{prostá}, pokud pro všechna $x_1, x_2\in D(f)$ platí
@@ -246,7 +246,7 @@ Prostá funkce nikdy nepřiřadí stejnou hodnotu dvěma různým číslům. Gra
 
 Obrácená implikace neplatí! Funkce $\frac{1}{x}$ je prostá (zkuste si to dokázat), ale podle poznámky~\ref{note:1x} na svém definičním oboru monotónní není.
 
-\subsection{Sudost a lichost}
+\subsection{Sudost a lichost}\label{sec:sudost-lichost}
 
 \begin{definitionbox}
   Funkce $f$ je
@@ -309,7 +309,7 @@ Názvy pochází z mocnin: $x^2, x^4, x^6, \ldots$ jsou sudé funkce a $x, x^3, 
   \end{enumerate}
 \end{solution}
 
-\subsection{Omezenost a extrémy}
+\subsection{Omezenost a extrémy}\label{sec:omezenost-extremy}
 
 \begin{definitionbox}
   Funkce $f$ je na množině $M\subseteq D(f)$
@@ -352,7 +352,7 @@ Omezená funkce je taková, jejíž graf se celý vejde do nějakého vodorovné
   \end{tikzpicture}
 \end{center}
 
-\subsection{Periodičnost}
+\subsection{Periodičnost}\label{sec:periodicnost}
 
 \begin{definitionbox}
   Funkce $f$ je \textbf{periodická} s periodou $p > 0$, pokud pro každé $x\in D(f)$ je i $x\pm p\in D(f)$ a
@@ -384,7 +384,7 @@ Graf periodické funkce si můžeme představit jako \textbf{razítko}: stačí 
 
 \section{Operace s funkcemi}
 
-\subsection{Skládání funkcí}
+\subsection{Skládání funkcí}\label{sec:skladani-funkci}
 
 \begin{definitionbox}
   \textbf{Složená funkce} $g\circ f$ (čteme `$g$ po $f$') je funkce
@@ -443,7 +443,7 @@ Složenou funkci si představte jako dva automaty zapojené za sebou. Výstup pr
   \end{enumerate}
 \end{solution}
 
-\subsection{Inverzní funkce}
+\subsection{Inverzní funkce}\label{sec:inverzni-funkce}
 
 Funkce přiřazuje číslu $x$ číslo $y$. Můžeme jít obráceně a z $y$ zjistit, z jakého $x$ vzniklo? To jde jen tehdy, když každé $y$ vzniklo z jediného $x$, tedy když je funkce prostá.
 
@@ -529,7 +529,7 @@ Proč je graf inverzní funkce souměrný podle přímky $y = x$? Inverzní funk
   \end{enumerate}
 \end{solution}
 
-\section{Transformace grafů}
+\section{Transformace grafů}\label{sec:transformace-grafu}
 
 Pokud známe graf funkce $f$, můžeme z něj snadno nakreslit grafy mnoha příbuzných funkcí. To je jedna z nejužitečnějších dovedností pro celou analýzu, protože místo bodování (počítání hodnot v mnoha bodech) stačí znát pár základních grafů a vědět, jak se posouvají.
 

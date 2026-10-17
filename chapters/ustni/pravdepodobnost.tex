@@ -3,7 +3,7 @@
 
 Laplace tvrdí, že pravděpodobnost je jen zdravý rozum převedený na počty. Dobrá zpráva je, že má pravdu. Špatná zpráva je, že lidský zdravý rozum je v pravděpodobnosti překvapivě špatný. V této kapitole si ukážeme, jak pravděpodobnost počítat, a narazíme na několik příkladů, ve kterých intuice selhává tak spolehlivě, že kvůli nim vznikaly hádky mezi profesory matematiky.
 
-\section{Náhodný pokus a jevy}
+\section{Náhodný pokus a jevy}\label{sec:nahodny-pokus}
 
 \begin{definitionbox}
   \begin{itemize}
@@ -26,7 +26,7 @@ Laplace tvrdí, že pravděpodobnost je jen zdravý rozum převedený na počty.
   Hod kostkou: $\Omega = \{1, 2, 3, 4, 5, 6\}$. Jev `padne sudé číslo' je $A = \{2, 4, 6\}$, jev `padne víc než $4$' je $B = \{5, 6\}$. Pak $A\cup B = \{2, 4, 5, 6\}$, $A\cap B = \{6\}$ a $A' = \{1, 3, 5\}$.
 \end{example}
 
-\section{Klasická pravděpodobnost}
+\section{Klasická pravděpodobnost}\label{sec:klasicka-pravdepodobnost}
 
 \begin{definitionbox}
   \textbf{Klasická definice pravděpodobnosti}: Pokud má pokus konečně mnoho výsledků a všechny jsou \textbf{stejně pravděpodobné}, je pravděpodobnost jevu $A$
@@ -80,7 +80,7 @@ Podmínka stejně pravděpodobných výsledků je důležitá. Výroky jako `bu�
   \end{enumerate}
 \end{solution}
 
-\section{Podmíněná pravděpodobnost a nezávislost}
+\section{Podmíněná pravděpodobnost a nezávislost}\label{sec:podminena-pravdepodobnost}
 
 \begin{definitionbox}
   \textbf{Podmíněná pravděpodobnost} jevu $A$ za podmínky, že nastal jev $B$ (s $P(B) > 0$), je
@@ -108,7 +108,7 @@ Podmíněná pravděpodobnost znamená, že jsme dostali nějakou informaci a t�
   Pozor na \textbf{gamblerův omyl}. Pokud na ruletě padla pětkrát po sobě červená, šance na černou v dalším kole není větší. Jednotlivá kola rulety jsou nezávislá a ruleta si nepamatuje, co padlo. V roce 1913 v kasinu v Monte Carlu padla černá šestadvacetkrát po sobě a hráči během té série prosázeli miliony franků, protože byli přesvědčení, že červená `už musí přijít'.
 \end{note}
 
-\subsection{Bayesova věta}
+\subsection{Bayesova věta}\label{sec:bayesova-veta}
 
 \begin{definitionbox}
   \textbf{Věta o úplné pravděpodobnosti}: Pokud jevy $B$ a $B'$ rozdělí prostor na dvě části, platí
@@ -121,7 +121,7 @@ Podmíněná pravděpodobnost znamená, že jsme dostali nějakou informaci a t�
   \end{equation*}
 \end{definitionbox}
 
-\begin{example}
+\begin{example}\label{ex:lekarsky-test}
   Nemoc má $1\,\%$ populace. Test ji odhalí u nemocného s pravděpodobností $99\,\%$, ale u zdravého člověka vyjde falešně pozitivní v $5\,\%$ případů. Váš test vyšel pozitivní. Jaká je pravděpodobnost, že jste nemocní?
 
   Označme $N$ = nemocný, $+$ = pozitivní test. $P(+) = 0{,}99\cdot 0{,}01 + 0{,}05\cdot 0{,}99 = 0{,}0099 + 0{,}0495 = 0{,}0594$. Podle Bayese
@@ -131,7 +131,7 @@ Podmíněná pravděpodobnost znamená, že jsme dostali nějakou informaci a t�
   Ne $99\,\%$, ale jen asi $17\,\%$! Zdravých lidí je tolik, že i malé procento falešných poplachů jich vyprodukuje víc než skutečně nemocných. Studie ukázaly, že velká část lékařů na takovou otázku odpoví špatně. Proto se pozitivní výsledky screeningových testů vždy ověřují dalším testem.
 \end{example}
 
-\begin{example}[ (Monty Hall)]
+\begin{example}[ (Monty Hall)]\label{ex:monty-hall}
   V televizní soutěži jsou tři dveře. Za jedněmi je auto, za ostatními kozy. Vyberete si dveře, třeba číslo $1$. Moderátor, který ví, kde je auto, otevře jiné dveře, třeba číslo $3$, za kterými je koza. Pak se vás zeptá, jestli chcete změnit volbu na dveře číslo $2$. Vyplatí se to?
 
   Ano! Pokud volbu změníte, vyhrajete s pravděpodobností $\frac{2}{3}$. Vaše původní volba měla šanci $\frac{1}{3}$ a moderátor na tom nic nezměnil, protože koza za nějakými dalšími dveřmi je vždycky. Zbylé $\frac{2}{3}$ se ale `soustředily' na jediné zbývající dveře. Nevěříte? Představte si stejnou hru se sto dveřmi, ze kterých moderátor otevře $98$ s kozou. Nechali byste si svou původní volbu?
@@ -139,7 +139,7 @@ Podmíněná pravděpodobnost znamená, že jsme dostali nějakou informaci a t�
   Když tuto úlohu v roce 1990 v časopise vyřešila Marilyn vos Savant, dostala přes deset tisíc dopisů, z toho asi tisíc od lidí s doktorátem, že se mýlí. Přesvědčit se prý nenechal ani slavný matematik Paul Erdős, dokud neviděl počítačovou simulaci.
 \end{example}
 
-\section{Opakované pokusy}
+\section{Opakované pokusy}\label{sec:opakovane-pokusy}
 
 \begin{definitionbox}
   \textbf{Bernoulliho schéma}: Pokus, ve kterém nastane `úspěch' s pravděpodobností $p$, opakujeme $n$-krát nezávisle. Pravděpodobnost, že úspěch nastane \textbf{právě $k$-krát}, je
@@ -170,7 +170,7 @@ Odkud vzorec? Konkrétní pořadí s $k$ úspěchy a $n - k$ neúspěchy má pra
   Do čtverce o straně $2$ náhodně hodíme šipku. Jaká je pravděpodobnost, že padne do vepsaného kruhu? $P = \frac{\pi\cdot 1^2}{4} = \frac{\pi}{4}\approx 0{,}785$. Takto se dá $\pi$ dokonce \textit{změřit}: hodíme velké množství náhodných bodů a spočítáme, kolik jich padlo do kruhu. Této metodě se říká \textbf{Monte Carlo} a dnes se používá ve fyzice, ve financích i při vývoji her.
 \end{example}
 
-\begin{problem}
+\begin{problem}\label{pr:narozeniny}
   \begin{enumerate}[label=(\alph*)]
     \item Kolik lidí musí být v místnosti, aby pravděpodobnost, že dva z nich mají narozeniny ve stejný den, byla větší než $\frac{1}{2}$? Odhadněte nejdřív bez počítání.
     \item Střelec zasáhne terč s pravděpodobností $0{,}8$. Jaká je pravděpodobnost, že z $5$ výstřelů zasáhne alespoň čtyřikrát?

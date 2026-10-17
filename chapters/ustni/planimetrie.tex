@@ -3,7 +3,7 @@
 
 Planimetrie je geometrie v rovině. Je to nejstarší systematicky budovaná část matematiky. Eukleidovy \textit{Základy} ze 3. století před naším letopočtem jsou po Bibli pravděpodobně nejčastěji vydávanou knihou v dějinách a po dva tisíce let se z nich učilo, co je to důkaz. Právě v geometrii se poprvé objevila myšlenka, že z několika málo axiomů lze logicky odvodit všechno ostatní. Tu samou myšlenku jsme viděli u teorie množin v kapitole 2.
 
-\section{Základní pojmy}
+\section{Základní pojmy}\label{sec:plan-zakladni-pojmy}
 
 \begin{definitionbox}
   \textbf{Základní útvary}: Bod, přímka a rovina jsou základní pojmy, které nedefinujeme (podobně jako množinu). Značíme body velkými písmeny ($A, B, \ldots$) a přímky malými ($p, q, \ldots$).
@@ -72,7 +72,7 @@ Planimetrie je geometrie v rovině. Je to nejstarší systematicky budovaná č�
   \end{tikzpicture}
 \end{center}
 
-\section{Trojúhelník}
+\section{Trojúhelník}\label{sec:trojuhelnik}
 
 \begin{definitionbox}
   \textbf{Trojúhelník} $ABC$ je útvar určený třemi body, které neleží na jedné přímce. Strany značíme $a = |BC|$, $b = |AC|$, $c = |AB|$ (strana proti vrcholu), úhly $\alpha, \beta, \gamma$ při vrcholech $A, B, C$.
@@ -116,7 +116,7 @@ Planimetrie je geometrie v rovině. Je to nejstarší systematicky budovaná č�
   \end{itemize}
 \end{definitionbox}
 
-\subsection{Významné přímky a body trojúhelníku}
+\subsection{Významné přímky a body trojúhelníku}\label{sec:vyznamne-body}
 
 \begin{definitionbox}
   \begin{itemize}
@@ -178,7 +178,7 @@ Proč se osy stran protínají v jednom bodě? Osa úsečky $AB$ je množina bod
   Těžiště $T$, ortocentrum $V$ a střed kružnice opsané $S$ leží v každém trojúhelníku na jedné přímce, a navíc $|VT| = 2|TS|$. Této přímce se říká \textbf{Eulerova přímka}. Euler ji objevil v roce 1765, tedy přes dva tisíce let poté, co si Řekové s trojúhelníky začali hrát. Někdy jsou věci zajímavé i po dvou tisících letech.
 \end{note}
 
-\subsection{Shodnost a podobnost}
+\subsection{Shodnost a podobnost}\label{sec:shodnost-podobnost}
 
 \begin{definitionbox}
   Dva trojúhelníky jsou \textbf{shodné}, pokud mají shodné všechny odpovídající si strany a úhly. Stačí ale ověřit jen některé z nich.
@@ -227,7 +227,7 @@ Proč ve větě Ssu musí být úhel proti větší straně? Je to přesně neje
   \end{center}
 \end{example}
 
-\subsection{Pythagorova a Eukleidovy věty}
+\subsection{Pythagorova a Eukleidovy věty}\label{sec:pythagorova-veta}
 
 \begin{definitionbox}
   \textbf{Pythagorova věta}: V pravoúhlém trojúhelníku s odvěsnami $a, b$ a přeponou $c$ platí
@@ -311,7 +311,7 @@ Pythagorovu větu znali Babyloňané přes tisíc let před Pythagorem. Existuje
   \end{enumerate}
 \end{solution}
 
-\subsection{Obsah trojúhelníku}
+\subsection{Obsah trojúhelníku}\label{sec:obsah-trojuhelniku}
 
 \begin{definitionbox}
   \begin{equation*}
@@ -343,7 +343,7 @@ Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojú
   Poloměr kružnice vepsané je $\rho = \frac{S}{s} = 4$.
 \end{example}
 
-\section{Mnohoúhelníky}
+\section{Mnohoúhelníky}\label{sec:mnohouhelniky}
 
 \begin{definitionbox}
   \textbf{Konvexní $n$-úhelník} je mnohoúhelník, jehož každý vnitřní úhel je menší než $180^\circ$. \textbf{Úhlopříčka} spojuje dva nesousední vrcholy.
@@ -380,7 +380,7 @@ Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojú
   Pravidelný šestiúhelník má součet úhlů $720^\circ$, každý úhel $120^\circ$ a $9$ úhlopříček. Hlavní úhlopříčky ho rozdělí na $6$ rovnostranných trojúhelníků, takže pro stranu $a$ je jeho obsah $S = 6\cdot\frac{\sqrt{3}}{4}a^2 = \frac{3\sqrt{3}}{2}a^2$ a poloměr kružnice opsané je $r = a$. Proto mají včelí plástve tvar šestiúhelníků: ze všech pravidelných mnohoúhelníků, kterými lze vydláždit rovinu (trojúhelník, čtverec, šestiúhelník), uzavře šestiúhelník největší plochu při daném obvodu.
 \end{example}
 
-\subsection{Čtyřúhelníky}
+\subsection{Čtyřúhelníky}\label{sec:ctyruhelniky}
 
 \begin{definitionbox}
   \begin{center}
@@ -459,7 +459,7 @@ Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojú
   \end{enumerate}
 \end{solution}
 
-\section{Kružnice a kruh}
+\section{Kružnice a kruh}\label{sec:kruznice-kruh}
 
 \begin{definitionbox}
   \textbf{Kružnice} $k(S, r)$ je množina všech bodů roviny, které mají od středu $S$ vzdálenost $r > 0$. \textbf{Kruh} $K(S, r)$ je množina bodů, které mají od $S$ vzdálenost nejvýše $r$.
@@ -514,7 +514,7 @@ Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojú
 
 Číslo $\pi$ je definováno jako poměr obvodu kružnice k jejímu průměru. Že je tento poměr stejný pro všechny kružnice, plyne z toho, že všechny kružnice jsou si podobné. Číslo $\pi$ je iracionální (dokázal Lambert v roce 1761), takže jeho desetinný rozvoj nikdy nekončí a neopakuje se. Rekord v počítání jeho cifer je dnes přes sto bilionů míst. Pro všechny praktické účely přitom stačí asi čtyřicet: s nimi lze spočítat obvod pozorovatelného vesmíru s přesností na průměr atomu vodíku.
 
-\subsection{Středový a obvodový úhel}
+\subsection{Středový a obvodový úhel}\label{sec:stredovy-obvodovy}
 
 \begin{definitionbox}
   Nechť $AB$ je tětiva kružnice se středem $S$ a $V$ je bod kružnice, který neleží na oblouku $AB$.
@@ -581,7 +581,7 @@ Vzorec $S = \rho s$ plyne z toho, že střed kružnice vepsané rozdělí trojú
   \end{enumerate}
 \end{solution}
 
-\section{Odbočka --- Pátý postulát}
+\section{Odbočka --- Pátý postulát}\label{sec:paty-postulat}
 
 Eukleidés postavil celou geometrii na pěti postulátech. První čtyři jsou krátké a samozřejmé (například `všechny pravé úhly jsou si rovny'). Pátý je dlouhý a nepříjemný. V moderní podobě zní: \textit{bodem mimo přímku vede právě jedna rovnoběžka s touto přímkou}. Matematici měli dva tisíce let pocit, že tohle přece musí jít dokázat z ostatních čtyř, a pokoušeli se o to. Nikomu se to nepovedlo.
 

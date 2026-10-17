@@ -1,0 +1,711 @@
+\label{kap:hry}
+\mathquote{Člověk je zcela člověkem jen tam, kde si hraje.}{Friedrich Schiller, Listy o estetické výchově člověka, 1795}
+
+Hry jsou matematika, která se tváří jako zábava. Když se rozhodujete, jestli v kámen, nůžky, papír hodit kámen, řešíte úlohu teorie her. Když v deskovce počítáte, jak často padne na dvou kostkách sedmička, používáte kombinatoriku z kapitoly~\ref{kap:kombinatorika} a pravděpodobnost z kapitoly~\ref{kap:pravdepodobnost}. A když ve videohře postavička otočí hlavu za nepřítelem, odrazí se od zdi nebo najde cestu bludištěm, běží pod kapotou vektory z kapitol~\ref{kap:prostor} a~\ref{kap:analyticka}, matice z kapitoly~\ref{kap:linearni-algebra} a numerické řešení diferenciálních rovnic z kapitoly~\ref{kap:diferencialni}.
+
+Kapitola má tři patra. Nejdřív teorie her: jak se rozhodovat, když o výsledku rozhoduje i soupeř. Pak pravděpodobnost ve hrách, od kostek po loot boxy. A nakonec největší část, matematika pro vývojáře her, tedy to, co skutečně najdete v každém herním enginu.
+
+\section{Teorie her: když hraje i soupeř}
+
+\begin{definitionbox}
+  \textbf{Hra v normálním tvaru} je dána hráči, jejich možnými \textbf{strategiemi} a \textbf{výplatami}: pro každou kombinaci strategií dostane každý hráč nějaké číslo (zisk). Dvojice strategií je \textbf{Nashova rovnováha}, pokud ani jeden hráč nemůže zvýšit svou výplatu tím, že \textit{sám} změní strategii.
+\end{definitionbox}
+
+Nashova rovnováha není `nejlepší výsledek'. Je to stav, ze kterého nikomu nevyplatí jednostranně utéct. Nejslavnější příklad ukazuje, jak velký rozdíl mezi těmi dvěma věcmi může být.
+
+\begin{example}
+  \textbf{Vězňovo dilema.} Dva podezřelí sedí v oddělených celách. Každý může mlčet, nebo práskat. Pokud oba mlčí, dostanou po roce. Pokud jeden práská a druhý mlčí, práskač jde domů a mlčící dostane tři roky. Pokud práskají oba, dostanou po dvou letech. Výplaty (záporné roky vězení, první číslo patří hráči A):
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      & B mlčí & B práská\\
+      \hline
+      A mlčí & $(-1, -1)$ & $(-3, 0)$\\
+      \hline
+      A práská & $(0, -3)$ & $(-2, -2)$\\
+      \hline
+    \end{tabular}
+  \end{center}
+  Ať udělá B cokoli, A si práskáním polepší: $0 > -1$ a $-2 > -3$. Práskání je tzv. \textbf{dominantní strategie}, a totéž platí pro B. Jediná Nashova rovnováha je (práská, práská) s výsledkem $(-2, -2)$, přestože (mlčí, mlčí) by bylo lepší pro \textit{oba}. Rozumné individuální chování vede ke špatnému společnému výsledku.
+\end{example}
+
+Hru vymysleli v roce 1950 Merrill Flood a Melvin Dresher v RAND Corporation, příběh o vězních k ní přidal Albert Tucker. Stejnou strukturu má závod ve zbrojení, přetěžování společné pastviny nebo dva obchody, které si navzájem podbízejí ceny. Když se ale vězňovo dilema hraje \textit{opakovaně}, situace se mění. V počítačových turnajích Roberta Axelroda kolem roku 1980 zvítězila jednoduchá strategie `oko za oko': začni spoluprací a pak opakuj soupeřův minulý tah.
+
+\subsection{Kámen, nůžky, papír a smíšené strategie}
+
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    & kámen & nůžky & papír\\
+    \hline
+    kámen & $0$ & $+1$ & $-1$\\
+    \hline
+    nůžky & $-1$ & $0$ & $+1$\\
+    \hline
+    papír & $+1$ & $-1$ & $0$\\
+    \hline
+  \end{tabular}
+\end{center}
+
+Tabulka udává výplatu řádkového hráče, soupeř dostane přesně opačné číslo. Takové hře se říká \textbf{hra s nulovým součtem}: co jeden získá, druhý ztratí. Žádná \textit{čistá} strategie tu rovnováhou není. Kdo hraje stále kámen, toho soupeř porazí papírem. Řešením je \textbf{smíšená strategie}: hráč volí tahy náhodně s pevnými pravděpodobnostmi.
+
+\begin{example}
+  Proč právě $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{3}$? Nechť soupeř hraje kámen, nůžky, papír s pravděpodobnostmi $k$, $n$, $p$. Moje očekávaná výplata za jednotlivé tahy je
+  \begin{equation*}
+    E[\text{kámen}] = n - p,\qquad E[\text{nůžky}] = p - k,\qquad E[\text{papír}] = k - n.
+  \end{equation*}
+  Pokud by jedna z hodnot byla kladná, hrál bych jen ten tah a vydělával. Soupeř mi to nesmí dovolit, takže v rovnováze musí být všechny tři hodnoty stejné. Jejich součet je ale $0$, takže jsou všechny nulové: $n = p$, $p = k$, $k = n$. Spolu s $k + n + p = 1$ dostaneme $k = n = p = \frac{1}{3}$.
+\end{example}
+
+Princip `udělej soupeře lhostejným' platí obecně. V rovnováze musí být každý tah, který hrajete s kladnou pravděpodobností, stejně dobrý. Jinak byste hráli jen ten lepší. Proto má smysl ve fotbale kopat penaltu občas doprostřed a v pokeru občas blafovat.
+
+\begin{definitionbox}
+  \textbf{Nashova věta} (1950): Každá konečná hra (konečně mnoho hráčů i strategií) má alespoň jednu Nashovu rovnováhu ve smíšených strategiích.
+
+  \textbf{Věta o minimaxu} (von Neumann, 1928): Ve hře dvou hráčů s nulovým součtem existuje číslo $v$ (\textbf{cena hry}) a smíšené strategie, kterými si první hráč zaručí průměrně aspoň $v$ a druhý hráč zaručí, že první nezíská víc než $v$.
+\end{definitionbox}
+
+Nashův důkaz je krátký a stojí na \textit{větě o pevném bodě}: spojité zobrazení koule do sebe má bod, který se nehýbe. Pro kámen, nůžky, papír je cena hry $v = 0$, jak čekáme u férové hry.
+
+\section{Kombinatorické hry: Nim a krádež strategie}
+
+Kombinatorické hry jsou hry bez náhody a bez skrytých informací, jako šachy, dáma nebo piškvorky. Dva hráči se střídají a kdo nemůže táhnout, prohrává (nebo se vyhrává jiným jasným pravidlem). V teorii jsou to nejjednodušší hry. Každou pozici lze v principu označit jako \textbf{vyhranou} (hráč na tahu má vyhrávající strategii) nebo \textbf{prohranou}.
+
+\begin{definitionbox}
+  \textbf{Nim}: na stole je několik hromádek žetonů. Hráč na tahu si vybere jednu hromádku a odebere z ní libovolný kladný počet žetonů. Kdo nemůže táhnout (stůl je prázdný), prohrál.
+
+  \textbf{Boutonova věta} (1901): Pozice s hromádkami $a_1, a_2, \dots, a_k$ je prohraná pro hráče na tahu, právě když
+  \begin{equation*}
+    a_1\oplus a_2\oplus\cdots\oplus a_k = 0,
+  \end{equation*}
+  kde $\oplus$ je \textbf{XOR}, tedy sčítání ve dvojkové soustavě bez přenosu (v každém řádu: $0\oplus 0 = 1\oplus 1 = 0$, $0\oplus 1 = 1\oplus 0 = 1$).
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.55]
+    \foreach \h/\x/\b in {3/0/011, 4/3/100, 5/6/101} {
+      \foreach \i in {1,...,\h} {
+        \fill[colorofwisdom!25] (\x,{\i*0.9}) circle (0.38);
+        \draw[colorofwisdom] (\x,{\i*0.9}) circle (0.38);
+      }
+      \node[font=\small] at (\x,-0.1) {$\h$};
+      \node[font=\scriptsize] at (\x,-0.9) {$\b_2$};
+    }
+    \foreach \i in {2,3} {
+      \fill[white] (0,{\i*0.9}) circle (0.38);
+      \draw[gray, dashed] (0,{\i*0.9}) circle (0.38);
+    }
+    \draw[->, thick, gray] (0.9,2.3) -- (1.9,3.2) node[above, font=\scriptsize] {odeber 2};
+    \node[font=\small, anchor=west] at (9,3.1) {$011\oplus 100\oplus 101 = 010 = 2\neq 0$};
+    \node[font=\small, anchor=west] at (9,2.0) {nejvyšší jednička součtu: řád $2$};
+    \node[font=\small, anchor=west] at (9,0.9) {$3\oplus 2 = 1$: z hromádky $3$ nech $1$};
+    \node[font=\small, anchor=west] at (9,-0.2) {$001\oplus 100\oplus 101 = 000$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(Boutonovy věty)]
+  Označme pozice s nulovým XORem jako \textit{nulové}. Stačí ukázat tři věci.
+  \begin{enumerate}
+    \item Koncová pozice (všechny hromádky prázdné) je nulová.
+    \item Z nulové pozice vede každý tah do nenulové. Tah mění jen jednu hromádku z $a$ na $a' \neq a$. Celkový XOR se tím změní na $s\oplus a\oplus a'$, a protože $a\oplus a'\neq 0$, nový součet je $0\oplus(a\oplus a')\neq 0$.
+    \item Z nenulové pozice existuje tah do nulové. Nechť $s\neq 0$ je XOR všech hromádek a nechť jeho nejvyšší jednička je v řádu $2^m$. Aspoň jedna hromádka $a$ má v řádu $2^m$ také jedničku (jinak by tam součet měl nulu). Číslo $a\oplus s$ má v řádu $2^m$ nulu a ve vyšších řádech se s $a$ shoduje, takže $a\oplus s < a$. Zmenšíme tedy hromádku $a$ na $a\oplus s$. Nový XOR je $s\oplus a\oplus(a\oplus s) = 0$.
+  \end{enumerate}
+  Hráč, který vždy táhne do nulové pozice, tedy nikdy nedostane do ruky koncovou pozici. Hra je konečná, takže soupeř jednou nebude mít tah.
+\end{proof}
+
+\begin{note}
+  Nim je víc než kuriozita. \textbf{Sprague--Grundyho věta} (1935--1939) říká, že \textit{každá} nestranná kombinatorická hra (oba hráči mají stejné tahy) je ekvivalentní jedné hromádce Nimu nějaké velikosti. Součet her se pak počítá XORem.
+\end{note}
+
+\subsection{Krádež strategie}
+
+Někdy umíme dokázat, že první hráč vyhrává, aniž bychom věděli \textit{jak}.
+
+\begin{example}
+  \textbf{Chomp}: čokoláda o rozměrech $m\times n$ s otráveným dílkem v levém dolním rohu. Hráč na tahu ukáže na dílek a sní ho spolu se všemi dílky napravo a nahoru od něj. Kdo musí sníst otrávený dílek, prohrál.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \foreach \x in {0,...,6} \foreach \y in {0,...,3} {
+      \draw[thick, fill=colorofwisdom!15] (\x,\y) rectangle ++(1,1);
+    }
+    \foreach \x in {3,...,6} \foreach \y in {2,3} {
+      \draw[gray, dashed, fill=white] (\x,\y) rectangle ++(1,1);
+    }
+    \draw[very thick, colorofwisdom] (3,2) rectangle ++(1,1);
+    \node[font=\scriptsize, colorofwisdom] at (3.5,2.5) {tah};
+    \fill[black] (0,0) rectangle (1,1);
+    \node[font=\scriptsize, white] at (0.5,0.5) {jed};
+    \node[font=\scriptsize, gray] at (5,3.5) {snědeno};
+    \draw[very thick, colorofwisdom] (6,3) rectangle ++(1,1);
+    \draw[->, colorofwisdom] (8.2,3.5) node[right, font=\scriptsize] {roh vpravo nahoře} -- (7.1,3.5);
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(první hráč vyhrává)]
+  Předpokládejme, že vyhrávající strategii má druhý hráč. První hráč sní jen roh vpravo nahoře. Druhý odpoví podle své vyhrávající strategie nějakým tahem $X$. Tah $X$ ale sní i ten roh (roh leží napravo a nahoru od každého dílku), takže pozice po tahu $X$ je stejná, jako kdyby první hráč zahrál $X$ hned na začátku. První hráč tedy mohl `ukrást' vyhrávající tah a hrát za druhého. To je spor, protože oba nemohou mít vyhrávající strategii. Hra skončí vždy vítězstvím jednoho z hráčů (je konečná a remízy nejsou), takže vyhrává první hráč.
+\end{proof}
+
+Stejný argument funguje pro deskovou hru Hex (John Nash ji v roce 1948 vymyslel nezávisle na Pietu Heinovi). Pro velké čokolády ani velké desky Hexu přitom vyhrávající strategii nikdo nezná.
+
+\subsection{Strom hry a minimax}
+
+Každou konečnou hru lze nakreslit jako \textbf{strom}: kořen je výchozí pozice, hrany jsou tahy. U piškvorek $3\times 3$ je nejvýš $9! = 362\,880$ posloupností tahů. Mnoho partií ale skončí dřív, takže dohraných partií je přesně $255\,168$. To počítač projde za zlomek sekundy a zjistí, že při dokonalé hře je výsledkem remíza. Claude Shannon v roce 1950 odhadl počet partií šachů zhruba na $10^{120}$, víc, než je atomů v pozorovatelném vesmíru (asi $10^{80}$).
+
+\begin{definitionbox}
+  \textbf{Minimax}: hodnota listu je výsledek hry (z pohledu hráče MAX). Hodnota uzlu, kde táhne MAX, je \textit{maximum} hodnot potomků, uzlu, kde táhne MIN, je \textit{minimum}. Hodnota kořene je výsledek při dokonalé hře obou stran.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.95,
+    mx/.style={draw, thick, circle, minimum size=6mm, inner sep=0pt, font=\small, fill=colorofwisdom!20},
+    mn/.style={draw, thick, rectangle, minimum size=5.5mm, inner sep=0pt, font=\small},
+    lf/.style={font=\small}]
+    \node[mx] (r) at (0,0) {$3$};
+    \node[mn] (a) at (-3.5,-1.4) {$3$};
+    \node[mn] (b) at (0,-1.4) {$\leq 2$};
+    \node[mn] (c) at (3.5,-1.4) {$2$};
+    \draw[very thick, colorofwisdom] (r) -- (a);
+    \draw (r) -- (b) (r) -- (c);
+    \foreach \v/\dx in {3/-1, 12/0, 8/1} \node[lf] (a\v) at ({-3.5+\dx},-2.8) {$\v$};
+    \draw[very thick, colorofwisdom] (a) -- (a3);
+    \draw (a) -- (a12) (a) -- (a8);
+    \node[lf] (b2) at (-1,-2.8) {$2$};
+    \node[lf, gray] (b4) at (0,-2.8) {$4$};
+    \node[lf, gray] (b6) at (1,-2.8) {$6$};
+    \draw (b) -- (b2);
+    \draw[gray, dashed] (b) -- (b4) (b) -- (b6);
+    \foreach \v/\dx in {14/-1, 5/0, 2/1} \node[lf] (c\v) at ({3.5+\dx},-2.8) {$\v$};
+    \draw (c) -- (c14) (c) -- (c5) (c) -- (c2);
+    \node[font=\scriptsize, gray] at (0,-3.4) {odříznuto};
+    \node[font=\scriptsize, anchor=west] at (5.0,0) {MAX (kruh)};
+    \node[font=\scriptsize, anchor=west] at (5.0,-1.4) {MIN (čtverec)};
+  \end{tikzpicture}
+\end{center}
+
+Strom na obrázku ukazuje i trik, kterým šachové programy ušetří obrovské množství práce: \textbf{alfa-beta prořezávání}. Levá větev zaručuje MAXovi hodnotu $3$. V prostřední větvi MIN hned první odpovědí nabídne $2$, takže hodnota celé větve bude nejvýš $2 < 3$. Zbylé listy $4$ a $6$ už nemá smysl zkoumat, MAX tuto větev stejně nezvolí. Při dobrém pořadí tahů zmenší alfa-beta počet prohledaných pozic zhruba na odmocninu.
+
+\section{Pravděpodobnost ve hrách}
+
+\subsection{Kostky}
+
+Při hodu dvěma kostkami je $36$ stejně pravděpodobných dvojic. Součet $s$ lze dostat $6 - |s - 7|$ způsoby, takže součty nejsou stejně pravděpodobné. Sedmička padá šestkrát častěji než dvojka nebo dvanáctka.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.8cm, y=0.45cm]
+    \foreach \s in {2,...,12} {
+      \pgfmathtruncatemacro{\c}{6-abs(\s-7)}
+      \fill[colorofwisdom!35] ({\s-0.35},0) rectangle ({\s+0.35},\c);
+      \draw[colorofwisdom] ({\s-0.35},0) rectangle ({\s+0.35},\c);
+      \node[font=\scriptsize, above] at (\s,\c) {$\frac{\c}{36}$};
+      \node[font=\scriptsize, below] at (\s,0) {$\s$};
+    }
+    \draw[->] (1.3,0) -- (13,0) node[right, font=\small] {součet};
+    \draw[dashed, gray] (7,0) -- (7,7.6) node[above, font=\scriptsize] {$E = 7$};
+  \end{tikzpicture}
+\end{center}
+
+Rozdělení má tvar trojúhelníku. Hází-li se třemi kostkami, je to už `zvon' složený ze tří parabol, a s více kostkami se podle centrální limitní věty blíží normálnímu rozdělení. Herní designéři to znají: útok `$3k6$' má stejný průměr $10{,}5$ jako `$1k20$', ale je mnohem předvídatelnější. V deskové hře Osadníci z Katanu jsou na číslech políček tečky, jejichž počet je přesně počet způsobů, jak daný součet padne.
+
+\subsection{Loot boxy, gacha a geometrické rozdělení}
+
+\begin{example}
+  Truhla za $50$ mincí obsahuje běžný předmět v hodnotě $10$ (pravděpodobnost $0{,}70$), vzácný v hodnotě $60$ ($0{,}25$) a legendární v hodnotě $400$ ($0{,}05$). Střední hodnota obsahu je
+  \begin{equation*}
+    E = 0{,}70\cdot 10 + 0{,}25\cdot 60 + 0{,}05\cdot 400 = 7 + 15 + 20 = 42 < 50.
+  \end{equation*}
+  Průměrně tedy každou truhlou prodělá hráč $8$ mincí. Polovinu hodnoty přitom tvoří legendárka, kterou devatenáct hráčů z dvaceti nedostane.
+\end{example}
+
+\begin{definitionbox}
+  Opakujeme nezávislé pokusy, každý uspěje s pravděpodobností $p$. Počet pokusů $T$ do prvního úspěchu má \textbf{geometrické rozdělení}:
+  \begin{equation*}
+    P(T = k) = (1 - p)^{k-1}p,\qquad P(T > k) = (1 - p)^k,\qquad E[T] = \frac{1}{p}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Po prvním pokusu buď máme úspěch (pravděpodobnost $p$, spotřebovali jsme $1$ pokus), nebo jsme na začátku znovu a jeden pokus jsme `ztratili'. Tedy $E = p\cdot 1 + (1 - p)(1 + E)$, odkud $pE = 1$.
+\end{proof}
+
+Pozor na intuici: se šancí $5\,\%$ potřebujete průměrně $20$ pokusů, ale po $20$ pokusech máte úspěch jen s pravděpodobností $1 - 0{,}95^{20}\approx 64\,\%$. A $10\,\%$ hráčů nemá úspěch ani po $45$ pokusech. Rozdělení má dlouhý `ocas' nešťastníků, kteří pak píšou rozzlobené recenze.
+
+\begin{example}
+  \textbf{Pity systém.} Ve hrách typu gacha bývá šance na nejvzácnější postavu malá, třeba $p = 0{,}6\,\%$, ale hra slibuje, že nejpozději $90$. pokus uspěje vždy (tzv. tvrdá pity). Jaký je průměrný počet pokusů? Pro kladné celočíselné $T$ platí užitečný vzorec $E[T] = \sum_{k\geq 0}P(T > k)$. Zde $P(T > k) = (1 - p)^k$ pro $k < 90$ a $P(T > k) = 0$ pro $k\geq 90$:
+  \begin{equation*}
+    E[T] = \sum_{k=0}^{89}(1 - p)^k = \frac{1 - (1 - p)^{90}}{p} = \frac{1 - 0{,}994^{90}}{0{,}006}\approx\frac{1 - 0{,}582}{0{,}006}\approx 69{,}7.
+  \end{equation*}
+  Bez pity by průměr byl $\frac{1}{p}\approx 167$. Navíc $P(T > 89) = 0{,}994^{89}\approx 0{,}585$, takže víc než polovina hráčů `dojde až na pity'. Pity tedy není drobná pojistka, je to hlavní mechanika.
+\end{example}
+
+\subsection{Krach hráče}
+
+\begin{example}
+  Hráč má $k$ žetonů a v každém kole vyhraje žeton s pravděpodobností $p$, nebo prohraje žeton s pravděpodobností $q = 1 - p$. Hraje, dokud nezbankrotuje, nebo nemá $N$ žetonů. Nechť $P_k$ je pravděpodobnost, že dosáhne $N$. Podmíněním podle prvního kola
+  \begin{equation*}
+    P_k = pP_{k+1} + qP_{k-1},\qquad P_0 = 0,\quad P_N = 1.
+  \end{equation*}
+  Je to lineární rekurence. Charakteristická rovnice $p\lambda^2 - \lambda + q = 0$ má kořeny $1$ a $\frac{q}{p}$, takže pro $p\neq q$
+  \begin{equation*}
+    P_k = \frac{(q/p)^k - 1}{(q/p)^N - 1},
+  \end{equation*}
+  a pro férovou hru $p = q$ vyjde $P_k = \frac{k}{N}$. Ruleta s jednou nulou má pro sázku na barvu $p = \frac{18}{37}$. Kdo má $50$ žetonů a chce je zdvojnásobit sázkami po jednom žetonu, uspěje s pravděpodobností jen asi $6{,}3\,\%$. Kdo vsadí všech $50$ najednou, uspěje s pravděpodobností $\frac{18}{37}\approx 48{,}6\,\%$. V nevýhodné hře je nejlepší hrát co nejkratší dobu.
+\end{example}
+
+\subsection{Proč náhoda nepůsobí náhodně}
+
+Hráči si často stěžují, že náhoda ve hře je `rozbitá'. Většinou není, jen lidská intuice čeká víc pravidelnosti, než náhoda dává. Ve $100$ hodech mincí je s pravděpodobností asi $80\,\%$ někde aspoň šest stejných výsledků za sebou. Zamícháte-li playlist $20$ písní od $5$ interpretů (po čtyřech), dvě sousední pozice mají stejného interpreta s pravděpodobností $\frac{3}{19}$ (druhá píseň je jedna z $19$ zbývajících a $3$ z nich jsou od stejného interpreta). Sousedních dvojic je $19$, takže v průměru budou v playlistu \textit{tři} dvojice písní téhož interpreta za sebou. Spotify proto svůj shuffle záměrně upravil, aby byl \textit{méně} náhodný a působil náhodněji. Hry dělají totéž: v některých se šance na kritický zásah po každém neúspěchu zvyšuje, aby se omezily dlouhé série smůly.
+
+\begin{definitionbox}
+  \textbf{Lineární kongruenční generátor} (LCG) vytváří pseudonáhodná čísla předpisem
+  \begin{equation*}
+    x_{n+1} = (ax_n + c)\bmod m.
+  \end{equation*}
+  Podle \textbf{Hullovy--Dobellovy věty} má (pro $c\neq 0$) plnou periodu $m$, právě když $c$ je nesoudělné s $m$, $a - 1$ je dělitelné každým prvočíslem dělícím $m$ a $a - 1$ je dělitelné $4$, pokud $4\mid m$.
+\end{definitionbox}
+
+\begin{example}
+  Pro $m = 16$, $a = 5$, $c = 3$ a $x_0 = 7$ dostaneme
+  \begin{equation*}
+    7,\ 6,\ 1,\ 8,\ 11,\ 10,\ 5,\ 12,\ 15,\ 14,\ 9,\ 0,\ 3,\ 2,\ 13,\ 4,\ 7,\ \dots
+  \end{equation*}
+  Perioda je plná, $16$. Ale podívejte se na paritu: lichá, sudá, lichá, sudá\dots\ Nejnižší bit má periodu $2$. Proto se u LCG nikdy nepoužívají nejnižší bity, třeba přes \texttt{rand() \% 2}.
+\end{example}
+
+Slavný odstrašující případ je generátor RANDU z 60. let s $a = 65\,539 = 2^{16} + 3$ a $m = 2^{31}$. Protože $a^2 = 2^{32} + 6\cdot 2^{16} + 9\equiv 6a - 9\pmod{2^{31}}$, platí $x_{n+2} = 6x_{n+1} - 9x_n\pmod{2^{31}}$. Každá trojice po sobě jdoucích čísel tak leží v jedné z pouhých $15$ rovin v krychli. Moderní hry používají lepší generátory (např. PCG nebo xorshift), ale princip `deterministický vzorec, který jen vypadá náhodně' zůstává. Stejné semínko dá stejný svět, na čemž stojí procedurálně generované hry a přehrávání záznamů.
+
+\begin{note}
+  Míchání balíčku: \textbf{Fisherův--Yatesův algoritmus} prochází pozice $i = n - 1, \dots, 1$ a prohodí prvek na pozici $i$ s náhodnou pozicí $j\in\{0, \dots, i\}$. Má $n\cdot(n - 1)\cdots 2 = n!$ stejně pravděpodobných průběhů, každý vede k jiné permutaci, takže všechny permutace jsou stejně pravděpodobné. Častá chyba je volit $j$ vždy z celého rozsahu $\{0, \dots, n - 1\}$. Pak je průběhů $n^n$, a protože $n^n$ obecně není dělitelné $n!$ (pro $n = 3$: $27$ není dělitelné $6$), některé permutace musí padat častěji. Pro $n = 3$ padnou tři permutace s pravděpodobností $\frac{5}{27}$ a tři s pravděpodobností $\frac{4}{27}$.
+\end{note}
+
+\section{Matematika pro vývojáře her: vektory}
+
+\subsection{Skalární součin: vidí mě?}
+
+Skalární součin z kapitoly~\ref{kap:prostor} je nejpoužívanější operace v herní grafice:
+\begin{equation*}
+  \vec{u}\cdot\vec{v} = u_xv_x + u_yv_y + u_zv_z = |\vec{u}||\vec{v}|\cos\varphi.
+\end{equation*}
+Levá strana je levná (tři násobení), pravá strana obsahuje úhel. Nepřítel stojící v bodě $P$ s pohledem ve směru jednotkového vektoru $\vec{f}$ vidí hráče v bodě $H$, pokud je hráč v jeho \textbf{zorném kuželu} s polovičním úhlem $\alpha$:
+\begin{equation*}
+  \vec{f}\cdot\frac{H - P}{|H - P|}\geq\cos\alpha.
+\end{equation*}
+Žádný arkus kosinus, $\cos\alpha$ se spočítá jednou dopředu.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \fill[colorofwisdom!12] (0,0) -- (40:4.2) arc (40:-40:4.2) -- cycle;
+    \draw[colorofwisdom!60] (0,0) -- (40:4.2) (0,0) -- (-40:4.2);
+    \draw[colorofwisdom!60, dashed] (0.9,0) arc (0:40:0.9);
+    \node[font=\scriptsize, colorofwisdom] at (20:1.15) {$\alpha$};
+    \draw[->, very thick] (0,0) -- (1.6,0) node[below, font=\small] {$\vec{f}$};
+    \fill (0,0) circle (2pt) node[left, font=\small] {$P$};
+    \foreach \x/\y/\n in {3/1/H_1, 2.5/-1.2/H_2, 1.8/2.4/H_3} {
+      \draw[->, gray] (0,0) -- (\x,\y);
+      \fill[colorofwisdom] (\x,\y) circle (2.5pt) node[right, font=\small, black] {$\n$};
+    }
+    \node[font=\scriptsize, align=left, anchor=west] at (4.6,1.2) {$H_1$: vidí, vlevo ($\vec{f}\times\vec{d} > 0$)};
+    \node[font=\scriptsize, align=left, anchor=west] at (4.6,0.5) {$H_2$: vidí, vpravo ($\vec{f}\times\vec{d} < 0$)};
+    \node[font=\scriptsize, align=left, anchor=west] at (4.6,-0.2) {$H_3$: nevidí, $\cos\varphi = 0{,}6 < \cos 40^\circ$};
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Vektorový součin: vlevo, nebo vpravo?}
+
+Ve 2D se z vektorového součinu stane jediné číslo, třetí složka
+\begin{equation*}
+  \vec{f}\times\vec{d} = f_xd_y - f_yd_x = |\vec{f}||\vec{d}|\sin\varphi.
+\end{equation*}
+Je kladné, pokud je $\vec{d}$ \textit{nalevo} od $\vec{f}$ (proti směru hodinových ručiček), a záporné, pokud napravo. Podle znaménka se věžička rozhodne, kterým směrem se otočit. Na obrázku je $\vec{f} = (1, 0)$, takže $\vec{f}\times\vec{d} = d_y$: hráč $H_1 = [3, 1]$ je vlevo, $H_2 = [2{,}5; -1{,}2]$ vpravo a $H_3 = [1{,}8; 2{,}4]$ s $\cos\varphi = \frac{1{,}8}{3} = 0{,}6 < \cos 40^\circ\approx 0{,}77$ je mimo zorné pole.
+
+Ve 3D vektorový součin dvou hran trojúhelníku $\vec{n} = (B - A)\times(C - A)$ dává \textbf{normálu}, vektor kolmý na trojúhelník. Její směr závisí na pořadí vrcholů. Enginy proto ukládají vrcholy v pevném pořadí (třeba proti směru ručiček při pohledu zvenku) a trojúhelníky, jejichž normála míří od kamery, vůbec nekreslí (\textit{back-face culling}). Tím se ušetří zhruba polovina práce.
+
+\subsection{Osvětlení: Lambertův kosinový zákon}
+
+Proč je povrch natočený ke světlu jasnější? Svazek paprsků o šířce $w$ dopadá na plochu pod úhlem $\theta$ od normály a rozprostře se na šířku $\frac{w}{\cos\theta}$. Stejné množství světla připadá na větší plochu, takže osvětlení klesá s faktorem $\cos\theta$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[thick] (-2,0) -- (2,0);
+    \fill[colorofwisdom!20] (-0.5,0) rectangle (0.5,2.4);
+    \foreach \x in {-0.5,-0.25,...,0.5} \draw[->, colorofwisdom] (\x,2.4) -- (\x,0.03);
+    \draw[very thick, colorofwisdom] (-0.5,0) -- (0.5,0);
+    \draw[->, thick] (1.4,0) -- (1.4,1.2) node[above, font=\small] {$\vec{n}$};
+    \node[font=\scriptsize] at (0,-0.4) {šířka $w$, plný jas};
+    \begin{scope}[xshift=6cm]
+      \draw[thick] (-2.5,0) -- (2.5,0);
+      \fill[colorofwisdom!20] (-1,0) -- (1,0) -- ({1+2.4*tan(60)*0.5},1.2) -- ({-1+2.4*tan(60)*0.5},1.2) -- cycle;
+      \foreach \x in {-1,-0.5,...,1} \draw[->, colorofwisdom] ({\x+2.078},1.2) -- (\x,0.03);
+      \draw[very thick, colorofwisdom] (-1,0) -- (1,0);
+      \draw[->, thick] (-1.8,0) -- (-1.8,1.2) node[above, font=\small] {$\vec{n}$};
+      \draw[->, thick] (0,0) -- ({0.6*sin(60)},{0.6*cos(60)}) node[above right, font=\small] {$\vec{l}$};
+      \draw[dashed, gray] (0,0) -- (0,1.0);
+      \draw (0,0.45) arc (90:30:0.45);
+      \node[font=\scriptsize] at (0.15,0.7) {$\theta$};
+      \node[font=\scriptsize] at (0,-0.4) {$\theta = 60^\circ$: šířka $\frac{w}{\cos\theta} = 2w$, poloviční jas};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Lambertovo (difúzní) osvětlení}: s jednotkovou normálou $\vec{n}$ a jednotkovým směrem ke světlu $\vec{l}$ je jas povrchu
+  \begin{equation*}
+    I = I_{\text{světla}}\cdot\rho\cdot\max(0, \vec{n}\cdot\vec{l}),
+  \end{equation*}
+  kde $\rho$ je barva (odrazivost) materiálu. Maximum s nulou zajistí, že plochy odvrácené od světla nejsou `záporně osvětlené'.
+\end{definitionbox}
+
+Tento řádek kódu běží v pixel shaderu pro každý pixel na obrazovce, dnes miliardkrát za sekundu.
+
+\section{Matematika pro vývojáře her: transformace}
+
+\subsection{Homogenní souřadnice}
+
+Otočení a změna měřítka jsou lineární zobrazení z kapitoly~\ref{kap:linearni-algebra}, takže je zapíšeme maticí. Posunutí ale lineární není (počátek se nezobrazí na počátek). Trik: k bodu $[x, y]$ přidáme třetí souřadnici $1$. Pak i posunutí je násobení maticí:
+\begin{equation*}
+  T = \begin{pmatrix}1 & 0 & t_x\\ 0 & 1 & t_y\\ 0 & 0 & 1\end{pmatrix},\quad
+  R = \begin{pmatrix}\cos\varphi & -\sin\varphi & 0\\ \sin\varphi & \cos\varphi & 0\\ 0 & 0 & 1\end{pmatrix},\quad
+  S = \begin{pmatrix}s & 0 & 0\\ 0 & s & 0\\ 0 & 0 & 1\end{pmatrix},\quad
+  T\begin{pmatrix}x\\ y\\ 1\end{pmatrix} = \begin{pmatrix}x + t_x\\ y + t_y\\ 1\end{pmatrix}.
+\end{equation*}
+Celou transformaci sprajtu (obrázku postavičky) lze spojit do jediné \textbf{modelové matice} $M = TRS$. Bod se nejdřív zvětší, pak otočí kolem počátku a nakonec posune. Pořadí je důležité, protože násobení matic není komutativní: $RT\neq TR$. Kdybychom nejdřív posunuli a pak otočili, sprajt by obíhal kolem počátku jako planeta.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.75]
+    \draw[gray!30] (-2,-2) grid (7,4);
+    \draw[->] (-2,0) -- (7.3,0) node[right, font=\small] {$x$};
+    \draw[->] (0,-2) -- (0,4.3) node[above, font=\small] {$y$};
+        \draw[thick, fill=gray!40] (0,1) -- (-0.6,-0.6) -- (0,-0.2) -- (0.6,-0.6) -- cycle;
+    \begin{scope}[scale=2] \draw[gray, dashed] (0,1) -- (-0.6,-0.6) -- (0,-0.2) -- (0.6,-0.6) -- cycle; \end{scope}
+    \begin{scope}[rotate=30, scale=2] \draw[gray, dashed] (0,1) -- (-0.6,-0.6) -- (0,-0.2) -- (0.6,-0.6) -- cycle; \end{scope}
+    \begin{scope}[shift={(4,1)}, rotate=30, scale=2] \draw[very thick, colorofwisdom, fill=colorofwisdom!25] (0,1) -- (-0.6,-0.6) -- (0,-0.2) -- (0.6,-0.6) -- cycle; \end{scope}
+    \fill (3,2.732) circle (2pt) node[above left, font=\scriptsize] {$[3;\,2{,}73]$};
+    \fill (0,1) circle (1.5pt);
+    \node[font=\scriptsize, anchor=west] at (0.15,1.2) {$[0, 1]$};
+    \draw[->, colorofwisdom!70, dashed] (-1,1.732) -- (2.9,2.707) node[pos=0.45, above, sloped, font=\scriptsize] {posunutí $T$};
+    \fill[gray] (-1,1.732) circle (1.5pt);
+    \node[font=\scriptsize, gray, anchor=west] at (-1.9,3.6) {čárkovaně: po $S$ a po $RS$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Špička sprajtu $[0, 1]$, měřítko $s = 2$, otočení o $30^\circ$, posunutí o $(4, 1)$. Po $S$: $[0, 2]$. Po $R$: $[-2\sin 30^\circ, 2\cos 30^\circ] = [-1;\ 1{,}732]$. Po $T$: $[3;\ 2{,}732]$. Přesně tam leží špička tmavého sprajtu na obrázku. V praxi se ale matice $M = TRS$ spočítá jen jednou a pak se jí násobí všechny vrcholy.
+\end{example}
+
+Ve 3D se používají matice $4\times 4$ a čtvrtá souřadnice má ještě jednu roli. Perspektivní projekce vydělí body jejich vzdáleností od kamery, a právě to dělení `schované' ve čtvrté souřadnici dělá ze vzdálených věcí malé věci.
+
+\subsection{Otočení ve 3D: Eulerovy úhly a kvaterniony}
+
+Nejpřirozenější popis orientace ve 3D jsou tři \textbf{Eulerovy úhly}: otočení kolem svislé osy (yaw), náklon nahoru a dolů (pitch) a náklon do strany (roll). Mají ale vadu, které se říká \textbf{gimbal lock}. Pokud je pitch přesně $90^\circ$ (letadlo míří kolmo nahoru), osa yaw a osa roll splynou. Oba úhly pak dělají totéž a jeden stupeň volnosti se ztratí. Animace, která prochází blízko takové polohy, se začne nečekaně točit. Astronauti Apolla se gimbal locku inerciální plošiny báli a Michael Collins během letu Apolla 11 prý žertem požádal, ať mu k Vánocům pošlou čtvrtý kardanový závěs.
+
+Řešením jsou \textbf{kvaterniony}, rozšíření komplexních čísel z kapitoly~\ref{kap:komplexni} o tři imaginární jednotky $i$, $j$, $k$ s pravidly $i^2 = j^2 = k^2 = ijk = -1$. Otočení o úhel $\theta$ kolem jednotkové osy $\vec{n}$ je kvaternion
+\begin{equation*}
+  q = \cos\frac{\theta}{2} + \sin\frac{\theta}{2}\,(n_xi + n_yj + n_zk),
+\end{equation*}
+a vektor $\vec{v}$ (zapsaný jako $v_xi + v_yj + v_zk$) se otočí na $q\vec{v}q^{-1}$. Kvaternion má jen čtyři čísla místo devíti v matici, skládání otočení je násobení kvaternionů, gimbal lock neexistuje a mezi dvěma orientacemi lze plynule interpolovat po `nejkratší cestě' (tzv. slerp). Proč vzorec otáčí a proč obsahuje poloviční úhel, uvidíme v odbočce.
+
+\section{Matematika pro vývojáře her: křivky a pohyb}
+
+\subsection{Lerp a easing}
+
+\begin{definitionbox}
+  \textbf{Lineární interpolace} (lerp) mezi hodnotami $a$ a $b$ s parametrem $t\in[0, 1]$:
+  \begin{equation*}
+    \operatorname{lerp}(a, b, t) = a + t(b - a) = (1 - t)a + tb.
+  \end{equation*}
+  \textbf{Easing funkce} je funkce $e\colon[0, 1]\to[0, 1]$ s $e(0) = 0$, $e(1) = 1$, kterou vložíme mezi čas a interpolaci: $\operatorname{lerp}(a, b, e(t))$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=4]
+    \draw[gray!30, step=0.25] (0,0) grid (1,1);
+    \draw[->] (0,0) -- (1.08,0) node[right, font=\small] {$t$};
+    \draw[->] (0,0) -- (0,1.08) node[above, font=\small] {$e(t)$};
+    \draw[thick, gray] (0,0) -- (1,1);
+    \draw[thick, colorofwisdom!50, domain=0:1, samples=40] plot (\x, {\x*\x});
+    \draw[thick, colorofwisdom!50, dashed, domain=0:1, samples=40] plot (\x, {1-(1-\x)*(1-\x)});
+    \draw[very thick, colorofwisdom, domain=0:1, samples=40] plot (\x, {3*\x*\x-2*\x*\x*\x});
+    \node[font=\scriptsize, gray, rotate=45] at (0.27,0.33) {lineární};
+    \node[font=\scriptsize, colorofwisdom!70] at (0.8,0.48) {ease-in $t^2$};
+    \node[font=\scriptsize, colorofwisdom!70] at (0.2,0.55) {ease-out};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (1.05,0.85) {smoothstep $3t^2 - 2t^3$};
+    \foreach \v in {0,0.5,1} \node[font=\scriptsize, below] at (\v,0) {$\v$};
+  \end{tikzpicture}
+\end{center}
+
+Lineární pohyb působí roboticky: objekt se rozjede a zastaví okamžitě. Funkce \textbf{smoothstep} $3t^2 - 2t^3$ má v obou koncích nulovou derivaci ($6t - 6t^2 = 0$ pro $t = 0, 1$), takže objekt plynule zrychlí a plynule zabrzdí. Ease-in $t^2$ startuje pomalu, ease-out $1 - (1 - t)^2$ pomalu končí.
+
+\begin{note}
+  Oblíbený řádek \texttt{x = lerp(x, cíl, 0.1)} volaný každý snímek způsobí, že vzdálenost od cíle se každý snímek zmenší na $0{,}9$násobek. Je to geometrická posloupnost, tedy exponenciální přibližování. Háček: při $120$ snímcích za sekundu se kamera přiblíží dvakrát rychleji než při $60$. Správná, na snímkové frekvenci nezávislá verze je \texttt{x = lerp(x, cíl, 1 - exp(-k*dt))}, kde \texttt{dt} je délka snímku. Po čase $t$ pak zbývá vzdálenost $\mathrm{e}^{-kt}$-násobná, ať je snímků kolik chce.
+\end{note}
+
+\subsection{Bézierovy křivky}
+
+\begin{definitionbox}
+  \textbf{Kubická Bézierova křivka} s řídicími body $P_0$, $P_1$, $P_2$, $P_3$:
+  \begin{equation*}
+    B(t) = (1 - t)^3P_0 + 3(1 - t)^2t\,P_1 + 3(1 - t)t^2\,P_2 + t^3P_3,\qquad t\in[0, 1].
+  \end{equation*}
+  \textbf{Algoritmus de Casteljau}: bod $B(t)$ dostaneme opakovaným lerpem. Z $P_0P_1P_2P_3$ uděláme $Q_i = \operatorname{lerp}(P_i, P_{i+1}, t)$, z nich $R_i = \operatorname{lerp}(Q_i, Q_{i+1}, t)$ a nakonec $B(t) = \operatorname{lerp}(R_0, R_1, t)$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \coordinate (P0) at (0,0); \coordinate (P1) at (1,3); \coordinate (P2) at (5,4); \coordinate (P3) at (6,1);
+    \coordinate (Q0) at (0.5,1.5); \coordinate (Q1) at (3,3.5); \coordinate (Q2) at (5.5,2.5);
+    \coordinate (R0) at (1.75,2.5); \coordinate (R1) at (4.25,3);
+    \coordinate (S) at (3,2.75);
+    \draw[gray] (P0) -- (P1) -- (P2) -- (P3);
+    \draw[gray, dashed] (Q0) -- (Q1) -- (Q2);
+    \draw[colorofwisdom!60] (R0) -- (R1);
+    \draw[very thick, colorofwisdom] (P0) .. controls (P1) and (P2) .. (P3);
+    \foreach \p/\l/\pos in {P0/P_0/below, P1/P_1/above left, P2/P_2/above, P3/P_3/below right} {\fill (\p) circle (1.8pt); \node[\pos, font=\small] at (\p) {$\l$};}
+    \foreach \p/\l/\pos in {Q0/Q_0/left, Q1/Q_1/above, Q2/Q_2/right} {\fill[gray] (\p) circle (1.5pt); \node[\pos, font=\scriptsize, gray] at (\p) {$\l$};}
+    \foreach \p/\l/\pos in {R0/R_0/above left, R1/R_1/above right} {\fill[colorofwisdom!60] (\p) circle (1.5pt); \node[\pos, font=\scriptsize] at (\p) {$\l$};}
+    \fill[colorofwisdom] (S) circle (2.5pt);
+    \node[below, font=\small] at (3,2.65) {$B(\frac{1}{2})$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Pro $P_0 = [0, 0]$, $P_1 = [1, 3]$, $P_2 = [5, 4]$, $P_3 = [6, 1]$ a $t = \frac{1}{2}$ jsou lerpy prostě středy úseček:
+  \begin{align*}
+    Q_0 &= [0{,}5;\ 1{,}5], & Q_1 &= [3;\ 3{,}5], & Q_2 &= [5{,}5;\ 2{,}5],\\
+    R_0 &= [1{,}75;\ 2{,}5], & R_1 &= [4{,}25;\ 3], & B(\tfrac{1}{2}) &= [3;\ 2{,}75].
+  \end{align*}
+  Kontrola vzorcem: $B(\frac{1}{2}) = \frac{1}{8}(P_0 + 3P_1 + 3P_2 + P_3) = \frac{1}{8}[0 + 3 + 15 + 6,\ 0 + 9 + 12 + 1] = [3;\ 2{,}75]$.
+\end{example}
+
+Koeficienty $(1 - t)^3$, $3(1 - t)^2t$, \dots\ jsou členy binomického rozvoje $\big((1 - t) + t\big)^3 = 1$, takže jejich součet je vždy $1$ a křivka leží v konvexním obalu řídicích bodů. Křivka začíná v $P_0$ ve směru $P_1$ a končí v $P_3$ ve směru od $P_2$. Proto se s ní v editorech tak dobře pracuje. Bézierovy křivky kreslí písmo, cesty kamer, dráhy projektilů i tento obrázek: TikZ příkaz \texttt{.. controls ..} je přesně kubický Bézier.
+
+\section{Matematika pro vývojáře her: kolize}
+
+Kolize se testují tisíckrát za snímek, takže se používají co nejjednodušší tvary.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[thick, fill=colorofwisdom!15] (0,0) circle (1);
+    \draw[thick, fill=gray!20, opacity=0.8] (2.2,0.6) circle (0.8);
+    \fill (0,0) circle (1.5pt) node[below left, font=\scriptsize] {$C_1$};
+    \fill (2.2,0.6) circle (1.5pt) node[right, font=\scriptsize] {$C_2$};
+    \draw[dashed] (0,0) -- (2.2,0.6) node[pos=0.55, above, font=\scriptsize] {$d$};
+    \draw[colorofwisdom] (0,0) -- (0,-1) node[pos=0.5, right, font=\scriptsize] {$r_1$};
+    \node[font=\scriptsize] at (1.1,-1.6) {kolize $\iff d^2\leq(r_1 + r_2)^2$};
+    \begin{scope}[xshift=5.2cm, yshift=-1cm]
+      \draw[thick, fill=colorofwisdom!15] (0,0.5) rectangle (2.4,1.9);
+      \draw[thick, fill=gray!20, opacity=0.8] (1.7,1.2) rectangle (3.6,2.6);
+      \draw[->] (-0.3,0) -- (4,0) node[right, font=\scriptsize] {$x$};
+      \draw[->] (-0.3,0) -- (-0.3,3) node[above, font=\scriptsize] {$y$};
+      \draw[very thick, colorofwisdom] (0,0) -- (2.4,0);
+      \draw[very thick, gray] (1.7,0.08) -- (3.6,0.08);
+      \draw[very thick, colorofwisdom] (-0.3,0.5) -- (-0.3,1.9);
+      \draw[very thick, gray] (-0.22,1.2) -- (-0.22,2.6);
+      \node[font=\scriptsize] at (1.8,-0.6) {překryv v $x$ i v $y$ $\Rightarrow$ kolize};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\textbf{Dva kruhy} se srážejí, právě když je vzdálenost středů nejvýš součet poloměrů. Porovnáváme druhé mocniny, $(x_1 - x_2)^2 + (y_1 - y_2)^2\leq(r_1 + r_2)^2$, abychom nemuseli počítat odmocninu. \textbf{Obdélníky rovnoběžné s osami} (AABB, \textit{axis-aligned bounding box}) se srážejí, právě když se překrývají jejich průměty na osu $x$ \textit{i} na osu $y$. To jsou čtyři porovnání: $a_{\min}\leq b_{\max}$ a $b_{\min}\leq a_{\max}$ pro obě osy.
+
+Pro otočené tvary tento trik zobecňuje věta o oddělující ose.
+
+\begin{definitionbox}
+  \textbf{Věta o oddělující ose} (SAT): Dva konvexní mnohoúhelníky jsou disjunktní, právě když existuje přímka (osa), na kterou se promítnou do dvou disjunktních intervalů. Stačí přitom vyzkoušet normály všech hran obou mnohoúhelníků.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.95]
+    \draw[thick, fill=colorofwisdom!15] (0,0) -- (2.2,0.3) -- (0.8,2.0) -- cycle;
+    \draw[thick, fill=gray!20] (2.6,1.6) -- (3.9,1.0) -- (4.4,2.3) -- (3.1,2.9) -- cycle;
+    \draw[very thick, colorofwisdom] (2.2,0.3) -- (0.8,2.0);
+    \draw[->, colorofwisdom] (1.5,1.15) -- ++(0.618,0.509) node[above, font=\scriptsize] {$\vec{u}$};
+    \draw[->] (0.13,-3.63) -- (5.69,0.94) node[right, font=\small] {osa};
+    \draw[gray, dashed] (0,0) -- (1.836,-2.229) (0.8,2.0) -- (3.294,-1.028) (2.2,0.3) -- (3.294,-1.028);
+    \draw[gray, dashed] (2.6,1.6) -- (4.17,-0.306) (4.4,2.3) -- (5.586,0.86);
+    \draw[line width=2.5pt, colorofwisdom] (1.836,-2.229) -- (3.294,-1.028);
+    \draw[line width=2.5pt, gray] (4.17,-0.306) -- (5.586,0.86);
+    \draw[<->, thick] (3.485,-1.26) -- (4.36,-0.54) node[pos=0.5, below right, font=\scriptsize] {mezera};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(náznak)]
+  Jsou-li průměty disjunktní, tvary jsou zjevně disjunktní. Opačně: dva disjunktní konvexní mnohoúhelníky mají dvojici nejbližších bodů $X$, $Y$. Kolmice na $XY$ procházející středem $XY$ je odděluje, protože kdyby některý tvar zasahoval přes ni, z konvexity by v něm byl bod bližší druhému tvaru. Průměty na osu ve směru $XY$ jsou pak disjunktní. U mnohoúhelníků navíc oddělující přímku můžeme posouvat a natáčet, dokud se neopře o celou hranu jednoho z tvarů. Ta přímka je pak rovnoběžná s hranou a osa na ni kolmá je normálou hrany. Proto stačí zkoušet normály hran.
+\end{proof}
+
+Na obrázku je oddělující osa kolmá na tmavou hranu trojúhelníku. Průměty obou tvarů jsou disjunktní intervaly, takže kolize nenastala. Pro trojúhelník a čtyřúhelník je hran sedm, a tedy nejvýš sedm testů. Kdyby se intervaly překrývaly na všech sedmi osách, tvary by se srážely, a nejmenší překryv navíc říká, jakým směrem a o kolik je od sebe odstrčit.
+
+\section{Matematika pro vývojáře her: hledání cesty}
+
+Postavička má dojít z bodu $S$ do bodu $G$ na mřížce s překážkami. Mřížka je graf: políčka jsou vrcholy, sousední volná políčka jsou spojena hranou délky $1$.
+
+\begin{definitionbox}
+  \textbf{Algoritmus A*} udržuje pro každé políčko $n$ délku $g(n)$ nejkratší dosud nalezené cesty ze startu a \textbf{heuristický odhad} $h(n)$ zbývající vzdálenosti do cíle. Vždy rozvine (prozkoumá) políčko s nejmenší hodnotou
+  \begin{equation*}
+    f(n) = g(n) + h(n).
+  \end{equation*}
+  Pokud heuristika nikdy nepřecení skutečnou vzdálenost (je \textbf{přípustná}), najde A* nejkratší cestu. Pro pohyb ve čtyřech směrech je přípustná \textbf{manhattanská vzdálenost} $h(n) = |x_n - x_G| + |y_n - y_G|$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.62]
+    \foreach \x/\y in {1/4,1/3,1/2,2/2,3/2,4/2,2/4,3/4,4/4,4/1,3/1,2/1,4/5,0/2,1/1,3/5,0/3,2/5,0/4,1/5,4/0,5/0,6/0,6/1,6/2,7/2,8/2,9/2,10/2}
+      \fill[colorofwisdom!25] (\x,\y) rectangle ++(1,1);
+    \foreach \x/\y in {2/3,3/3,4/3,5/1,5/2,5/3,5/4,5/5,5/6,6/6,7/6,8/6,9/6}
+      \fill[black!75] (\x,\y) rectangle ++(1,1);
+    \draw[gray!50] (0,0) grid (12,8);
+    \foreach \x/\y in {0/1,0/5,1/0,1/6,2/0,2/6,3/0,3/6,4/6,6/3,7/0,7/1,7/3,8/1,8/3,9/1,9/3}
+      \draw[thick, colorofwisdom!60] ({\x+0.04},{\y+0.04}) rectangle ++(0.92,0.92);
+    \draw[very thick, colorofwisdom, rounded corners=2pt] (1.5,4.5) -- (1.5,2.5) -- (4.5,2.5) -- (4.5,0.5) -- (6.5,0.5) -- (6.5,2.5) -- (10.5,2.5);
+    \node[font=\small\bfseries] at (1.5,4.5) {$S$};
+    \node[font=\small\bfseries, fill=white, inner sep=1pt] at (10.5,2.5) {$G$};
+    \node[font=\scriptsize, anchor=west] at (12.3,6.5) {\tikz\fill[black!75] (0,0) rectangle (0.25,0.25); zeď};
+    \node[font=\scriptsize, anchor=west] at (12.3,5.5) {\tikz\fill[colorofwisdom!25] (0,0) rectangle (0.25,0.25); rozvinuto ($29$)};
+    \node[font=\scriptsize, anchor=west] at (12.3,4.5) {\tikz\draw[colorofwisdom!50] (0,0) rectangle (0.25,0.25); ve frontě ($17$)};
+    \node[font=\scriptsize, anchor=west] at (12.3,3.5) {cesta délky $15$};
+  \end{tikzpicture}
+\end{center}
+
+Obrázek je skutečný výsledek A* s manhattanskou heuristikou (při shodě $f$ dává přednost políčkům blíž k cíli). Algoritmus nejdřív zkusí jít přímo doprava, narazí na zeď a obejde ji spodní mezerou. Rozvine $29$ políček. \textbf{Dijkstrův algoritmus}, tedy A* s $h = 0$, se na stejné mapě rozlévá všemi směry stejně a před nalezením cíle rozvine $70$ políček. Obě metody najdou cestu stejné délky $15$.
+
+\begin{proof}[(optimality A* pro konzistentní heuristiku)]
+  Heuristika je \textbf{konzistentní}, pokud $h(n)\leq 1 + h(m)$ pro sousední políčka $n$, $m$ a $h(G) = 0$ (manhattanská vzdálenost to splňuje, krok změní $h$ nejvýš o $1$). Podél libovolné cesty pak $f = g + h$ neklesá: krok zvýší $g$ o $1$ a sníží $h$ nejvýš o $1$. A* proto rozvíjí políčka v neklesajícím pořadí $f$, a když poprvé rozvine políčko, zná k němu už nejkratší cestu. Speciálně v okamžiku, kdy rozvine $G$, je $g(G) = f(G)$ délka nejkratší cesty.
+\end{proof}
+
+\section{Matematika pro vývojáře her: šum a fyzika}
+
+\subsection{Procedurální generování: šum}
+
+Krajiny v Minecraftu, mraky, oheň nebo třesení kamery potřebují `náhodu', která je \textit{hladká}. Obyčejná náhodná čísla vedle sebe skáčou. Řešením je \textbf{šum}. Nejjednodušší je \textbf{hodnotový šum}: v celých číslech zvolíme náhodné hodnoty a mezi nimi interpolujeme hladce, s parametrem prohnaným přes smoothstep:
+\begin{equation*}
+  n(x) = \operatorname{lerp}\big(v_{\lfloor x\rfloor},\ v_{\lfloor x\rfloor + 1},\ \operatorname{smoothstep}(x - \lfloor x\rfloor)\big).
+\end{equation*}
+Jedna vrstva vypadá jako mírné kopce. Skutečné terény jsou ale `zubaté na všech měřítkách'. Proto sečteme několik \textbf{oktáv}: $k$-tá oktáva má dvojnásobnou frekvenci a poloviční amplitudu než předchozí,
+\begin{equation*}
+  N(x) = \sum_{k=0}^{K}\frac{1}{2^k}\,n_k(2^kx).
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.75cm, y=2.2cm]
+    \begin{scope}[yshift=1.25*2.2cm]
+      \draw[gray!50] (0,0) -- (12,0);
+      \draw[thick, colorofwisdom] plot coordinates {(0.00,0.630) (0.08,0.635) (0.17,0.650) (0.25,0.672) (0.33,0.700) (0.42,0.732) (0.50,0.765) (0.58,0.798) (0.67,0.830) (0.75,0.858) (0.83,0.880) (0.92,0.895) (1.00,0.900) (1.08,0.898) (1.17,0.891) (1.25,0.881) (1.33,0.869) (1.42,0.855) (1.50,0.840) (1.58,0.825) (1.67,0.811) (1.75,0.799) (1.83,0.789) (1.92,0.782) (2.00,0.780) (2.08,0.769) (2.17,0.739) (2.25,0.694) (2.33,0.637) (2.42,0.573) (2.50,0.505) (2.58,0.437) (2.67,0.373) (2.75,0.316) (2.83,0.271) (2.92,0.241) (3.00,0.230) (3.08,0.231) (3.17,0.235) (3.25,0.241) (3.33,0.248) (3.42,0.256) (3.50,0.265) (3.58,0.274) (3.67,0.282) (3.75,0.289) (3.83,0.295) (3.92,0.299) (4.00,0.300) (4.08,0.311) (4.17,0.342) (4.25,0.389) (4.33,0.448) (4.42,0.514) (4.50,0.585) (4.58,0.656) (4.67,0.722) (4.75,0.781) (4.83,0.828) (4.92,0.859) (5.00,0.870) (5.08,0.853) (5.17,0.806) (5.25,0.736) (5.33,0.647) (5.42,0.547) (5.50,0.440) (5.58,0.333) (5.67,0.233) (5.75,0.144) (5.83,0.074) (5.92,0.027) (6.00,0.010) (6.08,0.026) (6.17,0.070) (6.25,0.137) (6.33,0.220) (6.42,0.315) (6.50,0.415) (6.58,0.515) (6.67,0.610) (6.75,0.693) (6.83,0.760) (6.92,0.804) (7.00,0.820) (7.08,0.820) (7.17,0.819) (7.25,0.817) (7.33,0.815) (7.42,0.812) (7.50,0.810) (7.58,0.808) (7.67,0.805) (7.75,0.803) (7.83,0.801) (7.92,0.800) (8.00,0.800) (8.08,0.794) (8.17,0.776) (8.25,0.748) (8.33,0.714) (8.42,0.676) (8.50,0.635) (8.58,0.594) (8.67,0.556) (8.75,0.522) (8.83,0.494) (8.92,0.476) (9.00,0.470) (9.08,0.467) (9.17,0.457) (9.25,0.443) (9.33,0.426) (9.42,0.406) (9.50,0.385) (9.58,0.364) (9.67,0.344) (9.75,0.327) (9.83,0.313) (9.92,0.303) (10.00,0.300) (10.08,0.300) (10.17,0.299) (10.25,0.297) (10.33,0.295) (10.42,0.292) (10.50,0.290) (10.58,0.288) (10.67,0.285) (10.75,0.283) (10.83,0.281) (10.92,0.280) (11.00,0.280) (11.08,0.279) (11.17,0.278) (11.25,0.275) (11.33,0.272) (11.42,0.269) (11.50,0.265) (11.58,0.261) (11.67,0.258) (11.75,0.255) (11.83,0.252) (11.92,0.251) (12.00,0.250)};
+      \foreach \i/\v in {0/0.63,1/0.9,2/0.78,3/0.23,4/0.3,5/0.87,6/0.01,7/0.82,8/0.8,9/0.47,10/0.3,11/0.28,12/0.25} \fill (\i,\v) circle (1.6pt);
+      \node[font=\scriptsize, anchor=west] at (12.1,0.5) {oktáva $0$};
+    \end{scope}
+    \begin{scope}[yshift=0.25*2.2cm]
+      \draw[gray!50] (0,0) -- (12,0);
+      \draw[thick, gray] plot coordinates {(0.00,0.250) (0.05,0.251) (0.10,0.253) (0.15,0.255) (0.20,0.259) (0.25,0.263) (0.30,0.266) (0.35,0.270) (0.40,0.272) (0.45,0.274) (0.50,0.275) (0.55,0.281) (0.60,0.298) (0.65,0.324) (0.70,0.354) (0.75,0.388) (0.80,0.421) (0.85,0.451) (0.90,0.477) (0.95,0.494) (1.00,0.500) (1.05,0.497) (1.10,0.489) (1.15,0.477) (1.20,0.463) (1.25,0.448) (1.30,0.432) (1.35,0.418) (1.40,0.406) (1.45,0.398) (1.50,0.395) (1.55,0.393) (1.60,0.386) (1.65,0.377) (1.70,0.365) (1.75,0.353) (1.80,0.340) (1.85,0.328) (1.90,0.319) (1.95,0.312) (2.00,0.310) (2.05,0.315) (2.10,0.329) (2.15,0.350) (2.20,0.375) (2.25,0.402) (2.30,0.430) (2.35,0.455) (2.40,0.476) (2.45,0.490) (2.50,0.495) (2.55,0.484) (2.60,0.455) (2.65,0.412) (2.70,0.359) (2.75,0.302) (2.80,0.246) (2.85,0.193) (2.90,0.150) (2.95,0.121) (3.00,0.110) (3.05,0.109) (3.10,0.107) (3.15,0.104) (3.20,0.099) (3.25,0.095) (3.30,0.091) (3.35,0.086) (3.40,0.083) (3.45,0.081) (3.50,0.080) (3.55,0.086) (3.60,0.103) (3.65,0.129) (3.70,0.159) (3.75,0.193) (3.80,0.226) (3.85,0.256) (3.90,0.282) (3.95,0.299) (4.00,0.305) (4.05,0.297) (4.10,0.275) (4.15,0.243) (4.20,0.205) (4.25,0.163) (4.30,0.120) (4.35,0.082) (4.40,0.050) (4.45,0.028) (4.50,0.020) (4.55,0.020) (4.60,0.020) (4.65,0.020) (4.70,0.020) (4.75,0.020) (4.80,0.020) (4.85,0.020) (4.90,0.020) (4.95,0.020) (5.00,0.020) (5.05,0.027) (5.10,0.044) (5.15,0.071) (5.20,0.103) (5.25,0.138) (5.30,0.172) (5.35,0.204) (5.40,0.231) (5.45,0.248) (5.50,0.255) (5.55,0.254) (5.60,0.253) (5.65,0.251) (5.70,0.248) (5.75,0.245) (5.80,0.242) (5.85,0.239) (5.90,0.237) (5.95,0.236) (6.00,0.235) (6.05,0.241) (6.10,0.258) (6.15,0.284) (6.20,0.314) (6.25,0.348) (6.30,0.381) (6.35,0.411) (6.40,0.437) (6.45,0.454) (6.50,0.460) (6.55,0.456) (6.60,0.445) (6.65,0.429) (6.70,0.409) (6.75,0.388) (6.80,0.366) (6.85,0.346) (6.90,0.330) (6.95,0.319) (7.00,0.315) (7.05,0.313) (7.10,0.309) (7.15,0.302) (7.20,0.294) (7.25,0.285) (7.30,0.276) (7.35,0.268) (7.40,0.261) (7.45,0.257) (7.50,0.255) (7.55,0.255) (7.60,0.254) (7.65,0.254) (7.70,0.253) (7.75,0.253) (7.80,0.252) (7.85,0.251) (7.90,0.251) (7.95,0.250) (8.00,0.250) (8.05,0.246) (8.10,0.237) (8.15,0.223) (8.20,0.206) (8.25,0.188) (8.30,0.169) (8.35,0.152) (8.40,0.138) (8.45,0.128) (8.50,0.125) (8.55,0.122) (8.60,0.113) (8.65,0.099) (8.70,0.083) (8.75,0.065) (8.80,0.047) (8.85,0.031) (8.90,0.017) (8.95,0.008) (9.00,0.005) (9.05,0.008) (9.10,0.014) (9.15,0.024) (9.20,0.037) (9.25,0.050) (9.30,0.063) (9.35,0.076) (9.40,0.086) (9.45,0.092) (9.50,0.095) (9.55,0.102) (9.60,0.121) (9.65,0.149) (9.70,0.183) (9.75,0.220) (9.80,0.257) (9.85,0.291) (9.90,0.319) (9.95,0.338) (10.00,0.345) (10.05,0.338) (10.10,0.320) (10.15,0.292) (10.20,0.259) (10.25,0.222) (10.30,0.186) (10.35,0.153) (10.40,0.125) (10.45,0.107) (10.50,0.100) (10.55,0.102) (10.60,0.109) (10.65,0.118) (10.70,0.130) (10.75,0.143) (10.80,0.155) (10.85,0.167) (10.90,0.176) (10.95,0.183) (11.00,0.185) (11.05,0.180) (11.10,0.166) (11.15,0.145) (11.20,0.120) (11.25,0.092) (11.30,0.065) (11.35,0.040) (11.40,0.019) (11.45,0.005) (11.50,0.000) (11.55,0.012) (11.60,0.043) (11.65,0.090) (11.70,0.146) (11.75,0.207) (11.80,0.269) (11.85,0.325) (11.90,0.372) (11.95,0.403) (12.00,0.415)};
+      \node[font=\scriptsize, anchor=west] at (12.1,0.25) {oktáva $1$};
+    \end{scope}
+    \begin{scope}[yshift=-1*2.2cm]
+      \fill[colorofwisdom!15] (0,0) -- plot coordinates {(0.00,0.587) (0.05,0.588) (0.10,0.593) (0.15,0.601) (0.20,0.611) (0.25,0.623) (0.30,0.636) (0.35,0.650) (0.40,0.665) (0.45,0.679) (0.50,0.693) (0.55,0.711) (0.60,0.736) (0.65,0.765) (0.70,0.797) (0.75,0.830) (0.80,0.862) (0.85,0.890) (0.90,0.913) (0.95,0.928) (1.00,0.933) (1.05,0.931) (1.10,0.924) (1.15,0.913) (1.20,0.900) (1.25,0.886) (1.30,0.871) (1.35,0.856) (1.40,0.842) (1.45,0.831) (1.50,0.823) (1.55,0.816) (1.60,0.806) (1.65,0.794) (1.70,0.781) (1.75,0.768) (1.80,0.755) (1.85,0.744) (1.90,0.735) (1.95,0.729) (2.00,0.727) (2.05,0.727) (2.10,0.729) (2.15,0.731) (2.20,0.732) (2.25,0.731) (2.30,0.727) (2.35,0.720) (2.40,0.708) (2.45,0.691) (2.50,0.667) (2.55,0.632) (2.60,0.586) (2.65,0.531) (2.70,0.472) (2.75,0.412) (2.80,0.355) (2.85,0.304) (2.90,0.264) (2.95,0.237) (3.00,0.227) (3.05,0.226) (3.10,0.226) (3.15,0.225) (3.20,0.224) (3.25,0.224) (3.30,0.224) (3.35,0.224) (3.40,0.225) (3.45,0.227) (3.50,0.230) (3.55,0.238) (3.60,0.253) (3.65,0.273) (3.70,0.296) (3.75,0.321) (3.80,0.346) (3.85,0.368) (3.90,0.386) (3.95,0.399) (4.00,0.403) (4.05,0.401) (4.10,0.394) (4.15,0.385) (4.20,0.376) (4.25,0.368) (4.30,0.362) (4.35,0.361) (4.40,0.367) (4.45,0.380) (4.50,0.403) (4.55,0.432) (4.60,0.460) (4.65,0.486) (4.70,0.511) (4.75,0.534) (4.80,0.554) (4.85,0.570) (4.90,0.583) (4.95,0.591) (5.00,0.593) (5.05,0.594) (5.10,0.594) (5.15,0.592) (5.20,0.589) (5.25,0.582) (5.30,0.571) (5.35,0.555) (5.40,0.532) (5.45,0.502) (5.50,0.463) (5.55,0.420) (5.60,0.377) (5.65,0.335) (5.70,0.296) (5.75,0.260) (5.80,0.228) (5.85,0.201) (5.90,0.181) (5.95,0.168) (6.00,0.163) (6.05,0.171) (6.10,0.194) (6.15,0.229) (6.20,0.272) (6.25,0.323) (6.30,0.377) (6.35,0.433) (6.40,0.488) (6.45,0.539) (6.50,0.583) (6.55,0.621) (6.60,0.653) (6.65,0.680) (6.70,0.703) (6.75,0.721) (6.80,0.735) (6.85,0.745) (6.90,0.752) (6.95,0.755) (7.00,0.757) (7.05,0.755) (7.10,0.752) (7.15,0.747) (7.20,0.741) (7.25,0.735) (7.30,0.728) (7.35,0.722) (7.40,0.716) (7.45,0.712) (7.50,0.710) (7.55,0.709) (7.60,0.708) (7.65,0.706) (7.70,0.705) (7.75,0.704) (7.80,0.703) (7.85,0.702) (7.90,0.701) (7.95,0.700) (8.00,0.700) (8.05,0.696) (8.10,0.685) (8.15,0.669) (8.20,0.648) (8.25,0.624) (8.30,0.598) (8.35,0.573) (8.40,0.548) (8.45,0.525) (8.50,0.507) (8.55,0.488) (8.60,0.466) (8.65,0.441) (8.70,0.416) (8.75,0.391) (8.80,0.368) (8.85,0.347) (8.90,0.331) (8.95,0.321) (9.00,0.317) (9.05,0.318) (9.10,0.320) (9.15,0.323) (9.20,0.326) (9.25,0.329) (9.30,0.331) (9.35,0.332) (9.40,0.331) (9.45,0.327) (9.50,0.320) (9.55,0.316) (9.60,0.321) (9.65,0.331) (9.70,0.346) (9.75,0.364) (9.80,0.383) (9.85,0.401) (9.90,0.416) (9.95,0.426) (10.00,0.430) (10.05,0.425) (10.10,0.413) (10.15,0.394) (10.20,0.371) (10.25,0.346) (10.30,0.321) (10.35,0.298) (10.40,0.279) (10.45,0.266) (10.50,0.260) (10.55,0.261) (10.60,0.264) (10.65,0.269) (10.70,0.276) (10.75,0.284) (10.80,0.291) (10.85,0.299) (10.90,0.304) (10.95,0.309) (11.00,0.310) (11.05,0.306) (11.10,0.297) (11.15,0.282) (11.20,0.265) (11.25,0.245) (11.30,0.226) (11.35,0.208) (11.40,0.192) (11.45,0.182) (11.50,0.177) (11.55,0.183) (11.60,0.202) (11.65,0.232) (11.70,0.268) (11.75,0.308) (11.80,0.348) (11.85,0.385) (11.90,0.415) (11.95,0.436) (12.00,0.443)} -- (12,0) -- cycle;
+      \draw[very thick, colorofwisdom] plot coordinates {(0.00,0.587) (0.05,0.588) (0.10,0.593) (0.15,0.601) (0.20,0.611) (0.25,0.623) (0.30,0.636) (0.35,0.650) (0.40,0.665) (0.45,0.679) (0.50,0.693) (0.55,0.711) (0.60,0.736) (0.65,0.765) (0.70,0.797) (0.75,0.830) (0.80,0.862) (0.85,0.890) (0.90,0.913) (0.95,0.928) (1.00,0.933) (1.05,0.931) (1.10,0.924) (1.15,0.913) (1.20,0.900) (1.25,0.886) (1.30,0.871) (1.35,0.856) (1.40,0.842) (1.45,0.831) (1.50,0.823) (1.55,0.816) (1.60,0.806) (1.65,0.794) (1.70,0.781) (1.75,0.768) (1.80,0.755) (1.85,0.744) (1.90,0.735) (1.95,0.729) (2.00,0.727) (2.05,0.727) (2.10,0.729) (2.15,0.731) (2.20,0.732) (2.25,0.731) (2.30,0.727) (2.35,0.720) (2.40,0.708) (2.45,0.691) (2.50,0.667) (2.55,0.632) (2.60,0.586) (2.65,0.531) (2.70,0.472) (2.75,0.412) (2.80,0.355) (2.85,0.304) (2.90,0.264) (2.95,0.237) (3.00,0.227) (3.05,0.226) (3.10,0.226) (3.15,0.225) (3.20,0.224) (3.25,0.224) (3.30,0.224) (3.35,0.224) (3.40,0.225) (3.45,0.227) (3.50,0.230) (3.55,0.238) (3.60,0.253) (3.65,0.273) (3.70,0.296) (3.75,0.321) (3.80,0.346) (3.85,0.368) (3.90,0.386) (3.95,0.399) (4.00,0.403) (4.05,0.401) (4.10,0.394) (4.15,0.385) (4.20,0.376) (4.25,0.368) (4.30,0.362) (4.35,0.361) (4.40,0.367) (4.45,0.380) (4.50,0.403) (4.55,0.432) (4.60,0.460) (4.65,0.486) (4.70,0.511) (4.75,0.534) (4.80,0.554) (4.85,0.570) (4.90,0.583) (4.95,0.591) (5.00,0.593) (5.05,0.594) (5.10,0.594) (5.15,0.592) (5.20,0.589) (5.25,0.582) (5.30,0.571) (5.35,0.555) (5.40,0.532) (5.45,0.502) (5.50,0.463) (5.55,0.420) (5.60,0.377) (5.65,0.335) (5.70,0.296) (5.75,0.260) (5.80,0.228) (5.85,0.201) (5.90,0.181) (5.95,0.168) (6.00,0.163) (6.05,0.171) (6.10,0.194) (6.15,0.229) (6.20,0.272) (6.25,0.323) (6.30,0.377) (6.35,0.433) (6.40,0.488) (6.45,0.539) (6.50,0.583) (6.55,0.621) (6.60,0.653) (6.65,0.680) (6.70,0.703) (6.75,0.721) (6.80,0.735) (6.85,0.745) (6.90,0.752) (6.95,0.755) (7.00,0.757) (7.05,0.755) (7.10,0.752) (7.15,0.747) (7.20,0.741) (7.25,0.735) (7.30,0.728) (7.35,0.722) (7.40,0.716) (7.45,0.712) (7.50,0.710) (7.55,0.709) (7.60,0.708) (7.65,0.706) (7.70,0.705) (7.75,0.704) (7.80,0.703) (7.85,0.702) (7.90,0.701) (7.95,0.700) (8.00,0.700) (8.05,0.696) (8.10,0.685) (8.15,0.669) (8.20,0.648) (8.25,0.624) (8.30,0.598) (8.35,0.573) (8.40,0.548) (8.45,0.525) (8.50,0.507) (8.55,0.488) (8.60,0.466) (8.65,0.441) (8.70,0.416) (8.75,0.391) (8.80,0.368) (8.85,0.347) (8.90,0.331) (8.95,0.321) (9.00,0.317) (9.05,0.318) (9.10,0.320) (9.15,0.323) (9.20,0.326) (9.25,0.329) (9.30,0.331) (9.35,0.332) (9.40,0.331) (9.45,0.327) (9.50,0.320) (9.55,0.316) (9.60,0.321) (9.65,0.331) (9.70,0.346) (9.75,0.364) (9.80,0.383) (9.85,0.401) (9.90,0.416) (9.95,0.426) (10.00,0.430) (10.05,0.425) (10.10,0.413) (10.15,0.394) (10.20,0.371) (10.25,0.346) (10.30,0.321) (10.35,0.298) (10.40,0.279) (10.45,0.266) (10.50,0.260) (10.55,0.261) (10.60,0.264) (10.65,0.269) (10.70,0.276) (10.75,0.284) (10.80,0.291) (10.85,0.299) (10.90,0.304) (10.95,0.309) (11.00,0.310) (11.05,0.306) (11.10,0.297) (11.15,0.282) (11.20,0.265) (11.25,0.245) (11.30,0.226) (11.35,0.208) (11.40,0.192) (11.45,0.182) (11.50,0.177) (11.55,0.183) (11.60,0.202) (11.65,0.232) (11.70,0.268) (11.75,0.308) (11.80,0.348) (11.85,0.385) (11.90,0.415) (11.95,0.436) (12.00,0.443)};
+      \draw[gray!50] (0,0) -- (12,0);
+      \node[font=\scriptsize, anchor=west] at (12.1,0.5) {součet (terén)};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Ken Perlin vymyslel vylepšenou verzi, \textbf{gradientní šum}, po práci na filmu Tron (1982). V mřížových bodech nevolí náhodné hodnoty, ale náhodné \textit{sklony}, takže šum nemá tendenci vytvářet hrboly přesně v celých číslech. V roce 1997 za něj dostal technického Oscara. Všimněte si, že `náhodné' hodnoty $v_i$ pocházejí z generátoru se semínkem, takže stejné semínko dá vždy stejnou krajinu, a svět nemusí být uložen na disku.
+
+\subsection{Fyzika: Eulerova metoda a únik energie}
+
+Herní fyzika řeší Newtonovu rovnici $\ddot{x} = F/m$ z kapitoly~\ref{kap:diferencialni} po krocích délky $h$ (typicky $h = \frac{1}{60}$ s). Nejjednodušší je \textbf{Eulerova metoda}: novou polohu spočítáme se starou rychlostí. Skoro stejně jednoduchá je \textbf{semi-implicitní Eulerova metoda}: nejdřív aktualizujeme rychlost a polohu posuneme už s \textit{novou} rychlostí.
+\begin{equation*}
+  \text{Euler:}\ \begin{cases}x_{n+1} = x_n + hv_n,\\ v_{n+1} = v_n + ha(x_n),\end{cases}\qquad
+  \text{semi-implicitní:}\ \begin{cases}v_{n+1} = v_n + ha(x_n),\\ x_{n+1} = x_n + hv_{n+1}.\end{cases}
+\end{equation*}
+
+\begin{example}
+  Pružina $a(x) = -x$, tedy přesné řešení $x = \cos t$, $v = -\sin t$, s energií $E = \frac{1}{2}(x^2 + v^2)$. Pro obyčejného Eulera
+  \begin{equation*}
+    x_{n+1}^2 + v_{n+1}^2 = (x_n + hv_n)^2 + (v_n - hx_n)^2 = (1 + h^2)(x_n^2 + v_n^2).
+  \end{equation*}
+  Energie roste každý krok $(1 + h^2)$-krát, exponenciálně! Pro $h = 0{,}15$ se po jedné periodě ($42$ kroků) zvětší $1{,}0225^{42}\approx 2{,}5$krát. Semi-implicitní metoda má matici kroku $\begin{pmatrix}1 - h^2 & h\\ -h & 1\end{pmatrix}$ s determinantem $1$, zachovává tedy plochu ve fázové rovině, a přesně zachovává `skoro energii' $x^2 + v^2 - hxv$. Skutečná energie jen nepatrně kmitá a nikam neutíká.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \draw[->, gray] (-1.9,0) -- (1.9,0) node[right, font=\small, black] {$x$};
+    \draw[->, gray] (0,-1.7) -- (0,1.7) node[above, font=\small, black] {$v$};
+    \draw[dashed, gray] (0,0) circle (1);
+    \draw[thick, colorofwisdom!55, mark=*, mark size=0.6pt] plot coordinates {(1.000,0.000) (1.000,-0.150) (0.978,-0.300) (0.932,-0.447) (0.866,-0.587) (0.778,-0.716) (0.670,-0.833) (0.545,-0.933) (0.405,-1.015) (0.253,-1.076) (0.091,-1.114) (-0.076,-1.128) (-0.245,-1.116) (-0.412,-1.080) (-0.574,-1.018) (-0.727,-0.932) (-0.867,-0.823) (-0.990,-0.693) (-1.094,-0.544) (-1.175,-0.380) (-1.232,-0.204) (-1.263,-0.019) (-1.266,0.171) (-1.240,0.361) (-1.186,0.547) (-1.104,0.724) (-0.996,0.890) (-0.862,1.039) (-0.706,1.169) (-0.531,1.275) (-0.340,1.354) (-0.136,1.405) (0.074,1.426) (0.288,1.415) (0.500,1.371) (0.706,1.296) (0.900,1.190) (1.079,1.055) (1.237,0.893) (1.371,0.708) (1.478,0.502) (1.553,0.280) (1.595,0.048)};
+    \draw[very thick, colorofwisdom, mark=*, mark size=0.6pt] plot coordinates {(1.000,0.000) (0.978,-0.150) (0.933,-0.297) (0.868,-0.437) (0.783,-0.567) (0.680,-0.684) (0.562,-0.786) (0.431,-0.870) (0.291,-0.935) (0.144,-0.979) (-0.006,-1.000) (-0.156,-1.000) (-0.302,-0.976) (-0.442,-0.931) (-0.571,-0.865) (-0.688,-0.779) (-0.790,-0.676) (-0.873,-0.557) (-0.937,-0.426) (-0.980,-0.286) (-1.001,-0.139) (-0.999,0.011) (-0.975,0.161) (-0.929,0.307) (-0.862,0.447) (-0.775,0.576) (-0.671,0.692) (-0.553,0.793) (-0.421,0.876) (-0.280,0.939) (-0.133,0.981) (0.017,1.001) (0.167,0.999) (0.313,0.974) (0.452,0.927) (0.581,0.859) (0.696,0.772) (0.797,0.667) (0.879,0.548) (0.941,0.416) (0.982,0.275) (1.001,0.127) (0.998,-0.023)};
+    \fill (1,0) circle (1.5pt);
+    \node[font=\scriptsize, colorofwisdom!70, anchor=west] at (0.9,1.5) {Euler (spirála ven)};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (0.75,-0.85) {semi-implicitní};
+    \node[font=\scriptsize, gray] at (0,-1.9) {čárkovaně přesné řešení, $h = 0{,}15$, $42$ kroků};
+  \end{tikzpicture}
+\end{center}
+
+Ve hře to znamená, že s obyčejným Eulerem se kyvadlo rozhoupe samo od sebe a planety odletí ze soustavy. Semi-implicitní Euler (v knihovnách často nazývaný \textit{symplektický}) stojí stejně mnoho výpočtů, a proto ho používá většina herních fyzikálních enginů. Druhé pravidlo praxe: fyzika běží s \textbf{pevným krokem} $h$, nezávisle na snímkové frekvenci. Jinak by výsledek simulace závisel na tom, jak rychlý má hráč počítač.
+
+\section{Odbočka --- Proč kvaterniony otáčejí}
+
+Kvaternion $a + bi + cj + dk$ zapíšeme jako dvojici: reálnou část $a$ a vektor $\vec{u} = (b, c, d)$. Z pravidel $i^2 = j^2 = k^2 = ijk = -1$ plyne $ij = k = -ji$, $jk = i = -kj$, $ki = j = -ik$ a po roznásobení dostaneme kompaktní vzorec pro součin
+\begin{equation*}
+  (a, \vec{u})(b, \vec{w}) = \big(ab - \vec{u}\cdot\vec{w},\ a\vec{w} + b\vec{u} + \vec{u}\times\vec{w}\big).
+\end{equation*}
+Uvnitř násobení kvaternionů se tedy skrývá skalární i vektorový součin zároveň. (Historicky je to dokonce naopak, skalární a vektorový součin se z kvaternionů `oddělily' až později.) Speciálně pro dva čistě imaginární kvaterniony $(0, \vec{u})(0, \vec{w}) = (-\vec{u}\cdot\vec{w},\ \vec{u}\times\vec{w})$.
+
+Nechť $q = (c, s\vec{n})$, kde $c = \cos\frac{\theta}{2}$, $s = \sin\frac{\theta}{2}$ a $|\vec{n}| = 1$. Pak $|q| = 1$ a $q^{-1} = \bar{q} = (c, -s\vec{n})$. Vektor $\vec{v}$ rozložíme na složku rovnoběžnou s osou a kolmou k ose, $\vec{v} = \vec{v}_\parallel + \vec{v}_\perp$.
+
+\begin{itemize}
+  \item \textbf{Rovnoběžná složka} $\vec{v}_\parallel = \lambda\vec{n}$: vektorový součin $\vec{n}\times\vec{n} = 0$, takže $q$ a $\vec{v}_\parallel$ komutují a $q\vec{v}_\parallel\bar{q} = \vec{v}_\parallel q\bar{q} = \vec{v}_\parallel$. Osa se nehýbe.
+  \item \textbf{Kolmá složka}: protože $\vec{n}\cdot\vec{v}_\perp = 0$, ze vzorce plyne $\vec{n}\vec{v}_\perp = \vec{n}\times\vec{v}_\perp = -\vec{v}_\perp\vec{n}$. Kolmý vektor tedy s $\vec{n}$ \textit{antikomutuje}, a proto
+  \begin{equation*}
+    \vec{v}_\perp\bar{q} = \vec{v}_\perp(c - s\vec{n}) = (c + s\vec{n})\vec{v}_\perp = q\vec{v}_\perp,\qquad\text{tedy}\qquad q\vec{v}_\perp\bar{q} = q^2\vec{v}_\perp.
+  \end{equation*}
+  A $q^2 = (c^2 - s^2,\ 2cs\,\vec{n}) = (\cos\theta,\ \sin\theta\,\vec{n})$, takže
+  \begin{equation*}
+    q\vec{v}_\perp\bar{q} = \cos\theta\,\vec{v}_\perp + \sin\theta\,(\vec{n}\times\vec{v}_\perp).
+  \end{equation*}
+\end{itemize}
+
+To je přesně otočení vektoru $\vec{v}_\perp$ o úhel $\theta$ v rovině kolmé na $\vec{n}$: vektory $\vec{v}_\perp$ a $\vec{n}\times\vec{v}_\perp$ jsou kolmé, stejně dlouhé a tvoří v té rovině `osy $x$ a $y$'. Odtud i poloviční úhel: kvaternion $q$ působí na vektor dvakrát, zleva a zprava, a v kolmé rovině se obě poloviny sečtou na celé $\theta$. Vedlejší důsledek: $q$ a $-q$ dávají stejné otočení. Kvaterniony popisují každou orientaci dvakrát, což je důvod, proč slerp musí občas $q$ otočit na $-q$, aby šel kratší cestou.
+
+\section{Příběh --- Krásná mysl}
+
+John Forbes Nash přišel v roce 1948 na Princeton s doporučujícím dopisem, který měl prý jedinou větu: `Tento muž je génius.' Za dva roky obhájil disertaci o nekooperativních hrách. Měla jen pár desítek stran a obsahovala pojem, kterému dnes říkáme Nashova rovnováha. Během následujících let dokázal zásadní a velmi těžké věty o vnořování variet a o parciálních diferenciálních rovnicích, a vypadal jako jeden z nejslibnějších matematiků své generace.
+
+Na konci 50. let u něj propukla paranoidní schizofrenie. Věřil, že mu mimozemšťané posílají zakódované zprávy v novinách, a strávil řadu pobytů v psychiatrických léčebnách, kde podstoupil i léčbu inzulinovými šoky. Kolega se ho později zeptal, jak mohl on, muž rozumu, uvěřit mimozemšťanům. Nash odpověděl, že nápady o nadpřirozených bytostech k němu přicházely stejně jako ty matematické, a tak je bral vážně. Celá desetiletí bloudil po princetonském kampusu jako `fantom z Fine Hall' a psal na tabule podivné číselné vzkazy. Jeho žena Alicia se s ním v roce 1963 rozvedla, ale v roce 1970 si ho vzala zpátky k sobě do domu a starala se o něj.
+
+V 80. letech nemoc postupně ustoupila. V roce 1994 dostal Nash Nobelovu cenu za ekonomii (spolu s Johnem Harsanyim a Reinhardem Seltenem), a to právě za práci z disertace. Kniha Sylvie Nasar a film \textit{Čistá duše} (v originále \textit{A Beautiful Mind}) z roku 2001 z něj udělaly celebritu. S Aliciou se v roce 2001 znovu vzali.
+
+V květnu 2015 převzal Nash v Norsku Abelovu cenu, nejvyšší ocenění v matematice, spolu s Louisem Nirenbergem za práci o parciálních diferenciálních rovnicích. Po návratu jeli s Aliciou z letiště taxíkem domů. Na dálnici v New Jersey taxík narazil do svodidel a oba manželé, kteří nebyli připoutaní, z auta vypadli a na místě zemřeli. Johnovi bylo osmdesát šest, Alicii osmdesát dva.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Vypočítejte:
+  \begin{enumerate}[label=(\alph*)]
+    \item Kdo vyhraje Nim s hromádkami $1$, $5$, $7$, $9$ a jakým tahem?
+    \item Nepřítel v bodě $[0, 0]$ se dívá ve směru $\vec{f} = (0{,}6;\ 0{,}8)$, poloviční zorný úhel je $60^\circ$. Vidí hráče v bodě $[4, -1]$? Je hráč vlevo, nebo vpravo?
+    \item Jaký je průměrný počet pokusů do úspěchu se šancí $2\,\%$ a s tvrdou pity na $50$. pokusu? (Stačí vzorec.)
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $0001\oplus 0101\oplus 0111\oplus 1001 = 1010 = 10\neq 0$, vyhrává hráč na tahu. Nejvyšší jednička součtu je v řádu $8$, má ji jen hromádka $9$, a $9\oplus 10 = 3$. Z hromádky $9$ tedy nechá $3$: $1\oplus 5\oplus 7\oplus 3 = 0$.
+    \item $\vec{d} = (4, -1)$, $|\vec{d}| = \sqrt{17}$, $\vec{f}\cdot\vec{d} = 2{,}4 - 0{,}8 = 1{,}6$, $\cos\varphi = \frac{1{,}6}{\sqrt{17}}\approx 0{,}39 < \cos 60^\circ = 0{,}5$. Nevidí. $\vec{f}\times\vec{d} = 0{,}6\cdot(-1) - 0{,}8\cdot 4 = -3{,}8 < 0$, hráč je vpravo.
+    \item $E = \sum_{k=0}^{49}0{,}98^k = \frac{1 - 0{,}98^{50}}{0{,}02}\approx\frac{1 - 0{,}364}{0{,}02}\approx 31{,}8$.
+  \end{enumerate}
+\end{solution}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je Nashova rovnováha a proč ve vězňově dilematu nevede k nejlepšímu výsledku?
+    \item Proč je jedinou rovnováhou kamene, nůžek a papíru strategie $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{3}$?
+    \item Jak se hraje Nim a proč funguje strategie `táhni na nulový XOR'?
+    \item Vysvětlete argument krádeže strategie na hře Chomp. Proč nám neřekne, jak vyhrát?
+    \item Proč je průměrný počet pokusů do úspěchu $\frac{1}{p}$ a jak ho změní pity systém?
+    \item Jak skalární součin rozhodne, jestli nepřítel vidí hráče, a jak vektorový součin, jestli je vlevo?
+    \item K čemu jsou homogenní souřadnice a proč záleží na pořadí $TRS$?
+    \item Popište algoritmus de Casteljau. Proč Bézierova křivka leží v konvexním obalu řídicích bodů?
+    \item Proč A* s přípustnou heuristikou najde nejkratší cestu a proč bývá rychlejší než Dijkstrův algoritmus?
+    \item Proč obyčejná Eulerova metoda přidává energii a čím je lepší semi-implicitní varianta?
+  \end{enumerate}
+\end{problem}

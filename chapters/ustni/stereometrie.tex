@@ -3,7 +3,7 @@
 
 Stereometrie je geometrie v prostoru. Všechno, co jsme se naučili v rovině, platí dál, jen se objeví jedna nová dimenze a s ní nové situace. Například dvě přímky, které se neprotínají, a přesto nejsou rovnoběžné. V první části kapitoly se podíváme na vzájemné polohy a vzdálenosti útvarů v prostoru, ve druhé na tělesa, jejich objemy a povrchy.
 
-\section{Polohové vlastnosti}
+\section{Polohové vlastnosti}\label{sec:polohove-vlastnosti}
 
 \begin{definitionbox}
   \textbf{Vzájemná poloha dvou přímek v prostoru}:
@@ -122,7 +122,7 @@ Tři situace z příkladu jsou nakreslené vedle sebe. Dobrý test mimoběžnost
   \end{center}
 \end{solution}
 
-\subsection{Řezy těles}
+\subsection{Řezy těles}\label{sec:rezy-teles}
 
 \textbf{Řez tělesa} rovinou je průnik tělesa s touto rovinou. U krychle (a obecně u mnohostěnu) je to mnohoúhelník. Jeho vrcholy leží na hranách tělesa a jeho strany leží ve stěnách. Úloha typicky zní: \textit{sestrojte řez krychle rovinou určenou třemi body $K$, $L$, $M$}. Řezy jsou u maturity oblíbené a zároveň jedno z nejhůř pochopených témat, protože vyžadují kombinaci prostorové představivosti a několika jednoduchých pravidel, která se ale musí používat přesně. Pojďme na to pomalu.
 
@@ -302,7 +302,7 @@ Na závěr dvě zajímavosti.
   Ověřit to můžeme v souřadnicích. Pro krychli s hranou $1$ a $A = [0, 0, 0]$ leží všech šest středů hran v rovině $x - y + z = \frac{1}{2}$ (dosaďte si) a vzdálenost každých dvou sousedních je $\frac{\sqrt{2}}{2}$.
 \end{example}
 
-\section{Metrické vlastnosti}
+\section{Metrické vlastnosti}\label{sec:metricke-vlastnosti}
 
 \begin{definitionbox}
   \textbf{Vzdálenosti}:
@@ -370,7 +370,7 @@ Všechny tři situace z definice si můžeme představit v pokoji. Vzdálenost b
 
 Metrické úlohy v prostoru se skoro vždy řeší stejně. Najdeme vhodný pravoúhlý trojúhelník, který leží v nějaké rovině, a použijeme Pythagorovu větu nebo goniometrické funkce z kapitoly~\ref{kap:goniometrie}. Celý trik je v tom, ten trojúhelník najít.
 
-\begin{example}
+\begin{example}\label{ex:krychle-uhlopricky}
   V krychli o hraně $a$:
   \begin{itemize}
     \item \textbf{stěnová úhlopříčka}: $|AC| = \sqrt{a^2 + a^2} = a\sqrt{2}$,
@@ -455,7 +455,7 @@ Hledané trojúhelníky jsou na obrázcích vybarvené. Vlevo je pravoúhlý tro
   \end{center}
 \end{solution}
 
-\section{Tělesa}
+\section{Tělesa}\label{sec:telesa}
 
 \begin{definitionbox}
   \textbf{Mnohostěn} je těleso ohraničené konečně mnoha mnohoúhelníky (stěnami). Strany stěn jsou \textbf{hrany}, jejich koncové body \textbf{vrcholy}.
@@ -600,7 +600,7 @@ Představte si balíček karet. Pokud ho nakloníte tak, že karty se po sobě p
 \end{center}
 Všechny tři balíčky jsou ze stejných karet, mají tedy stejný objem. Každá vodorovná rovina (čárkovaná) je protne ve stejně velké kartě.
 
-\begin{example}
+\begin{example}\label{ex:jehlan-tretina}
   Proč má jehlan třetinový objem? Krychli lze rozdělit na tři shodné jehlany se společným vrcholem $G$ a podstavami $ABCD$, $ABFE$ a $ADHE$ (tři stěny, které se nedotýkají vrcholu $G$). Každý z nich má podstavu $a^2$ a výšku $a$, a protože jsou tři a dohromady dávají krychli, je objem každého $\frac{1}{3}a^3 = \frac{1}{3}S_pv$. Pro obecný jehlan pak vzorec plyne z Cavalieriho principu a podobnosti řezů. Kužel je `jehlan s kruhovou podstavou', a proto má stejně třetinu objemu válce.
   \begin{center}
     \begin{tikzpicture}[scale=1.7, krychle]
@@ -692,7 +692,7 @@ Všechny tři balíčky jsou ze stejných karet, mají tedy stejný objem. Každ
   \end{center}
 \end{example}
 
-\begin{note}
+\begin{note}\label{note:podobnost-teles}
   Pokud těleso zvětšíme $k$-krát (podobností), jeho povrch se zvětší $k^2$-krát a objem $k^3$-krát. Proto obři z pohádek nemohou existovat. Kdyby byl člověk desetkrát vyšší, vážil by tisíckrát víc, ale průřez jeho kostí by byl jen stokrát větší. Zlomil by si nohy při prvním kroku. Tento argument použil už Galileo Galilei. A proto mají sloni tak tlusté nohy a mravenci tak tenké.
 \end{note}
 
@@ -733,7 +733,7 @@ Zdvojnásobením hrany vznikne krychle, na jejíž stěnu se vejdou čtyři pův
   \end{enumerate}
 \end{solution}
 
-\subsection{Eulerova věta a pravidelné mnohostěny}
+\subsection{Eulerova věta a pravidelné mnohostěny}\label{sec:eulerova-veta}
 
 \begin{definitionbox}
   \textbf{Eulerova věta o mnohostěnech}: Pro každý konvexní mnohostěn s $V$ vrcholy, $H$ hranami a $S$ stěnami platí

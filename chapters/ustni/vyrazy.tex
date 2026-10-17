@@ -152,7 +152,7 @@ Teď přijdou pravidla pro počítání s mocninami. Ta vypadají na první pohl
   Stačí si vzít $a = b = 1$ a $n = 2$. Potom ${(1 + 1)}^2 = 4$, ale $1^2 + 1^2 = 2$. Tomuto chybnému `pravidlu' se v anglicky mluvících zemích přezdívá \textit{freshman's dream}, tedy sen prváka. U maturity je to spíš noční můra. Pro zkoušejícího.
 \end{definitionbox}
 
-\section{Mocniny s celým exponentem}
+\section{Mocniny s celým exponentem}\label{sec:mocniny-cely}
 
 Doposud jsme měli v exponentu jen přirozená čísla. Co by ale mělo znamenat $2^0$ nebo $2^{-3}$? Vynásobit dvojku samu sebou nulakrát nebo dokonce mínus třikrát? To zní jako nesmysl. Zde přichází na řadu typický matematický přístup: chceme, aby naše pravidla platila i nadále, a podle toho si novou definici \textit{vynutíme}.
 
@@ -389,7 +389,7 @@ Dvě techniky, které budete u maturity potřebovat neustále, jsou částečné
   \end{enumerate}
 \end{solution}
 
-\section{Mocniny s racionálním exponentem}
+\section{Mocniny s racionálním exponentem}\label{sec:mocniny-racionalni}
 
 Udělejme ještě jeden krok. Stejně jako jsme si vynutili definici záporného exponentu, vynutíme si nyní definici zlomku v exponentu. Pokud by pravidlo ${(a^m)}^n = a^{mn}$ mělo platit i pro zlomky, pak musí platit
 \begin{equation*}
@@ -477,7 +477,7 @@ Na závěr odbočky si ukážeme jeden z nejkrásnějších krátkých důkazů 
 
 Na tomto důkazu je zvláštní to, že na jeho konci \textit{nevíme}, která z možností nastala. Víme jen, že jedna z nich určitě funguje. Je to trochu jako když vám někdo řekne, že klíče máte buď v kabelce, nebo v bundě. Má pravdu, ale domů se tím nedostanete. Takovým důkazům se říká \textbf{nekonstruktivní}.\footnote{Pro zvědavé: díky hluboké Gelfondově--Schneiderově větě dnes víme, že $\sqrt{2}^{\sqrt{2}}$ je iracionální, takže nastal druhý případ. Pro důkaz výše to ale vůbec nepotřebujeme.} Někteří matematici (takzvaní intuicionisté) takové důkazy odmítají přijmout, protože odmítají právě princip \textit{tertium non datur}.
 
-\section{Algebraické výrazy}
+\section{Algebraické výrazy}\label{sec:algebraicke-vyrazy}
 
 Nyní už máme v ruce všechny operace a můžeme se podívat na výrazy. Výraz je, zjednodušeně řečeno, `smysluplně' zapsaná kombinace čísel, proměnných, operací a závorek.
 
@@ -599,7 +599,7 @@ Některé součiny se objevují tak často, že se vyplatí si je pamatovat. Ani
   Sečtením obsahů dostaneme přesně $a^2 + 2ab + b^2$. Tento obrázek je mimochodem také důkazem toho, že ${(a + b)}^2 \neq a^2 + b^2$ --- ty dva obdélníky tam prostě jsou.
 \end{example}
 
-\begin{example}
+\begin{example}\label{ex:vzorec-rozdil-ctverec}
   Podobně se dá nakreslit i vzorec ${(a - b)}^2 = a^2 - 2ab + b^2$ (pro $a > b > 0$). Začneme se čtvercem o straně $a$ a chceme z něj vyříznout čtverec o straně $a - b$. Musíme tedy odstřihnout pruh nahoře a pruh vpravo, každý o rozměrech $a\times b$. Jenže tmavý rožek $b\times b$ patří do obou pruhů, takže jsme ho odstřihli \textit{dvakrát}. Jednou ho proto musíme vrátit:
   \begin{center}
     \begin{tikzpicture}[scale=0.8]
@@ -756,7 +756,7 @@ Proč jsou desky zrovna tři? Deska má jeden rozměr $b$ a ten může ležet v 
   \end{enumerate}
 \end{solution}
 
-\subsection{Rozklad mnohočlenu na součin}
+\subsection{Rozklad mnohočlenu na součin}\label{sec:rozklad-soucin}
 
 Roznásobování je snadné, to zvládne každý. Opačný směr --- tedy zapsat mnohočlen jako součin jednodušších výrazů --- je mnohem zajímavější a důležitější. Pokud totiž máme mnohočlen zapsaný jako součin, můžeme snadno zjistit, kdy je roven nule, krátit zlomky nebo zjišťovat znaménko. Proč je to tak, vychází z následující jednoduché, ale klíčové vlastnosti reálných čísel.
 
@@ -822,7 +822,7 @@ Roznásobování je snadné, to zvládne každý. Opačný směr --- tedy zapsat
   \end{enumerate}
 \end{solution}
 
-\subsection{Lomené výrazy}
+\subsection{Lomené výrazy}\label{sec:lomene-vyrazy}
 
 Lomený výraz je zlomek, v jehož jmenovateli se vyskytuje proměnná. S lomenými výrazy počítáme úplně stejně jako se zlomky, jen si musíme pamatovat na podmínky.
 
@@ -924,7 +924,7 @@ Rozšiřování zlomku je tedy jen `lámání na menší kousky' a krácení je 
   Výsledek (d) je typický. Pokud vám v maturitním příkladu vyjde nějaké `hezké' číslo, je to dobré znamení. Pokud vám vyjde $\frac{1387}{2209}$, je to taky znamení, ale jiného druhu.
 \end{solution}
 
-\subsection{Dělení mnohočlenu mnohočlenem}
+\subsection{Dělení mnohočlenu mnohočlenem}\label{sec:deleni-mnohoclenu}
 
 Stejně jako umíme dělit čísla `pod sebou' se zbytkem, umíme dělit i mnohočleny.
 

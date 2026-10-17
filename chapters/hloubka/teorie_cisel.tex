@@ -1,0 +1,503 @@
+\label{kap:teorie-cisel}
+\mathquote{Matematika je královnou věd a aritmetika je královnou matematiky.}{Carl Friedrich Gauss}
+
+Celá čísla známe od první třídy. Sčítat, násobit a dělit se zbytkem umí každý, a přesto se v nich skrývají otázky, na které lidstvo nezná odpověď už přes dva tisíce let. Je prvočíselných dvojčat nekonečně mnoho? Je každé sudé číslo větší než $2$ součtem dvou prvočísel? Teorie čísel je obor, kde se otázka vejde na ubrousek a odpověď nemusí vejít do žádné knihy.
+
+V kapitole~\ref{kap:vyrazy} jsme rozkládali výrazy na součin, v kapitole~\ref{kap:kombinatorika} jsme počítali možnosti. Tady obojí spojíme. Nejdřív postavíme základy (prvočísla, největší společný dělitel, kongruence), pak dokážeme malou Fermatovu větu, která dnes chrání každý nákup na internetu (uvidíme v kapitole~\ref{kap:kryptografie}), a nakonec se podíváme, jak jsou prvočísla rozházená mezi ostatními čísly.
+
+\section{Dělitelnost a prvočísla}
+
+\begin{definitionbox}
+  Celé číslo $a$ \textbf{dělí} celé číslo $b$, píšeme $a\mid b$, pokud existuje celé $k$ s $b = ka$. \textbf{Prvočíslo} je přirozené číslo $p > 1$, jehož jedinými kladnými děliteli jsou $1$ a $p$. Číslo $n > 1$, které není prvočíslem, je \textbf{složené}.
+\end{definitionbox}
+
+Číslo $1$ za prvočíslo nepovažujeme. Není to rozmar: kdyby $1$ bylo prvočíslo, rozklad na prvočísla by nebyl jednoznačný ($6 = 2\cdot 3 = 1\cdot 2\cdot 3 = 1\cdot 1\cdot 2\cdot 3$) a všechny věty níže by musely začínat `kromě jedničky'.
+
+Prvočísla jsou `atomy' násobení. Každé číslo se z nich dá složit a, jak uvidíme, jen jedním způsobem. Najít je ale není úplně snadné. Nejstarší metoda je přes dva tisíce let stará.
+
+\begin{definitionbox}
+  \textbf{Eratosthenovo síto}: Vypíšeme čísla $2, 3, \ldots, N$. Nejmenší neškrtnuté číslo je prvočíslo; zakroužkujeme ho a škrtneme všechny jeho násobky. Opakujeme. Stačí škrtat násobky prvočísel $p\leq\sqrt{N}$: každé složené $n\leq N$ má totiž dělitel nejvýš $\sqrt{n}$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.62cm, y=0.5cm]
+    \foreach \n in {1,...,100} {
+      \pgfmathtruncatemacro{\c}{mod(\n-1,10)}
+      \pgfmathtruncatemacro{\r}{(\n-1)/10}
+      \node[font=\scriptsize, gray] at (\c,-\r) {\n};
+    }
+    \foreach \n in {4,...,100} {
+      \pgfmathtruncatemacro{\c}{mod(\n-1,10)}
+      \pgfmathtruncatemacro{\r}{(\n-1)/10}
+      \draw[gray!80] (\c-0.27,-\r-0.2) -- (\c+0.27,-\r+0.2);
+    }
+    \foreach \n in {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97} {
+      \pgfmathtruncatemacro{\c}{mod(\n-1,10)}
+      \pgfmathtruncatemacro{\r}{(\n-1)/10}
+      \node[font=\scriptsize\bfseries, fill=colorofwisdom!25, draw=colorofwisdom, rounded corners=2pt, minimum width=0.5cm, minimum height=0.4cm, inner sep=0pt] at (\c,-\r) {\n};
+    }
+    \node[font=\scriptsize, anchor=west, align=left] at (10,-3) {škrtáme násobky\\$2$, $3$, $5$ a $7$;\\$11 > \sqrt{100}$,\\takže dál\\už není co škrtat};
+    \node[font=\scriptsize, anchor=west, align=left] at (10,-7.5) {zbylo $25$ prvočísel};
+  \end{tikzpicture}
+\end{center}
+
+Všimněte si sloupců: kromě $2$ a $5$ leží všechna prvočísla jen ve sloupcích končících na $1$, $3$, $7$, $9$. Čísla končící sudou cifrou jsou dělitelná dvěma, končící pětkou pětkou. Mezi prvními sto čísly je prvočísel čtvrtina. Ubývá jich, ale nikdy nedojdou.
+
+\begin{definitionbox}
+  \textbf{Věta} (Eukleidés, asi 300 př.\,n.\,l.): Prvočísel je nekonečně mnoho.
+\end{definitionbox}
+
+\begin{proof}
+  Předpokládejme opak: prvočísel je konečně mnoho, $p_1, p_2, \ldots, p_k$. Uvažme číslo
+  \begin{equation*}
+    N = p_1p_2\cdots p_k + 1.
+  \end{equation*}
+  Číslo $N > 1$ má nějakého prvočíselného dělitele $p$ (jeho nejmenší dělitel větší než $1$ je jistě prvočíslo). To musí být některé z $p_i$. Jenže $p_i$ dělí součin $p_1\cdots p_k$, a kdyby dělilo i $N$, dělilo by i rozdíl $N - p_1\cdots p_k = 1$. To nejde. Spor.
+\end{proof}
+
+Pozor na častý omyl: důkaz \textit{netvrdí}, že $N$ je prvočíslo. Například $2\cdot 3\cdot 5\cdot 7\cdot 11\cdot 13 + 1 = 30\,031 = 59\cdot 509$. Tvrdí jen, že prvočíselní dělitelé čísla $N$ v našem seznamu chybí. Každý konečný seznam prvočísel je tedy neúplný.
+
+\begin{definitionbox}
+  \textbf{Základní věta aritmetiky}: Každé přirozené číslo $n > 1$ lze zapsat jako součin prvočísel,
+  \begin{equation*}
+    n = p_1^{a_1}p_2^{a_2}\cdots p_r^{a_r},
+  \end{equation*}
+  a to \textbf{jednoznačně} až na pořadí činitelů.
+\end{definitionbox}
+
+\textit{Existence} je snadná: buď je $n$ prvočíslo, nebo $n = ab$ s menšími $a, b$, a ty rozložíme dál. Proces skončí, protože čísla pořád klesají. Na obrázku rozkládáme $360$ dvěma různými cestami. Strom vypadá pokaždé jinak, listy jsou ale stejné.
+
+\begin{center}
+  \begin{tikzpicture}[level distance=0.9cm, every node/.style={font=\small},
+      level 1/.style={sibling distance=2.2cm}, level 2/.style={sibling distance=1.1cm}, level 3/.style={sibling distance=0.65cm}]
+    \node {$360$}
+      child {node {$36$}
+        child {node {$6$} child {node[fill=colorofwisdom!25] {$2$}} child {node[fill=colorofwisdom!25] {$3$}}}
+        child {node {$6$} child {node[fill=colorofwisdom!25] {$2$}} child {node[fill=colorofwisdom!25] {$3$}}}}
+      child {node {$10$}
+        child {node[fill=colorofwisdom!25] {$2$}}
+        child {node[fill=colorofwisdom!25] {$5$}}};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[level distance=0.9cm, every node/.style={font=\small},
+      level 1/.style={sibling distance=2.2cm}, level 2/.style={sibling distance=1.1cm}, level 3/.style={sibling distance=0.65cm}]
+    \node {$360$}
+      child {node {$8$}
+        child {node[fill=colorofwisdom!25] {$2$}}
+        child {node {$4$} child {node[fill=colorofwisdom!25] {$2$}} child {node[fill=colorofwisdom!25] {$2$}}}}
+      child {node {$45$}
+        child {node {$9$} child {node[fill=colorofwisdom!25] {$3$}} child {node[fill=colorofwisdom!25] {$3$}}}
+        child {node[fill=colorofwisdom!25] {$5$}}};
+  \end{tikzpicture}
+
+  \small $360 = 2^3\cdot 3^2\cdot 5$ oběma cestami
+\end{center}
+
+\textit{Jednoznačnost} je hlubší, než vypadá. Opírá se o \textbf{Eukleidovo lemma}: pokud prvočíslo $p$ dělí součin $ab$, pak $p\mid a$ nebo $p\mid b$. Dokážeme ho v další sekci. S ním je jednoznačnost už snadná: mějme dva rozklady $p_1p_2\cdots p_k = q_1q_2\cdots q_l$. Prvočíslo $p_1$ dělí pravou stranu, tedy podle lemmatu dělí některé $q_j$, a protože $q_j$ je prvočíslo, je $p_1 = q_j$. Zkrátíme a opakujeme, až nic nezbude.
+
+Že to není samozřejmost, ukazuje svět čísel tvaru $a + b\sqrt{-5}$. Tam platí $6 = 2\cdot 3 = (1 + \sqrt{-5})(1 - \sqrt{-5})$ a všechny čtyři činitele jsou `nerozložitelné'. Na podobnou past narazilo v 19. století několik chybných `důkazů' velké Fermatovy věty.
+
+\section{Největší společný dělitel a Eukleidův algoritmus}
+
+\begin{definitionbox}
+  \textbf{Největší společný dělitel} $\operatorname{NSD}(a, b)$ je největší přirozené číslo, které dělí $a$ i $b$. Čísla jsou \textbf{nesoudělná}, pokud $\operatorname{NSD}(a, b) = 1$.
+
+  \textbf{Eukleidův algoritmus}: Pro $a\geq b > 0$ vydělíme se zbytkem, $a = qb + r$, $0\leq r < b$. Pak $\operatorname{NSD}(a, b) = \operatorname{NSD}(b, r)$. Opakujeme, dokud zbytek není nulový; poslední nenulový zbytek je $\operatorname{NSD}$.
+\end{definitionbox}
+
+Proč $\operatorname{NSD}(a, b) = \operatorname{NSD}(b, r)$? Každý společný dělitel $a$ a $b$ dělí i $r = a - qb$, a naopak každý společný dělitel $b$ a $r$ dělí i $a = qb + r$. Dvojice $(a, b)$ a $(b, r)$ mají tedy úplně stejné společné dělitele, a tím i ten největší.
+
+Algoritmus má krásný geometrický význam. Máme obdélník $a\times b$ a chceme ho vydláždit stejnými čtverci co největší velikosti. Odřízneme z něj tolik čtverců $b\times b$, kolik se vejde, a se zbylým obdélníkem $b\times r$ postup zopakujeme. Poslední čtverec, který obdélník vyplní beze zbytku, má stranu $\operatorname{NSD}(a, b)$, a ten už vydláždí všechno předchozí.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.42]
+    \fill[colorofwisdom!8] (0,0) rectangle (20,10);
+    \fill[colorofwisdom!25] (20,0) rectangle (24,8);
+    \fill[colorofwisdom!55] (20,8) rectangle (24,10);
+    \draw[thick] (0,0) rectangle (24,10);
+    \draw[thick] (10,0) -- (10,10) (20,0) -- (20,10);
+    \draw[thick] (20,4) -- (24,4) (20,8) -- (24,8) (22,8) -- (22,10);
+    \node[font=\small] at (5,5) {$10\times 10$};
+    \node[font=\small] at (15,5) {$10\times 10$};
+    \node[font=\scriptsize] at (22,2) {$4\times 4$};
+    \node[font=\scriptsize] at (22,6) {$4\times 4$};
+    \draw[decorate, decoration={brace, mirror}] (0,-0.3) -- (24,-0.3) node[midway, below=3pt, font=\small] {$24$};
+    \draw[decorate, decoration={brace}] (-0.3,0) -- (-0.3,10) node[midway, left=3pt, font=\small] {$10$};
+    \draw[->] (25.2,9) node[right, font=\scriptsize] {$2\times 2$} -- (23.2,9.2);
+    \node[font=\scriptsize, anchor=west, align=left] at (25,4) {$24 = 2\cdot 10 + 4$\\$10 = 2\cdot 4 + 2$\\$\phantom{1}4 = 2\cdot 2 + 0$};
+  \end{tikzpicture}
+\end{center}
+
+Z obdélníku $24\times 10$ odřízneme dva čtverce $10\times 10$, ze zbylého $10\times 4$ dva čtverce $4\times 4$ a zbylý proužek $4\times 2$ vyplní přesně dva čtverce $2\times 2$. Tedy $\operatorname{NSD}(24, 10) = 2$. Algoritmus je rychlý: zbytky klesají aspoň na polovinu každé dva kroky, takže i pro čísla se stovkami cifer stačí pár set dělení. Rozklad na prvočísla by naopak trval déle než stáří vesmíru. Na tomto rozdílu stojí celá kapitola~\ref{kap:kryptografie}.
+
+\begin{definitionbox}
+  \textbf{Bézoutova rovnost}: Pro celá $a, b$, ne obě nulová, existují celá čísla $x, y$ taková, že
+  \begin{equation*}
+    ax + by = \operatorname{NSD}(a, b).
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Spočítejme $\operatorname{NSD}(1071, 462)$ a najděme Bézoutovy koeficienty:
+  \begin{align*}
+    1071 &= 2\cdot 462 + 147, & 147 &= 1071 - 2\cdot 462,\\
+    462 &= 3\cdot 147 + 21, & 21 &= 462 - 3\cdot 147,\\
+    147 &= 7\cdot 21 + 0.
+  \end{align*}
+  Tedy $\operatorname{NSD} = 21$. Zpětným dosazením: $21 = 462 - 3(1071 - 2\cdot 462) = 7\cdot 462 - 3\cdot 1071$. Zkouška: $3234 - 3213 = 21$.
+\end{example}
+
+\begin{proof}[(Eukleidova lemmatu)]
+  Nechť $p\mid ab$ a $p\nmid a$. Pak $\operatorname{NSD}(p, a) = 1$ (jediné dělitele $p$ jsou $1$ a $p$), takže podle Bézouta $px + ay = 1$. Vynásobíme $b$: $pbx + aby = b$. Obě sčítance vlevo jsou dělitelné $p$, tedy i $b$.
+\end{proof}
+
+\begin{definitionbox}
+  \textbf{Lineární diofantická rovnice} $ax + by = c$ s neznámými $x, y\in\mathbb{Z}$ má řešení právě tehdy, když $d = \operatorname{NSD}(a, b)$ dělí $c$. Je-li $[x_0, y_0]$ jedno řešení, jsou všechna řešení
+  \begin{equation*}
+    x = x_0 + \frac{b}{d}t,\qquad y = y_0 - \frac{a}{d}t,\qquad t\in\mathbb{Z}.
+  \end{equation*}
+\end{definitionbox}
+
+Geometricky hledáme body celočíselné mříže, kterými prochází přímka. Pro $3x + 5y = 7$ je jedno řešení $[4, -1]$ a ostatní jsou od něj posunuté o vektor $(5, -3)$. Rovnice $6x + 9y = 10$ naopak řešení nemá: levá strana je vždy dělitelná třemi, pravá ne. Taková přímka se mřížovým bodům vyhne úplně.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.36]
+    \foreach \x in {-7,...,10} \foreach \y in {-5,...,6} \fill[gray!50] (\x,\y) circle (1.5pt);
+    \draw[->, gray] (-7.5,0) -- (10.8,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-5.5) -- (0,6.8) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (-7.5,5.9) -- (10.5,-4.9);
+    \foreach \p in {(-6,5),(-1,2),(4,-1),(9,-4)} \fill[colorofwisdom] \p circle (5pt);
+    \draw[->, thick] (-1,2.0) -- (3.85,-0.91);
+    \node[font=\scriptsize, above right] at (1.5,0.9) {$(5, -3)$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt] at (-1,2.9) {$[-1, 2]$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt] at (4.6,-1.9) {$[4, -1]$};
+    \node[font=\small, colorofwisdom, fill=white, inner sep=1pt] at (6,3.8) {$3x + 5y = 7$};
+  \end{tikzpicture}
+\end{center}
+
+\section{Kongruence: aritmetika na ciferníku}
+
+Je devět hodin a za pět hodin máte zkoušku. V kolik? Nikdo neřekne `ve čtrnáct hodin na dvanáctihodinovém ciferníku', řekne `ve dvě'. Počítáte modulo $12$: na čísla se díváte jen přes jejich zbytek po dělení dvanácti.
+
+\begin{definitionbox}
+  Čísla $a, b$ jsou \textbf{kongruentní modulo} $n$, píšeme $a\equiv b\pmod{n}$, pokud $n\mid a - b$, tedy pokud mají stejný zbytek po dělení $n$. Kongruence se smějí sčítat, odčítat a násobit: z $a\equiv b$ a $c\equiv d\pmod{n}$ plyne
+  \begin{equation*}
+    a + c\equiv b + d,\qquad ac\equiv bd\pmod{n}.
+  \end{equation*}
+\end{definitionbox}
+
+Důkaz násobení: $ac - bd = a(c - d) + d(a - b)$, a obě závorky jsou dělitelné $n$. Díky tomu můžeme kdykoli během výpočtu nahradit číslo jeho zbytkem a výsledek se nezmění. Místo nekonečné přímky celých čísel máme $n$ bodů na kružnici, \textbf{zbytkové třídy} $0, 1, \ldots, n - 1$, a přímku si představíme navinutou na kružnici.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1]
+    \draw[thick] (0,0) circle (1.6);
+    \foreach \k in {0,...,11} {
+      \draw ({90-30*\k}:1.5) -- ({90-30*\k}:1.6);
+      \node[font=\small] at ({90-30*\k}:1.9) {$\k$};
+    }
+    \fill[colorofwisdom] (90-270:1.6) circle (2.5pt);
+    \fill[colorofwisdom] (90-60:1.6) circle (2.5pt);
+    \draw[->, very thick, colorofwisdom] (90-270:1.25) arc[start angle=-180, end angle=-330, radius=1.25];
+    \node[font=\scriptsize, align=center] at (0,0) {$9 + 5 = 14$\\$\equiv 2\pmod{12}$};
+  \end{tikzpicture}
+  \hspace{1.5cm}
+  \begin{tikzpicture}[scale=1]
+    \draw[thick] (0,0) circle (1.6);
+    \foreach \d [count=\k from 0] in {Po,Út,St,Čt,Pá,So,Ne} {
+      \fill ({90-360/7*\k}:1.6) circle (1.5pt);
+      \node[font=\small] at ({90-360/7*\k}:1.95) {\d};
+    }
+    \fill[colorofwisdom] (90:1.6) circle (2.5pt);
+    \fill[colorofwisdom] ({90-720/7}:1.6) circle (2.5pt);
+    \draw[->, very thick, colorofwisdom] (90:1.25) arc[start angle=90, end angle={90-720/7}, radius=1.25];
+    \node[font=\scriptsize, align=center] at (0,-0.05) {za $100$ dní:\\$100 = 14\cdot 7 + 2$};
+  \end{tikzpicture}
+\end{center}
+
+Kalendář je aritmetika modulo $7$. Je-li dnes pondělí, bude za $100$ dní středa, protože $100\equiv 2\pmod 7$. Úhly jsou aritmetika modulo $360^\circ$, směr na kompasu taky. Počítač s $32$bitovými čísly počítá modulo $2^{32}$, a když `přeteče', skočí z největšího čísla do záporných. Herní vývojáři o tom vědí své.
+
+\subsection{Proč funguje ciferný součet}
+
+\begin{example}
+  Číslo je dělitelné $9$, právě když je $9$ dělitelný jeho ciferný součet. Důvod: $10\equiv 1\pmod 9$, a tedy $10^k\equiv 1^k = 1$. Pro číslo s ciframi $c_k\ldots c_1c_0$:
+  \begin{equation*}
+    c_k10^k + \cdots + c_1\cdot 10 + c_0\equiv c_k + \cdots + c_1 + c_0\pmod 9.
+  \end{equation*}
+  Číslo a jeho ciferný součet mají dokonce stejný zbytek po dělení devíti. Totéž platí pro $3$. Pro $11$ využijeme $10\equiv -1\pmod{11}$ a dostaneme \textit{střídavý} ciferný součet: $918\,082$ je dělitelné $11$, protože $2 - 8 + 0 - 8 + 1 - 9 = -22$.
+\end{example}
+
+Na stejném principu stojí kontrolní číslice. Rodné číslo musí být dělitelné jedenácti, číslo bankovního účtu má vážený kontrolní součet modulo $11$ a čárový kód EAN modulo $10$. Jeden překlep pak systém pozná hned.
+
+\subsection{Dělení modulo $n$}
+
+Sčítat a násobit modulo $n$ umíme. Co dělení? Hledáme inverzi: číslo $a^{-1}$ s $a\cdot a^{-1}\equiv 1\pmod{n}$. Modulo $7$ je $3^{-1} = 5$, protože $15\equiv 1$. Modulo $12$ ale číslo $3$ inverzi nemá: násobky trojky jsou modulo $12$ jen $0, 3, 6, 9$. Obecně platí: \textbf{$a$ má inverzi modulo $n$, právě když $\operatorname{NSD}(a, n) = 1$}, a Bézoutova rovnost $ax + ny = 1$ ji rovnou najde: $a^{-1}\equiv x$. Modulo prvočíslo lze tedy dělit vším kromě nuly, zbytky tvoří \textbf{těleso} $\mathbb{Z}_p$, stejně jako racionální nebo reálná čísla.
+
+\section{Malá Fermatova věta}
+
+\begin{definitionbox}
+  \textbf{Malá Fermatova věta}: Je-li $p$ prvočíslo a $a$ celé číslo, pak
+  \begin{equation*}
+    a^p\equiv a\pmod{p}.
+  \end{equation*}
+  Je-li navíc $p\nmid a$, je $a^{p-1}\equiv 1\pmod{p}$.
+\end{definitionbox}
+
+Například $2^{10} = 1024 = 93\cdot 11 + 1\equiv 1\pmod{11}$. Fermat větu vyslovil v roce 1640 v dopise, a jak bylo jeho zvykem, důkaz neposlal. Ukážeme dva, jeden kombinatorický a jeden algebraický.
+
+\begin{proof}[(náhrdelníky)]
+  Nechť $a\geq 1$. Navlékáme $p$ korálků do řady, každý jednou z $a$ barev. Možností je $a^p$. Z nich $a$ je jednobarevných. Zbylých $a^p - a$ řad spojíme do náhrdelníků, tedy řady, které se liší jen otočením, považujeme za stejné. Každý vícebarevný náhrdelník vznikne z \textit{právě} $p$ různých řad: kdyby se nějaká řada otočením o $k$ míst ($0 < k < p$) nezměnila, nezměnila by se ani otočením o $2k, 3k, \ldots$, a protože $p$ je prvočíslo, násobky $k$ projdou modulo $p$ všechny posuny. Řada by byla jednobarevná. Tedy $a^p - a$ je $p$ krát počet náhrdelníků.
+\end{proof}
+
+\begin{center}
+  \begin{tikzpicture}
+    \foreach \s/\lab [count=\i from 0] in {{1,1,0,0,0}/11000, {0,1,1,0,0}/01100, {0,0,1,1,0}/00110, {0,0,0,1,1}/00011, {1,0,0,0,1}/10001} {
+      \begin{scope}[xshift=\i*2.1cm]
+        \draw[gray] (0,0) circle (0.55);
+        \foreach \bit [count=\k from 0] in \s {
+          \ifnum\bit=1
+            \fill[colorofwisdom] ({90-72*\k}:0.55) circle (0.15);
+          \else
+            \filldraw[fill=white, draw=black] ({90-72*\k}:0.55) circle (0.15);
+          \fi
+        }
+        \node[font=\scriptsize] at (0,-0.95) {\texttt{\lab}};
+      \end{scope}
+    }
+    \node[font=\scriptsize, align=center] at (4.2,-1.55) {pět řad, jeden náhrdelník: $2^5 - 2 = 30$ vícebarevných řad dává $30/5 = 6$ náhrdelníků};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Eulerova funkce} $\varphi(n)$ udává, kolik čísel z $1, 2, \ldots, n$ je s $n$ nesoudělných. Platí $\varphi(p) = p - 1$ pro prvočíslo $p$, $\varphi(p^k) = p^k - p^{k-1}$ a $\varphi(mn) = \varphi(m)\varphi(n)$ pro nesoudělná $m, n$. Speciálně $\varphi(pq) = (p - 1)(q - 1)$.
+
+  \textbf{Eulerova věta}: Je-li $\operatorname{NSD}(a, n) = 1$, pak $a^{\varphi(n)}\equiv 1\pmod{n}$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[thick, gray] (0,0) circle (1.4);
+    \foreach \k in {0,...,11} {
+      \filldraw[fill=white, draw=gray] ({90-30*\k}:1.4) circle (0.24);
+      \node[font=\scriptsize, gray] at ({90-30*\k}:1.4) {$\k$};
+    }
+    \foreach \k in {1,5,7,11} {
+      \filldraw[fill=colorofwisdom!30, draw=colorofwisdom, thick] ({90-30*\k}:1.4) circle (0.24);
+      \node[font=\scriptsize\bfseries] at ({90-30*\k}:1.4) {$\k$};
+    }
+    \node[font=\scriptsize, align=center] at (0,0) {$\varphi(12) = 4$};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[x=1cm, y=1.6cm]
+    \foreach \k in {1,...,6} {
+      \node[draw, circle, inner sep=1.5pt, font=\small] (a\k) at (\k,1) {$\k$};
+      \node[draw, circle, inner sep=1.5pt, font=\small, fill=colorofwisdom!20] (b\k) at (\k,0) {$\k$};
+    }
+    \foreach \k/\m in {1/3,2/6,3/2,4/5,5/1,6/4} \draw[->, thick, colorofwisdom] (a\k) -- (b\m);
+    \node[font=\scriptsize, anchor=east] at (0.5,0.5) {$\cdot 3\bmod 7$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(Eulerovy věty)]
+  Nechť $r_1, \ldots, r_k$, $k = \varphi(n)$, jsou zbytky nesoudělné s $n$ (vlevo pro $n = 12$). Vynásobíme je všechny číslem $a$. Součiny $ar_1, \ldots, ar_k$ jsou zase nesoudělné s $n$ a navzájem různé modulo $n$: z $ar_i\equiv ar_j$ plyne vynásobením inverzí $a^{-1}$, že $r_i\equiv r_j$. Násobení číslem $a$ tedy zbytky jen \textbf{přeházelo} (vpravo pro $n = 7$, $a = 3$). Součin všech je proto stejný:
+  \begin{equation*}
+    (ar_1)(ar_2)\cdots(ar_k)\equiv r_1r_2\cdots r_k\quad\Longrightarrow\quad a^k\cdot R\equiv R\pmod{n},
+  \end{equation*}
+  kde $R = r_1\cdots r_k$ je nesoudělné s $n$, takže jím smíme vydělit. Zbude $a^{\varphi(n)}\equiv 1$. Pro $n = p$ dostaneme malou Fermatovu větu.
+\end{proof}
+
+\begin{example}
+  Jaká je poslední cifra čísla $7^{222}$? Hledáme zbytek modulo $10$. Platí $\varphi(10) = \varphi(2)\varphi(5) = 4$, takže $7^4\equiv 1$ a $7^{222} = {(7^4)}^{55}\cdot 7^2\equiv 49\equiv 9\pmod{10}$. Poslední cifra je $9$. A zbytek $2^{100}$ po dělení $13$? Podle Fermata $2^{12}\equiv 1$, $100 = 8\cdot 12 + 4$, tedy $2^{100}\equiv 2^4 = 16\equiv 3\pmod{13}$.
+\end{example}
+
+\section{Čínská věta o zbytcích}
+
+Ve starém čínském spisu \textit{Sun-c' suan-ťing} (asi 3.--5. století) stojí úloha: `Máme věci, jejichž počet neznáme. Počítáme-li je po třech, zbudou dvě. Po pěti zbudou tři. Po sedmi zbudou dvě. Kolik je věcí?' Odpověď je $23$, a pak také $23 + 105$, $23 + 210$, \dots
+
+\begin{definitionbox}
+  \textbf{Čínská věta o zbytcích}: Jsou-li $n_1, \ldots, n_k$ po dvou nesoudělná a $N = n_1n_2\cdots n_k$, pak soustava
+  \begin{equation*}
+    x\equiv a_1\pmod{n_1},\quad\ldots,\quad x\equiv a_k\pmod{n_k}
+  \end{equation*}
+  má pro libovolná $a_1, \ldots, a_k$ právě jedno řešení modulo $N$.
+\end{definitionbox}
+
+Představte si dvoje ozubená kola, jedno s $3$ zuby, druhé s $5$. Pootočíme oběma o jeden zub, pak o další, \dots. Čísla $0$ až $14$ projdou všech $3\cdot 5 = 15$ dvojic zbytků, každou právě jednou. V tabulce jdou čísla `šikmo' a po okraji se vracejí na druhou stranu jako v Pac-Manovi.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.9cm, y=0.7cm]
+    \foreach \x in {0,...,14} {
+      \pgfmathtruncatemacro{\r}{mod(\x,3)}
+      \pgfmathtruncatemacro{\c}{mod(\x,5)}
+      \ifnum\x=8
+        \fill[colorofwisdom!30] (\c-0.5,-\r-0.5) rectangle (\c+0.5,-\r+0.5);
+      \fi
+      \node[font=\small] at (\c,-\r) {$\x$};
+    }
+    \draw[gray, shift={(-0.5,-0.5)}] (0,-2) grid (5,1);
+    \draw[thick] (-0.5,-2.5) rectangle (4.5,0.5);
+    \foreach \c in {0,...,4} \node[font=\scriptsize, colorofwisdom] at (\c,1) {$\c$};
+    \foreach \r in {0,1,2} \node[font=\scriptsize, colorofwisdom] at (-1,-\r) {$\r$};
+    \node[font=\scriptsize] at (2,1.6) {zbytek po dělení $5$};
+    \node[font=\scriptsize, rotate=90] at (-1.7,-1) {zbytek po dělení $3$};
+    \node[font=\scriptsize, anchor=west, align=left] at (5,-1) {$x\equiv 2\pmod 3$\\$x\equiv 3\pmod 5$\\$\Rightarrow x\equiv 8\pmod{15}$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}
+  Pro dvě rovnice. Zobrazení $x\mapsto(x\bmod n_1,\ x\bmod n_2)$ z $\{0, \ldots, N - 1\}$ do dvojic zbytků je prosté: kdyby $x$ a $y$ dávaly stejné dvojice, dělila by $n_1$ i $n_2$ rozdíl $x - y$, a protože jsou nesoudělná, dělil by ho i $N = n_1n_2$ (rozložte na prvočísla). Jenže $|x - y| < N$, tedy $x = y$. Prvků i dvojic je $N$, takže prosté zobrazení je i na. Pro více rovnic stačí indukce.
+\end{proof}
+
+Věta má i praktickou stránku: výpočet s obrovskými čísly modulo $N = pq$ lze rozdělit na dva menší výpočty modulo $p$ a modulo $q$ a výsledky slepit. Takto se zrychluje dešifrování v RSA.
+
+\section{Jak jsou rozložena prvočísla}
+
+Prvočísla vypadají rozházeně. Za $113$ přijde až $127$, ale $101$, $103$, $107$, $109$ a $113$ jsou nahuštěná vedle sebe. Lokálně je v nich chaos, ve velkém ale panuje překvapivý řád.
+
+\begin{definitionbox}
+  Označme $\pi(x)$ počet prvočísel nejvýše rovných $x$. \textbf{Prvočíselná věta} (Hadamard a de la Vallée Poussin, 1896):
+  \begin{equation*}
+    \lim_{x\to\infty}\frac{\pi(x)}{x/\ln x} = 1.
+  \end{equation*}
+\end{definitionbox}
+
+Neformálně: náhodně vybrané číslo kolem $x$ je prvočíslem s pravděpodobností asi $\frac{1}{\ln x}$. Mezi čísly kolem milionu je prvočíslo zhruba každé čtrnácté ($\ln 10^6\approx 13{,}8$), mezi stocifernými zhruba každé dvousté třicáté. Prvočísla řídnou, ale velmi pomalu, jako logaritmus. Domněnku vyslovil patnáctiletý Gauss, když si tabelátoval prvočísla po tisících.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.011cm, y=0.03cm]
+    \foreach \y in {50,100,150} {
+      \draw[gray!30] (0,\y) -- (1000,\y);
+      \node[left, font=\scriptsize] at (0,\y) {$\y$};
+    }
+    \foreach \x in {200,400,600,800,1000} \node[below, font=\scriptsize] at (\x,0) {$\x$};
+    \draw[->] (0,0) -- (1060,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,185);
+    \draw[thick, colorofwisdom] plot coordinates {(0,0) (2,0) (2,1) (3,1) (3,2) (5,2) (5,3) (7,3) (7,4) (11,4) (11,5) (13,5) (13,6) (17,6) (17,7) (19,7) (19,8) (23,8) (23,9) (29,9) (29,10) (31,10) (31,11) (37,11) (37,12) (41,12) (41,13) (43,13) (43,14) (47,14) (47,15) (53,15) (53,16) (59,16) (59,17) (61,17) (61,18) (67,18) (67,19) (71,19) (71,20) (73,20) (73,21) (79,21) (79,22) (83,22) (83,23) (89,23) (89,24) (97,24) (97,25) (101,25) (101,26) (103,26) (103,27) (107,27) (107,28) (109,28) (109,29) (113,29) (113,30) (127,30) (127,31) (131,31) (131,32) (137,32) (137,33) (139,33) (139,34) (149,34) (149,35) (151,35) (151,36) (157,36) (157,37) (163,37) (163,38) (167,38) (167,39) (173,39) (173,40) (179,40) (179,41) (181,41) (181,42) (191,42) (191,43) (193,43) (193,44) (197,44) (197,45) (199,45) (199,46) (211,46) (211,47) (223,47) (223,48) (227,48) (227,49) (229,49) (229,50) (233,50) (233,51) (239,51) (239,52) (241,52) (241,53) (251,53) (251,54) (257,54) (257,55) (263,55) (263,56) (269,56) (269,57) (271,57) (271,58) (277,58) (277,59) (281,59) (281,60) (283,60) (283,61) (293,61) (293,62) (307,62) (307,63) (311,63) (311,64) (313,64) (313,65) (317,65) (317,66) (331,66) (331,67) (337,67) (337,68) (347,68) (347,69) (349,69) (349,70) (353,70) (353,71) (359,71) (359,72) (367,72) (367,73) (373,73) (373,74) (379,74) (379,75) (383,75) (383,76) (389,76) (389,77) (397,77) (397,78) (401,78) (401,79) (409,79) (409,80) (419,80) (419,81) (421,81) (421,82) (431,82) (431,83) (433,83) (433,84) (439,84) (439,85) (443,85) (443,86) (449,86) (449,87) (457,87) (457,88) (461,88) (461,89) (463,89) (463,90) (467,90) (467,91) (479,91) (479,92) (487,92) (487,93) (491,93) (491,94) (499,94) (499,95) (503,95) (503,96) (509,96) (509,97) (521,97) (521,98) (523,98) (523,99) (541,99) (541,100) (547,100) (547,101) (557,101) (557,102) (563,102) (563,103) (569,103) (569,104) (571,104) (571,105) (577,105) (577,106) (587,106) (587,107) (593,107) (593,108) (599,108) (599,109) (601,109) (601,110) (607,110) (607,111) (613,111) (613,112) (617,112) (617,113) (619,113) (619,114) (631,114) (631,115) (641,115) (641,116) (643,116) (643,117) (647,117) (647,118) (653,118) (653,119) (659,119) (659,120) (661,120) (661,121) (673,121) (673,122) (677,122) (677,123) (683,123) (683,124) (691,124) (691,125) (701,125) (701,126) (709,126) (709,127) (719,127) (719,128) (727,128) (727,129) (733,129) (733,130) (739,130) (739,131) (743,131) (743,132) (751,132) (751,133) (757,133) (757,134) (761,134) (761,135) (769,135) (769,136) (773,136) (773,137) (787,137) (787,138) (797,138) (797,139) (809,139) (809,140) (811,140) (811,141) (821,141) (821,142) (823,142) (823,143) (827,143) (827,144) (829,144) (829,145) (839,145) (839,146) (853,146) (853,147) (857,147) (857,148) (859,148) (859,149) (863,149) (863,150) (877,150) (877,151) (881,151) (881,152) (883,152) (883,153) (887,153) (887,154) (907,154) (907,155) (911,155) (911,156) (919,156) (919,157) (929,157) (929,158) (937,158) (937,159) (941,159) (941,160) (947,160) (947,161) (953,161) (953,162) (967,162) (967,163) (971,163) (971,164) (977,164) (977,165) (983,165) (983,166) (991,166) (991,167) (997,167) (997,168) (1000,168)};
+    \draw[thick, dashed, domain=2.2:1000, samples=100] plot (\x, {\x/ln(\x)});
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (640,150) {$\pi(x)$, schody};
+    \node[font=\scriptsize, anchor=west] at (700,85) {$x/\ln x$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \small
+  \begin{tabular}{rrrc}
+    $x$ & $\pi(x)$ & $x/\ln x$ & poměr\\
+    \hline
+    $10^3$ & $168$ & $145$ & $1{,}161$\\
+    $10^6$ & $78\,498$ & $72\,382$ & $1{,}084$\\
+    $10^9$ & $50\,847\,534$ & $48\,254\,942$ & $1{,}054$
+  \end{tabular}
+\end{center}
+
+Poměr jde k jedničce, ale pomalu. Mnohem lepší přiblížení dává \textbf{integrální logaritmus} $\operatorname{li}(x) = \int_2^x\frac{\mathrm{d}t}{\ln t}$, tedy přímo `sečtená hustota' $\frac{1}{\ln t}$. Jak přesně se $\pi(x)$ kolem $\operatorname{li}(x)$ vlní, řídí nulové body Riemannovy funkce zeta. Tvrzení, že všechny netriviální nulové body leží na přímce $\operatorname{Re}s = \frac{1}{2}$, je \textbf{Riemannova hypotéza}, o jejímž autorovi jsme si vyprávěli v kapitole~\ref{kap:integraly}. Za její důkaz je vypsán milion dolarů a do kapitoly~\ref{kap:komplexni-analyza} ji nedokážeme ani my.
+
+\subsection{Otevřené otázky}
+
+\begin{itemize}
+  \item \textbf{Prvočíselná dvojčata} jsou dvojice $p$, $p + 2$, například $11, 13$ nebo $1\,000\,037, 1\,000\,039$. Je jich nekonečně mnoho? Nevíme. V roce 2013 ale Yitang Zhang dokázal, že nekonečně mnohokrát jsou sousední prvočísla vzdálena méně než $70$ milionů, a společný projekt Polymath pak mez stlačil na $246$.
+  \item \textbf{Goldbachova domněnka} (1742): každé sudé číslo větší než $2$ je součtem dvou prvočísel. Ověřena počítači do $4\cdot 10^{18}$, nedokázána. Slabší verzi pro lichá čísla a tři prvočísla dokázal Harald Helfgott v roce 2013.
+\end{itemize}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.022cm, y=0.13cm]
+    \draw[->] (0,0) -- (520,0) node[right] {\small $n$};
+    \draw[->] (0,0) -- (0,33) node[above, font=\scriptsize] {počet rozkladů $n = p + q$, $p\leq q$};
+    \foreach \x in {100,200,300,400,500} \node[below, font=\scriptsize] at (\x,0) {$\x$};
+    \foreach \y in {10,20,30} \node[left, font=\scriptsize] at (0,\y) {$\y$};
+    \foreach \p in {(4,1),(6,1),(8,1),(10,2),(12,1),(14,2),(16,2),(18,2),(20,2),(22,3),(24,3),(26,3),(28,2),(30,3),(32,2),(34,4),(36,4),(38,2),(40,3),(42,4),(44,3),(46,4),(48,5),(50,4),(52,3),(54,5),(56,3),(58,4),(60,6),(62,3),(64,5),(66,6),(68,2),(70,5),(72,6),(74,5),(76,5),(78,7),(80,4),(82,5),(84,8),(86,5),(88,4),(90,9),(92,4),(94,5),(96,7),(98,3),(100,6),(102,8),(104,5),(106,6),(108,8),(110,6),(112,7),(114,10),(116,6),(118,6),(120,12),(122,4),(124,5),(126,10),(128,3),(130,7),(132,9),(134,6),(136,5),(138,8),(140,7),(142,8),(144,11),(146,6),(148,5),(150,12),(152,4),(154,8),(156,11),(158,5),(160,8),(162,10),(164,5),(166,6),(168,13),(170,9),(172,6),(174,11),(176,7),(178,7),(180,14),(182,6),(184,8),(186,13),(188,5),(190,8),(192,11),(194,7),(196,9),(198,13),(200,8),(202,9),(204,14),(206,7),(208,7),(210,19),(212,6),(214,8),(216,13),(218,7),(220,9),(222,11),(224,7),(226,7),(228,12),(230,9),(232,7),(234,15),(236,9),(238,9),(240,18),(242,8),(244,9),(246,16),(248,6),(250,9),(252,16),(254,9),(256,8),(258,14),(260,10),(262,9),(264,16),(266,8),(268,9),(270,19),(272,7),(274,11),(276,16),(278,7),(280,14),(282,16),(284,8),(286,12),(288,17),(290,10),(292,8),(294,19),(296,8),(298,11),(300,21),(302,9),(304,10),(306,15),(308,8),(310,12),(312,17),(314,9),(316,10),(318,15),(320,11),(322,11),(324,20),(326,7),(328,10),(330,24),(332,6),(334,11),(336,19),(338,9),(340,13),(342,17),(344,10),(346,9),(348,16),(350,13),(352,10),(354,20),(356,9),(358,10),(360,22),(362,8),(364,14),(366,18),(368,8),(370,14),(372,18),(374,10),(376,11),(378,22),(380,13),(382,10),(384,19),(386,12),(388,9),(390,27),(392,11),(394,11),(396,21),(398,7),(400,14),(402,17),(404,11),(406,13),(408,20),(410,13),(412,11),(414,21),(416,10),(418,11),(420,30),(422,11),(424,12),(426,21),(428,9),(430,14),(432,19),(434,13),(436,11),(438,21),(440,14),(442,13),(444,21),(446,12),(448,13),(450,27),(452,12),(454,12),(456,24),(458,9),(460,16),(462,28),(464,12),(466,13),(468,24),(470,15),(472,13),(474,23),(476,14),(478,11),(480,29),(482,11),(484,14),(486,23),(488,9),(490,19),(492,22),(494,13),(496,13),(498,23),(500,13)} \fill[colorofwisdom] \p circle (0.9pt);
+  \end{tikzpicture}
+\end{center}
+
+Na grafu je \textbf{Goldbachova kometa}: pro každé sudé $n\leq 500$ počet způsobů, jak ho zapsat jako součet dvou prvočísel. Počty rostou a rozpadají se do pruhů (horní pruhy tvoří čísla dělitelná třemi, která mají rozkladů víc). Že by někde dál spadl počet na nulu, se zdá absurdní. Důkaz ale chybí.
+
+\section{Odbočka --- Pythagorejské trojice a racionální body na kružnici}
+
+Trojice přirozených čísel s $a^2 + b^2 = c^2$, jako $3, 4, 5$ nebo $5, 12, 13$, se nazývají \textbf{pythagorejské}. Vydělíme-li rovnici číslem $c^2$, dostaneme $\left(\frac{a}{c}\right)^2 + \left(\frac{b}{c}\right)^2 = 1$. Pythagorejské trojice jsou tedy totéž co \textbf{racionální body} na jednotkové kružnici $x^2 + y^2 = 1$. Problém teorie čísel se změnil v geometrii.
+
+Jak najít všechny racionální body? Trik: vezmeme jeden známý, $[-1, 0]$, a vedeme jím přímku $y = t(x + 1)$ s racionální směrnicí $t$. Přímka protne kružnici ještě v jednom bodě. Dosazením:
+\begin{equation*}
+  x^2 + t^2{(x + 1)}^2 = 1\quad\Longrightarrow\quad(1 + t^2)x^2 + 2t^2x + t^2 - 1 = 0.
+\end{equation*}
+Jeden kořen známe, $x = -1$. Podle Vietových vztahů z kapitoly~\ref{kap:kvadraticke} je součin kořenů $\frac{t^2 - 1}{1 + t^2}$, takže druhý kořen je
+\begin{equation*}
+  x = \frac{1 - t^2}{1 + t^2},\qquad y = t(x + 1) = \frac{2t}{1 + t^2}.
+\end{equation*}
+Pro racionální $t$ je bod racionální. A naopak: přímka spojující $[-1, 0]$ s racionálním bodem má racionální směrnici. Máme tedy \textbf{všechny} racionální body.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.4]
+    \draw[->, gray] (-1.25,0) -- (1.4,0) node[right] {\small $x$};
+    \draw[->, gray] (0,-0.5) -- (0,1.25) node[above] {\small $y$};
+    \draw[thick] (0,0) circle (1);
+    \foreach \t/\lab/\pos in {0.5/{3, 4, 5}/above right, 0.3333/{4, 3, 5}/right, 0.6667/{5, 12, 13}/above, 0.2/{12, 5, 13}/right} {
+      \pgfmathsetmacro{\px}{(1-\t*\t)/(1+\t*\t)}
+      \pgfmathsetmacro{\py}{2*\t/(1+\t*\t)}
+      \draw[colorofwisdom!70] (-1.2,{-0.2*\t}) -- ({\px+0.15},{\t*(\px+1.15)});
+      \fill[colorofwisdom] (\px,\py) circle (0.9pt);
+      \node[font=\scriptsize, \pos] at (\px,\py) {$(\lab)$};
+    }
+    \fill (-1,0) circle (1pt) node[below left, font=\scriptsize] {$[-1, 0]$};
+    \node[font=\scriptsize, colorofwisdom] at (-0.45,0.62) {$y = t(x + 1)$};
+    \node[font=\scriptsize, align=left, anchor=west] at (0.6,-0.32) {$t = \frac{1}{2}, \frac{1}{3}, \frac{2}{3}, \frac{1}{5}$};
+  \end{tikzpicture}
+\end{center}
+
+Dosadíme $t = \frac{n}{m}$ a vynásobíme $m^2 + n^2$. Dostaneme slavný vzorec, který znal už Eukleidés:
+\begin{equation*}
+  a = m^2 - n^2,\qquad b = 2mn,\qquad c = m^2 + n^2.
+\end{equation*}
+Například $m = 2$, $n = 1$ dává $3, 4, 5$, a $m = 3$, $n = 2$ dává $5, 12, 13$. Každá pythagorejská trojice je násobkem některé z nich.
+
+\subsection{Velká Fermatova věta}
+
+Na okraj svého výtisku Diofantovy \textit{Aritmetiky} připsal Fermat kolem roku 1637, že rovnice $a^n + b^n = c^n$ nemá pro $n\geq 3$ žádné řešení v přirozených číslech, a že objevil `vskutku podivuhodný důkaz', který se na okraj nevejde. Geometricky: na křivce $x^n + y^n = 1$ nejsou kromě triviálních žádné racionální body. Fermat sám dokázal případ $n = 4$ metodou `nekonečného sestupu'. Euler případ $n = 3$.
+
+Úplný důkaz trval $358$ let. Cesta vedla přes \textbf{eliptické křivky} $y^2 = x^3 + ax + b$, které potkáme v kapitole~\ref{kap:kryptografie}. V 80. letech Gerhard Frey a Ken Ribet ukázali: kdyby existovalo řešení, dala by se z něj sestrojit eliptická křivka tak podivná, že by porušila tzv. Taniyamovu--Šimurovu domněnku. Andrew Wiles ji (pro potřebnou třídu křivek) dokázal po sedmi letech tajné práce. První verze z roku 1993 obsahovala mezeru, kterou spolu s Richardem Taylorem opravil v září 1994. Fermatův podivuhodný důkaz téměř jistě neexistoval.
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Spočítejte $\operatorname{NSD}(252, 198)$ Eukleidovým algoritmem a najděte celá $x, y$ s $252x + 198y = \operatorname{NSD}(252, 198)$.
+    \item Určete zbytek čísla $3^{100}$ po dělení $7$ a poslední cifru čísla $3^{2026}$.
+    \item Dokažte, že $n^5 - n$ je dělitelné $30$ pro každé celé $n$.
+    \item Najděte nejmenší přirozené $x$ s $x\equiv 1\pmod 4$, $x\equiv 2\pmod 5$, $x\equiv 3\pmod 7$.
+    \item Najděte pythagorejskou trojici pro $m = 4$, $n = 1$ a ověřte ji.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $252 = 198 + 54$, $198 = 3\cdot 54 + 36$, $54 = 36 + 18$, $36 = 2\cdot 18$. Tedy $\operatorname{NSD} = 18$ a zpětně $18 = 54 - 36 = 4\cdot 54 - 198 = 4\cdot 252 - 5\cdot 198$.
+    \item $3^6\equiv 1\pmod 7$ a $100 = 16\cdot 6 + 4$, takže $3^{100}\equiv 3^4 = 81\equiv 4$. Mocniny trojky končí cyklicky na $3, 9, 7, 1$ ($\varphi(10) = 4$) a $2026\equiv 2\pmod 4$, poslední cifra je $9$.
+    \item $30 = 2\cdot 3\cdot 5$. Podle Fermata $n^5\equiv n\pmod 5$. Modulo $3$ je $n^3\equiv n$, tedy $n^5 = n^3\cdot n^2\equiv n\cdot n^2 = n^3\equiv n$. Modulo $2$ je $n^2\equiv n$, a tedy i $n^5\equiv n$. Číslo $n^5 - n$ je dělitelné $2$, $3$ i $5$, a protože jsou nesoudělná, i jejich součinem $30$.
+    \item Čísla $\equiv 3\pmod 7$: $3, 10, 17, 24, 31, 38, \ldots$; z nich $\equiv 2\pmod 5$ je $17$, dál se přičítá $35$: $17, 52, 87, 122$. Podmínku $\equiv 1\pmod 4$ splní $17$. Tedy $x = 17$ (zkouška: $17 = 4\cdot 4 + 1 = 3\cdot 5 + 2 = 2\cdot 7 + 3$).
+    \item $a = 15$, $b = 8$, $c = 17$: $225 + 64 = 289 = 17^2$.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Monsieur Le Blanc}
+
+Sophie Germain se narodila v roce 1776 v Paříži v rodině zámožného obchodníka. Když jí bylo třináct, vypukla revoluce a dívka, která nesměla z domu, trávila dny v otcově knihovně. Tam si přečetla, jak Archimédés při dobytí Syrakus tak zabral do geometrického obrazce, že si nevšiml římského vojáka, který ho zabil. Usoudila, že obor, kvůli kterému člověk zapomene i na smrt, musí stát za to. Rodiče považovali matematiku pro dívku za nevhodnou a podle tradovaného vyprávění jí v noci brali svíčky a teplé oblečení. Ona se učila pod přikrývkou se schovanými svíčkami, dokud se nevzdali.
+
+V roce 1794 vznikla v Paříži École polytechnique, kam ženy nesměly. Sophie si opatřila skripta a pod jménem bývalého studenta Antoina-Augusta Le Blanca posílala vlastní řešení úloh. Profesor Lagrange si všiml, že `pan Le Blanc', dříve průměrný student, se proměnil v talent, a chtěl ho poznat. Pravda vyšla najevo a Lagrange, ke své cti, se stal jejím rádcem.
+
+Od roku 1804 si jako Monsieur Le Blanc dopisovala s Gaussem o teorii čísel. V roce 1806 obsadila Napoleonova vojska Brunšvik, kde Gauss žil. Sophie se bála, že Gaussa potká Archimédův osud, a požádala známého generála Perneta, aby zajistil jeho bezpečí. Když se Gauss dozvěděl, kdo se o něj postaral, poznal i pravou identitu svého korespondenta. Odepsal jí, že když žena navzdory všem předsudkům pronikne do nejtemnějších částí teorie čísel, musí mít `nejušlechtilejší odvahu, zcela mimořádné nadání a geniální mysl'.
+
+Germain dokázala první obecný výsledek o velké Fermatově větě: pro prvočísla $p$, u nichž je i $2p + 1$ prvočíslo, nemá rovnice řešení s $a, b, c$ nedělitelnými $p$. Těmto prvočíslům ($2, 3, 5, 11, 23, \ldots$) se dodnes říká \textbf{prvočísla Sophie Germainové} a používají se v kryptografii. V roce 1816 jako první žena vyhrála cenu Pařížské akademie, za teorii kmitání pružných desek. Zemřela v roce 1831 na rakovinu prsu. Gauss údajně prosazoval, aby jí univerzita v Göttingenu udělila čestný doktorát, ale ten už nestihla. V úmrtním listu stálo místo `matematička' jen `rentière', žena žijící z renty. Na Eiffelově věži je vyryto $72$ jmen francouzských vědců a inženýrů, mnozí z nich stavěli na její teorii pružnosti. Její jméno mezi nimi není.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Proč $1$ není prvočíslo? Jak funguje Eratosthenovo síto a proč stačí škrtat do $\sqrt{N}$?
+    \item Převyprávějte Eukleidův důkaz nekonečnosti prvočísel. Je číslo $p_1\cdots p_k + 1$ vždy prvočíslo?
+    \item Na čem stojí jednoznačnost rozkladu na prvočísla?
+    \item Popište Eukleidův algoritmus pomocí dláždění obdélníku čtverci.
+    \item Kdy má rovnice $ax + by = c$ celočíselné řešení a jak vypadají všechna řešení?
+    \item Co znamená $a\equiv b\pmod n$? Proč funguje test dělitelnosti devíti?
+    \item Kdy má číslo inverzi modulo $n$?
+    \item Dokažte malou Fermatovu větu pomocí náhrdelníků.
+    \item Co říká čínská věta o zbytcích a prvočíselná věta?
+    \item Jak souvisejí pythagorejské trojice s racionálními body na kružnici?
+  \end{enumerate}
+\end{problem}

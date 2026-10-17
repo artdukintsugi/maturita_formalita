@@ -1,0 +1,717 @@
+\label{kap:ml}
+\mathquote{Všechny modely jsou špatně, ale některé jsou užitečné.}{George E.\,P. Box}
+
+Když vám telefon navrhne další slovo zprávy, když banka zablokuje podezřelou platbu nebo když chatbot napíše báseň o integrálech, nestojí za tím žádná magie, ale matematika, kterou už skoro celou znáte. Derivace z kapitoly~\ref{kap:derivace}, gradient z kapitoly~\ref{kap:vice-promennych}, matice a vlastní vektory z kapitoly~\ref{kap:linearni-algebra}, pravděpodobnost z kapitoly~\ref{kap:pravdepodobnost} a skalární součin z kapitoly~\ref{kap:analyticka}. V této kapitole uvidíme, jak se z těchto kousků skládá \textbf{strojové učení}: obor, ve kterém počítač nedostane přesný postup, ale příklady, a postup si z nich `vypočítá' sám. Budeme se snažit o poctivost: ukážeme, co tyto metody umějí, proč fungují, a také kde končí.
+
+\section{Co znamená `učit se z dat'}
+
+Začněme úplně obyčejně. Máme tabulku bytů: plocha, patro, stáří domu, vzdálenost od metra, a cena. Chceme odhadnout cenu bytu, který v tabulce není. Každý byt je pro nás \textbf{bod} $\vec{x}\in\mathbb{R}^n$ (zde $n = 4$) a k němu známe číslo $y$, cenu. Obrázek s rozlišením $28\times 28$ pixelů je bod v $\mathbb{R}^{784}$ a jeho $y$ je třeba číslice, kterou zobrazuje. Data jsou tedy prostě hromada bodů v (často obrovsky vysokorozměrném) prostoru.
+
+\begin{definitionbox}
+  \textbf{Učení s učitelem}: Máme \textbf{trénovací data} $(\vec{x}_1, y_1), \dots, (\vec{x}_N, y_N)$. \textbf{Model} je funkce $f_{\vec{w}}(\vec{x})$, která závisí na \textbf{parametrech} $\vec{w}$ (vahách). \textbf{Ztrátová funkce} $\ell(f_{\vec{w}}(\vec{x}), y)$ měří, jak moc se předpověď mýlí, a \textbf{učení} je hledání vah, které minimalizují průměrnou ztrátu
+  \begin{equation*}
+    L(\vec{w}) = \frac{1}{N}\sum_{i=1}^{N}\ell\big(f_{\vec{w}}(\vec{x}_i), y_i\big).
+  \end{equation*}
+\end{definitionbox}
+
+V téhle definici je schovaná celá filozofie oboru. `Učení' je \textit{optimalizace}: hledáme minimum funkce mnoha proměnných, přesně jako v kapitole~\ref{kap:vice-promennych}. Jenže skutečný cíl je jiný. Nechceme dobře předpovídat byty, které už známe, ale ty, které jsme ještě neviděli. K tomuto rozporu se vrátíme v sekci o přeučení.
+
+\section{Lineární regrese}
+
+Nejjednodušší model: $y$ závisí na $x$ lineárně, $f(x) = ax + b$. Jak najít `nejlepší' přímku procházející mrakem bodů? Přímka body většinou přesně neprotne. Rozdílům $r_i = y_i - (ax_i + b)$ říkáme \textbf{rezidua}.
+
+\begin{definitionbox}
+  \textbf{Metoda nejmenších čtverců}: Za nejlepší přímku považujeme tu, která minimalizuje součet čtverců reziduí
+  \begin{equation*}
+    S(a, b) = \sum_{i=1}^{N}{\big(y_i - ax_i - b\big)}^2.
+  \end{equation*}
+\end{definitionbox}
+
+Proč čtverce, a ne třeba absolutní hodnoty? Čtverce se dají derivovat, velké chyby trestají víc než malé, a hlavně z nich vyjde krásná geometrie, jak hned uvidíme. (Navíc, pokud jsou chyby měření normálně rozdělené, je to přesně ta nejpravděpodobnější přímka.)
+
+\begin{example}
+  Data: $[1, 2]$, $[2, 3]$, $[3, 5]$, $[4, 4]$, $[5, 6]$. Minimum funkce $S(a, b)$ hledáme jako v kapitole~\ref{kap:vice-promennych}: obě parciální derivace položíme rovny nule,
+  \begin{align*}
+    \frac{\partial S}{\partial b} &= -2\sum(y_i - ax_i - b) = 0 &&\Longrightarrow\quad a\sum x_i + bN = \sum y_i,\\
+    \frac{\partial S}{\partial a} &= -2\sum x_i(y_i - ax_i - b) = 0 &&\Longrightarrow\quad a\sum x_i^2 + b\sum x_i = \sum x_iy_i.
+  \end{align*}
+  Spočítáme $N = 5$, $\sum x_i = 15$, $\sum y_i = 20$, $\sum x_i^2 = 55$, $\sum x_iy_i = 2 + 6 + 15 + 16 + 30 = 69$. Soustava $15a + 5b = 20$, $55a + 15b = 69$ má řešení $a = 0{,}9$, $b = 1{,}3$. Nejlepší přímka je $y = 0{,}9x + 1{,}3$. Rezidua jsou $-0{,}2$; $-0{,}1$; $1$; $-0{,}9$; $0{,}2$ a jejich součet je (jak vyžaduje první rovnice) přesně nula. Minimální součet čtverců je $S = 1{,}9$.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.6cm, y=0.8cm]
+    \draw[->] (0,0) -- (6.2,0) node[right] {\small $x$};
+    \draw[->] (0,0) -- (0,7.3) node[above] {\small $y$};
+    \foreach \x in {1,...,5} \draw (\x,0.1) -- (\x,-0.1) node[below, font=\scriptsize] {$\x$};
+    \foreach \y in {2,4,6} \draw (0.05,\y) -- (-0.05,\y) node[left, font=\scriptsize] {$\y$};
+    \draw[very thick, colorofwisdom] (0.3,1.57) -- (5.8,6.52) node[above, font=\small] {$y = 0{,}9x + 1{,}3$};
+    \foreach \x/\y/\f in {1/2/2.2, 2/3/3.1, 3/5/4.0, 4/4/4.9, 5/6/5.8} {
+      \draw[thick, dashed] (\x,\y) -- (\x,\f);
+      \fill (\x,\y) circle (2.2pt);
+    }
+    \node[font=\scriptsize, anchor=west] at (3.05,4.5) {$r_3 = 1$};
+    \node[font=\scriptsize, anchor=west] at (4.05,4.45) {$r_4 = -0{,}9$};
+  \end{tikzpicture}
+\end{center}
+
+Čárkované úsečky jsou rezidua. Minimalizujeme součet čtverců jejich délek. Všimněte si, že měříme svisle, ne kolmo k přímce: chyba je v $y$, ne v $x$.
+
+\subsection{Maticový zápis a projekce}
+
+Pro více proměnných se počítání po složkách stane nepřehledným. Zapišme data maticově. Řádky matice $X$ jsou jednotlivé body (s jedničkou navíc kvůli absolutnímu členu), $\vec{y}$ je sloupec výsledků a $\vec{w}$ sloupec vah:
+\begin{equation*}
+  X = \begin{pmatrix} 1 & 1\\ 1 & 2\\ 1 & 3\\ 1 & 4\\ 1 & 5\end{pmatrix},\qquad\vec{y} = \begin{pmatrix} 2\\ 3\\ 5\\ 4\\ 6\end{pmatrix},\qquad\vec{w} = \begin{pmatrix} b\\ a\end{pmatrix},\qquad S(\vec{w}) = \|\vec{y} - X\vec{w}\|^2.
+\end{equation*}
+
+\begin{definitionbox}
+  \textbf{Normální rovnice}: Vektor vah $\vec{w}$ minimalizuje $\|\vec{y} - X\vec{w}\|^2$, právě když
+  \begin{equation*}
+    X^TX\vec{w} = X^T\vec{y}.
+  \end{equation*}
+  Má-li $X$ lineárně nezávislé sloupce, je $X^TX$ regulární a $\vec{w} = {(X^TX)}^{-1}X^T\vec{y}$.
+\end{definitionbox}
+
+V našem příkladu je $X^TX = \begin{pmatrix} 5 & 15\\ 15 & 55\end{pmatrix}$ a $X^T\vec{y} = \begin{pmatrix} 20\\ 69\end{pmatrix}$, tedy přesně soustava z příkladu. Důležitější než výpočet je ale geometrie. Vektor $X\vec{w} = b\,\vec{x}_{(1)} + a\,\vec{x}_{(2)}$ je lineární kombinace sloupců matice $X$, takže leží v rovině (obecně podprostoru) $\mathrm{Im}\,X$, kterou sloupce generují. Vektor $\vec{y}\in\mathbb{R}^5$ v ní obvykle neleží. Hledáme bod roviny, který je k $\vec{y}$ nejblíž. To je \textbf{kolmý průmět}.
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.3]
+    \fill[colorofwisdom!12] (-0.5,-0.3,0) -- (4.6,-0.3,0) -- (4.6,3.2,0) -- (-0.5,3.2,0) -- cycle;
+    \draw[colorofwisdom!50] (-0.5,-0.3,0) -- (4.6,-0.3,0) -- (4.6,3.2,0) -- (-0.5,3.2,0) -- cycle;
+    \draw[->, thick, gray] (0,0,0) -- (1.6,0,0) node[below, font=\scriptsize, black] {$\vec{x}_{(1)}$};
+    \draw[->, thick, gray] (0,0,0) -- (-0.3,2.4,0) node[above left, font=\scriptsize, black] {$\vec{x}_{(2)}$};
+    \draw[->, very thick] (0,0,0) -- (3,1.8,2.2) node[above, font=\small] {$\vec{y}$};
+    \draw[->, very thick, colorofwisdom] (0,0,0) -- (3,1.8,0) node[below right, font=\small] {$X\vec{w} = \hat{\vec{y}}$};
+    \draw[thick, dashed] (3,1.8,0) -- (3,1.8,2.2);
+    \draw (3,1.8,0.25) -- (2.82,1.692,0.25) -- (2.82,1.692,0);
+    \node[font=\scriptsize, anchor=west] at (3.05,1.8,1.1) {$\vec{r} = \vec{y} - X\vec{w}$};
+    \node[font=\scriptsize, colorofwisdom] at (0.9,2.9,0) {rovina $\mathrm{Im}\,X$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{proof}[(normálních rovnic)]
+  Nejbližší bod $\hat{\vec{y}} = X\vec{w}$ roviny k bodu $\vec{y}$ je ten, pro který je spojnice $\vec{r} = \vec{y} - X\vec{w}$ kolmá na celou rovinu (jinak bychom se mohli posunout po rovině blíž, podobně jako u vzdálenosti bodu od přímky v kapitole~\ref{kap:analyticka}). Kolmost na rovinu znamená kolmost na každý sloupec matice $X$, tedy $X^T\vec{r} = \vec{o}$. Odtud $X^T(\vec{y} - X\vec{w}) = \vec{o}$, neboli $X^TX\vec{w} = X^T\vec{y}$.
+
+  Že jde o minimum, ověříme přímo: pro libovolný vektor $\vec{v}$ je $\vec{y} - X(\vec{w} + \vec{v}) = \vec{r} - X\vec{v}$ a protože $\vec{r}\perp X\vec{v}$, dává Pythagorova věta
+  \begin{equation*}
+    \|\vec{y} - X(\vec{w} + \vec{v})\|^2 = \|\vec{r}\|^2 + \|X\vec{v}\|^2\geq\|\vec{r}\|^2.
+  \end{equation*}
+\end{proof}
+
+Tenhle argument dokázal víc, než jsme chtěli. Funkce $S(\vec{w})$ je \textbf{konvexní} miska bez jiných důlků: jediné stacionární místo je globální minimum. (Hessova matice je $2X^TX$ a pro každé $\vec{v}$ je $\vec{v}^TX^TX\vec{v} = \|X\vec{v}\|^2\geq 0$.) U lineární regrese tedy nemůžeme `uvíznout' ve špatném údolí. U neuronových sítí, jak uvidíme, takové štěstí nemáme.
+
+\section{Gradientní sestup}
+
+Normální rovnice jsou krásné, ale pro model s miliardou parametrů bychom museli řešit soustavu s miliardou neznámých. A pro většinu modelů žádný vzorec pro minimum ani neexistuje. Proto se v praxi postupuje jako turista v mlze: nevidí údolí, ale cítí pod nohama sklon. V kapitole~\ref{kap:vice-promennych} jsme dokázali, že nejprudší klesání ukazuje vektor $-\nabla L$.
+
+\begin{definitionbox}
+  \textbf{Gradientní sestup}: Zvolíme počáteční váhy $\vec{w}_0$ a \textbf{rychlost učení} $\eta > 0$ a opakujeme
+  \begin{equation*}
+    \vec{w}_{k+1} = \vec{w}_k - \eta\,\nabla L(\vec{w}_k).
+  \end{equation*}
+\end{definitionbox}
+
+\begin{example}
+  Pro $L(u, v) = \frac{u^2}{2} + 5v^2$ je $\nabla L = (u, 10v)$ a krok s $\eta = 0{,}18$ zní $u_{k+1} = 0{,}82\,u_k$, $v_{k+1} = -0{,}8\,v_k$. Začneme v bodě $[-4{,}5;\ 1{,}2]$. Souřadnice $v$ v každém kroku změní znaménko, takže cesta \textit{kličkuje} napříč úzkým údolím, a přitom se po jeho dně jen pomalu sune k minimu.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.85cm, y=1.5cm]
+    \foreach \a in {1,2,3,4,5,6} {
+      \draw[colorofwisdom!45] plot[variable=\t, domain=0:360, samples=70] ({\a*cos(\t)}, {0.3162*\a*sin(\t)});
+    }
+    \draw[->, gray] (-6.4,0) -- (6.6,0) node[right, black] {\small $u$};
+    \draw[->, gray] (0,-2.0) -- (0,2.1) node[above, black] {\small $v$};
+    \draw[thick, -latex] (-4.500,1.200) -- (-3.690,-0.960) -- (-3.026,0.768) -- (-2.481,-0.614) -- (-2.035,0.492) -- (-1.668,-0.393) -- (-1.368,0.315) -- (-1.122,-0.252) -- (-0.920,0.201) -- (-0.754,-0.161) -- (-0.619,0.129) -- (-0.507,-0.103) -- (-0.416,0.082) -- (-0.341,-0.066) -- (-0.280,0.053);
+    \foreach \p in {(-4.500,1.200), (-3.690,-0.960), (-3.026,0.768), (-2.481,-0.614), (-2.035,0.492), (-1.668,-0.393), (-1.368,0.315), (-1.122,-0.252), (-0.920,0.201)} \fill \p circle (1.5pt);
+    \node[font=\scriptsize, anchor=south east] at (-4.5,1.2) {$\vec{w}_0$};
+    \fill[colorofwisdom] (0,0) circle (2pt);
+    \node[font=\scriptsize, colorofwisdom, anchor=north west] at (0.1,-0.08) {minimum};
+    \node[font=\scriptsize] at (3.6,-1.65) {vrstevnice $\frac{u^2}{2} + 5v^2 = c$};
+  \end{tikzpicture}
+\end{center}
+
+Na obrázku je skutečných patnáct iterací. Gradient je kolmý na vrstevnice, a v protáhlém údolí proto míří hlavně `přes údolí', ne `podél něj'. To je typické chování: když je funkce v jednom směru mnohem strmější než v jiném, gradientní sestup zbytečně kmitá. Moderní metody (s `hybností' nebo s různou rychlostí pro každou souřadnici) se snaží právě tohle kmitání tlumit.
+
+\subsection{Rychlost učení}
+
+Nejdůležitější číslo celého algoritmu je $\eta$. Podívejme se na nejjednodušší možný případ $L(w) = w^2$. Krok je $w_{k+1} = w_k - 2\eta w_k = (1 - 2\eta)w_k$, takže $w_k = {(1 - 2\eta)}^kw_0$ je geometrická posloupnost z kapitoly~\ref{kap:posloupnosti}. Konverguje k minimu, právě když $|1 - 2\eta| < 1$, tedy pro $0 < \eta < 1$.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.75cm, y=0.5cm]
+    \draw[->, gray] (-2.4,0) -- (2.5,0) node[right, font=\scriptsize, black] {$w$};
+    \draw[thick, domain=-2.3:2.3, samples=50] plot (\x, {\x*\x});
+    \draw[colorofwisdom, thick, ->] (1.5,2.25) -- (1.2,1.44);
+    \draw[colorofwisdom, thick, ->] (1.2,1.44) -- (0.96,0.922);
+    \draw[colorofwisdom, thick, ->] (0.96,0.922) -- (0.768,0.590);
+    \draw[colorofwisdom, thick, ->] (0.768,0.590) -- (0.614,0.377);
+    \draw[colorofwisdom, thick, ->] (0.614,0.377) -- (0.492,0.242);
+    \foreach \w in {1.5,1.2,0.96,0.768,0.614,0.492} \fill[colorofwisdom] (\w,{\w*\w}) circle (1.4pt);
+    \node[font=\scriptsize, align=center] at (0,-1.2) {$\eta = 0{,}1$: pomalu};
+  \end{tikzpicture}
+  \hspace{0.2cm}
+  \begin{tikzpicture}[x=0.75cm, y=0.5cm]
+    \draw[->, gray] (-2.4,0) -- (2.5,0) node[right, font=\scriptsize, black] {$w$};
+    \draw[thick, domain=-2.3:2.3, samples=50] plot (\x, {\x*\x});
+    \draw[colorofwisdom, thick, ->] (1.5,2.25) -- (0.3,0.09);
+    \draw[colorofwisdom, thick, ->] (0.3,0.09) -- (0.06,0.0036);
+    \foreach \w in {1.5,0.3,0.06} \fill[colorofwisdom] (\w,{\w*\w}) circle (1.4pt);
+    \node[font=\scriptsize, align=center] at (0,-1.2) {$\eta = 0{,}4$: rychle};
+  \end{tikzpicture}
+  \hspace{0.2cm}
+  \begin{tikzpicture}[x=0.75cm, y=0.5cm]
+    \draw[->, gray] (-2.4,0) -- (2.5,0) node[right, font=\scriptsize, black] {$w$};
+    \draw[thick, domain=-2.3:2.3, samples=50] plot (\x, {\x*\x});
+    \draw[colorofwisdom, thick, ->] (1.5,2.25) -- (-1.65,2.7225);
+    \draw[colorofwisdom, thick, ->] (-1.65,2.7225) -- (1.815,3.294);
+    \draw[colorofwisdom, thick, ->] (1.815,3.294) -- (-1.997,3.988);
+    \draw[colorofwisdom, thick, ->] (-1.997,3.988) -- (2.196,4.822);
+    \foreach \w in {1.5,-1.65,1.815,-1.997,2.196} \fill[colorofwisdom] (\w,{\w*\w}) circle (1.4pt);
+    \node[font=\scriptsize, align=center] at (0,-1.2) {$\eta = 1{,}05$: diverguje};
+  \end{tikzpicture}
+\end{center}
+
+Malá rychlost učení znamená mnoho drobných kroků. Rozumná dojde k minimu za pár kroků. Příliš velká přeskočí údolí na druhou stranu, výš, než začala, a výpočet `vybuchne'. V praxi se $\eta$ ladí zkoušením a často se během učení postupně zmenšuje. Pro obecnou hladkou funkci platí podobné pravidlo: je-li druhá derivace (zakřivení) nejvýš $M$, stačí volit $\eta < \frac{2}{M}$. V protáhlém údolí z předchozího obrázku určuje bezpečné $\eta$ ten \textit{nejstrmější} směr, a proto se v plochém směru postupuje tak pomalu.
+
+\subsection{Stochastický gradientní sestup}
+
+Ztráta je průměr přes všechna data, $L = \frac{1}{N}\sum\ell_i$, takže i gradient je průměr $\frac{1}{N}\sum\nabla\ell_i$. Pro $N$ v řádu miliard je jeden přesný krok neúnosně drahý. \textbf{Stochastický gradientní sestup} (SGD) proto v každém kroku vybere náhodnou malou dávku (anglicky \textit{minibatch}) třeba $32$ příkladů a použije průměr gradientů jen přes ni. Takový odhad je náhodný, ale jeho \textit{střední hodnota} je přesně skutečný gradient, protože každý příklad je vybrán se stejnou pravděpodobností. Cesta pak připomíná opilce, který jde z kopce: klopýtá ze strany na stranu, ale v průměru míří dolů. A jak se ukazuje, trocha šumu dokonce pomáhá vyskočit z mělkých důlků.
+
+\section{Klasifikace a logistická regrese}
+
+Často nechceme předpovědět číslo, ale \textit{třídu}: je e-mail spam? Je na snímku nádor? Odpovědi budeme kódovat $y\in\{0, 1\}$. Přímka $\vec{w}\cdot\vec{x} + b$ dává libovolné reálné číslo. Chceme z něj udělat pravděpodobnost.
+
+\begin{definitionbox}
+  \textbf{Sigmoida} (logistická funkce) je $\sigma(z) = \dfrac{1}{1 + \mathrm{e}^{-z}}$. \textbf{Logistická regrese} modeluje
+  \begin{equation*}
+    P(y = 1\mid\vec{x}) = p = \sigma(\vec{w}\cdot\vec{x} + b).
+  \end{equation*}
+  \textbf{Rozhodovací hranice} $p = \frac{1}{2}$ je množina $\vec{w}\cdot\vec{x} + b = 0$, tedy přímka (v rovině), rovina, obecně nadrovina.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.36cm, y=2.6cm]
+    \draw[->, gray] (-6.5,0) -- (6.8,0) node[right, black, font=\small] {$z$};
+    \draw[->, gray] (0,-0.1) -- (0,1.25);
+    \draw[dashed, gray] (-6.5,1) -- (6.5,1);
+    \node[left, font=\scriptsize] at (0,1.07) {$1$};
+    \node[left, font=\scriptsize] at (0,0.5) {$\frac{1}{2}$};
+    \draw[gray] (0.2,0.5) -- (-0.2,0.5);
+    \draw[very thick, colorofwisdom, domain=-6.5:6.5, samples=80] plot (\x, {1/(1+exp(-\x))});
+    \foreach \z in {-5,5} \draw (\z,0.03) -- (\z,-0.03) node[below, font=\scriptsize] {$\z$};
+    \node[font=\scriptsize] at (-3.2,0.65) {$\sigma(z)$};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[x=1.15cm, y=1.15cm]
+    \fill[colorofwisdom!10] (0.345,4) -- (4.2,4) -- (4.2,0) -- (3.982,0) -- cycle;
+    \draw[->, gray] (0,0) -- (4.4,0) node[right, black, font=\small] {$x_1$};
+    \draw[->, gray] (0,0) -- (0,4.2) node[above, black, font=\small] {$x_2$};
+    \draw[very thick, dashed] (0.345,4) -- (3.982,0);
+    \foreach \p in {(2.12,0.15), (1.39,1.04), (1.00,1.20), (0.29,1.20), (0.81,2.80), (1.30,1.14), (1.07,1.00), (0.73,1.12), (1.42,1.19), (1.63,1.21), (1.21,2.00), (1.45,1.07), (1.12,1.54), (2.07,1.18)} \draw[thick] \p circle (2.3pt);
+    \foreach \p in {(2.89,3.35), (2.60,2.77), (3.40,3.16), (3.04,3.20), (1.73,3.36), (2.57,2.15), (3.12,3.22), (2.80,2.42), (3.01,2.88), (3.63,3.24), (3.09,3.40), (2.91,2.48), (3.26,3.16), (2.90,2.55)} \fill[colorofwisdom] \p circle (2.3pt);
+    \node[font=\scriptsize, colorofwisdom] at (3.55,3.8) {$p > \frac{1}{2}$};
+    \node[font=\scriptsize] at (0.75,0.35) {$p < \frac{1}{2}$};
+  \end{tikzpicture}
+\end{center}
+
+Vlevo je sigmoida: hladký `schod', který stlačí celou reálnou osu do intervalu $(0, 1)$. Vpravo je skutečný výsledek logistické regrese pro dvě skupiny po čtrnácti bodech. Naučené váhy jsou $w_1\approx 1{,}47$, $w_2\approx 1{,}33$, $b\approx -5{,}84$ a čárkovaná přímka $1{,}47x_1 + 1{,}33x_2 = 5{,}84$ odděluje obě skupiny bezchybně. Daleko od hranice je model `jistý' ($p$ blízko $0$ nebo $1$), u hranice váhá.
+
+\subsection{Křížová entropie}
+
+Jakou ztrátu zvolit? Čtverce se tu nehodí. Přirozenější je zeptat se pravděpodobnosti z kapitoly~\ref{kap:pravdepodobnost}: \textit{Jak pravděpodobná jsou naše data, pokud platí model?} Model dává bodu třídy $1$ pravděpodobnost $p_i$ a bodu třídy $0$ pravděpodobnost $1 - p_i$. Obojí zapíšeme jedním vzorcem $p_i^{y_i}{(1 - p_i)}^{1 - y_i}$. Pro nezávislé příklady se pravděpodobnosti násobí:
+\begin{equation*}
+  \mathcal{L}(\vec{w}) = \prod_{i=1}^{N}p_i^{y_i}{(1 - p_i)}^{1 - y_i}.
+\end{equation*}
+Chceme ji co největší (\textbf{metoda maximální věrohodnosti}). Součin tisíců čísel menších než jedna je ale tak malý, že by ho počítač zaokrouhlil na nulu. Pomůže logaritmus z kapitoly~\ref{kap:exponencialni}: je rostoucí, takže nemění polohu maxima, a mění součin na součet. Místo maximalizace $\ln\mathcal{L}$ budeme minimalizovat $-\ln\mathcal{L}$.
+
+\begin{definitionbox}
+  \textbf{Křížová entropie} (log-loss) jednoho příkladu je
+  \begin{equation*}
+    \ell(p, y) = -\big(y\ln p + (1 - y)\ln(1 - p)\big).
+  \end{equation*}
+  Pro $y = 1$ je to $-\ln p$, pro $y = 0$ je to $-\ln(1 - p)$. V obou případech tedy
+  \begin{equation*}
+    \ell = -\ln\big(\text{pravděpodobnost, kterou model dal správné odpovědi}\big).
+  \end{equation*}
+\end{definitionbox}
+
+Pokud model dá správné odpovědi pravděpodobnost $0{,}9$, zaplatí $-\ln 0{,}9\approx 0{,}11$. Při $0{,}5$ zaplatí $0{,}69$ a při $0{,}01$ už $4{,}6$. Sebevědomý omyl je tedy trestán velmi tvrdě, a pro $p\to 0$ jde ztráta do nekonečna. Odměna za derivování je překvapivě elegantní.
+
+\begin{example}
+  Platí $\sigma'(z) = \sigma(z)\big(1 - \sigma(z)\big)$, protože
+  \begin{equation*}
+    \sigma'(z) = \frac{\mathrm{e}^{-z}}{{(1 + \mathrm{e}^{-z})}^2} = \frac{1}{1 + \mathrm{e}^{-z}}\cdot\frac{\mathrm{e}^{-z}}{1 + \mathrm{e}^{-z}} = \sigma(z)\big(1 - \sigma(z)\big).
+  \end{equation*}
+  Pro $p = \sigma(z)$ pak podle derivace složené funkce
+  \begin{equation*}
+    \frac{\partial\ell}{\partial z} = -\left(\frac{y}{p} - \frac{1 - y}{1 - p}\right)p(1 - p) = -y(1 - p) + (1 - y)p = p - y.
+  \end{equation*}
+  Gradient podle vah je tedy $(p - y)\,\vec{x}$: chyba předpovědi krát vstup. Úplně stejný tvar má gradient čtvercové ztráty u lineární regrese. To není náhoda, obojí je zvláštní případ jedné obecné teorie (tzv. zobecněných lineárních modelů).
+\end{example}
+
+\section{Neuronové sítě}
+
+Logistická regrese umí oddělit třídy jen přímkou. Svět je ale křivější. Myšlenka neuronových sítí je jednoduchá: poskládat mnoho jednoduchých jednotek za sebe a vedle sebe.
+
+\begin{definitionbox}
+  \textbf{Umělý neuron} se vstupy $x_1, \dots, x_n$ spočítá vážený součet a na něj použije nelineární \textbf{aktivační funkci} $\varphi$:
+  \begin{equation*}
+    a = \varphi(w_1x_1 + w_2x_2 + \cdots + w_nx_n + b) = \varphi(\vec{w}\cdot\vec{x} + b).
+  \end{equation*}
+  \textbf{Vrstva} je několik neuronů se stejnými vstupy, tedy $\vec{a} = \varphi(W\vec{x} + \vec{b})$, kde $W$ je matice vah a $\varphi$ se použije na každou složku zvlášť. \textbf{Síť} je složení několika vrstev,
+  \begin{equation*}
+    f(\vec{x}) = W_3\,\varphi\big(W_2\,\varphi(W_1\vec{x} + \vec{b}_1) + \vec{b}_2\big) + \vec{b}_3.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[x=1cm, y=1cm]
+    \foreach \i/\y in {1/1.1, 2/0, 3/-1.1} {
+      \node[draw, circle, minimum size=0.65cm, font=\scriptsize] (x\i) at (0,\y) {$x_{\i}$};
+      \draw[->, thick] (x\i) -- (2.05,0) node[pos=0.45, font=\scriptsize, fill=white, inner sep=1pt] {$w_{\i}$};
+    }
+    \node[draw, circle, thick, fill=colorofwisdom!15, minimum size=1.3cm] (n) at (2.7,0) {};
+    \draw (2.7,0.65) -- (2.7,-0.65);
+    \node[font=\small] at (2.38,0) {$\Sigma$};
+    \node[font=\small] at (3.02,0) {$\varphi$};
+    \node[font=\scriptsize] at (2.7,-0.95) {$+\,b$};
+    \draw[->, thick] (3.35,0) -- (4.4,0) node[right, font=\small] {$a$};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[x=1.45cm, y=0.75cm]
+    \foreach \i in {1,2,3} \node[draw, circle, minimum size=0.45cm] (a\i) at (0,{2.5-1.25*\i+1.25}) {};
+    \foreach \i in {1,...,4} \node[draw, circle, fill=colorofwisdom!15, minimum size=0.45cm] (b\i) at (1,{3-1.2*\i+1.2}) {};
+    \foreach \i in {1,...,4} \node[draw, circle, fill=colorofwisdom!15, minimum size=0.45cm] (c\i) at (2,{3-1.2*\i+1.2}) {};
+    \node[draw, circle, fill=gray!30, minimum size=0.45cm] (d) at (3,1.2) {};
+    \foreach \i in {1,2,3} \foreach \j in {1,...,4} \draw[gray] (a\i) -- (b\j);
+    \foreach \i in {1,...,4} \foreach \j in {1,...,4} \draw[gray] (b\i) -- (c\j);
+    \foreach \i in {1,...,4} \draw[gray] (c\i) -- (d);
+    \node[font=\scriptsize] at (0,-1.4) {vstup};
+    \node[font=\scriptsize, align=center] at (1.5,-1.4) {skryté vrstvy};
+    \node[font=\scriptsize] at (3,-1.4) {výstup};
+  \end{tikzpicture}
+\end{center}
+
+Vlevo jeden neuron, vpravo síť se dvěma skrytými vrstvami. Každá čára je jedna váha. Už tahle malá síť má $3\cdot 4 + 4\cdot 4 + 4\cdot 1 = 32$ vah a $9$ absolutních členů. Velké jazykové modely mají vah stovky miliard. Se skutečnými neurony v mozku mají ty umělé společné asi tolik, co letadlo s ptákem: inspiraci, ne mechanismus.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.4cm, y=1.1cm]
+    \draw[->, gray] (-3.2,0) -- (3.3,0) node[right, black, font=\small] {$z$};
+    \draw[->, gray] (0,-1.3) -- (0,2.7);
+    \draw[dashed, gray!60] (-3.2,1) -- (3.2,1) (-3.2,-1) -- (3.2,-1);
+    \node[left, font=\scriptsize] at (0,1.12) {$1$};
+    \node[left, font=\scriptsize] at (0,-0.88) {$-1$};
+    \draw[very thick, gray, domain=-3.1:3.1, samples=60] plot (\x, {1/(1+exp(-\x))});
+    \draw[very thick, black, domain=-3.1:3.1, samples=60] plot (\x, {tanh(\x)});
+    \draw[very thick, colorofwisdom] (-3.1,0) -- (0,0) -- (2.5,2.5);
+    \node[font=\scriptsize, gray, anchor=west] at (2.15,0.72) {$\sigma(z)$};
+    \node[font=\scriptsize, anchor=west] at (2.15,1.18) {$\tanh z$};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (2.0,2.55) {$\mathrm{ReLU}(z) = \max(0, z)$};
+  \end{tikzpicture}
+\end{center}
+
+Tři nejznámější aktivační funkce. Sigmoida a hyperbolický tangens $\tanh z = \frac{\mathrm{e}^z - \mathrm{e}^{-z}}{\mathrm{e}^z + \mathrm{e}^{-z}}$ jsou hladké schody. Daleko od nuly jsou ale téměř vodorovné, mají tam skoro nulovou derivaci, a gradientní sestup se v nich `zasekne'. Proto se dnes nejvíc používá obyčejný \textbf{ReLU} (\textit{rectified linear unit}): pro záporná čísla nula, pro kladná identita. Nevypadá to jako nic převratného, a přece právě on hlubokým sítím výrazně usnadnil učení.
+
+\subsection{Proč je potřeba nelinearita}
+
+Kdyby $\varphi$ byla lineární, byla by celá síť jen $W_3W_2W_1\vec{x} + \text{konstanta}$: součin matic je zase matice, takže by sto vrstev nebylo o nic silnějších než jedna. Bez nelinearity je hluboká síť jen drahá lineární regrese. Nejslavnější úloha, kterou lineární model nezvládne, je \textbf{XOR} (`buď, anebo'): výstup je $1$, právě když je právě jeden ze vstupů roven $1$.
+
+\begin{center}
+  \begin{tikzpicture}[x=2.3cm, y=2.3cm]
+    \draw[->, gray] (-0.3,0) -- (1.45,0) node[right, black, font=\small] {$x_1$};
+    \draw[->, gray] (0,-0.3) -- (0,1.45) node[above, black, font=\small] {$x_2$};
+    \draw[thick] (0,0) circle (3pt) (1,1) circle (3pt);
+    \fill[colorofwisdom] (1,0) circle (3pt) (0,1) circle (3pt);
+    \draw[dashed, gray] (-0.25,0.85) -- (1.3,0.05);
+    \draw[dashed, gray] (0.3,-0.25) -- (1.35,1.1);
+    \node[font=\scriptsize, below left] at (0,0) {$[0, 0]$};
+    \node[font=\scriptsize, above right] at (1,1) {$[1, 1]$};
+    \node[font=\scriptsize, below] at (1,-0.06) {$[1, 0]$};
+    \node[font=\scriptsize, left] at (-0.06,1) {$[0, 1]$};
+    \node[font=\scriptsize, align=center] at (0.6,-0.55) {žádná přímka neoddělí\\barevné body od bílých};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[x=1.6cm, y=2.3cm]
+    \draw[->, gray] (-0.3,0) -- (2.5,0) node[right, black, font=\small] {$h_1$};
+    \draw[->, gray] (0,-0.3) -- (0,1.45) node[above, black, font=\small] {$h_2$};
+    \draw[thick] (0,0) circle (3pt) (2,1) circle (3pt);
+    \fill[colorofwisdom] (1,0) circle (3pt);
+    \draw[very thick, colorofwisdom, dashed] (0.3,-0.1) -- (2.3,0.9);
+    \node[font=\scriptsize, below left] at (0,0) {$[0, 0]$};
+    \node[font=\scriptsize, above] at (2,1.07) {$[2, 1]$};
+    \node[font=\scriptsize, below] at (1,-0.06) {$[1, 0]$ (dvakrát)};
+    \node[font=\scriptsize, align=center] at (1.1,-0.55) {po skryté vrstvě to jde};
+  \end{tikzpicture}
+\end{center}
+
+Vlevo: body $[1, 0]$ a $[0, 1]$ leží na jedné úhlopříčce, body $[0, 0]$ a $[1, 1]$ na druhé, a každá přímka, která odřízne jednu barevnou, odřízne s ní i bílou. (Formálně: kdyby $w_1x_1 + w_2x_2 + b$ bylo kladné v $[1, 0]$ a $[0, 1]$ a záporné v $[0, 0]$ a $[1, 1]$, sečtením prvních dvou nerovností dostaneme $w_1 + w_2 + 2b > 0$ a sečtením druhých dvou $w_1 + w_2 + 2b < 0$.) Jedna skrytá vrstva se dvěma neurony ale stačí. Zvolme
+\begin{equation*}
+  h_1 = \mathrm{ReLU}(x_1 + x_2),\qquad h_2 = \mathrm{ReLU}(x_1 + x_2 - 1),\qquad\text{výstup} = h_1 - 2h_2.
+\end{equation*}
+Body se zobrazí na $[0, 0]\mapsto[0, 0]$, $[1, 0], [0, 1]\mapsto[1, 0]$, $[1, 1]\mapsto[2, 1]$ a výstup je postupně $0, 1, 1, 0$. Skrytá vrstva \textit{ohnula prostor} tak, že je úloha najednou lineárně oddělitelná (vpravo). Tohle je podstata hlubokého učení: každá vrstva přetransformuje data do tvaru, ve kterém je pro další vrstvu úloha snazší.
+
+\subsection{Univerzální aproximace}
+
+Kolik toho síť dokáže? Překvapivě mnoho. Uvažujme síť s jednou skrytou vrstvou neuronů ReLU a jedním vstupem: $g(x) = \sum_k c_k\,\mathrm{ReLU}(x - t_k)$. Každý člen je `zalomení' v bodě $t_k$, za kterým se sklon změní o $c_k$. Součet je tedy lomená čára, a lomenou čarou se dá libovolně přesně obtáhnout každá spojitá funkce na uzavřeném intervalu.
+
+\begin{example}
+  Aproximujme $\sin x$ na $[0, \pi]$ lomenou čárou s vrcholy v bodech $0, \frac{\pi}{4}, \frac{\pi}{2}, \frac{3\pi}{4}, \pi$. Sklony úseků jsou $\pm\frac{2\sqrt{2}}{\pi}\approx\pm 0{,}900$ a $\pm\frac{4 - 2\sqrt{2}}{\pi}\approx\pm 0{,}373$. Koeficient $c_k$ je změna sklonu v bodě $t_k$, takže
+  \begin{equation*}
+    g(x) = 0{,}900\,\mathrm{ReLU}(x) - 0{,}527\,\mathrm{ReLU}\big(x - \tfrac{\pi}{4}\big) - 0{,}746\,\mathrm{ReLU}\big(x - \tfrac{\pi}{2}\big) - 0{,}527\,\mathrm{ReLU}\big(x - \tfrac{3\pi}{4}\big).
+  \end{equation*}
+  Čtyři neurony a největší chyba je asi $0{,}07$. S osmi neurony by klesla zhruba na čtvrtinu.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=2.5cm, y=3cm]
+    \draw[->, gray] (-0.2,0) -- (3.45,0) node[right, black, font=\small] {$x$};
+    \draw[->, gray] (0,-0.15) -- (0,1.2);
+    \draw[gray!70] (0.7854,0.7071) -- (1.3,1.17);
+    \draw[gray!70] (1.5708,1) -- (2.3,1.272);
+    \draw[very thick, domain=0:3.1416, samples=80] plot (\x, {sin(deg(\x))});
+    \draw[very thick, dashed, colorofwisdom, domain=0:3.1416, samples=50] plot (\x, {0.9003*max(0,\x)-0.5274*max(0,\x-0.7854)-0.7458*max(0,\x-1.5708)-0.5274*max(0,\x-2.3562)});
+    \foreach \t/\l in {0.7854/\frac{\pi}{4}, 1.5708/\frac{\pi}{2}, 2.3562/\frac{3\pi}{4}, 3.1416/\pi} \draw (\t,0.03) -- (\t,-0.03) node[below, font=\scriptsize] {$\l$};
+    \foreach \t/\v in {0/0, 0.7854/0.7071, 1.5708/1, 2.3562/0.7071, 3.1416/0} \fill[colorofwisdom] (\t,\v) circle (1.6pt);
+    \node[font=\scriptsize] at (0.35,0.6) {sklon $0{,}9$};
+    \node[font=\scriptsize] at (2.75,0.75) {$\sin x$};
+    \node[font=\scriptsize, colorofwisdom] at (1.95,0.5) {$g(x)$};
+  \end{tikzpicture}
+\end{center}
+
+Šedé čáry ukazují, jak by $g$ pokračovala bez dalšího zalomení. Každý neuron graf v jednom místě `ohne'. Obecná \textbf{věta o univerzální aproximaci} (pro sigmoidy ji v roce 1989 dokázal George Cybenko) říká totéž ve více rozměrech: síť s jednou dostatečně širokou skrytou vrstvou aproximuje libovolnou spojitou funkci na omezené uzavřené množině s libovolnou přesností. Pozor ale, co věta \textit{neříká}: kolik neuronů bude potřeba (může to být astronomické číslo), ani jak správné váhy najít, ani jestli síť bude dobře odhadovat body, které neviděla. Je to věta o existenci, ne návod.
+
+\section{Zpětné šíření: derivace složené funkce}
+
+Učit síť gradientním sestupem znamená spočítat parciální derivace ztráty podle každé z miliard vah. Naivně, po jedné, by to trvalo věčnost. \textbf{Zpětné šíření} (\textit{backpropagation}) je jen pečlivě zorganizované pravidlo pro derivaci složené funkce z kapitoly~\ref{kap:derivace}: $\frac{\mathrm{d}f}{\mathrm{d}x} = \frac{\mathrm{d}f}{\mathrm{d}g}\cdot\frac{\mathrm{d}g}{\mathrm{d}x}$. Síť je dlouhé složení funkcí, a tak se derivace násobí podél řetězu, odzadu dopředu.
+
+\begin{example}
+  Síť s jedním vstupem, jedním skrytým neuronem ReLU a lineárním výstupem:
+  \begin{equation*}
+    z = w_1x,\qquad h = \mathrm{ReLU}(z),\qquad\hat{y} = w_2h,\qquad L = \tfrac{1}{2}{(\hat{y} - y)}^2.
+  \end{equation*}
+  Vezmeme $x = 2$, $y = 1$, $w_1 = 0{,}5$, $w_2 = 1{,}5$. \textbf{Dopředný průchod}: $z = 1$, $h = 1$, $\hat{y} = 1{,}5$, $L = 0{,}125$. \textbf{Zpětný průchod} jde od konce a každý krok znovu použije výsledek předchozího:
+  \begin{align*}
+    \frac{\partial L}{\partial\hat{y}} &= \hat{y} - y = 0{,}5, & \frac{\partial L}{\partial w_2} &= \frac{\partial L}{\partial\hat{y}}\cdot h = 0{,}5,\\
+    \frac{\partial L}{\partial h} &= \frac{\partial L}{\partial\hat{y}}\cdot w_2 = 0{,}75, & \frac{\partial L}{\partial z} &= \frac{\partial L}{\partial h}\cdot\mathrm{ReLU}'(z) = 0{,}75\cdot 1 = 0{,}75,\\
+    \frac{\partial L}{\partial w_1} &= \frac{\partial L}{\partial z}\cdot x = 1{,}5.
+  \end{align*}
+  Krok gradientního sestupu s $\eta = 0{,}1$ dá $w_1 = 0{,}35$, $w_2 = 1{,}45$. Nový výstup je $\hat{y} = 1{,}45\cdot 0{,}7 = 1{,}015$, téměř přesně požadovaná jednička.
+\end{example}
+
+Trik je v tom, že mezivýsledky $\frac{\partial L}{\partial h}$, $\frac{\partial L}{\partial z}$ se spočítají jen jednou a sdílí se pro všechny váhy před nimi. Celý gradient tak stojí jen zhruba tolik jako dva až tři dopředné průchody, ať má síť vah kolik chce. Bez tohoto pozorování by moderní umělá inteligence neexistovala.
+
+\section{Přeučení a zobecnění}
+
+Teď k rozporu, který jsme slíbili na začátku. Vezmeme deset bodů, které vznikly z funkce $\sin 2\pi x$ přidáním náhodného šumu, a proložíme jimi metodou nejmenších čtverců mnohočleny stupně $1$, $3$ a $9$. Zvlášť máme deset dalších \textbf{testovacích} bodů ze stejného zdroje, které model při učení neviděl.
+
+\begin{center}
+  \begin{tikzpicture}[x=3.2cm, y=0.62cm]
+    \begin{scope}
+      \clip (-0.05,-2.3) rectangle (1.05,2.3);
+      \draw[gray!60, dashed, domain=0:1, samples=60] plot (\x, {sin(360*\x)});
+      \draw[very thick, colorofwisdom] plot coordinates {(0.000,0.48) (0.500,0.14) (1.000,-0.20)};
+    \end{scope}
+    \draw[gray] (0,-2.3) rectangle (1,2.3);
+    \foreach \p in {(0.000,-0.108), (0.111,0.360), (0.222,1.153), (0.333,0.589), (0.444,0.845), (0.556,-0.111), (0.667,-0.956), (0.778,-0.842), (0.889,-0.240), (1.000,0.708)} \fill \p circle (1.6pt);
+    \foreach \p in {(0.035,0.224), (0.169,0.877), (0.283,0.787), (0.381,0.711), (0.486,0.136), (0.512,-0.091), (0.669,-0.877), (0.764,-0.822), (0.860,-0.935), (0.961,-0.068)} \draw \p circle (1.6pt);
+    \node[font=\scriptsize] at (0.5,-2.75) {stupeň $1$};
+  \end{tikzpicture}
+  \hspace{0.15cm}
+  \begin{tikzpicture}[x=3.2cm, y=0.62cm]
+    \begin{scope}
+      \clip (-0.05,-2.3) rectangle (1.05,2.3);
+      \draw[gray!60, dashed, domain=0:1, samples=60] plot (\x, {sin(360*\x)});
+      \draw[very thick, colorofwisdom] plot coordinates {(0.000,-0.29) (0.025,0.01) (0.050,0.26) (0.075,0.47) (0.100,0.64) (0.125,0.78) (0.150,0.89) (0.175,0.96) (0.200,1.00) (0.225,1.02) (0.250,1.01) (0.275,0.98) (0.300,0.93) (0.325,0.86) (0.350,0.78) (0.375,0.68) (0.400,0.58) (0.425,0.46) (0.450,0.34) (0.475,0.21) (0.500,0.09) (0.525,-0.04) (0.550,-0.16) (0.575,-0.28) (0.600,-0.39) (0.625,-0.49) (0.650,-0.58) (0.675,-0.66) (0.700,-0.71) (0.725,-0.75) (0.750,-0.77) (0.775,-0.76) (0.800,-0.73) (0.825,-0.67) (0.850,-0.58) (0.875,-0.46) (0.900,-0.30) (0.925,-0.11) (0.950,0.12) (0.975,0.40) (1.000,0.72)};
+    \end{scope}
+    \draw[gray] (0,-2.3) rectangle (1,2.3);
+    \foreach \p in {(0.000,-0.108), (0.111,0.360), (0.222,1.153), (0.333,0.589), (0.444,0.845), (0.556,-0.111), (0.667,-0.956), (0.778,-0.842), (0.889,-0.240), (1.000,0.708)} \fill \p circle (1.6pt);
+    \foreach \p in {(0.035,0.224), (0.169,0.877), (0.283,0.787), (0.381,0.711), (0.486,0.136), (0.512,-0.091), (0.669,-0.877), (0.764,-0.822), (0.860,-0.935), (0.961,-0.068)} \draw \p circle (1.6pt);
+    \node[font=\scriptsize] at (0.5,-2.75) {stupeň $3$};
+  \end{tikzpicture}
+  \hspace{0.15cm}
+  \begin{tikzpicture}[x=3.2cm, y=0.62cm]
+    \begin{scope}
+      \clip (0,-2.3) rectangle (1,2.3);
+      \draw[gray!60, dashed, domain=0:1, samples=60] plot (\x, {sin(360*\x)});
+      \draw[very thick, colorofwisdom] plot coordinates {(0.000,-0.11) (0.008,-1.39) (0.017,-2.20) (0.025,-2.40) (0.033,-2.40) (0.042,-2.40) (0.050,-2.40) (0.058,-2.19) (0.067,-1.79) (0.075,-1.37) (0.083,-0.93) (0.092,-0.51) (0.100,-0.11) (0.108,0.25) (0.117,0.57) (0.125,0.84) (0.133,1.06) (0.142,1.23) (0.150,1.35) (0.158,1.44) (0.167,1.48) (0.175,1.49) (0.183,1.47) (0.192,1.43) (0.200,1.37) (0.208,1.30) (0.217,1.21) (0.225,1.12) (0.233,1.03) (0.242,0.95) (0.250,0.87) (0.258,0.79) (0.267,0.73) (0.275,0.67) (0.283,0.63) (0.292,0.59) (0.300,0.57) (0.308,0.56) (0.317,0.56) (0.325,0.57) (0.333,0.59) (0.342,0.61) (0.350,0.64) (0.358,0.67) (0.367,0.71) (0.375,0.74) (0.383,0.78) (0.392,0.81) (0.400,0.83) (0.408,0.85) (0.417,0.86) (0.425,0.87) (0.433,0.86) (0.442,0.85) (0.450,0.83) (0.458,0.80) (0.467,0.76) (0.475,0.71) (0.483,0.65) (0.492,0.58) (0.500,0.50) (0.508,0.42) (0.517,0.34) (0.525,0.24) (0.533,0.15) (0.542,0.05) (0.550,-0.05) (0.558,-0.14) (0.567,-0.24) (0.575,-0.33) (0.583,-0.42) (0.592,-0.51) (0.600,-0.59) (0.608,-0.66) (0.617,-0.72) (0.625,-0.78) (0.633,-0.83) (0.642,-0.87) (0.650,-0.91) (0.658,-0.94) (0.667,-0.96) (0.675,-0.97) (0.683,-0.98) (0.692,-0.98) (0.700,-0.97) (0.708,-0.96) (0.717,-0.95) (0.725,-0.94) (0.733,-0.92) (0.742,-0.91) (0.750,-0.89) (0.758,-0.88) (0.767,-0.86) (0.775,-0.85) (0.783,-0.83) (0.792,-0.82) (0.800,-0.80) (0.808,-0.79) (0.817,-0.77) (0.825,-0.75) (0.833,-0.72) (0.842,-0.68) (0.850,-0.64) (0.858,-0.58) (0.867,-0.51) (0.875,-0.42) (0.883,-0.32) (0.892,-0.20) (0.900,-0.06) (0.908,0.10) (0.917,0.28) (0.925,0.46) (0.933,0.66) (0.942,0.85) (0.950,1.03) (0.958,1.18) (0.967,1.29) (0.975,1.33) (0.983,1.27) (0.992,1.08) (1.000,0.71)};
+    \end{scope}
+    \draw[gray] (0,-2.3) rectangle (1,2.3);
+    \foreach \p in {(0.000,-0.108), (0.111,0.360), (0.222,1.153), (0.333,0.589), (0.444,0.845), (0.556,-0.111), (0.667,-0.956), (0.778,-0.842), (0.889,-0.240), (1.000,0.708)} \fill \p circle (1.6pt);
+    \foreach \p in {(0.035,0.224), (0.169,0.877), (0.283,0.787), (0.381,0.711), (0.486,0.136), (0.512,-0.091), (0.669,-0.877), (0.764,-0.822), (0.860,-0.935), (0.961,-0.068)} \draw \p circle (1.6pt);
+    \node[font=\scriptsize] at (0.5,-2.75) {stupeň $9$};
+  \end{tikzpicture}
+\end{center}
+
+Plné body jsou trénovací, prázdné testovací, šedá čárkovaná křivka je skutečná funkce, kterou model nezná. Chybu změříme odmocninou z průměrného čtverce reziduí:
+
+\begin{center}
+  \begin{tabular}{lccc}
+    & stupeň $1$ & stupeň $3$ & stupeň $9$\\\hline
+    chyba na trénovacích datech & $0{,}64$ & $0{,}25$ & $0{,}00$\\
+    chyba na testovacích datech & $0{,}55$ & $0{,}19$ & $1{,}09$
+  \end{tabular}
+\end{center}
+
+Přímka je příliš hloupá: chybuje všude (\textbf{nedoučení}). Mnohočlen stupně $9$ má deset koeficientů, a tak projde všemi deseti body \textit{přesně}. Trénovací chyba je nulová, a přesto je to nejhorší model ze tří: mezi body divoce kmitá, protože se naučil nazpaměť i šum (\textbf{přeučení}). Jeho koeficienty mají velikost až kolem $600\,000$, které se navzájem jemně vyrušují. Kubika zachytila tvar, ne náhodu. Je to jako student, který se naučí nazpaměť řešení všech příkladů ze sbírky, ale u maturity dostane nový příklad.
+
+\begin{definitionbox}
+  \textbf{Zobecnění}: model posuzujeme podle chyby na datech, která při učení neviděl. Proto se data dělí na \textbf{trénovací} (na nich se učí váhy) a \textbf{testovací} (na nich se jednou, na konci, změří úspěšnost). Často i na třetí, \textbf{validační} část, podle které se volí třeba stupeň mnohočlenu.
+
+  \vspace{0.2cm}
+
+  \textbf{Regularizace}: k ztrátě přičteme trest za velké váhy,
+  \begin{equation*}
+    L_\lambda(\vec{w}) = \|\vec{y} - X\vec{w}\|^2 + \lambda\|\vec{w}\|^2,\qquad\text{s řešením}\qquad\vec{w} = {(X^TX + \lambda I)}^{-1}X^T\vec{y}.
+  \end{equation*}
+\end{definitionbox}
+
+Regularizace říká modelu: `buď jednoduchý, pokud to jde'. Pro mnohočlen stupně $9$ s $\lambda = 0{,}001$ klesnou koeficienty z řádu statisíců zhruba na $10$, trénovací chyba vzroste na $0{,}23$ a testovací klesne z $1{,}09$ na $0{,}20$. Model se zhoršil na tom, co zná, a výrazně zlepšil na tom, co nezná. Matice $X^TX + \lambda I$ je navíc vždy regulární (proč? nápověda: $\vec{v}^T(X^TX + \lambda I)\vec{v} = \|X\vec{v}\|^2 + \lambda\|\vec{v}\|^2$), takže regularizace vyléčí i soustavy, které by jinak řešení neměly jednoznačné.
+
+\section{Odbočka --- Rozklad chyby na vychýlení a rozptyl}
+
+Proč má přímka i mnohočlen stupně $9$ velkou testovací chybu, když selhávají úplně jinak? Odpověď dává jedna z nejhezčích rovností statistiky. Předpokládejme, že data vznikají jako $y = f(x) + \varepsilon$, kde $f$ je neznámá skutečná funkce a $\varepsilon$ náhodný šum se střední hodnotou $0$ a rozptylem $\sigma^2$ (viz kapitolu~\ref{kap:statistika}). Trénovací data jsou náhodná, takže i naučený model $\hat{f}$ je náhodný: s jinými deseti body bychom dostali jiný mnohočlen. Označme $\bar{f}(x) = \mathrm{E}\,\hat{f}(x)$ `průměrný model' přes všechny možné trénovací sady.
+
+\begin{definitionbox}
+  \textbf{Rozklad na vychýlení a rozptyl}: Pro nový bod $x$ s nezávislým šumem platí
+  \begin{equation*}
+    \mathrm{E}\big[{(y - \hat{f}(x))}^2\big] = \underbrace{\sigma^2}_{\text{šum}} + \underbrace{{\big(f(x) - \bar{f}(x)\big)}^2}_{\text{vychýlení}^2} + \underbrace{\mathrm{E}\big[{(\hat{f}(x) - \bar{f}(x))}^2\big]}_{\text{rozptyl}}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}
+  Pišme $y - \hat{f} = \varepsilon + (f - \bar{f}) + (\bar{f} - \hat{f})$ (vše v bodě $x$). Umocníme na druhou a vezmeme střední hodnotu. Vzniknou tři čtverce a tři smíšené členy. Smíšené členy jsou nulové:
+  \begin{itemize}
+    \item $\mathrm{E}[\varepsilon(f - \bar{f})] = (f - \bar{f})\,\mathrm{E}\,\varepsilon = 0$, protože $f - \bar{f}$ je pevné číslo;
+    \item $\mathrm{E}[\varepsilon(\bar{f} - \hat{f})] = \mathrm{E}\,\varepsilon\cdot\mathrm{E}[\bar{f} - \hat{f}] = 0$, protože šum v novém bodě nezávisí na trénovacích datech;
+    \item $\mathrm{E}[(f - \bar{f})(\bar{f} - \hat{f})] = (f - \bar{f})\big(\bar{f} - \mathrm{E}\,\hat{f}\big) = 0$ podle definice $\bar{f}$.
+  \end{itemize}
+  Zbudou $\mathrm{E}\,\varepsilon^2 = \sigma^2$, ${(f - \bar{f})}^2$ a $\mathrm{E}{(\bar{f} - \hat{f})}^2$.
+\end{proof}
+
+Šum $\sigma^2$ nepřekoná žádný model: je to chyba, kterou má i dokonalé $\hat{f} = f$. \textbf{Vychýlení} měří, jak daleko je i \textit{průměrný} model od pravdy. Přímka má vychýlení velké, protože sinusovku nevystihne, ať ji naučíme na čemkoli. \textbf{Rozptyl} měří, jak moc model kolísá podle toho, která data zrovna dostal. Mnohočlen stupně $9$ má vychýlení malé (v průměru přes mnoho datových sad by se k sinusovce blížil), ale rozptyl obrovský: každá nová desítka bodů dá úplně jinou divokou křivku. Složitější model vychýlení snižuje a rozptyl zvyšuje, a nejlepší je kompromis uprostřed. Regularizace je přesně páka, kterou mezi nimi posouváme. (Moderní obří sítě tento klasický obraz zčásti narušují: při extrémním počtu parametrů se testovací chyba někdy znovu zlepšuje. Proč přesně, je dodnes předmětem výzkumu.)
+
+\section{Učení bez učitele}
+
+Někdy žádné $y$ nemáme, jen body $\vec{x}_i$. Chceme v nich najít strukturu.
+
+\subsection{Shlukování metodou k-means}
+
+\begin{definitionbox}
+  \textbf{Algoritmus k-means} rozdělí body do $k$ shluků. Zvolí $k$ počátečních středů (centroidů) a opakuje dva kroky:
+  \begin{enumerate}
+    \item každý bod přiřadí k nejbližšímu centroidu;
+    \item každý centroid přesune do těžiště (průměru) bodů, které k němu patří.
+  \end{enumerate}
+  Skončí, když se přiřazení přestane měnit. Minimalizuje tím součet čtverců vzdáleností bodů od jejich centroidů.
+\end{definitionbox}
+
+Proč algoritmus skončí? Oba kroky součet čtverců nezvětší: první proto, že bod přejde jen k bližšímu centroidu, a druhý proto, že těžiště je bod, který minimalizuje součet čtverců vzdáleností (to je mimochodem tentýž výpočet jako u $\frac{\partial S}{\partial b} = 0$ v regresi). Přiřazení je jen konečně mnoho, takže se cyklus jednou zastaví. Výsledek ale může záviset na počátečních středech a nemusí být nejlepší možný.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm]
+    \draw[->, gray] (0.3,0) -- (5.0,0) node[right, black, font=\small] {$x_1$};
+    \draw[->, gray] (0.3,0) -- (0.3,4.2) node[above, black, font=\small] {$x_2$};
+    \foreach \p in {(2.495,3.285), (3.033,2.868), (2.932,2.905), (2.451,3.022), (3.252,3.656), (3.694,3.689), (2.980,3.778), (2.327,3.368), (3.208,3.222), (2.685,3.390), (2.874,3.236), (2.531,3.509)} \draw[thick] \p circle (2.3pt);
+    \foreach \p in {(0.839,0.404), (1.088,1.189), (1.711,1.049), (0.951,0.647), (1.537,1.736), (1.323,0.445), (0.769,1.720), (1.291,0.221), (1.162,0.477), (0.917,0.780), (0.879,1.249), (1.172,0.735)} \fill[colorofwisdom] \p circle (2.3pt);
+    \foreach \p in {(4.184,1.773), (3.261,1.284), (3.559,1.322), (3.420,1.409), (3.983,1.263), (3.528,1.222), (3.509,0.790), (4.101,0.901), (4.527,1.722), (3.101,1.522), (3.504,1.415), (4.020,0.505)} \fill[gray] \p ++(-2.2pt,-2.2pt) rectangle ++(4.4pt,4.4pt);
+    \foreach \a/\b in {0.5/3.5, 1.5/0.5, 2.0/1.0} \draw[thick] (\a,\b) ++(-0.09,-0.09) -- ++(0.18,0.18) ++(0,-0.18) -- ++(-0.18,0.18);
+    \draw[->, dashed] (0.6,3.48) -- (2.75,3.33);
+    \draw[->, dashed] (1.5,0.5) -- (1.17,0.84);
+    \draw[->, dashed] (2.08,1.03) -- (3.6,1.25);
+    \foreach \a/\b in {2.872/3.327, 1.137/0.888, 3.725/1.261} \draw[line width=2pt, colorofwisdom] (\a,\b) ++(-0.12,-0.12) -- ++(0.24,0.24) ++(0,-0.24) -- ++(-0.24,0.24);
+    \node[font=\scriptsize, anchor=east] at (0.42,3.5) {start};
+  \end{tikzpicture}
+\end{center}
+
+Skutečný běh algoritmu pro $36$ bodů a $k = 3$. Tenké křížky jsou počáteční centroidy, zvolené schválně nešikovně. Po dvou kolech se přiřazení přestalo měnit a centroidy (tlusté křížky) skončily v bodech $[1{,}14;\ 0{,}89]$, $[3{,}72;\ 1{,}26]$ a $[2{,}87;\ 3{,}33]$. Algoritmus nezná žádné `správné odpovědi', a přesto našel tři skupiny, které vidí i lidské oko. Podobně se shlukují zákazníci e-shopů nebo pixely obrázku (tím se zmenšuje počet barev).
+
+\subsection{Analýza hlavních komponent}
+
+Data o stovkách proměnných nelze nakreslit. Často ale leží blízko nějakého podprostoru menší dimenze: výška a hmotnost lidí spolu silně souvisí, takže dvourozměrný mrak bodů je ve skutečnosti `skoro přímka'. Jak ten nejdůležitější směr najít?
+
+\begin{definitionbox}
+  Nechť jsou data \textbf{vycentrovaná} (průměr každé souřadnice je $0$). Jejich \textbf{kovarianční matice} je $C = \frac{1}{N - 1}\sum_i\vec{x}_i\vec{x}_i^T$, neboli $c_{jk}$ je kovariance $j$-té a $k$-té souřadnice. \textbf{Hlavní komponenty} jsou vlastní vektory matice $C$, seřazené podle velikosti vlastních čísel. Vlastní číslo je rozptyl dat ve směru příslušného vlastního vektoru.
+\end{definitionbox}
+
+Proč zrovna vlastní vektory? Rozptyl průmětů dat na jednotkový vektor $\vec{u}$ je
+\begin{equation*}
+  \frac{1}{N - 1}\sum_i{(\vec{u}\cdot\vec{x}_i)}^2 = \vec{u}^T\Big(\frac{1}{N - 1}\sum_i\vec{x}_i\vec{x}_i^T\Big)\vec{u} = \vec{u}^TC\vec{u}.
+\end{equation*}
+Matice $C$ je symetrická, takže podle spektrální věty z kapitoly~\ref{kap:linearni-algebra} má ortonormální bázi vlastních vektorů $\vec{e}_1, \vec{e}_2, \dots$ s vlastními čísly $\lambda_1\geq\lambda_2\geq\cdots\geq 0$. Zapíšeme-li $\vec{u} = \sum u_j\vec{e}_j$ se $\sum u_j^2 = 1$, vyjde $\vec{u}^TC\vec{u} = \sum\lambda_ju_j^2\leq\lambda_1\sum u_j^2 = \lambda_1$, s rovností pro $\vec{u} = \vec{e}_1$. Směr největšího rozptylu je tedy první vlastní vektor. Druhý nejlepší směr kolmý na první je $\vec{e}_2$, a tak dál.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm]
+    \draw[->, gray] (-2.5,0) -- (2.5,0) node[right, black, font=\small] {$x_1$};
+    \draw[->, gray] (0,-1.7) -- (0,1.8) node[above, black, font=\small] {$x_2$};
+    \foreach \p in {(0.090,0.146), (1.600,0.977), (1.299,1.147), (-0.237,-0.703), (-0.107,-0.376), (-0.335,-0.579), (1.057,-0.137), (0.027,0.020), (0.861,0.664), (-1.838,-1.407), (1.634,1.456), (-0.140,0.205), (0.769,0.651), (-0.112,0.051), (-0.482,0.061), (0.867,-0.085), (0.933,0.740), (-0.221,0.069), (0.250,-0.617), (0.824,0.569), (-0.824,-0.624), (-1.729,-0.729), (0.634,0.142), (-0.639,-0.423), (-2.110,-1.126), (-0.651,-0.777), (-0.519,-0.104), (-1.213,-0.789), (-1.654,-0.803), (0.245,-0.116), (0.932,0.931), (-0.256,0.050), (-0.694,-0.519), (0.435,0.460), (0.699,0.866), (-0.539,0.366), (1.001,-0.105), (1.132,0.964), (-0.202,0.025), (-0.787,-0.539)} \fill[gray] \p circle (1.7pt);
+    \draw[colorofwisdom!60, thick, rotate=33.57] (0,0) ellipse (3.35cm and 0.90cm);
+    \draw[->, very thick, colorofwisdom] (0,0) -- (1.861,1.232) node[above right, font=\scriptsize] {$\vec{e}_1$, $\lambda_1\approx 1{,}25$};
+    \draw[->, very thick] (0,0) -- (-0.332,0.501) node[above left, font=\scriptsize] {$\vec{e}_2$, $\lambda_2\approx 0{,}09$};
+  \end{tikzpicture}
+\end{center}
+
+Pro těchto $40$ bodů vyšla kovarianční matice $C\approx\begin{pmatrix} 0{,}89 & 0{,}53\\ 0{,}53 & 0{,}44\end{pmatrix}$ s vlastními vektory $\vec{e}_1\approx(0{,}83;\ 0{,}55)$ a $\vec{e}_2\approx(-0{,}55;\ 0{,}83)$. Šipky mají délku dvojnásobku směrodatné odchylky $2\sqrt{\lambda}$. První komponenta nese $\frac{1{,}25}{1{,}34}\approx 93\,\%$ celkového rozptylu, takže když každý bod nahradíme jediným číslem, jeho průmětem na $\vec{e}_1$, ztratíme jen $7\,\%$ informace (měřeno rozptylem). Stejně se zmenšují data o tisících proměnných: ponechají se jen první desítky komponent.
+
+\section{Jazykové modely}
+
+Jak může počítač, který umí jen násobit čísla, pracovat s textem? Nejdřív musí slova převést na čísla.
+
+\subsection{Slova jako vektory}
+
+Každé slovo (přesněji \textit{token}, kousek slova) dostane vektor v $\mathbb{R}^d$, kde $d$ bývá stovky až tisíce. Tyto vektory, \textbf{embeddingy}, nejsou zvolené ručně. Jsou to parametry modelu, naučené gradientním sestupem tak, aby slova vyskytující se v podobných kontextech měla podobné vektory. `Podobné' měříme úhlem, přesně jako v kapitole~\ref{kap:analyticka}:
+
+\begin{definitionbox}
+  \textbf{Kosinová podobnost} vektorů $\vec{u}$, $\vec{v}$ je
+  \begin{equation*}
+    \cos\theta = \frac{\vec{u}\cdot\vec{v}}{\|\vec{u}\|\,\|\vec{v}\|}\in[-1, 1].
+  \end{equation*}
+  Pro jednotkové vektory je to prostě skalární součin.
+\end{definitionbox}
+
+\begin{example}
+  Hračkové trojrozměrné embeddingy: \textit{kočka} $= (4, 3, 0)$, \textit{pes} $= (3, 4, 1)$, \textit{rovnice} $= (0, 1, 5)$. Pak
+  \begin{equation*}
+    \cos(\textit{kočka}, \textit{pes}) = \frac{24}{5\sqrt{26}}\approx 0{,}94,\qquad\cos(\textit{kočka}, \textit{rovnice}) = \frac{3}{5\sqrt{26}}\approx 0{,}12.
+  \end{equation*}
+  Kočka a pes jsou si `blízko', kočka a rovnice ne.
+\end{example}
+
+Nejslavnější pozorování (Tomáš Mikolov a kolegové, 2013, model \textit{word2vec}): rozdíly vektorů někdy zachycují vztahy. Vektor $\textit{král} - \textit{muž} + \textit{žena}$ leží nejblíž vektoru \textit{královna}. Směr `muž $\to$ žena' je zhruba stejný jako směr `král $\to$ královna'.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.9cm, y=1.5cm]
+    \draw[->, gray] (0,0) -- (4.7,0);
+    \draw[->, gray] (0,0) -- (0,2.9);
+    \foreach \p/\n/\a in {{(1.0,0.6)}/muž/below, {(1.4,2.0)}/žena/above, {(3.6,0.9)}/král/below, {(4.0,2.3)}/královna/above right} {
+      \draw[->, thick, gray!70] (0,0) -- \p;
+      \fill \p circle (2pt) node[\a, font=\scriptsize] {\n};
+    }
+    \draw[->, very thick, colorofwisdom] (1.0,0.6) -- (1.4,2.0);
+    \draw[->, very thick, colorofwisdom] (3.6,0.9) -- (3.95,2.2);
+    \fill[colorofwisdom] (3.95,2.2) circle (1.5pt);
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (3.85,1.45) {$+(\textit{žena} - \textit{muž})$};
+    \fill[gray] (2.2,0.12) circle (1.5pt) node[right, font=\scriptsize] {pes};
+    \fill[gray] (2.45,0.32) circle (1.5pt) node[right, font=\scriptsize] {kočka};
+  \end{tikzpicture}
+\end{center}
+
+Tenhle obrázek je ale \textit{ilustrace}, ne skutečná data. Skutečné vektory mají stovky rozměrů a do roviny se nevejdou bez zkreslení. Rovnost platí jen přibližně (a při hledání `nejbližšího slova' se obvykle vylučují slova samotného dotazu, jinak by často vyhrál sám \textit{král}). Pro mnoho jiných dvojic analogie nefunguje vůbec. Je to krásná intuice, ne zákon přírody.
+
+\subsection{Softmax a pravděpodobnost dalšího slova}
+
+Jazykový model dělá v jádru jedinou věc: na základě dosavadního textu přiřadí každému tokenu ze slovníku (bývá jich desítky tisíc) skóre $z_i$ a převede skóre na pravděpodobnosti, že tento token bude následovat.
+
+\begin{definitionbox}
+  \textbf{Softmax s teplotou} $T > 0$:
+  \begin{equation*}
+    p_i = \frac{\mathrm{e}^{z_i/T}}{\sum_j\mathrm{e}^{z_j/T}}.
+  \end{equation*}
+  Všechna $p_i$ jsou kladná a jejich součet je $1$. Větší skóre znamená větší pravděpodobnost.
+\end{definitionbox}
+
+Exponenciála dělá z libovolných čísel kladná a zesiluje rozdíly. Pro dvě třídy (a $T = 1$) je
+\begin{equation*}
+  p_1 = \frac{\mathrm{e}^{z_1}}{\mathrm{e}^{z_1} + \mathrm{e}^{z_2}} = \frac{1}{1 + \mathrm{e}^{-(z_1 - z_2)}} = \sigma(z_1 - z_2),
+\end{equation*}
+takže softmax je přímé zobecnění sigmoidy. Model se učí křížovou entropií $-\ln p_{\text{skutečné další slovo}}$, tedy úplně stejně jako logistická regrese, jen na obrovském množství textu.
+
+\begin{example}
+  Za textem `Kočka spí na \dots' dá model skóre \textit{gauči}~$3$, \textit{stole}~$2$, \textit{střeše}~$1{,}5$, \textit{rovnici}~$-1$. Pravděpodobnosti:
+  \begin{center}
+    \begin{tabular}{lcccc}
+      & \textit{gauči} & \textit{stole} & \textit{střeše} & \textit{rovnici}\\\hline
+      $T = 0{,}5$ & $0{,}844$ & $0{,}114$ & $0{,}042$ & $0{,}000\,3$\\
+      $T = 1$ & $0{,}621$ & $0{,}229$ & $0{,}139$ & $0{,}011$\\
+      $T = 2$ & $0{,}452$ & $0{,}274$ & $0{,}213$ & $0{,}061$
+    \end{tabular}
+  \end{center}
+\end{example}
+
+Text se generuje tak, že se z tohoto rozdělení \textit{náhodně vylosuje} další token, připojí se k textu a celé se to opakuje. Teplota řídí odvahu. Pro $T\to 0$ se veškerá pravděpodobnost soustředí na nejlepší token a model píše předvídatelně (a často nudně a dokola). Velké $T$ rozdělení zplošťuje, text je `kreativnější', ale i častěji nesmyslný. Proto stejná otázka může dostat pokaždé jinou odpověď.
+
+\subsection{Pozornost: vážený průměr}
+
+Význam slova závisí na kontextu. Ve větě `Pes nepřeběhl silnici, protože byl unavený' se `byl' týká psa, ne silnice. Moderní jazykové modely (architektura \textit{transformer}, 2017) k tomu používají mechanismus \textbf{pozornosti} (\textit{attention}). Každý token $j$ má kromě embeddingu ještě tři naučené vektory: \textit{dotaz} $\vec{q}_j$, \textit{klíč} $\vec{k}_j$ a \textit{hodnotu} $\vec{v}_j$ (vzniknou vynásobením embeddingu třemi maticemi vah).
+
+\begin{definitionbox}
+  \textbf{Pozornost}: nová reprezentace tokenu s dotazem $\vec{q}$ je vážený průměr hodnot
+  \begin{equation*}
+    \vec{o} = \sum_j\alpha_j\vec{v}_j,\qquad\text{kde}\qquad\alpha_j = \mathrm{softmax}_j\left(\frac{\vec{q}\cdot\vec{k}_j}{\sqrt{d}}\right).
+  \end{equation*}
+\end{definitionbox}
+
+Skalární součin $\vec{q}\cdot\vec{k}_j$ měří, jak moc se klíč tokenu $j$ `hodí' k dotazu. Softmax z toho udělá váhy se součtem $1$ a výstup je těžiště hodnot s těmito vahami. (Dělení $\sqrt{d}$ jen brání tomu, aby skalární součiny v mnoha rozměrech byly tak velké, že by softmax dal skoro všechnu váhu jedinému tokenu.)
+
+\begin{center}
+  \begin{tikzpicture}[x=1.9cm, y=1cm]
+    \foreach \x/\w/\t/\l in {0/Pes/0{,}61/2.6, 1/nepřeběhl/0{,}14/0.8, 2/silnici/0{,}03/0.4, 3/protože/0{,}22/1.2} {
+      \node[draw, fill=colorofwisdom!12, minimum width=1.5cm, minimum height=0.6cm, font=\scriptsize] (t\x) at (\x,0) {\w};
+      \draw[->, colorofwisdom, line width=\l pt] (t\x.south) -- (2.0,-2.05);
+      \node[font=\scriptsize, fill=white, inner sep=1pt] at ({\x+(2.0-\x)*0.37},-0.95) {$\t$};
+    }
+    \node[draw, thick, minimum width=1.5cm, minimum height=0.6cm, font=\scriptsize] (q) at (4.2,0) {byl};
+    \draw[->, dashed] (q.south) -- (2.3,-2.1);
+    \node[font=\scriptsize, anchor=west] at (3.65,-1.0) {dotaz $\vec{q}$};
+    \node[draw, thick, fill=colorofwisdom!25, font=\scriptsize] at (2.0,-2.4) {$\vec{o} = 0{,}61\,\vec{v}_{\text{Pes}} + 0{,}14\,\vec{v}_{\text{nepřeběhl}} + 0{,}03\,\vec{v}_{\text{silnici}} + 0{,}22\,\vec{v}_{\text{protože}}$};
+  \end{tikzpicture}
+\end{center}
+
+V příkladu vyšla skóre $\frac{\vec{q}\cdot\vec{k}_j}{\sqrt{d}}$ postupně $2$; $0{,}5$; $-1$; $1$ a softmax z nich udělal váhy $0{,}61$; $0{,}14$; $0{,}03$; $0{,}22$. Token `byl' si tedy vezme nejvíc informace od `Pes'. (Čísla jsou zde vymyšlená pro ilustraci. Ve skutečném modelu běží desítky takových `hlav pozornosti' vedle sebe a desítky vrstev za sebou.) Celý transformer je jen střídání pozornosti, malých neuronových sítí a normalizací, učené zpětným šířením na předpovídání dalšího tokenu.
+
+\subsection{Co jazykové modely umějí a co ne}
+
+Je dobré mít střízlivý pohled. Jazykový model je naučen na jedinou úlohu: odhadovat pravděpodobné pokračování textu. Že se z toho vynoří schopnost překládat, shrnovat nebo psát programy, je pozoruhodné a ne zcela pochopené. Plynou z toho ale i omezení:
+\begin{itemize}
+  \item \textit{Pravděpodobné} není totéž co \textit{pravdivé}. Model může sebejistě napsat neexistující citaci nebo chybný výpočet (tomu se říká \textbf{halucinace}). Výstup je třeba ověřovat, zvlášť čísla, fakta a zdroje.
+  \item Model zdědí vzorce, a tedy i předsudky a chyby, ze svých trénovacích dat.
+  \item Nemá zaručeno, že na nové typy úloh zobecní. Platí pro něj totéž co pro mnohočlen stupně $9$: úspěch na známých datech nic nedokazuje.
+  \item Je to obrovská, přesně definovaná matematická funkce. Otázky, zda `rozumí' nebo `myslí', jsou zajímavé, ale matematika sama na ně neodpoví.
+\end{itemize}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Metodou nejmenších čtverců proložte přímku body $[0, 1]$, $[1, 3]$, $[2, 4]$.
+    \item Gradientní sestup s $\eta$ pro $L(w) = 3w^2$. Pro která $\eta$ konverguje?
+    \item Ukažte, že softmax se nezmění, když ke všem skóre $z_i$ přičteme stejné číslo $c$. (Počítače to využívají: odečtou $\max z_i$, aby exponenciála nepřetekla.)
+    \item Model dá správnému dalšímu slovu pravděpodobnost $\frac{1}{1000}$. Jaká je ztráta? Jaká by byla, kdyby hádal rovnoměrně z $50\,000$ tokenů?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $N = 3$, $\sum x = 3$, $\sum y = 8$, $\sum x^2 = 5$, $\sum xy = 11$. Soustava $3a + 3b = 8$, $5a + 3b = 11$ dává $a = \frac{3}{2}$, $b = \frac{7}{6}$. Přímka $y = 1{,}5x + \frac{7}{6}$.
+    \item $w_{k+1} = w_k - 6\eta w_k = (1 - 6\eta)w_k$, konverguje pro $|1 - 6\eta| < 1$, tedy $0 < \eta < \frac{1}{3}$. Souhlasí s pravidlem $\eta < \frac{2}{M}$ pro $M = L'' = 6$.
+    \item Exponenciála převede sčítání na násobení a $\mathrm{e}^c$ se vykrátí:
+    \begin{equation*}
+      \frac{\mathrm{e}^{z_i + c}}{\sum_j\mathrm{e}^{z_j + c}} = \frac{\mathrm{e}^c\,\mathrm{e}^{z_i}}{\mathrm{e}^c\sum_j\mathrm{e}^{z_j}} = \frac{\mathrm{e}^{z_i}}{\sum_j\mathrm{e}^{z_j}}.
+    \end{equation*}
+    \item $-\ln\frac{1}{1000} = \ln 1000\approx 6{,}91$. Rovnoměrné hádání: $\ln 50\,000\approx 10{,}82$. I `špatný' odhad je tedy mnohem lepší než náhoda.
+  \end{enumerate}
+\end{solution}
+
+\section{Příběh --- Stroj, který měl být vědomý}
+
+V červenci 1958 předvedl mladý psycholog Frank Rosenblatt z Cornellovy letecké laboratoře novinářům ve Washingtonu svůj \textbf{perceptron}. Šlo o program na sálovém počítači IBM 704 financovaný americkým námořnictvem: jeden umělý neuron, jehož váhy se upravovaly podle jednoduchého pravidla. Když se spletl, přičetl ke své váze vstup (nebo ho odečetl). Počítač dostával karty se značkou buď vlevo, nebo vpravo, a po padesáti pokusech je prý začal rozlišovat. Druhý den, 8. července 1958, napsal \textit{New York Times}, že námořnictvo očekává, že stroj bude jednou `chodit, mluvit, vidět, psát, rozmnožovat se a být si vědom své existence'.
+
+Rosenblatt pak postavil i hardwarovou verzi, Mark I Perceptron, s `sítnicí' z $400$ fotočlánků a s vahami v podobě potenciometrů, které otáčely elektromotorky. Byl charismatický, sliboval hodně a vzbudil stejně tolik nadšení jako odporu. Jeho nejvýznamnějším kritikem byl Marvin Minsky z MIT, mimochodem absolvent téže newyorské střední školy, Bronx High School of Science.
+
+V roce 1969 vydali Minsky a Seymour Papert knihu \textit{Perceptrons}. Matematicky přesně v ní ukázali, co jedna vrstva perceptronů nedokáže: například rozpoznat, zda je obrazec souvislý, nebo spočítat paritu, tedy obecnou verzi našeho XOR. O vícevrstvých sítích byli skeptičtí, a nikdo tehdy neuměl takové sítě rozumně učit. Kniha se stala symbolem konce optimismu. Peníze na výzkum neuronových sítí v sedmdesátých letech do značné míry vyschly a nastala první `zima umělé inteligence'. Jak velký podíl na tom kniha opravdu měla, se historici přou dodnes.
+
+Rosenblatt se nástupu té zimy plně nedožil. 11. července 1971, v den svých třiačtyřicátých narozenin, zahynul při nehodě na lodi v zálivu Chesapeake. Vícevrstvé sítě učené zpětným šířením se proslavily až v roce 1986 díky článku Davida Rumelharta, Geoffreyho Hintona a Ronalda Williamse. A když v roce 2012 hluboká síť drtivě vyhrála soutěž v rozpoznávání obrázků ImageNet, ukázalo se, že Rosenblattova základní myšlenka, vážený součet, nelinearita a úprava vah podle chyb, byla správná. Chyběla jen data, výpočetní výkon a derivace složené funkce použitá v pořádném měřítku.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je model, parametry a ztrátová funkce? Proč je `učení' vlastně optimalizace?
+    \item Odvoďte normální rovnice pro proložení přímky. Proč je řešení kolmým průmětem a proč je minimum jediné?
+    \item Jak funguje gradientní sestup? Co se stane při příliš malé a příliš velké rychlosti učení? Proč kličkuje v úzkém údolí?
+    \item Co je logistická regrese a sigmoida? Jak souvisí křížová entropie s pravděpodobností a proč v ní je logaritmus?
+    \item Co je umělý neuron a neuronová síť? Proč je nutná nelineární aktivační funkce? Vysvětlete na úloze XOR.
+    \item Co říká věta o univerzální aproximaci a co neříká?
+    \item Vysvětlete zpětné šíření pomocí derivace složené funkce. Proč je tak efektivní?
+    \item Co je přeučení? Proč dělíme data na trénovací a testovací a k čemu je regularizace? Co je vychýlení a rozptyl?
+    \item Jak funguje k-means a proč skončí? Proč jsou hlavní komponenty vlastními vektory kovarianční matice?
+    \item Jak jazykový model volí další slovo? Co je kosinová podobnost, softmax, teplota a pozornost? Jaká jsou jeho omezení?
+  \end{enumerate}
+\end{problem}

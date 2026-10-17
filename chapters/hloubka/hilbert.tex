@@ -1,0 +1,584 @@
+\label{kap:hilbert}
+\mathquote{Musíme vědět. Budeme vědět.}{David Hilbert, 1930}
+
+V kapitole~\ref{kap:integraly} jsme integrál definovali jako limitu součtů obdélníků a v kapitole~\ref{kap:rady} jsme funkce rozkládali do Fourierových řad, jako by to byly vektory v prostoru s nekonečně mnoha osami. Obojí fungovalo, ale pod povrchem zůstaly nepříjemné otázky. Jakou `délku' má množina racionálních čísel? Které funkce vlastně umíme integrovat? A v jakém prostoru žijí funkce, když s nimi zacházíme jako s vektory? Na přelomu 19. a 20. století na ně odpověděly dvě teorie, které dnes tvoří základ moderní analýzy. \textbf{Teorie míry} říká, jak měřit velikost podivných množin, a dává lepší integrál. \textbf{Hilbertovy prostory} jsou nekonečněrozměrná verze lineární algebry z kapitoly~\ref{kap:linearni-algebra}. Na konci uvidíme, že obojí dohromady je přesně jazyk, kterým mluví kvantová mechanika.
+
+\section{Jak dlouhá je podivná množina?}
+
+Délku intervalu $[a, b]$ známe: je to $b - a$. Délka sjednocení dvou disjunktních intervalů je součet délek. Ale jak dlouhá je třeba množina všech racionálních čísel v $[0, 1]$? Nebo následující množina?
+
+\subsection{Cantorova množina}
+
+Z intervalu $[0, 1]$ vyjmeme otevřenou prostřední třetinu $(\frac{1}{3}, \frac{2}{3})$. Ze dvou zbylých intervalů vyjmeme jejich prostřední třetiny, ze čtyř zbylých zase, a tak pořád dál. Co zbude po nekonečně mnoha krocích, je \textbf{Cantorova množina} $C$.
+
+\begin{center}
+  \begin{tikzpicture}[x=10cm, y=0.5cm]
+    \fill[colorofwisdom] (0,0) rectangle (1,-0.3);
+    \foreach \a in {0,0.66667} \fill[colorofwisdom] (\a,-1) rectangle ({\a+0.33333},-1.3);
+    \foreach \a in {0,0.22222,0.66667,0.88889} \fill[colorofwisdom] (\a,-2) rectangle ({\a+0.11111},-2.3);
+    \foreach \a in {0,0.07407,0.22222,0.2963,0.66667,0.74074,0.88889,0.96296} \fill[colorofwisdom] (\a,-3) rectangle ({\a+0.03704},-3.3);
+    \foreach \a in {0,0.02469,0.07407,0.09877,0.22222,0.24691,0.2963,0.32099,0.66667,0.69136,0.74074,0.76543,0.88889,0.91358,0.96296,0.98765} \fill[colorofwisdom] (\a,-4) rectangle ({\a+0.01235},-4.3);
+    \foreach \a in {0,0.00823,0.02469,0.03292,0.07407,0.0823,0.09877,0.107,0.22222,0.23045,0.24691,0.25514,0.2963,0.30453,0.32099,0.32922,0.66667,0.6749,0.69136,0.69959,0.74074,0.74897,0.76543,0.77366,0.88889,0.89712,0.91358,0.92181,0.96296,0.97119,0.98765,0.99588} \fill[colorofwisdom] (\a,-5) rectangle ({\a+0.00412},-5.3);
+    \foreach \n/\l in {0/1, 1/\frac{2}{3}, 2/\frac{4}{9}, 3/\frac{8}{27}, 4/\frac{16}{81}, 5/\frac{32}{243}} \node[font=\scriptsize, anchor=west] at (1.03,{-\n-0.15}) {délka $\l$};
+    \node[font=\scriptsize, below] at (0,-5.4) {$0$};
+    \node[font=\scriptsize, below] at (0.33333,-5.4) {$\frac{1}{3}$};
+    \node[font=\scriptsize, below] at (0.66667,-5.4) {$\frac{2}{3}$};
+    \node[font=\scriptsize, below] at (1,-5.4) {$1$};
+  \end{tikzpicture}
+\end{center}
+
+Kolik jsme vyjmuli? V prvním kroku $\frac{1}{3}$, ve druhém $2\cdot\frac{1}{9}$, ve třetím $4\cdot\frac{1}{27}$. Celkem geometrická řada z kapitoly~\ref{kap:posloupnosti}:
+\begin{equation*}
+  \frac{1}{3} + \frac{2}{9} + \frac{4}{27} + \cdots = \frac{\frac{1}{3}}{1 - \frac{2}{3}} = 1.
+\end{equation*}
+Vyjmuli jsme `všechno'. Cantorova množina má délku nula. A přesto je jí \textbf{nespočetně mnoho}, stejně jako bodů celého intervalu $[0, 1]$. Zapišme čísla z $[0, 1]$ v trojkové soustavě. První krok vyhodí čísla, která mají na prvním místě za desetinnou čárkou číslici $1$, druhý krok ta s jedničkou na druhém místě, a tak dál. V $C$ zůstanou přesně čísla, která se dají zapsat jen číslicemi $0$ a $2$. Nahradíme-li v takovém zápisu každou dvojku jedničkou, dostaneme dvojkový zápis libovolného čísla z $[0, 1]$. Prvků $C$ je tedy aspoň tolik jako reálných čísel v $[0, 1]$, a ty podle Cantorovy diagonální metody z kapitoly~\ref{kap:posloupnosti} spočetné nejsou.
+
+\subsection{Racionální čísla mají délku nula}
+
+Racionální čísla v $[0, 1]$ se dají seřadit do posloupnosti $q_1, q_2, q_3, \dots$ (například $\frac{1}{2}, \frac{1}{3}, \frac{2}{3}, \frac{1}{4}, \frac{3}{4}, \frac{1}{5}, \dots$ a k tomu $0$ a $1$). Zvolme libovolně malé $\varepsilon > 0$ a obalme bod $q_n$ intervalem délky $\frac{\varepsilon}{2^n}$:
+
+\begin{center}
+  \begin{tikzpicture}[x=10cm, y=0.32cm]
+    \draw[->] (-0.03,0) -- (1.06,0);
+    \foreach \x/\l in {0/0, 1/1} \draw (\x,0.3) -- (\x,-0.3) node[below, font=\scriptsize] {$\l$};
+    \foreach \q/\n in {0.5/1, 0.33333/2, 0.66667/3, 0.25/4, 0.75/5, 0.2/6, 0.4/7, 0.6/8, 0.8/9} {
+      \pgfmathsetmacro{\w}{0.25/(2^\n)}
+      \fill[colorofwisdom!70] ({\q-\w},{\n*0.75+0.15}) rectangle ({\q+\w},{\n*0.75+0.55});
+      \draw[gray, dotted] (\q,0) -- (\q,{\n*0.75+0.15});
+      \fill (\q,0) circle (1pt);
+    }
+    \node[font=\scriptsize, anchor=west] at (0.64,0.95) {$q_1 = \frac{1}{2}$: délka $\frac{\varepsilon}{2}$};
+    \node[font=\scriptsize, anchor=west] at (0.4,1.65) {$q_2 = \frac{1}{3}$: délka $\frac{\varepsilon}{4}$};
+    \node[font=\scriptsize, anchor=west] at (0.84,6.5) {$\cdots$};
+  \end{tikzpicture}
+\end{center}
+
+Všechna racionální čísla jsou pokrytá a součet délek obalů je
+\begin{equation*}
+  \frac{\varepsilon}{2} + \frac{\varepsilon}{4} + \frac{\varepsilon}{8} + \cdots = \varepsilon.
+\end{equation*}
+Racionální čísla tedy leží v množině o celkové délce nejvýš $\varepsilon$, a to pro \textit{každé} $\varepsilon > 0$. Jejich délka musí být nula. Přitom leží `všude': v každém intervalu, jakkoli malém, jsou nekonečně mnoha. Hustota a velikost jsou dvě úplně různé věci. Stejný argument funguje pro každou spočetnou množinu.
+
+\subsection{Funkce, kterou Riemann neumí zintegrovat}
+
+\textbf{Dirichletova funkce} $D(x)$ je rovna $1$ pro racionální $x$ a $0$ pro iracionální. Zkusme ji zintegrovat na $[0, 1]$ Riemannovým postupem z kapitoly~\ref{kap:integraly}. Rozdělíme interval na malé kousky a v každém zvolíme bod, jehož funkční hodnota určí výšku obdélníku. V každém kousku je ale racionální i iracionální číslo.
+
+\begin{center}
+  \begin{tikzpicture}[x=5cm, y=2cm]
+    \foreach \k in {0,...,4} {
+      \fill[colorofwisdom!15] ({\k/5},0) rectangle ({(\k+1)/5},1);
+      \draw[colorofwisdom!50] ({\k/5},0) rectangle ({(\k+1)/5},1);
+    }
+    \draw[very thick, dotted, colorofwisdom] (0,1) -- (1,1);
+    \draw[very thick, dotted] (0,0.02) -- (1,0.02);
+    \draw[->] (-0.03,0) -- (1.1,0) node[right] {\small $x$};
+    \draw[->] (0,-0.05) -- (0,1.3) node[above] {\small $y$};
+    \node[font=\scriptsize, left] at (0,1) {$1$};
+    \node[font=\scriptsize, below] at (1,0) {$1$};
+    \node[font=\scriptsize, anchor=west] at (1.03,1) {$x\in\mathbb{Q}$};
+    \node[font=\scriptsize, anchor=west] at (1.03,0.15) {$x\notin\mathbb{Q}$};
+    \node[font=\scriptsize, align=center] at (0.5,-0.35) {body v $\mathbb{Q}$: součet $1$; body mimo $\mathbb{Q}$: součet $0$};
+  \end{tikzpicture}
+\end{center}
+
+Zvolíme-li vždy racionální bod, dostaneme součet $1$. Zvolíme-li iracionální, dostaneme $0$. Při jakkoli jemném dělení. Riemannův integrál neexistuje. Ale intuitivně by měl vyjít nula: funkce je rovna $1$ jen na množině délky nula. Potřebujeme lepší integrál, a k tomu nejdřív pořádně zavést `délku' podivných množin.
+
+\section{Míra}
+
+\subsection{Co od míry chceme}
+
+Chtěli bychom funkci $\lambda$, která každé podmnožině $\mathbb{R}$ přiřadí `délku' z $[0, \infty]$, takovou, že:
+\begin{enumerate}
+  \item $\lambda([a, b]) = b - a$,
+  \item posunutím se délka nemění: $\lambda(A + t) = \lambda(A)$,
+  \item délka spočetného sjednocení disjunktních množin je součet délek: $\lambda\left(\bigcup A_n\right) = \sum\lambda(A_n)$.
+\end{enumerate}
+Třetí bod je přesně to, co jsme použili u racionálních čísel. Nestačí jen konečné součty, protože bychom nespočítali ani délku Cantorovy množiny. Nespočetné součty zase připustit nelze: interval je sjednocení nespočetně mnoha bodů délky nula, a $0 + 0 + \cdots$ by dalo nulu. Spočetnost je přesně ta správná hranice. Za chvíli ale uvidíme, že všechny tři požadavky \textit{najednou pro všechny množiny} splnit nejdou. Proto se omezíme na rozumné množiny.
+
+\begin{definitionbox}
+  \textbf{$\sigma$-algebra} na množině $\Omega$ je systém $\mathcal{F}$ podmnožin $\Omega$, který
+  \begin{enumerate}
+    \item obsahuje $\Omega$,
+    \item s každou množinou $A$ obsahuje i doplněk $\Omega\setminus A$,
+    \item se spočetně mnoha množinami $A_1, A_2, \dots$ obsahuje i jejich sjednocení $\bigcup_n A_n$.
+  \end{enumerate}
+  Množiny z $\mathcal{F}$ se nazývají \textbf{měřitelné}. \textbf{Míra} na $\mathcal{F}$ je funkce $\mu\colon\mathcal{F}\to[0, \infty]$, pro kterou $\mu(\emptyset) = 0$ a pro disjunktní $A_1, A_2, \ldots\in\mathcal{F}$ platí \textbf{$\sigma$-aditivita}
+  \begin{equation*}
+    \mu\Big(\bigcup_{n=1}^{\infty}A_n\Big) = \sum_{n=1}^{\infty}\mu(A_n).
+  \end{equation*}
+\end{definitionbox}
+
+$\sigma$-algebra je tedy `pracovní prostor': množiny, se kterými smíme dělat doplňky, spočetná sjednocení, a tedy i spočetné průniky (z de Morganových pravidel), a pořád zůstaneme mezi měřitelnými množinami. Písmeno $\sigma$ odkazuje na slovo `suma', tedy spočetný součet.
+
+\begin{definitionbox}
+  \textbf{Lebesgueova vnější míra} množiny $A\subseteq\mathbb{R}$ je
+  \begin{equation*}
+    \lambda^\ast(A) = \inf\Big\{\sum_{n=1}^{\infty}|I_n| : A\subseteq\bigcup_{n=1}^{\infty}I_n,\ I_n\text{ intervaly}\Big\}.
+  \end{equation*}
+  Existuje $\sigma$-algebra \textbf{lebesgueovsky měřitelných množin}, která obsahuje všechny intervaly, otevřené i uzavřené množiny, a na které je $\lambda = \lambda^\ast$ míra splňující požadavky 1--3. Množiny s $\lambda(A) = 0$ se nazývají \textbf{nulové}.
+\end{definitionbox}
+
+Vnější míra je přesně to, co jsme udělali s racionálními čísly: množinu pokryjeme spočetně mnoha intervaly co nejúsporněji. Pro $\mathbb{Q}$ vyšlo $0$, pro Cantorovu množinu také (pokryjeme ji $2^n$ intervaly délky $3^{-n}$ z $n$-tého kroku, celkem $\left(\frac{2}{3}\right)^n\to 0$). Ve vyšších dimenzích se místo intervalů použijí obdélníky a kvádry a dostaneme plošný obsah a objem.
+
+\begin{problem}
+  Jakou míru má množina všech čísel z $[0, 1]$, v jejichž desetinném rozvoji se nevyskytuje číslice $7$?
+\end{problem}
+
+\begin{solution}
+  Číslice $7$ na prvním místě vyřadí interval $[0{,}7; 0{,}8)$, zbude délka $\frac{9}{10}$. Z každého zbylého intervalu vyřadí sedmička na druhém místě desetinu, zbude ${\left(\frac{9}{10}\right)}^2$. Po $n$ krocích zbývá ${\left(\frac{9}{10}\right)}^n\to 0$. Míra je nula. `Skoro všechna' čísla tedy sedmičku obsahují, a ve skutečnosti obsahují každou konečnou skupinu číslic, třeba datum vašeho narození, nekonečněkrát.
+\end{solution}
+
+\section{Nesměřitelná množina a axiom výběru}
+
+Proč jsme se omezili na nějakou $\sigma$-algebru, místo abychom měřili všechny podmnožiny? Protože to nejde. Následující konstrukci našel Giuseppe Vitali v roce 1905.
+
+Na intervalu $[0, 1)$ řekneme, že $x\sim y$, pokud je $x - y$ racionální. To je relace ekvivalence z kapitoly 2, takže interval se rozpadne na třídy. Každá třída je tvaru $\{x + q : q\in\mathbb{Q}\}\cap[0, 1)$, je spočetná a hustá a tříd je nespočetně mnoho. \textbf{Z každé třídy vybereme jeden prvek} a vybrané prvky tvoří \textbf{Vitaliho množinu} $V$.
+
+\begin{center}
+  \begin{tikzpicture}[x=9cm, y=0.55cm]
+    \foreach \r/\b in {0/0.13, 1/0.41, 2/0.67, 3/0.86} {
+      \foreach \q in {0,0.25,0.5,0.75, 0.125,0.375,0.625,0.875} {
+        \pgfmathsetmacro{\p}{\b+\q-floor(\b+\q)}
+        \fill[gray] (\p,{-\r}) circle (1.3pt);
+      }
+      \fill[colorofwisdom] (\b,{-\r}) circle (2.6pt);
+      \draw[gray!40] (0,{-\r}) -- (1,{-\r});
+    }
+    \node[font=\scriptsize, anchor=west] at (1.03,0) {třída $x_1 + \mathbb{Q}$};
+    \node[font=\scriptsize, anchor=west] at (1.03,-1) {třída $x_2 + \mathbb{Q}$};
+    \node[font=\scriptsize, anchor=west] at (1.03,-2) {třída $x_3 + \mathbb{Q}$};
+    \node[font=\scriptsize, anchor=west] at (1.03,-3) {$\vdots$ (nespočetně mnoho)};
+    \node[font=\scriptsize, below] at (0,-3.3) {$0$};
+    \node[font=\scriptsize, below] at (1,-3.3) {$1$};
+    \node[font=\scriptsize, colorofwisdom] at (0.5,-4.4) {z každé třídy vybereme jednoho zástupce (velké body) a dostaneme $V$};
+  \end{tikzpicture}
+\end{center}
+
+Pro každé racionální $q\in[-1, 1]$ uvažujme posunutou kopii $V + q$. Těchto kopií je spočetně mnoho a platí:
+\begin{itemize}
+  \item jsou navzájem disjunktní (kdyby $v_1 + q_1 = v_2 + q_2$, byly by $v_1$, $v_2$ ve stejné třídě, takže $v_1 = v_2$ a $q_1 = q_2$),
+  \item jejich sjednocení pokrývá $[0, 1)$ (každé $x$ leží ve třídě nějakého $v\in V$ a $x - v\in\mathbb{Q}\cap(-1, 1)$),
+  \item všechny leží v $[-1, 2)$.
+\end{itemize}
+Kdyby $V$ měla míru $m$, měla by ji podle bodu 2 i každá kopie, a podle $\sigma$-aditivity
+\begin{equation*}
+  1\leq m + m + m + \cdots\leq 3.
+\end{equation*}
+Pro $m = 0$ je součet $0$, pro $m > 0$ je nekonečný. Ani jedno nevyhovuje. \textbf{Množina $V$ nemá žádnou rozumnou délku.}
+
+Kde je háček? V kroku `z každé třídy vybereme jeden prvek'. Tříd je nespočetně mnoho a nemáme žádné pravidlo, jak zástupce vybrat. Přesně to dovoluje \textbf{axiom výběru} z kapitoly 2, a nic jiného. Robert Solovay v roce 1970 ukázal, že bez axiomu výběru (s jeho slabší verzí a jedním technickým předpokladem) lze bezesporně předpokládat, že je lebesgueovsky měřitelná úplně každá množina reálných čísel. Nesměřitelné množiny se tedy nedají `zkonstruovat', jen `vybrat'.
+
+Nejslavnějším důsledkem je \textbf{Banachův--Tarského paradox} z kapitoly 2. Kouli ve třech rozměrech lze rozložit na pět kusů a ty jen posunutím a otočením složit do dvou koulí stejné velikosti jako původní. Objem se `zdvojnásobil'. Kusy jsou ovšem nesměřitelné množiny jako $V$, jen o hodně divočejší, takže jim žádný objem přiřadit nelze a s aditivitou objemu nejsme ve sporu. Zajímavé je, že na přímce a v rovině nic takového nejde. Stefan Banach dokázal, že tam existuje (konečně aditivní) `objem' pro všechny množiny. Ve třech rozměrech je grupa otočení tak bohatá, že paradox umožní.
+
+\section{Lebesgueův integrál}
+
+Henri Lebesgue, který svůj integrál představil v disertaci v roce 1902, vysvětloval rozdíl mezi ním a Riemannovým integrálem přirovnáním k placení dluhu. Riemann vytahuje mince z kapsy jednu po druhé v pořadí, v jakém mu přijdou pod ruku, a sčítá. Lebesgue nejdřív mince roztřídí na hromádky podle hodnoty, spočítá, kolik je v které hromádce, a teprve pak sčítá: tolik korun krát počet korun, plus tolik dvoukorun krát počet dvoukorun, \dots{} Výsledek je stejný, ale druhý postup se nenechá zmást tím, jak chaoticky jsou mince v kapse rozházené.
+
+\begin{center}
+  \begin{tikzpicture}[x=1.3cm, y=1.1cm]
+    \foreach \x/\h in {0/1.512, 0.5/1.946, 1/1.927, 1.5/1.468, 2/0.846, 2.5/0.439, 3/0.493, 3.5/0.976} {
+      \fill[colorofwisdom!20] (\x,0) rectangle ({\x+0.5},\h);
+      \draw[colorofwisdom!70] (\x,0) rectangle ({\x+0.5},\h);
+    }
+    \draw[very thick, domain=0:4, samples=80] plot (\x, {1.2+0.8*sin(deg(1.6*\x))});
+    \draw[->] (-0.1,0) -- (4.3,0) node[right] {\small $x$};
+    \draw[->] (0,-0.1) -- (0,2.3) node[above] {\small $y$};
+    \node[font=\scriptsize] at (2,-0.45) {Riemann: svislé proužky};
+  \end{tikzpicture}
+  \hspace{0.5cm}
+  \begin{tikzpicture}[x=1.3cm, y=1.1cm]
+    \foreach \y/\a/\b/\c/\d in {0/0/4/4/4, 0.25/0/2.63/3.262/4, 0.5/0/2.337/3.554/4, 0.75/0/2.122/3.77/4, 1/0.04/1.925/3.967/4} {
+      \fill[colorofwisdom!20] (\a,\y) rectangle (\b,{\y+0.25});
+      \fill[colorofwisdom!20] (\c,\y) rectangle (\d,{\y+0.25});
+      \draw[colorofwisdom!70] (\a,\y) rectangle (\b,{\y+0.25});
+      \draw[colorofwisdom!70] (\c,\y) rectangle (\d,{\y+0.25});
+    }
+    \foreach \y/\a/\b in {1.25/0.241/1.724, 1.5/0.474/1.49} {
+      \fill[colorofwisdom!20] (\a,\y) rectangle (\b,{\y+0.25});
+      \draw[colorofwisdom!70] (\a,\y) rectangle (\b,{\y+0.25});
+    }
+    \draw[very thick, domain=0:4, samples=80] plot (\x, {1.2+0.8*sin(deg(1.6*\x))});
+    \draw[dashed, gray] (0,1) -- (4.1,1) node[right, font=\scriptsize] {$t$};
+    \draw[line width=2.2pt, colorofwisdom] (0,0) -- (2.122,0);
+    \draw[line width=2.2pt, colorofwisdom] (3.77,0) -- (4,0);
+    \draw[->] (-0.1,0) -- (4.3,0) node[right] {\small $x$};
+    \draw[->] (0,-0.1) -- (0,2.3) node[above] {\small $y$};
+    \node[font=\scriptsize] at (2,-0.45) {Lebesgue: vodorovné vrstvy, tlustě $\{f > t\}$};
+  \end{tikzpicture}
+\end{center}
+
+Riemann dělí osu $x$ a ptá se `jak vysoko je funkce tady?'. Lebesgue dělí osu $y$ a ptá se `kde všude je funkce vyšší než $t$?'. Ta množina $\{x : f(x) > t\}$ může být ošklivá, třeba sjednocení nekonečně mnoha kousků, ale pokud je měřitelná, známe její míru a víc nepotřebujeme.
+
+\begin{definitionbox}
+  \textbf{Jednoduchá funkce} nabývá jen konečně mnoha hodnot: $s = \sum_{k=1}^{n}a_k\mathbf{1}_{A_k}$, kde $\mathbf{1}_A$ je funkce rovná $1$ na $A$ a $0$ jinde a $A_k$ jsou měřitelné. Její integrál je
+  \begin{equation*}
+    \int s\,\mathrm{d}\mu = \sum_{k=1}^{n}a_k\,\mu(A_k).
+  \end{equation*}
+  Pro měřitelnou $f\geq 0$ je \textbf{Lebesgueův integrál} supremum integrálů jednoduchých funkcí $0\leq s\leq f$. Ekvivalentně (`vrstvový dort')
+  \begin{equation*}
+    \int f\,\mathrm{d}\mu = \int_0^{\infty}\mu\big(\{x : f(x) > t\}\big)\,\mathrm{d}t.
+  \end{equation*}
+  Pro obecnou $f$ integrujeme zvlášť kladnou a zápornou část.
+\end{definitionbox}
+
+\begin{example}
+  Dirichletova funkce je jednoduchá: $D = 1\cdot\mathbf{1}_{\mathbb{Q}} + 0\cdot\mathbf{1}_{\mathbb{R}\setminus\mathbb{Q}}$. Tedy
+  \begin{equation*}
+    \int_0^1 D\,\mathrm{d}\lambda = 1\cdot\lambda(\mathbb{Q}\cap[0, 1]) + 0\cdot\lambda([0, 1]\setminus\mathbb{Q}) = 1\cdot 0 + 0\cdot 1 = 0.
+  \end{equation*}
+  Přesně jak říkala intuice.
+\end{example}
+
+Pro každou funkci, kterou umí integrovat Riemann, dá Lebesgue stejný výsledek. Lebesgue dokonce přesně popsal, kdy Riemannův integrál existuje: omezená funkce na $[a, b]$ je riemannovsky integrovatelná, právě když je množina jejích bodů nespojitosti nulová. Dirichletova funkce je nespojitá úplně všude.
+
+\subsection{Záměna limity a integrálu}
+
+Skutečná síla Lebesgueova integrálu ale není v exotických funkcích. Je v tom, že se s ním dobře zachází s limitami. Kdy smíme psát $\lim\int f_n = \int\lim f_n$? Nejdřív varování.
+
+\begin{center}
+  \begin{tikzpicture}[x=2.6cm, y=0.55cm]
+    \foreach \n/\c in {1/30, 2/50, 4/75} {
+      \fill[colorofwisdom!\c, opacity=0.6] (0,0) rectangle ({1/\n},\n);
+      \draw[colorofwisdom] (0,0) rectangle ({1/\n},\n);
+    }
+    \node[font=\scriptsize, anchor=west] at (1.02,1) {$f_1$};
+    \node[font=\scriptsize, anchor=west] at (0.52,2) {$f_2$};
+    \node[font=\scriptsize, anchor=west] at (0.27,4) {$f_4$};
+    \draw[->] (-0.05,0) -- (1.3,0) node[right] {\small $x$};
+    \draw[->] (0,-0.2) -- (0,4.8);
+    \node[font=\scriptsize, below] at (1,0) {$1$};
+    \node[font=\scriptsize, align=center] at (0.6,-1.4) {$f_n = n\cdot\mathbf{1}_{(0, 1/n)}$: rostoucí a užší};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[x=0.9cm, y=0.55cm]
+    \foreach \n/\c in {0/30, 1/45, 2/60, 3/75} {
+      \fill[colorofwisdom!\c] (\n,0) rectangle ({\n+1},1);
+      \draw[colorofwisdom] (\n,0) rectangle ({\n+1},1);
+      \node[font=\scriptsize] at ({\n+0.5},1.5) {$f_{\n}$};
+    }
+    \node[font=\scriptsize] at (4.6,0.5) {$\cdots\to$};
+    \draw[->] (-0.2,0) -- (5.4,0) node[right] {\small $x$};
+    \draw[->] (0,-0.2) -- (0,4.8);
+    \node[font=\scriptsize, align=center] at (2.6,-1.4) {$f_n = \mathbf{1}_{[n, n+1]}$: utíká do nekonečna};
+  \end{tikzpicture}
+\end{center}
+
+V obou případech je $\int f_n = 1$ pro každé $n$, ale $f_n(x)\to 0$ v každém bodě $x$ (bod $x > 0$ je dřív nebo později mimo úzký obdélník, resp. za ním). Tedy $\lim\int f_n = 1\neq 0 = \int\lim f_n$. Obsah `utekl' do nekonečně vysoké špičky, nebo do nekonečna doprava.
+
+\begin{definitionbox}
+  \textbf{Lebesgueova věta o monotónní konvergenci}: Je-li $0\leq f_1\leq f_2\leq\cdots$ a $f_n\to f$ bodově, pak $\int f_n\to\int f$.
+
+  \vspace{0.2cm}
+
+  \textbf{Lebesgueova věta o majorizované konvergenci}: Je-li $f_n\to f$ bodově a existuje integrovatelná $g$ taková, že $|f_n|\leq g$ pro všechna $n$, pak $\int f_n\to\int f$.
+\end{definitionbox}
+
+Majoranta $g$ je `střecha', pod kterou se všechny $f_n$ vejdou a která má sama konečný obsah. Plocha pak nemá kam utéct. V našich protipříkladech by střecha musela být nad všemi obdélníky najednou, a ta má nekonečný obsah ($\sum\frac{1}{n}$-krát nějaký kousek, nebo celou polopřímku). U Riemannova integrálu analogické věty buď neplatí, nebo vyžadují mnohem silnější předpoklady, protože limita riemannovsky integrovatelných funkcí nemusí být riemannovsky integrovatelná. (Dirichletova funkce je limitou funkcí, které jsou nenulové jen v konečně mnoha bodech.)
+
+\section{Pravděpodobnost jako míra}
+
+V kapitole~\ref{kap:pravdepodobnost} jsme počítali pravděpodobnosti jako podíl příznivých a všech výsledků. To funguje pro kostky, ale co pro `náhodně vybraný bod úsečky'? Každý jednotlivý bod má pravděpodobnost nula, a přesto nějaký bod padne. Andrej Kolmogorov v roce 1933 v knize \textit{Grundbegriffe der Wahrscheinlichkeitsrechnung} ukázal, že pravděpodobnost je prostě míra.
+
+\begin{definitionbox}
+  \textbf{Kolmogorovovy axiomy}: \textbf{Pravděpodobnostní prostor} je trojice $(\Omega, \mathcal{F}, P)$, kde $\mathcal{F}$ je $\sigma$-algebra jevů na $\Omega$ a $P$ je míra s
+  \begin{equation*}
+    P(A)\geq 0,\qquad P(\Omega) = 1,\qquad P\Big(\bigcup_n A_n\Big) = \sum_n P(A_n)\text{ pro disjunktní }A_n.
+  \end{equation*}
+  \textbf{Náhodná veličina} je měřitelná funkce $X\colon\Omega\to\mathbb{R}$ a její \textbf{střední hodnota} je Lebesgueův integrál $E X = \int_\Omega X\,\mathrm{d}P$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.6]
+    \draw[thick] (0,0) rectangle (1,1);
+    \fill[colorofwisdom!30] plot[smooth cycle, tension=0.9] coordinates {(0.15,0.55) (0.3,0.85) (0.55,0.8) (0.6,0.55) (0.4,0.35) (0.2,0.35)};
+    \node[font=\scriptsize] at (0.38,0.6) {$A$};
+    \draw[very thick, colorofwisdom] (0.65,0.15) -- (0.92,0.42);
+    \node[font=\scriptsize, anchor=west] at (0.8,0.22) {$B$};
+    \fill (0.8,0.8) circle (0.6pt) node[right, font=\scriptsize] {$\{\omega\}$};
+    \node[font=\scriptsize, align=left, anchor=west] at (1.15,0.5) {$\Omega = [0, 1]^2$, $P = $ obsah\\ $P(A) = $ obsah $A$\\ $P(B) = 0$ (úsečka)\\ $P(\{\omega\}) = 0$, a přesto\\ nějaký bod padne};
+  \end{tikzpicture}
+\end{center}
+
+Šipka hozená na čtvercový terč zasáhne oblast $A$ s pravděpodobností rovnou jejímu obsahu. Úsečka i bod mají obsah nula. \textbf{Pravděpodobnost nula neznamená nemožné}, a pravděpodobnost jedna neznamená jisté. Proto se v teorii pravděpodobnosti říká, že něco platí \textbf{skoro jistě}. Například silný zákon velkých čísel říká, že průměr hodů kostkou skoro jistě konverguje k $3{,}5$. Posloupnost samých šestek je možná, jen má pravděpodobnost nula.
+
+Míra sjednotila diskrétní a spojitý svět. Pro kostku je $E X$ součet $\sum x_iP(X = x_i)$, pro normální rozdělení z kapitoly~\ref{kap:pravdepodobnost} je to integrál s hustotou. Obojí je jeden a tentýž Lebesgueův integrál, jen podle jiné míry. Hezký příklad síly tohoto jazyka: Émile Borel v roce 1909 dokázal, že skoro všechna reálná čísla jsou \textbf{normální}, tedy v jejich rozvoji se každá číslice vyskytuje s frekvencí $\frac{1}{10}$, každá dvojice číslic s frekvencí $\frac{1}{100}$, a tak dál. Přesto o žádném `přirozeném' čísle, jako je $\pi$, $\mathrm{e}$ nebo $\sqrt{2}$, nevíme, jestli normální je.
+
+\section{Hilbertovy prostory}
+
+Teď druhá polovina kapitoly. V kapitole~\ref{kap:linearni-algebra} jsme viděli, že skalární součin $\langle f, g\rangle = \int f g$ dělá z funkcí vektory s délkou a úhly. V kapitole~\ref{kap:rady} jsme Fourierovy koeficienty spočítali jako průměty do kolmé báze. Hilbertův prostor je místo, kde tyhle úvahy přestanou být analogií a stanou se větami.
+
+\begin{definitionbox}
+  \textbf{Skalární součin} na komplexním vektorovém prostoru $H$ je zobrazení $\langle x, y\rangle\in\mathbb{C}$, které je lineární v první složce, $\langle y, x\rangle = \overline{\langle x, y\rangle}$ a $\langle x, x\rangle > 0$ pro $x\neq 0$. Definuje \textbf{normu} $\|x\| = \sqrt{\langle x, x\rangle}$ a vzdálenost $\|x - y\|$.
+
+  \vspace{0.2cm}
+
+  Posloupnost $x_n$ je \textbf{cauchyovská}, pokud $\|x_n - x_m\|\to 0$ pro $m, n\to\infty$. Prostor je \textbf{úplný}, pokud každá cauchyovská posloupnost konverguje k prvku prostoru. \textbf{Hilbertův prostor} je úplný prostor se skalárním součinem.
+\end{definitionbox}
+
+Komplexní sdružení v symetrii je nutné, aby $\langle x, x\rangle = \sum|x_k|^2$ vyšlo reálné a kladné i pro komplexní vektory. Cauchyova--Schwarzova nerovnost i Pythagorova věta platí beze změny.
+
+\subsection{Proč úplnost}
+
+Úplnost je požadavek, že v prostoru `nejsou díry'. Typický prostor s dírami jsou racionální čísla: posloupnost $1;\ 1{,}4;\ 1{,}41;\ 1{,}414;\ \dots$ se zahušťuje, její členy jsou si libovolně blízko, ale k žádnému racionálnímu číslu nekonverguje, protože $\sqrt{2}$ racionální není. V $\mathbb{Q}$ by neplatila Bolzanova věta z kapitoly~\ref{kap:limity}: funkce $x^2 - 2$ mění znaménko na $[1, 2]$, a přesto nemá racionální kořen. Analýza bez úplnosti nefunguje, protože limity nemají kam konvergovat.
+
+Totéž se stane s funkcemi. Vezměme prostor spojitých funkcí na $[0, 1]$ s normou $\|f\| = \sqrt{\int_0^1|f|^2}$ a posloupnost `ramp':
+
+\begin{center}
+  \begin{tikzpicture}[x=7cm, y=2.2cm]
+    \foreach \n/\c in {2/30, 4/50, 8/70, 32/100} {
+      \draw[thick, colorofwisdom!\c] (0,0) -- ({0.5-0.5/\n},0) -- ({0.5+0.5/\n},1) -- (1,1);
+    }
+    \draw[very thick, dashed] (0,0.0) -- (0.5,0.0);
+    \draw[very thick, dashed] (0.5,1) -- (1,1);
+    \draw[->] (-0.03,0) -- (1.08,0) node[right] {\small $x$};
+    \draw[->] (0,-0.05) -- (0,1.25);
+    \node[font=\scriptsize, left] at (0,1) {$1$};
+    \node[font=\scriptsize, below] at (0.5,0) {$\frac{1}{2}$};
+    \node[font=\scriptsize, below] at (1,0) {$1$};
+    \node[font=\scriptsize, anchor=west] at (0.66,0.55) {$f_2$};
+    \draw[gray] (0.65,0.55) -- (0.6,0.6);
+    \node[font=\scriptsize, align=center] at (0.5,-0.4) {spojité rampy $f_2, f_4, f_8, f_{32}$ se blíží ke skoku (čárkovaně)};
+  \end{tikzpicture}
+\end{center}
+
+Rampy se od sebe liší jen na stále užším intervalu, takže $\|f_n - f_m\|\to 0$. Jejich `limitou' je skoková funkce, která spojitá není. Prostor spojitých funkcí má díru. Abychom ji zalepili, potřebujeme do prostoru přidat i nespojité funkce, ale jen takové, které lze rozumně integrovat. A tady se obě poloviny kapitoly potkávají.
+
+\begin{definitionbox}
+  \textbf{Prostor $\ell^2$} tvoří posloupnosti $(x_1, x_2, \dots)$ komplexních čísel s $\sum|x_n|^2 < \infty$ a skalárním součinem $\langle x, y\rangle = \sum x_n\overline{y_n}$.
+
+  \vspace{0.2cm}
+
+  \textbf{Prostor $L^2(a, b)$} tvoří (třídy) lebesgueovsky měřitelných funkcí s $\int_a^b|f|^2\,\mathrm{d}\lambda < \infty$ a skalárním součinem $\langle f, g\rangle = \int_a^b f\,\overline{g}\,\mathrm{d}\lambda$.
+
+  \vspace{0.2cm}
+
+  \textbf{Rieszova--Fischerova věta} (1907): Oba prostory jsou úplné, tedy Hilbertovy.
+\end{definitionbox}
+
+Prostor $\ell^2$ je přímočaré zobecnění $\mathbb{C}^n$: vektory s nekonečně mnoha souřadnicemi, jejichž délka je konečná. Posloupnost $(1, \frac{1}{2}, \frac{1}{3}, \dots)$ do něj patří, protože $\sum\frac{1}{n^2} = \frac{\pi^2}{6}$. Posloupnost $(1, \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{3}}, \dots)$ ne, protože $\sum\frac{1}{n}$ je harmonická řada. Úplnost prostoru $L^2$ potřebuje Lebesgueův integrál a věty o záměně limity. S Riemannovým integrálem by prostor zůstal děravý. Proto jsou míra a Hilbertovy prostory v jedné kapitole.
+
+\subsection{Ortonormální báze a Fourier podruhé}
+
+\begin{definitionbox}
+  Systém $e_1, e_2, \ldots$ je \textbf{ortonormální}, pokud $\langle e_m, e_n\rangle = 0$ pro $m\neq n$ a $\|e_n\| = 1$. Je to \textbf{ortonormální báze}, pokud jediný vektor kolmý na všechna $e_n$ je nulový. Pak pro každé $x\in H$ platí
+  \begin{equation*}
+    x = \sum_{n=1}^{\infty}\langle x, e_n\rangle\,e_n\qquad\text{a}\qquad\|x\|^2 = \sum_{n=1}^{\infty}|\langle x, e_n\rangle|^2\quad\text{(Parsevalova rovnost)}.
+  \end{equation*}
+\end{definitionbox}
+
+Pozor na slovo `báze': na rozdíl od kapitoly~\ref{kap:linearni-algebra} nepožadujeme, aby každý vektor byl \textit{konečnou} kombinací bázových vektorů. Stačí nekonečná řada konvergující v normě. Funkce $\frac{\mathrm{e}^{inx}}{\sqrt{2\pi}}$, $n\in\mathbb{Z}$, tvoří ortonormální bázi $L^2(-\pi, \pi)$. Fourierova řada z kapitoly~\ref{kap:rady} je tedy rozklad vektoru do souřadnic a Parsevalova rovnost je Pythagorova věta. Každý Hilbertův prostor se spočetnou ortonormální bází je dokonce `stejný' jako $\ell^2$: přiřazení $x\mapsto(\langle x, e_1\rangle, \langle x, e_2\rangle, \dots)$ zachovává skalární součin. Funkce a posloupnosti jejich Fourierových koeficientů jsou dva popisy téhož objektu.
+
+\begin{example}
+  Funkce $f(x) = x$ na $(-\pi, \pi)$ má Fourierovu řadu (počítejte per partes)
+  \begin{equation*}
+    x = 2\left(\sin x - \frac{\sin 2x}{2} + \frac{\sin 3x}{3} - \cdots\right) = \sum_{n=1}^{\infty}\frac{2{(-1)}^{n+1}}{n}\sin nx.
+  \end{equation*}
+  Parsevalova rovnost ve tvaru z kapitoly~\ref{kap:rady} dává $\frac{1}{\pi}\int_{-\pi}^{\pi}x^2\,\mathrm{d}x = \frac{2\pi^2}{3}$ vlevo a $\sum\frac{4}{n^2}$ vpravo. Tedy $\sum\frac{1}{n^2} = \frac{\pi^2}{6}$, Eulerův výsledek podruhé, tentokrát z délky vektoru.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=0.95cm, y=0.62cm]
+    \draw[gray, thick] (-3.1416,-3.1416) -- (3.1416,3.1416);
+    \draw[colorofwisdom!40, domain=-3.1416:3.1416, samples=80] plot (\x, {2*sin(deg(\x))});
+    \draw[colorofwisdom!70, domain=-3.1416:3.1416, samples=120] plot (\x, {2*(sin(deg(\x))-sin(deg(2*\x))/2+sin(deg(3*\x))/3)});
+    \draw[very thick, colorofwisdom, domain=-3.1416:3.1416, samples=300] plot (\x, {2*(sin(deg(\x))-sin(deg(2*\x))/2+sin(deg(3*\x))/3-sin(deg(4*\x))/4+sin(deg(5*\x))/5-sin(deg(6*\x))/6+sin(deg(7*\x))/7-sin(deg(8*\x))/8+sin(deg(9*\x))/9-sin(deg(10*\x))/10)});
+    \draw[->] (-3.5,0) -- (3.7,0) node[right] {\small $x$};
+    \draw[->] (0,-3.6) -- (0,3.8);
+    \node[font=\scriptsize, below right] at (3.1416,0) {$\pi$};
+    \node[font=\scriptsize, above left] at (-3.1416,0) {$-\pi$};
+    \node[font=\scriptsize, align=center] at (0,-4.4) {$f(x) = x$ (šedě) a součty $1$, $3$ a $10$ členů Fourierovy řady};
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Nejlepší přiblížení a projekce}
+
+\begin{definitionbox}
+  \textbf{Věta o projekci}: Nechť $M$ je uzavřený podprostor Hilbertova prostoru $H$ a $x\in H$. Pak existuje právě jeden bod $Px\in M$, který je k $x$ nejblíž:
+  \begin{equation*}
+    \|x - Px\| = \min_{m\in M}\|x - m\|,
+  \end{equation*}
+  a je to právě ten bod, pro který je $x - Px$ kolmé na celé $M$. Je-li $e_1, \dots, e_N$ ortonormální báze $M$, je $Px = \sum_{n=1}^{N}\langle x, e_n\rangle\,e_n$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[krychle, scale=1.4]
+    \fill[colorofwisdom!12] (-0.5,-0.3,0) -- (2.6,-0.3,0) -- (2.6,2.4,0) -- (-0.5,2.4,0) -- cycle;
+    \draw[colorofwisdom!50] (-0.5,-0.3,0) -- (2.6,-0.3,0) -- (2.6,2.4,0) -- (-0.5,2.4,0) -- cycle;
+    \draw[->, very thick] (0,0,0) -- (1.5,1.6,1.6) node[above, font=\small] {$x$};
+    \draw[->, very thick, colorofwisdom] (0,0,0) -- (1.5,1.6,0) node[below right, font=\small] {$Px$};
+    \draw[dashed, thick] (1.5,1.6,0) -- (1.5,1.6,1.6);
+    \draw (1.5,1.6,0.2) -- (1.3,1.6,0.2) -- (1.3,1.6,0);
+    \draw[gray] (1.5,1.6,0) -- (2.3,0.4,0);
+    \fill[gray] (2.3,0.4,0) circle (1pt) node[below, font=\scriptsize] {$m$};
+    \draw[gray, dotted] (2.3,0.4,0) -- (1.5,1.6,1.6);
+    \node[font=\scriptsize] at (1.9,1.65,0.85) {$x - Px$};
+    \node[font=\small, colorofwisdom] at (-0.2,2.1,0) {$M$};
+  \end{tikzpicture}
+\end{center}
+
+Kolmý průmět je nejbližší bod, protože pro libovolné jiné $m\in M$ je podle Pythagorovy věty $\|x - m\|^2 = \|x - Px\|^2 + \|Px - m\|^2$. Tečkovaná přepona je delší než čárkovaná odvěsna. To zní jako geometrie z prvního ročníku, ale v $L^2$ to říká něco netriviálního: \textbf{částečný součet Fourierovy řady je ze všech trigonometrických polynomů daného stupně nejlepším přiblížením funkce} ve smyslu průměrné kvadratické chyby. Stejnou větou se řeší metoda nejmenších čtverců ve statistice (kapitola~\ref{kap:statistika}), jen tam je $H$ konečněrozměrný.
+
+\subsection{Gramova--Schmidtova ortogonalizace}
+
+Jak sehnat ortonormální bázi? Vezmeme libovolné lineárně nezávislé vektory $v_1, v_2, \dots$ a postupně z každého odečteme jeho průmět do prostoru předchozích:
+\begin{equation*}
+  u_1 = \frac{v_1}{\|v_1\|},\qquad w_2 = v_2 - \langle v_2, u_1\rangle u_1,\quad u_2 = \frac{w_2}{\|w_2\|},\qquad w_3 = v_3 - \langle v_3, u_1\rangle u_1 - \langle v_3, u_2\rangle u_2,\ \dots
+\end{equation*}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.8]
+    \draw[->, thick] (0,0) -- (2,0.5) node[right, font=\small] {$v_1$};
+    \draw[->, thick] (0,0) -- (1,1.8) node[above, font=\small] {$v_2$};
+    \draw[->, very thick, colorofwisdom] (0,0) -- (0.9701,0.2425) node[below right, font=\small] {$u_1$};
+    \draw[->, gray, thick] (0,0) -- (1.3645,0.3411);
+    \draw[dashed] (1.3645,0.3411) -- (1,1.8);
+    \draw[->, thick, gray] (0,0) -- (-0.3645,1.4589) node[left, font=\small] {$w_2$};
+    \draw[->, very thick, colorofwisdom] (0,0) -- (-0.2424,0.9701) node[left, font=\small] {$u_2$};
+    \draw[gray] ({1.3645-0.12*0.9701},{0.3411-0.12*0.2425}) -- ++({-0.12*0.2424},{0.12*0.9701}) -- ++({0.12*0.9701},{0.12*0.2425});
+    \node[font=\scriptsize, gray, anchor=north west] at (1.25,0.28) {$\langle v_2, u_1\rangle u_1$};
+    \node[font=\scriptsize, anchor=west] at (1.25,1.15) {$w_2 = v_2 - \langle v_2, u_1\rangle u_1$};
+  \end{tikzpicture}
+\end{center}
+
+Vektor $w_2$ je přesně ta čárkovaná `odvěsna' z věty o projekci, posunutá do počátku. Na $v_1$ je kolmý a spolu s $u_1$ generuje stejnou rovinu jako $v_1$, $v_2$.
+
+\begin{problem}
+  V $L^2(-1, 1)$ ortogonalizujte (bez normování) funkce $1, x, x^2, x^3$.
+\end{problem}
+
+\begin{solution}
+  $\langle 1, x\rangle = \int_{-1}^1 x\,\mathrm{d}x = 0$, takže $1$ a $x$ jsou už kolmé. Dále $\langle x^2, 1\rangle = \frac{2}{3}$, $\langle 1, 1\rangle = 2$ a $\langle x^2, x\rangle = 0$, takže $w_3 = x^2 - \frac{2/3}{2}\cdot 1 = x^2 - \frac{1}{3}$. Pro $x^3$ je kolmý na sudé funkce a $\langle x^3, x\rangle = \frac{2}{5}$, $\langle x, x\rangle = \frac{2}{3}$, tedy $w_4 = x^3 - \frac{3}{5}x$. Až na násobky jsou to \textbf{Legendreovy polynomy}, které se objevují ve fyzice například při popisu gravitačního pole Země nebo tvaru elektronových orbitalů.
+\end{solution}
+
+\subsection{Rieszova věta o reprezentaci}
+
+\begin{definitionbox}
+  \textbf{Rieszova věta}: Každý spojitý lineární funkcionál $\varphi\colon H\to\mathbb{C}$ je tvaru $\varphi(x) = \langle x, y\rangle$ pro právě jedno $y\in H$.
+\end{definitionbox}
+
+V $\mathbb{R}^n$ je to samozřejmé: každá lineární funkce $a_1x_1 + \cdots + a_nx_n$ je skalární součin s vektorem $(a_1, \dots, a_n)$. V $L^2$ to znamená, že každé rozumné lineární `měření' funkce je integrál proti nějaké pevné funkci. Zajímavé je, co tam \textit{není}. Funkcionál $f\mapsto f(0)$ by potřeboval `funkci' $\delta$, pro kterou $\int f\delta = f(0)$. Taková funkce v $L^2$ neexistuje, protože $f\mapsto f(0)$ není spojitý (odbočka na konci kapitoly ukáže, že v $L^2$ nemá ani smysl). Fyzikové s Diracovou funkcí $\delta$ přesto počítají a matematici museli vymyslet teorii distribucí, aby to bylo poctivé.
+
+\section{Operátory a kvantová mechanika}
+
+\begin{definitionbox}
+  \textbf{Lineární operátor} je lineární zobrazení $A\colon H\to H$. Je \textbf{omezený}, pokud $\|Ax\|\leq C\|x\|$. \textbf{Adjungovaný operátor} $A^\ast$ je určen vztahem $\langle Ax, y\rangle = \langle x, A^\ast y\rangle$. Operátor je \textbf{samoadjungovaný}, pokud $A = A^\ast$.
+
+  \vspace{0.2cm}
+
+  \textbf{Spektrum} $\sigma(A)$ je množina čísel $\lambda$, pro která $A - \lambda I$ nemá omezenou inverzi. Každé vlastní číslo patří do spektra, ale spektrum může obsahovat i jiná čísla.
+\end{definitionbox}
+
+Samoadjungované operátory jsou nekonečněrozměrné symetrické (hermitovské) matice z odbočky v kapitole~\ref{kap:linearni-algebra}. Mají reálná vlastní čísla a vlastní vektory k různým vlastním číslům jsou kolmé, se stejným důkazem. Nekonečná dimenze ale přináší nová překvapení.
+
+\begin{example}[ (Hilbertův hotel)]
+  David Hilbert v jedné přednášce z roku 1924 popsal hotel s nekonečně mnoha pokoji, který je plný, a přesto ubytuje dalšího hosta: host z pokoje $n$ se přestěhuje do pokoje $n + 1$ a pokoj $1$ je volný. V $\ell^2$ je to \textbf{operátor posunu} $S(x_1, x_2, x_3, \dots) = (0, x_1, x_2, \dots)$.
+
+  \begin{center}
+    \begin{tikzpicture}[x=1.1cm]
+      \foreach \n in {1,...,6} {
+        \draw[thick, fill=colorofwisdom!12] ({\n-0.4},0) rectangle ({\n+0.4},0.7);
+        \node[font=\scriptsize] at (\n,0.35) {$\n$};
+      }
+      \foreach \n in {1,...,5} \draw[->, thick, colorofwisdom] ({\n+0.1},0.8) to[bend left=45] ({\n+0.9},0.8);
+      \draw[->, thick, colorofwisdom] (6.1,0.8) to[bend left=45] (6.7,0.6);
+      \node[font=\scriptsize] at (7.2,0.35) {$\cdots$};
+      \node[font=\scriptsize, colorofwisdom] at (1,-0.3) {volný};
+      \node[font=\scriptsize] at (3.5,-0.75) {$(x_1, x_2, x_3, \dots)\ \mapsto\ (0, x_1, x_2, \dots)$};
+    \end{tikzpicture}
+  \end{center}
+
+  Posun zachovává délku, $\|Sx\| = \|x\|$, takže je prostý. Ale není `na', protože vektor $(1, 0, 0, \dots)$ nemá vzor. V konečné dimenzi je to nemožné: prostá lineární zobrazení z $\mathbb{C}^n$ do $\mathbb{C}^n$ jsou podle věty o hodnosti vždy `na'. Číslo $0$ tedy patří do spektra $S$ (operátor $S$ nemá inverzi), i když není vlastním číslem ($Sx = 0$ jen pro $x = 0$).
+\end{example}
+
+Ještě výraznější je operátor násobení $(Mf)(x) = x\,f(x)$ na $L^2(0, 1)$. Je samoadjungovaný, jeho spektrum je celý interval $[0, 1]$, a přesto nemá jediné vlastní číslo. Rovnice $xf(x) = \lambda f(x)$ by vyžadovala, aby $f$ byla nenulová jen v bodě $x = \lambda$, a taková funkce je v $L^2$ nulová. Spektrum už není jen seznam vlastních čísel. Může být `spojité'.
+
+\subsection{Kvantová mechanika}
+
+Kolem roku 1925 vznikly dvě podivné teorie atomu. Heisenbergova maticová mechanika počítala s nekonečnými maticemi, Schrödingerova vlnová mechanika s vlnovými funkcemi a diferenciálními rovnicemi. Vypadaly úplně odlišně a dávaly stejné výsledky. John von Neumann v roce 1932 v knize \textit{Mathematische Grundlagen der Quantenmechanik} ukázal proč: obě jsou totéž v Hilbertově prostoru, jednou v souřadnicích $\ell^2$, podruhé v $L^2$. Termín `Hilbertův prostor' ostatně zavedl on. Postuláty kvantové mechaniky (podrobněji v kapitole~\ref{kap:fyzika}) jsou:
+\begin{enumerate}
+  \item \textbf{Stav} systému je jednotkový vektor $\psi$ v Hilbertově prostoru, třeba $\psi\in L^2(\mathbb{R})$ pro částici na přímce. Číslo $|\psi(x)|^2$ je hustota pravděpodobnosti, že částici najdeme v bodě $x$. Podmínka $\|\psi\| = 1$ je přesně $P(\Omega) = 1$ z Kolmogorovových axiomů.
+  \item \textbf{Měřitelná veličina} je samoadjungovaný operátor $A$. Možné výsledky měření jsou prvky jeho spektra, proto reálná čísla.
+  \item Má-li $A$ ortonormální bázi vlastních vektorů $e_n$ s vlastními čísly $\lambda_n$, naměříme $\lambda_n$ s pravděpodobností $|\langle\psi, e_n\rangle|^2$. Že se tyto pravděpodobnosti sečtou na $1$, je Parsevalova rovnost.
+\end{enumerate}
+
+\begin{example}
+  Částice v `krabici' $[0, 1]$ má energii danou operátorem $H = -\frac{\hbar^2}{2m}\frac{\mathrm{d}^2}{\mathrm{d}x^2}$ s podmínkou $\psi(0) = \psi(1) = 0$. Vlastní funkce jsou $\psi_n(x) = \sqrt{2}\sin(n\pi x)$, protože $-\psi_n'' = n^2\pi^2\psi_n$, a vlastní čísla jsou $E_n = \frac{n^2\pi^2\hbar^2}{2m}$. Energie nemůže být libovolná, je \textbf{kvantovaná}. A funkce $\sqrt{2}\sin(n\pi x)$ jsou ortonormální báze $L^2(0, 1)$, tedy Fourierova řada podruhé.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=4cm, y=1cm]
+    \foreach \n/\l in {1/E_1, 2/E_2 = 4E_1, 3/E_3 = 9E_1} {
+      \pgfmathsetmacro{\e}{0.38*\n*\n}
+      \draw[gray, dashed] (0,\e) -- (1,\e);
+      \draw[very thick, colorofwisdom, domain=0:1, samples=60] plot (\x, {\e+0.32*sin(deg(\n*pi*\x))});
+      \node[font=\scriptsize, anchor=west] at (1.05,\e) {$\l$, $\psi_{\n}$};
+    }
+    \draw[very thick] (0,-0.2) -- (0,3.9);
+    \draw[very thick] (1,-0.2) -- (1,3.9);
+    \draw[->] (-0.1,-0.2) -- (1.2,-0.2) node[right] {\small $x$};
+    \node[font=\scriptsize, below] at (0,-0.2) {$0$};
+    \node[font=\scriptsize, below] at (1,-0.2) {$1$};
+  \end{tikzpicture}
+\end{center}
+
+Polohu reprezentuje operátor násobení $X\psi = x\psi$ a hybnost operátor $P\psi = -i\hbar\psi'$. Zkuste si, že $(XP - PX)\psi = i\hbar\psi$ (pravidlo pro derivaci součinu). Tento vztah je jádrem \textbf{Heisenbergova principu neurčitosti}. A ukazuje, proč nestačí konečné matice: stopa (součet prvků na diagonále) matice $XP - PX$ je pro matice $n\times n$ vždy nula, protože stopa $XP$ je stejná jako stopa $PX$. Stopa $i\hbar I$ je ale $i\hbar n\neq 0$. Kvantová mechanika se do konečné dimenze nevejde. Operátor násobení $X$ má navíc spojité spektrum bez vlastních vektorů, stejně jako $M$ výše: `stav s přesnou polohou' by byla Diracova $\delta$, a ta v $L^2$ není.
+
+\section{Odbočka --- Proč prvky \texorpdfstring{$L^2$}{L2} nejsou funkce}
+
+V definici $L^2$ jsme opatrně napsali `třídy funkcí'. Proč? Vezměme funkci $g$, která je nulová všude kromě bodů $\frac{1}{3}$ a $\frac{2}{3}$, kde je rovna $1$. Pak
+\begin{equation*}
+  \|g\|^2 = \int_0^1|g|^2\,\mathrm{d}\lambda = 1\cdot\lambda\Big(\Big\{\frac{1}{3}, \frac{2}{3}\Big\}\Big) = 0,
+\end{equation*}
+ale $g\neq 0$. Norma by nebyla pozitivně definitní a skalární součin by nebyl skalárním součinem. Obecně: integrál `nevidí' změny na nulové množině.
+
+\begin{center}
+  \begin{tikzpicture}[x=6cm, y=2.2cm]
+    \draw[very thick, colorofwisdom, domain=0:1, samples=50] plot (\x, {0.3+0.6*\x*\x});
+    \fill[white] (0.33333,0.36667) circle (1.6pt);
+    \draw[colorofwisdom] (0.33333,0.36667) circle (1.6pt);
+    \fill[colorofwisdom] (0.33333,0.95) circle (1.6pt);
+    \fill[white] (0.75,0.6375) circle (1.6pt);
+    \draw[colorofwisdom] (0.75,0.6375) circle (1.6pt);
+    \fill[colorofwisdom] (0.75,0.15) circle (1.6pt);
+    \fill[colorofwisdom!50] (0.66,0.2) circle (0.8pt) (0.6,0.08) circle (0.8pt) (0.2,0.12) circle (0.8pt) (0.5,0.1) circle (0.8pt);
+    \draw[->] (-0.03,0) -- (1.08,0) node[right] {\small $x$};
+    \draw[->] (0,-0.05) -- (0,1.15);
+    \node[font=\scriptsize, align=center] at (0.5,-0.35) {$f$ a $\tilde{f}$ se liší jen v konečně (nebo spočetně) mnoha bodech: $\|f - \tilde{f}\| = 0$};
+  \end{tikzpicture}
+\end{center}
+
+Řešení: dvě funkce prohlásíme za stejné, pokud se liší jen na množině míry nula. Říkáme, že se rovnají \textbf{skoro všude}. Je to relace ekvivalence (kapitola 2) a prvky $L^2$ jsou její třídy. Na obrázku je $f$ (plná čára) a funkce $\tilde{f}$, která se od $f$ liší v několika bodech (plná kolečka místo prázdných). V $L^2$ je to tentýž prvek.
+
+Má to zvláštní důsledek: \textbf{prvek $L^2$ nemá hodnotu v bodě}. Výraz `$f(0)$' pro $f\in L^2$ nedává smysl, protože hodnotu v jednom bodě můžeme změnit a zůstaneme ve stejné třídě. Proto $f\mapsto f(0)$ není funkcionál na $L^2$, jak jsme slíbili u Rieszovy věty. Smysl dávají jen `průměrné' veličiny, integrály přes množiny kladné míry. A přesně to se fyzikálně dá měřit: nikdo nikdy nezměřil polohu částice s nekonečnou přesností, jen pravděpodobnost, že je v nějakém intervalu.
+
+Zato platí věta s krásným jménem: Je-li $f_n\to f$ v $L^2$, pak nějaká podposloupnost $f_{n_k}$ konverguje k $f$ skoro všude. Zpátky k hodnotám v bodech se tedy dostat dá, ale jen `skoro'. Celé to připomíná rovnost $0{,}999\ldots = 1$: dva různé zápisy, jedna věc.
+
+\section{Příběh --- Matematika v Göttingenu už neexistuje}
+
+Na přelomu 19. a 20. století byla univerzita v Göttingenu matematickým středem světa a jejím srdcem byl David Hilbert. V roce 1900 na kongresu v Paříži představil seznam třiadvaceti problémů, které podle něj měly určit matematiku nového století. Osmým z nich je Riemannova hypotéza z kapitoly~\ref{kap:komplexni-analyza}. Do Göttingenu se sjížděli studenti z celého světa. Pracovali tam Felix Klein, Hermann Minkowski, Emmy Noetherová, Hermann Weyl, Richard Courant, Edmund Landau a mladý John von Neumann tam za Hilbertem jezdil pracovat na základech kvantové mechaniky.
+
+V září 1930 Hilbert v Královci pronesl projev, který skončil slovy `Musíme vědět. Budeme vědět.' Odpovídal jimi na pesimisty, kteří tvrdili, že některé otázky zůstanou navždy nezodpověditelné. Ironií dějin je, že den předtím na konferenci v témže městě oznámil mladý Kurt Gödel svou větu o neúplnosti: v každém dostatečně silném bezesporném systému axiomů existují pravdivá tvrzení, která nelze dokázat.
+
+V dubnu 1933, krátce po nástupu nacistů k moci, vyšel zákon, podle kterého museli státní službu opustit `neárijští' úředníci, a profesoři byli státní úředníci. Během několika měsíců byl Göttingen zničen. Courant byl suspendován a emigroval do USA, kde později založil slavný institut v New Yorku. Emmy Noetherová, možná největší matematička historie, přišla o právo učit, odešla na Bryn Mawr College v Pensylvánii a o dva roky později tam zemřela po operaci. Weyl, jehož manželka byla židovského původu, odešel do Princetonu. Hilbertův asistent Paul Bernays přišel o místo a odešel do Curychu. Landauovy přednášky začali v listopadu 1933 bojkotovat nacističtí studenti, organizovaní mimo jiné nadaným matematikem Oswaldem Teichmüllerem, a Landau musel odejít.
+
+Podle vyprávění, které zaznamenala Hilbertova životopiskyně Constance Reidová, seděl Hilbert o něco později na jednom banketu vedle říšského ministra školství Bernharda Rusta. Ministr se ho zeptal: `Jak je na tom matematika v Göttingenu teď, když je zbavena židovského vlivu?' Hilbert odpověděl: `Matematika v Göttingenu? Ta už opravdu neexistuje.'
+
+Hilbert zemřel v Göttingenu 14.~února 1943, uprostřed války. Jeho pohřbu se podle pamětníků zúčastnilo sotva deset lidí. Na jeho náhrobku stojí slova z královeckého projevu: \textit{Wir müssen wissen. Wir werden wissen.}
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak vzniká Cantorova množina? Proč má míru nula, a přesto je nespočetná?
+    \item Proč má množina racionálních čísel míru nula, i když je hustá? Proč není Dirichletova funkce riemannovsky integrovatelná?
+    \item Co je $\sigma$-algebra a míra? Proč požadujeme právě spočetnou aditivitu?
+    \item Popište konstrukci Vitaliho množiny. Kde se v ní použije axiom výběru a jak souvisí s Banachovým--Tarského paradoxem?
+    \item Jaký je rozdíl mezi Riemannovým a Lebesgueovým integrálem? Vysvětlete Lebesgueovo přirovnání s mincemi.
+    \item Uveďte příklad, kdy $\lim\int f_n\neq\int\lim f_n$. Co zaručuje věta o majorizované konvergenci?
+    \item Jak Kolmogorov popsal pravděpodobnost pomocí míry? Proč `pravděpodobnost nula' neznamená `nemožné'?
+    \item Co je Hilbertův prostor a proč potřebujeme úplnost? Proč je $L^2$ úplný jen s Lebesgueovým integrálem?
+    \item Jak souvisí Fourierova řada s ortonormální bází a Parsevalova rovnost s Pythagorovou větou? Co říká věta o projekci?
+    \item Proč jsou v kvantové mechanice měřitelné veličiny samoadjungované operátory? Proč se nevejde do konečné dimenze?
+  \end{enumerate}
+\end{problem}

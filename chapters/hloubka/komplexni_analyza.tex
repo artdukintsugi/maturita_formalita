@@ -1,0 +1,681 @@
+\label{kap:komplexni-analyza}
+\mathquote{Nejkratší cesta mezi dvěma pravdami v reálném oboru vede přes obor komplexní.}{Jacques Hadamard}
+
+V kapitole~\ref{kap:komplexni} jsme komplexní čísla zavedli jako nouzové řešení rovnice $x^2 = -1$. Pak se ukázalo, že mají krásnou geometrii: násobení je otočení a natažení. V této kapitole uděláme další krok a budeme s komplexními čísly dělat analýzu, tedy derivovat a integrovat. Čeká nás jedno z největších překvapení celé matematiky. Komplexní derivace je tak silná podmínka, že funkce, která ji má, je automaticky nekonečněkrát derivovatelná, rovná se své Taylorově řadě a její hodnoty uvnitř kruhu jsou určené hodnotami na jeho hranici. Splníme také dva dluhy z kapitoly~\ref{kap:rady}: vysvětlíme, proč má řada pro $\frac{1}{1 + x^2}$ poloměr konvergence $1$, a proč v komplexních číslech neexistuje monstrum typu $\mathrm{e}^{-1/x^2}$. Cestou dokážeme základní větu algebry a spočítáme reálné integrály, na které reálná analýza nestačí.
+
+\section{Komplexní funkce jako deformace roviny}
+
+Reálnou funkci si nakreslíme jako graf. U komplexní funkce $f\colon\mathbb{C}\to\mathbb{C}$ to nejde, protože graf by žil ve čtyřech rozměrech: dva pro vstup $z = x + iy$, dva pro výstup $w = u + iv$. Místo toho si nakreslíme dvě roviny vedle sebe a díváme se, kam funkce přenese body, čáry a oblasti. Komplexní funkce je \textbf{deformace roviny}, jako by rovina byla z gumy.
+
+\begin{definitionbox}
+  \textbf{Komplexní funkce} komplexní proměnné přiřazuje číslu $z = x + iy$ číslo
+  \begin{equation*}
+    f(z) = u(x, y) + i\,v(x, y),
+  \end{equation*}
+  kde $u = \mathrm{Re}\,f$ a $v = \mathrm{Im}\,f$ jsou dvě obyčejné reálné funkce dvou proměnných z kapitoly~\ref{kap:vice-promennych}.
+\end{definitionbox}
+
+\begin{example}
+  Pro $f(z) = z^2$ je $(x + iy)^2 = x^2 - y^2 + 2xyi$, tedy $u = x^2 - y^2$ a $v = 2xy$. Kam se zobrazí svislá přímka $x = a$? Její body jsou $a + it$, takže
+  \begin{equation*}
+    u = a^2 - t^2,\qquad v = 2at\qquad\Longrightarrow\qquad u = a^2 - \frac{v^2}{4a^2}.
+  \end{equation*}
+  To je parabola otevřená doleva s vrcholem v bodě $a^2$. Vodorovná přímka $y = b$ s body $t + ib$ dá $u = t^2 - b^2$, $v = 2bt$, tedy $u = \frac{v^2}{4b^2} - b^2$, parabolu otevřenou doprava s vrcholem v $-b^2$. Všechny tyto paraboly mají ohnisko v počátku (zkuste si to ověřit pomocí kapitoly~\ref{kap:kuzelosecky}).
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.6]
+    \fill[colorofwisdom!20] (0.6,0.6) rectangle (0.9,0.9);
+    \foreach \a in {0.3,0.6,0.9,1.2} {
+      \draw[colorofwisdom, thick] (\a,0) -- (\a,1.2);
+      \draw[gray, thick] (0,\a) -- (1.2,\a);
+    }
+    \draw[->] (-0.2,0) -- (1.5,0) node[right] {\small $x$};
+    \draw[->] (0,-0.2) -- (0,1.5) node[above] {\small $y$};
+    \foreach \a in {0.3,0.6,0.9,1.2} \node[below, font=\tiny] at (\a,0) {$\a$};
+    \node[font=\small] at (0.6,-0.45) {rovina $z$};
+  \end{tikzpicture}
+  \hspace{0.4cm}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->, thick] (0,0) -- (1.2,0) node[midway, above, font=\small] {$z\mapsto z^2$};
+    \path (0,-1.5) -- (0,1.5);
+  \end{tikzpicture}
+  \hspace{0.4cm}
+  \begin{tikzpicture}[scale=1.15]
+    \fill[colorofwisdom!20] plot[domain=0.6:0.9, samples=12] ({\x*\x-0.36},{1.2*\x}) -- plot[domain=0.6:0.9, samples=12] ({0.81-\x*\x},{1.8*\x}) -- plot[domain=0.9:0.6, samples=12] ({\x*\x-0.81},{1.8*\x}) -- plot[domain=0.9:0.6, samples=12] ({0.36-\x*\x},{1.2*\x}) -- cycle;
+    \foreach \a in {0.3,0.6,0.9,1.2} {
+      \draw[colorofwisdom, thick, domain=0:1.2, samples=30] plot ({\a*\a-\x*\x},{2*\a*\x});
+      \draw[gray, thick, domain=0:1.2, samples=30] plot ({\x*\x-\a*\a},{2*\a*\x});
+    }
+    \draw[->] (-1.7,0) -- (1.8,0) node[right] {\small $u$};
+    \draw[->] (0,-0.2) -- (0,3.1) node[above] {\small $v$};
+    \foreach \a/\l in {0.09/{}, 0.36/0{,}36, 0.81/0{,}81, 1.44/1{,}44} \fill[colorofwisdom] (\a,0) circle (0.9pt);
+    \node[below, font=\tiny] at (1.44,0) {$1{,}44$};
+    \node[below, font=\tiny] at (-1.44,0) {$-1{,}44$};
+    \node[font=\small] at (0,-0.55) {rovina $w$};
+  \end{tikzpicture}
+\end{center}
+
+Čtverec $[0; 1{,}2]\times[0; 1{,}2]$ se rozevře do horní poloroviny, protože úhly se zdvojnásobí: pravý úhel u počátku se rozevře na přímý. Barevné přímky $x = \text{konst.}$ přešly v paraboly otevřené doleva, šedé $y = \text{konst.}$ v paraboly otevřené doprava. A všimněte si jedné věci: barevné a šedé paraboly se \textit{pořád protínají v pravém úhlu}, přesně jako původní mřížka. Vybarvený čtvereček se pokřivil a zvětšil, ale v malém zůstal `čtverečkem'. To není náhoda a za chvíli uvidíme proč.
+
+\begin{example}
+  Exponenciála $\mathrm{e}^z = \mathrm{e}^{x + iy} = \mathrm{e}^x(\cos y + i\sin y)$ (Eulerův vzorec z kapitoly~\ref{kap:rady}). Číslo $\mathrm{e}^z$ má tedy absolutní hodnotu $\mathrm{e}^x$ a argument $y$. Vodorovná přímka $y = b$ přejde v \textbf{polopřímku} z počátku pod úhlem $b$. Svislá úsečka $x = a$, $0\leq y < 2\pi$, přejde v \textbf{kružnici} o poloměru $\mathrm{e}^a$. Pás $0\leq y < 2\pi$ se tak zabalí do celé roviny kromě nuly. Kartézská mřížka se proměnila v polární souřadnice.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.3cm, y=0.48cm]
+    \fill[colorofwisdom!10] (-1,0) rectangle (0.5,6.2832);
+    \foreach \k in {0,...,7} \draw[gray] (-1,{\k*0.7854}) -- (0.5,{\k*0.7854});
+    \draw[gray, thick] (-1,1.5708) -- (0.5,1.5708);
+    \foreach \a in {-1,-0.5,0.5} \draw[colorofwisdom!60] (\a,0) -- (\a,6.2832);
+    \draw[colorofwisdom, very thick] (0,0) -- (0,6.2832);
+    \draw[dashed] (-1,6.2832) -- (0.5,6.2832);
+    \draw[->] (-1.3,0) -- (0.9,0) node[right] {\small $x$};
+    \node[left, font=\scriptsize] at (-1,6.2832) {$2\pi$};
+    \node[left, font=\scriptsize] at (-1,1.5708) {$\frac{\pi}{2}$};
+    \node[below, font=\scriptsize] at (-1,0) {$-1$};
+    \node[below, font=\scriptsize] at (0.5,0) {$\frac{1}{2}$};
+    \node[below, font=\scriptsize] at (0,0) {$0$};
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}
+    \draw[->, thick] (0,0) -- (1.2,0) node[midway, above, font=\small] {$z\mapsto\mathrm{e}^z$};
+    \path (0,-1.7) -- (0,1.5);
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=1.15]
+    \fill[colorofwisdom!10] (0,0) circle (1.6487);
+    \fill[white] (0,0) circle (0.3679);
+    \foreach \k in {0,...,7} \draw[gray] ({\k*45}:0.3679) -- ({\k*45}:1.6487);
+    \draw[gray, thick] (90:0.3679) -- (90:1.6487);
+    \foreach \r in {0.3679,0.6065,1.6487} \draw[colorofwisdom!60] (0,0) circle (\r);
+    \draw[colorofwisdom, very thick] (0,0) circle (1);
+    \draw[->] (-1.9,0) -- (2,0) node[right] {\small $u$};
+    \draw[->] (0,-1.9) -- (0,1.95) node[above] {\small $v$};
+    \node[font=\scriptsize, fill=white, inner sep=1pt] at (1.25,-0.25) {$1$};
+    \node[font=\scriptsize, anchor=west] at (1.2,1.4) {$\mathrm{e}^{1/2}$};
+  \end{tikzpicture}
+\end{center}
+
+Tlustá svislá úsečka $x = 0$ se zabalila do jednotkové kružnice, tlustá vodorovná přímka $y = \frac{\pi}{2}$ do svislé polopřímky. Posuneme-li pás o $2\pi$ nahoru, zabalí se do roviny znovu, protože $\mathrm{e}^{z + 2\pi i} = \mathrm{e}^z$. Komplexní exponenciála je \textbf{periodická} s imaginární periodou $2\pi i$. Reálná exponenciála nic takového nemá, protože na reálné ose tuto periodicitu nevidíme.
+
+\section{Komplexní derivace}
+
+\begin{definitionbox}
+  Funkce $f$ je \textbf{(komplexně) derivovatelná} v bodě $z_0$, pokud existuje limita
+  \begin{equation*}
+    f'(z_0) = \lim_{h\to 0}\frac{f(z_0 + h) - f(z_0)}{h},
+  \end{equation*}
+  kde $h$ je \textit{komplexní} číslo jdoucí k nule z libovolného směru. Funkce derivovatelná v každém bodě otevřené množiny $D$ se nazývá \textbf{holomorfní} na $D$. Funkce holomorfní na celém $\mathbb{C}$ se nazývá \textbf{celistvá}.
+\end{definitionbox}
+
+Definice vypadá úplně stejně jako v kapitole~\ref{kap:derivace} a stejná zůstanou i pravidla: derivace součtu, součinu, podílu, složené funkce, $(z^n)' = nz^{n-1}$, $(\mathrm{e}^z)' = \mathrm{e}^z$. Rozdíl je skrytý v jediném slově: $h$ se k nule může blížit zleva, zprava, shora, zdola, po spirále. Limita musí vyjít pokaždé stejně. To je obrovský požadavek.
+
+\subsection{Cauchyovy--Riemannovy podmínky}
+
+Nechť $f = u + iv$ je derivovatelná v $z_0 = x + iy$. Spočítejme limitu dvěma způsoby. Nejdřív $h$ reálné, $h\to 0$. Pak se mění jen $x$ a dostaneme parciální derivace:
+\begin{equation*}
+  f'(z_0) = \lim_{h\to 0}\frac{u(x + h, y) - u(x, y)}{h} + i\frac{v(x + h, y) - v(x, y)}{h} = u_x + iv_x.
+\end{equation*}
+Teď $h = ik$ ryze imaginární, $k\to 0$ reálné. Mění se jen $y$ a ve jmenovateli je navíc $i$:
+\begin{equation*}
+  f'(z_0) = \lim_{k\to 0}\frac{u(x, y + k) - u(x, y) + i\big(v(x, y + k) - v(x, y)\big)}{ik} = \frac{u_y + iv_y}{i} = v_y - iu_y.
+\end{equation*}
+Obě hodnoty se musí rovnat. Porovnáním reálných a imaginárních částí:
+
+\begin{definitionbox}
+  \textbf{Cauchyovy--Riemannovy podmínky}: Je-li $f = u + iv$ derivovatelná v bodě $z_0$, pak v něm
+  \begin{equation*}
+    u_x = v_y,\qquad u_y = -v_x,
+  \end{equation*}
+  a $f'(z_0) = u_x + iv_x$. Naopak, mají-li $u$, $v$ spojité parciální derivace splňující tyto rovnice, je $f$ holomorfní.
+\end{definitionbox}
+
+\begin{example}
+  Pro $z^2$ je $u = x^2 - y^2$, $v = 2xy$. Platí $u_x = 2x = v_y$ a $u_y = -2y = -v_x$. Podmínky jsou splněny a $f' = 2x + 2yi = 2z$, jak má být.
+
+  Naopak komplexně sdružené číslo $f(z) = \bar{z} = x - iy$ má $u_x = 1$, ale $v_y = -1$. Funkce $\bar{z}$ tedy \textbf{není nikde derivovatelná}, i když je to jen zrcadlení podle reálné osy, z reálného pohledu ta nejhladší věc na světě. Pro $h$ reálné je $\frac{\bar{h}}{h} = 1$, pro $h$ imaginární $\frac{\bar{h}}{h} = -1$.
+\end{example}
+
+\subsection{Proč je to tak silné: otočení a natažení}
+
+Co znamená derivace geometricky? Blízko bodu $z_0$ je $f(z_0 + h)\approx f(z_0) + f'(z_0)\,h$. Malý kousek roviny kolem $z_0$ se tedy zobrazí \textit{vynásobením komplexním číslem} $f'(z_0) = r\,\mathrm{e}^{i\theta}$, a to je podle kapitoly~\ref{kap:komplexni} otočení o úhel $\theta$ a natažení $r$-krát. Nic jiného.
+
+Obecné hladké zobrazení roviny do roviny se v malém chová jako lineární zobrazení s maticí parciálních derivací (kapitola~\ref{kap:linearni-algebra}). Ta může čtvereček natáhnout v jednom směru víc než v jiném, zkosit ho, překlopit. Cauchyovy--Riemannovy podmínky říkají, že matice má speciální tvar:
+\begin{equation*}
+  \begin{pmatrix} u_x & u_y\\ v_x & v_y\end{pmatrix} = \begin{pmatrix} a & -b\\ b & a\end{pmatrix} = r\begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix},
+\end{equation*}
+kde $f'(z_0) = a + bi = r\,\mathrm{e}^{i\theta}$. Z obecných čtyř čísel zbyla dvě. Zkosení a nerovnoměrné natažení jsou zakázané.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \fill[colorofwisdom!20] (0,0) rectangle (1,1);
+    \draw[thick] (0,0) rectangle (1,1);
+    \draw[->, thick, colorofwisdom] (0,0) -- (1,0);
+    \draw[->, thick] (0,0) -- (0,1);
+    \fill (0,0) circle (1.2pt) node[below left, font=\scriptsize] {$z_0$};
+    \node[font=\scriptsize] at (0.5,-0.7) {malý čtvereček};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=1.1]
+    \begin{scope}[rotate=30, scale=1.5]
+      \fill[colorofwisdom!20] (0,0) rectangle (1,1);
+      \draw[thick] (0,0) rectangle (1,1);
+      \draw[->, thick, colorofwisdom] (0,0) -- (1,0);
+      \draw[->, thick] (0,0) -- (0,1);
+    \end{scope}
+    \draw[gray, dashed] (0,0) -- (1.6,0);
+    \draw[gray] (0.7,0) arc (0:30:0.7) node[midway, right, font=\scriptsize] {$\theta$};
+    \fill (0,0) circle (1.2pt) node[below left, font=\scriptsize] {$f(z_0)$};
+    \node[font=\scriptsize, align=center] at (0.3,-0.7) {holomorfní: otočený\\a zvětšený čtverec};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=1.1]
+    \fill[colorofwisdom!20] (0,0) -- (1.6,0.3) -- (2.1,1.1) -- (0.5,0.8) -- cycle;
+    \draw[thick] (0,0) -- (1.6,0.3) -- (2.1,1.1) -- (0.5,0.8) -- cycle;
+    \draw[->, thick, colorofwisdom] (0,0) -- (1.6,0.3);
+    \draw[->, thick] (0,0) -- (0.5,0.8);
+    \fill (0,0) circle (1.2pt);
+    \node[font=\scriptsize, align=center] at (1,-0.7) {obecné zobrazení $\mathbb{R}^2\to\mathbb{R}^2$:\\zkosený rovnoběžník};
+  \end{tikzpicture}
+\end{center}
+
+Představte si to takhle: reálně derivovatelná funkce musí být hladká jen `podél jedné přímky'. Komplexně derivovatelná funkce musí být v každém bodě `infinitezimálně podobnostním zobrazením'. To je tak tuhý požadavek, že si funkce nemůže dovolit skoro nic. Uvidíme, že ji to donutí být nekonečněkrát derivovatelnou.
+
+Mimochodem, z Cauchyových--Riemannových podmínek plyne $u_{xx} = v_{yx}$ a $u_{yy} = -v_{xy}$, takže $u_{xx} + u_{yy} = 0$. Reálná i imaginární část holomorfní funkce splňují \textbf{Laplaceovu rovnici}. Ta popisuje rovnovážné rozložení teploty, elektrostatický potenciál nebo ustálené proudění. Komplexní funkce jsou proto oblíbeným nástrojem fyziků a inženýrů, jak uvidíme v odbočce.
+
+\subsection{Konformní zobrazení}
+
+\begin{definitionbox}
+  Zobrazení je \textbf{konformní}, pokud zachovává úhly (včetně orientace) mezi křivkami. \textbf{Holomorfní funkce je konformní v každém bodě, kde $f'(z_0)\neq 0$.}
+\end{definitionbox}
+
+Důvod je vidět z obrázku výše: dvě křivky procházející bodem $z_0$ mají tečné vektory a ty se oba otočí o stejný úhel $\theta$. Úhel mezi nimi zůstane stejný. Proto se ve druhém obrázku kapitoly protínaly paraboly kolmo. Kde je ale $f'(z_0) = 0$, konformita selže. Pro $z^2$ v nule:
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.2]
+    \fill[colorofwisdom!15] (0,0) -- (1.6,0) arc (0:45:1.6) -- cycle;
+    \draw[->, thick] (0,0) -- (1.8,0);
+    \draw[->, thick, colorofwisdom] (0,0) -- (45:1.8);
+    \draw (0.5,0) arc (0:45:0.5) node[midway, right, font=\scriptsize] {$45^\circ$};
+    \fill (1.2,0.5) circle (1.2pt);
+    \draw[->, gray] (1.2,0.5) -- (1.6,0.5);
+    \draw[->, gray] (1.2,0.5) -- (1.2,0.9);
+    \node[font=\scriptsize, gray, below] at (1.25,0.45) {$z_0$};
+    \node[font=\scriptsize] at (0.9,-0.4) {rovina $z$};
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}
+    \draw[->, thick] (0,0) -- (1.2,0) node[midway, above, font=\small] {$z\mapsto z^2$};
+    \path (0,-0.8) -- (0,1.2);
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=1.2]
+    \fill[colorofwisdom!15] (0,0) -- (1.8,0) arc (0:90:1.8) -- cycle;
+    \draw[->, thick] (0,0) -- (2,0);
+    \draw[->, thick, colorofwisdom] (0,0) -- (90:2);
+    \draw (0.4,0) arc (0:90:0.4) node[midway, above right, font=\scriptsize] {$90^\circ$};
+    \fill (1.19,1.2) circle (1.2pt);
+    \draw[->, gray] (1.19,1.2) -- ({1.19+0.4*cos(22.6)},{1.2+0.4*sin(22.6)});
+    \draw[->, gray] (1.19,1.2) -- ({1.19+0.4*cos(112.6)},{1.2+0.4*sin(112.6)});
+    \node[font=\scriptsize, gray, right] at (1.25,1.05) {$z_0^2$};
+    \node[font=\scriptsize] at (1,-0.4) {rovina $w$};
+  \end{tikzpicture}
+\end{center}
+
+V počátku, kde $(z^2)' = 0$, se úhel $45^\circ$ zdvojnásobil. V bodě $z_0 = 1{,}2 + 0{,}5i$, kde $f'(z_0) = 2z_0\neq 0$, zůstaly šedé tečné vektory na sebe kolmé, jen se oba otočily o $\arg z_0\approx 22{,}6^\circ$. Konformní zobrazení se používají v kartografii: Mercatorovo zobrazení světa je konformní, a proto ho používají námořníci. Úhel kurzu na mapě je stejný jako ve skutečnosti. Plochy ovšem zachovat neumí, a proto je Grónsko na mapě velké skoro jako Afrika, i když je ve skutečnosti asi čtrnáctkrát menší.
+
+\section{Exponenciála, logaritmus a větve}
+
+Víme už, že $\mathrm{e}^z$ je periodická s periodou $2\pi i$. To má nepříjemný důsledek: nemůže mít inverzní funkci v obvyklém smyslu. Rovnice $\mathrm{e}^w = z$ má pro každé $z\neq 0$ nekonečně mnoho řešení.
+
+\begin{definitionbox}
+  Pro $z = r\,\mathrm{e}^{i\varphi}\neq 0$ jsou řešení rovnice $\mathrm{e}^w = z$ čísla
+  \begin{equation*}
+    \log z = \ln r + i(\varphi + 2k\pi),\qquad k\in\mathbb{Z}.
+  \end{equation*}
+  Volbou $\varphi\in(-\pi, \pi]$ dostaneme \textbf{hlavní větev logaritmu} $\mathrm{Log}\,z$. Je holomorfní na $\mathbb{C}$ bez záporné reálné poloosy a nuly. Této vyřízlé polopřímce se říká \textbf{řez}.
+\end{definitionbox}
+
+\begin{example}
+  $\mathrm{Log}(-1) = i\pi$, protože $\mathrm{e}^{i\pi} = -1$. A $i^i = \mathrm{e}^{i\,\mathrm{Log}\,i} = \mathrm{e}^{i\cdot i\pi/2} = \mathrm{e}^{-\pi/2}\approx 0{,}2079$. Imaginární číslo umocněné na imaginární číslo je reálné! (Jiné větve dávají $\mathrm{e}^{-\pi/2 - 2k\pi}$, také reálná čísla.)
+\end{example}
+
+Proč řez? Vydejme se z bodu $1$ po jednotkové kružnici proti směru hodinových ručiček a sledujme spojitě $\log z = i\varphi$. Úhel $\varphi$ roste od $0$ k $\pi$, $2\pi$, \dots Když se vrátíme do bodu $1$, má logaritmus hodnotu $2\pi i$, ne $0$. Funkce `nesedí' sama na sebe. Buď rovinu rozřízneme, aby oběhnout nulu nešlo, nebo uděláme z roviny nekonečné parkovací patrové schodiště, \textbf{Riemannovu plochu}, kde každé obkroužení nuly vyjede o patro výš:
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.15]
+    \fill[colorofwisdom!8] (-1.8,-1.8) rectangle (1.8,1.8);
+    \draw[->, gray] (-1.9,0) -- (2,0) node[right, font=\scriptsize] {Re};
+    \draw[->, gray] (0,-1.9) -- (0,2) node[above, font=\scriptsize] {Im};
+    \draw[line width=2.5pt, colorofwisdom] (-1.8,0) -- (0,0);
+    \fill[white] (0,0) circle (2pt);
+    \draw (0,0) circle (2pt);
+    \draw[->, thick] (1,0) arc (0:170:1);
+    \draw[->, thick] (1,0) arc (0:-170:1);
+    \node[font=\scriptsize, anchor=south] at (-1.1,0.12) {$\arg\approx\pi$};
+    \node[font=\scriptsize, anchor=north] at (-1.1,-0.12) {$\arg\approx -\pi$};
+    \node[font=\scriptsize, fill=colorofwisdom!8, inner sep=1pt] at (-1.2,1.4) {řez};
+    \draw[->, colorofwisdom] (-1.2,1.25) -- (-1.2,0.12);
+    \node[font=\scriptsize] at (0,-2.2) {hlavní větev: skok o $2\pi$ přes řez};
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}[krychle, scale=1.1]
+    \draw[gray, thick] (0,0,-0.7) -- (0,0,2.8) node[above, font=\scriptsize] {$\mathrm{Im}\log z$};
+    \foreach \a in {0,360,720} \draw[very thick, colorofwisdom!35, domain=\a:\a+180, samples=30] plot ({1.4*cos(\x)},{1.4*sin(\x)},{\x/360});
+    \foreach \a in {-180,180,540} \draw[very thick, colorofwisdom, domain=\a:\a+180, samples=30] plot ({1.4*cos(\x)},{1.4*sin(\x)},{\x/360});
+    \foreach \k/\l in {0/0, 1/2\pi i, 2/4\pi i} {
+      \fill ({1.4},0,{\k}) circle (1.3pt);
+      \node[font=\scriptsize, anchor=west] at ({1.5},0,{\k}) {$\log 1 = \l$};
+    }
+    \node[font=\scriptsize] at (0,0,-1.25) {Riemannova plocha logaritmu};
+  \end{tikzpicture}
+\end{center}
+
+Stejný problém mají odmocniny. Funkce $\sqrt{z} = \mathrm{e}^{\frac{1}{2}\log z}$ má jen \textbf{dvě} větve, protože $\mathrm{e}^{\frac{1}{2}\cdot 2\pi i} = -1$ a po dvou obězích jsme zpátky ($\mathrm{e}^{\frac{1}{2}\cdot 4\pi i} = 1$). Obecně $\sqrt[n]{z} = \mathrm{e}^{\frac{1}{n}\log z}$ má $n$ větví, které se liší o násobky $\mathrm{e}^{2\pi i k/n}$. To jsou přesně \textbf{odmocniny z jedničky}, vrcholy pravidelného $n$-úhelníku z binomických rovnic v kapitole~\ref{kap:komplexni}. Obejít nulu znamená přeskočit na sousední vrchol.
+
+\section{Křivkový integrál a Cauchyova věta}
+
+Integrovat v komplexní rovině znamená integrovat podél křivky. Mezi dvěma body vede nekonečně mnoho cest a a priori nemáme důvod čekat, že na cestě nezáleží.
+
+\begin{definitionbox}
+  Nechť $\gamma\colon[a, b]\to\mathbb{C}$ je hladká křivka. \textbf{Křivkový integrál} funkce $f$ podél $\gamma$ je
+  \begin{equation*}
+    \int_\gamma f(z)\,\mathrm{d}z = \int_a^b f\big(\gamma(t)\big)\,\gamma'(t)\,\mathrm{d}t.
+  \end{equation*}
+  Je-li křivka uzavřená, píšeme $\oint_\gamma$. Kladný směr je proti směru hodinových ručiček.
+\end{definitionbox}
+
+Je to přesně substituce $z = \gamma(t)$, $\mathrm{d}z = \gamma'(t)\,\mathrm{d}t$ z kapitoly~\ref{kap:integraly}. Intuitivně sčítáme součiny $f(z)\cdot\Delta z$ přes malé kousky křivky, kde $\Delta z$ je komplexní číslo, které míří po křivce.
+
+\begin{example}[ (nejdůležitější integrál kapitoly)]
+  Nechť $\gamma(t) = r\,\mathrm{e}^{it}$, $t\in[0, 2\pi]$, je kružnice kolem nuly. Pak $\mathrm{d}z = ir\,\mathrm{e}^{it}\,\mathrm{d}t$ a pro celé $n$
+  \begin{equation*}
+    \oint_{|z| = r}z^n\,\mathrm{d}z = \int_0^{2\pi}r^n\mathrm{e}^{int}\cdot ir\,\mathrm{e}^{it}\,\mathrm{d}t = ir^{n+1}\int_0^{2\pi}\mathrm{e}^{i(n+1)t}\,\mathrm{d}t = \begin{cases}2\pi i, & n = -1,\\ 0, & n\neq -1.\end{cases}
+  \end{equation*}
+  Pro $n\neq -1$ se $\mathrm{e}^{i(n+1)t}$ otočí celistvě mnohokrát kolem nuly a její `průměr' je nula. Pro $n = -1$ je integrand konstanta $1$. Výsledek nezávisí na poloměru $r$.
+\end{example}
+
+Proč je $n = -1$ výjimečné? Pro $n\neq -1$ má $z^n$ primitivní funkci $\frac{z^{n+1}}{n + 1}$, a integrál přes uzavřenou křivku je pak `hodnota na konci minus hodnota na začátku', tedy nula. Funkce $\frac{1}{z}$ by měla primitivní funkci $\log z$, ale ten se po oběhu nuly změní o $2\pi i$. Hodnota integrálu přesně měří ten skok.
+
+\begin{definitionbox}
+  \textbf{Cauchyova věta}: Je-li $f$ holomorfní uvnitř a na jednoduché uzavřené křivce $\gamma$, pak
+  \begin{equation*}
+    \oint_\gamma f(z)\,\mathrm{d}z = 0.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}[(náčrt)]
+  Rozepíšeme $f\,\mathrm{d}z = (u + iv)(\mathrm{d}x + i\,\mathrm{d}y) = (u\,\mathrm{d}x - v\,\mathrm{d}y) + i(v\,\mathrm{d}x + u\,\mathrm{d}y)$. \textbf{Greenova věta}, dvourozměrná obdoba základní věty integrálního počtu z oddílu~\ref{sec:zvip}, říká, že $\oint_\gamma(P\,\mathrm{d}x + Q\,\mathrm{d}y) = \iint_\Omega(Q_x - P_y)\,\mathrm{d}x\,\mathrm{d}y$, kde $\Omega$ je oblast uvnitř $\gamma$. Tedy
+  \begin{equation*}
+    \oint_\gamma f\,\mathrm{d}z = \iint_\Omega(-v_x - u_y)\,\mathrm{d}x\,\mathrm{d}y + i\iint_\Omega(u_x - v_y)\,\mathrm{d}x\,\mathrm{d}y = 0 + 0,
+  \end{equation*}
+  protože obě závorky jsou podle Cauchyových--Riemannových podmínek nulové.
+\end{proof}
+
+Důsledek: integrál holomorfní funkce mezi dvěma body nezávisí na cestě (dvě cesty dají dohromady uzavřenou křivku). A křivku můžeme libovolně \textbf{deformovat}, dokud přitom nepřejedeme přes singularitu. Integrál přes velkou ošklivou křivku kolem bodu $z_0$ je stejný jako přes malou kružnici kolem $z_0$, protože mezikruží mezi nimi singularitu neobsahuje.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \fill[colorofwisdom!12] plot[smooth cycle, tension=0.8] coordinates {(-1.6,0) (-0.9,1.1) (0.4,1.2) (1.6,0.5) (1.3,-0.9) (-0.2,-1.2) (-1.2,-0.9)};
+    \draw[->, thick] (0.5,1.195) -- (0.3,1.2);
+    \draw[thick] plot[smooth cycle, tension=0.8] coordinates {(-1.6,0) (-0.9,1.1) (0.4,1.2) (1.6,0.5) (1.3,-0.9) (-0.2,-1.2) (-1.2,-0.9)};
+    \node[font=\scriptsize, align=center] at (0,0) {$f$ holomorfní\\všude uvnitř};
+    \node[font=\small] at (1.6,1.1) {$\gamma$};
+    \node[font=\scriptsize] at (0,-1.7) {$\oint_\gamma f\,\mathrm{d}z = 0$};
+  \end{tikzpicture}
+  \hspace{1.2cm}
+  \begin{tikzpicture}[scale=1.1]
+    \fill[colorofwisdom!12] plot[smooth cycle, tension=0.8] coordinates {(-1.6,0) (-0.9,1.1) (0.4,1.2) (1.6,0.5) (1.3,-0.9) (-0.2,-1.2) (-1.2,-0.9)};
+    \fill[white] (0,0) circle (0.45);
+    \draw[->, thick] (0.5,1.195) -- (0.3,1.2);
+    \draw[thick] plot[smooth cycle, tension=0.8] coordinates {(-1.6,0) (-0.9,1.1) (0.4,1.2) (1.6,0.5) (1.3,-0.9) (-0.2,-1.2) (-1.2,-0.9)};
+    \draw[thick, colorofwisdom, ->] (0.45,0) arc (0:350:0.45);
+    \fill (0,0) circle (1.3pt) node[below, font=\scriptsize] {$z_0$};
+    \node[font=\scriptsize] at (1.0,-0.25) {$f$ hol.};
+    \node[font=\small] at (1.6,1.1) {$\gamma$};
+    \node[font=\scriptsize] at (0,-1.7) {$\oint_\gamma f\,\mathrm{d}z = \oint_{|z - z_0| = \varepsilon}f\,\mathrm{d}z$};
+  \end{tikzpicture}
+\end{center}
+
+\section{Cauchyho integrální vzorec a jeho důsledky}
+
+\begin{definitionbox}
+  \textbf{Cauchyho integrální vzorec}: Je-li $f$ holomorfní uvnitř a na jednoduché uzavřené křivce $\gamma$ a $z_0$ leží uvnitř, pak
+  \begin{equation*}
+    f(z_0) = \frac{1}{2\pi i}\oint_\gamma\frac{f(z)}{z - z_0}\,\mathrm{d}z.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}[(náčrt)]
+  Funkce $\frac{f(z)}{z - z_0}$ je holomorfní všude kromě $z_0$, takže podle předchozího obrázku smíme $\gamma$ stáhnout na malou kružnici $|z - z_0| = \varepsilon$. Na ní je $f(z)\approx f(z_0)$, protože $f$ je spojitá, a tedy
+  \begin{equation*}
+    \oint\frac{f(z)}{z - z_0}\,\mathrm{d}z\approx f(z_0)\oint_{|z - z_0| = \varepsilon}\frac{\mathrm{d}z}{z - z_0} = f(z_0)\cdot 2\pi i
+  \end{equation*}
+  podle nejdůležitějšího integrálu kapitoly. Chyba jde pro $\varepsilon\to 0$ k nule, ale levá strana na $\varepsilon$ nezávisí, takže rovnost platí přesně.
+\end{proof}
+
+To je neuvěřitelné tvrzení. \textbf{Hodnoty holomorfní funkce na hranici určují všechny hodnoty uvnitř.} Pro $\gamma$ kružnici se středem $z_0$ dostaneme po dosazení $z = z_0 + r\,\mathrm{e}^{it}$, že $f(z_0)$ je \textit{průměr} hodnot na kružnici. Reálná funkce si nic takového nemusí plnit, uvnitř intervalu si může dělat, co chce.
+
+Teď přijde klíčový trik. Vzorec můžeme derivovat podle $z_0$ pod integrálem. Proměnná $z_0$ se vyskytuje jen ve výrazu $\frac{1}{z - z_0}$, a ten umíme derivovat kolikrát chceme:
+\begin{equation*}
+  f^{(n)}(z_0) = \frac{n!}{2\pi i}\oint_\gamma\frac{f(z)}{{(z - z_0)}^{n+1}}\,\mathrm{d}z.
+\end{equation*}
+
+\begin{definitionbox}
+  \textbf{Důsledky Cauchyho vzorce}:
+  \begin{enumerate}
+    \item Holomorfní funkce má derivace všech řádů. \textbf{Jednou derivovatelná znamená nekonečněkrát derivovatelná.}
+    \item Holomorfní funkce je \textbf{analytická}: v každém kruhu $|z - z_0| < R$, ve kterém je holomorfní, se rovná své Taylorově řadě.
+    \item \textbf{Cauchyho odhad}: Je-li $|f|\leq M$ na kružnici $|z - z_0| = r$, pak $|f^{(n)}(z_0)|\leq\frac{n!\,M}{r^n}$.
+  \end{enumerate}
+\end{definitionbox}
+
+Bod 2 dostaneme rozvinutím jádra do geometrické řady z kapitoly~\ref{kap:posloupnosti}. Pro $|z_1 - z_0| < |z - z_0|$:
+\begin{equation*}
+  \frac{1}{z - z_1} = \frac{1}{(z - z_0) - (z_1 - z_0)} = \frac{1}{z - z_0}\cdot\frac{1}{1 - \frac{z_1 - z_0}{z - z_0}} = \sum_{n=0}^{\infty}\frac{{(z_1 - z_0)}^n}{{(z - z_0)}^{n+1}}.
+\end{equation*}
+Dosadíme do Cauchyho vzorce pro $f(z_1)$ a integrujeme člen po členu. Vyjde přesně $f(z_1) = \sum\frac{f^{(n)}(z_0)}{n!}{(z_1 - z_0)}^n$. Bod 3 plyne z odhadu integrálu: délka kružnice je $2\pi r$ a integrand je nejvýš $\frac{M}{r^{n+1}}$.
+
+Teď je jasné, proč v kapitole~\ref{kap:rady} nemohla funkce $\mathrm{e}^{-1/x^2}$ existovat v komplexní podobě. Na imaginární ose $z = iy$ je $-\frac{1}{z^2} = \frac{1}{y^2}$, takže $\mathrm{e}^{-1/z^2} = \mathrm{e}^{1/y^2}\to\infty$ pro $y\to 0$. Funkce v nule není komplexně ani spojitá. Placatost na reálné ose `zaplatila' explozí na imaginární ose.
+
+\subsection{Liouvilleova věta a základní věta algebry}
+
+\begin{definitionbox}
+  \textbf{Liouvilleova věta}: Každá omezená celistvá funkce je konstantní.
+\end{definitionbox}
+
+\begin{proof}
+  Nechť $|f(z)|\leq M$ pro všechna $z\in\mathbb{C}$. Podle Cauchyho odhadu pro $n = 1$ a libovolné $r$ je $|f'(z_0)|\leq\frac{M}{r}$. Protože je $f$ celistvá, můžeme vzít kružnici libovolně velkou. Pro $r\to\infty$ dostaneme $f'(z_0) = 0$, a to v každém bodě $z_0$. Funkce s nulovou derivací je konstantní.
+\end{proof}
+
+Reálná funkce $\sin x$ je omezená, hladká na celé ose a konstantní není. V komplexních číslech $\sin z$ omezená není: $\sin(iy) = i\,\frac{\mathrm{e}^y - \mathrm{e}^{-y}}{2}$ roste exponenciálně. Komplexní rovina je pro funkce jako vězení: kdo chce být všude hezký, musí někde utéct do nekonečna.
+
+\begin{definitionbox}
+  \textbf{Základní věta algebry}: Každý nekonstantní mnohočlen s komplexními koeficienty má v $\mathbb{C}$ kořen. Mnohočlen stupně $n$ má tedy (s násobností) právě $n$ kořenů.
+\end{definitionbox}
+
+\begin{proof}
+  Předpokládejme, že $p(z)\neq 0$ pro všechna $z$. Pak $f = \frac{1}{p}$ je celistvá. Protože $|p(z)|\to\infty$ pro $|z|\to\infty$ (vedoucí člen $a_nz^n$ přeroste ostatní), je $|f(z)| < 1$ mimo nějaký velký kruh. Na tom kruhu je $|f|$ spojitá, a tedy omezená (Weierstrassova věta z kapitoly~\ref{kap:limity}). Funkce $f$ je tedy omezená celistvá, podle Liouvilleovy věty konstantní, a proto je konstantní i $p$. Spor.
+\end{proof}
+
+Věta, kterou jste v kapitole~\ref{kap:komplexni} slyšeli jako fakt, je tedy dokázána na čtyřech řádcích. Existuje i názornější pohled, který používal už Gauss. Vezměme $p(z) = z^3 + z + 1$ a sledujme, kam se zobrazí kružnice $|z| = r$. Pro malé $r$ je $p(z)\approx 1$ a obraz je malá smyčka kolem bodu $1$, která nulu neobíhá. Pro velké $r$ převáží $z^3$ a obraz oběhne nulu třikrát. Při spojitém zvětšování $r$ se smyčka musí někdy `přetáhnout' přes nulu, a v tu chvíli jsme našli kořen.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.45]
+    \draw[->, gray] (-4.5,0) -- (6.5,0) node[right, font=\scriptsize] {Re};
+    \draw[->, gray] (0,-5.3) -- (0,5.5) node[above, font=\scriptsize] {Im};
+    \draw[thick, colorofwisdom, domain=0:360, samples=200] plot ({3.375*cos(3*\x)+1.5*cos(\x)+1},{3.375*sin(3*\x)+1.5*sin(\x)});
+    \draw[very thick, domain=0:360, samples=60] plot ({0.125*cos(3*\x)+0.5*cos(\x)+1},{0.125*sin(3*\x)+0.5*sin(\x)});
+    \fill (0,0) circle (4pt);
+    \node[font=\scriptsize, anchor=north east] at (0,0) {$0$};
+    \node[font=\scriptsize, anchor=west] at (1.75,0.6) {$r = 0{,}5$};
+    \node[font=\scriptsize, colorofwisdom, anchor=west] at (4.1,3.6) {$r = 1{,}5$};
+    \node[font=\scriptsize] at (1,-6.2) {obrazy kružnic $|z| = r$ při zobrazení $p(z) = z^3 + z + 1$};
+  \end{tikzpicture}
+\end{center}
+
+\section{Rezidua: reálné integrály přes komplexní rovinu}
+
+\begin{definitionbox}
+  Má-li $f$ v bodě $z_0$ izolovanou singularitu, lze ji v okolí rozvinout do \textbf{Laurentovy řady} $f(z) = \sum_{n=-\infty}^{\infty}c_n{(z - z_0)}^n$, která připouští i záporné mocniny. Koeficient $c_{-1}$ se nazývá \textbf{reziduum} $\mathrm{res}_{z_0}f$.
+
+  \vspace{0.2cm}
+
+  \textbf{Reziduová věta}: Je-li $f$ holomorfní uvnitř a na $\gamma$ až na konečně mnoho singularit $z_1, \dots, z_k$ uvnitř, pak
+  \begin{equation*}
+    \oint_\gamma f(z)\,\mathrm{d}z = 2\pi i\sum_{j=1}^{k}\mathrm{res}_{z_j}f.
+  \end{equation*}
+  Pro jednoduchý pól funkce $\frac{p(z)}{q(z)}$, kde $q(z_0) = 0\neq q'(z_0)$, je $\mathrm{res}_{z_0}\frac{p}{q} = \frac{p(z_0)}{q'(z_0)}$.
+\end{definitionbox}
+
+Proč? Kolem každé singularity smrštíme křivku na malou kružnici a Laurentovu řadu zintegrujeme člen po členu. Podle nejdůležitějšího integrálu kapitoly přežije jen člen $c_{-1}{(z - z_0)}^{-1}$ a dá $2\pi i\,c_{-1}$. Reziduum je doslova `to, co zbyde' po integraci.
+
+\begin{example}
+  Spočítáme $\int_{-\infty}^{\infty}\frac{\mathrm{d}x}{1 + x^2}$. Uzavřeme úsečku $[-R, R]$ horní půlkružnicí $C_R$:
+
+  \begin{center}
+    \begin{tikzpicture}[scale=1.1]
+      \fill[colorofwisdom!10] (-2,0) arc (180:0:2) -- cycle;
+      \draw[->, gray] (-2.7,0) -- (2.8,0) node[right, font=\scriptsize] {Re};
+      \draw[->, gray] (0,-1.5) -- (0,2.5) node[above, font=\scriptsize] {Im};
+      \draw[very thick, colorofwisdom] (-2,0) -- (2,0);
+      \draw[->, very thick, colorofwisdom] (0.6,0) -- (0.9,0);
+      \draw[very thick, colorofwisdom] (2,0) arc (0:180:2);
+      \draw[->, very thick, colorofwisdom] (60:2) arc (60:75:2);
+      \fill (0,1) circle (2pt) node[right, font=\scriptsize] {$i$};
+      \draw[fill=white] (0,-1) circle (2pt) node[right, font=\scriptsize] {$-i$ (venku)};
+      \node[below, font=\scriptsize] at (-2,0) {$-R$};
+      \node[below, font=\scriptsize] at (2,0) {$R$};
+      \node[font=\scriptsize] at (1.85,1.6) {$C_R$};
+    \end{tikzpicture}
+  \end{center}
+
+  Funkce $\frac{1}{1 + z^2} = \frac{1}{(z - i)(z + i)}$ má póly v $\pm i$. Pro $R > 1$ je uvnitř jen $i$ s reziduem $\frac{1}{2z}\big|_{z = i} = \frac{1}{2i}$. Tedy
+  \begin{equation*}
+    \int_{-R}^{R}\frac{\mathrm{d}x}{1 + x^2} + \int_{C_R}\frac{\mathrm{d}z}{1 + z^2} = 2\pi i\cdot\frac{1}{2i} = \pi.
+  \end{equation*}
+  Na půlkružnici je $|1 + z^2|\geq|z|^2 - 1 = R^2 - 1$ a její délka je $\pi R$, takže $\left|\int_{C_R}\right|\leq\frac{\pi R}{R^2 - 1}\to 0$. Pro $R\to\infty$ zbude
+  \begin{equation*}
+    \int_{-\infty}^{\infty}\frac{\mathrm{d}x}{1 + x^2} = \pi.
+  \end{equation*}
+  Souhlasí to s výpočtem přes $\mathrm{arctg}$: $\frac{\pi}{2} - \left(-\frac{\pi}{2}\right) = \pi$. Reálný integrál jsme ale spočítali, aniž bychom znali primitivní funkci. Stačilo vědět, kde má jmenovatel komplexní kořeny.
+\end{example}
+
+Stejnou metodou se dá spočítat slavný \textbf{Dirichletův integrál} $\int_{-\infty}^{\infty}\frac{\sin x}{x}\,\mathrm{d}x = \pi$, jehož primitivní funkce elementárními funkcemi vyjádřit nejde. Integruje se $\frac{\mathrm{e}^{iz}}{z}$ přes horní půlkružnici, která se malým půlkroužkem vyhne nule. Velký oblouk dá v limitě nulu, malý půlkroužek polovinu příspěvku rezidua, tedy $-\pi i$ (jde ve směru hodinových ručiček), a imaginární část výsledku je hledaný integrál.
+
+\begin{problem}
+  Spočítejte $\int_{-\infty}^{\infty}\frac{\mathrm{d}x}{1 + x^4}$.
+\end{problem}
+
+\begin{hint}
+  Póly jsou čtvrté odmocniny z $-1$, tedy $\mathrm{e}^{i\pi/4}$, $\mathrm{e}^{3i\pi/4}$, $\mathrm{e}^{5i\pi/4}$, $\mathrm{e}^{7i\pi/4}$. V horní polorovině leží první dva. Reziduum je $\frac{1}{4z^3} = \frac{z}{4z^4} = -\frac{z}{4}$.
+\end{hint}
+
+\begin{solution}
+  Součet reziduí je $-\frac{1}{4}\left(\mathrm{e}^{i\pi/4} + \mathrm{e}^{3i\pi/4}\right) = -\frac{1}{4}\cdot i\sqrt{2}$ (reálné části $\pm\frac{\sqrt{2}}{2}$ se odečtou, imaginární sečtou). Integrál přes půlkružnici jde opět k nule, takže výsledek je $2\pi i\cdot\left(-\frac{i\sqrt{2}}{4}\right) = \frac{\pi\sqrt{2}}{2} = \frac{\pi}{\sqrt{2}}$.
+\end{solution}
+
+\section{Poloměr konvergence a analytické prodloužení}
+
+Konečně můžeme splatit dluh z kapitoly~\ref{kap:rady}. Z důkazu analytičnosti vyplynulo víc: Taylorova řada v bodě $z_0$ konverguje v každém kruhu, ve kterém je $f$ holomorfní.
+
+\begin{definitionbox}
+  \textbf{Poloměr konvergence} Taylorovy řady holomorfní funkce v bodě $z_0$ je roven \textbf{vzdálenosti $z_0$ k nejbližší singularitě} (bodu, kam se $f$ nedá holomorfně rozšířit).
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.3]
+    \fill[colorofwisdom!10] (1,0) circle (1.4142);
+    \fill[colorofwisdom!25] (0,0) circle (1);
+    \draw[colorofwisdom, dashed] (1,0) circle (1.4142);
+    \draw[colorofwisdom, thick] (0,0) circle (1);
+    \draw[->, gray] (-1.6,0) -- (2.9,0) node[right, font=\scriptsize] {Re};
+    \draw[->, gray] (0,-1.6) -- (0,1.7) node[above, font=\scriptsize] {Im};
+    \draw[line width=2pt] (-1,0) -- (1,0);
+    \draw[line width=2pt, colorofwisdom!60] (-0.4142,-0.06) -- (2.4142,-0.06);
+    \foreach \y in {1,-1} \draw[thick] (-0.08,{\y-0.08}) -- (0.08,{\y+0.08}) (-0.08,{\y+0.08}) -- (0.08,{\y-0.08});
+    \node[font=\scriptsize, anchor=east] at (-0.1,1.12) {$i$};
+    \node[font=\scriptsize, anchor=east] at (-0.1,-1.12) {$-i$};
+    \fill (1,0) circle (1.2pt);
+    \draw[gray] (1,0) -- (0,1) node[midway, above right, font=\scriptsize] {$\sqrt{2}$};
+    \node[below, font=\scriptsize] at (-1,0) {$-1$};
+    \node[below, font=\scriptsize] at (1.08,0) {$1$};
+  \end{tikzpicture}
+\end{center}
+
+Funkce $\frac{1}{1 + z^2}$ má singularity v $\pm i$. Řada se středem $0$ konverguje v kruhu o poloměru $1$ (tmavší), jehož řezem s reálnou osou je interval $(-1, 1)$. Kdybychom rozvíjeli kolem bodu $1$, vzdálenost k $\pm i$ by byla $\sqrt{2}$ a řada by konvergovala na intervalu $(1 - \sqrt{2}, 1 + \sqrt{2})$ (světlejší). Na reálné ose žádná singularita není, ale poloměry jsou diktovány body, které z reálné osy nevidíme. Proto se mu říká \textit{poloměr}.
+
+\subsection{Analytické prodloužení}
+
+\begin{definitionbox}
+  \textbf{Věta o jednoznačnosti}: Shodují-li se dvě funkce holomorfní na souvislé otevřené množině $D$ na nějaké úsečce (nebo jen na posloupnosti bodů s hromadným bodem v $D$), shodují se na celém $D$.
+\end{definitionbox}
+
+Holomorfní funkce je tedy jako hologram: každý kousek v sobě nese celek. Když známe funkci jen v malém kruhu, můžeme ji jednoznačně rozšiřovat: vezmeme bod blízko okraje kruhu, rozvineme kolem něj Taylorovu řadu, ta konverguje v novém kruhu, který přečnívá ven, a tak dál. Tomu se říká \textbf{analytické prodloužení}. Výsledek nezávisí na tom, jak jsme postupovali, pokud neobcházíme singularity. U logaritmu se to ale stane: prodloužíme-li ho řetízkem kruhů kolem nuly, vrátíme se k hodnotě o $2\pi i$ větší.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.62]
+    \foreach \k in {0,...,5} {
+      \draw[colorofwisdom!60, fill=colorofwisdom!6, fill opacity=0.6] ({\k*60}:1.8) circle (1.75);
+    }
+    \foreach \k in {0,...,5} \fill[colorofwisdom] ({\k*60}:1.8) circle (2.5pt);
+    \draw[->, very thick] (0:1.8) arc (0:345:1.8);
+    \draw[->, gray] (-4,0) -- (4.2,0);
+    \draw[->, gray] (0,-4) -- (0,4.2);
+    \fill[white] (0,0) circle (3pt);
+    \draw (0,0) circle (3pt);
+    \node[font=\scriptsize, anchor=west] at (3.55,0.35) {$\log 1 = 0$};
+    \node[font=\scriptsize, anchor=west] at (3.55,-0.4) {po oběhu: $2\pi i$};
+  \end{tikzpicture}
+\end{center}
+
+\subsection{Riemannova funkce zeta}
+
+Nejslavnější analytické prodloužení se týká řady
+\begin{equation*}
+  \zeta(s) = \sum_{n=1}^{\infty}\frac{1}{n^s} = 1 + \frac{1}{2^s} + \frac{1}{3^s} + \cdots,
+\end{equation*}
+která podle integrálního kritéria z kapitoly~\ref{kap:rady} konverguje pro $\mathrm{Re}\,s > 1$. Už Euler věděl, že souvisí s prvočísly z kapitoly~\ref{kap:teorie-cisel}:
+\begin{equation*}
+  \zeta(s) = \prod_{p\text{ prvočíslo}}\frac{1}{1 - p^{-s}} = \left(1 + \frac{1}{2^s} + \frac{1}{4^s} + \cdots\right)\left(1 + \frac{1}{3^s} + \frac{1}{9^s} + \cdots\right)\cdots
+\end{equation*}
+Roznásobením dostaneme každé $\frac{1}{n^s}$ právě jednou, protože každé $n$ má jednoznačný rozklad na prvočísla. Riemann v roce 1859 ukázal, že $\zeta$ lze analyticky prodloužit na celé $\mathbb{C}$ kromě pólu v $s = 1$ (kde je řada harmonická). Prodloužení dává smysl i tam, kde řada diverguje, například $\zeta(-1) = -\frac{1}{12}$. To je Ramanujanův `součet' $1 + 2 + 3 + \cdots$ z kapitoly~\ref{kap:rady}.
+
+\begin{center}
+  \begin{tikzpicture}[x=0.75cm, y=0.095cm]
+    \fill[colorofwisdom!12] (0,-36) rectangle (1,36);
+    \draw[->, gray] (-7.5,0) -- (2.8,0) node[right, font=\scriptsize] {$\mathrm{Re}\,s$};
+    \draw[->, gray] (0,-37) -- (0,38) node[above, font=\scriptsize] {$\mathrm{Im}\,s$};
+    \draw[colorofwisdom, thick, dashed] (0.5,-36) -- (0.5,36);
+    \foreach \t in {14.1347,21.0220,25.0109,30.4249,32.9351} {
+      \fill[colorofwisdom] (0.5,\t) circle (2.2pt);
+      \fill[colorofwisdom] (0.5,-\t) circle (2.2pt);
+    }
+    \foreach \x in {-2,-4,-6} {
+      \fill (\x,0) circle (2.2pt);
+      \node[below, font=\scriptsize] at (\x,-1.5) {$\x$};
+    }
+    \draw[thick] (0.85,-2.5) -- (1.15,2.5) (0.85,2.5) -- (1.15,-2.5);
+    \node[below right, font=\scriptsize] at (1,-1.5) {pól v $1$};
+    \node[font=\scriptsize, anchor=west] at (1.2,14.13) {$\frac{1}{2} + 14{,}13\ldots i$};
+    \node[font=\scriptsize, anchor=west] at (1.2,25) {kritická přímka $\mathrm{Re}\,s = \frac{1}{2}$};
+    \node[font=\scriptsize, anchor=east] at (-0.3,30) {kritický pás};
+    \node[font=\scriptsize, anchor=south] at (-4,3) {triviální nuly};
+  \end{tikzpicture}
+\end{center}
+
+Prodloužená funkce má \textbf{triviální nuly} v bodech $-2, -4, -6, \ldots$ a nekonečně mnoho \textbf{netriviálních nul} v kritickém pásu $0 < \mathrm{Re}\,s < 1$. Ty jsou souměrné podle reálné osy i podle přímky $\mathrm{Re}\,s = \frac{1}{2}$.
+
+\begin{definitionbox}
+  \textbf{Riemannova hypotéza}: Všechny netriviální nuly funkce $\zeta$ leží na \textbf{kritické přímce} $\mathrm{Re}\,s = \frac{1}{2}$.
+\end{definitionbox}
+
+Proč by to někoho zajímalo? Riemann našel explicitní vzorec, který vyjadřuje počet prvočísel menších než $x$ jako součet přes nuly funkce $\zeta$. Každá nula přispívá jakousi `vlnou' a poloha nuly určuje, jak velká ta vlna může být. Riemannova hypotéza je ekvivalentní tvrzení, že prvočísla jsou rozložena tak pravidelně, jak to jen jde: chyba odhadu jejich počtu je nanejvýš řádu $\sqrt{x}\ln x$. Počítače ověřily, že na kritické přímce leží prvních několik bilionů nul. Důkaz nemá nikdo.
+
+\section{Odbočka --- Mandelbrotova množina}
+
+Vezměme komplexní číslo $c$ a iterujme zobrazení $z\mapsto z^2 + c$ od nuly:
+\begin{equation*}
+  z_0 = 0,\quad z_1 = c,\quad z_2 = c^2 + c,\quad z_3 = {(c^2 + c)}^2 + c,\quad\dots
+\end{equation*}
+\textbf{Mandelbrotova množina} $M$ je množina všech $c$, pro která posloupnost $z_n$ zůstane omezená. Pro $c = 0$ zůstáváme v nule, $c = -1$ dá cyklus $0, -1, 0, -1, \dots$, pro $c = i$ dostaneme $0, i, -1 + i, -i, -1 + i, -i, \dots$, také omezené. Pro $c = 1$ dostaneme $0, 1, 2, 5, 26, \dots$ a utečeme.
+
+\begin{definitionbox}
+  \textbf{Poloměr úniku}: Pokud někdy $|z_n| > 2$, posloupnost utíká do nekonečna. Proto $M$ leží v kruhu $|c|\leq 2$.
+\end{definitionbox}
+
+\begin{proof}
+  Je-li $|c| > 2$, je $|z_2|\geq|c|^2 - |c| = |c|(|c| - 1) > |c|$, a odhad se opakuje se stále větším koeficientem. Nechť tedy $|c|\leq 2$ a $|z_n| = 2 + \delta$, $\delta > 0$. Z trojúhelníkové nerovnosti
+  \begin{equation*}
+    |z_{n+1}| = |z_n^2 + c|\geq|z_n|^2 - |c|\geq|z_n|^2 - |z_n| = |z_n|(|z_n| - 1) = |z_n|(1 + \delta).
+  \end{equation*}
+  Každý další krok absolutní hodnotu vynásobí aspoň číslem $1 + \delta > 1$, takže roste aspoň geometricky.
+\end{proof}
+
+Počítače kreslí $M$ přesně takhle: pro každý pixel $c$ iterují, dokud $|z_n|$ nepřekročí $2$, a obarví pixel podle toho, jak dlouho to trvalo. Na reálné ose je dobře vidět, co se děje. Iterace $x\mapsto x^2 + c$ je pavučinový diagram: svisle na parabolu, vodorovně na diagonálu, a znovu.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.2]
+    \begin{scope}
+      \clip (-0.85,-0.85) rectangle (0.85,0.85);
+      \draw[thick, domain=-0.85:0.85, samples=40] plot (\x, {\x*\x-0.5});
+      \draw[gray] (-0.85,-0.85) -- (0.85,0.85);
+      \draw[colorofwisdom] (0,0) -- (0,-0.5) -- (-0.5,-0.5) -- (-0.5,-0.25) -- (-0.25,-0.25) -- (-0.25,-0.4375) -- (-0.4375,-0.4375) -- (-0.4375,-0.3086) -- (-0.3086,-0.3086) -- (-0.3086,-0.4048) -- (-0.4048,-0.4048) -- (-0.4048,-0.3362) -- (-0.3362,-0.3362) -- (-0.3362,-0.387) -- (-0.387,-0.387);
+      \fill[colorofwisdom] (-0.366,-0.366) circle (0.7pt);
+    \end{scope}
+    \draw[->, gray] (-0.85,0) -- (0.9,0);
+    \draw[->, gray] (0,-0.85) -- (0,0.9);
+    \node[font=\scriptsize] at (0,-1.05) {$c = -0{,}5$: konverguje k $\frac{1 - \sqrt{3}}{2}$};
+  \end{tikzpicture}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=1.5]
+    \begin{scope}
+      \clip (-0.5,-0.3) rectangle (1.65,1.7);
+      \draw[thick, domain=-0.5:1.65, samples=40] plot (\x, {\x*\x+0.35});
+      \draw[gray] (-0.3,-0.3) -- (1.65,1.65);
+      \draw[colorofwisdom] (0,0) -- (0,0.35) -- (0.35,0.35) -- (0.35,0.4725) -- (0.4725,0.4725) -- (0.4725,0.5733) -- (0.5733,0.5733) -- (0.5733,0.6786) -- (0.6786,0.6786) -- (0.6786,0.8105) -- (0.8105,0.8105) -- (0.8105,1.007) -- (1.007,1.007) -- (1.007,1.364) -- (1.364,1.364);
+      \draw[colorofwisdom, ->] (1.364,1.364) -- (1.364,1.7);
+    \end{scope}
+    \draw[->, gray] (-0.5,0) -- (1.7,0);
+    \draw[->, gray] (0,-0.3) -- (0,1.75);
+    \node[font=\scriptsize] at (0.6,-0.5) {$c = 0{,}35$: uteče do nekonečna};
+  \end{tikzpicture}
+\end{center}
+
+Pro $c = -0{,}5$ protíná parabola diagonálu a iterace se stáčí k \textbf{pevnému bodu} $z^2 + c = z$. Pro $c = 0{,}35$ parabola leží celá nad diagonálí (rovnice $x^2 - x + c = 0$ má diskriminant $1 - 4c < 0$) a body utíkají. Hranice je přesně $c = \frac{1}{4}$.
+
+Pevný bod $z^\ast$ přitahuje okolní body, pokud zobrazení v jeho okolí zmenšuje vzdálenosti, tedy pokud $|(z^2 + c)'| = |2z^\ast| < 1$. Hranice přitahování je $2z^\ast = \mathrm{e}^{it}$, tedy $z^\ast = \frac{\mathrm{e}^{it}}{2}$ a $c = z^\ast - {(z^\ast)}^2$:
+\begin{equation*}
+  c(t) = \frac{\mathrm{e}^{it}}{2} - \frac{\mathrm{e}^{2it}}{4}.
+\end{equation*}
+To je \textbf{kardioida}, hlavní tělo Mandelbrotovy množiny. Podobně pro cyklus délky dva: body $z_1$, $z_2$ s $z_1^2 + c = z_2$, $z_2^2 + c = z_1$ jsou kořeny rovnice $z^2 + z + c + 1 = 0$ (vydělte ${(z^2 + c)}^2 + c - z$ výrazem $z^2 - z + c$). Cyklus přitahuje, pokud $|2z_1\cdot 2z_2| < 1$, a podle Vieta je $z_1z_2 = c + 1$. Dostáváme \textbf{kruh} $|c + 1| < \frac{1}{4}$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.4]
+    \draw[dashed, gray] (0,0) circle (2);
+    \fill[colorofwisdom!30] plot[domain=0:360, samples=150] ({cos(\x)/2-cos(2*\x)/4},{sin(\x)/2-sin(2*\x)/4}) -- cycle;
+    \draw[thick, colorofwisdom] plot[domain=0:360, samples=150] ({cos(\x)/2-cos(2*\x)/4},{sin(\x)/2-sin(2*\x)/4}) -- cycle;
+    \fill[colorofwisdom!30] (-1,0) circle (0.25);
+    \draw[thick, colorofwisdom] (-1,0) circle (0.25);
+    \draw[->, gray] (-2.25,0) -- (2.3,0) node[right, font=\scriptsize] {Re};
+    \draw[->, gray] (0,-1.15) -- (0,1.2) node[above, font=\scriptsize] {Im};
+    \draw[line width=1.6pt] (-2,0) -- (-1.25,0);
+    \fill (-2,0) circle (0.8pt) node[below, font=\scriptsize] {$-2$};
+    \fill (0.25,0) circle (0.8pt) node[below right, font=\scriptsize] {$\frac{1}{4}$};
+    \fill (-0.75,0) circle (0.8pt);
+    \node[font=\scriptsize, anchor=north] at (-0.72,-0.04) {$-\frac{3}{4}$};
+    \fill (0,1) circle (0.8pt) node[right, font=\scriptsize] {$c = i$};
+    \node[font=\scriptsize, align=center] at (-1,0.5) {$|c + 1| < \frac{1}{4}$};
+    \node[font=\scriptsize] at (0.55,0.55) {kardioida};
+    \node[font=\scriptsize, gray] at (1.25,-1.15) {$|c| = 2$};
+  \end{tikzpicture}
+\end{center}
+
+Kardioida a kruh se dotýkají v bodě $c = -\frac{3}{4}$. Na obrázku je jen `kostra': skutečná množina má na každém z nich další a další menší `pupeny' (jeden pro každý zlomek, který udává délku a rotaci přitahujícího cyklu), z nich vyrůstají nitky a na nitkách miniaturní kopie celé množiny. Reálná osa protíná $M$ přesně v intervalu $[-2, \frac{1}{4}]$. Hranice $M$ je tak členitá, že má Hausdorffovu dimenzi $2$, jak v 90. letech dokázal japonský matematik Micuhiro Šišikura. Celá ta složitost se schovává v jediném vzorci $z^2 + c$.
+
+\section{Příběh --- Rukopis v Cauchyho šuplíku}
+
+Augustin-Louis Cauchy, po kterém je pojmenovaná polovina této kapitoly, byl jedním z nejplodnějších matematiků historie. Napsal téměř osm set článků a jeho sebrané spisy mají sedmadvacet svazků. Byl to také horlivý katolík a zarytý monarchista. Když v roce 1830 červencová revoluce svrhla krále Karla X., Cauchy odmítl složit přísahu věrnosti novému králi Ludvíku Filipovi, přišel o svá místa a odešel z Francie. Nějakou dobu učil v Turíně a v roce 1833 přijel do \textbf{Prahy}. Sesazený Karel X. tehdy žil v exilu na Pražském hradě a Cauchy se stal vychovatelem jeho vnuka, mladého vévody z Bordeaux. Na Hradčanech učil budoucího `krále' Jindřicha V., který nikdy nevládl, a za odměnu dostal titul barona. Do Paříže se vrátil v roce 1838, ale bez přísahy nemohl učit na univerzitě. Na katedru se dostal až po revoluci v roce 1848, která přísahy zrušila.
+
+Temnější kapitolou je osud Nielse Henrika Abela, mladého Nora, jehož citát otevírá kapitolu~\ref{kap:rady}. Abel v roce 1826 přijel do Paříže, chudý a neznámý, a předložil Akademii věd rozsáhlé pojednání o integrálech algebraických funkcí. Byla to jedna z nejhlubších prací desetiletí, základ toho, čemu dnes říkáme abelovské integrály. Posudek měli napsat Legendre a Cauchy. Cauchy rukopis odložil a ten se ztratil v jeho papírech. Abel se vrátil do Norska, kde nesehnal stálé místo, žil v chudobě a onemocněl tuberkulózou. Zemřel 6.~dubna 1829 ve věku 26 let. O dva dny později mu přišel dopis od jeho přítele, berlínského vydavatele Augusta Crella, se zprávou, že pro něj zajistil profesuru v Berlíně.
+
+Teprve když se po rukopisu začal shánět Carl Gustav Jacob Jacobi, rukopis se našel. Akademie Abelovi v roce 1830 posmrtně udělila Velkou cenu a pojednání vyšlo v roce 1841. Originál pak zmizel znovu a objevil se až v roce 1952 ve Florencii. Dnes nese Abelovo jméno nejprestižnější matematická cena, kterou norská vláda uděluje od roku 2003. Někteří ji označují za `Nobelovu cenu za matematiku'. Abel by ji jistě rád dostal za života.
+
+\section{Shrnutí a otázky}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak si nakreslit komplexní funkci? Kam zobrazí $z^2$ svislé a vodorovné přímky a kam je zobrazí $\mathrm{e}^z$?
+    \item Odvoďte Cauchyovy--Riemannovy podmínky. Proč $\bar{z}$ není derivovatelná?
+    \item Proč je komplexní derivace geometricky `otočení a natažení'? Co je konformní zobrazení a kde konformita selhává?
+    \item Proč má komplexní logaritmus nekonečně mnoho hodnot? Co je řez a co Riemannova plocha?
+    \item Spočítejte $\oint_{|z| = r}z^n\,\mathrm{d}z$ pro všechna celá $n$. Proč je $n = -1$ výjimečné?
+    \item Vyslovte Cauchyovu větu a Cauchyho integrální vzorec. Proč z nich plyne, že holomorfní funkce je nekonečněkrát derivovatelná?
+    \item Dokažte Liouvilleovu větu a pomocí ní základní větu algebry.
+    \item Spočítejte $\int_{-\infty}^{\infty}\frac{\mathrm{d}x}{1 + x^2}$ pomocí reziduí. Proč integrál přes půlkružnici zmizí?
+    \item Proč má Taylorova řada funkce $\frac{1}{1 + x^2}$ v nule poloměr konvergence $1$? Co je analytické prodloužení a co říká Riemannova hypotéza?
+    \item Jak je definovaná Mandelbrotova množina? Proč stačí iterovat, dokud $|z_n|$ nepřekročí $2$?
+  \end{enumerate}
+\end{problem}

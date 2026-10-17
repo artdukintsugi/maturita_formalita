@@ -24,7 +24,7 @@ Představte si, že vám někdo nabídne dvě možnosti. Buď dostanete milion k
 
 Na obrázku vidíte, jak zrádný exponenciální růst je. Prvních pár dní vede pravidelné přidávání $15$ a zdvojnásobování vypadá směšně. Pak ho ale zdvojnásobování dožene a utíká mu čím dál rychleji. Proto se exponenciálnímu růstu někdy říká `růst, který přijde nečekaně'. Podobný příklad: list papíru tlustý $0{,}1\ \si{mm}$ přeložený na půl $42$krát by měl tloušťku $0{,}1\cdot 2^{42}\ \si{mm}$, tedy zhruba $440\,000\ \si{km}$. To je dál než na Měsíc.
 
-\section{Exponenciální funkce}
+\section{Exponenciální funkce}\label{sec:exponencialni-funkce}
 
 V kapitole~\ref{kap:vyrazy} jsme si postupně zadefinovali mocniny s přirozeným, celým, racionálním a nakonec i iracionálním exponentem. Pro kladný základ $a$ tedy má výraz $a^x$ smysl pro každé reálné $x$. Mocninná funkce měla proměnnou v základu a pevný exponent. Teď to otočíme.
 
@@ -87,7 +87,7 @@ Jak graf závisí na základu? Všechny exponenciální funkce procházejí bode
   Nechť $x_1 < x_2$. Pak $a^{x_2} = a^{x_1}\cdot a^{x_2 - x_1}$. Protože $x_2 - x_1 > 0$ a $a > 1$, je $a^{x_2 - x_1} > 1$.\footnote{Pro přirozený exponent je to jasné (součin čísel větších než $1$), pro racionální plyne z vlastností odmocnin a pro iracionální z aproximace. Detaily vynecháme.} Vynásobením kladného čísla $a^{x_1}$ číslem větším než $1$ dostaneme větší číslo, a tedy $a^{x_1} < a^{x_2}$.
 \end{proof}
 
-\subsection{Eulerovo číslo}
+\subsection{Eulerovo číslo}\label{sec:eulerovo-cislo}
 
 Mezi všemi možnými základy je jeden výjimečný. Představte si banku, která vám nabídne úrok $100\,\%$ ročně. Vložíte $1$ korunu a za rok máte $2$. Co když vám ale úrok připíše po půl roce (každé pololetí $50\,\%$)? Pak máte za rok ${(1 + \frac{1}{2})}^2 = 2{,}25$ korun. Při čtvrtletním připisování ${(1 + \frac{1}{4})}^4\approx 2{,}44$ korun. A co když se úrok připisuje každou vteřinu?
 \begin{center}
@@ -120,7 +120,7 @@ kterému se říká \textbf{Eulerovo číslo}. Je iracionální (a dokonce trans
   \end{tikzpicture}
 \end{center}
 
-\section{Logaritmus}
+\section{Logaritmus}\label{sec:logaritmus}
 
 Rovnici $2^x = 8$ vyřeší každý zpaměti: $x = 3$. Ale co rovnice $2^x = 5$? Řešení existuje (exponenciální funkce je prostá a nabývá všech kladných hodnot), ale nedá se vyjádřit pomocí operací, které zatím známe. Potřebujeme nový symbol.
 
@@ -162,7 +162,7 @@ Rovnici $2^x = 8$ vyřeší každý zpaměti: $x = 3$. Ale co rovnice $2^x = 5$?
   $5$, $\frac{1}{2}$, $\frac{3}{2}$ (protože $9^{\frac{3}{2}} = 27$), $-4$, $5$, $0$, $3$ a $\log_2 2^{\frac{1}{2} - 2} = -\frac{3}{2}$.
 \end{solution}
 
-\subsection{Logaritmická funkce}
+\subsection{Logaritmická funkce}\label{sec:logaritmicka-funkce}
 
 \begin{definitionbox}
   \textbf{Logaritmická funkce} o základu $a$ ($a > 0$, $a\neq 1$) je funkce $f(x) = \log_a x$. Je to \textbf{inverzní funkce} k exponenciální funkci $a^x$. Proto:
@@ -213,7 +213,7 @@ Graf logaritmické funkce dostaneme z grafu exponenciální funkce prostým pře
   \end{tikzpicture}
 \end{center}
 
-\subsection{Pravidla pro počítání s logaritmy}
+\subsection{Pravidla pro počítání s logaritmy}\label{sec:pravidla-logaritmy}
 
 \begin{definitionbox}
   Pro $a, b > 0$, $a, b\neq 1$, $x, y > 0$ a $r\in\mathbb{R}$ platí:
@@ -295,7 +295,7 @@ Všimněte si také šedých čárek. Mezi $1$ a $2$ je stejně místa jako mezi
   \end{enumerate}
 \end{solution}
 
-\section{Exponenciální rovnice}
+\section{Exponenciální rovnice}\label{sec:exponencialni-rovnice}
 
 \begin{definitionbox}
   \textbf{Exponenciální rovnice} je rovnice, ve které se neznámá vyskytuje v exponentu. Základní metody:
@@ -359,7 +359,7 @@ Exponenciální rovnici je dobré vidět i graficky. Řešení rovnice $3^x = 7$
   \end{enumerate}
 \end{solution}
 
-\section{Logaritmické rovnice}
+\section{Logaritmické rovnice}\label{sec:logaritmicke-rovnice}
 
 \begin{definitionbox}
   \textbf{Logaritmická rovnice} je rovnice, ve které se neznámá vyskytuje v argumentu logaritmu (případně v základu). Postup:
@@ -406,7 +406,7 @@ Pozor: úprava $\log_a f(x) + \log_a g(x) = \log_a(f(x)g(x))$ \textbf{rozšiřuj
   \end{enumerate}
 \end{solution}
 
-\section{Exponenciální a logaritmické nerovnice}
+\section{Exponenciální a logaritmické nerovnice}\label{sec:exp-log-nerovnice}
 
 Pro nerovnice je klíčová monotonie. Rostoucí funkce zachovává nerovnost, klesající ji otáčí.
 
@@ -460,7 +460,7 @@ Proč se u základu menšího než $1$ otáčí znak nerovnosti? Podívejte se n
   \end{tikzpicture}
 \end{center}
 
-\section{Využití v praxi}
+\section{Využití v praxi}\label{sec:exp-vyuziti}
 
 Exponenciální funkce popisují všechno, co roste nebo klesá úměrně tomu, kolik toho právě je. Logaritmy se pak používají všude, kde potřebujeme měřit veličiny, které se pohybují v obrovském rozsahu.
 

@@ -3,7 +3,7 @@
 
 V kapitole~\ref{kap:stereometrie} jsme řešili prostorové úlohy tak, že jsme hledali vhodné pravoúhlé trojúhelníky. To funguje, ale vyžaduje to dobrou prostorovou představivost a trochu štěstí. Analytická geometrie v prostoru nabízí jinou cestu: zavedeme souřadnice a všechno spočítáme. Žádné hledání trojúhelníků, žádné kreslení. Jen vektory a rovnice. Pro ty z nás, kdo si v hlavě neumí otočit ani židli, je to vysvobození.
 
-\section{Souřadnice a vektory v prostoru}
+\section{Souřadnice a vektory v prostoru}\label{sec:souradnice-prostor}
 
 \begin{definitionbox}
   \textbf{Kartézská soustava souřadnic} v prostoru má tři navzájem kolmé osy $x$, $y$, $z$. Bod je určen trojicí $A = [a_1, a_2, a_3]$, vektor trojicí $\vec{u} = (u_1, u_2, u_3)$. Všechny vzorce z roviny se přenesou přidáním třetí souřadnice:
@@ -39,7 +39,7 @@ Jak si bod v prostoru představit? Z počátku ujdeme $a_1$ ve směru osy $x$, p
   Pro $A = [1, 2, 3]$ a $B = [3, -1, 9]$ je $\overrightarrow{AB} = (2, -3, 6)$, $|AB| = \sqrt{4 + 9 + 36} = 7$ a $S_{AB} = \left[2, \frac{1}{2}, 6\right]$.
 \end{example}
 
-\subsection{Vektorový součin}
+\subsection{Vektorový součin}\label{sec:vektorovy-soucin}
 
 V prostoru existuje ještě jeden součin vektorů, který v rovině nemá obdobu. Výsledkem není číslo, ale vektor.
 
@@ -87,7 +87,7 @@ Kolmost si ověříte přímo: $\vec{u}\cdot(\vec{u}\times\vec{v}) = u_1(u_2v_3 
   Kontrola: $(1, 2, 3)\cdot(-3, 6, -3) = -3 + 12 - 9 = 0$ a $(4, 5, 6)\cdot(-3, 6, -3) = -12 + 30 - 18 = 0$.
 \end{example}
 
-\section{Přímka a rovina v prostoru}
+\section{Přímka a rovina v prostoru}\label{sec:primka-rovina-prostor}
 
 \begin{definitionbox}
   \textbf{Přímka} procházející bodem $A$ se směrovým vektorem $\vec{u}$ má \textbf{parametrické vyjádření}
@@ -137,7 +137,7 @@ Parametr $t$ funguje jako `čas': v čase $t = 0$ stojíme v bodě $A$ a za kaž
 
 Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrightarrow{AX} = 0$ říká, že vektor $\overrightarrow{AX}$ je kolmý na $\vec{n}$. V rovině jsou všechny takové body $X$ na jedné přímce. V prostoru tvoří všechny vektory kolmé na $\vec{n}$ celou rovinu. Jedna podmínka v prostoru `ubere' jen jeden rozměr ze tří.
 
-\begin{example}
+\begin{example}\label{ex:rovina-tremi-body}
   Napišme obecnou rovnici roviny $ABC$, kde $A = [1, 0, 0]$, $B = [0, 2, 0]$ a $C = [0, 0, 3]$.
 
   Vektory $\vec{u} = \overrightarrow{AB} = (-1, 2, 0)$ a $\vec{v} = \overrightarrow{AC} = (-1, 0, 3)$. Normálový vektor
@@ -164,7 +164,7 @@ Proč má rovina obecnou rovnici a přímka ne? Rovnice $\vec{n}\cdot\overrighta
 \end{center}
 Rovina `odřízne' z prvního oktantu trojúhelníkový kousek. Čísla ve jmenovatelích úsekového tvaru jsou přesně místa, kde rovina protíná osy.
 
-\section{Vzájemné polohy}
+\section{Vzájemné polohy}\label{sec:vzajemne-polohy-prostor}
 
 \begin{definitionbox}
   \textbf{Dvě přímky} $p: X = A + t\vec{u}$ a $q: X = B + s\vec{v}$:
@@ -250,7 +250,7 @@ Podmínka $\vec{n}\cdot\vec{u} = 0$ znamená, že směr přímky je kolmý na no
   Průsečnice rovin $x + y + z = 3$ a $x - y = 1$: zvolíme $y = t$, pak $x = 1 + t$ a $z = 3 - x - y = 2 - 2t$. Průsečnice je $X = [1, 0, 2] + t(1, 1, -2)$. Kontrola: směrový vektor $(1, 1, -2)$ je kolmý na oba normálové vektory $(1, 1, 1)$ a $(1, -1, 0)$, a tedy je rovnoběžný s $\vec{n}_1\times\vec{n}_2$.
 \end{example}
 
-\section{Metrické úlohy}
+\section{Metrické úlohy}\label{sec:metricke-ulohy-prostor}
 
 \begin{definitionbox}
   \textbf{Vzdálenost bodu} $M = [m_1, m_2, m_3]$ od roviny $ax + by + cz + d = 0$:
@@ -271,7 +271,7 @@ Podmínka $\vec{n}\cdot\vec{u} = 0$ znamená, že směr přímky je kolmý na no
 
 Všechny tyto vzorce vypadají jako něco, co je potřeba se naučit nazpaměť. Ve skutečnosti za nimi stojí jediná myšlenka: \textbf{průmět vektoru do vhodného směru}. Pojďme si je projít s obrázky.
 
-\subsection*{Vzdálenost bodu od roviny}
+\subsection*{Vzdálenost bodu od roviny}\label{sec:vzdalenost-bod-rovina}
 
 Představte si, že $M$ je lampa visící nad podlahou $\rho$. Nejkratší cesta z lampy na podlahu vede svisle dolů, tedy ve směru normály $\vec{n}$. Vezmeme libovolný bod $P$ podlahy. Vektor $\overrightarrow{PM}$ míří šikmo, ale nás zajímá jen jeho `svislá' složka, tedy jeho průmět do směru $\vec{n}$.
 
@@ -303,7 +303,7 @@ A teď rozepišme čitatel. Pro $P = [p_1, p_2, p_3]$ je
 \end{equation*}
 protože $P$ leží v rovině, a tedy $ap_1 + bp_2 + cp_3 + d = 0$. To je celý vzorec. Všimněte si, že nezáleží na tom, který bod $P$ vybereme. Posouváním $P$ po podlaze se mění jen `vodorovná' část vektoru $\overrightarrow{PM}$, svislá zůstává stejná. Mimochodem, výraz $am_1 + bm_2 + cm_3 + d$ bez absolutní hodnoty má ještě jednu informaci: jeho znaménko říká, na \textit{které straně} roviny bod leží.
 
-\subsection*{Vzdálenost mimoběžek}
+\subsection*{Vzdálenost mimoběžek}\label{sec:vzdalenost-mimobezek}
 
 Každé dvě mimoběžky leží ve dvou rovnoběžných rovinách, jako přímka na podlaze a přímka na stropě. Jejich vzdálenost je tedy prostě `výška místnosti'. Obě roviny mají stejnou normálu, která musí být kolmá na $\vec{u}$ i na $\vec{v}$. Takový vektor už známe: $\vec{u}\times\vec{v}$. Vzdálenost je tak délka průmětu libovolného vektoru $\overrightarrow{AB}$ (z podlahy na strop) do směru $\vec{u}\times\vec{v}$, přesně jako výše.
 
@@ -329,7 +329,7 @@ Vzorec má i krásný geometrický význam. Číslo $\overrightarrow{AB}\cdot(\v
   v = \frac{\text{objem}}{\text{obsah podstavy}} = \text{výška}.
 \end{equation*}
 
-\subsection*{Odchylky}
+\subsection*{Odchylky}\label{sec:odchylky-prostor}
 
 Odchylka dvou rovin se měří jako úhel otevřené knihy: v rovině kolmé na hřbet. Normála každé stránky je od stránky otočená o $90^\circ$, takže když se stránky rozevřou o úhel $\varphi$, normály se rozevřou o stejný úhel. Proto stačí změřit úhel normál. Absolutní hodnota ve vzorci zajistí, že dostaneme úhel mezi $0^\circ$ a $90^\circ$. Normálu totiž můžeme vzít i opačně a odchylka nemá záviset na tom, jak se rozhodneme.
 

@@ -15,7 +15,7 @@ Lineární rovnice jsme v předchozí kapitole vyřešili úplně a definitivně
 
 Podmínka $a\neq 0$ je důležitá. Pokud by $a = 0$, dostali bychom lineární rovnici z předchozí kapitoly a nic by se nedělo.
 
-\subsection{Neúplné kvadratické rovnice}
+\subsection{Neúplné kvadratické rovnice}\label{sec:neuplne-kvadraticke}
 
 Než se pustíme do obecného vzorce, podívejme se na dva speciální případy, které se dají vyřešit mnohem rychleji. Používat na ně vzorec je jako jet do vedlejší místnosti autem. Jde to, ale proč.
 
@@ -64,7 +64,7 @@ Proč má ryze kvadratická rovnice dvě, jedno, nebo žádné řešení, je vid
   U rovnice $3x^2 = 12x$ by vás mohlo napadnout vydělit obě strany číslem $3x$. Nedělejte to! Výraz $3x$ může být nulový a dělením byste přišli o řešení $x = 0$. Tohle je jedna z nejčastějších chyb vůbec. Vytýkejte, nedělte.
 \end{note}
 
-\subsection{Doplnění na čtverec a obecný vzorec}
+\subsection{Doplnění na čtverec a obecný vzorec}\label{sec:doplneni-na-ctverec}
 
 Jak vyřešit rovnici $x^2 + 6x + 5 = 0$? Trik je přepsat levou stranu tak, aby v ní byl `celý čtverec'. Víme, že ${(x + 3)}^2 = x^2 + 6x + 9$. Naše rovnice má místo $9$ jen $5$, takže
 \begin{equation*}
@@ -214,7 +214,7 @@ První zlomek nezávisí na znaménku $\pm$. Je to osa souměrnosti paraboly $y 
   Kladné řešení je $\frac{1 + \sqrt{5}}{2}\approx 1{,}618$. Druhé řešení je záporné, takže ho zlatý řez nepotřebuje.
 \end{example}
 
-\section{Vietovy vzorce a rozklad na součin}
+\section{Vietovy vzorce a rozklad na součin}\label{sec:vietovy-vzorce}
 
 Podívejme se, co se stane, když kořeny kvadratické rovnice sečteme a vynásobíme.
 
@@ -314,7 +314,7 @@ Vietovy vzorce mají spoustu využití:
   \end{enumerate}
 \end{solution}
 
-\section{Kvadratické rovnice s parametrem}
+\section{Kvadratické rovnice s parametrem}\label{sec:kvadr-parametr}
 
 U lineárních rovnic s parametrem jsme rozhodovali podle toho, zda je koeficient u $x$ nulový. U kvadratických rovnic rozhoduje hlavně diskriminant. A pozor: pokud parametr stojí u $x^2$, musíme zvlášť vyšetřit i případ, kdy rovnice přestane být kvadratická.
 
@@ -381,7 +381,7 @@ Tento trik, kdy parametr `oddělíme' na jednu stranu a díváme se na průseč�
   \end{enumerate}
 \end{solution}
 
-\section{Rovnice vyšších stupňů}
+\section{Rovnice vyšších stupňů}\label{sec:vyssi-stupne}
 
 Pro rovnice třetího a čtvrtého stupně existují obecné vzorce, ale jsou tak ošklivé, že se u maturity nepoužívají.\footnote{Vzorec pro kubickou rovnici má na svědomí jeden z nejdramatičtějších příběhů dějin matematiky, viz příběh na konci kapitoly.} Pro pátý a vyšší stupeň obecný vzorec neexistuje, jak jsme zmínili u Galoise v kapitole~\ref{kap:rovnice}. Proč tomu tak je, rozebíráme v odbočce v sekci~\ref{sec:kubicke}. U maturity se proto objevují jen rovnice, které se dají na kvadratické převést nějakým trikem.
 
@@ -424,7 +424,7 @@ Proč kořeny bikvadratické rovnice přicházejí v párech $\pm$? Výraz $x^4 
   $K = \{-1, 1, 3\}$. Kdo by roznásobil závorku, dostal by rovnici čtvrtého stupně a pravděpodobně by se rozplakal.
 \end{example}
 
-\subsection{Celočíselné kořeny}
+\subsection{Celočíselné kořeny}\label{sec:celociselne-koreny}
 
 \begin{definitionbox}
   \textbf{Věta (o celočíselných kořenech)}: Nechť $P(x) = a_nx^n + \cdots + a_1x + a_0$ je mnohočlen s \textbf{celočíselnými} koeficienty. Pokud je celé číslo $r$ jeho kořenem, pak $r$ dělí absolutní člen $a_0$.
@@ -565,7 +565,7 @@ Vzorec postupně snižuje stupeň: $2\to 1$, $3\to 2$, $4\to 3$. Pro pátý stup
   Kořeny přitom \textit{existují}: rovnice stupně $n$ má v komplexních číslech vždy přesně $n$ kořenů, pokud je počítáme i s násobností (základní věta algebry). Jen je nejde zapsat vzorcem. V praxi se proto počítají přibližně, numerickými metodami, třeba půlením intervalu z kapitoly~\ref{kap:limity}.
 \end{definitionbox}
 
-\section{Kvadratické nerovnice}
+\section{Kvadratické nerovnice}\label{sec:kvadraticke-nerovnice}
 
 \begin{definitionbox}
   \textbf{Kvadratická nerovnice} je nerovnice, kterou lze převést na tvar $ax^2 + bx + c > 0$ (případně $<$, $\geq$, $\leq$), kde $a\neq 0$.
@@ -663,7 +663,7 @@ Kdyby se nerovnice ptala na $> 0$, hledali bychom naopak části paraboly \texti
   \end{enumerate}
 \end{solution}
 
-\section{Soustavy s kvadratickou rovnicí}
+\section{Soustavy s kvadratickou rovnicí}\label{sec:soustavy-kvadraticke}
 
 Pokud je v soustavě alespoň jedna rovnice kvadratická, metody z předchozí kapitoly (sčítací, matice) přestanou fungovat. Zůstane nám ale dosazovací metoda, která funguje vždy.
 
