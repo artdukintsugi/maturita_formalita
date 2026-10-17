@@ -1,0 +1,314 @@
+\label{kap:kuzelosecky}
+\mathquote{Ubi materia, ibi geometria. (Kde je hmota, tam je geometrie.)}{Johannes Kepler}
+
+Pokud dvojitý kužel (dva kužele spojené vrcholy) protneme rovinou, dostaneme podle sklonu roviny kružnici, elipsu, parabolu nebo hyperbolu. Těmto křivkám se proto říká \textbf{kuželosečky}. Zkoumali je už staří Řekové, hlavně Apollónios z Pergy, který jim dal jejich jména. Dva tisíce let to byla čistě abstraktní geometrie. Pak Kepler zjistil, že planety obíhají po elipsách, Newton vysvětlil proč, a ukázalo se, že kuželosečky jsou dráhy všeho, co se pohybuje v gravitačním poli: planet, komet, družic i hozeného míče.
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{|l|l|}
+    \hline
+    Rovina řezu & Kuželosečka \\
+    \hline
+    kolmá na osu kužele & kružnice \\
+    šikmá, protíná jen jeden kužel celý & elipsa \\
+    rovnoběžná s jednou povrchovou přímkou & parabola \\
+    protíná oba kužele & hyperbola \\
+    \hline
+  \end{tabular}
+\end{center}
+
+V analytické geometrii je ale budeme definovat jako množiny bodů s určitou vlastností vzdálenosti. A jejich rovnice budou rovnice druhého stupně v $x$ a $y$.
+
+\section{Kružnice}
+
+\begin{definitionbox}
+  \textbf{Kružnice} $k(S; r)$ je množina bodů, které mají od středu $S = [m, n]$ vzdálenost $r > 0$. Ze vzorce pro vzdálenost bodů dostaneme její \textbf{středovou rovnici}
+  \begin{equation*}
+    {(x - m)}^2 + {(y - n)}^2 = r^2.
+  \end{equation*}
+  Roznásobením dostaneme \textbf{obecnou rovnici} $x^2 + y^2 + ax + by + c = 0$. Naopak z obecné rovnice získáme střed a poloměr \textbf{doplněním na čtverec}.
+
+  \vspace{0.2cm}
+
+  \textbf{Tečna} ke kružnici v bodě $T = [x_0, y_0]$, který na ní leží:
+  \begin{equation*}
+    (x_0 - m)(x - m) + (y_0 - n)(y - n) = r^2.
+  \end{equation*}
+\end{definitionbox}
+
+Rovnice tečny plyne z toho, že tečna je kolmá na poloměr $ST$. Vektor $\overrightarrow{ST} = (x_0 - m, y_0 - n)$ je tedy normálovým vektorem tečny. Rovnici pak dostaneme stejně jako u každé přímky z kapitoly~\ref{kap:analyticka}. (Zkuste si, že po úpravě vyjde přesně vzorec výše.)
+
+\begin{example}
+  Kružnice se středem $[2, -3]$ a poloměrem $5$ má rovnici ${(x - 2)}^2 + {(y + 3)}^2 = 25$. Po roznásobení $x^2 + y^2 - 4x + 6y - 12 = 0$.
+
+  Opačně: rovnice $x^2 + y^2 - 4x + 6y - 12 = 0$. Doplníme na čtverec zvlášť pro $x$ a $y$:
+  \begin{equation*}
+    (x^2 - 4x + 4) - 4 + (y^2 + 6y + 9) - 9 - 12 = 0\quad\Leftrightarrow\quad{(x - 2)}^2 + {(y + 3)}^2 = 25.
+  \end{equation*}
+
+  Pozor, ne každá rovnice tvaru $x^2 + y^2 + ax + by + c = 0$ popisuje kružnici. Rovnice $x^2 + y^2 + 2x + 2 = 0$ dává ${(x + 1)}^2 + y^2 = -1$, a tu nesplňuje žádný bod. Rovnice $x^2 + y^2 - 2x + 1 = 0$ dává ${(x - 1)}^2 + y^2 = 0$, což je jediný bod $[1, 0]$.
+\end{example}
+
+\begin{example}
+  Tečna ke kružnici $x^2 + y^2 = 25$ v bodě $[3, 4]$ je $3x + 4y = 25$.
+\end{example}
+
+\subsection{Vzájemná poloha přímky a kružnice}
+
+Polohu přímky a kružnice zjistíme dvěma způsoby. Buď porovnáme vzdálenost středu od přímky s poloměrem (jako v kapitole~\ref{kap:planimetrie}), nebo vyřešíme soustavu rovnic. Dosazením přímky do rovnice kružnice dostaneme kvadratickou rovnici a o počtu průsečíků rozhodne diskriminant.
+
+\begin{definitionbox}
+  Po dosazení přímky do rovnice kuželosečky dostaneme kvadratickou rovnici s diskriminantem $D$:
+  \begin{itemize}
+    \item $D > 0$: dva průsečíky, přímka je \textbf{sečna},
+    \item $D = 0$: jeden společný bod, přímka je \textbf{tečna},
+    \item $D < 0$: žádný společný bod, přímka je \textbf{nesečna} (vnější přímka).
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Přímka $y = x + 1$ a kružnice $x^2 + y^2 = 25$: $x^2 + {(x + 1)}^2 = 25$, tedy $2x^2 + 2x - 24 = 0$, neboli $x^2 + x - 12 = 0$, a tedy $x\in\{3, -4\}$. Průsečíky jsou $[3, 4]$ a $[-4, -3]$, přímka je sečna.
+\end{example}
+
+\begin{example}
+  Pro která $k$ je přímka $y = x + k$ tečnou kružnice $x^2 + y^2 = 8$? Dosazením $2x^2 + 2kx + k^2 - 8 = 0$, diskriminant $D = 4k^2 - 8(k^2 - 8) = 64 - 4k^2$. Tečna pro $D = 0$, tedy $k = \pm 4$.
+
+  Kontrola vzdáleností: vzdálenost středu $[0, 0]$ od přímky $x - y + k = 0$ je $\frac{|k|}{\sqrt{2}}$ a má být rovna $r = 2\sqrt{2}$, tedy $|k| = 4$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete střed a poloměr kružnice $x^2 + y^2 + 6x - 2y + 6 = 0$.
+    \item Napište rovnici kružnice se středem $[1, 2]$, která prochází bodem $[4, 6]$.
+    \item Napište rovnici kružnice, jejímž průměrem je úsečka $AB$, kde $A = [-2, 1]$ a $B = [4, 9]$.
+    \item Určete vzájemnou polohu kružnic $x^2 + y^2 = 9$ a ${(x - 5)}^2 + y^2 = 4$.
+    \item Určete průsečíky kružnice ${(x - 1)}^2 + y^2 = 5$ s osou $y$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item ${(x + 3)}^2 + {(y - 1)}^2 = 9 + 1 - 6 = 4$, střed $[-3, 1]$, $r = 2$.
+    \item $r = 5$, ${(x - 1)}^2 + {(y - 2)}^2 = 25$.
+    \item Střed je střed $AB$, tedy $[1, 5]$, $r = \frac{|AB|}{2} = \frac{10}{2} = 5$: ${(x - 1)}^2 + {(y - 5)}^2 = 25$.
+    \item Vzdálenost středů je $5 = 3 + 2$, kružnice mají \textbf{vnější dotyk} v bodě $[3, 0]$.
+    \item $x = 0$: $1 + y^2 = 5$, $y = \pm 2$. Průsečíky $[0, 2]$ a $[0, -2]$.
+  \end{enumerate}
+\end{solution}
+
+\section{Elipsa}
+
+\begin{definitionbox}
+  \textbf{Elipsa} je množina bodů roviny, které mají od dvou daných bodů $F_1$, $F_2$ (\textbf{ohnisek}) konstantní součet vzdáleností $2a$, kde $2a > |F_1F_2|$:
+  \begin{equation*}
+    |XF_1| + |XF_2| = 2a.
+  \end{equation*}
+  \begin{itemize}
+    \item $S$ je \textbf{střed} (střed úsečky $F_1F_2$), $a$ je \textbf{hlavní poloosa}, $b$ \textbf{vedlejší poloosa},
+    \item $e = |SF_1|$ je \textbf{výstřednost} (excentricita) a platí $a^2 = b^2 + e^2$,
+    \item \textbf{středová rovnice} elipsy se středem $[m, n]$ a hlavní osou rovnoběžnou s osou $x$:
+    \begin{equation*}
+      \frac{{(x - m)}^2}{a^2} + \frac{{(y - n)}^2}{b^2} = 1.
+    \end{equation*}
+    Pokud je hlavní osa rovnoběžná s osou $y$, prohodí se $a$ a $b$ ve jmenovatelích.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \draw[->] (-5.8,0) -- (6,0) node[right] {\small $x$};
+    \draw[->] (0,-3.5) -- (0,3.7) node[above] {\small $y$};
+    \draw[thick, colorofwisdom] (0,0) ellipse (5 and 3);
+    \filldraw (-4,0) circle (2pt) node[below] {\small $F_1$};
+    \filldraw (4,0) circle (2pt) node[below] {\small $F_2$};
+    \coordinate (X) at ({5*cos(60)},{3*sin(60)});
+    \filldraw (X) circle (2pt) node[above right] {\small $X$};
+    \draw[dashed] (-4,0) -- (X) -- (4,0);
+    \draw[thick] (0,0) -- (0,3) node[midway, left] {\small $b$};
+    \draw[thick] (0,0) -- (4,0) node[midway, below] {\small $e$};
+    \draw[gray] (0,3) -- (4,0) node[midway, above right] {\small $a$};
+    \node[below left] at (-5,0) {\small $A$}; \node[below right] at (5,0) {\small $B$};
+    \node[above left] at (0,3) {\small $C$}; \node[below left] at (0,-3) {\small $D$};
+  \end{tikzpicture}
+\end{center}
+
+Proč $a^2 = b^2 + e^2$? Vrchol $C$ na vedlejší ose má od obou ohnisek stejnou vzdálenost a jejich součet je $2a$. Každá z nich je tedy $a$. Z pravoúhlého trojúhelníku $SF_2C$ s odvěsnami $e$ a $b$ a přeponou $a$ už vzorec plyne z Pythagorovy věty.
+
+Definice elipsy dává i praktický návod, jak ji nakreslit. Do dvou bodů zapíchněte připínáčky, uvažte mezi ně volný provázek a tužkou ho napínejte. Tužka opíše elipsu. Tak se to mimochodem dělá i při zakládání eliptických záhonů. Pokud dáte oba připínáčky do jednoho bodu, dostanete kružnici. Kružnice je tedy elipsa s $e = 0$.
+
+\begin{example}
+  Elipsa $\frac{x^2}{25} + \frac{y^2}{9} = 1$ má $a = 5$, $b = 3$, $e = \sqrt{25 - 9} = 4$. Ohniska jsou $[\pm 4, 0]$, hlavní vrcholy $[\pm 5, 0]$ a vedlejší vrcholy $[0, \pm 3]$. (To je přesně elipsa na obrázku.)
+
+  Rovnice $9x^2 + 25y^2 - 18x - 100y - 116 = 0$ po doplnění na čtverec:
+  \begin{equation*}
+    9{(x - 1)}^2 - 9 + 25{(y - 2)}^2 - 100 = 116\quad\Leftrightarrow\quad\frac{{(x - 1)}^2}{25} + \frac{{(y - 2)}^2}{9} = 1.
+  \end{equation*}
+  Je to stejná elipsa, jen posunutá do středu $[1, 2]$.
+\end{example}
+
+\begin{note}
+  Poměr $\varepsilon = \frac{e}{a}\in[0, 1)$ se nazývá \textbf{číselná výstřednost} a říká, jak moc je elipsa `zploštělá'. Oběžná dráha Země kolem Slunce má $\varepsilon\approx 0{,}017$, je tedy skoro kruhová. Halleyova kometa má $\varepsilon\approx 0{,}967$, její dráha je velice protáhlá. Slunce leží v jednom ohnisku dráhy, druhé ohnisko je prázdné. To je první Keplerův zákon.
+\end{note}
+
+\section{Hyperbola}
+
+\begin{definitionbox}
+  \textbf{Hyperbola} je množina bodů roviny, které mají od dvou daných bodů $F_1$, $F_2$ konstantní \textbf{absolutní hodnotu rozdílu} vzdáleností $2a$, kde $0 < 2a < |F_1F_2|$:
+  \begin{equation*}
+    \big||XF_1| - |XF_2|\big| = 2a.
+  \end{equation*}
+  \begin{itemize}
+    \item $a$ je \textbf{hlavní poloosa}, $e = |SF_1|$ výstřednost, \textbf{vedlejší poloosa} $b$ je dána vztahem $e^2 = a^2 + b^2$,
+    \item \textbf{středová rovnice} (hlavní osa rovnoběžná s $x$):
+    \begin{equation*}
+      \frac{{(x - m)}^2}{a^2} - \frac{{(y - n)}^2}{b^2} = 1,
+    \end{equation*}
+    \item hyperbola má dvě větve a dvě \textbf{asymptoty} $y - n = \pm\frac{b}{a}(x - m)$.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.6]
+    \draw[->] (-7,0) -- (7.2,0) node[right] {\small $x$};
+    \draw[->] (0,-5) -- (0,5.2) node[above] {\small $y$};
+    \draw[dashed, gray] (-6.6,-4.95) -- (6.6,4.95);
+    \draw[dashed, gray] (-6.6,4.95) -- (6.6,-4.95) node[right] {\small asymptoty};
+    \draw[gray] (-4,-3) rectangle (4,3);
+    \draw[thick, colorofwisdom, domain=-1.1:1.1, samples=60, variable=\t] plot ({4*cosh(\t)}, {3*sinh(\t)});
+    \draw[thick, colorofwisdom, domain=-1.1:1.1, samples=60, variable=\t] plot ({-4*cosh(\t)}, {3*sinh(\t)});
+    \filldraw (5,0) circle (3pt) node[below right] {\small $F_2$};
+    \filldraw (-5,0) circle (3pt) node[below left] {\small $F_1$};
+    \node[below right] at (4,0) {\small $a$};
+    \node[left] at (0,3) {\small $b$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Hyperbola $\frac{x^2}{16} - \frac{y^2}{9} = 1$ má $a = 4$, $b = 3$, $e = \sqrt{16 + 9} = 5$. Ohniska $[\pm 5, 0]$, vrcholy $[\pm 4, 0]$, asymptoty $y = \pm\frac{3}{4}x$. Asymptoty jsou úhlopříčky obdélníku o stranách $2a$ a $2b$ se středem ve středu hyperboly (šedý obdélník na obrázku). To je nejrychlejší způsob, jak hyperbolu nakreslit.
+\end{example}
+
+\begin{note}
+  Graf nepřímé úměrnosti $y = \frac{k}{x}$ z kapitoly~\ref{kap:elementarni} je také hyperbola, jen otočená o $45^\circ$. Asymptotami jsou osy souřadnic a $a = b$, proto se jí říká \textbf{rovnoosá}. Hyperboly se ve skutečném světě objevují méně často než elipsy, ale potkáte je: po hyperbole letí kometa, která má dost energie, aby ze Sluneční soustavy unikla, a na hyperbolách stál starší navigační systém LORAN, který určoval polohu lodí z rozdílu časů, za které dorazily signály ze dvou vysílačů.
+\end{note}
+
+\section{Parabola}
+
+\begin{definitionbox}
+  \textbf{Parabola} je množina bodů roviny, které mají stejnou vzdálenost od daného bodu $F$ (\textbf{ohniska}) a dané přímky $d$ (\textbf{řídicí přímky}), která bodem $F$ neprochází:
+  \begin{equation*}
+    |XF| = |Xd|.
+  \end{equation*}
+  \begin{itemize}
+    \item $p = |Fd|$ je \textbf{parametr} paraboly, \textbf{vrchol} $V$ leží uprostřed mezi $F$ a $d$,
+    \item \textbf{vrcholová rovnice} paraboly s vrcholem $[m, n]$:
+    \begin{align*}
+      {(y - n)}^2 &= \pm 2p(x - m) &&\text{(osa rovnoběžná s osou } x\text{, otevřená doprava/doleva)},\\
+      {(x - m)}^2 &= \pm 2p(y - n) &&\text{(osa rovnoběžná s osou } y\text{, otevřená nahoru/dolů)}.
+    \end{align*}
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Odvoďme rovnici paraboly s ohniskem $F = \left[0, \frac{p}{2}\right]$ a řídicí přímkou $y = -\frac{p}{2}$. Bod $X = [x, y]$ má od ohniska vzdálenost $\sqrt{x^2 + {\left(y - \frac{p}{2}\right)}^2}$ a od řídicí přímky $\left|y + \frac{p}{2}\right|$. Umocníme rovnost vzdáleností:
+  \begin{equation*}
+    x^2 + y^2 - py + \frac{p^2}{4} = y^2 + py + \frac{p^2}{4}\quad\Leftrightarrow\quad x^2 = 2py.
+  \end{equation*}
+  Graf funkce $y = x^2$ je tedy parabola s $2p = 1$, tedy $p = \frac{1}{2}$, ohniskem $\left[0, \frac{1}{4}\right]$ a řídicí přímkou $y = -\frac{1}{4}$. Parabola z kapitoly~\ref{kap:elementarni} a parabola z této kapitoly jsou opravdu tatáž křivka.
+\end{example}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.2]
+    \draw[->] (-2.5,0) -- (2.7,0) node[right] {\small $x$};
+    \draw[->] (0,-0.8) -- (0,3.3) node[above] {\small $y$};
+    \draw[thick, colorofwisdom, domain=-1.75:1.75, samples=60] plot (\x, {\x*\x});
+    \draw[thick] (-2.5,-0.25) -- (2.5,-0.25) node[right] {\small $d$};
+    \filldraw (0,0.25) circle (1.5pt) node[right] {\small $F$};
+    \coordinate (X) at (1.3,1.69);
+    \filldraw (X) circle (1.5pt) node[right] {\small $X$};
+    \draw[dashed] (0,0.25) -- (X) -- (1.3,-0.25);
+    \foreach \x in {-1.2,-0.6,0.6,1.2} \draw[gray, ->] (\x,3) -- (\x,{\x*\x}) -- (0,0.25);
+  \end{tikzpicture}
+\end{center}
+
+Šedé paprsky na obrázku ukazují vlastnost, kterou jsme zmínili u Archimédových zrcadel v kapitole~\ref{kap:elementarni}: paprsky rovnoběžné s osou se po odrazu od paraboly setkají v ohnisku.
+
+\begin{example}
+  Rovnice $x^2 - 4x - 8y + 12 = 0$ po doplnění na čtverec dává ${(x - 2)}^2 - 4 - 8y + 12 = 0$, tedy ${(x - 2)}^2 = 8(y - 1)$. Vrchol $V = [2, 1]$, $2p = 8$, tedy $p = 4$. Parabola je otevřená nahoru, ohnisko je o $\frac{p}{2} = 2$ nad vrcholem, $F = [2, 3]$, a řídicí přímka $y = -1$.
+\end{example}
+
+\section{Rozpoznání kuželosečky a vzájemné polohy}
+
+\begin{definitionbox}
+  Rovnici $Ax^2 + Cy^2 + Dx + Ey + F = 0$ (bez členu $xy$) upravíme doplněním na čtverec. Podle koeficientů $A$ a $C$ jde o:
+  \begin{itemize}
+    \item \textbf{kružnici}, pokud $A = C\neq 0$,
+    \item \textbf{elipsu}, pokud $A$ a $C$ mají stejné znaménko a $A\neq C$,
+    \item \textbf{hyperbolu}, pokud $A$ a $C$ mají opačná znaménka,
+    \item \textbf{parabolu}, pokud je právě jedno z $A$, $C$ nulové.
+  \end{itemize}
+  Ve výjimečných případech (tzv. \textbf{degenerované kuželosečky}) může rovnice popisovat jen bod, dvojici přímek nebo prázdnou množinu.
+\end{definitionbox}
+
+\begin{note}
+  U paraboly a hyperboly může mít přímka s kuželosečkou jediný společný bod, a přesto nebýt tečnou. U paraboly je to přímka rovnoběžná s osou, u hyperboly přímka rovnoběžná s asymptotou. Po dosazení v tom případě nedostaneme kvadratickou, ale lineární rovnici, takže diskriminant nemá smysl.
+\end{note}
+
+\begin{problem}
+  Rozhodněte, o jakou kuželosečku jde, a určete její základní parametry:
+  \begin{enumerate}[label=(\alph*)]
+    \item $4x^2 - 9y^2 = 36$,
+    \item $x^2 + 4y^2 - 4 = 0$,
+    \item $y^2 - 4y - 4x = 0$,
+    \item $x^2 + y^2 - 10x = 0$,
+    \item $4x^2 + y^2 + 8x - 6y + 9 = 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{x^2}{9} - \frac{y^2}{4} = 1$, hyperbola, $a = 3$, $b = 2$, $e = \sqrt{13}$, asymptoty $y = \pm\frac{2}{3}x$.
+    \item $\frac{x^2}{4} + y^2 = 1$, elipsa, $a = 2$, $b = 1$, $e = \sqrt{3}$, ohniska $[\pm\sqrt{3}, 0]$.
+    \item ${(y - 2)}^2 = 4x + 4 = 4(x + 1)$, parabola, $V = [-1, 2]$, $p = 2$, otevřená doprava, $F = [0, 2]$, řídicí přímka $x = -2$.
+    \item ${(x - 5)}^2 + y^2 = 25$, kružnice se středem $[5, 0]$ a poloměrem $5$.
+    \item $4{(x + 1)}^2 - 4 + {(y - 3)}^2 - 9 + 9 = 0$, tedy $\frac{{(x + 1)}^2}{1} + \frac{{(y - 3)}^2}{4} = 1$. Elipsa se středem $[-1, 3]$, $a = 2$ (ve směru osy $y$), $b = 1$.
+  \end{enumerate}
+\end{solution}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete průsečíky přímky $x - 2y + 2 = 0$ s elipsou $x^2 + 4y^2 = 20$.
+    \item Pro která $q$ je přímka $y = 2x + q$ tečnou paraboly $y^2 = 8x$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $x = 2y - 2$, dosazením ${(2y - 2)}^2 + 4y^2 = 20$, $8y^2 - 8y - 16 = 0$, $y^2 - y - 2 = 0$, $y\in\{2, -1\}$. Průsečíky $[2, 2]$ a $[-4, -1]$.
+    \item ${(2x + q)}^2 = 8x$, tedy $4x^2 + (4q - 8)x + q^2 = 0$. $D = {(4q - 8)}^2 - 16q^2 = -64q + 64 = 0$, tedy $q = 1$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Hypatia}
+
+Apollóniovo dílo o kuželosečkách se nám dochovalo i díky komentářům, které k němu ve 4. a 5. století psala Hypatia z Alexandrie. Byla to jedna z prvních žen v dějinách matematiky, o kterých víme. Vedla v Alexandrii novoplatónskou filozofickou školu, učila matematiku a astronomii a byla tak uznávaná, že za ní přijížděli studenti z celého Středomoří. Radili se s ní i městští úředníci.
+
+To se jí stalo osudným. V roce 415 se Alexandrie zmítala v mocenském sporu mezi římským prefektem Orestem a biskupem Kyrillem. Hypatia byla Orestovou přítelkyní a rádkyní a mezi Kyrillovými stoupenci se rozšířila pověst, že je to právě ona, kdo brání smíru, a že je čarodějnice. Dav fanatiků ji podle dobových zpráv vytáhl z vozu, odvlekl do kostela, svlékl ji a zaživa ji rozdrásal střepy z hliněných nádob. Její ostatky pak spálili.
+
+Dílo Hypatie se nedochovalo celé. Víme, že psala komentáře k Apollóniovým \textit{Kuželosečkám}, k Diofantově \textit{Aritmetice} a k Ptolemaiovým astronomickým tabulkám. Pro mnoho historiků její smrt symbolizuje konec antické vědy. Další ženu, která by se do dějin matematiky zapsala podobně výrazně, známe až o více než tisíc let později.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co jsou kuželosečky a jak vznikají řezem kužele?
+    \item Definujte kružnici. Napište její středovou a obecnou rovnici. Jak z obecné rovnice určíte střed a poloměr?
+    \item Jak zjistíte vzájemnou polohu přímky a kružnice? Jak vypadá rovnice tečny?
+    \item Definujte elipsu. Jaký je vztah mezi $a$, $b$ a $e$? Napište středovou rovnici.
+    \item Definujte hyperbolu. Co jsou asymptoty a jak je najdete?
+    \item Definujte parabolu. Odvoďte její vrcholovou rovnici. Jak souvisí s grafem kvadratické funkce?
+    \item Jak z obecné rovnice poznáte, o jakou kuželosečku jde?
+    \item Kdy může mít přímka s kuželosečkou jediný společný bod, a přesto nebýt tečnou?
+    \item Uveďte příklady kuželoseček v praxi.
+  \end{enumerate}
+\end{problem}
