@@ -1,0 +1,285 @@
+\label{kap:analyticka}
+\mathquote{Each problem that I solved became a rule which served afterwards to solve other problems.}{René Descartes}
+
+Analytická geometrie je místo, kde se setkává geometrie s algebrou. Body popíšeme čísly (souřadnicemi), přímky a kružnice rovnicemi a geometrické úlohy pak řešíme počítáním. Místo kružítka a pravítka používáme soustavy rovnic z kapitol~\ref{kap:rovnice} a~\ref{kap:kvadraticke}. Tahle myšlenka je tak silná, že na ní dnes stojí počítačová grafika, navigace i fyzika. Váš telefon totiž neumí rýsovat. Umí jen počítat.
+
+\section{Soustava souřadnic}
+
+\begin{definitionbox}
+  \textbf{Kartézská soustava souřadnic} v rovině je tvořena dvěma navzájem kolmými číselnými osami $x$ a $y$ se společným počátkem $O$ a stejnou jednotkou. Každému bodu $A$ roviny odpovídá právě jedna uspořádaná dvojice $[a_1, a_2]$ jeho \textbf{souřadnic}. Rovina tak odpovídá kartézskému součinu $\mathbb{R}\times\mathbb{R}$ z kapitoly 2.
+
+  \vspace{0.2cm}
+
+  \textbf{Vzdálenost bodů} $A = [a_1, a_2]$ a $B = [b_1, b_2]$:
+  \begin{equation*}
+    |AB| = \sqrt{{(b_1 - a_1)}^2 + {(b_2 - a_2)}^2}.
+  \end{equation*}
+  \textbf{Střed úsečky} $AB$:
+  \begin{equation*}
+    S_{AB} = \left[\frac{a_1 + b_1}{2}, \frac{a_2 + b_2}{2}\right].
+  \end{equation*}
+\end{definitionbox}
+
+Vzorec pro vzdálenost je jen Pythagorova věta. Úsečka $AB$ je přeponou pravoúhlého trojúhelníku, jehož odvěsny jsou rovnoběžné s osami a mají délky $|b_1 - a_1|$ a $|b_2 - a_2|$.
+
+\begin{example}
+  Pro $A = [1, 2]$ a $B = [4, 6]$ je $|AB| = \sqrt{9 + 16} = 5$ a $S_{AB} = \left[\frac{5}{2}, 4\right]$.
+\end{example}
+
+\section{Vektory}
+
+\begin{definitionbox}
+  \textbf{Vektor} $\vec{u} = \overrightarrow{AB}$ je určen orientovanou úsečkou s počátečním bodem $A$ a koncovým bodem $B$. Dvě orientované úsečky určují stejný vektor, pokud mají stejnou délku, jsou rovnoběžné a stejně orientované. Vektor je tedy `posunutí', nezáleží na tom, odkud ho kreslíme.
+
+  \vspace{0.2cm}
+
+  \textbf{Souřadnice vektoru} $\overrightarrow{AB}$ jsou
+  \begin{equation*}
+    \vec{u} = B - A = (b_1 - a_1, b_2 - a_2).
+  \end{equation*}
+  \textbf{Velikost vektoru} $\vec{u} = (u_1, u_2)$ je $|\vec{u}| = \sqrt{u_1^2 + u_2^2}$. \textbf{Nulový vektor} $\vec{o} = (0, 0)$ má velikost $0$. \textbf{Jednotkový vektor} má velikost $1$.
+\end{definitionbox}
+
+Souřadnice bodů píšeme do hranatých závorek, souřadnice vektorů do kulatých. Je to drobnost, ale zkoušející si na ní rádi zakládají, takže si na ni zvykněte.
+
+\begin{definitionbox}
+  \textbf{Operace s vektory}: Pro $\vec{u} = (u_1, u_2)$, $\vec{v} = (v_1, v_2)$ a $k\in\mathbb{R}$:
+  \begin{itemize}
+    \item \textbf{součet}: $\vec{u} + \vec{v} = (u_1 + v_1, u_2 + v_2)$. Geometricky: vektor $\vec{v}$ připojíme na konec $\vec{u}$ (nebo úhlopříčka rovnoběžníku),
+    \item \textbf{násobek}: $k\vec{u} = (ku_1, ku_2)$. Geometricky: prodloužení $|k|$-krát, pro $k < 0$ i s otočením směru,
+    \item \textbf{opačný vektor}: $-\vec{u} = (-u_1, -u_2)$.
+  \end{itemize}
+  Vektory $\vec{u}, \vec{v}$ jsou \textbf{kolineární} (lineárně závislé), pokud je jeden násobkem druhého. Nenulové vektory $(u_1, u_2)$ a $(v_1, v_2)$ jsou kolineární, právě když
+  \begin{equation*}
+    \begin{vmatrix} u_1 & v_1\\ u_2 & v_2 \end{vmatrix} = u_1v_2 - u_2v_1 = 0.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9, >=stealth]
+    \coordinate (O) at (0,0); \coordinate (U) at (3,1); \coordinate (V) at (1,2);
+    \draw[->, thick, colorofwisdom] (O) -- (U) node[midway, below right] {\small $\vec{u}$};
+    \draw[->, thick] (O) -- (V) node[midway, left] {\small $\vec{v}$};
+    \draw[->, dashed, colorofwisdom] (V) -- ($(U)+(V)$);
+    \draw[->, dashed] (U) -- ($(U)+(V)$);
+    \draw[->, very thick] (O) -- ($(U)+(V)$) node[above right] {\small $\vec{u} + \vec{v}$};
+  \end{tikzpicture}
+\end{center}
+
+Ano, ten determinant je ten samý jako v kapitole~\ref{kap:rovnice}. Tam jsme si řekli, že jeho absolutní hodnota je obsah rovnoběžníku, který vektory vytvoří. Kolineární vektory vytvoří `rovnoběžník' s nulovým obsahem, a proto je determinant nulový.
+
+\subsection{Skalární součin}
+
+\begin{definitionbox}
+  \textbf{Skalární součin} vektorů $\vec{u} = (u_1, u_2)$ a $\vec{v} = (v_1, v_2)$ je \textbf{číslo}
+  \begin{equation*}
+    \vec{u}\cdot\vec{v} = u_1v_1 + u_2v_2.
+  \end{equation*}
+  \textbf{Věta}: Pro úhel $\varphi\in[0^\circ, 180^\circ]$ mezi nenulovými vektory platí
+  \begin{equation*}
+    \vec{u}\cdot\vec{v} = |\vec{u}|\cdot|\vec{v}|\cdot\cos\varphi,\qquad\text{tedy}\qquad\cos\varphi = \frac{\vec{u}\cdot\vec{v}}{|\vec{u}|\cdot|\vec{v}|}.
+  \end{equation*}
+  Speciálně: nenulové vektory jsou \textbf{kolmé}, právě když $\vec{u}\cdot\vec{v} = 0$. Dále $\vec{u}\cdot\vec{u} = |\vec{u}|^2$.
+\end{definitionbox}
+
+\begin{proof}
+  Vektory $\vec{u}$, $\vec{v}$ umístíme do společného počátku. Třetí strana trojúhelníku, který vytvoří, je vektor $\vec{u} - \vec{v}$. Podle kosinové věty z kapitoly~\ref{kap:goniometrie}:
+  \begin{equation*}
+    |\vec{u} - \vec{v}|^2 = |\vec{u}|^2 + |\vec{v}|^2 - 2|\vec{u}||\vec{v}|\cos\varphi.
+  \end{equation*}
+  Zároveň v souřadnicích:
+  \begin{equation*}
+    |\vec{u} - \vec{v}|^2 = {(u_1 - v_1)}^2 + {(u_2 - v_2)}^2 = |\vec{u}|^2 + |\vec{v}|^2 - 2(u_1v_1 + u_2v_2).
+  \end{equation*}
+  Porovnáním dostaneme $u_1v_1 + u_2v_2 = |\vec{u}||\vec{v}|\cos\varphi$.
+\end{proof}
+
+\begin{example}
+  Vektory $\vec{u} = (3, 4)$ a $\vec{v} = (4, -3)$ mají skalární součin $12 - 12 = 0$, jsou tedy kolmé. Mimochodem, vektor kolmý k $(a, b)$ dostaneme vždy tak, že souřadnice prohodíme a jedné změníme znaménko: $(-b, a)$ nebo $(b, -a)$.
+
+  Úhel mezi $\vec{u} = (1, 2)$ a $\vec{v} = (3, 1)$: $\cos\varphi = \frac{3 + 2}{\sqrt{5}\cdot\sqrt{10}} = \frac{5}{\sqrt{50}} = \frac{\sqrt{2}}{2}$, tedy $\varphi = 45^\circ$.
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Pro $A = [-1, 3]$, $B = [2, -1]$ určete $\overrightarrow{AB}$, $|AB|$ a střed úsečky $AB$.
+    \item Pro která $k$ jsou vektory $(2, k)$ a $(k, 8)$ kolineární? Pro které $k$ je $(2, k)$ kolmý na $(3, -6)$?
+    \item Určete vnitřní úhly trojúhelníku $A = [0, 0]$, $B = [4, 0]$, $C = [1, 3]$.
+    \item Doplňte bod $D$ tak, aby $ABCD$ byl rovnoběžník, kde $A = [1, 1]$, $B = [5, 2]$, $C = [6, 5]$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\overrightarrow{AB} = (3, -4)$, $|AB| = 5$, $S = \left[\frac{1}{2}, 1\right]$.
+    \item $2\cdot 8 - k\cdot k = 0$, $k = \pm 4$. Kolmost: $6 - 6k = 0$, $k = 1$.
+    \item U $A$: $\overrightarrow{AB} = (4, 0)$, $\overrightarrow{AC} = (1, 3)$, $\cos\alpha = \frac{4}{4\sqrt{10}} = \frac{1}{\sqrt{10}}$, $\alpha\approx 71{,}6^\circ$. U $B$: $\overrightarrow{BA} = (-4, 0)$, $\overrightarrow{BC} = (-3, 3)$, $\cos\beta = \frac{12}{4\cdot 3\sqrt{2}} = \frac{\sqrt{2}}{2}$, $\beta = 45^\circ$. Pak $\gamma\approx 63{,}4^\circ$.
+    \item $D = A + \overrightarrow{BC} = [1, 1] + (1, 3) = [2, 4]$.
+  \end{enumerate}
+\end{solution}
+
+\section{Přímka v rovině}
+
+Přímku můžeme popsat třemi způsoby. Každý se hodí na něco jiného, a proto je potřeba umět mezi nimi přecházet.
+
+\begin{definitionbox}
+  \textbf{Parametrické vyjádření}: Přímka procházející bodem $A$ se \textbf{směrovým vektorem} $\vec{u}\neq\vec{o}$ je množina bodů
+  \begin{equation*}
+    X = A + t\vec{u},\quad t\in\mathbb{R},\qquad\text{tedy}\qquad x = a_1 + tu_1,\quad y = a_2 + tu_2.
+  \end{equation*}
+
+  \textbf{Obecná rovnice}: Přímka s \textbf{normálovým vektorem} $\vec{n} = (a, b)\neq\vec{o}$ (kolmým na přímku) má rovnici
+  \begin{equation*}
+    ax + by + c = 0.
+  \end{equation*}
+
+  \textbf{Směrnicový tvar}: Pokud přímka není rovnoběžná s osou $y$, lze ji zapsat jako
+  \begin{equation*}
+    y = kx + q,
+  \end{equation*}
+  kde $k = \tg\varphi$ je \textbf{směrnice} ($\varphi$ je úhel s kladnou poloosou $x$) a $q$ je úsek na ose $y$. To je přesně graf lineární funkce z kapitoly~\ref{kap:elementarni}.
+\end{definitionbox}
+
+Parametrické vyjádření si můžete představit jako pohyb. V čase $t = 0$ jste v bodě $A$ a každou sekundu se posunete o vektor $\vec{u}$. Za všechny časy (i záporné, tedy i v minulosti) opíšete celou přímku. Obecná rovnice naopak přímku nepopisuje jako cestu, ale jako podmínku: bod leží na přímce, právě když splňuje rovnici.
+
+\begin{example}
+  Najděme všechna vyjádření přímky $AB$, kde $A = [1, 2]$ a $B = [4, 6]$.
+
+  Směrový vektor $\vec{u} = (3, 4)$. Parametricky: $x = 1 + 3t$, $y = 2 + 4t$.
+
+  Normálový vektor je kolmý na $\vec{u}$: $\vec{n} = (4, -3)$. Obecná rovnice $4x - 3y + c = 0$, dosazením bodu $A$: $4 - 6 + c = 0$, tedy $c = 2$ a $4x - 3y + 2 = 0$.
+
+  Směrnicový tvar: $y = \frac{4}{3}x + \frac{2}{3}$.
+
+  Z parametrického vyjádření dostaneme obecnou rovnici také tak, že z obou rovnic vyloučíme $t$: $t = \frac{x - 1}{3} = \frac{y - 2}{4}$, tedy $4x - 4 = 3y - 6$ a $4x - 3y + 2 = 0$.
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Vzájemná poloha dvou přímek}: Pro přímky $p: a_1x + b_1y + c_1 = 0$ a $q: a_2x + b_2y + c_2 = 0$:
+  \begin{itemize}
+    \item jsou \textbf{různoběžné}, pokud normálové vektory nejsou kolineární. Průsečík najdeme vyřešením soustavy dvou rovnic,
+    \item jsou \textbf{rovnoběžné různé}, pokud jsou normálové vektory kolineární, ale rovnice nejsou násobkem jedna druhé,
+    \item jsou \textbf{totožné}, pokud je jedna rovnice násobkem druhé.
+  \end{itemize}
+  To je přesně rozbor počtu řešení soustavy dvou lineárních rovnic z kapitoly~\ref{kap:rovnice}. Tam jsme řekli, že soustava popisuje dvě přímky, a teď to víme jistě.
+
+  \vspace{0.2cm}
+
+  \textbf{Odchylka přímek} $\varphi\in[0^\circ, 90^\circ]$:
+  \begin{equation*}
+    \cos\varphi = \frac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1|\cdot|\vec{n}_2|}\qquad\text{(nebo totéž se směrovými vektory)}.
+  \end{equation*}
+  Absolutní hodnota zajistí, že dostaneme ostrý úhel. Přímky v směrnicovém tvaru jsou rovnoběžné, právě když $k_1 = k_2$, a kolmé, právě když $k_1\cdot k_2 = -1$.
+
+  \vspace{0.2cm}
+
+  \textbf{Vzdálenost bodu} $M = [m_1, m_2]$ od přímky $ax + by + c = 0$:
+  \begin{equation*}
+    d = \frac{|am_1 + bm_2 + c|}{\sqrt{a^2 + b^2}}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}[(vzorce pro vzdálenost)]
+  Nechť $P = [p_1, p_2]$ je libovolný bod přímky, tedy $ap_1 + bp_2 = -c$. Vzdálenost bodu $M$ od přímky je délka průmětu vektoru $\overrightarrow{PM}$ do směru kolmého na přímku, tedy do směru normálového vektoru $\vec{n}$. Z definice skalárního součinu je tato délka
+  \begin{equation*}
+    d = \frac{|\overrightarrow{PM}\cdot\vec{n}|}{|\vec{n}|} = \frac{|a(m_1 - p_1) + b(m_2 - p_2)|}{\sqrt{a^2 + b^2}} = \frac{|am_1 + bm_2 - (ap_1 + bp_2)|}{\sqrt{a^2 + b^2}} = \frac{|am_1 + bm_2 + c|}{\sqrt{a^2 + b^2}}.
+  \end{equation*}
+\end{proof}
+
+\begin{proof}[(podmínky kolmosti $k_1k_2 = -1$)]
+  Přímka $y = kx + q$ má směrový vektor $(1, k)$. Dvě přímky jsou kolmé, právě když jsou kolmé jejich směrové vektory, tedy $(1, k_1)\cdot(1, k_2) = 1 + k_1k_2 = 0$.
+\end{proof}
+
+\begin{example}
+  \begin{itemize}
+    \item Průsečík přímek $x + y - 3 = 0$ a $2x - y = 0$: sečtením $3x = 3$, tedy $x = 1$ a $y = 2$. Průsečík je $[1, 2]$.
+    \item Vzdálenost bodu $M = [3, 1]$ od přímky $4x - 3y + 2 = 0$ je $\frac{|12 - 3 + 2|}{\sqrt{16 + 9}} = \frac{11}{5}$.
+    \item Odchylka přímek $x - y = 0$ a $y = 0$: $\vec{n}_1 = (1, -1)$, $\vec{n}_2 = (0, 1)$, $\cos\varphi = \frac{1}{\sqrt{2}}$, $\varphi = 45^\circ$.
+  \end{itemize}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Polorovina}: Přímka $ax + by + c = 0$ rozdělí rovinu na dvě poloroviny. Body, pro které $ax + by + c > 0$, leží v jedné z nich, body s $ax + by + c < 0$ ve druhé. Normálový vektor $\vec{n} = (a, b)$ míří do té, kde je výraz kladný.
+\end{definitionbox}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Napište obecnou rovnici přímky, která prochází bodem $P = [2, -1]$ a je (i) rovnoběžná, (ii) kolmá k přímce $3x + 2y - 5 = 0$.
+    \item Určete vzájemnou polohu přímek $p: x = 1 + 2t$, $y = 3 - t$ a $q: x + 2y - 7 = 0$.
+    \item Určete vzdálenost rovnoběžek $3x - 4y + 1 = 0$ a $3x - 4y - 9 = 0$.
+    \item Určete odchylku přímek $y = 2x + 1$ a $y = -3x + 4$.
+    \item Leží body $[0, 0]$ a $[3, 3]$ ve stejné polorovině vzhledem k přímce $x + y - 4 = 0$?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item (i) $3x + 2y + c = 0$, $6 - 2 + c = 0$, tedy $3x + 2y - 4 = 0$. (ii) Normálový vektor kolmice je směrovým vektorem původní přímky, $(2, -3)$: $2x - 3y + c = 0$, $4 + 3 + c = 0$, tedy $2x - 3y - 7 = 0$.
+    \item Směrový vektor $p$ je $(2, -1)$, normálový tedy $(1, 2)$, stejný jako u $q$. Bod $[1, 3]$ přímky $p$ dosadíme do $q$: $1 + 6 - 7 = 0$. Leží na ní, takže přímky jsou \textbf{totožné}.
+    \item Vezmeme bod první přímky, například $[1, 1]$ ($3 - 4 + 1 = 0$), a spočítáme jeho vzdálenost od druhé: $\frac{|3 - 4 - 9|}{5} = 2$. Obecně pro rovnoběžky $ax + by + c_1 = 0$ a $ax + by + c_2 = 0$ je vzdálenost $\frac{|c_1 - c_2|}{\sqrt{a^2 + b^2}}$.
+    \item Směrové vektory $(1, 2)$ a $(1, -3)$, $\cos\varphi = \frac{|1 - 6|}{\sqrt{5}\sqrt{10}} = \frac{5}{\sqrt{50}} = \frac{\sqrt{2}}{2}$, $\varphi = 45^\circ$.
+    \item Dosadíme: $0 + 0 - 4 = -4 < 0$ a $3 + 3 - 4 = 2 > 0$. Body leží v opačných polorovinách.
+  \end{enumerate}
+\end{solution}
+
+\section{Aplikace na trojúhelník}
+
+\begin{definitionbox}
+  Pro trojúhelník $ABC$ se souřadnicemi vrcholů:
+  \begin{itemize}
+    \item \textbf{těžiště}: $T = \left[\frac{a_1 + b_1 + c_1}{3}, \frac{a_2 + b_2 + c_2}{3}\right]$,
+    \item \textbf{obsah}: $S = \frac{1}{2}\left|\det\left(\overrightarrow{AB}, \overrightarrow{AC}\right)\right| = \frac{1}{2}|(b_1 - a_1)(c_2 - a_2) - (b_2 - a_2)(c_1 - a_1)|$.
+  \end{itemize}
+\end{definitionbox}
+
+Vzorec pro těžiště plyne z toho, že těžiště dělí těžnici v poměru $2:1$. Vzorec pro obsah z toho, že trojúhelník je polovina rovnoběžníku určeného vektory $\overrightarrow{AB}$ a $\overrightarrow{AC}$.
+
+\begin{example}
+  Trojúhelník $A = [0, 0]$, $B = [4, 0]$, $C = [1, 3]$ má těžiště $T = \left[\frac{5}{3}, 1\right]$ a obsah $S = \frac{1}{2}|4\cdot 3 - 0\cdot 1| = 6$. Kontrola: základna $AB$ má délku $4$ a výška z $C$ je $3$, tedy $S = \frac{4\cdot 3}{2} = 6$.
+
+  Rovnice výšky z vrcholu $C$: je kolmá na $AB$, takže její normálový vektor je $\overrightarrow{AB} = (4, 0)$, a rovnice je $4x + c = 0$, po dosazení $C$: $x = 1$. Rovnice výšky z $A$: normálový vektor je $\overrightarrow{BC} = (-3, 3)$, neboli $(1, -1)$, rovnice $x - y = 0$. Průsečík obou výšek je ortocentrum $V = [1, 1]$.
+\end{example}
+
+\begin{problem}
+  Je dán trojúhelník $A = [1, 1]$, $B = [7, 3]$, $C = [3, 7]$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Určete jeho těžiště a obsah.
+    \item Napište rovnici těžnice z vrcholu $C$.
+    \item Napište rovnici osy strany $AB$.
+    \item Rozhodněte, zda je trojúhelník rovnoramenný nebo pravoúhlý.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $T = \left[\frac{11}{3}, \frac{11}{3}\right]$. $\overrightarrow{AB} = (6, 2)$, $\overrightarrow{AC} = (2, 6)$, $S = \frac{1}{2}|36 - 4| = 16$.
+    \item Střed $AB$ je $[4, 2]$, směrový vektor těžnice $(1, -5)$, normálový $(5, 1)$: $5x + y + c = 0$, $20 + 2 + c = 0$, tedy $5x + y - 22 = 0$. (Kontrola: $C$ dává $15 + 7 - 22 = 0$.)
+    \item Osa prochází středem $[4, 2]$ a má normálový vektor $\overrightarrow{AB} = (6, 2)$, tedy $(3, 1)$: $3x + y - 14 = 0$.
+    \item $|AB| = |AC| = \sqrt{40}$, je rovnoramenný se základnou $BC$. Skalární součiny: $\overrightarrow{AB}\cdot\overrightarrow{AC} = 24\neq 0$, $\overrightarrow{BA}\cdot\overrightarrow{BC} = (-6)(-4) + (-2)(4) = 16\neq 0$, $\overrightarrow{CA}\cdot\overrightarrow{CB} = (-2)(4) + (-6)(-4) = 16\neq 0$. Pravoúhlý není.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Lebka filozofa}
+
+Souřadnice jsou pojmenované po Reném Descartovi (latinsky Cartesius), francouzském filozofovi a matematikovi, autorovi věty `Myslím, tedy jsem'. Podle legendy ho myšlenka souřadnic napadla, když jako nemocný ležel v posteli a pozoroval mouchu na stropě. Uvědomil si, že její polohu lze kdykoli popsat dvěma čísly: vzdáleností od dvou stěn. Descartes mimochodem celý život vstával pozdě, protože ráno v posteli prý myslel nejlépe. Čtenáři této knihy jistě chápou.
+
+Právě to se mu stalo osudným. V roce 1649 ho švédská královna Kristina pozvala do Stockholmu, aby ji učil filozofii. Královna ale trvala na tom, že lekce budou v pět hodin ráno, v mrazivém zámku a uprostřed švédské zimy. Descartes po několika měsících dostal zápal plic a v únoru 1650 zemřel. Někteří historici dnes tvrdí, že ho otrávil arzenem katolický kněz, který se bál, že by Descartovy názory odradily protestantskou královnu od přestupu ke katolictví. Kristina mimochodem o několik let později opravdu konvertovala a vzdala se trůnu.
+
+Tím ale Descartův příběh neskončil. Když po šestnácti letech převáželi jeho ostatky do Francie, hlava v rakvi chyběla. Lebka se pak víc než sto let potulovala Evropou, prodávala se a kupovala. Každý majitel na ni napsal své jméno a krátkou báseň, takže je dnes popsaná latinskými verši. Dnes ji najdete v Muzeu člověka v Paříži, zatímco zbytek těla leží v kostele Saint-Germain-des-Prés na druhém břehu Seiny. Zakladatel moderní filozofie, který tvrdil, že mysl a tělo jsou dvě oddělené věci, tak skončil přesně podle své vlastní teorie.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Jak se počítá vzdálenost dvou bodů a střed úsečky? Odkud se vzorec pro vzdálenost bere?
+    \item Co je vektor? Jak se určí jeho souřadnice a velikost? Jak se vektory sčítají a násobí číslem?
+    \item Kdy jsou dva vektory kolineární? Jak to souvisí s determinantem?
+    \item Definujte skalární součin. Dokažte vztah se kosinem úhlu. Kdy jsou vektory kolmé?
+    \item Jaké znáte způsoby vyjádření přímky v rovině? Co je směrový a normálový vektor? Jak se mezi vyjádřeními přechází?
+    \item Jak určíte vzájemnou polohu dvou přímek a jejich průsečík?
+    \item Jak se počítá odchylka dvou přímek a vzdálenost bodu od přímky? Odvoďte vzorec pro vzdálenost.
+    \item Kdy jsou dvě přímky ve směrnicovém tvaru rovnoběžné a kdy kolmé?
+    \item Jak spočítáte těžiště a obsah trojúhelníku ze souřadnic jeho vrcholů?
+  \end{enumerate}
+\end{problem}
