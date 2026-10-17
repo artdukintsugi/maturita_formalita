@@ -1,0 +1,539 @@
+\label{kap:goniometrie}
+\mathquote{Mathematics compares the most diverse phenomena and discovers the secret analogies that unite them.}{Joseph Fourier}
+
+Goniometrie je část matematiky, která se zabývá úhly a funkcemi, které na nich závisí. Začíná nevinně u pravoúhlého trojúhelníku, ale končí u vln, kmitání, střídavého proudu, hudby a komprese obrázků v telefonu. Goniometrické funkce jsou totiž přesně ty funkce, které popisují všechno, co se opakuje. A to je ve fyzice skoro všechno.
+
+\begin{note}
+  Slovo \textit{sinus} má mimochodem jednu z nejzvláštnějších etymologií v matematice. Indičtí matematici mu říkali \textit{jyā}, tedy `tětiva luku'. Arabové slovo převzali jako \textit{jība}, ale v arabském písmu se nepíší samohlásky, takže pozdější překladatelé ho přečetli jako \textit{jaib}, což znamená `záhyb' nebo `ňadra'. Do latiny ho pak Gerard z Cremony v 12. století věrně přeložil jako \textit{sinus}, tedy také `záhyb, ohyb, ňadra'. Takže když počítáte sinus, počítáte vlastně překlep starý přes osm set let.
+\end{note}
+
+\section{Úhly a jejich míra}
+
+\begin{definitionbox}
+  \textbf{Stupňová míra}: Plný úhel má $360^\circ$, $1^\circ = 60'$ (minut), $1' = 60''$ (vteřin).
+
+  \textbf{Oblouková míra}: Velikost úhlu v \textbf{radiánech} je délka oblouku, který úhel vytne na jednotkové kružnici (kružnici o poloměru $1$) se středem ve vrcholu úhlu. Plný úhel má tedy $2\pi$ radiánů (obvod jednotkové kružnice).
+
+  \textbf{Převod}:
+  \begin{equation*}
+    180^\circ = \pi\ \text{rad},\qquad\alpha_{\text{rad}} = \frac{\pi}{180}\cdot\alpha^\circ,\qquad\alpha^\circ = \frac{180}{\pi}\cdot\alpha_{\text{rad}}.
+  \end{equation*}
+\end{definitionbox}
+
+Proč radiány? Stupně jsou úplně libovolné, číslo $360$ si vymysleli Babyloňané, protože se dobře dělí a je blízko počtu dní v roce. Radiány jsou naopak `přirozené'. Vzorce v analýze (třeba pro derivaci sinu) fungují hezky jen v radiánech. Pokud v radiánech uvidíte úhel bez jednotky, je to v pořádku, radián se obvykle nepíše.
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    stupně & $0^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ & $270^\circ$ & $360^\circ$ \\
+    \hline
+    radiány & $0$ & $\frac{\pi}{6}$ & $\frac{\pi}{4}$ & $\frac{\pi}{3}$ & $\frac{\pi}{2}$ & $\pi$ & $\frac{3\pi}{2}$ & $2\pi$ \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Orientovaný úhel}: Úhel měříme od kladné poloosy $x$. Proti směru hodinových ručiček je úhel \textbf{kladný}, po směru \textbf{záporný}. Úhly, které se liší o celistvý násobek $2\pi$, mají stejné rameno. Každý orientovaný úhel lze zapsat jako $x = x_0 + 2k\pi$, kde $x_0\in[0, 2\pi)$ je \textbf{základní velikost} a $k\in\mathbb{Z}$.
+\end{definitionbox}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Převeďte na radiány: $15^\circ$, $120^\circ$, $135^\circ$, $210^\circ$, $-300^\circ$.
+    \item Převeďte na stupně: $\frac{5\pi}{6}$, $\frac{7\pi}{4}$, $1$ rad.
+    \item Určete základní velikost úhlů $\frac{17\pi}{3}$ a $-\frac{5\pi}{4}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\frac{\pi}{12}$, $\frac{2\pi}{3}$, $\frac{3\pi}{4}$, $\frac{7\pi}{6}$, $-\frac{5\pi}{3}$.
+    \item $150^\circ$, $315^\circ$, $\frac{180^\circ}{\pi}\approx 57{,}3^\circ$.
+    \item $\frac{17\pi}{3} = \frac{5\pi}{3} + 4\pi$, základní velikost $\frac{5\pi}{3}$. $-\frac{5\pi}{4} + 2\pi = \frac{3\pi}{4}$.
+  \end{enumerate}
+\end{solution}
+
+\section{Goniometrické funkce v pravoúhlém trojúhelníku}
+
+\begin{definitionbox}
+  V pravoúhlém trojúhelníku s ostrým úhlem $\alpha$, odvěsnou $a$ \textbf{protilehlou} k úhlu $\alpha$, odvěsnou $b$ \textbf{přilehlou} a přeponou $c$ definujeme
+  \begin{equation*}
+    \sin\alpha = \frac{a}{c},\qquad\cos\alpha = \frac{b}{c},\qquad\tg\alpha = \frac{a}{b},\qquad\cotg\alpha = \frac{b}{a}.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.1]
+    \draw[thick] (0,0) -- (4,0) -- (4,2.5) -- cycle;
+    \draw (3.75,0) -- (3.75,0.25) -- (4,0.25);
+    \draw[colorofwisdom, thick] (0.8,0) arc (0:32:0.8);
+    \node[colorofwisdom] at (1.05,0.25) {$\alpha$};
+    \node[below] at (2,0) {$b$ (přilehlá)};
+    \node[right] at (4,1.25) {$a$ (protilehlá)};
+    \node[above left] at (2,1.25) {$c$ (přepona)};
+  \end{tikzpicture}
+\end{center}
+
+Proč tato definice dává smysl? Všechny pravoúhlé trojúhelníky se stejným úhlem $\alpha$ jsou si podobné, takže poměry jejich stran jsou stejné. Hodnota $\sin\alpha$ tedy závisí jen na úhlu, ne na velikosti trojúhelníku. Podobnosti se podrobně věnuje kapitola o planimetrii.
+
+\begin{example}\label{ex:tabulka-hodnot}
+  Odvoďme hodnoty pro $30^\circ$, $45^\circ$ a $60^\circ$.
+
+  \textbf{$45^\circ$}: Vezmeme rovnoramenný pravoúhlý trojúhelník s odvěsnami $1$. Přepona je podle Pythagorovy věty $\sqrt{2}$, takže $\sin 45^\circ = \cos 45^\circ = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$ a $\tg 45^\circ = 1$.
+
+  \textbf{$30^\circ$ a $60^\circ$}: Vezmeme rovnostranný trojúhelník o straně $2$ a rozpůlíme ho výškou. Dostaneme pravoúhlý trojúhelník s přeponou $2$, kratší odvěsnou $1$ a delší odvěsnou $\sqrt{4 - 1} = \sqrt{3}$. Úhly jsou $30^\circ$ a $60^\circ$. Tedy
+  \begin{equation*}
+    \sin 30^\circ = \frac{1}{2},\quad\cos 30^\circ = \frac{\sqrt{3}}{2},\quad\sin 60^\circ = \frac{\sqrt{3}}{2},\quad\cos 60^\circ = \frac{1}{2}.
+  \end{equation*}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Tabulka významných hodnot}:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{|c|c|c|c|c|c|}
+      \hline
+      $x$ & $0$ & $\frac{\pi}{6}$ & $\frac{\pi}{4}$ & $\frac{\pi}{3}$ & $\frac{\pi}{2}$ \\
+      \hline
+      $\sin x$ & $0$ & $\frac{1}{2}$ & $\frac{\sqrt{2}}{2}$ & $\frac{\sqrt{3}}{2}$ & $1$ \\
+      $\cos x$ & $1$ & $\frac{\sqrt{3}}{2}$ & $\frac{\sqrt{2}}{2}$ & $\frac{1}{2}$ & $0$ \\
+      $\tg x$ & $0$ & $\frac{\sqrt{3}}{3}$ & $1$ & $\sqrt{3}$ & --- \\
+      $\cotg x$ & --- & $\sqrt{3}$ & $1$ & $\frac{\sqrt{3}}{3}$ & $0$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  Mnemotechnická pomůcka pro sinus: $\frac{\sqrt{0}}{2}, \frac{\sqrt{1}}{2}, \frac{\sqrt{2}}{2}, \frac{\sqrt{3}}{2}, \frac{\sqrt{4}}{2}$. Kosinus je to samé pozpátku.
+\end{definitionbox}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Žebřík dlouhý $5\ \si{m}$ je opřený o zeď a svírá se zemí úhel $60^\circ$. Jak vysoko na zdi končí?
+    \item Ze vzdálenosti $50\ \si{m}$ od paty věže vidíme její vrchol pod úhlem $35^\circ$. Jak je věž vysoká?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $h = 5\sin 60^\circ = \frac{5\sqrt{3}}{2}\approx 4{,}33\ \si{m}$.
+    \item $v = 50\tg 35^\circ\approx 50\cdot 0{,}700\approx 35\ \si{m}$ (plus výška očí pozorovatele, pokud nekouká ze země).
+  \end{enumerate}
+\end{solution}
+
+\section{Goniometrické funkce obecného úhlu}
+
+V trojúhelníku má smysl jen úhel mezi $0$ a $\frac{\pi}{2}$. Pro obecný úhel použijeme jednotkovou kružnici.
+
+\begin{definitionbox}
+  Nechť $x\in\mathbb{R}$. Na jednotkové kružnici se středem v počátku najdeme bod $M$, do kterého se dostaneme z bodu $[1, 0]$ otočením o orientovaný úhel $x$. Pak definujeme
+  \begin{equation*}
+    \cos x = \text{$x$-ová souřadnice bodu } M,\qquad\sin x = \text{$y$-ová souřadnice bodu } M,
+  \end{equation*}
+  tedy $M = [\cos x, \sin x]$. Dále
+  \begin{equation*}
+    \tg x = \frac{\sin x}{\cos x}\quad(\cos x\neq 0),\qquad\cotg x = \frac{\cos x}{\sin x}\quad(\sin x\neq 0).
+  \end{equation*}
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[scale=2.2]
+    \draw[->] (-1.3,0) -- (1.4,0) node[right] {\small $x$};
+    \draw[->] (0,-1.2) -- (0,1.3) node[above] {\small $y$};
+    \draw[thick] (0,0) circle (1);
+    \coordinate (M) at (40:1);
+    \draw[thick, colorofwisdom] (0,0) -- (M);
+    \filldraw[colorofwisdom] (M) circle (0.8pt) node[above right] {$M = [\cos x, \sin x]$};
+    \draw[dashed] (M) -- ({cos(40)},0);
+    \draw[dashed] (M) -- (0,{sin(40)});
+    \draw[line width=2pt, colorofwisdom!60] (0,0) -- ({cos(40)},0);
+    \draw[line width=2pt, black!50] ({cos(40)},0) -- (M);
+    \node[below] at ({cos(40)/2},0) {\small $\cos x$};
+    \node[right] at ({cos(40)},{sin(40)/2}) {\small $\sin x$};
+    \draw[->, colorofwisdom] (0.3,0) arc (0:40:0.3);
+    \node[colorofwisdom] at (20:0.42) {\small $x$};
+    \node[below right] at (1,0) {\small $1$};
+    \node[above left] at (0,1) {\small $1$};
+    \node at (0.75,0.95) {\small I};
+    \node at (-0.75,0.95) {\small II};
+    \node at (-0.75,-0.95) {\small III};
+    \node at (0.75,-0.95) {\small IV};
+  \end{tikzpicture}
+\end{center}
+
+Pro ostré úhly se nová definice shoduje se starou. Bod $M$, jeho průmět na osu $x$ a počátek tvoří pravoúhlý trojúhelník s přeponou $1$, takže $\sin x = \frac{\text{protilehlá}}{1}$.
+
+\begin{definitionbox}
+  \textbf{Znaménka v kvadrantech}:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      kvadrant & I & II & III & IV \\
+      \hline
+      $\sin x$ & $+$ & $+$ & $-$ & $-$ \\
+      $\cos x$ & $+$ & $-$ & $-$ & $+$ \\
+      $\tg x$, $\cotg x$ & $+$ & $-$ & $+$ & $-$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \textbf{Převod do prvního kvadrantu} (pro $x\in\left(0, \frac{\pi}{2}\right)$):
+  \begin{align*}
+    \sin(\pi - x) &= \sin x, & \cos(\pi - x) &= -\cos x,\\
+    \sin(\pi + x) &= -\sin x, & \cos(\pi + x) &= -\cos x,\\
+    \sin(2\pi - x) &= -\sin x, & \cos(2\pi - x) &= \cos x.
+  \end{align*}
+  Všechny plynou ze souměrnosti jednotkové kružnice.
+\end{definitionbox}
+
+\begin{example}
+  Spočítejme:
+  \begin{align*}
+    \sin\frac{5\pi}{6} &= \sin\left(\pi - \frac{\pi}{6}\right) = \sin\frac{\pi}{6} = \frac{1}{2},\\
+    \cos\frac{4\pi}{3} &= \cos\left(\pi + \frac{\pi}{3}\right) = -\cos\frac{\pi}{3} = -\frac{1}{2},\\
+    \tg\frac{7\pi}{4} &= \frac{\sin\frac{7\pi}{4}}{\cos\frac{7\pi}{4}} = \frac{-\frac{\sqrt{2}}{2}}{\frac{\sqrt{2}}{2}} = -1,\\
+    \sin\frac{25\pi}{6} &= \sin\left(\frac{\pi}{6} + 4\pi\right) = \sin\frac{\pi}{6} = \frac{1}{2}.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Spočítejte bez kalkulačky: $\cos\frac{5\pi}{6}$, $\sin\frac{7\pi}{6}$, $\tg\frac{2\pi}{3}$, $\cos\left(-\frac{\pi}{4}\right)$, $\sin\frac{3\pi}{2}$, $\cos 3\pi$, $\cotg\frac{5\pi}{3}$.
+\end{problem}
+
+\begin{solution}
+  $-\frac{\sqrt{3}}{2}$, $-\frac{1}{2}$, $-\sqrt{3}$, $\frac{\sqrt{2}}{2}$, $-1$, $-1$, $-\frac{\sqrt{3}}{3}$.
+\end{solution}
+
+\section{Grafy a vlastnosti goniometrických funkcí}
+
+Pokud bod $M$ obíhá kolem jednotkové kružnice a my zapisujeme jeho výšku v závislosti na úhlu, dostaneme graf sinu. Vodorovná souřadnice dá graf kosinu.
+
+\begin{center}
+  \begin{tikzpicture}[xscale=0.85, yscale=1.2]
+    \draw[->] (-3.6,0) -- (7.2,0) node[right] {\small $x$};
+    \draw[->] (0,-1.4) -- (0,1.5) node[above] {\small $y$};
+    \draw[dashed, gray] (-3.5,1) -- (7,1);
+    \draw[dashed, gray] (-3.5,-1) -- (7,-1);
+    \node[left] at (0,1) {\tiny $1$};
+    \node[left] at (0,-1) {\tiny $-1$};
+    \foreach \t/\l in {-3.1416/{-\pi}, -1.5708/{-\frac{\pi}{2}}, 1.5708/{\frac{\pi}{2}}, 3.1416/{\pi}, 4.7124/{\frac{3\pi}{2}}, 6.2832/{2\pi}} \draw (\t,0.06) -- (\t,-0.06) node[below] {\tiny $\l$};
+    \draw[thick, colorofwisdom, domain=-3.5:7, samples=150] plot (\x, {sin(\x r)});
+    \draw[thick, domain=-3.5:7, samples=150] plot (\x, {cos(\x r)});
+    \node[colorofwisdom] at (2.2,1.25) {\small $\sin x$};
+    \node at (-0.7,1.25) {\small $\cos x$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti funkcí sinus a kosinus}:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|l|l|l|}
+      \hline
+       & $\sin x$ & $\cos x$ \\
+      \hline
+      $D$, $H$ & $\mathbb{R}$, $[-1, 1]$ & $\mathbb{R}$, $[-1, 1]$ \\
+      perioda & $2\pi$ & $2\pi$ \\
+      parita & lichá & sudá \\
+      nulové body & $k\pi$ & $\frac{\pi}{2} + k\pi$ \\
+      maximum $1$ & $\frac{\pi}{2} + 2k\pi$ & $2k\pi$ \\
+      minimum $-1$ & $\frac{3\pi}{2} + 2k\pi$ & $\pi + 2k\pi$ \\
+      rostoucí na & $\left[-\frac{\pi}{2} + 2k\pi, \frac{\pi}{2} + 2k\pi\right]$ & $[-\pi + 2k\pi, 2k\pi]$ \\
+      klesající na & $\left[\frac{\pi}{2} + 2k\pi, \frac{3\pi}{2} + 2k\pi\right]$ & $[2k\pi, \pi + 2k\pi]$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+  ($k\in\mathbb{Z}$). Graf kosinu je graf sinu posunutý o $\frac{\pi}{2}$ doleva: $\cos x = \sin\left(x + \frac{\pi}{2}\right)$.
+\end{definitionbox}
+
+\begin{center}
+  \begin{tikzpicture}[xscale=0.85, yscale=0.6]
+    \draw[->] (-3.6,0) -- (5.2,0) node[right] {\small $x$};
+    \draw[->] (0,-3.4) -- (0,3.6) node[above] {\small $y$};
+    \foreach \t/\l in {-3.1416/{-\pi}, -1.5708/{-\frac{\pi}{2}}, 1.5708/{\frac{\pi}{2}}, 3.1416/{\pi}, 4.7124/{\frac{3\pi}{2}}} \draw (\t,0.1) -- (\t,-0.1) node[below] {\tiny $\l$};
+    \foreach \a in {-1.5708, 1.5708, 4.7124} \draw[dashed, gray] (\a,-3.4) -- (\a,3.4);
+    \draw[thick, colorofwisdom, domain=-1.27:1.27, samples=60] plot (\x, {tan(\x r)});
+    \draw[thick, colorofwisdom, domain=1.87:4.41, samples=60] plot (\x, {tan(\x r)});
+    \draw[thick, colorofwisdom, domain=-3.5:-1.87, samples=60] plot (\x, {tan(\x r)});
+    \node[colorofwisdom] at (0.9,3.1) {\small $\tg x$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{definitionbox}
+  \textbf{Vlastnosti funkce tangens}: $D = \mathbb{R}\setminus\left\{\frac{\pi}{2} + k\pi\right\}$, $H = \mathbb{R}$, perioda $\pi$, lichá, rostoucí na každém intervalu $\left(-\frac{\pi}{2} + k\pi, \frac{\pi}{2} + k\pi\right)$, nulové body $k\pi$, asymptoty $x = \frac{\pi}{2} + k\pi$. Kotangens má periodu $\pi$, je lichý a klesající na každém intervalu $(k\pi, \pi + k\pi)$.
+\end{definitionbox}
+
+\begin{example}
+  Graf funkce $f(x) = 2\sin\left(x - \frac{\pi}{3}\right)$ dostaneme z grafu sinu posunem o $\frac{\pi}{3}$ doprava a roztažením dvakrát ve směru osy $y$ (transformace z kapitoly~\ref{kap:funkce}). Obor hodnot je $[-2, 2]$, perioda zůstává $2\pi$. Funkce $g(x) = \sin 2x$ má naopak periodu $\pi$, protože graf je stlačen dvakrát ve směru osy $x$. Obecně má $\sin(ax)$ periodu $\frac{2\pi}{|a|}$.
+\end{example}
+
+\section{Goniometrické vzorce}
+
+\begin{definitionbox}
+  \textbf{Základní vztahy}: Pro všechna přípustná $x$ platí
+  \begin{align*}
+    \sin^2 x + \cos^2 x &= 1, & \tg x\cdot\cotg x &= 1,\\
+    \sin(-x) &= -\sin x, & \cos(-x) &= \cos x,\\
+    \sin\left(\tfrac{\pi}{2} - x\right) &= \cos x, & \cos\left(\tfrac{\pi}{2} - x\right) &= \sin x.
+  \end{align*}
+
+  \textbf{Součtové vzorce}:
+  \begin{align*}
+    \cos(x\pm y) &= \cos x\cos y\mp\sin x\sin y,\\
+    \sin(x\pm y) &= \sin x\cos y\pm\cos x\sin y.
+  \end{align*}
+
+  \textbf{Vzorce pro dvojnásobný úhel}:
+  \begin{equation*}
+    \sin 2x = 2\sin x\cos x,\qquad\cos 2x = \cos^2 x - \sin^2 x = 1 - 2\sin^2 x = 2\cos^2 x - 1.
+  \end{equation*}
+
+  \textbf{Vzorce pro poloviční úhel}:
+  \begin{equation*}
+    \sin^2\frac{x}{2} = \frac{1 - \cos x}{2},\qquad\cos^2\frac{x}{2} = \frac{1 + \cos x}{2}.
+  \end{equation*}
+\end{definitionbox}
+
+Vzorec $\sin^2 x + \cos^2 x = 1$ je Pythagorova věta na jednotkové kružnici. Bod $M = [\cos x, \sin x]$ leží na kružnici o poloměru $1$, takže součet čtverců jeho souřadnic je $1$. Značení $\sin^2 x$ znamená ${(\sin x)}^2$, ne $\sin(\sin x)$ ani $\sin(x^2)$.
+
+\begin{proof}[(součtového vzorce pro $\cos(x - y)$)]
+  Na jednotkové kružnici vezmeme body $A = [\cos x, \sin x]$ a $B = [\cos y, \sin y]$. Úhel mezi nimi je $x - y$. Druhou mocninu jejich vzdálenosti spočítáme dvakrát.
+
+  Přímo ze souřadnic:
+  \begin{equation*}
+    |AB|^2 = {(\cos x - \cos y)}^2 + {(\sin x - \sin y)}^2 = 2 - 2(\cos x\cos y + \sin x\sin y),
+  \end{equation*}
+  kde jsme roznásobili a dvakrát použili $\sin^2 + \cos^2 = 1$.
+
+  Nyní celý obrázek otočíme o úhel $-y$. Otočení zachovává vzdálenosti. Bod $B$ se dostane do $[1, 0]$ a bod $A$ do $[\cos(x - y), \sin(x - y)]$. Tedy
+  \begin{equation*}
+    |AB|^2 = {(\cos(x - y) - 1)}^2 + \sin^2(x - y) = 2 - 2\cos(x - y).
+  \end{equation*}
+  Porovnáním obou vyjádření dostaneme $\cos(x - y) = \cos x\cos y + \sin x\sin y$.
+\end{proof}
+
+Ostatní vzorce z tohoto plynou. Dosazením $-y$ místo $y$ dostaneme $\cos(x + y)$. Ze vztahu $\sin x = \cos\left(\frac{\pi}{2} - x\right)$ dostaneme $\sin(x + y) = \cos\left(\left(\frac{\pi}{2} - x\right) - y\right)$ a po rozepsání vzorec pro sinus. Volbou $y = x$ dostaneme vzorce pro dvojnásobný úhel a z $\cos 2x = 1 - 2\sin^2 x$ po dosazení $\frac{x}{2}$ vzorce pro poloviční úhel. Celá tabulka vzorců tedy stojí na jednom obrázku.
+
+\begin{example}
+  Spočítejme přesně $\cos 15^\circ$:
+  \begin{equation*}
+    \cos 15^\circ = \cos(45^\circ - 30^\circ) = \frac{\sqrt{2}}{2}\cdot\frac{\sqrt{3}}{2} + \frac{\sqrt{2}}{2}\cdot\frac{1}{2} = \frac{\sqrt{6} + \sqrt{2}}{4}.
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  Víme, že $\sin x = \frac{3}{5}$ a $x\in\left(\frac{\pi}{2}, \pi\right)$. Spočítejme ostatní funkce. Z $\sin^2 x + \cos^2 x = 1$ je $\cos^2 x = \frac{16}{25}$, a protože jsme ve druhém kvadrantu, je $\cos x = -\frac{4}{5}$. Pak
+  \begin{equation*}
+    \tg x = -\frac{3}{4},\qquad\sin 2x = 2\cdot\frac{3}{5}\cdot\left(-\frac{4}{5}\right) = -\frac{24}{25},\qquad\cos 2x = \frac{16}{25} - \frac{9}{25} = \frac{7}{25}.
+  \end{equation*}
+\end{example}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Spočítejte přesně $\sin 75^\circ$ a $\cos 105^\circ$.
+    \item Víme, že $\cos x = -\frac{5}{13}$ a $x\in\left(\pi, \frac{3\pi}{2}\right)$. Určete $\sin x$, $\tg x$ a $\sin 2x$.
+    \item Dokažte, že $\frac{\sin 2x}{1 + \cos 2x} = \tg x$ (pro přípustná $x$).
+    \item Zjednodušte ${(\sin x + \cos x)}^2 - \sin 2x$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sin 75^\circ = \sin(45^\circ + 30^\circ) = \frac{\sqrt{6} + \sqrt{2}}{4}$. $\cos 105^\circ = \cos(60^\circ + 45^\circ) = \frac{\sqrt{2}}{4} - \frac{\sqrt{6}}{4} = \frac{\sqrt{2} - \sqrt{6}}{4}$.
+    \item Ve třetím kvadrantu je sinus záporný: $\sin x = -\frac{12}{13}$, $\tg x = \frac{12}{5}$, $\sin 2x = 2\cdot\left(-\frac{12}{13}\right)\left(-\frac{5}{13}\right) = \frac{120}{169}$.
+    \item $\frac{2\sin x\cos x}{1 + 2\cos^2 x - 1} = \frac{2\sin x\cos x}{2\cos^2 x} = \frac{\sin x}{\cos x} = \tg x$.
+    \item $\sin^2 x + 2\sin x\cos x + \cos^2 x - 2\sin x\cos x = 1$.
+  \end{enumerate}
+\end{solution}
+
+\section{Goniometrické rovnice}
+
+Goniometrické funkce jsou periodické, a proto mají goniometrické rovnice (pokud mají řešení) nekonečně mnoho řešení. Najdeme je v jedné periodě a přičteme celistvé násobky periody.
+
+\begin{definitionbox}
+  \textbf{Základní goniometrické rovnice} ($k\in\mathbb{Z}$):
+  \begin{itemize}
+    \item $\sin x = a$, $|a|\leq 1$: najdeme $x_0\in\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ se $\sin x_0 = a$. Řešení jsou $x = x_0 + 2k\pi$ a $x = \pi - x_0 + 2k\pi$.
+    \item $\cos x = a$, $|a|\leq 1$: najdeme $x_0\in[0, \pi]$ s $\cos x_0 = a$. Řešení jsou $x = \pm x_0 + 2k\pi$.
+    \item $\tg x = a$: najdeme $x_0\in\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ s $\tg x_0 = a$. Řešení jsou $x = x_0 + k\pi$.
+  \end{itemize}
+  Pro $|a| > 1$ rovnice se sinem a kosinem nemají řešení.
+\end{definitionbox}
+
+Nejlepší je řešení vždy vidět na jednotkové kružnici. Rovnice $\sin x = \frac{1}{2}$ hledá body na kružnici ve výšce $\frac{1}{2}$. Takové body jsou dva: jeden v prvním kvadrantu ($\frac{\pi}{6}$) a jeden ve druhém ($\frac{5\pi}{6}$). Pak už jen přidáme $2k\pi$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.7]
+    \draw[->] (-1.3,0) -- (1.4,0);
+    \draw[->] (0,-1.2) -- (0,1.3);
+    \draw[thick] (0,0) circle (1);
+    \draw[dashed, colorofwisdom] (-1.2,0.5) -- (1.2,0.5) node[right] {\small $y = \frac{1}{2}$};
+    \filldraw[colorofwisdom] (30:1) circle (1pt) node[above right] {\small $\frac{\pi}{6}$};
+    \filldraw[colorofwisdom] (150:1) circle (1pt) node[above left] {\small $\frac{5\pi}{6}$};
+    \draw (0,0) -- (30:1) (0,0) -- (150:1);
+  \end{tikzpicture}
+\end{center}
+
+\begin{example}
+  Vyřešme:
+  \begin{enumerate}[label=(\alph*)]
+    \item $\sin x = \frac{1}{2}$: $x = \frac{\pi}{6} + 2k\pi$ nebo $x = \frac{5\pi}{6} + 2k\pi$, $k\in\mathbb{Z}$.
+    \item $\cos x = -\frac{\sqrt{2}}{2}$: $x_0 = \frac{3\pi}{4}$, tedy $x = \pm\frac{3\pi}{4} + 2k\pi$.
+    \item $\tg x = \sqrt{3}$: $x = \frac{\pi}{3} + k\pi$.
+    \item $\sin 2x = 1$: $2x = \frac{\pi}{2} + 2k\pi$, tedy $x = \frac{\pi}{4} + k\pi$. Pozor, perioda se při dělení dvěma také vydělí!
+  \end{enumerate}
+\end{example}
+
+\begin{definitionbox}
+  \textbf{Složitější rovnice} převádíme na základní:
+  \begin{itemize}
+    \item \textbf{substitucí} (například $t = \sin x$, pokud se v rovnici vyskytuje jen $\sin x$ a jeho mocniny),
+    \item \textbf{pomocí vzorců} (typicky $\sin^2 x = 1 - \cos^2 x$, abychom měli v rovnici jen jednu funkci),
+    \item \textbf{rozkladem na součin} a větou o nulovém součinu.
+  \end{itemize}
+\end{definitionbox}
+
+\begin{example}
+  Vyřešme $2\sin^2 x - \sin x - 1 = 0$. Substituce $t = \sin x$: $2t^2 - t - 1 = 0$, tedy $t = 1$ nebo $t = -\frac{1}{2}$.
+  \begin{itemize}
+    \item $\sin x = 1$: $x = \frac{\pi}{2} + 2k\pi$,
+    \item $\sin x = -\frac{1}{2}$: $x = -\frac{\pi}{6} + 2k\pi$ nebo $x = \frac{7\pi}{6} + 2k\pi$.
+  \end{itemize}
+\end{example}
+
+\begin{example}
+  Vyřešme $2\cos^2 x + 3\sin x - 3 = 0$. Nahradíme $\cos^2 x = 1 - \sin^2 x$:
+  \begin{equation*}
+    2 - 2\sin^2 x + 3\sin x - 3 = 0\quad\Leftrightarrow\quad 2\sin^2 x - 3\sin x + 1 = 0.
+  \end{equation*}
+  Tedy $\sin x = 1$ nebo $\sin x = \frac{1}{2}$, a tedy $x = \frac{\pi}{2} + 2k\pi$, $x = \frac{\pi}{6} + 2k\pi$ nebo $x = \frac{5\pi}{6} + 2k\pi$.
+\end{example}
+
+\begin{example}
+  Vyřešme $\sin 2x = \sin x$. Podle vzorce $2\sin x\cos x - \sin x = 0$, tedy $\sin x(2\cos x - 1) = 0$.
+  \begin{itemize}
+    \item $\sin x = 0$: $x = k\pi$,
+    \item $\cos x = \frac{1}{2}$: $x = \pm\frac{\pi}{3} + 2k\pi$.
+  \end{itemize}
+  Kdo by rovnici vydělil $\sin x$, přišel by o řešení $x = k\pi$. Tuto větu píšu v každé kapitole. Asi to něco znamená.
+\end{example}
+
+\begin{problem}
+  Vyřešte v $\mathbb{R}$:
+  \begin{enumerate}[label=(\alph*)]
+    \item $2\cos x - 1 = 0$,
+    \item $\sin^2 x = \frac{1}{4}$,
+    \item $\cos 2x + \cos x = 0$,
+    \item $\sin x + \cos x = 0$,
+    \item $\tg^2 x - 3 = 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\cos x = \frac{1}{2}$, $x = \pm\frac{\pi}{3} + 2k\pi$.
+    \item $\sin x = \pm\frac{1}{2}$, $x = \pm\frac{\pi}{6} + k\pi$. Čtyři body na kružnici se dají zapsat dvěma soustavami s periodou $\pi$.
+    \item $2\cos^2 x - 1 + \cos x = 0$, $\cos x\in\left\{\frac{1}{2}, -1\right\}$, tedy $x = \pm\frac{\pi}{3} + 2k\pi$ nebo $x = \pi + 2k\pi$.
+    \item Pokud by $\cos x = 0$, bylo by $\sin x = \pm 1$ a rovnice by neplatila. Můžeme tedy dělit $\cos x$: $\tg x = -1$, $x = -\frac{\pi}{4} + k\pi$. Tady je dělení v pořádku, protože jsme předem ověřili, že nedělíme nulou.
+    \item $\tg x = \pm\sqrt{3}$, $x = \pm\frac{\pi}{3} + k\pi$.
+  \end{enumerate}
+\end{solution}
+
+\begin{example}
+  Goniometrické nerovnice řešíme nejlépe pomocí jednotkové kružnice nebo grafu. $\sin x > \frac{1}{2}$ platí pro body na kružnici nad přímkou $y = \frac{1}{2}$, tedy na oblouku mezi $\frac{\pi}{6}$ a $\frac{5\pi}{6}$. $K = \bigcup_{k\in\mathbb{Z}}\left(\frac{\pi}{6} + 2k\pi, \frac{5\pi}{6} + 2k\pi\right)$.
+\end{example}
+
+\section{Řešení obecného trojúhelníku}
+
+V obecném (ne nutně pravoúhlém) trojúhelníku značíme strany $a, b, c$ a protilehlé úhly $\alpha, \beta, \gamma$. Dvě věty nám umožní dopočítat všechno ostatní, pokud známe tři údaje (z nichž alespoň jeden je strana).
+
+\begin{definitionbox}
+  \textbf{Sinová věta}:
+  \begin{equation*}
+    \frac{a}{\sin\alpha} = \frac{b}{\sin\beta} = \frac{c}{\sin\gamma} = 2r,
+  \end{equation*}
+  kde $r$ je poloměr kružnice opsané.
+
+  \textbf{Kosinová věta}:
+  \begin{equation*}
+    c^2 = a^2 + b^2 - 2ab\cos\gamma,
+  \end{equation*}
+  a obdobně pro ostatní strany.
+
+  \textbf{Obsah trojúhelníku}:
+  \begin{equation*}
+    S = \frac{1}{2}ab\sin\gamma.
+  \end{equation*}
+\end{definitionbox}
+
+\begin{proof}[(sinové věty bez části s $2r$)]
+  Spusťme z vrcholu $C$ výšku $v_c$ na stranu $c$. Vzniknou dva pravoúhlé trojúhelníky. Z jednoho $v_c = b\sin\alpha$, z druhého $v_c = a\sin\beta$. Tedy $b\sin\alpha = a\sin\beta$, neboli $\frac{a}{\sin\alpha} = \frac{b}{\sin\beta}$. Pro třetí poměr stejně s jinou výškou. (Pro tupý úhel je důkaz stejný, jen pata výšky leží mimo stranu.)
+\end{proof}
+
+\begin{proof}[(kosinové věty)]
+  Umístěme trojúhelník do souřadnic: $C = [0, 0]$, $B = [a, 0]$. Bod $A$ je ve vzdálenosti $b$ od $C$ pod úhlem $\gamma$, tedy $A = [b\cos\gamma, b\sin\gamma]$. Pak
+  \begin{equation*}
+    c^2 = |AB|^2 = {(b\cos\gamma - a)}^2 + b^2\sin^2\gamma = b^2(\cos^2\gamma + \sin^2\gamma) - 2ab\cos\gamma + a^2 = a^2 + b^2 - 2ab\cos\gamma.
+  \end{equation*}
+\end{proof}
+
+Kosinová věta je zobecněním Pythagorovy věty. Pro $\gamma = 90^\circ$ je $\cos\gamma = 0$ a dostaneme $c^2 = a^2 + b^2$. Člen $-2ab\cos\gamma$ je `oprava' pro trojúhelníky, které pravoúhlé nejsou.
+
+\begin{example}
+  V trojúhelníku je $a = 5$, $b = 7$ a $\gamma = 60^\circ$. Dopočítejme $c$ a obsah.
+  \begin{equation*}
+    c^2 = 25 + 49 - 2\cdot 5\cdot 7\cdot\frac{1}{2} = 39,\qquad c = \sqrt{39}\approx 6{,}24,\qquad S = \frac{1}{2}\cdot 5\cdot 7\cdot\frac{\sqrt{3}}{2} = \frac{35\sqrt{3}}{4}\approx 15{,}16.
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  V trojúhelníku je $a = 10$, $\alpha = 30^\circ$ a $\beta = 45^\circ$. Pak $\gamma = 105^\circ$ a podle sinové věty
+  \begin{equation*}
+    b = \frac{a\sin\beta}{\sin\alpha} = \frac{10\cdot\frac{\sqrt{2}}{2}}{\frac{1}{2}} = 10\sqrt{2},\qquad c = \frac{a\sin\gamma}{\sin\alpha} = 20\sin 105^\circ = 20\cdot\frac{\sqrt{6} + \sqrt{2}}{4} = 5(\sqrt{6} + \sqrt{2}).
+  \end{equation*}
+  Hodnotu $\sin 105^\circ = \sin(60^\circ + 45^\circ)$ jsme spočítali součtovým vzorcem.
+\end{example}
+
+\begin{note}
+  Pokud známe dvě strany a úhel \textbf{proti kratší} z nich, sinová věta může dát dvě řešení, protože $\sin\beta = \sin(180^\circ - \beta)$. Trojúhelník pak existuje ve dvou verzích (s ostrým a s tupým úhlem), nebo vůbec. Tomu se říká \textbf{nejednoznačný případ}. Kosinová věta tímto problémem netrpí, protože kosinus na $(0^\circ, 180^\circ)$ je prostý.
+\end{note}
+
+\begin{problem}
+  \begin{enumerate}[label=(\alph*)]
+    \item Trojúhelník má strany $a = 8$, $b = 5$, $c = 7$. Určete úhel $\gamma$.
+    \item Dvě lodě vyplují ze stejného přístavu. Jedna jede $12\ \si{km}$ na sever, druhá $8\ \si{km}$ směrem, který svírá se severem úhel $60^\circ$. Jak daleko jsou od sebe?
+    \item Určete obsah trojúhelníku se stranami $b = 6$, $c = 4$ a úhlem $\alpha = 150^\circ$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\cos\gamma = \frac{a^2 + b^2 - c^2}{2ab} = \frac{64 + 25 - 49}{80} = \frac{1}{2}$, $\gamma = 60^\circ$.
+    \item $d^2 = 144 + 64 - 2\cdot 12\cdot 8\cdot\frac{1}{2} = 112$, $d = 4\sqrt{7}\approx 10{,}6\ \si{km}$.
+    \item $S = \frac{1}{2}\cdot 6\cdot 4\cdot\sin 150^\circ = 12\cdot\frac{1}{2} = 6$.
+  \end{enumerate}
+\end{solution}
+
+\section{Odbočka --- Muž, který miloval teplo}
+
+Jean-Baptiste Joseph Fourier vyrůstal jako sirotek, za Francouzské revoluce byl zatčen a jen o vlásek unikl gilotině, a pak doprovázel Napoleona na výpravě do Egypta. Po návratu se začal zabývat šířením tepla a v roce 1807 přišel s tvrzením, které většina tehdejších matematiků považovala za nesmysl: \textit{každou} rozumnou periodickou funkci lze zapsat jako součet (nekonečně mnoha) sinů a kosinů různých frekvencí. Lagrange byl proti, práce byla roky odmítána a vyšla až v roce 1822.
+
+Fourier měl pravdu. Dnes se tomu říká \textbf{Fourierova řada} (a obecněji Fourierova transformace) a stojí na tom značná část moderního světa. Váš telefon rozloží zvuk na sinusovky, ty nepodstatné zahodí a zbytek uloží. Tak funguje MP3. Fotka ve formátu JPEG se ukládá velice podobně, jen s kosiny ve dvou směrech. Na stejném principu fungují i rentgenová tomografie, rozpoznávání řeči a magnetická rezonance.
+
+Teplo, kterým se Fourier celý život zabýval, se nakonec stalo i jeho posedlostí. Po návratu z Egypta byl přesvědčený, že horko je pro zdraví prospěšné. Svůj byt prý vytápěl tak, že návštěvníci nemohli dýchat, a sám chodil zabalený v několika vrstvách přikrývek. V roce 1830 spadl ze schodů a o několik týdnů později zemřel. Jeho jméno je jedním ze 72 jmen vědců vyrytých na Eiffelově věži.
+
+\section{Shrnutí a otázky k ústní zkoušce}
+
+\begin{problem}
+  Odpovězte vlastními slovy:
+  \begin{enumerate}
+    \item Co je stupňová a oblouková míra úhlu? Jak se mezi nimi převádí? Proč se v matematice dává přednost radiánům?
+    \item Jak jsou definovány goniometrické funkce v pravoúhlém trojúhelníku a na jednotkové kružnici? Proč se obě definice pro ostré úhly shodují?
+    \item Odvoďte hodnoty goniometrických funkcí pro $30^\circ$, $45^\circ$ a $60^\circ$.
+    \item Nakreslete grafy sinu, kosinu a tangentu a popište jejich vlastnosti.
+    \item Odvoďte vztah $\sin^2 x + \cos^2 x = 1$. Dokažte součtový vzorec pro kosinus a odvoďte z něj vzorce pro dvojnásobný úhel.
+    \item Jak se řeší základní goniometrické rovnice? Proč mají nekonečně mnoho řešení?
+    \item Jaké znáte metody řešení složitějších goniometrických rovnic?
+    \item Vyslovte a dokažte sinovou a kosinovou větu. Jak souvisí kosinová věta s Pythagorovou větou?
+    \item Kdy může mít úloha o trojúhelníku dvě řešení?
+  \end{enumerate}
+\end{problem}
