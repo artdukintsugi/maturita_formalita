@@ -446,7 +446,7 @@ Plné body jsou trénovací, prázdné testovací, šedá čárkovaná křivka j
 \begin{center}
   \begin{tabular}{lccc}
     & stupeň $1$ & stupeň $3$ & stupeň $9$\\\hline
-    chyba na trénovacích datech & $0{,}64$ & $0{,}25$ & $0{,}00$\\
+    chyba na trénovacích datech & $0{,}64$ & $0{,}24$ & $0{,}00$\\
     chyba na testovacích datech & $0{,}55$ & $0{,}19$ & $1{,}09$
   \end{tabular}
 \end{center}
@@ -464,7 +464,7 @@ Přímka je příliš hloupá: chybuje všude (\textbf{nedoučení}). Mnohočlen
   \end{equation*}
 \end{definitionbox}
 
-Regularizace říká modelu: `buď jednoduchý, pokud to jde'. Pro mnohočlen stupně $9$ s $\lambda = 0{,}001$ klesnou koeficienty z řádu statisíců zhruba na $10$, trénovací chyba vzroste na $0{,}23$ a testovací klesne z $1{,}09$ na $0{,}20$. Model se zhoršil na tom, co zná, a výrazně zlepšil na tom, co nezná. Matice $X^TX + \lambda I$ je navíc vždy regulární (proč? nápověda: $\vec{v}^T(X^TX + \lambda I)\vec{v} = \|X\vec{v}\|^2 + \lambda\|\vec{v}\|^2$), takže regularizace vyléčí i soustavy, které by jinak řešení neměly jednoznačné.
+Regularizace říká modelu: `buď jednoduchý, pokud to jde'. Pro mnohočlen stupně $9$ s $\lambda = 0{,}001$ klesnou koeficienty z řádu statisíců zhruba na $10$, trénovací chyba vzroste na $0{,}22$ a testovací klesne z $1{,}09$ na $0{,}20$. Model se zhoršil na tom, co zná, a výrazně zlepšil na tom, co nezná. Matice $X^TX + \lambda I$ je navíc vždy regulární (proč? nápověda: $\vec{v}^T(X^TX + \lambda I)\vec{v} = \|X\vec{v}\|^2 + \lambda\|\vec{v}\|^2$), takže regularizace vyléčí i soustavy, které by jinak řešení neměly jednoznačné.
 
 \section{Odbočka --- Rozklad chyby na vychýlení a rozptyl}
 
